@@ -2,7 +2,7 @@
 
 **Complete SPARC + Three-Loop Integrated Development System for Claude Code**
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/yourusername/ruv-sparc-three-loop-system/releases)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/DNYoussef/ruv-sparc-three-loop-system/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/claude--code-plugin-purple.svg)](https://claude.ai/code)
 
