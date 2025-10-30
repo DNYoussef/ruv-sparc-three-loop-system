@@ -1,0 +1,476 @@
+{
+  "name": "testing-framework",
+  "version": "1.0.0",
+  "description": "MCP tool for comprehensive testing framework operations including test generation, execution, coverage analysis, and CI/CD integration",
+  "tools": [
+    {
+      "name": "generate_tests",
+      "description": "Generate comprehensive test suite for specified files or modules",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Target file or module path to generate tests for"
+          },
+          "testType": {
+            "type": "string",
+            "enum": ["unit", "integration", "e2e", "all"],
+            "default": "unit",
+            "description": "Type of tests to generate"
+          },
+          "framework": {
+            "type": "string",
+            "enum": ["vitest", "jest", "playwright", "cypress", "auto"],
+            "default": "auto",
+            "description": "Testing framework to use (auto-detect if not specified)"
+          },
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "lines": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "default": 80
+              },
+              "functions": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "default": 80
+              },
+              "branches": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "default": 75
+              },
+              "statements": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "default": 80
+              }
+            },
+            "description": "Coverage goals for generated tests"
+          },
+          "mockDependencies": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to mock external dependencies"
+          },
+          "includeEdgeCases": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include edge case tests"
+          },
+          "includeErrorHandling": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include error handling tests"
+          }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "run_tests",
+      "description": "Execute test suite with various options",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["unit", "integration", "e2e", "all"],
+            "default": "all",
+            "description": "Type of tests to run"
+          },
+          "coverage": {
+            "type": "boolean",
+            "default": false,
+            "description": "Generate coverage report"
+          },
+          "watch": {
+            "type": "boolean",
+            "default": false,
+            "description": "Run tests in watch mode"
+          },
+          "parallel": {
+            "type": "boolean",
+            "default": true,
+            "description": "Run tests in parallel"
+          },
+          "file": {
+            "type": "string",
+            "description": "Specific test file to run"
+          },
+          "verbose": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show detailed output"
+          },
+          "bail": {
+            "type": "boolean",
+            "default": false,
+            "description": "Stop on first test failure"
+          }
+        }
+      }
+    },
+    {
+      "name": "analyze_coverage",
+      "description": "Analyze test coverage and identify gaps",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "default": 80,
+            "description": "Minimum coverage threshold"
+          },
+          "prioritize": {
+            "type": "string",
+            "enum": ["all", "critical-paths", "low-coverage", "uncovered"],
+            "default": "critical-paths",
+            "description": "Which areas to prioritize in analysis"
+          },
+          "format": {
+            "type": "string",
+            "enum": ["summary", "detailed", "json", "html"],
+            "default": "summary",
+            "description": "Output format for coverage report"
+          },
+          "includeUncovered": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include list of uncovered files"
+          }
+        }
+      }
+    },
+    {
+      "name": "generate_suite",
+      "description": "Generate complete test suite for an entire project or module",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Target directory or module (e.g., 'src/services')"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["unit", "integration", "e2e"]
+            },
+            "default": ["unit", "integration"],
+            "description": "Types of tests to include in suite"
+          },
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "lines": { "type": "number", "default": 80 },
+              "functions": { "type": "number", "default": 80 },
+              "branches": { "type": "number", "default": 75 },
+              "statements": { "type": "number", "default": 80 }
+            }
+          },
+          "framework": {
+            "type": "string",
+            "enum": ["vitest", "jest", "auto"],
+            "default": "auto"
+          },
+          "includeHelpers": {
+            "type": "boolean",
+            "default": true,
+            "description": "Generate test helper utilities"
+          },
+          "includeMocks": {
+            "type": "boolean",
+            "default": true,
+            "description": "Generate mock data and factories"
+          },
+          "includeFixtures": {
+            "type": "boolean",
+            "default": true,
+            "description": "Generate test fixtures"
+          }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "setup_framework",
+      "description": "Setup complete testing framework infrastructure",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "framework": {
+            "type": "string",
+            "enum": ["vitest", "jest"],
+            "default": "vitest",
+            "description": "Primary testing framework"
+          },
+          "e2eFramework": {
+            "type": "string",
+            "enum": ["playwright", "cypress", "none"],
+            "default": "playwright",
+            "description": "E2E testing framework"
+          },
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string",
+                "enum": ["v8", "istanbul"],
+                "default": "v8"
+              },
+              "reporters": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["text", "html", "json", "lcov"]
+                },
+                "default": ["text", "html", "json", "lcov"]
+              }
+            }
+          },
+          "cicd": {
+            "type": "object",
+            "properties": {
+              "platform": {
+                "type": "string",
+                "enum": ["github-actions", "gitlab-ci", "none"],
+                "default": "github-actions"
+              },
+              "nodeVersions": {
+                "type": "array",
+                "items": { "type": "string" },
+                "default": ["18.x", "20.x"]
+              }
+            }
+          },
+          "preCommitHooks": {
+            "type": "boolean",
+            "default": true,
+            "description": "Setup pre-commit hooks for testing"
+          }
+        }
+      }
+    },
+    {
+      "name": "create_test_utilities",
+      "description": "Create test helper utilities, factories, and mocks",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["factories", "mocks", "helpers", "fixtures", "all"],
+            "default": "all",
+            "description": "Type of utilities to create"
+          },
+          "models": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Model names to create factories/mocks for (e.g., ['User', 'Order'])"
+          },
+          "includeFaker": {
+            "type": "boolean",
+            "default": true,
+            "description": "Use @faker-js/faker for realistic test data"
+          }
+        }
+      }
+    },
+    {
+      "name": "validate_tests",
+      "description": "Validate test quality and adherence to best practices",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "default": "tests/",
+            "description": "Path to tests directory"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "naming-conventions",
+                "test-independence",
+                "proper-assertions",
+                "mock-usage",
+                "test-coverage",
+                "execution-time"
+              ]
+            },
+            "default": [
+              "naming-conventions",
+              "test-independence",
+              "proper-assertions"
+            ]
+          },
+          "strict": {
+            "type": "boolean",
+            "default": false,
+            "description": "Fail on any violation"
+          }
+        }
+      }
+    },
+    {
+      "name": "benchmark_tests",
+      "description": "Benchmark test execution performance",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["unit", "integration", "e2e", "all"],
+            "default": "all"
+          },
+          "iterations": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10,
+            "default": 3,
+            "description": "Number of benchmark iterations"
+          },
+          "includeMemory": {
+            "type": "boolean",
+            "default": true,
+            "description": "Include memory usage metrics"
+          }
+        }
+      }
+    },
+    {
+      "name": "fix_flaky_tests",
+      "description": "Identify and suggest fixes for flaky tests",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "iterations": {
+            "type": "number",
+            "minimum": 5,
+            "maximum": 100,
+            "default": 10,
+            "description": "Number of iterations to detect flakiness"
+          },
+          "autofix": {
+            "type": "boolean",
+            "default": false,
+            "description": "Automatically apply fixes (use with caution)"
+          }
+        }
+      }
+    },
+    {
+      "name": "generate_cicd_pipeline",
+      "description": "Generate CI/CD pipeline configuration for testing",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "platform": {
+            "type": "string",
+            "enum": ["github-actions", "gitlab-ci", "circleci", "jenkins"],
+            "default": "github-actions"
+          },
+          "nodeVersions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": ["18.x", "20.x"],
+            "description": "Node.js versions to test against"
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["lint", "typecheck", "unit", "integration", "e2e", "coverage"]
+            },
+            "default": ["lint", "unit", "integration", "coverage"]
+          },
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "upload": {
+                "type": "boolean",
+                "default": true,
+                "description": "Upload coverage to Codecov/Coveralls"
+              },
+              "threshold": {
+                "type": "number",
+                "default": 80,
+                "description": "Fail pipeline if coverage below threshold"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "test-strategy",
+      "description": "Current test strategy document and coverage goals",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "coverage-report",
+      "description": "Latest coverage report with detailed metrics",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "test-results",
+      "description": "Recent test execution results and history",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "flaky-tests",
+      "description": "List of identified flaky tests and their patterns",
+      "mimeType": "application/json"
+    }
+  ],
+  "prompts": [
+    {
+      "name": "generate-unit-tests",
+      "description": "Generate comprehensive unit tests for a module",
+      "arguments": [
+        {
+          "name": "module",
+          "description": "Module path to generate tests for",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "review-test-coverage",
+      "description": "Review test coverage and suggest improvements",
+      "arguments": [
+        {
+          "name": "threshold",
+          "description": "Minimum coverage threshold",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "setup-testing-stack",
+      "description": "Setup complete testing stack for a project",
+      "arguments": [
+        {
+          "name": "projectType",
+          "description": "Type of project (frontend, backend, fullstack)",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

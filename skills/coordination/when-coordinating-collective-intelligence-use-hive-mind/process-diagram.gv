@@ -1,0 +1,25 @@
+digraph HiveMind {
+  rankdir=TB;
+  node [shape=box, style=rounded];
+
+  start [label="Start", shape=ellipse, fillcolor=lightgreen, style=filled];
+  p1 [label="Initialize\nHive Mind"];
+  p2 [label="Coordinate\nAgents"];
+  p3 [label="Synchronize\nMemory"];
+  p4 [label="Reach\nConsensus"];
+  p5 [label="Execute\nCollectively"];
+  end [label="End", shape=ellipse, fillcolor=lightgreen, style=filled];
+
+  queen [label="Queen\nCoordinator", shape=hexagon, fillcolor=gold, style=filled];
+  collective [label="Collective\nIntelligence", shape=component, fillcolor=lightblue, style=filled];
+  memory [label="Swarm\nMemory", shape=cylinder, fillcolor=lightgray, style=filled];
+
+  start -> p1 -> p2 -> p3 -> p4 -> p5 -> end;
+
+  queen -> p2 [label="Direct", style=bold];
+  collective -> p4 [label="Synthesize"];
+  memory -> p3 [label="Sync"];
+
+  p2 -> queen [style=dashed];
+  p4 -> queen [label="Validate", style=dashed];
+}

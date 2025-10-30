@@ -1,0 +1,28 @@
+digraph CascadeOrchestrator {
+  rankdir=TB;
+  node [shape=box, style=rounded];
+
+  start [label="Start", shape=ellipse, fillcolor=lightgreen, style=filled];
+  p1 [label="Design\nCascade"];
+  p2 [label="Chain\nWorkflows"];
+  p3 [label="Execute\nCascade"];
+  p4 [label="Monitor\nProgress"];
+  p5 [label="Optimize\nFlow"];
+  end [label="End", shape=ellipse, fillcolor=lightgreen, style=filled];
+
+  design [label="Design", shape=component];
+  backend [label="Backend", shape=component];
+  frontend [label="Frontend", shape=component];
+  testing [label="Testing", shape=component];
+  deploy [label="Deploy", shape=component];
+
+  start -> p1 -> p2 -> p3 -> p4 -> p5 -> end;
+
+  p3 -> design -> backend -> testing -> deploy;
+  design -> frontend -> testing;
+
+  condition [label="Tests Pass?", shape=diamond, fillcolor=yellow, style=filled];
+  testing -> condition;
+  condition -> deploy [label="Yes"];
+  condition -> end [label="No", style=dashed];
+}

@@ -1,0 +1,122 @@
+{
+  "mcpServers": {
+    "claude-flow": {
+      "command": "npx",
+      "args": [
+        "claude-flow@alpha",
+        "mcp",
+        "start"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "swarm_init",
+        "agent_spawn",
+        "task_orchestrate",
+        "swarm_status",
+        "agent_list",
+        "agent_metrics",
+        "task_status",
+        "task_results",
+        "memory_usage",
+        "neural_status",
+        "neural_train",
+        "neural_patterns"
+      ],
+      "description": "Claude Flow MCP server for agent coordination, swarm management, and neural features (REQUIRED)",
+      "required": true
+    },
+    "ruv-swarm": {
+      "command": "npx",
+      "args": [
+        "ruv-swarm",
+        "mcp",
+        "start"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "swarm_init",
+        "swarm_status",
+        "swarm_monitor",
+        "agent_spawn",
+        "agent_list",
+        "agent_metrics",
+        "task_orchestrate",
+        "task_status",
+        "task_results",
+        "benchmark_run",
+        "features_detect",
+        "memory_usage",
+        "neural_status",
+        "neural_train",
+        "neural_patterns",
+        "daa_init",
+        "daa_agent_create",
+        "daa_agent_adapt",
+        "daa_workflow_create",
+        "daa_workflow_execute",
+        "daa_knowledge_share",
+        "daa_learning_status",
+        "daa_cognitive_pattern",
+        "daa_meta_learning",
+        "daa_performance_metrics"
+      ],
+      "description": "RUV Swarm MCP server for enhanced coordination, neural features, and DAA (optional)",
+      "required": false
+    },
+    "flow-nexus": {
+      "command": "npx",
+      "args": [
+        "flow-nexus@latest",
+        "mcp",
+        "start"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "swarm_init",
+        "swarm_status",
+        "swarm_scale",
+        "swarm_destroy",
+        "agent_spawn",
+        "task_orchestrate",
+        "neural_train",
+        "neural_predict",
+        "neural_cluster_init",
+        "neural_node_deploy",
+        "neural_train_distributed",
+        "sandbox_create",
+        "sandbox_execute",
+        "sandbox_configure",
+        "sandbox_status",
+        "template_list",
+        "template_deploy",
+        "workflow_create",
+        "workflow_execute",
+        "workflow_status",
+        "github_repo_analyze",
+        "realtime_subscribe",
+        "storage_upload",
+        "seraphina_chat"
+      ],
+      "description": "Flow Nexus MCP server for cloud features, sandboxes, neural training, templates, and Queen Seraphina (optional)",
+      "required": false
+    }
+  },
+  "configuration": {
+    "autoStartServers": true,
+    "retryOnFailure": true,
+    "maxRetries": 3,
+    "timeout": 30000
+  },
+  "notes": {
+    "required_servers": [
+      "claude-flow: Required for basic agent coordination and swarm management"
+    ],
+    "optional_servers": [
+      "ruv-swarm: Enhanced coordination, neural features, DAA autonomous agents",
+      "flow-nexus: Cloud sandboxes, distributed neural training, templates, GitHub integration, Queen Seraphina AI assistant"
+    ],
+    "authentication": {
+      "flow-nexus": "Requires registration: npx flow-nexus@latest register"
+    }
+  }
+}

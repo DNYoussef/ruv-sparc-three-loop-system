@@ -1,0 +1,106 @@
+{
+  "name": "ruv-sparc-three-loop-system",
+  "version": "2.0.0",
+  "description": "Complete SPARC + Three-Loop Integrated Development System with 86+ AI agents, evidence-based prompting, Byzantine consensus, and META-SKILL orchestration. Includes research-driven planning, parallel swarm implementation, CI/CD intelligent recovery, and comprehensive agent registry.",
+  "author": "ruv",
+  "license": "MIT",
+  "repository": "https://github.com/yourusername/ruv-sparc-three-loop-system",
+  "homepage": "https://github.com/yourusername/ruv-sparc-three-loop-system#readme",
+  "keywords": [
+    "sparc",
+    "three-loop",
+    "ai-agents",
+    "swarm-intelligence",
+    "evidence-based-prompting",
+    "byzantine-consensus",
+    "claude-code",
+    "development-workflow",
+    "meta-skill",
+    "tdd",
+    "ci-cd-automation"
+  ],
+  "claudeCode": {
+    "minVersion": "1.0.0",
+    "compatibility": "2024.01+"
+  },
+  "contents": {
+    "skills": {
+      "count": 50,
+      "categories": [
+        "three-loop-system",
+        "sparc-methodology",
+        "agent-coordination",
+        "quality-assurance",
+        "development-automation",
+        "meta-skills"
+      ]
+    },
+    "commands": {
+      "count": 30,
+      "prefixes": ["/sparc", "/claude-flow"]
+    },
+    "agents": {
+      "count": 86,
+      "types": [
+        "core-development",
+        "swarm-coordination",
+        "consensus-distributed",
+        "performance-monitoring",
+        "github-integration",
+        "sparc-methodology",
+        "testing-quality",
+        "specialized-development"
+      ]
+    },
+    "mcpServers": {
+      "count": 3,
+      "required": ["claude-flow"],
+      "optional": ["ruv-swarm", "flow-nexus"]
+    }
+  },
+  "features": [
+    "Three-Loop Integrated Development System (v2.0.0)",
+    "SPARC Methodology (Specification → Pseudocode → Architecture → Refinement → Completion)",
+    "86+ AI Agent Registry with explicit SOPs",
+    "Evidence-Based Prompting (Self-consistency, Byzantine consensus, Raft consensus, Program-of-thought)",
+    "META-SKILL Architecture (Dynamic agent+skill compilation)",
+    "Theater Detection & Reality Validation",
+    "Gemini Large-Context Integration (2M token)",
+    "Multi-Agent Consensus Mechanisms",
+    "Cross-Loop Learning & Continuous Improvement",
+    "GitHub Integration & CI/CD Automation"
+  ],
+  "installation": {
+    "steps": [
+      "Clone plugin repository",
+      "Install MCP servers (claude-flow required, others optional)",
+      "Configure agent registry",
+      "Load skills and commands",
+      "Verify installation"
+    ],
+    "mcpSetup": {
+      "required": {
+        "claude-flow": "npx claude-flow@alpha mcp start"
+      },
+      "optional": {
+        "ruv-swarm": "npx ruv-swarm mcp start",
+        "flow-nexus": "npx flow-nexus@latest mcp start"
+      }
+    }
+  },
+  "documentation": {
+    "quickStart": "docs/QUICK-START.md",
+    "architecture": "docs/ARCHITECTURE.md",
+    "agentRegistry": "docs/AGENT-REGISTRY.md",
+    "skillMappings": "docs/SKILL-AGENT-MAPPINGS.md",
+    "mcpGuide": "docs/MCP-SETUP.md",
+    "examples": "docs/EXAMPLES.md"
+  },
+  "maintainers": [
+    {
+      "name": "ruv",
+      "email": "your-email@example.com",
+      "url": "https://github.com/yourusername"
+    }
+  ]
+}

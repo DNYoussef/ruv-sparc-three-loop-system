@@ -1,0 +1,163 @@
+digraph TestingFramework {
+    rankdir=TB;
+    node [shape=box, style=rounded, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Main phases
+    start [label="Start: Testing Request", shape=ellipse, style=filled, fillcolor=lightgreen];
+    phase1 [label="Phase 1: Test Strategy Design\n(20 min)\nAgent: code-analyzer", style=filled, fillcolor=lightblue];
+    phase2 [label="Phase 2: Unit Test Implementation\n(60 min)\nAgent: tester", style=filled, fillcolor=lightblue];
+    phase3 [label="Phase 3: Integration Test Creation\n(60 min)\nAgent: tester", style=filled, fillcolor=lightblue];
+    phase4 [label="Phase 4: E2E Test Setup\n(60 min)\nAgent: tester", style=filled, fillcolor=lightblue];
+    phase5 [label="Phase 5: Coverage Analysis & CI/CD\n(40 min)\nAgent: coder", style=filled, fillcolor=lightblue];
+    end [label="Complete: Testing Framework Ready", shape=ellipse, style=filled, fillcolor=lightcoral];
+
+    // Phase 1 details
+    p1_analyze [label="Analyze Codebase\nStructure"];
+    p1_frameworks [label="Select Testing\nFrameworks"];
+    p1_goals [label="Define Coverage\nGoals"];
+    p1_plan [label="Create Test Plan\nDocument"];
+    p1_store [label="Store Strategy\nin Memory"];
+
+    // Phase 2 details
+    p2_setup [label="Setup Testing\nFramework"];
+    p2_utils [label="Create Test\nUtilities"];
+    p2_unit [label="Write Unit Tests\n(Functions/Methods)"];
+    p2_edge [label="Test Edge Cases &\nError Handling"];
+    p2_verify [label="Verify >80%\nCoverage"];
+
+    // Phase 3 details
+    p3_identify [label="Identify Integration\nPoints"];
+    p3_testdb [label="Setup Test Database/\nMock Services"];
+    p3_api [label="Create API\nIntegration Tests"];
+    p3_services [label="Test Service Layer\nInteractions"];
+    p3_validate [label="Validate Data Flow"];
+
+    // Phase 4 details
+    p4_playwright [label="Setup Playwright/\nCypress"];
+    p4_pageobjects [label="Create Page Object\nModels"];
+    p4_journeys [label="Write Critical User\nJourneys"];
+    p4_auth [label="Test Authentication\nFlows"];
+    p4_visual [label="Visual Regression\nTests (optional)"];
+
+    // Phase 5 details
+    p5_coverage [label="Configure Coverage\nCollection"];
+    p5_reports [label="Generate Coverage\nReports"];
+    p5_gaps [label="Identify Untested\nCode Paths"];
+    p5_cicd [label="Setup CI/CD Pipeline\n(GitHub Actions)"];
+    p5_hooks [label="Create Pre-commit\nHooks"];
+    p5_thresholds [label="Set Coverage\nThresholds"];
+
+    // Quality gates
+    gate1 [label="Strategy Approved?", shape=diamond, style=filled, fillcolor=yellow];
+    gate2 [label="Unit Tests Pass?\nCoverage >80%?", shape=diamond, style=filled, fillcolor=yellow];
+    gate3 [label="Integration Tests\nPass?", shape=diamond, style=filled, fillcolor=yellow];
+    gate4 [label="E2E Tests Pass?", shape=diamond, style=filled, fillcolor=yellow];
+    gate5 [label="CI/CD Pipeline\nSuccessful?", shape=diamond, style=filled, fillcolor=yellow];
+
+    // Feedback loops
+    feedback1 [label="Revise Strategy", style=dashed];
+    feedback2 [label="Fix Unit Tests", style=dashed];
+    feedback3 [label="Fix Integration\nTests", style=dashed];
+    feedback4 [label="Fix E2E Tests", style=dashed];
+    feedback5 [label="Fix CI/CD Config", style=dashed];
+
+    // Memory and coordination
+    memory [label="Memory Storage\n- Test strategy\n- Coverage metrics\n- Test results", shape=cylinder, style=filled, fillcolor=lightyellow];
+    hooks [label="Claude-Flow Hooks\n- pre-task\n- post-edit\n- post-task\n- session-end", shape=note, style=filled, fillcolor=lightgray];
+
+    // Main flow
+    start -> phase1;
+
+    // Phase 1 flow
+    phase1 -> p1_analyze;
+    p1_analyze -> p1_frameworks;
+    p1_frameworks -> p1_goals;
+    p1_goals -> p1_plan;
+    p1_plan -> p1_store;
+    p1_store -> gate1;
+    gate1 -> phase2 [label="Yes"];
+    gate1 -> feedback1 [label="No"];
+    feedback1 -> p1_analyze;
+
+    // Phase 2 flow
+    phase2 -> p2_setup;
+    p2_setup -> p2_utils;
+    p2_utils -> p2_unit;
+    p2_unit -> p2_edge;
+    p2_edge -> p2_verify;
+    p2_verify -> gate2;
+    gate2 -> phase3 [label="Yes"];
+    gate2 -> feedback2 [label="No"];
+    feedback2 -> p2_unit;
+
+    // Phase 3 flow
+    phase3 -> p3_identify;
+    p3_identify -> p3_testdb;
+    p3_testdb -> p3_api;
+    p3_api -> p3_services;
+    p3_services -> p3_validate;
+    p3_validate -> gate3;
+    gate3 -> phase4 [label="Yes"];
+    gate3 -> feedback3 [label="No"];
+    feedback3 -> p3_api;
+
+    // Phase 4 flow
+    phase4 -> p4_playwright;
+    p4_playwright -> p4_pageobjects;
+    p4_pageobjects -> p4_journeys;
+    p4_journeys -> p4_auth;
+    p4_auth -> p4_visual;
+    p4_visual -> gate4;
+    gate4 -> phase5 [label="Yes"];
+    gate4 -> feedback4 [label="No"];
+    feedback4 -> p4_journeys;
+
+    // Phase 5 flow
+    phase5 -> p5_coverage;
+    p5_coverage -> p5_reports;
+    p5_reports -> p5_gaps;
+    p5_gaps -> p5_cicd;
+    p5_cicd -> p5_hooks;
+    p5_hooks -> p5_thresholds;
+    p5_thresholds -> gate5;
+    gate5 -> end [label="Yes"];
+    gate5 -> feedback5 [label="No"];
+    feedback5 -> p5_cicd;
+
+    // Memory connections
+    p1_store -> memory [style=dashed];
+    p2_verify -> memory [style=dashed];
+    p3_validate -> memory [style=dashed];
+    p4_visual -> memory [style=dashed];
+    p5_thresholds -> memory [style=dashed];
+
+    // Hooks connections
+    phase1 -> hooks [style=dotted];
+    phase2 -> hooks [style=dotted];
+    phase3 -> hooks [style=dotted];
+    phase4 -> hooks [style=dotted];
+    phase5 -> hooks [style=dotted];
+
+    // Subgraphs for organization
+    subgraph cluster_phases {
+        label = "5 Testing Framework Phases";
+        style = filled;
+        fillcolor = aliceblue;
+        phase1; phase2; phase3; phase4; phase5;
+    }
+
+    subgraph cluster_quality {
+        label = "Quality Gates";
+        style = filled;
+        fillcolor = lightyellow;
+        gate1; gate2; gate3; gate4; gate5;
+    }
+
+    subgraph cluster_coordination {
+        label = "Coordination & Memory";
+        style = filled;
+        fillcolor = lavender;
+        memory; hooks;
+    }
+}

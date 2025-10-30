@@ -1,0 +1,271 @@
+{
+  "version": "2.0.0",
+  "description": "Comprehensive hooks configuration for Claude Code plugin automation and integration",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "name": "pre-task-coordination",
+        "description": "Initialize agent coordination before task execution",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "pre-task",
+          "--description",
+          "${TOOL_NAME}: ${TOOL_DESCRIPTION}"
+        ],
+        "matcher": {
+          "toolNames": ["Task", "mcp__claude-flow__task_orchestrate", "mcp__ruv-swarm__task_orchestrate"]
+        },
+        "enabled": true,
+        "continueOnError": true
+      },
+      {
+        "name": "pre-edit-memory",
+        "description": "Store file context before editing",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "pre-edit",
+          "--file",
+          "${FILE_PATH}"
+        ],
+        "matcher": {
+          "toolNames": ["Edit", "Write", "MultiEdit"]
+        },
+        "enabled": true,
+        "continueOnError": true
+      },
+      {
+        "name": "pre-search-cache",
+        "description": "Check cache before expensive search operations",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "pre-search",
+          "--pattern",
+          "${PATTERN}"
+        ],
+        "matcher": {
+          "toolNames": ["Grep", "Glob"]
+        },
+        "enabled": false,
+        "continueOnError": true
+      }
+    ],
+    "PostToolUse": [
+      {
+        "name": "post-edit-formatting",
+        "description": "Auto-format code after editing and store in memory",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "post-edit",
+          "--file",
+          "${FILE_PATH}",
+          "--memory-key",
+          "swarm/${AGENT_ID}/edits"
+        ],
+        "matcher": {
+          "toolNames": ["Edit", "Write", "MultiEdit"]
+        },
+        "enabled": true,
+        "continueOnError": true
+      },
+      {
+        "name": "post-task-neural-training",
+        "description": "Train neural patterns from completed tasks",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "post-task",
+          "--task-id",
+          "${TASK_ID}",
+          "--train-patterns",
+          "true"
+        ],
+        "matcher": {
+          "toolNames": ["Task"]
+        },
+        "enabled": true,
+        "continueOnError": true
+      },
+      {
+        "name": "post-command-notify",
+        "description": "Send notifications after command execution",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "post-command",
+          "--command",
+          "${COMMAND}",
+          "--status",
+          "${STATUS}"
+        ],
+        "matcher": {
+          "toolNames": ["Bash"]
+        },
+        "enabled": false,
+        "continueOnError": true
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "name": "intent-analysis",
+        "description": "Analyze user intent before processing",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "intent-analyze",
+          "--prompt",
+          "${USER_PROMPT}"
+        ],
+        "enabled": false,
+        "continueOnError": true
+      }
+    ],
+    "SessionStart": [
+      {
+        "name": "session-restore",
+        "description": "Restore previous session state and memory",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "session-restore",
+          "--session-id",
+          "${SESSION_ID}"
+        ],
+        "enabled": true,
+        "continueOnError": true
+      },
+      {
+        "name": "swarm-init-auto",
+        "description": "Auto-initialize swarm based on project complexity",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "session-start",
+          "--auto-swarm",
+          "true"
+        ],
+        "enabled": false,
+        "continueOnError": true
+      }
+    ],
+    "SessionEnd": [
+      {
+        "name": "session-persist",
+        "description": "Persist session state and export metrics",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "session-end",
+          "--export-metrics",
+          "true",
+          "--persist-memory",
+          "true"
+        ],
+        "enabled": true,
+        "continueOnError": false
+      },
+      {
+        "name": "session-summary",
+        "description": "Generate session summary and learnings",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "session-summary",
+          "--output",
+          ".claude/.artifacts/session-summary.md"
+        ],
+        "enabled": true,
+        "continueOnError": true
+      }
+    ],
+    "Stop": [
+      {
+        "name": "graceful-shutdown",
+        "description": "Gracefully shutdown swarm and save state",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "graceful-shutdown",
+          "--save-state",
+          "true"
+        ],
+        "enabled": true,
+        "continueOnError": false
+      }
+    ],
+    "SubagentStop": [
+      {
+        "name": "subagent-cleanup",
+        "description": "Cleanup resources when subagent stops",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "subagent-cleanup",
+          "--agent-id",
+          "${AGENT_ID}"
+        ],
+        "enabled": true,
+        "continueOnError": true
+      }
+    ],
+    "PreCompact": [
+      {
+        "name": "pre-compact-memory",
+        "description": "Store important context before conversation compaction",
+        "command": "npx",
+        "args": [
+          "claude-flow@alpha",
+          "hooks",
+          "pre-compact",
+          "--export-memory",
+          "true"
+        ],
+        "enabled": true,
+        "continueOnError": false
+      }
+    ]
+  },
+  "globalSettings": {
+    "enableAllHooks": true,
+    "debugMode": false,
+    "logDirectory": ".claude/.artifacts/hooks-logs",
+    "environmentVariables": {
+      "CLAUDE_PLUGIN_ROOT": "${CLAUDE_PLUGIN_ROOT}",
+      "CLAUDE_FLOW_VERSION": "alpha",
+      "ENABLE_NEURAL_TRAINING": "true",
+      "ENABLE_MEMORY_PERSISTENCE": "true"
+    }
+  },
+  "hookCategories": {
+    "coordination": ["pre-task-coordination", "swarm-init-auto"],
+    "memory": ["pre-edit-memory", "session-restore", "session-persist", "pre-compact-memory"],
+    "automation": ["post-edit-formatting", "post-task-neural-training"],
+    "lifecycle": ["session-restore", "session-persist", "graceful-shutdown", "subagent-cleanup"],
+    "optimization": ["pre-search-cache", "post-task-neural-training"]
+  },
+  "notes": {
+    "required_mcp": "claude-flow@alpha",
+    "optional_features": [
+      "Neural pattern training (requires neural_train tool)",
+      "Memory persistence (requires memory tools)",
+      "Swarm auto-initialization (requires swarm tools)"
+    ],
+    "customization": "Edit enabled flags to customize hook behavior for your workflow"
+  }
+}
