@@ -57,7 +57,7 @@ This Claude Code plugin provides a complete, production-ready development system
 /plugin install ruv-sparc-three-loop-system@github
 
 # Or manually clone to a local directory
-git clone https://github.com/ruvnet/ruv-sparc-three-loop-system.git ~/claude-plugins/ruv-sparc-three-loop-system
+git clone https://github.com/DNYoussef/ruv-sparc-three-loop-system.git ~/claude-plugins/ruv-sparc-three-loop-system
 
 # Then in Claude Code:
 /plugin install ~/claude-plugins/ruv-sparc-three-loop-system
@@ -67,7 +67,7 @@ git clone https://github.com/ruvnet/ruv-sparc-three-loop-system.git ~/claude-plu
 
 ```bash
 # Clone the repository
-git clone https://github.com/ruvnet/ruv-sparc-three-loop-system.git
+git clone https://github.com/DNYoussef/ruv-sparc-three-loop-system.git
 cd ruv-sparc-three-loop-system
 
 # The plugin will be automatically detected by Claude Code
@@ -374,9 +374,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ruv-sparc-three-loop-system/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ruv-sparc-three-loop-system/discussions)
-- **Documentation**: [Wiki](https://github.com/yourusername/ruv-sparc-three-loop-system/wiki)
+- **Issues**: [GitHub Issues](https://github.com/DNYoussef/ruv-sparc-three-loop-system/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/DNYoussef/ruv-sparc-three-loop-system/discussions)
+- **Documentation**: [Wiki](https://github.com/DNYoussef/ruv-sparc-three-loop-system/wiki)
 
 ## 🗺️ Roadmap
 
@@ -402,4 +402,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **Version**: 2.0.0 | **Status**: Production Ready ✅ | **Last Updated**: 2025-10-30
 
-Made with ❤️ by [ruv](https://github.com/yourusername) | Powered by [Claude Code](https://claude.ai/code)
+Made with ❤️ by [ruv](https://github.com/DNYoussef) | Powered by [Claude Code](https://claude.ai/code)
