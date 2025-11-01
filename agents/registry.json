@@ -24,10 +24,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "fetch"
-        ],
-        "usage": "Use tavily/exa for web search, fetch for content retrieval, memory-mcp to store research findings with \"research\" intent"
+        "recommended": [],
+        "usage": "RESEARCH WORKFLOW:\n1. Search prior research: memory-mcp.vector_search(topic)\n2. Conduct new research\n3. Store findings: memory-mcp.memory_store(findings, {intent: \"research\", layer: \"long_term\"})\n4. Tag with keywords for future retrieval",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "coder": {
@@ -53,11 +87,44 @@
           "connascence-analyzer",
           "focused-changes"
         ],
-        "recommended": [
-          "filesystem",
-          "git"
-        ],
-        "usage": "Use connascence-analyzer before committing code, focused-changes to stay on task, memory-mcp to log implementation decisions with \"implementation\" intent"
+        "recommended": [],
+        "usage": "WORKFLOW:\n1. Start tracking: focused-changes.start_tracking(file)\n2. Write code\n3. Analyze quality: connascence-analyzer.analyze_file(file)\n4. Fix violations before committing\n5. Store implementation decisions: memory-mcp.memory_store(decision, {intent: \"implementation\"})\n6. Verify changes stayed focused: focused-changes.analyze_changes(newContent)",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "tester": {
@@ -84,7 +151,43 @@
           "focused-changes"
         ],
         "recommended": [],
-        "usage": "Use root_cause_analysis from focused-changes for test failures, connascence-analyzer for quality checks, memory-mcp to store test patterns with \"testing\" intent"
+        "usage": "WORKFLOW:\n1. If tests fail: focused-changes.root_cause_analysis(testResults)\n2. Analyze test code quality: connascence-analyzer.analyze_file(test_file)\n3. Store test patterns: memory-mcp.memory_store(pattern, {intent: \"testing\"})\n4. Track test coverage trends in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "reviewer": {
@@ -110,10 +213,44 @@
           "connascence-analyzer",
           "focused-changes"
         ],
-        "recommended": [
-          "git"
-        ],
-        "usage": "Run connascence-analyzer for quality checks, review change scope with focused-changes, memory-mcp to log review findings with \"analysis\" intent"
+        "recommended": [],
+        "usage": "WORKFLOW:\n1. Run quality check: connascence-analyzer.analyze_workspace(files)\n2. Check change scope: focused-changes.analyze_changes(changes)\n3. Store review findings: memory-mcp.memory_store(findings, {intent: \"analysis\"})\n4. Verify 0 violations before approval",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "planner": {
@@ -136,12 +273,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking",
-          "ToC",
-          "fetch"
-        ],
-        "usage": "Use sequential-thinking for complex planning, retrieve prior plans from memory-mcp with \"planning\" intent"
+        "recommended": [],
+        "usage": "PLANNING WORKFLOW:\n1. Retrieve prior plans: memory-mcp.vector_search(\"plan for...\")\n2. Create new plan\n3. Store plan: memory-mcp.memory_store(plan, {intent: \"planning\", layer: \"mid_term\"})\n4. Link to related specifications",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "analyst": {
@@ -167,7 +336,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Use connascence-analyzer for code analysis, memory-mcp to store metrics and patterns with \"analysis\" intent"
+        "usage": "Deep code analysis, pattern detection, store insights in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "backend-dev": {
@@ -192,7 +397,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Store database schemas, API contracts in memory-mcp, validate code with connascence-analyzer"
+        "usage": "Store API schemas, database designs in memory (long-term layer)",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "mobile-dev": {
@@ -216,7 +457,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Store platform-specific patterns, UI components in memory-mcp"
+        "usage": "Store platform-specific patterns, UI components in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "ml-developer": {
@@ -243,7 +520,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Store model architectures, hyperparameters, dataset metadata in memory-mcp"
+        "usage": "Store model architectures, hyperparameters in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "cicd-engineer": {
@@ -267,10 +580,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "git"
-        ],
-        "usage": "Store pipeline configs, deployment histories in memory-mcp"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "api-docs": {
@@ -290,13 +637,47 @@
       ],
       "mcp_servers": {
         "required": [
-          "memory-mcp"
+          "memory-mcp",
+          "ToC"
         ],
-        "recommended": [
-          "ToC",
-          "fetch"
-        ],
-        "usage": "Generate API docs, store OpenAPI schemas in memory-mcp"
+        "recommended": [],
+        "usage": "Generate API docs, use ToC for structure, store OpenAPI schemas in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "system-architect": {
@@ -319,11 +700,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking",
-          "ToC"
-        ],
-        "usage": "Store system design decisions in memory-mcp long-term layer"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "code-analyzer": {
@@ -344,10 +758,47 @@
       ],
       "mcp_servers": {
         "required": [
-          "memory-mcp"
+          "memory-mcp",
+          "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "Analyze code patterns, store metrics in memory for trend analysis",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "base-template-generator": {
@@ -368,10 +819,47 @@
       ],
       "mcp_servers": {
         "required": [
-          "memory-mcp"
+          "memory-mcp",
+          "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "Validate generated templates with connascence, store patterns in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "production-validator": {
@@ -397,7 +885,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Comprehensive validation with all quality tools, certification in memory-mcp"
+        "usage": "Comprehensive validation with all quality tools, certification in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "hierarchical-coordinator": {
@@ -420,7 +944,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Store swarm topology, coordination state in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "mesh-coordinator": {
@@ -443,7 +1003,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Store peer connections, distributed state in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "adaptive-coordinator": {
@@ -466,7 +1062,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Store topology adaptations, performance metrics in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "collective-intelligence-coordinator": {
@@ -490,7 +1122,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Centralized memory coordination across swarm agents"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "swarm-memory-manager": {
@@ -514,7 +1182,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Manage distributed memory, ensure consistency across swarm"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "task-orchestrator": {
@@ -538,7 +1242,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "smart-agent": {
@@ -561,7 +1301,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "swarm-init": {
@@ -584,7 +1360,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "performance-benchmarker": {
@@ -607,7 +1419,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Track benchmark results over time in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "memory-coordinator": {
@@ -631,7 +1479,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "byzantine-coordinator": {
@@ -654,7 +1538,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "raft-manager": {
@@ -677,7 +1597,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "gossip-coordinator": {
@@ -700,7 +1656,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "crdt-synchronizer": {
@@ -723,7 +1715,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "quorum-manager": {
@@ -746,7 +1774,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "security-manager": {
@@ -769,7 +1833,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "pr-manager": {
@@ -791,11 +1891,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "git",
-          "connascence-analyzer"
-        ],
-        "usage": "Analyze PR changes with connascence-analyzer, track PR lifecycle in memory-mcp"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "code-review-swarm": {
@@ -820,10 +1953,44 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "git"
-        ],
-        "usage": "Coordinate review findings with connascence-analyzer, memory-mcp for pattern learning"
+        "recommended": [],
+        "usage": "Coordinate review findings, learn patterns from past reviews",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "issue-tracker": {
@@ -846,7 +2013,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Track issue state and progress in memory-mcp with \"planning\" intent"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "release-manager": {
@@ -869,10 +2072,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "git"
-        ],
-        "usage": "Store release notes, deployment history in memory-mcp long-term layer"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "workflow-automation": {
@@ -895,7 +2132,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Track workflow executions, pipeline configs in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "project-board-sync": {
@@ -918,7 +2191,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Sync project state across platforms via memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "repo-architect": {
@@ -940,11 +2249,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "git",
-          "ToC"
-        ],
-        "usage": "Store architecture decisions in memory-mcp long-term layer"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "multi-repo-swarm": {
@@ -966,10 +2308,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "git"
-        ],
-        "usage": "Coordinate across repositories with memory-mcp shared state"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "swarm-pr": {
@@ -992,7 +2368,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "swarm-issue": {
@@ -1015,7 +2427,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "tdd-london-swarm": {
@@ -1038,7 +2486,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "theater-detection-audit": {
@@ -1063,7 +2547,43 @@
           "connascence-analyzer"
         ],
         "recommended": [],
-        "usage": "Detect theater code with connascence-analyzer, log findings in memory-mcp"
+        "usage": "Detect theater code with connascence-analyzer, log findings in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "functionality-audit": {
@@ -1084,12 +2604,47 @@
       "mcp_servers": {
         "required": [
           "memory-mcp",
-          "connascence-analyzer"
-        ],
-        "recommended": [
+          "connascence-analyzer",
           "focused-changes"
         ],
-        "usage": "Validate functionality with e2b sandboxes, track audit results in memory-mcp"
+        "recommended": [],
+        "usage": "Validate functionality, run connascence checks, store audit results in memory",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "style-audit": {
@@ -1112,7 +2667,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "sparc-coord": {
@@ -1134,11 +2725,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking",
-          "ToC"
-        ],
-        "usage": "Orchestrate SPARC phases with memory-mcp tracking each phase"
+        "recommended": [],
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "specification": {
@@ -1160,12 +2784,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking",
-          "ToC",
-          "fetch"
-        ],
-        "usage": "Store specifications in memory-mcp long-term layer with sparc_phase: specification"
+        "recommended": [],
+        "usage": "Store specifications in memory long-term layer with sparc_phase: \"specification\"",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "pseudocode": {
@@ -1186,10 +2842,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking"
-        ],
-        "usage": "Store pseudocode in memory-mcp mid-term layer with sparc_phase: pseudocode"
+        "recommended": [],
+        "usage": "Store pseudocode in memory mid-term layer with sparc_phase: \"pseudocode\"",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "architecture": {
@@ -1210,11 +2900,44 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "sequential-thinking",
-          "ToC"
-        ],
-        "usage": "Store architecture decisions in memory-mcp long-term layer with sparc_phase: architecture"
+        "recommended": [],
+        "usage": "Store architecture decisions in memory long-term layer with sparc_phase: \"architecture\"",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "refinement": {
@@ -1238,10 +2961,44 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "focused-changes"
-        ],
-        "usage": "Use connascence-analyzer for refinement validation, memory-mcp with sparc_phase: refinement"
+        "recommended": [],
+        "usage": "Use connascence-analyzer for refinement validation, store in memory with sparc_phase: \"refinement\"",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "sparc-coder": {
@@ -1261,13 +3018,47 @@
       "mcp_servers": {
         "required": [
           "memory-mcp",
-          "connascence-analyzer"
+          "connascence-analyzer",
+          "focused-changes"
         ],
-        "recommended": [
-          "focused-changes",
-          "git"
-        ],
-        "usage": "Implement with quality checks via connascence-analyzer, track in memory-mcp with sparc_phase: code"
+        "recommended": [],
+        "usage": "SPARC WORKFLOW:\n1. Retrieve spec from memory: memory-mcp.vector_search(\"specification for...\")\n2. Start tracking: focused-changes.start_tracking(file)\n3. Implement code\n4. Validate quality: connascence-analyzer.analyze_file(file)\n5. Store implementation: memory-mcp.memory_store(code, {sparc_phase: \"code\"})",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "debugger": {
@@ -1292,7 +3083,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "perf-analyzer": {
@@ -1315,7 +3142,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "Store performance metrics, bottleneck analysis in memory-mcp"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "optimizer": {
@@ -1338,7 +3201,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "migration-planner": {
@@ -1361,7 +3260,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "skill-forge": {
@@ -1386,7 +3321,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "intent-analyzer": {
@@ -1410,7 +3381,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "prompt-architect": {
@@ -1434,7 +3441,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "micro-skill-creator": {
@@ -1457,7 +3500,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "cascade-orchestrator": {
@@ -1481,7 +3560,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "agent-creator": {
@@ -1505,7 +3620,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "skill-builder": {
@@ -1528,7 +3679,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "slash-command-encoder": {
@@ -1551,7 +3738,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "queen-coordinator": {
@@ -1576,7 +3799,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "topology-optimizer": {
@@ -1599,7 +3858,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "consensus-builder": {
@@ -1623,7 +3918,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "pre-mortem-analyst": {
@@ -1647,7 +3978,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "gemini-analyst": {
@@ -1670,7 +4037,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "failure-pattern-researcher": {
@@ -1694,7 +4097,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "graph-analyst": {
@@ -1717,7 +4156,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "fix-strategy-planner": {
@@ -1741,7 +4216,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "sandbox-validator": {
@@ -1764,7 +4275,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "synthesis-coordinator": {
@@ -1788,7 +4335,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "cost-benefit-analyzer": {
@@ -1811,7 +4394,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "defense-architect": {
@@ -1834,7 +4453,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "root-cause-detective": {
@@ -1859,7 +4514,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "integration-checker": {
@@ -1882,7 +4573,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "connascence-detector": {
@@ -1905,7 +4632,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "test-validity-auditor": {
@@ -1928,7 +4691,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "dependency-conflict-detector": {
@@ -1951,7 +4750,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "differential-validator": {
@@ -1974,7 +4809,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "github-analyst": {
@@ -1998,7 +4869,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "error-message-analyzer": {
@@ -2022,7 +4929,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "code-context-investigator": {
@@ -2045,7 +4988,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "fix-implementation-specialist": {
@@ -2069,7 +5048,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "fix-approval-coordinator": {
@@ -2092,7 +5107,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "failure-categorizer": {
@@ -2115,7 +5166,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "mece-decomposer": {
@@ -2139,7 +5226,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "web-researcher": {
@@ -2162,7 +5285,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     },
     "evidence-synthesizer": {
@@ -2186,7 +5345,43 @@
           "memory-mcp"
         ],
         "recommended": [],
-        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+        "usage": "All agents have memory-mcp access with WHO/WHEN/PROJECT/WHY tagging",
+        "installed_servers": {
+          "memory-mcp": {
+            "description": "Persistent cross-session memory with triple-layer retention (24h/7d/30d+)",
+            "tools": [
+              "vector_search",
+              "memory_store"
+            ],
+            "usage": "Store and retrieve information with WHO/WHEN/PROJECT/WHY tagging"
+          },
+          "connascence-analyzer": {
+            "description": "Code quality analysis (9 connascence types, 7+ violations, NASA compliance)",
+            "tools": [
+              "analyze_file",
+              "analyze_workspace",
+              "health_check"
+            ],
+            "usage": "Run before committing code to detect God Objects, Parameter Bombs, complexity issues"
+          },
+          "focused-changes": {
+            "description": "Track file changes, ensure focused scope, build error trees",
+            "tools": [
+              "start_tracking",
+              "analyze_changes",
+              "root_cause_analysis"
+            ],
+            "usage": "Track changes to stay on task, analyze test failures for root causes"
+          },
+          "ToC": {
+            "description": "Generate table of contents for documentation",
+            "tools": [
+              "generate_toc",
+              "get_file_description"
+            ],
+            "usage": "Generate hierarchical TOC for Python, Markdown, JSON, YAML files"
+          }
+        }
       }
     }
   },
@@ -2368,10 +5563,18 @@
     "evidence_based_optimization": true
   },
   "mcp_integration": {
-    "version": "3.0.3",
+    "version": "3.0.4",
     "last_updated": "2025-11-01",
-    "description": "All agents now use ONLY free MCP servers (no payment, API keys, or accounts required)",
-    "free_servers_only": true,
-    "marketplace_guide": "docs/MCP-MARKETPLACE-GUIDE.md"
+    "description": "All agents use ONLY installed MCP servers (4 total)",
+    "installed_servers_only": true,
+    "installed_servers": [
+      "memory-mcp",
+      "connascence-analyzer",
+      "focused-changes",
+      "ToC"
+    ],
+    "removed_all_non_existing": true,
+    "marketplace_guide": "docs/MCP-MARKETPLACE-GUIDE.md",
+    "installed_guide": "docs/INSTALLED-MCP-SERVERS.md"
   }
 }

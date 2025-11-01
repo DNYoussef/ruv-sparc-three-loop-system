@@ -7,6 +7,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.4] - 2025-11-01
+
+### Added
+
+#### FREE MCP SERVERS - INSTALLED & CONFIGURED
+
+**MAJOR UPDATE**: Installed 11 FREE MCP servers (no API keys, no payment required) and configured all 90 agents with specific usage instructions.
+
+**Installed Servers** (11 total):
+
+**Local Servers** (4):
+1. **connascence-analyzer** - Local Python server for code quality analysis
+2. **memory-mcp** - Local Python server for persistent cross-session memory (24h/7d/30d+)
+3. **focused-changes** - Local Node.js server for file change tracking
+4. **ToC** - Local Node.js server for documentation table of contents
+
+**Free Anthropic/Microsoft Servers** (7):
+5. **markitdown** (Microsoft) - Convert 29+ file formats to Markdown
+6. **playwright** (Microsoft) - Browser automation for web testing
+7. **sequential-thinking** (Anthropic) - Dynamic problem-solving through thought sequences
+8. **fetch** (Anthropic) - Web content fetching and conversion
+9. **filesystem** (Anthropic) - Secure file operations with access controls
+10. **git** (Anthropic) - Git repository operations (local only, no API required)
+11. **time** (Anthropic) - Time and timezone conversion
+
+**Configuration Updates**:
+- All servers added to `C:\Users\17175\.claude.json` via `claude mcp add` commands
+- Agent registry (`agents/registry.json`) updated for all 90 agents
+- Each agent now has specific MCP usage instructions
+- All references to non-existing servers removed
+
+**Documentation**:
+- `docs/MCP-INSTALLATION-PLAN.md` - Comprehensive installation plan with research findings
+- `docs/MCP-INSTALLATION-COMPLETE.md` - Complete installation summary with results
+- `docs/INSTALLED-MCP-SERVERS.md` - Updated to reflect 11 installed servers
+- `docs/MCP-MARKETPLACE-GUIDE.md` - Updated to show only free servers
+
+**Excluded Servers** (Require Payment/API Keys):
+- ~~Context7~~ (requires Upstash API key)
+- ~~GitHub MCP~~ (requires GITHUB_TOKEN - use `git` server instead)
+- ~~HuggingFace~~, ~~DeepWiki~~, ~~Ref~~ (packages don't exist)
+
+#### Agent Registry Enhancements
+
+- **90 agents updated** with MCP server assignments
+- Each agent has `mcp_servers.required` array with only installed servers
+- Each agent has specific `mcp_servers.usage` workflow instructions
+- Added `installed_servers` metadata object
+- Removed all `recommended` arrays (empty now - only installed servers)
+
+**Agent-to-MCP-Server Mapping**:
+- **Code Quality Agents** (14): memory-mcp + connascence-analyzer + focused-changes
+- **Research & Planning** (23+): memory-mcp + sequential-thinking + fetch
+- **Documentation** (5+): memory-mcp + ToC + markitdown
+- **Testing** (3+): memory-mcp + connascence-analyzer + focused-changes + playwright
+- **GitHub/Repository** (9+): memory-mcp + git
+- **ALL Agents** (90): memory-mcp (global access)
+
+### Changed
+
+#### MCP Integration Philosophy
+
+- **FREE ONLY**: All MCP servers are 100% free (no payment, no API keys, no account registration)
+- **LOCAL FIRST**: Prefer local processing over cloud services
+- **PRIVACY**: No data sent to third-party services
+- **SIMPLICITY**: Simple installation via `claude mcp add` commands
+- **COMPREHENSIVE**: 11 servers covering all major use cases
+
+---
+
 ## [3.0.3] - 2025-11-01
 
 ### Changed
