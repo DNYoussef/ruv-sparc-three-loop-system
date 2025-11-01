@@ -94,10 +94,37 @@ Full documentation of how all layers connect:
 - **Program-of-Thought**: Step-by-step explicit reasoning with show-your-work
 - **Plan-and-Solve**: Clear phase structure with validation gates
 
-### 6. Three MCP Server Integrations
+### 6. Five MCP Server Integrations
 
-- **claude-flow** (required): Basic agent coordination and swarm management
-- **ruv-swarm** (optional): Enhanced coordination, neural features, DAA autonomous agents
+**Required**:
+- **claude-flow**: Basic agent coordination and swarm management
+
+**Optional (Enhanced)**:
+- **ruv-swarm**: Enhanced coordination, neural features, DAA autonomous agents
+- **connascence-analyzer** [NEW]: Code quality analysis for 14 code quality agents
+- **memory-mcp** [NEW]: Persistent memory with automatic tagging for ALL 37 agents
+- **flow-nexus**: Cloud-based orchestration with 70+ tools
+
+**Production-Ready MCP Systems**:
+
+**Connascence Safety Analyzer** - [https://github.com/DNYoussef/connascence-safety-analyzer](https://github.com/DNYoussef/connascence-safety-analyzer)
+- 7+ violation types (God Objects, Parameter Bombs, Complexity, Deep Nesting, etc.)
+- NASA compliance checking (Power of 10 Rules)
+- 0.018s analysis performance
+- Access: 14 code quality agents only (coder, reviewer, tester, etc.)
+- MCP Integration: [docs/MCP-INTEGRATION.md](https://github.com/DNYoussef/connascence-safety-analyzer/blob/main/docs/MCP-INTEGRATION.md)
+
+**Memory MCP Triple System** - [https://github.com/DNYoussef/memory-mcp-triple-system](https://github.com/DNYoussef/memory-mcp-triple-system)
+- Triple-layer retention (24h/7d/30d+)
+- Mode-aware context adaptation (Execution/Planning/Brainstorming)
+- Automatic tagging protocol (WHO/WHEN/PROJECT/WHY)
+- 384-dimensional vector embeddings with HNSW indexing
+- Access: ALL 37 agents (global)
+- MCP Integration: [docs/MCP-INTEGRATION.md](https://github.com/DNYoussef/memory-mcp-triple-system/blob/main/docs/MCP-INTEGRATION.md)
+
+**Tagging Protocol Implementation**: See [`hooks/12fa/memory-mcp-tagging-protocol.js`](hooks/12fa/memory-mcp-tagging-protocol.js) for automatic metadata injection
+
+**Agent Access Control Matrix**: See [`hooks/12fa/agent-mcp-access-control.js`](hooks/12fa/agent-mcp-access-control.js) for agent-specific MCP permissions
 - **flow-nexus** (optional): Cloud sandboxes, distributed neural training, templates, GitHub integration
 
 ## 🎨 Example Application: Three-Loop Development System
