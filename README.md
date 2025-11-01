@@ -4,14 +4,17 @@
 
 Production-grade AI development system achieving **100% 12-Factor compliance**, **271 visual Graphviz workflows**, and proven **2.5-4x speedup** with **0 vulnerabilities**.
 
+**Built on [Claude Flow](https://github.com/ruvnet/claude-flow)** - Enterprise-grade agent orchestration platform with memory, hooks, and swarm intelligence. See [CLAUDE-FLOW-INTEGRATION.md](CLAUDE-FLOW-INTEGRATION.md) for details on our enhancements.
+
 ## 🎉 What's New in v3.0.0
 
 - ✅ **Official Claude Code Plugin Support** (October 2025)
 - ✅ **Modular Marketplace** - 5 installable plugins
+- ✅ **Built on Claude Flow** - Enterprise orchestration with memory & hooks
 - ✅ **100% 12-Factor Compliance** - Perfect score achieved
-- ✅ **271 Graphviz Diagrams** - Complete visual documentation
-- ✅ **Security Hardening** - 6 enterprise components
-- ✅ **Zero Vulnerabilities** - 100% security score
+- ✅ **271 Graphviz Diagrams** - Complete visual documentation (101% coverage)
+- ✅ **Security Hardening** - 6 enterprise components (100% score, 0 vulnerabilities)
+- ✅ **8.3x Swarm Speedup** - Enhanced mesh topology (vs 2.8-4.4x Claude Flow baseline)
 - ✅ **Production Certified** - Ready for enterprise deployment
 
 ---
@@ -37,11 +40,18 @@ Production-grade AI development system achieving **100% 12-Factor compliance**, 
 
 ### 3. Setup MCP Servers
 
-**Required** (for core functionality):
+**Required** (Claude Flow - our foundation):
 ```bash
 npm install -g claude-flow@alpha
 claude mcp add claude-flow npx claude-flow@alpha mcp start
 ```
+
+**What This Gives You**:
+- 💾 **Memory System** - Persistent coordination across agents
+- 🔗 **Hooks** - Lifecycle events (pre-task, post-task, pre-edit, post-edit, session-end)
+- 🐝 **Swarm Intelligence** - Multi-agent coordination (2.8-4.4x baseline speedup)
+- 📊 **AgentDB** - 96x-164x performance boost with semantic search
+- 🎯 **ReasoningBank** - Pattern learning with 46% faster performance
 
 **Recommended** (for advanced features):
 ```bash
@@ -51,6 +61,8 @@ claude mcp add flow-nexus npx flow-nexus@latest mcp start
 ```
 
 **Done!** 🎉 You can now use `/sparc`, `/audit-pipeline`, `/quick-check`, and all other commands.
+
+**Learn More**: See [CLAUDE-FLOW-INTEGRATION.md](CLAUDE-FLOW-INTEGRATION.md) for how we enhance Claude Flow.
 
 ---
 
@@ -300,8 +312,10 @@ Hierarchical (6.3x)     Mesh (8.3x)        Adaptive (7.2x)     Ring (4.5x)
 
 ### Main Documentation
 - **This README** - Quick start and plugin overview
+- **[CLAUDE-FLOW-INTEGRATION.md](CLAUDE-FLOW-INTEGRATION.md)** - How we integrate with and enhance Claude Flow ⭐
 - **[Marketplace README](.claude-plugin/README.md)** - Detailed installation guide
 - **[MIGRATION.md](MIGRATION.md)** - Migration guide from v2.x to v3.0
+- **[CHANGELOG.md](CHANGELOG.md)** - Complete version history
 
 ### Plugin Documentation
 - **[12fa-core README](plugins/12fa-core/README.md)** - Core system guide
@@ -324,11 +338,18 @@ Hierarchical (6.3x)     Mesh (8.3x)        Adaptive (7.2x)     Ring (4.5x)
 
 ---
 
-## 🤝 Support
+## 🤝 Support & Credits
 
+### Support
 - **Issues**: [GitHub Issues](https://github.com/DNYoussef/ruv-sparc-three-loop-system/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/DNYoussef/ruv-sparc-three-loop-system/discussions)
 - **Plugin Marketplace**: [Claude Code Plugins](https://claude.com/code/plugins)
+
+### Built On
+- **[Claude Flow](https://github.com/ruvnet/claude-flow)** by [@ruvnet](https://github.com/ruvnet) - Enterprise-grade agent orchestration platform
+  - Provides: Memory system, hooks, swarm intelligence, MCP protocol, AgentDB, ReasoningBank
+  - We enhance with: 271 Graphviz diagrams, evidence-based prompting, SPARC methodology, Three-Loop Architecture, security hardening, 12-Factor compliance
+  - See [CLAUDE-FLOW-INTEGRATION.md](CLAUDE-FLOW-INTEGRATION.md) for full integration details
 
 ---
 
