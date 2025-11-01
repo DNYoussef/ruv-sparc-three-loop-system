@@ -1,0 +1,146 @@
+{
+  "id": "12fa-three-loop",
+  "name": "12-Factor Agents - Three-Loop System",
+  "version": "3.0.0",
+  "description": "Advanced Three-Loop Architecture: Loop 1 (Research-Driven Planning with 5x pre-mortem), Loop 2 (Parallel Swarm Implementation), Loop 3 (CI/CD Intelligent Recovery)",
+  "author": "DNYoussef",
+  "license": "MIT",
+  "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "keywords": ["three-loop", "research", "swarm", "cicd", "recovery", "architecture"],
+
+  "skills": {
+    "research-driven-planning": {
+      "path": "../../.claude/skills/research-driven-planning",
+      "description": "Loop 1: Research-driven requirements analysis with 5x pre-mortem cycles",
+      "category": "planning"
+    },
+    "parallel-swarm-implementation": {
+      "path": "../../.claude/skills/parallel-swarm-implementation",
+      "description": "Loop 2: Dynamic agent swarm execution with 6.75x speedup",
+      "category": "implementation"
+    },
+    "cicd-intelligent-recovery": {
+      "path": "../../.claude/skills/cicd-intelligent-recovery",
+      "description": "Loop 3: CI/CD automation with intelligent failure recovery",
+      "category": "quality"
+    },
+    "multi-model": {
+      "path": "../../.claude/skills/multi-model",
+      "description": "Multi-model routing (Gemini search + Codex execution)",
+      "category": "coordination"
+    },
+    "cascade-orchestrator": {
+      "path": "../../.claude/skills/cascade-orchestrator",
+      "description": "Sophisticated workflow cascades with sequential/parallel/conditional execution",
+      "category": "orchestration"
+    },
+    "feature-dev-complete": {
+      "path": "../../.claude/skills/feature-dev-complete",
+      "description": "Complete feature development lifecycle from research to deployment",
+      "category": "development"
+    }
+  },
+
+  "commands": {
+    "/sparc:integration": {
+      "path": "../../.claude/commands/sparc/integration.md",
+      "description": "System integration and merging"
+    },
+    "/sparc:devops": {
+      "path": "../../.claude/commands/sparc/devops.md",
+      "description": "DevOps automation and deployment"
+    },
+    "/development": {
+      "path": "../../.claude/commands/development-commands/development.md",
+      "description": "Complete development workflow (all 3 loops)"
+    },
+    "/build-feature": {
+      "path": "../../.claude/commands/development-commands/build-feature.md",
+      "description": "Build feature with research, implementation, and recovery"
+    },
+    "/gemini-search": {
+      "path": "../../.claude/commands/development-commands/gemini-search.md",
+      "description": "Gemini-powered research and pattern discovery"
+    },
+    "/codex-auto": {
+      "path": "../../.claude/commands/development-commands/codex-auto.md",
+      "description": "Codex-powered auto-implementation with sandbox testing"
+    }
+  },
+
+  "agents": [
+    "task-orchestrator",
+    "migration-planner",
+    "cicd-engineer",
+    "performance-benchmarker",
+    "gemini-search-agent",
+    "codex-auto-agent"
+  ],
+
+  "dependencies": {
+    "plugins": ["12fa-core"],
+    "mcp_servers": {
+      "claude-flow": {
+        "version": ">=1.0.0-alpha",
+        "required": true,
+        "install": "npm install -g claude-flow@alpha",
+        "add": "claude mcp add claude-flow npx claude-flow@alpha mcp start"
+      }
+    },
+    "optional_mcp": {
+      "flow-nexus": {
+        "version": ">=1.0.0",
+        "required": false,
+        "install": "npm install -g flow-nexus@latest",
+        "add": "claude mcp add flow-nexus npx flow-nexus@latest mcp start",
+        "description": "Enhanced cloud features for neural training and distributed execution"
+      }
+    },
+    "tools": {
+      "git": {"required": true},
+      "npm": {"required": true},
+      "node": {"version": ">=18.0.0", "required": true}
+    }
+  },
+
+  "configuration": {
+    "loop_1_pre_mortem_cycles": 5,
+    "loop_2_max_parallel_agents": 10,
+    "loop_3_recovery_attempts": 3,
+    "planning_accuracy_target": ">97%",
+    "parallel_speedup_target": "6.75x",
+    "recovery_rate_target": "100%"
+  },
+
+  "metrics": {
+    "planning_accuracy": ">97%",
+    "parallel_speedup": "6.75x",
+    "recovery_rate": "100%",
+    "failure_confidence": "<3%"
+  },
+
+  "three_loop_architecture": {
+    "loop_1": {
+      "name": "Research-Driven Planning",
+      "description": "Iterative risk mitigation through 5x pre-mortem cycles with multi-agent consensus",
+      "output": "Validated, risk-mitigated plans with evidence-based technology selection",
+      "agents": ["researcher", "planner", "risk-analyzer"],
+      "confidence_target": "<3% failure"
+    },
+    "loop_2": {
+      "name": "Parallel Swarm Implementation",
+      "description": "Dynamic compilation of plans into agent+skill execution graphs",
+      "output": "Implemented features with theater detection and reality validation",
+      "agents": ["coder", "tester", "reviewer", "worker-specialist"],
+      "speedup_target": "6.75x"
+    },
+    "loop_3": {
+      "name": "CI/CD Intelligent Recovery",
+      "description": "Automated failure recovery with root cause analysis and comprehensive validation",
+      "output": "100% test success through automated repair",
+      "agents": ["cicd-engineer", "debugger", "performance-benchmarker"],
+      "recovery_target": "100%"
+    }
+  }
+}

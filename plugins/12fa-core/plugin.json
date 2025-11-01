@@ -1,0 +1,178 @@
+{
+  "id": "12fa-core",
+  "name": "12-Factor Agents - Core",
+  "version": "3.0.0",
+  "description": "Essential 12-Factor Agent tools with SPARC methodology, core agents, audit pipeline, and quality gates",
+  "author": "DNYoussef",
+  "license": "MIT",
+  "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "keywords": ["12-factor", "sparc", "tdd", "quality", "core"],
+
+  "skills": {
+    "agent-creator": {
+      "path": "../../.claude/skills/agent-creator",
+      "description": "4-phase SOP methodology for creating specialized AI agents",
+      "category": "core"
+    },
+    "sparc-methodology": {
+      "path": "../../.claude/skills/sparc-methodology",
+      "description": "Complete 5-phase SPARC development methodology",
+      "category": "methodology"
+    },
+    "functionality-audit": {
+      "path": "../../.claude/skills/functionality-audit",
+      "description": "Sandbox-based reality validation with systematic debugging",
+      "category": "quality"
+    },
+    "theater-detection-audit": {
+      "path": "../../.claude/skills/theater-detection-audit",
+      "description": "6-agent Byzantine consensus for fake implementation detection",
+      "category": "quality"
+    },
+    "production-readiness": {
+      "path": "../../.claude/skills/production-readiness",
+      "description": "Complete audit pipeline with deployment checklist",
+      "category": "quality"
+    },
+    "audit-pipeline": {
+      "path": "../../.claude/skills/audit-pipeline",
+      "description": "3-stage quality gates (theater + functionality + style)",
+      "category": "quality"
+    },
+    "code-review-assistant": {
+      "path": "../../.claude/skills/code-review-assistant",
+      "description": "5-agent review swarm (security, performance, style, tests, docs)",
+      "category": "quality"
+    },
+    "quick-quality-check": {
+      "path": "../../.claude/skills/quick-quality-check",
+      "description": "Lightning-fast parallel validation checks",
+      "category": "quality"
+    },
+    "smart-bug-fix": {
+      "path": "../../.claude/skills/smart-bug-fix",
+      "description": "Systematic debugging with root cause analysis",
+      "category": "development"
+    },
+    "prompt-architect": {
+      "path": "../../.claude/skills/prompt-architect",
+      "description": "Evidence-based prompting with self-consistency patterns",
+      "category": "core"
+    }
+  },
+
+  "commands": {
+    "/sparc": {
+      "path": "../../.claude/commands/sparc.md",
+      "description": "Execute complete 5-phase SPARC methodology"
+    },
+    "/sparc:code": {
+      "path": "../../.claude/commands/sparc/code.md",
+      "description": "Auto-coder with TDD integration"
+    },
+    "/sparc:spec-pseudocode": {
+      "path": "../../.claude/commands/sparc/spec-pseudocode.md",
+      "description": "Specification and pseudocode generation"
+    },
+    "/sparc:debug": {
+      "path": "../../.claude/commands/sparc/debug.md",
+      "description": "Systematic debugging workflow"
+    },
+    "/audit-pipeline": {
+      "path": "../../.claude/commands/audit-commands/audit-pipeline.md",
+      "description": "Complete audit pipeline orchestration"
+    },
+    "/theater-detect": {
+      "path": "../../.claude/commands/audit-commands/theater-detect.md",
+      "description": "Theater detection with 6-agent consensus"
+    },
+    "/functionality-audit": {
+      "path": "../../.claude/commands/audit-commands/functionality-audit.md",
+      "description": "Functionality audit with sandbox testing"
+    },
+    "/quick-check": {
+      "path": "../../.claude/commands/essential-commands/quick-check.md",
+      "description": "Lightning-fast quality check"
+    },
+    "/fix-bug": {
+      "path": "../../.claude/commands/essential-commands/fix-bug.md",
+      "description": "Smart bug fix with systematic debugging"
+    },
+    "/review-pr": {
+      "path": "../../.claude/commands/essential-commands/review-pr.md",
+      "description": "Comprehensive PR review with 5-agent swarm"
+    },
+    "/deploy-check": {
+      "path": "../../.claude/commands/essential-commands/deploy-check.md",
+      "description": "Production readiness validation"
+    }
+  },
+
+  "hooks": {
+    "pre-task": {
+      "path": "../../hooks/12fa/pre-task.hook.js",
+      "description": "Pre-task preparation and validation"
+    },
+    "post-task": {
+      "path": "../../hooks/12fa/post-task.hook.js",
+      "description": "Post-task cleanup and reporting"
+    },
+    "pre-edit": {
+      "path": "../../hooks/12fa/pre-edit.hook.js",
+      "description": "Pre-edit file operation hooks"
+    },
+    "post-edit": {
+      "path": "../../hooks/12fa/post-edit.hook.js",
+      "description": "Post-edit formatting and validation"
+    },
+    "session-end": {
+      "path": "../../hooks/12fa/session-end.hook.js",
+      "description": "Session end cleanup and persistence"
+    }
+  },
+
+  "agents": [
+    "coder",
+    "reviewer",
+    "tester",
+    "planner",
+    "researcher",
+    "sparc-coord",
+    "sparc-coder",
+    "specification",
+    "pseudocode",
+    "architecture",
+    "refinement",
+    "production-validator"
+  ],
+
+  "dependencies": {
+    "mcp_servers": {
+      "claude-flow": {
+        "version": ">=1.0.0-alpha",
+        "required": true,
+        "install": "npm install -g claude-flow@alpha",
+        "add": "claude mcp add claude-flow npx claude-flow@alpha mcp start"
+      }
+    },
+    "tools": {
+      "git": {"required": true},
+      "npm": {"required": true},
+      "node": {"version": ">=18.0.0", "required": true}
+    }
+  },
+
+  "configuration": {
+    "12fa_compliance": "100%",
+    "test_coverage_target": ">85%",
+    "security_score_target": "100%"
+  },
+
+  "metrics": {
+    "speed_improvement": "2.5-4x",
+    "failure_rate": "<3%",
+    "compliance": "100%",
+    "test_coverage": ">85%"
+  }
+}
