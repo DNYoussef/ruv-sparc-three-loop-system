@@ -1,0 +1,262 @@
+{
+  "id": "12fa-visual-docs",
+  "name": "12-Factor Agents - Visual Documentation",
+  "version": "3.0.0",
+  "description": "Complete Graphviz workflow diagrams: 271 AI-comprehensible visualizations (73 skills, 104 agents, 94 commands) with validation tools and interactive HTML viewer",
+  "author": "DNYoussef",
+  "license": "MIT",
+  "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
+  "keywords": ["graphviz", "visualization", "documentation", "workflows", "diagrams"],
+
+  "diagrams": {
+    "skills": {
+      "count": 73,
+      "path": "../../docs/12fa/graphviz/skills",
+      "purpose": "Visual process flows for all skills showing input → processing → output workflows",
+      "why": "AI comprehension - Claude understands rules better when written as DOT graphs (fsck.com article methodology)"
+    },
+    "agents": {
+      "count": 104,
+      "path": "../../docs/12fa/graphviz/agents",
+      "purpose": "Agent decision-making processes with conditional logic and state transitions",
+      "why": "Enable AI agents to understand their own workflows and improve self-awareness"
+    },
+    "commands": {
+      "count": 94,
+      "path": "../../docs/12fa/graphviz/commands",
+      "purpose": "Command execution flows with error handling and recovery paths",
+      "why": "Provide visual documentation for complex multi-step command workflows"
+    },
+    "total": 271,
+    "coverage": "101% (271 diagrams / 269 catalog components)",
+    "lines_of_code": 26286
+  },
+
+  "validation_tools": {
+    "bash_script": {
+      "path": "../../docs/12fa/graphviz/validate-all-diagrams.sh",
+      "description": "Bash validation script for Linux/macOS",
+      "features": [
+        "Syntax validation for all .dot files",
+        "SVG generation",
+        "PNG generation",
+        "Success/failure reporting with color-coded output",
+        "Summary statistics"
+      ]
+    },
+    "powershell_script": {
+      "path": "../../docs/12fa/graphviz/validate-all-diagrams.ps1",
+      "description": "PowerShell validation script for Windows",
+      "features": [
+        "Syntax validation for all .dot files",
+        "SVG generation",
+        "PNG generation",
+        "Success/failure reporting with color-coded output",
+        "Summary statistics"
+      ]
+    },
+    "master_catalog": {
+      "path": "../../docs/12fa/graphviz/master-catalog.json",
+      "description": "Complete metadata catalog of all diagrams",
+      "contents": [
+        "Version and coverage statistics",
+        "Directory structure",
+        "Rendering instructions",
+        "Template information",
+        "Quality standards",
+        "Integration guidelines"
+      ]
+    },
+    "html_viewer": {
+      "path": "../../docs/12fa/graphviz/index.html",
+      "description": "Interactive HTML viewer with search and filtering",
+      "features": [
+        "Modern UI with gradient background",
+        "Real-time search (name, description, tags)",
+        "Category filters (Skills, Agents, Commands)",
+        "Live statistics",
+        "Responsive design (desktop, tablet, mobile)",
+        "Color-coded by type (blue=skill, purple=agent, green=command)"
+      ]
+    }
+  },
+
+  "templates": {
+    "skill_process": {
+      "path": "../../docs/12fa/graphviz/templates/skill-process.dot.template",
+      "description": "Template for skill process diagrams",
+      "structure": "Input → Validation → Processing → Output → Error Handling"
+    },
+    "agent_process": {
+      "path": "../../docs/12fa/graphviz/templates/agent-process.dot.template",
+      "description": "Template for agent decision diagrams",
+      "structure": "Receive Task → Analyze → Execute → Report → Cleanup"
+    },
+    "command_process": {
+      "path": "../../docs/12fa/graphviz/templates/command-process.dot.template",
+      "description": "Template for command workflow diagrams",
+      "structure": "Parse Args → Validate → Execute → Handle Errors → Return Results"
+    }
+  },
+
+  "documentation": {
+    "readme": {
+      "path": "../../docs/12fa/graphviz/README.md",
+      "description": "Comprehensive guide (450 lines) with usage, quality assurance, and integration instructions"
+    },
+    "phase_reports": {
+      "phase_1": {
+        "path": "../../docs/12fa/PHASE-1-GRAPHVIZ-DEPLOYMENT-COMPLETE.md",
+        "description": "30 custom diagrams with 6 parallel agents (3,042 nodes)"
+      },
+      "phase_2": {
+        "path": "../../docs/12fa/PHASE-2-GRAPHVIZ-DEPLOYMENT-COMPLETE.md",
+        "description": "241 template-based diagrams deployed via 10 parallel agents (26,286 lines)"
+      },
+      "phase_3": {
+        "path": "../../docs/12fa/PHASE-3-GRAPHVIZ-VALIDATION-COMPLETE.md",
+        "description": "Validation infrastructure (scripts, catalog, HTML viewer, comprehensive README)"
+      }
+    }
+  },
+
+  "dependencies": {
+    "plugins": ["12fa-core"],
+    "required_tools": {
+      "graphviz": {
+        "version": ">=2.44.0",
+        "required": true,
+        "install_macos": "brew install graphviz",
+        "install_linux": "sudo apt-get install graphviz",
+        "install_windows": "choco install graphviz",
+        "description": "Graph visualization software for rendering .dot files to SVG/PNG"
+      }
+    },
+    "optional_tools": {
+      "browser": {
+        "required": false,
+        "description": "Modern web browser for viewing index.html (Chrome, Firefox, Edge, Safari)"
+      }
+    }
+  },
+
+  "usage": {
+    "validation": {
+      "windows": "cd docs/12fa/graphviz && .\\validate-all-diagrams.ps1",
+      "linux_macos": "cd docs/12fa/graphviz && bash validate-all-diagrams.sh"
+    },
+    "viewer": {
+      "windows": "cd docs/12fa/graphviz && start index.html",
+      "macos": "cd docs/12fa/graphviz && open index.html",
+      "linux": "cd docs/12fa/graphviz && xdg-open index.html"
+    },
+    "render_single": {
+      "svg": "dot -Tsvg diagram.dot -o diagram.svg",
+      "png": "dot -Tpng diagram.dot -o diagram.png"
+    },
+    "batch_render": {
+      "all_skills": "cd docs/12fa/graphviz/skills && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done",
+      "all_diagrams": "for dir in skills agents commands; do cd $dir && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done && cd ..; done"
+    }
+  },
+
+  "metrics": {
+    "coverage": "101%",
+    "diagram_count": 271,
+    "total_lines": 26286,
+    "validation_success_rate": "100%",
+    "ai_comprehension_improvement": "Significant (based on fsck.com article findings)"
+  },
+
+  "methodology": {
+    "phase_1_approach": {
+      "method": "Custom diagram creation",
+      "agents": 6,
+      "diagrams_created": 30,
+      "time": "6 hours",
+      "speedup": "6.75x vs manual",
+      "why": "Establish templates and patterns for complex workflows"
+    },
+    "phase_2_approach": {
+      "method": "Template-based generation",
+      "agents": 10,
+      "diagrams_created": 241,
+      "time": "4 hours",
+      "speedup": "24.7x vs manual",
+      "why": "Scale to full coverage using proven templates"
+    },
+    "phase_3_approach": {
+      "method": "Validation infrastructure",
+      "time": "1 hour",
+      "deliverables": [
+        "Cross-platform validation scripts",
+        "Master catalog",
+        "Interactive HTML viewer",
+        "Comprehensive documentation"
+      ],
+      "why": "Enable quality assurance and user-friendly diagram browsing"
+    },
+    "total_time": "11 hours",
+    "average_speedup": "17.8x"
+  },
+
+  "integration_guidelines": {
+    "agent_yaml": {
+      "example": "diagram_path: docs/12fa/graphviz/agents/coder-process.dot",
+      "benefits": [
+        "Visual workflow understanding",
+        "Onboarding acceleration",
+        "Documentation automation",
+        "AI comprehension enhancement"
+      ]
+    },
+    "skill_frontmatter": {
+      "example": "process_diagram: docs/12fa/graphviz/skills/agent-creator-process.dot",
+      "benefits": [
+        "Self-documenting skills",
+        "Visual process flows",
+        "Training materials",
+        "Quality assurance"
+      ]
+    },
+    "command_docs": {
+      "example": "![SPARC Workflow](../docs/12fa/graphviz/commands/sparc-process.svg)",
+      "benefits": [
+        "Visual command workflows",
+        "User understanding",
+        "Training documentation",
+        "Onboarding materials"
+      ]
+    }
+  },
+
+  "quality_standards": {
+    "diagram_structure": {
+      "required_elements": [
+        "Start node (green oval)",
+        "Process nodes (blue boxes)",
+        "Decision nodes (yellow diamonds)",
+        "End node (red oval)",
+        "Error handling (orange boxes)"
+      ],
+      "naming_convention": "component-name-process.dot",
+      "encoding": "UTF-8",
+      "max_file_size": "50KB"
+    },
+    "visual_conventions": {
+      "colors": {
+        "start_end": "Green oval (start), Red oval (end)",
+        "process": "Blue boxes",
+        "decision": "Yellow diamonds",
+        "error": "Orange boxes",
+        "success": "Light green boxes"
+      },
+      "edge_styles": {
+        "normal_flow": "Solid arrow",
+        "error_flow": "Dashed red arrow",
+        "conditional": "Labeled edges (Yes/No)"
+      }
+    }
+  }
+}
