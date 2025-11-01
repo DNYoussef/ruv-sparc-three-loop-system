@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.2] - 2025-11-01
+
+### Added
+
+#### MCP Marketplace Documentation
+- **MCP Marketplace Guide** (`docs/MCP-MARKETPLACE-GUIDE.md`) - 450+ line comprehensive guide
+  - Complete catalog of 100+ MCP servers (official + community)
+  - Agent-to-MCP-server mapping for all 90 agents
+  - Installation guide for popular MCP servers (GitHub, Supabase, Tavily, E2B, AWS, Azure, etc.)
+  - Usage examples and best practices
+  - Troubleshooting section
+
+#### Agent Registry Enhancements
+- **MCP Server Assignments** added to all 90 agents in `agents/registry.json`
+  - `mcp_servers.required`: Array of required MCP servers for each agent
+  - `mcp_servers.recommended`: Array of recommended/optional MCP servers
+  - `mcp_servers.usage`: Specific usage instructions for each agent
+  - Example: coder requires `['memory-mcp', 'connascence-analyzer', 'focused-changes']`
+
+#### MCP Server Categories
+- **Official Reference Servers** (7): Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, Time
+- **Development & Infrastructure** (20+): GitHub, Docker, E2B, AWS Suite, Azure DevOps, Cloudflare, etc.
+- **Data & Databases** (15+): ClickHouse, Neo4j, Supabase, Milvus, DuckDB, etc.
+- **Web & Data Extraction** (10+): Firecrawl, Exa, Tavily, Browserbase, etc.
+- **AI & Machine Learning** (8+): Langfuse, Logfire, Chroma, etc.
+- **Communication & Productivity** (12+): Slack, Notion, Taskade, Email services, etc.
+
+#### Documentation Updates
+- **README.md** - Added MCP Marketplace & Ecosystem section
+  - Links to complete MCP server catalog
+  - Agent-to-MCP-server mapping overview
+  - Popular server installation guides
+
+### Changed
+
+#### Agent Registry Structure
+- Registry version remains `2.0.0` with enhanced metadata
+- Total agents updated: 90 (from 86+ listed)
+- All agents now have explicit MCP server assignments
+- Added `mcp_integration` metadata section to registry
+
+#### Agent Access Patterns
+- **Code Quality Agents** (14): Get connascence-analyzer + memory-mcp + focused-changes
+  - coder, reviewer, tester, code-analyzer, functionality-audit, theater-detection-audit
+  - production-validator, sparc-coder, analyst, backend-dev, mobile-dev, ml-developer
+  - base-template-generator, code-review-swarm
+
+- **Research & Planning** (23+): Get memory-mcp + web search tools (tavily/exa/fetch)
+  - researcher, planner, specification, pseudocode, architecture
+  - All use sequential-thinking for complex workflows
+
+- **GitHub Agents** (9): Get memory-mcp + git + github
+  - github-modes, pr-manager, issue-tracker, release-manager, etc.
+
+- **Swarm Coordinators** (all): Get memory-mcp for distributed state
+  - hierarchical-coordinator, mesh-coordinator, adaptive-coordinator, etc.
+
+### Improved
+
+#### Developer Experience
+- **Clear MCP Server Selection** - Know exactly which servers each agent uses
+- **Installation Guidance** - Step-by-step for 30+ popular MCP servers
+- **Usage Examples** - Real workflows for code quality, research, PR management, SPARC methodology
+- **Troubleshooting** - Common issues and solutions documented
+
+#### Integration Clarity
+- **Currently Installed** (4 servers): connascence-analyzer, memory-mcp, focused-changes, ToC
+- **Official Available** (7 servers): Full Anthropic reference implementations
+- **Community Available** (100+ servers): Comprehensive third-party ecosystem
+
+---
+
 ## [3.0.1] - 2025-11-01
 
 ### Added

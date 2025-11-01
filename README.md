@@ -98,6 +98,12 @@ claude mcp add memory-mcp /path/to/memory-mcp/venv/Scripts/python.exe -u -m src.
 **Agent Access Control**: See `hooks/12fa/agent-mcp-access-control.js` for agent-specific MCP permissions
 **Tagging Protocol**: See `hooks/12fa/memory-mcp-tagging-protocol.js` for automatic metadata injection
 
+**MCP Marketplace & Ecosystem**: See [docs/MCP-MARKETPLACE-GUIDE.md](docs/MCP-MARKETPLACE-GUIDE.md) for:
+- Complete catalog of 100+ available MCP servers (official + community)
+- Agent-to-MCP-server mapping for all 86+ agents
+- Installation guide for popular MCP servers (GitHub, Supabase, Tavily, E2B, etc.)
+- Usage examples and best practices
+
 ---
 
 ## 📦 Available Plugins

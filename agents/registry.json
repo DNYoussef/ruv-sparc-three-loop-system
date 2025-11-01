@@ -5,760 +5,2383 @@
     "researcher": {
       "type": "core-development",
       "subagent_type": "researcher",
-      "capabilities": ["web-research", "github-analysis", "synthesis", "evidence-collection"],
+      "capabilities": [
+        "web-research",
+        "github-analysis",
+        "synthesis",
+        "evidence-collection"
+      ],
       "description": "Research specialist for gathering and synthesizing information from web sources and GitHub repositories. Uses self-consistency validation across multiple sources.",
-      "skills": ["research-patterns", "evidence-collection"],
-      "prompting_techniques": ["self-consistency", "program-of-thought"]
+      "skills": [
+        "research-patterns",
+        "evidence-collection"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "fetch",
+          "tavily",
+          "exa",
+          "firecrawl"
+        ],
+        "usage": "Use tavily/exa for web search, fetch for content retrieval, memory-mcp to store research findings with \"research\" intent"
+      }
     },
     "coder": {
       "type": "core-development",
       "subagent_type": "coder",
-      "capabilities": ["code-generation", "implementation", "refactoring"],
+      "capabilities": [
+        "code-generation",
+        "implementation",
+        "refactoring"
+      ],
       "description": "Implementation specialist for writing clean, efficient code based on specifications and architecture",
-      "skills": ["sparc-coder", "functionality-audit"],
-      "prompting_techniques": ["plan-and-solve", "program-of-thought"]
+      "skills": [
+        "sparc-coder",
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer",
+          "focused-changes"
+        ],
+        "recommended": [
+          "filesystem",
+          "git"
+        ],
+        "usage": "Use connascence-analyzer before committing code, focused-changes to stay on task, memory-mcp to log implementation decisions with \"implementation\" intent"
+      }
     },
     "tester": {
       "type": "core-development",
       "subagent_type": "tester",
-      "capabilities": ["test-generation", "quality-assurance", "coverage-analysis"],
+      "capabilities": [
+        "test-generation",
+        "quality-assurance",
+        "coverage-analysis"
+      ],
       "description": "Testing specialist focused on comprehensive test coverage (≥90%) with TDD practices",
-      "skills": ["tdd-london-swarm", "functionality-audit"],
-      "prompting_techniques": ["self-consistency", "plan-and-solve"]
+      "skills": [
+        "tdd-london-swarm",
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer",
+          "focused-changes"
+        ],
+        "recommended": [
+          "e2b"
+        ],
+        "usage": "Use root_cause_analysis from focused-changes for test failures, connascence-analyzer for quality checks, memory-mcp to store test patterns with \"testing\" intent"
+      }
     },
     "reviewer": {
       "type": "core-development",
       "subagent_type": "reviewer",
-      "capabilities": ["code-review", "security-audit", "quality-check"],
+      "capabilities": [
+        "code-review",
+        "security-audit",
+        "quality-check"
+      ],
       "description": "Code review specialist ensuring quality, security, and best practices",
-      "skills": ["code-review-assistant", "theater-detection-audit"],
-      "prompting_techniques": ["self-consistency", "byzantine-consensus"]
+      "skills": [
+        "code-review-assistant",
+        "theater-detection-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer",
+          "focused-changes"
+        ],
+        "recommended": [
+          "git"
+        ],
+        "usage": "Run connascence-analyzer for quality checks, review change scope with focused-changes, memory-mcp to log review findings with \"analysis\" intent"
+      }
     },
     "planner": {
       "type": "core-development",
       "subagent_type": "planner",
-      "capabilities": ["task-decomposition", "mece-planning", "risk-analysis"],
+      "capabilities": [
+        "task-decomposition",
+        "mece-planning",
+        "risk-analysis"
+      ],
       "description": "Planning specialist for MECE task breakdown and risk mitigation",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["plan-and-solve", "byzantine-consensus"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking",
+          "ToC",
+          "fetch"
+        ],
+        "usage": "Use sequential-thinking for complex planning, retrieve prior plans from memory-mcp with \"planning\" intent"
+      }
     },
     "analyst": {
       "type": "core-development",
       "subagent_type": "analyst",
-      "capabilities": ["code-analysis", "pattern-detection", "quality-metrics"],
+      "capabilities": [
+        "code-analysis",
+        "pattern-detection",
+        "quality-metrics"
+      ],
       "description": "Analysis specialist for code quality, patterns, and metrics",
-      "skills": ["code-analyzer", "performance-analysis"],
-      "prompting_techniques": ["program-of-thought", "self-consistency"]
+      "skills": [
+        "code-analyzer",
+        "performance-analysis"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "logfire",
+          "chroma"
+        ],
+        "usage": "Use connascence-analyzer for code analysis, memory-mcp to store metrics and patterns with \"analysis\" intent"
+      }
     },
     "backend-dev": {
       "type": "specialized-development",
       "subagent_type": "backend-dev",
-      "capabilities": ["api-development", "database-design", "microservices"],
+      "capabilities": [
+        "api-development",
+        "database-design",
+        "microservices"
+      ],
       "description": "Backend development specialist for REST/GraphQL APIs, databases, and server-side logic",
-      "skills": ["api-docs", "sparc-coder"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "api-docs",
+        "sparc-coder"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "supabase",
+          "postgres",
+          "aws",
+          "azure",
+          "docker"
+        ],
+        "usage": "Store database schemas, API contracts in memory-mcp, validate code with connascence-analyzer"
+      }
     },
     "mobile-dev": {
       "type": "specialized-development",
       "subagent_type": "mobile-dev",
-      "capabilities": ["react-native", "ios", "android"],
+      "capabilities": [
+        "react-native",
+        "ios",
+        "android"
+      ],
       "description": "Mobile development specialist for React Native, iOS, and Android applications",
-      "skills": ["sparc-coder"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "sparc-coder"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "supabase",
+          "firebase"
+        ],
+        "usage": "Store platform-specific patterns, UI components in memory-mcp"
+      }
     },
     "ml-developer": {
       "type": "specialized-development",
       "subagent_type": "ml-developer",
-      "capabilities": ["ml-models", "training", "inference", "neural-networks"],
+      "capabilities": [
+        "ml-models",
+        "training",
+        "inference",
+        "neural-networks"
+      ],
       "description": "Machine learning specialist for model development, training, and deployment",
-      "skills": ["ml-expert", "ml-training-debugger", "flow-nexus-neural"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "ml-expert",
+        "ml-training-debugger",
+        "flow-nexus-neural"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "chroma",
+          "milvus",
+          "duckdb"
+        ],
+        "usage": "Store model architectures, hyperparameters, dataset metadata in memory-mcp"
+      }
     },
     "cicd-engineer": {
       "type": "specialized-development",
       "subagent_type": "cicd-engineer",
-      "capabilities": ["github-actions", "pipeline-optimization", "deployment"],
+      "capabilities": [
+        "github-actions",
+        "pipeline-optimization",
+        "deployment"
+      ],
       "description": "CI/CD specialist for GitHub Actions workflows and deployment automation",
-      "skills": ["cicd-intelligent-recovery", "github-workflow-automation"],
-      "prompting_techniques": ["program-of-thought", "raft-consensus"]
+      "skills": [
+        "cicd-intelligent-recovery",
+        "github-workflow-automation"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "git",
+          "github",
+          "docker",
+          "aws",
+          "azure"
+        ],
+        "usage": "Store pipeline configs, deployment histories in memory-mcp"
+      }
     },
     "api-docs": {
       "type": "specialized-development",
       "subagent_type": "api-docs",
-      "capabilities": ["openapi", "swagger", "documentation"],
+      "capabilities": [
+        "openapi",
+        "swagger",
+        "documentation"
+      ],
       "description": "API documentation specialist for OpenAPI/Swagger specs",
-      "skills": ["api-docs"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "api-docs"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "ToC",
+          "fetch"
+        ],
+        "usage": "Generate API docs, store OpenAPI schemas in memory-mcp"
+      }
     },
     "system-architect": {
       "type": "specialized-development",
       "subagent_type": "system-architect",
-      "capabilities": ["system-design", "architecture", "patterns"],
+      "capabilities": [
+        "system-design",
+        "architecture",
+        "patterns"
+      ],
       "description": "System architecture specialist for high-level design and architectural patterns",
-      "skills": ["sparc-coord"],
-      "prompting_techniques": ["program-of-thought", "plan-and-solve"]
+      "skills": [
+        "sparc-coord"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking",
+          "ToC",
+          "aws",
+          "azure"
+        ],
+        "usage": "Store system design decisions in memory-mcp long-term layer"
+      }
     },
     "code-analyzer": {
       "type": "specialized-development",
       "subagent_type": "code-analyzer",
-      "capabilities": ["static-analysis", "quality-metrics", "refactoring"],
+      "capabilities": [
+        "static-analysis",
+        "quality-metrics",
+        "refactoring"
+      ],
       "description": "Advanced code analysis specialist for comprehensive code reviews",
-      "skills": ["code-analyzer", "style-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "code-analyzer",
+        "style-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "base-template-generator": {
       "type": "specialized-development",
       "subagent_type": "base-template-generator",
-      "capabilities": ["templates", "boilerplate", "scaffolding"],
+      "capabilities": [
+        "templates",
+        "boilerplate",
+        "scaffolding"
+      ],
       "description": "Template generation specialist for project scaffolding",
-      "skills": ["skill-builder", "agent-creator"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "skill-builder",
+        "agent-creator"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "production-validator": {
       "type": "specialized-development",
       "subagent_type": "production-validator",
-      "capabilities": ["deployment-readiness", "validation", "checklist"],
+      "capabilities": [
+        "deployment-readiness",
+        "validation",
+        "checklist"
+      ],
       "description": "Production readiness validation specialist",
-      "skills": ["production-readiness", "functionality-audit"],
-      "prompting_techniques": ["self-consistency", "byzantine-consensus"]
+      "skills": [
+        "production-readiness",
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "e2b",
+          "docker"
+        ],
+        "usage": "Comprehensive validation with all quality tools, certification in memory-mcp"
+      }
     },
     "hierarchical-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "hierarchical-coordinator",
-      "capabilities": ["queen-led-hierarchy", "delegation", "strategic-planning"],
+      "capabilities": [
+        "queen-led-hierarchy",
+        "delegation",
+        "strategic-planning"
+      ],
       "description": "Queen-led hierarchical coordinator for centralized strategy with distributed execution",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["raft-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "Store swarm topology, coordination state in memory-mcp"
+      }
     },
     "mesh-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "mesh-coordinator",
-      "capabilities": ["peer-to-peer", "distributed-coordination", "fault-tolerance"],
+      "capabilities": [
+        "peer-to-peer",
+        "distributed-coordination",
+        "fault-tolerance"
+      ],
       "description": "Mesh network coordinator for peer-to-peer agent collaboration",
-      "skills": ["swarm-orchestration"],
-      "prompting_techniques": ["gossip-consensus"]
+      "skills": [
+        "swarm-orchestration"
+      ],
+      "prompting_techniques": [
+        "gossip-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "Store peer connections, distributed state in memory-mcp"
+      }
     },
     "adaptive-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "adaptive-coordinator",
-      "capabilities": ["topology-switching", "dynamic-optimization", "self-organization"],
+      "capabilities": [
+        "topology-switching",
+        "dynamic-optimization",
+        "self-organization"
+      ],
       "description": "Adaptive coordinator that switches topologies based on task complexity",
-      "skills": ["swarm-advanced"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "swarm-advanced"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "Store topology adaptations, performance metrics in memory-mcp"
+      }
     },
     "collective-intelligence-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "collective-intelligence-coordinator",
-      "capabilities": ["distributed-cognition", "consensus-building", "memory-sync"],
+      "capabilities": [
+        "distributed-cognition",
+        "consensus-building",
+        "memory-sync"
+      ],
       "description": "Collective intelligence coordinator for distributed cognitive processes",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["byzantine-consensus", "raft-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "chroma"
+        ],
+        "usage": "Centralized memory coordination across swarm agents"
+      }
     },
     "swarm-memory-manager": {
       "type": "swarm-coordination",
       "subagent_type": "swarm-memory-manager",
-      "capabilities": ["memory-persistence", "caching", "synchronization"],
+      "capabilities": [
+        "memory-persistence",
+        "caching",
+        "synchronization"
+      ],
       "description": "Distributed memory manager for swarm state persistence",
-      "skills": ["memory-coordinator", "agentdb-memory-patterns"],
-      "prompting_techniques": ["crdt-synchronization"]
+      "skills": [
+        "memory-coordinator",
+        "agentdb-memory-patterns"
+      ],
+      "prompting_techniques": [
+        "crdt-synchronization"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "chroma"
+        ],
+        "usage": "Manage distributed memory, ensure consistency across swarm"
+      }
     },
     "task-orchestrator": {
       "type": "swarm-coordination",
       "subagent_type": "task-orchestrator",
-      "capabilities": ["task-decomposition", "agent-assignment", "result-synthesis"],
+      "capabilities": [
+        "task-decomposition",
+        "agent-assignment",
+        "result-synthesis"
+      ],
       "description": "Central task orchestration agent for complex multi-agent workflows",
-      "skills": ["parallel-swarm-implementation"],
-      "prompting_techniques": ["plan-and-solve", "byzantine-consensus"]
+      "skills": [
+        "parallel-swarm-implementation"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "smart-agent": {
       "type": "swarm-coordination",
       "subagent_type": "smart-agent",
-      "capabilities": ["dynamic-spawning", "auto-scaling", "intelligent-routing"],
+      "capabilities": [
+        "dynamic-spawning",
+        "auto-scaling",
+        "intelligent-routing"
+      ],
       "description": "Intelligent agent spawning and coordination specialist",
-      "skills": ["swarm-init"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "swarm-init"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "swarm-init": {
       "type": "swarm-coordination",
       "subagent_type": "swarm-init",
-      "capabilities": ["topology-optimization", "initialization", "configuration"],
+      "capabilities": [
+        "topology-optimization",
+        "initialization",
+        "configuration"
+      ],
       "description": "Swarm initialization and topology optimization specialist",
-      "skills": ["swarm-orchestration"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "swarm-orchestration"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "performance-benchmarker": {
       "type": "swarm-coordination",
       "subagent_type": "performance-benchmarker",
-      "capabilities": ["benchmarking", "metrics", "optimization"],
+      "capabilities": [
+        "benchmarking",
+        "metrics",
+        "optimization"
+      ],
       "description": "Performance benchmarking and optimization specialist",
-      "skills": ["performance-analysis"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "performance-analysis"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "logfire"
+        ],
+        "usage": "Track benchmark results over time in memory-mcp"
+      }
     },
     "memory-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "memory-coordinator",
-      "capabilities": ["cross-session-persistence", "memory-sharing", "context-management"],
+      "capabilities": [
+        "cross-session-persistence",
+        "memory-sharing",
+        "context-management"
+      ],
       "description": "Memory coordination across sessions and agents",
-      "skills": ["memory-coordinator", "agentdb-memory-patterns"],
-      "prompting_techniques": ["crdt-synchronization"]
+      "skills": [
+        "memory-coordinator",
+        "agentdb-memory-patterns"
+      ],
+      "prompting_techniques": [
+        "crdt-synchronization"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "byzantine-coordinator": {
       "type": "consensus-distributed",
       "subagent_type": "byzantine-coordinator",
-      "capabilities": ["byzantine-consensus", "fault-tolerance", "agreement"],
+      "capabilities": [
+        "byzantine-consensus",
+        "fault-tolerance",
+        "agreement"
+      ],
       "description": "Byzantine fault-tolerant consensus coordinator (2/3, 4/5, 5/7 thresholds)",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["byzantine-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "raft-manager": {
       "type": "consensus-distributed",
       "subagent_type": "raft-manager",
-      "capabilities": ["raft-consensus", "leader-election", "log-replication"],
+      "capabilities": [
+        "raft-consensus",
+        "leader-election",
+        "log-replication"
+      ],
       "description": "Raft consensus manager with leader election and log replication",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["raft-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "gossip-coordinator": {
       "type": "consensus-distributed",
       "subagent_type": "gossip-coordinator",
-      "capabilities": ["gossip-protocol", "eventual-consistency", "peer-propagation"],
+      "capabilities": [
+        "gossip-protocol",
+        "eventual-consistency",
+        "peer-propagation"
+      ],
       "description": "Gossip protocol coordinator for eventually consistent systems",
-      "skills": ["swarm-orchestration"],
-      "prompting_techniques": ["gossip-consensus"]
+      "skills": [
+        "swarm-orchestration"
+      ],
+      "prompting_techniques": [
+        "gossip-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "crdt-synchronizer": {
       "type": "consensus-distributed",
       "subagent_type": "crdt-synchronizer",
-      "capabilities": ["crdt", "conflict-free-replication", "state-sync"],
+      "capabilities": [
+        "crdt",
+        "conflict-free-replication",
+        "state-sync"
+      ],
       "description": "CRDT synchronizer for conflict-free replicated data types",
-      "skills": ["agentdb-optimization"],
-      "prompting_techniques": ["crdt-synchronization"]
+      "skills": [
+        "agentdb-optimization"
+      ],
+      "prompting_techniques": [
+        "crdt-synchronization"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "quorum-manager": {
       "type": "consensus-distributed",
       "subagent_type": "quorum-manager",
-      "capabilities": ["quorum-management", "membership", "dynamic-adjustment"],
+      "capabilities": [
+        "quorum-management",
+        "membership",
+        "dynamic-adjustment"
+      ],
       "description": "Quorum management for dynamic membership adjustment",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["byzantine-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "security-manager": {
       "type": "consensus-distributed",
       "subagent_type": "security-manager",
-      "capabilities": ["security-audit", "consensus-validation", "threat-detection"],
+      "capabilities": [
+        "security-audit",
+        "consensus-validation",
+        "threat-detection"
+      ],
       "description": "Security manager for consensus protocol validation",
-      "skills": ["theater-detection-audit"],
-      "prompting_techniques": ["byzantine-consensus"]
+      "skills": [
+        "theater-detection-audit"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "pr-manager": {
       "type": "github-integration",
       "subagent_type": "pr-manager",
-      "capabilities": ["pr-creation", "pr-review", "merge-coordination"],
+      "capabilities": [
+        "pr-creation",
+        "pr-review",
+        "merge-coordination"
+      ],
       "description": "Pull request management and coordination specialist",
-      "skills": ["github-code-review"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "github-code-review"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "git",
+          "github",
+          "connascence-analyzer"
+        ],
+        "usage": "Analyze PR changes with connascence-analyzer, track PR lifecycle in memory-mcp"
+      }
     },
     "code-review-swarm": {
       "type": "github-integration",
       "subagent_type": "code-review-swarm",
-      "capabilities": ["multi-agent-review", "comprehensive-analysis", "auto-fix"],
+      "capabilities": [
+        "multi-agent-review",
+        "comprehensive-analysis",
+        "auto-fix"
+      ],
       "description": "Multi-agent code review swarm for comprehensive PR analysis",
-      "skills": ["code-review-assistant", "github-code-review"],
-      "prompting_techniques": ["byzantine-consensus", "self-consistency"]
+      "skills": [
+        "code-review-assistant",
+        "github-code-review"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "git",
+          "github"
+        ],
+        "usage": "Coordinate review findings with connascence-analyzer, memory-mcp for pattern learning"
+      }
     },
     "issue-tracker": {
       "type": "github-integration",
       "subagent_type": "issue-tracker",
-      "capabilities": ["issue-management", "tracking", "coordination"],
+      "capabilities": [
+        "issue-management",
+        "tracking",
+        "coordination"
+      ],
       "description": "Issue management and tracking specialist",
-      "skills": ["github-project-management"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "github-project-management"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "github",
+          "slack",
+          "notion"
+        ],
+        "usage": "Track issue state and progress in memory-mcp with \"planning\" intent"
+      }
     },
     "release-manager": {
       "type": "github-integration",
       "subagent_type": "release-manager",
-      "capabilities": ["release-orchestration", "versioning", "deployment"],
+      "capabilities": [
+        "release-orchestration",
+        "versioning",
+        "deployment"
+      ],
       "description": "Release orchestration and deployment specialist",
-      "skills": ["github-release-management"],
-      "prompting_techniques": ["plan-and-solve", "raft-consensus"]
+      "skills": [
+        "github-release-management"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "git",
+          "github",
+          "docker"
+        ],
+        "usage": "Store release notes, deployment history in memory-mcp long-term layer"
+      }
     },
     "workflow-automation": {
       "type": "github-integration",
       "subagent_type": "workflow-automation",
-      "capabilities": ["github-actions", "workflow-optimization", "ci-cd"],
+      "capabilities": [
+        "github-actions",
+        "workflow-optimization",
+        "ci-cd"
+      ],
       "description": "GitHub Actions workflow automation specialist",
-      "skills": ["github-workflow-automation"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "github-workflow-automation"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "github",
+          "docker",
+          "aws",
+          "azure"
+        ],
+        "usage": "Track workflow executions, pipeline configs in memory-mcp"
+      }
     },
     "project-board-sync": {
       "type": "github-integration",
       "subagent_type": "project-board-sync",
-      "capabilities": ["project-boards", "synchronization", "tracking"],
+      "capabilities": [
+        "project-boards",
+        "synchronization",
+        "tracking"
+      ],
       "description": "GitHub Projects board synchronization specialist",
-      "skills": ["github-project-management"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "github-project-management"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "github",
+          "slack",
+          "notion"
+        ],
+        "usage": "Sync project state across platforms via memory-mcp"
+      }
     },
     "repo-architect": {
       "type": "github-integration",
       "subagent_type": "repo-architect",
-      "capabilities": ["multi-repo-management", "architecture", "coordination"],
+      "capabilities": [
+        "multi-repo-management",
+        "architecture",
+        "coordination"
+      ],
       "description": "Repository architecture and multi-repo management specialist",
-      "skills": ["github-multi-repo"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "github-multi-repo"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "git",
+          "github",
+          "ToC"
+        ],
+        "usage": "Store architecture decisions in memory-mcp long-term layer"
+      }
     },
     "multi-repo-swarm": {
       "type": "github-integration",
       "subagent_type": "multi-repo-swarm",
-      "capabilities": ["cross-repo-coordination", "synchronization", "organization-wide"],
+      "capabilities": [
+        "cross-repo-coordination",
+        "synchronization",
+        "organization-wide"
+      ],
       "description": "Multi-repository swarm coordination specialist",
-      "skills": ["github-multi-repo"],
-      "prompting_techniques": ["gossip-consensus"]
+      "skills": [
+        "github-multi-repo"
+      ],
+      "prompting_techniques": [
+        "gossip-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "git",
+          "github"
+        ],
+        "usage": "Coordinate across repositories with memory-mcp shared state"
+      }
     },
     "swarm-pr": {
       "type": "github-integration",
       "subagent_type": "swarm-pr",
-      "capabilities": ["pr-swarm-management", "multi-agent-pr", "lifecycle"],
+      "capabilities": [
+        "pr-swarm-management",
+        "multi-agent-pr",
+        "lifecycle"
+      ],
       "description": "PR swarm management for multi-agent PR workflows",
-      "skills": ["github-code-review"],
-      "prompting_techniques": ["byzantine-consensus"]
+      "skills": [
+        "github-code-review"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "swarm-issue": {
       "type": "github-integration",
       "subagent_type": "swarm-issue",
-      "capabilities": ["issue-based-swarms", "task-decomposition", "progress-tracking"],
+      "capabilities": [
+        "issue-based-swarms",
+        "task-decomposition",
+        "progress-tracking"
+      ],
       "description": "Issue-based swarm coordination for task management",
-      "skills": ["github-project-management"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "github-project-management"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "tdd-london-swarm": {
       "type": "testing-quality",
       "subagent_type": "tdd-london-swarm",
-      "capabilities": ["tdd-london-school", "mock-driven", "test-first"],
+      "capabilities": [
+        "tdd-london-school",
+        "mock-driven",
+        "test-first"
+      ],
       "description": "TDD London School specialist for mock-driven development",
-      "skills": ["tdd-london-swarm"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "tdd-london-swarm"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "theater-detection-audit": {
       "type": "testing-quality",
       "subagent_type": "analyst",
-      "capabilities": ["theater-detection", "reality-validation", "fake-work-elimination"],
+      "capabilities": [
+        "theater-detection",
+        "reality-validation",
+        "fake-work-elimination"
+      ],
       "description": "Theater detection specialist for eliminating fake implementations",
-      "skills": ["theater-detection-audit"],
-      "prompting_techniques": ["byzantine-consensus", "self-consistency"]
+      "skills": [
+        "theater-detection-audit"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [],
+        "usage": "Detect theater code with connascence-analyzer, log findings in memory-mcp"
+      }
     },
     "functionality-audit": {
       "type": "testing-quality",
       "subagent_type": "analyst",
-      "capabilities": ["functionality-validation", "sandbox-testing", "execution-verification"],
+      "capabilities": [
+        "functionality-validation",
+        "sandbox-testing",
+        "execution-verification"
+      ],
       "description": "Functionality audit specialist for real execution validation",
-      "skills": ["functionality-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "e2b",
+          "focused-changes"
+        ],
+        "usage": "Validate functionality with e2b sandboxes, track audit results in memory-mcp"
+      }
     },
     "style-audit": {
       "type": "testing-quality",
       "subagent_type": "analyst",
-      "capabilities": ["style-checking", "linting", "formatting"],
+      "capabilities": [
+        "style-checking",
+        "linting",
+        "formatting"
+      ],
       "description": "Code style and formatting audit specialist",
-      "skills": ["style-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "style-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "sparc-coord": {
       "type": "sparc-methodology",
       "subagent_type": "sparc-coord",
-      "capabilities": ["sparc-orchestration", "phase-coordination", "workflow"],
+      "capabilities": [
+        "sparc-orchestration",
+        "phase-coordination",
+        "workflow"
+      ],
       "description": "SPARC methodology orchestrator for systematic development",
-      "skills": ["sparc-methodology"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "sparc-methodology"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking",
+          "ToC"
+        ],
+        "usage": "Orchestrate SPARC phases with memory-mcp tracking each phase"
+      }
     },
     "specification": {
       "type": "sparc-methodology",
       "subagent_type": "specification",
-      "capabilities": ["requirements-analysis", "specification-writing"],
+      "capabilities": [
+        "requirements-analysis",
+        "specification-writing"
+      ],
       "description": "SPARC Specification phase specialist for requirements analysis",
-      "skills": ["sparc-methodology"],
-      "prompting_techniques": ["plan-and-solve", "self-consistency"]
+      "skills": [
+        "sparc-methodology"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking",
+          "ToC",
+          "fetch"
+        ],
+        "usage": "Store specifications in memory-mcp long-term layer with sparc_phase: specification"
+      }
     },
     "pseudocode": {
       "type": "sparc-methodology",
       "subagent_type": "pseudocode",
-      "capabilities": ["algorithm-design", "pseudocode-writing"],
+      "capabilities": [
+        "algorithm-design",
+        "pseudocode-writing"
+      ],
       "description": "SPARC Pseudocode phase specialist for algorithm design",
-      "skills": ["sparc-methodology"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "sparc-methodology"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking"
+        ],
+        "usage": "Store pseudocode in memory-mcp mid-term layer with sparc_phase: pseudocode"
+      }
     },
     "architecture": {
       "type": "sparc-methodology",
       "subagent_type": "architecture",
-      "capabilities": ["system-design", "architectural-patterns"],
+      "capabilities": [
+        "system-design",
+        "architectural-patterns"
+      ],
       "description": "SPARC Architecture phase specialist for system design",
-      "skills": ["sparc-methodology"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "sparc-methodology"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "sequential-thinking",
+          "ToC"
+        ],
+        "usage": "Store architecture decisions in memory-mcp long-term layer with sparc_phase: architecture"
+      }
     },
     "refinement": {
       "type": "sparc-methodology",
       "subagent_type": "refinement",
-      "capabilities": ["tdd-implementation", "iterative-refinement"],
+      "capabilities": [
+        "tdd-implementation",
+        "iterative-refinement"
+      ],
       "description": "SPARC Refinement phase specialist for TDD implementation",
-      "skills": ["sparc-methodology", "tdd-london-swarm"],
-      "prompting_techniques": ["plan-and-solve", "self-consistency"]
+      "skills": [
+        "sparc-methodology",
+        "tdd-london-swarm"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "focused-changes"
+        ],
+        "usage": "Use connascence-analyzer for refinement validation, memory-mcp with sparc_phase: refinement"
+      }
     },
     "sparc-coder": {
       "type": "sparc-methodology",
       "subagent_type": "sparc-coder",
-      "capabilities": ["sparc-based-coding", "specification-to-code"],
+      "capabilities": [
+        "sparc-based-coding",
+        "specification-to-code"
+      ],
       "description": "SPARC coder for transforming specifications into code",
-      "skills": ["sparc-coder"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "sparc-coder"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp",
+          "connascence-analyzer"
+        ],
+        "recommended": [
+          "focused-changes",
+          "git"
+        ],
+        "usage": "Implement with quality checks via connascence-analyzer, track in memory-mcp with sparc_phase: code"
+      }
     },
     "debugger": {
       "type": "specialized-development",
       "subagent_type": "debugger",
-      "capabilities": ["debugging", "root-cause-analysis", "fix-generation"],
+      "capabilities": [
+        "debugging",
+        "root-cause-analysis",
+        "fix-generation"
+      ],
       "description": "Debugging specialist with root cause analysis",
-      "skills": ["smart-bug-fix", "cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought", "byzantine-consensus"]
+      "skills": [
+        "smart-bug-fix",
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "perf-analyzer": {
       "type": "performance-monitoring",
       "subagent_type": "perf-analyzer",
-      "capabilities": ["performance-analysis", "bottleneck-detection", "optimization"],
+      "capabilities": [
+        "performance-analysis",
+        "bottleneck-detection",
+        "optimization"
+      ],
       "description": "Performance analysis and bottleneck detection specialist",
-      "skills": ["performance-analysis"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "performance-analysis"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [
+          "logfire"
+        ],
+        "usage": "Store performance metrics, bottleneck analysis in memory-mcp"
+      }
     },
     "optimizer": {
       "type": "performance-monitoring",
       "subagent_type": "optimizer",
-      "capabilities": ["code-optimization", "refactoring", "efficiency"],
+      "capabilities": [
+        "code-optimization",
+        "refactoring",
+        "efficiency"
+      ],
       "description": "Code optimization and efficiency specialist",
-      "skills": ["agentdb-optimization"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "agentdb-optimization"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "migration-planner": {
       "type": "specialized-development",
       "subagent_type": "migration-planner",
-      "capabilities": ["migration-planning", "system-conversion", "strategy"],
+      "capabilities": [
+        "migration-planning",
+        "system-conversion",
+        "strategy"
+      ],
       "description": "Migration planning specialist for system conversions",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "skill-forge": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["skill-creation", "prompt-engineering", "template-generation"],
+      "capabilities": [
+        "skill-creation",
+        "prompt-engineering",
+        "template-generation"
+      ],
       "description": "Advanced skill creation system with evidence-based prompting",
-      "skills": ["skill-forge", "prompt-architect"],
-      "prompting_techniques": ["self-consistency", "program-of-thought"]
+      "skills": [
+        "skill-forge",
+        "prompt-architect"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "intent-analyzer": {
       "type": "meta-tools",
       "subagent_type": "analyst",
-      "capabilities": ["intent-analysis", "requirement-extraction", "cognitive-science"],
+      "capabilities": [
+        "intent-analysis",
+        "requirement-extraction",
+        "cognitive-science"
+      ],
       "description": "Intent analysis specialist using cognitive science principles",
-      "skills": ["intent-analyzer"],
-      "prompting_techniques": ["program-of-thought", "self-consistency"]
+      "skills": [
+        "intent-analyzer"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "prompt-architect": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["prompt-optimization", "evidence-based-techniques", "structural-design"],
+      "capabilities": [
+        "prompt-optimization",
+        "evidence-based-techniques",
+        "structural-design"
+      ],
       "description": "Prompt engineering specialist with evidence-based optimization",
-      "skills": ["prompt-architect"],
-      "prompting_techniques": ["self-consistency", "structural-optimization"]
+      "skills": [
+        "prompt-architect"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "structural-optimization"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "micro-skill-creator": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["micro-skill-creation", "atomic-operations", "composability"],
+      "capabilities": [
+        "micro-skill-creation",
+        "atomic-operations",
+        "composability"
+      ],
       "description": "Micro-skill creation specialist for atomic, composable operations",
-      "skills": ["micro-skill-creator"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "micro-skill-creator"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "cascade-orchestrator": {
       "type": "meta-tools",
       "subagent_type": "task-orchestrator",
-      "capabilities": ["workflow-cascades", "multi-skill-coordination", "pipeline-execution"],
+      "capabilities": [
+        "workflow-cascades",
+        "multi-skill-coordination",
+        "pipeline-execution"
+      ],
       "description": "Cascade orchestration specialist for multi-skill workflows",
-      "skills": ["cascade-orchestrator"],
-      "prompting_techniques": ["plan-and-solve", "raft-consensus"]
+      "skills": [
+        "cascade-orchestrator"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "agent-creator": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["agent-creation", "sop-design", "prompt-optimization"],
+      "capabilities": [
+        "agent-creation",
+        "sop-design",
+        "prompt-optimization"
+      ],
       "description": "Agent creation specialist with SOP methodology",
-      "skills": ["agent-creator"],
-      "prompting_techniques": ["self-consistency", "program-of-thought"]
+      "skills": [
+        "agent-creator"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "skill-builder": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["skill-building", "yaml-frontmatter", "progressive-disclosure"],
+      "capabilities": [
+        "skill-building",
+        "yaml-frontmatter",
+        "progressive-disclosure"
+      ],
       "description": "Skill builder specialist for Claude Code skills",
-      "skills": ["skill-builder"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "skill-builder"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "slash-command-encoder": {
       "type": "meta-tools",
       "subagent_type": "base-template-generator",
-      "capabilities": ["command-creation", "parameter-validation", "routing"],
+      "capabilities": [
+        "command-creation",
+        "parameter-validation",
+        "routing"
+      ],
       "description": "Slash command creation specialist with intelligent routing",
-      "skills": ["slash-command-encoder"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "slash-command-encoder"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "queen-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "hierarchical-coordinator",
-      "capabilities": ["strategic-planning", "high-level-coordination", "resource-allocation"],
+      "capabilities": [
+        "strategic-planning",
+        "high-level-coordination",
+        "resource-allocation"
+      ],
       "description": "Queen coordinator for Loop 2 META-SKILL dynamic agent selection",
-      "skills": ["parallel-swarm-implementation", "hive-mind-advanced"],
-      "prompting_techniques": ["plan-and-solve", "byzantine-consensus"]
+      "skills": [
+        "parallel-swarm-implementation",
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "topology-optimizer": {
       "type": "performance-monitoring",
       "subagent_type": "optimizer",
-      "capabilities": ["topology-optimization", "dynamic-reconfiguration", "pattern-optimization"],
+      "capabilities": [
+        "topology-optimization",
+        "dynamic-reconfiguration",
+        "pattern-optimization"
+      ],
       "description": "Swarm topology optimization specialist",
-      "skills": ["swarm-advanced"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "swarm-advanced"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "consensus-builder": {
       "type": "consensus-distributed",
       "subagent_type": "byzantine-coordinator",
-      "capabilities": ["consensus-building", "agreement-protocols", "fault-tolerance"],
+      "capabilities": [
+        "consensus-building",
+        "agreement-protocols",
+        "fault-tolerance"
+      ],
       "description": "General consensus building specialist across protocols",
-      "skills": ["hive-mind-advanced"],
-      "prompting_techniques": ["byzantine-consensus", "raft-consensus"]
+      "skills": [
+        "hive-mind-advanced"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "pre-mortem-analyst": {
       "type": "core-development",
       "subagent_type": "analyst",
-      "capabilities": ["pre-mortem-analysis", "failure-prediction", "risk-assessment"],
+      "capabilities": [
+        "pre-mortem-analysis",
+        "failure-prediction",
+        "risk-assessment"
+      ],
       "description": "Pre-mortem analysis specialist for Loop 1 risk mitigation",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["byzantine-consensus", "program-of-thought"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus",
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "gemini-analyst": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["large-context-analysis", "2m-token-window", "dependency-mapping"],
+      "capabilities": [
+        "large-context-analysis",
+        "2m-token-window",
+        "dependency-mapping"
+      ],
       "description": "Gemini large-context analysis specialist for Loop 3 (2M token window)",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "failure-pattern-researcher": {
       "type": "core-development",
       "subagent_type": "researcher",
-      "capabilities": ["failure-analysis", "pattern-recognition", "historical-research"],
+      "capabilities": [
+        "failure-analysis",
+        "pattern-recognition",
+        "historical-research"
+      ],
       "description": "Failure pattern research specialist for Loop 3 analysis",
-      "skills": ["cicd-intelligent-recovery", "smart-bug-fix"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "cicd-intelligent-recovery",
+        "smart-bug-fix"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "graph-analyst": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["graph-analysis", "dependency-mapping", "cascade-detection"],
+      "capabilities": [
+        "graph-analysis",
+        "dependency-mapping",
+        "cascade-detection"
+      ],
       "description": "Graph-based analysis specialist for root cause detection",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["raft-consensus"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "fix-strategy-planner": {
       "type": "core-development",
       "subagent_type": "planner",
-      "capabilities": ["fix-planning", "strategy-design", "side-effect-prediction"],
+      "capabilities": [
+        "fix-planning",
+        "strategy-design",
+        "side-effect-prediction"
+      ],
       "description": "Fix strategy planner using program-of-thought methodology",
-      "skills": ["smart-bug-fix", "cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "smart-bug-fix",
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "sandbox-validator": {
       "type": "testing-quality",
       "subagent_type": "tester",
-      "capabilities": ["sandbox-execution", "reality-validation", "integration-testing"],
+      "capabilities": [
+        "sandbox-execution",
+        "reality-validation",
+        "integration-testing"
+      ],
       "description": "Sandbox validation specialist for real execution testing",
-      "skills": ["functionality-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "synthesis-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "task-orchestrator",
-      "capabilities": ["synthesis", "cross-validation", "consensus-building"],
+      "capabilities": [
+        "synthesis",
+        "cross-validation",
+        "consensus-building"
+      ],
       "description": "Synthesis coordinator for multi-source validation",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["self-consistency", "byzantine-consensus"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "cost-benefit-analyzer": {
       "type": "core-development",
       "subagent_type": "analyst",
-      "capabilities": ["cost-benefit-analysis", "risk-assessment", "decision-support"],
+      "capabilities": [
+        "cost-benefit-analysis",
+        "risk-assessment",
+        "decision-support"
+      ],
       "description": "Cost-benefit analysis specialist for pre-mortem decisions",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "defense-architect": {
       "type": "specialized-development",
       "subagent_type": "system-architect",
-      "capabilities": ["defensive-architecture", "failure-prevention", "resilience-design"],
+      "capabilities": [
+        "defensive-architecture",
+        "failure-prevention",
+        "resilience-design"
+      ],
       "description": "Defense architecture specialist for failure prevention",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "root-cause-detective": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["root-cause-analysis", "investigation", "connascence-detection"],
+      "capabilities": [
+        "root-cause-analysis",
+        "investigation",
+        "connascence-detection"
+      ],
       "description": "Root cause investigation specialist",
-      "skills": ["smart-bug-fix", "cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought", "raft-consensus"]
+      "skills": [
+        "smart-bug-fix",
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought",
+        "raft-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "integration-checker": {
       "type": "testing-quality",
       "subagent_type": "tester",
-      "capabilities": ["integration-testing", "cross-component-validation", "system-testing"],
+      "capabilities": [
+        "integration-testing",
+        "cross-component-validation",
+        "system-testing"
+      ],
       "description": "Integration testing specialist for cross-component validation",
-      "skills": ["functionality-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "connascence-detector": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["connascence-analysis", "coupling-detection", "dependency-mapping"],
+      "capabilities": [
+        "connascence-analysis",
+        "coupling-detection",
+        "dependency-mapping"
+      ],
       "description": "Connascence detection specialist (name/type/algorithm)",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "test-validity-auditor": {
       "type": "testing-quality",
       "subagent_type": "analyst",
-      "capabilities": ["test-validation", "test-correctness", "assertion-analysis"],
+      "capabilities": [
+        "test-validation",
+        "test-correctness",
+        "assertion-analysis"
+      ],
       "description": "Test validity audit specialist for test correctness",
-      "skills": ["functionality-audit"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "functionality-audit"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "dependency-conflict-detector": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["dependency-analysis", "conflict-detection", "version-resolution"],
+      "capabilities": [
+        "dependency-analysis",
+        "conflict-detection",
+        "version-resolution"
+      ],
       "description": "Dependency conflict detection specialist",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "differential-validator": {
       "type": "testing-quality",
       "subagent_type": "tester",
-      "capabilities": ["differential-testing", "before-after-comparison", "regression-detection"],
+      "capabilities": [
+        "differential-testing",
+        "before-after-comparison",
+        "regression-detection"
+      ],
       "description": "Differential validation specialist for before/after testing",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "github-analyst": {
       "type": "core-development",
       "subagent_type": "researcher",
-      "capabilities": ["github-research", "repository-analysis", "code-study"],
+      "capabilities": [
+        "github-research",
+        "repository-analysis",
+        "code-study"
+      ],
       "description": "GitHub repository analysis specialist for best practices research",
-      "skills": ["research-driven-planning", "github-code-review"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "research-driven-planning",
+        "github-code-review"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "error-message-analyzer": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["error-analysis", "stack-trace-parsing", "message-interpretation"],
+      "capabilities": [
+        "error-analysis",
+        "stack-trace-parsing",
+        "message-interpretation"
+      ],
       "description": "Error message and stack trace analysis specialist",
-      "skills": ["smart-bug-fix", "cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "smart-bug-fix",
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "code-context-investigator": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["context-analysis", "surrounding-code-study", "impact-assessment"],
+      "capabilities": [
+        "context-analysis",
+        "surrounding-code-study",
+        "impact-assessment"
+      ],
       "description": "Code context investigation specialist for failure analysis",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "fix-implementation-specialist": {
       "type": "core-development",
       "subagent_type": "coder",
-      "capabilities": ["fix-implementation", "minimal-changes", "patch-generation"],
+      "capabilities": [
+        "fix-implementation",
+        "minimal-changes",
+        "patch-generation"
+      ],
       "description": "Fix implementation specialist with program-of-thought execution",
-      "skills": ["smart-bug-fix", "cicd-intelligent-recovery"],
-      "prompting_techniques": ["program-of-thought"]
+      "skills": [
+        "smart-bug-fix",
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "program-of-thought"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "fix-approval-coordinator": {
       "type": "swarm-coordination",
       "subagent_type": "hierarchical-coordinator",
-      "capabilities": ["fix-approval", "consensus-decision", "dual-validation"],
+      "capabilities": [
+        "fix-approval",
+        "consensus-decision",
+        "dual-validation"
+      ],
       "description": "Fix approval coordinator requiring dual validation (sandbox + theater)",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["byzantine-consensus"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "failure-categorizer": {
       "type": "specialized-development",
       "subagent_type": "analyst",
-      "capabilities": ["failure-categorization", "pattern-classification", "taxonomy"],
+      "capabilities": [
+        "failure-categorization",
+        "pattern-classification",
+        "taxonomy"
+      ],
       "description": "Failure categorization specialist for Loop 3 feedback",
-      "skills": ["cicd-intelligent-recovery"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "cicd-intelligent-recovery"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "mece-decomposer": {
       "type": "core-development",
       "subagent_type": "planner",
-      "capabilities": ["mece-decomposition", "task-breakdown", "coverage-validation"],
+      "capabilities": [
+        "mece-decomposition",
+        "task-breakdown",
+        "coverage-validation"
+      ],
       "description": "MECE decomposition specialist (Mutually Exclusive, Collectively Exhaustive)",
-      "skills": ["research-driven-planning", "parallel-swarm-implementation"],
-      "prompting_techniques": ["plan-and-solve"]
+      "skills": [
+        "research-driven-planning",
+        "parallel-swarm-implementation"
+      ],
+      "prompting_techniques": [
+        "plan-and-solve"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "web-researcher": {
       "type": "core-development",
       "subagent_type": "researcher",
-      "capabilities": ["web-search", "information-gathering", "source-validation"],
+      "capabilities": [
+        "web-search",
+        "information-gathering",
+        "source-validation"
+      ],
       "description": "Web research specialist for external information gathering",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["self-consistency"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "self-consistency"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     },
     "evidence-synthesizer": {
       "type": "core-development",
       "subagent_type": "analyst",
-      "capabilities": ["evidence-synthesis", "cross-source-validation", "recommendation-generation"],
+      "capabilities": [
+        "evidence-synthesis",
+        "cross-source-validation",
+        "recommendation-generation"
+      ],
       "description": "Evidence synthesis specialist with cross-source validation",
-      "skills": ["research-driven-planning"],
-      "prompting_techniques": ["self-consistency", "byzantine-consensus"]
+      "skills": [
+        "research-driven-planning"
+      ],
+      "prompting_techniques": [
+        "self-consistency",
+        "byzantine-consensus"
+      ],
+      "mcp_servers": {
+        "required": [
+          "memory-mcp"
+        ],
+        "recommended": [],
+        "usage": "All agents have access to memory-mcp for persistent memory with WHO/WHEN/PROJECT/WHY tagging"
+      }
     }
   },
   "categories": {
     "core-development": {
       "count": 15,
-      "agents": ["researcher", "coder", "tester", "reviewer", "planner", "analyst", "pre-mortem-analyst", "failure-pattern-researcher", "fix-strategy-planner", "cost-benefit-analyzer", "mece-decomposer", "web-researcher", "evidence-synthesizer", "fix-implementation-specialist", "synthesis-coordinator"]
+      "agents": [
+        "researcher",
+        "coder",
+        "tester",
+        "reviewer",
+        "planner",
+        "analyst",
+        "pre-mortem-analyst",
+        "failure-pattern-researcher",
+        "fix-strategy-planner",
+        "cost-benefit-analyzer",
+        "mece-decomposer",
+        "web-researcher",
+        "evidence-synthesizer",
+        "fix-implementation-specialist",
+        "synthesis-coordinator"
+      ]
     },
     "swarm-coordination": {
       "count": 10,
-      "agents": ["hierarchical-coordinator", "mesh-coordinator", "adaptive-coordinator", "collective-intelligence-coordinator", "swarm-memory-manager", "task-orchestrator", "smart-agent", "swarm-init", "performance-benchmarker", "memory-coordinator", "queen-coordinator", "fix-approval-coordinator"]
+      "agents": [
+        "hierarchical-coordinator",
+        "mesh-coordinator",
+        "adaptive-coordinator",
+        "collective-intelligence-coordinator",
+        "swarm-memory-manager",
+        "task-orchestrator",
+        "smart-agent",
+        "swarm-init",
+        "performance-benchmarker",
+        "memory-coordinator",
+        "queen-coordinator",
+        "fix-approval-coordinator"
+      ]
     },
     "consensus-distributed": {
       "count": 9,
-      "agents": ["byzantine-coordinator", "raft-manager", "gossip-coordinator", "crdt-synchronizer", "quorum-manager", "security-manager", "consensus-builder"]
+      "agents": [
+        "byzantine-coordinator",
+        "raft-manager",
+        "gossip-coordinator",
+        "crdt-synchronizer",
+        "quorum-manager",
+        "security-manager",
+        "consensus-builder"
+      ]
     },
     "specialized-development": {
       "count": 20,
-      "agents": ["backend-dev", "mobile-dev", "ml-developer", "cicd-engineer", "api-docs", "system-architect", "code-analyzer", "base-template-generator", "production-validator", "debugger", "migration-planner", "gemini-analyst", "graph-analyst", "defense-architect", "root-cause-detective", "connascence-detector", "dependency-conflict-detector", "error-message-analyzer", "code-context-investigator"]
+      "agents": [
+        "backend-dev",
+        "mobile-dev",
+        "ml-developer",
+        "cicd-engineer",
+        "api-docs",
+        "system-architect",
+        "code-analyzer",
+        "base-template-generator",
+        "production-validator",
+        "debugger",
+        "migration-planner",
+        "gemini-analyst",
+        "graph-analyst",
+        "defense-architect",
+        "root-cause-detective",
+        "connascence-detector",
+        "dependency-conflict-detector",
+        "error-message-analyzer",
+        "code-context-investigator"
+      ]
     },
     "github-integration": {
       "count": 10,
-      "agents": ["pr-manager", "code-review-swarm", "issue-tracker", "release-manager", "workflow-automation", "project-board-sync", "repo-architect", "multi-repo-swarm", "swarm-pr", "swarm-issue", "github-analyst"]
+      "agents": [
+        "pr-manager",
+        "code-review-swarm",
+        "issue-tracker",
+        "release-manager",
+        "workflow-automation",
+        "project-board-sync",
+        "repo-architect",
+        "multi-repo-swarm",
+        "swarm-pr",
+        "swarm-issue",
+        "github-analyst"
+      ]
     },
     "sparc-methodology": {
       "count": 6,
-      "agents": ["sparc-coord", "specification", "pseudocode", "architecture", "refinement", "sparc-coder"]
+      "agents": [
+        "sparc-coord",
+        "specification",
+        "pseudocode",
+        "architecture",
+        "refinement",
+        "sparc-coder"
+      ]
     },
     "testing-quality": {
       "count": 10,
-      "agents": ["tdd-london-swarm", "theater-detection-audit", "functionality-audit", "style-audit", "sandbox-validator", "integration-checker", "test-validity-auditor", "differential-validator"]
+      "agents": [
+        "tdd-london-swarm",
+        "theater-detection-audit",
+        "functionality-audit",
+        "style-audit",
+        "sandbox-validator",
+        "integration-checker",
+        "test-validity-auditor",
+        "differential-validator"
+      ]
     },
     "performance-monitoring": {
       "count": 3,
-      "agents": ["perf-analyzer", "optimizer", "topology-optimizer"]
+      "agents": [
+        "perf-analyzer",
+        "optimizer",
+        "topology-optimizer"
+      ]
     },
     "meta-tools": {
       "count": 8,
-      "agents": ["skill-forge", "intent-analyzer", "prompt-architect", "micro-skill-creator", "cascade-orchestrator", "agent-creator", "skill-builder", "slash-command-encoder"]
+      "agents": [
+        "skill-forge",
+        "intent-analyzer",
+        "prompt-architect",
+        "micro-skill-creator",
+        "cascade-orchestrator",
+        "agent-creator",
+        "skill-builder",
+        "slash-command-encoder"
+      ]
     }
   },
   "prompting_techniques": {
@@ -801,5 +2424,11 @@
     "last_updated": "2025-10-30",
     "three_loop_integration": true,
     "evidence_based_optimization": true
+  },
+  "mcp_integration": {
+    "version": "3.0.2",
+    "last_updated": "2025-11-01",
+    "description": "All agents now include MCP server assignments based on their capabilities and use cases",
+    "marketplace_guide": "docs/MCP-MARKETPLACE-GUIDE.md"
   }
 }
