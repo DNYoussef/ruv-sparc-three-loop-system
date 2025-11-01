@@ -25,10 +25,7 @@
           "memory-mcp"
         ],
         "recommended": [
-          "fetch",
-          "tavily",
-          "exa",
-          "firecrawl"
+          "fetch"
         ],
         "usage": "Use tavily/exa for web search, fetch for content retrieval, memory-mcp to store research findings with \"research\" intent"
       }
@@ -86,9 +83,7 @@
           "connascence-analyzer",
           "focused-changes"
         ],
-        "recommended": [
-          "e2b"
-        ],
+        "recommended": [],
         "usage": "Use root_cause_analysis from focused-changes for test failures, connascence-analyzer for quality checks, memory-mcp to store test patterns with \"testing\" intent"
       }
     },
@@ -171,10 +166,7 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "logfire",
-          "chroma"
-        ],
+        "recommended": [],
         "usage": "Use connascence-analyzer for code analysis, memory-mcp to store metrics and patterns with \"analysis\" intent"
       }
     },
@@ -199,13 +191,7 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "supabase",
-          "postgres",
-          "aws",
-          "azure",
-          "docker"
-        ],
+        "recommended": [],
         "usage": "Store database schemas, API contracts in memory-mcp, validate code with connascence-analyzer"
       }
     },
@@ -229,10 +215,7 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "supabase",
-          "firebase"
-        ],
+        "recommended": [],
         "usage": "Store platform-specific patterns, UI components in memory-mcp"
       }
     },
@@ -259,11 +242,7 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "chroma",
-          "milvus",
-          "duckdb"
-        ],
+        "recommended": [],
         "usage": "Store model architectures, hyperparameters, dataset metadata in memory-mcp"
       }
     },
@@ -289,11 +268,7 @@
           "memory-mcp"
         ],
         "recommended": [
-          "git",
-          "github",
-          "docker",
-          "aws",
-          "azure"
+          "git"
         ],
         "usage": "Store pipeline configs, deployment histories in memory-mcp"
       }
@@ -346,9 +321,7 @@
         ],
         "recommended": [
           "sequential-thinking",
-          "ToC",
-          "aws",
-          "azure"
+          "ToC"
         ],
         "usage": "Store system design decisions in memory-mcp long-term layer"
       }
@@ -423,10 +396,7 @@
           "memory-mcp",
           "connascence-analyzer"
         ],
-        "recommended": [
-          "e2b",
-          "docker"
-        ],
+        "recommended": [],
         "usage": "Comprehensive validation with all quality tools, certification in memory-mcp"
       }
     },
@@ -519,9 +489,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "chroma"
-        ],
+        "recommended": [],
         "usage": "Centralized memory coordination across swarm agents"
       }
     },
@@ -545,9 +513,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "chroma"
-        ],
+        "recommended": [],
         "usage": "Manage distributed memory, ensure consistency across swarm"
       }
     },
@@ -640,9 +606,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "logfire"
-        ],
+        "recommended": [],
         "usage": "Track benchmark results over time in memory-mcp"
       }
     },
@@ -829,7 +793,6 @@
         ],
         "recommended": [
           "git",
-          "github",
           "connascence-analyzer"
         ],
         "usage": "Analyze PR changes with connascence-analyzer, track PR lifecycle in memory-mcp"
@@ -858,8 +821,7 @@
           "connascence-analyzer"
         ],
         "recommended": [
-          "git",
-          "github"
+          "git"
         ],
         "usage": "Coordinate review findings with connascence-analyzer, memory-mcp for pattern learning"
       }
@@ -883,11 +845,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "github",
-          "slack",
-          "notion"
-        ],
+        "recommended": [],
         "usage": "Track issue state and progress in memory-mcp with \"planning\" intent"
       }
     },
@@ -912,9 +870,7 @@
           "memory-mcp"
         ],
         "recommended": [
-          "git",
-          "github",
-          "docker"
+          "git"
         ],
         "usage": "Store release notes, deployment history in memory-mcp long-term layer"
       }
@@ -938,12 +894,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "github",
-          "docker",
-          "aws",
-          "azure"
-        ],
+        "recommended": [],
         "usage": "Track workflow executions, pipeline configs in memory-mcp"
       }
     },
@@ -966,11 +917,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "github",
-          "slack",
-          "notion"
-        ],
+        "recommended": [],
         "usage": "Sync project state across platforms via memory-mcp"
       }
     },
@@ -995,7 +942,6 @@
         ],
         "recommended": [
           "git",
-          "github",
           "ToC"
         ],
         "usage": "Store architecture decisions in memory-mcp long-term layer"
@@ -1021,8 +967,7 @@
           "memory-mcp"
         ],
         "recommended": [
-          "git",
-          "github"
+          "git"
         ],
         "usage": "Coordinate across repositories with memory-mcp shared state"
       }
@@ -1142,7 +1087,6 @@
           "connascence-analyzer"
         ],
         "recommended": [
-          "e2b",
           "focused-changes"
         ],
         "usage": "Validate functionality with e2b sandboxes, track audit results in memory-mcp"
@@ -1370,9 +1314,7 @@
         "required": [
           "memory-mcp"
         ],
-        "recommended": [
-          "logfire"
-        ],
+        "recommended": [],
         "usage": "Store performance metrics, bottleneck analysis in memory-mcp"
       }
     },
@@ -2426,9 +2368,10 @@
     "evidence_based_optimization": true
   },
   "mcp_integration": {
-    "version": "3.0.2",
+    "version": "3.0.3",
     "last_updated": "2025-11-01",
-    "description": "All agents now include MCP server assignments based on their capabilities and use cases",
+    "description": "All agents now use ONLY free MCP servers (no payment, API keys, or accounts required)",
+    "free_servers_only": true,
     "marketplace_guide": "docs/MCP-MARKETPLACE-GUIDE.md"
   }
 }

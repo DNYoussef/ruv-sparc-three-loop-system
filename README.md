@@ -99,9 +99,10 @@ claude mcp add memory-mcp /path/to/memory-mcp/venv/Scripts/python.exe -u -m src.
 **Tagging Protocol**: See `hooks/12fa/memory-mcp-tagging-protocol.js` for automatic metadata injection
 
 **MCP Marketplace & Ecosystem**: See [docs/MCP-MARKETPLACE-GUIDE.md](docs/MCP-MARKETPLACE-GUIDE.md) for:
-- Complete catalog of 100+ available MCP servers (official + community)
-- Agent-to-MCP-server mapping for all 86+ agents
-- Installation guide for popular MCP servers (GitHub, Supabase, Tavily, E2B, etc.)
+- **FREE SERVERS ONLY** - No payment, API keys, or accounts required
+- Complete catalog of 11 free MCP servers (4 local + 7 official Anthropic)
+- Agent-to-MCP-server mapping for all 90 agents
+- Installation guide for all free servers
 - Usage examples and best practices
 
 ---

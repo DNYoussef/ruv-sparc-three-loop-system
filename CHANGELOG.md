@@ -7,6 +7,74 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.3] - 2025-11-01
+
+### Changed
+
+#### FREE MCP SERVERS ONLY
+
+**MAJOR BREAKING CHANGE**: Removed all MCP servers that require payment, API keys, or account registration.
+
+**Removed Servers** (39 total):
+- **Web Search**: ~~Tavily~~, ~~Exa~~, ~~Firecrawl~~, ~~Browserbase~~ (all require API keys)
+- **Infrastructure**: ~~E2B~~, ~~Docker~~, ~~AWS~~, ~~Azure~~, ~~Cloudflare~~ (all require accounts/credentials)
+- **Databases**: ~~Supabase~~, ~~PostgreSQL~~, ~~Neo4j~~, ~~Milvus~~, ~~Chroma~~, ~~DuckDB~~ (all require setup/credentials)
+- **GitHub**: ~~GitHub MCP~~ (requires GITHUB_TOKEN)
+- **Communication**: ~~Slack~~, ~~Notion~~, ~~Taskade~~ (all require accounts)
+- **AI/ML Services**: ~~Langfuse~~, ~~Logfire~~, ~~ElevenLabs~~ (all require API keys)
+- **Payment**: ~~Stripe~~, ~~PayPal~~ (require accounts)
+- **Observability**: ~~Grafana~~, ~~SonarQube~~, ~~Sentry~~ (require setup/accounts)
+- **Mobile**: ~~Firebase~~ (requires Google account)
+
+**Remaining FREE Servers** (11 total):
+
+**Currently Installed (Local)** (4):
+1. connascence-analyzer - FREE local code analysis
+2. memory-mcp - FREE local ChromaDB storage
+3. focused-changes - FREE local file tracking
+4. ToC - FREE local file parsing
+
+**Official Anthropic** (7):
+5. fetch - FREE web content fetching
+6. filesystem - FREE file operations
+7. git - FREE Git repository tools
+8. memory - FREE knowledge graph (we use enhanced version)
+9. sequential-thinking - FREE problem-solving
+10. time - FREE timezone conversion
+11. everything - FREE reference server
+
+#### Agent Registry Updates
+- Updated all 90 agents to use ONLY free servers
+- Removed 39 paid servers from "recommended" arrays
+- Many agents now have empty "recommended" arrays (only "required" servers)
+- Added `free_servers_only: true` flag to registry metadata
+- Registry version updated to 3.0.3
+
+#### Documentation Updates
+- **MCP-MARKETPLACE-GUIDE.md**: Completely restructured to show only free servers
+- Added "Removed from Recommendations" section listing all 39 paid servers
+- Added clear warnings about free-only policy
+- Removed installation guides for paid services
+- Updated README.md to reflect "11 free servers" instead of "100+ servers"
+
+### Rationale
+
+**Why Remove Paid Services?**
+- Users should not need external accounts or API keys to use the system
+- Cost transparency - all servers are 100% free
+- Privacy - no data sent to third-party services
+- Simplicity - simpler installation and configuration
+- Local-first - everything runs on your machine
+
+**Alternative Solutions:**
+- For web search: Use official `fetch` server + manual browsing
+- For databases: Use local ChromaDB (memory-mcp) for vector storage
+- For GitHub: Use official `git` server (no API required for local repos)
+- For communication: Use local file system or memory-mcp for coordination
+- For infrastructure: Use local Docker/tools directly (not via MCP)
+
+---
+
 ## [3.0.2] - 2025-11-01
 
 ### Added

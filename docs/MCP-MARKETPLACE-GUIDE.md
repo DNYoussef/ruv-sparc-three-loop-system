@@ -134,103 +134,139 @@ Time and timezone conversion capabilities
 
 ---
 
-## Recommended MCP Servers by Category
+## Free & Local MCP Servers Only
 
-### Development & Infrastructure
+**IMPORTANT**: This guide focuses ONLY on free, open-source MCP servers that do NOT require:
+- Paid subscriptions
+- API keys from third-party services
+- Account registration or login
 
-#### **GitHub**
-Repository and workflow management
-- **Agents**: github-modes, pr-manager, code-review-swarm, issue-tracker, release-manager, workflow-automation, project-board-sync, repo-architect, multi-repo-swarm
+All servers listed below are either:
+1. **Official Anthropic servers** (free, open-source)
+2. **Local-only servers** (run on your machine, no external services)
+3. **Self-hosted open-source** (free to run yourself)
 
-#### **Docker**
-Container management and deployment
-- **Agents**: cicd-engineer, backend-dev, production-validator
+---
 
-#### **E2B**
-Run code in secure sandboxes
-- **Agents**: tester, functionality-audit, production-validator
+## Currently Installed (All Free & Local)
 
-#### **AWS Suite** (CDK, Core, Cost Analysis, Documentation, Bedrock KB)
-Cloud development and infrastructure tools
-- **Agents**: backend-dev, cicd-engineer, system-architect
+### 1. **connascence-analyzer** (Local)
+- **Status**: Production Ready
+- **Cost**: FREE (local analysis only)
+- **Requirements**: Python, tree-sitter
+- **Agents**: All 14 code quality agents
 
-#### **Azure DevOps**
-Pipeline and project management
-- **Agents**: cicd-engineer, workflow-automation, project-board-sync
+### 2. **memory-mcp** (Local)
+- **Status**: Production Ready
+- **Cost**: FREE (local ChromaDB storage)
+- **Requirements**: Python, ChromaDB
+- **Agents**: ALL 90 agents (global access)
 
-### Data & Databases
+### 3. **focused-changes** (Local)
+- **Status**: Production Ready
+- **Cost**: FREE (local file tracking)
+- **Requirements**: Node.js
+- **Agents**: coder, reviewer, tester, sparc-coder
 
-#### **PostgreSQL/Supabase**
-Connects to Supabase platform for database, auth, edge functions
-- **Agents**: backend-dev, mobile-dev, system-architect
+### 4. **ToC** (Local)
+- **Status**: Production Ready
+- **Cost**: FREE (local file parsing)
+- **Requirements**: Node.js
+- **Agents**: Documentation specialists
 
-#### **Neo4j**
-Graph database with Cypher support
-- **Agents**: backend-dev, data-modeling specialists
+---
 
-#### **DuckDB/MotherDuck**
-Analytics database access
-- **Agents**: ml-developer, data analysis agents
+## Official Anthropic MCP Servers (All Free)
 
-#### **Milvus/Chroma**
-Vector database operations (embeddings)
-- **Agents**: ml-developer, memory-coordinator, neural specialists
+These are maintained by Anthropic and are completely free to use:
 
-### Web & Data Extraction
-
-#### **Firecrawl**
-Web data extraction with HTML/markdown conversion
-- **Agents**: researcher, web-research tasks
-
-#### **Exa**
-Search engine made for AIs
+### 1. **Fetch**
+- **Purpose**: Web content fetching and conversion for LLM usage
+- **Cost**: FREE
+- **Requirements**: None (npx install)
 - **Agents**: researcher, planner
+- **Install**: `npx @modelcontextprotocol/server-fetch`
 
-#### **Tavily**
-Search engine for AI agents (search + extract)
-- **Agents**: researcher, specification, planning agents
+### 2. **Filesystem**
+- **Purpose**: Secure file operations with configurable access controls
+- **Cost**: FREE
+- **Requirements**: None (npx install)
+- **Agents**: ALL agents needing file I/O
+- **Install**: `npx @modelcontextprotocol/server-filesystem /allowed/path`
 
-#### **Browserbase**
-Cloud browser automation
-- **Agents**: web automation, testing agents
+### 3. **Git**
+- **Purpose**: Tools to read, search, and manipulate Git repositories
+- **Cost**: FREE
+- **Requirements**: Git installed locally
+- **Agents**: All GitHub/repository agents
+- **Install**: `npx @modelcontextprotocol/server-git`
 
-### AI & Machine Learning
+### 4. **Memory** (Official)
+- **Purpose**: Knowledge graph-based persistent memory system
+- **Cost**: FREE
+- **Requirements**: None (npx install)
+- **Note**: We use the enhanced Memory MCP Triple System instead
+- **Install**: `npx @modelcontextprotocol/server-memory`
 
-#### **Langfuse**
-Open-source tool for collaborative prompt editing, versioning, evaluation
-- **Agents**: prompt-architect, agent-creator, sparc-coord
+### 5. **Sequential Thinking**
+- **Purpose**: Dynamic and reflective problem-solving through thought sequences
+- **Cost**: FREE
+- **Requirements**: None (npx install)
+- **Agents**: planner, researcher, system-architect, specification, architecture
+- **Install**: `npx @modelcontextprotocol/server-sequential-thinking`
 
-#### **Logfire**
-OpenTelemetry traces and metrics access
-- **Agents**: perf-analyzer, performance-benchmarker
+### 6. **Time**
+- **Purpose**: Time and timezone conversion capabilities
+- **Cost**: FREE
+- **Requirements**: None (npx install)
+- **Agents**: Scheduling, planning, time-sensitive workflows
+- **Install**: `npx @modelcontextprotocol/server-time`
 
-#### **Chroma**
-Vector search and embeddings
-- **Agents**: ml-developer, memory-coordinator, agentdb specialists
+### 7. **Everything**
+- **Purpose**: Reference/test server demonstrating all MCP capabilities
+- **Cost**: FREE
+- **Requirements**: None (npx install)
+- **Install**: `npx @modelcontextprotocol/server-everything`
 
-### Communication & Productivity
+---
 
-#### **Slack Integration**
-Team communication
-- **Agents**: issue-tracker, project-board-sync, workflow-automation
+## Community Free & Open Source Servers
 
-#### **Notion/Taskade**
-Task management and documentation
-- **Agents**: planner, project-board-sync, issue-tracker
+**NOTE**: Only listing servers that are:
+- Completely free
+- No API keys required
+- Run locally or are self-hosted
+- Open source
 
-### Specialized Services
+### Local Development Tools
 
-#### **ElevenLabs**
-Text-to-speech generation
-- **Agents**: Content creation, accessibility agents
+#### **VSCode MCP Server**
+- **Purpose**: Expose VS Code editing features to LLMs
+- **Cost**: FREE (local only)
+- **Requirements**: VS Code installed
+- **Repository**: https://github.com/juehang/vscode-mcp-server
 
-#### **Stripe/PayPal**
-Payment processing
-- **Agents**: backend-dev for e-commerce projects
+---
 
-#### **SonarQube**
-Code quality and security analysis
-- **Agents**: reviewer, code-analyzer, security-manager
+## Removed from Recommendations
+
+The following servers have been **REMOVED** because they require payment, API keys, or third-party accounts:
+
+**Removed - Require API Keys/Payment:**
+- ~~Tavily~~ (requires TAVILY_API_KEY)
+- ~~Exa~~ (requires API key)
+- ~~E2B~~ (requires E2B_API_KEY)
+- ~~Firecrawl~~ (requires API key)
+- ~~Browserbase~~ (requires account/payment)
+- ~~GitHub MCP~~ (requires GITHUB_TOKEN - though GitHub tokens are free)
+- ~~Supabase~~ (requires project setup/credentials)
+- ~~AWS Suite~~ (requires AWS account/credentials)
+- ~~Azure~~ (requires Azure account/credentials)
+- ~~All database services~~ (require connection strings/credentials)
+- ~~All payment services~~ (Stripe, PayPal - require accounts)
+- ~~All communication services~~ (Slack, Notion - require accounts)
+- ~~All AI services~~ (ElevenLabs, Langfuse - require accounts/API keys)
+- ~~All observability services~~ (Grafana, Logfire - require setup/accounts)
 
 ---
 
