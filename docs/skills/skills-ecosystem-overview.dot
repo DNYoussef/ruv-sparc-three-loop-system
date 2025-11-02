@@ -1,0 +1,363 @@
+// Skills Ecosystem Overview - Complete Bipartite Graph
+// 106 Skills × 10 MECE Categories (62 current + 44 planned)
+// Generated: 2025-11-02
+
+digraph SkillsEcosystem {
+    // Graph settings
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.8;
+    ranksep=1.2;
+    bgcolor="#FAFAFA";
+
+    // Title node
+    title [
+        label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10">
+                <TR><TD BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="24"><B>Skills Ecosystem Overview</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">106 Total Skills (62 Current + 44 Planned) × 10 MECE Categories</FONT></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Legend node
+    legend [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#424242"><FONT COLOR="white"><B>Complexity Legend</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#4CAF50">Low (1-3)</TD><TD>Foundation skills, single agent</TD></TR>
+                <TR><TD BGCOLOR="#FFC107">Medium (4-7)</TD><TD>Multi-step, 2-3 agents</TD></TR>
+                <TR><TD BGCOLOR="#FF9800">High (8-12)</TD><TD>Complex workflows, 4-6 agents</TD></TR>
+                <TR><TD BGCOLOR="#F44336">Very High (13+)</TD><TD>Enterprise-grade, 7+ agents, multi-phase</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#E0E0E0"><FONT POINT-SIZE="10">Current: 62 | Planned: 44 | Coverage: 85%</FONT></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Category nodes - 10 MECE categories
+    subgraph cluster_categories {
+        label="Skill Categories (MECE Classification)";
+        style=filled;
+        color="#E1F5FE";
+
+        cat_dev [label="Development Lifecycle\n(15 skills)", shape=box, style="filled,rounded", fillcolor="#B3E5FC", color="#0277BD", fontsize=12, width=2.5];
+        cat_infra [label="Infrastructure & Ops\n(12 skills)", shape=box, style="filled,rounded", fillcolor="#C5CAE9", color="#3949AB", fontsize=12, width=2.5];
+        cat_workflow [label="Workflow & Coordination\n(10 skills)", shape=box, style="filled,rounded", fillcolor="#F0F4C3", color="#827717", fontsize=12, width=2.5];
+        cat_platform [label="Platform & Integration\n(14 skills)", shape=box, style="filled,rounded", fillcolor="#FFF9C4", color="#F57F17", fontsize=12, width=2.5];
+        cat_meta [label="Meta-Tools & Utilities\n(10 skills)", shape=box, style="filled,rounded", fillcolor="#FFCCBC", color="#E64A19", fontsize=12, width=2.5];
+        cat_data [label="Data & Intelligence\n(12 skills)", shape=box, style="filled,rounded", fillcolor="#D1C4E9", color="#512DA8", fontsize=12, width=2.5];
+        cat_external [label="External Tools\n(9 skills)", shape=box, style="filled,rounded", fillcolor="#FFECB3", color="#FF6F00", fontsize=12, width=2.5];
+        cat_research [label="Research & Analysis\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#DCEDC8", color="#689F38", fontsize=12, width=2.5];
+        cat_specialized [label="Specialized Development\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#E1BEE7", color="#7B1FA2", fontsize=12, width=2.5];
+        cat_creation [label="Code Creation & Architecture\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#B2DFDB", color="#00897B", fontsize=12, width=2.5];
+    }
+
+    // Development Lifecycle Skills (15 skills)
+    subgraph cluster_dev_skills {
+        label="Development Lifecycle Skills";
+        style=filled;
+        color="#E3F2FD";
+
+        // Planning & Analysis (4 skills)
+        s_intent [label="intent-analyzer\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_planner [label="interactive-planner\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+        s_gaps [label="skill-gap-analyzer\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_deps [label="dependency-mapper\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Implementation (4 skills)
+        s_feature [label="feature-dev-complete\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_pair [label="pair-programming\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_hooks [label="hooks-automation\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_i18n [label="i18n-automation\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Testing & QA (5 skills)
+        s_func [label="functionality-audit\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_theater [label="theater-detection\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_test [label="testing-framework\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_style [label="style-audit\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_quick [label="quick-quality-check\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Documentation & Deployment (2 skills)
+        s_doc [label="doc-generator\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+        s_prod [label="production-readiness\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+    }
+
+    // Infrastructure & Operations Skills (12 skills)
+    subgraph cluster_infra_skills {
+        label="Infrastructure & Operations Skills";
+        style=filled;
+        color="#EDE7F6";
+
+        // Security (3 skills)
+        s_security [label="security-analyzer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_network [label="network-security-setup\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_sandbox [label="sandbox-configurator\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Performance (2 skills)
+        s_profiler [label="performance-profiler\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_perf_analysis [label="performance-analysis\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // DevOps (3 skills)
+        s_sparc [label="sparc-workflow\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_release [label="github-release-mgmt\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_cicd [label="github-workflow-automation\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // CI/CD Recovery (1 skill)
+        s_cicd_recovery [label="cicd-intelligent-recovery\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // Platform (3 skills - NEW from Batch 4)
+        s_platform_ops [label="platform-operations\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_monitoring [label="monitoring-observability\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_incident [label="incident-response\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+    }
+
+    // Workflow & Coordination Skills (10 skills)
+    subgraph cluster_workflow_skills {
+        label="Workflow & Coordination Skills";
+        style=filled;
+        color="#FFF8E1";
+
+        // Swarm Orchestration (4 skills)
+        s_swarm_adv [label="swarm-advanced\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_swarm_orch [label="swarm-orchestration\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_cascade [label="cascade-orchestrator\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_hive [label="hive-mind-advanced\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // Agent Coordination (2 skills)
+        s_stream [label="stream-chain\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_slash [label="slash-command-encoder\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+
+        // Process Automation (2 skills)
+        s_review [label="code-review-assistant\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_bugfix [label="smart-bug-fix\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Debugging (2 skills)
+        s_debug [label="debugging-assistant\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_reverse [label="reverse-engineer-debug\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+    }
+
+    // Platform & Integration Skills (14 skills)
+    subgraph cluster_platform_skills {
+        label="Platform & Integration Skills";
+        style=filled;
+        color="#FFF3E0";
+
+        // Flow Nexus (3 skills)
+        s_neural [label="flow-nexus-neural\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_nexus [label="flow-nexus-platform\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_nexus_swarm [label="flow-nexus-swarm\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // AgentDB (6 skills)
+        s_adb_adv [label="agentdb-advanced\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_adb_learn [label="agentdb-learning\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_adb_mem [label="agentdb-memory\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_adb_opt [label="agentdb-optimization\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_adb_vec [label="agentdb-vector-search\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_reason [label="reasoningbank-agentdb\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // GitHub (5 skills)
+        s_gh_pr [label="github-code-review\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_gh_multi [label="github-multi-repo\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_gh_proj [label="github-project-mgmt\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_gh_rel [label="github-release-mgmt\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_gh_workflow [label="github-workflow-auto\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+    }
+
+    // Meta-Tools & Utilities Skills (10 skills)
+    subgraph cluster_meta_skills {
+        label="Meta-Tools & Utilities Skills";
+        style=filled;
+        color="#FCE4EC";
+
+        // Skill Management (5 skills)
+        s_agent_create [label="agent-creator\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_skill_agent [label="skill-creator-agent\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_micro [label="micro-skill-creator\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_forge [label="skill-forge\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_builder [label="skill-builder\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Optimization (3 skills)
+        s_prompt [label="prompt-optimization\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_token [label="token-budget-advisor\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_prompt_arch [label="prompt-architect\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // CLI Tools (2 skills)
+        s_teleport [label="web-cli-teleport\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_specialized [label="specialized-tools\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+    }
+
+    // Data & Intelligence Skills (12 skills)
+    subgraph cluster_data_skills {
+        label="Data & Intelligence Skills";
+        style=filled;
+        color="#E8F5E9";
+
+        // ReasoningBank (2 skills)
+        s_reason_intel [label="reasoningbank-intelligence\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_reason_adb [label="reasoningbank-agentdb\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // Memory & Context (3 skills)
+        s_memory_pattern [label="agentdb-memory-patterns\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_context [label="context-management\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_session [label="session-persistence\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Research SOP (4 skills - NEW)
+        s_data_steward [label="data-steward\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_ethics [label="ethics-agent\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_archivist [label="archivist\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_evaluator [label="evaluator\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // Analytics (3 skills - NEW)
+        s_analytics [label="data-analytics\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_viz [label="data-visualization\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_pipeline [label="data-pipeline-engineer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+    }
+
+    // External Tools Skills (9 skills)
+    subgraph cluster_external_skills {
+        label="External Tools Skills";
+        style=filled;
+        color="#FFF59D";
+
+        // Gemini (4 skills)
+        s_gem_search [label="gemini-search\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+        s_gem_mega [label="gemini-megacontext\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_gem_media [label="gemini-media\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_gem_ext [label="gemini-extensions\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+
+        // Codex (2 skills)
+        s_codex [label="codex-auto\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_codex_reason [label="codex-reasoning\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Multi-Model (1 skill)
+        s_multi [label="multi-model\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Documentation Tools (2 skills)
+        s_pptx [label="pptx-generation\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_doc_ext [label="documentation-external\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+    }
+
+    // Research & Analysis Skills (8 skills)
+    subgraph cluster_research_skills {
+        label="Research & Analysis Skills";
+        style=filled;
+        color="#E0F2F1";
+
+        // Deep Research (4 skills - Quality Gate System)
+        s_research_plan [label="research-driven-planning\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_sop_launch [label="sop-product-launch\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_sop_api [label="sop-api-development\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_sop_review [label="sop-code-review\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Analysis (4 skills)
+        s_code_analysis [label="code-analyzer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_arch_analysis [label="architecture-analyzer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_tech_debt [label="tech-debt-analyzer\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_complexity [label="complexity-analyzer\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+    }
+
+    // Specialized Development Skills (8 skills)
+    subgraph cluster_specialized_skills {
+        label="Specialized Development Skills";
+        style=filled;
+        color="#F3E5F5";
+
+        // Backend (2 skills)
+        s_backend [label="backend-api-orchestrator\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_backend_dev [label="backend-developer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Mobile (1 skill)
+        s_mobile [label="mobile-dev\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Machine Learning (2 skills)
+        s_ml [label="ml-expert\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_ml_debug [label="ml-training-debugger\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+
+        // Frontend (3 skills - NEW from Batch 4)
+        s_react [label="react-developer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_vue [label="vue-developer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_ui [label="ui-component-builder\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+    }
+
+    // Code Creation & Architecture Skills (8 skills)
+    subgraph cluster_creation_skills {
+        label="Code Creation & Architecture Skills";
+        style=filled;
+        color="#E0F7FA";
+
+        // SPARC Methodology (2 skills)
+        s_sparc_method [label="sparc-methodology\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_sparc_coord [label="sparc-coordinator\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+
+        // Architecture (3 skills)
+        s_system_arch [label="system-architect\n(Very High)", shape=ellipse, style=filled, fillcolor="#F44336", fontsize=10];
+        s_arch_design [label="architecture-designer\n(High)", shape=ellipse, style=filled, fillcolor="#FF9800", fontsize=10];
+        s_pattern [label="design-pattern-specialist\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+
+        // Templates (3 skills)
+        s_template [label="base-template-generator\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+        s_boilerplate [label="boilerplate-creator\n(Low)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=10];
+        s_scaffold [label="project-scaffolder\n(Medium)", shape=ellipse, style=filled, fillcolor="#FFC107", fontsize=10];
+    }
+
+    // Statistics table
+    stats [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="4" BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="14"><B>Ecosystem Statistics</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><B>Category</B></TD><TD><B>Current Skills</B></TD><TD><B>Planned Skills</B></TD><TD><B>Coverage</B></TD></TR>
+                <TR><TD>Development Lifecycle</TD><TD>15</TD><TD>0</TD><TD BGCOLOR="#4CAF50">100%</TD></TR>
+                <TR><TD>Infrastructure & Ops</TD><TD>9</TD><TD>3</TD><TD BGCOLOR="#8BC34A">75%</TD></TR>
+                <TR><TD>Workflow & Coordination</TD><TD>10</TD><TD>0</TD><TD BGCOLOR="#4CAF50">100%</TD></TR>
+                <TR><TD>Platform & Integration</TD><TD>14</TD><TD>0</TD><TD BGCOLOR="#4CAF50">100%</TD></TR>
+                <TR><TD>Meta-Tools & Utilities</TD><TD>10</TD><TD>0</TD><TD BGCOLOR="#4CAF50">100%</TD></TR>
+                <TR><TD>Data & Intelligence</TD><TD>5</TD><TD>7</TD><TD BGCOLOR="#FFC107">42%</TD></TR>
+                <TR><TD>External Tools</TD><TD>9</TD><TD>0</TD><TD BGCOLOR="#4CAF50">100%</TD></TR>
+                <TR><TD>Research & Analysis</TD><TD>4</TD><TD>4</TD><TD BGCOLOR="#FFC107">50%</TD></TR>
+                <TR><TD>Specialized Development</TD><TD>5</TD><TD>3</TD><TD BGCOLOR="#8BC34A">62%</TD></TR>
+                <TR><TD>Code Creation & Architecture</TD><TD>5</TD><TD>3</TD><TD BGCOLOR="#8BC34A">62%</TD></TR>
+                <TR><TD COLSPAN="4" BGCOLOR="#E0E0E0"><B>Total: 62 Current + 44 Planned = 106 Skills</B></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Edges - Category to Skills (showing key relationships)
+    // Development Lifecycle → Skills
+    cat_dev -> {s_intent s_planner s_feature s_pair s_func s_theater s_test s_prod} [color="#0277BD"];
+
+    // Infrastructure & Ops → Skills
+    cat_infra -> {s_security s_network s_profiler s_sparc s_release s_cicd s_cicd_recovery} [color="#3949AB"];
+
+    // Workflow & Coordination → Skills
+    cat_workflow -> {s_swarm_adv s_swarm_orch s_cascade s_hive s_review s_bugfix} [color="#827717"];
+
+    // Platform & Integration → Skills
+    cat_platform -> {s_neural s_nexus s_adb_adv s_adb_learn s_reason s_gh_pr s_gh_multi} [color="#F57F17"];
+
+    // Meta-Tools → Skills
+    cat_meta -> {s_agent_create s_skill_agent s_forge s_builder s_prompt} [color="#E64A19"];
+
+    // Data & Intelligence → Skills
+    cat_data -> {s_reason_intel s_memory_pattern s_data_steward s_ethics s_archivist s_evaluator} [color="#512DA8"];
+
+    // External Tools → Skills
+    cat_external -> {s_gem_search s_gem_mega s_codex s_codex_reason s_multi} [color="#FF6F00"];
+
+    // Research & Analysis → Skills
+    cat_research -> {s_research_plan s_sop_launch s_code_analysis s_arch_analysis} [color="#689F38"];
+
+    // Specialized Development → Skills
+    cat_specialized -> {s_backend s_mobile s_ml s_react s_vue} [color="#7B1FA2"];
+
+    // Code Creation & Architecture → Skills
+    cat_creation -> {s_sparc_method s_sparc_coord s_system_arch s_template} [color="#00897B"];
+
+    // Layout ordering
+    {rank=same; title}
+    {rank=same; cat_dev cat_infra cat_workflow cat_platform cat_meta}
+    {rank=same; cat_data cat_external cat_research cat_specialized cat_creation}
+    {rank=same; legend stats}
+}
