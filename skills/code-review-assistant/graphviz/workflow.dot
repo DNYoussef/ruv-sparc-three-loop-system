@@ -1,0 +1,192 @@
+digraph CodeReviewWorkflow {
+  // Graph properties
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial", fontsize=11];
+  edge [fontname="Arial", fontsize=10];
+
+  // Color scheme
+  node [fillcolor="#E3F2FD"];  // Light blue default
+
+  // Start
+  start [label="PR Submitted", shape=oval, fillcolor="#4CAF50", fontcolor=white, style=filled];
+
+  // Phase 1: Information Gathering
+  subgraph cluster_phase1 {
+    label="Phase 1: Information Gathering";
+    style=filled;
+    fillcolor="#FFF3E0";
+
+    pr_info [label="Gather PR Info\n(gh pr view)", fillcolor="#FFE0B2"];
+    checkout [label="Checkout PR Branch\n(gh pr checkout)", fillcolor="#FFE0B2"];
+    parse_files [label="Parse Changed Files\n(git diff)", fillcolor="#FFE0B2"];
+
+    pr_info -> checkout;
+    checkout -> parse_files;
+  }
+
+  start -> pr_info;
+
+  // Phase 2: Swarm Initialization
+  subgraph cluster_phase2 {
+    label="Phase 2: Swarm Initialization";
+    style=filled;
+    fillcolor="#F3E5F5";
+
+    swarm_init [label="Initialize Swarm\n(mesh topology)", fillcolor="#E1BEE7"];
+    spawn_agents [label="Spawn 5 Specialized\nReview Agents", fillcolor="#E1BEE7"];
+
+    swarm_init -> spawn_agents;
+  }
+
+  parse_files -> swarm_init;
+
+  // Phase 3: Parallel Reviews
+  subgraph cluster_phase3 {
+    label="Phase 3: Parallel Specialized Reviews";
+    style=filled;
+    fillcolor="#E8F5E9";
+
+    security [label="Security Reviewer\n🔒 Vulnerabilities\n🔒 Unsafe patterns\n🔒 Secrets scan", fillcolor="#81C784"];
+    performance [label="Performance Analyst\n⚡ Bottlenecks\n⚡ Complexity\n⚡ Optimization", fillcolor="#81C784"];
+    style [label="Style Reviewer\n🎨 Clean code\n🎨 Best practices\n🎨 Maintainability", fillcolor="#81C784"];
+    tests [label="Test Specialist\n🧪 Coverage\n🧪 Quality\n🧪 Edge cases", fillcolor="#81C784"];
+    docs [label="Docs Reviewer\n📚 API docs\n📚 Comments\n📚 README", fillcolor="#81C784"];
+
+    {rank=same; security; performance; style; tests; docs;}
+  }
+
+  spawn_agents -> security [label="parallel"];
+  spawn_agents -> performance [label="parallel"];
+  spawn_agents -> style [label="parallel"];
+  spawn_agents -> tests [label="parallel"];
+  spawn_agents -> docs [label="parallel"];
+
+  // Individual review outputs
+  sec_output [label="security-review.json\nScore: 0-100\nIssues: critical/high/med/low", shape=note, fillcolor="#FFECB3"];
+  perf_output [label="performance-review.json\nScore: 0-100\nBottlenecks detected", shape=note, fillcolor="#FFECB3"];
+  style_output [label="style-review.json\nScore: 0-100\nViolations found", shape=note, fillcolor="#FFECB3"];
+  test_output [label="test-review.json\nCoverage: %\nGaps identified", shape=note, fillcolor="#FFECB3"];
+  docs_output [label="docs-review.json\nScore: 0-100\nMissing docs", shape=note, fillcolor="#FFECB3"];
+
+  security -> sec_output;
+  performance -> perf_output;
+  style -> style_output;
+  tests -> test_output;
+  docs -> docs_output;
+
+  // Phase 4: Quality Audit
+  subgraph cluster_phase4 {
+    label="Phase 4: Complete Quality Audit";
+    style=filled;
+    fillcolor="#FCE4EC";
+
+    audit [label="Audit Pipeline\n• Functionality Audit\n• Theater Detection\n• Production Readiness", fillcolor="#F48FB1"];
+    audit_output [label="quality-audit.json\nOverall score\nAll tests status", shape=note, fillcolor="#FFECB3"];
+
+    audit -> audit_output;
+  }
+
+  sec_output -> audit;
+  perf_output -> audit;
+  style_output -> audit;
+  test_output -> audit;
+  docs_output -> audit;
+
+  // Phase 5: Aggregation
+  subgraph cluster_phase5 {
+    label="Phase 5: Findings Aggregation";
+    style=filled;
+    fillcolor="#E0F2F1";
+
+    aggregate [label="Aggregate Reviews\nCalculate Scores\nRank by Severity", fillcolor="#80CBC4"];
+    score_calc [label="Overall Score =\n(Security×30% +\nPerformance×25% +\nStyle×20% +\nTests×15% +\nDocs×10%)", shape=diamond, fillcolor="#80CBC4"];
+
+    aggregate -> score_calc;
+  }
+
+  audit_output -> aggregate;
+
+  // Phase 6: Fix Suggestions
+  subgraph cluster_phase6 {
+    label="Phase 6: Fix Suggestions (Codex)";
+    style=filled;
+    fillcolor="#FFF9C4";
+
+    codex [label="Codex Reasoning Engine\nContext-aware fixes\nMultiple alternatives", fillcolor="#FFF59D"];
+    fix_output [label="fix-suggestions.md\nCode fixes\nReasoning\nRisk assessment", shape=note, fillcolor="#FFECB3"];
+
+    codex -> fix_output;
+  }
+
+  score_calc -> codex;
+
+  // Phase 7: Merge Readiness
+  subgraph cluster_phase7 {
+    label="Phase 7: Merge Readiness Assessment";
+    style=filled;
+    fillcolor="#E1F5FE";
+
+    assess [label="Quality Gates Check", shape=diamond, fillcolor="#81D4FA"];
+
+    gate_critical [label="Critical Security\nIssues = 0?", shape=diamond, fillcolor="#B3E5FC"];
+    gate_tests [label="All Tests\nPassing?", shape=diamond, fillcolor="#B3E5FC"];
+    gate_score [label="Overall Score\n≥ 80?", shape=diamond, fillcolor="#B3E5FC"];
+
+    assess -> gate_critical;
+    gate_critical -> gate_tests [label="Yes"];
+    gate_critical -> decision_fail [label="No"];
+    gate_tests -> gate_score [label="Yes"];
+    gate_tests -> decision_fail [label="No"];
+  }
+
+  fix_output -> assess;
+
+  // Decision nodes
+  decision_approve [label="APPROVE\nScore ≥ 90", shape=oval, fillcolor="#66BB6A", fontcolor=white, style=filled];
+  decision_approve_suggest [label="APPROVE WITH\nSUGGESTIONS\nScore 80-89", shape=oval, fillcolor="#FFA726", fontcolor=white, style=filled];
+  decision_fail [label="REQUEST\nCHANGES\nScore < 80", shape=oval, fillcolor="#EF5350", fontcolor=white, style=filled];
+
+  gate_score -> decision_approve [label="≥ 90"];
+  gate_score -> decision_approve_suggest [label="80-89"];
+  gate_score -> decision_fail [label="< 80"];
+
+  // Phase 8: Review Comment
+  subgraph cluster_phase8 {
+    label="Phase 8: Post Review";
+    style=filled;
+    fillcolor="#F3E5F5";
+
+    create_comment [label="Generate Review Comment\n• Summary table\n• Detailed findings\n• Fix suggestions\n• Merge decision", fillcolor="#CE93D8"];
+    post_comment [label="Post to GitHub\n(gh pr comment)", fillcolor="#CE93D8"];
+    pr_review [label="GitHub PR Review\n(gh pr review)", fillcolor="#CE93D8"];
+
+    create_comment -> post_comment;
+    post_comment -> pr_review;
+  }
+
+  decision_approve -> create_comment;
+  decision_approve_suggest -> create_comment;
+  decision_fail -> create_comment;
+
+  // End
+  end [label="Review Complete", shape=oval, fillcolor="#9E9E9E", fontcolor=white, style=filled];
+  pr_review -> end;
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style=filled;
+    fillcolor=white;
+
+    legend_phase [label="Phase Container", fillcolor="#E0E0E0"];
+    legend_action [label="Action", fillcolor="#E3F2FD"];
+    legend_decision [label="Decision", shape=diamond, fillcolor="#B3E5FC"];
+    legend_output [label="Output File", shape=note, fillcolor="#FFECB3"];
+    legend_parallel [label="", style=invis];
+
+    {rank=same; legend_phase; legend_action; legend_decision; legend_output;}
+  }
+
+  // Invisible edge to position legend
+  end -> legend_phase [style=invis];
+}

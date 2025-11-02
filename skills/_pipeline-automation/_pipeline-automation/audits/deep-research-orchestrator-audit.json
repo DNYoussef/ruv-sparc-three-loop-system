@@ -1,0 +1,123 @@
+{
+  "skill_name": "deep-research-orchestrator",
+  "audit_timestamp": "2025-11-02T13:11:59.181828",
+  "overall_score": 0.207,
+  "quality_tier": "Incomplete",
+  "decision": "NO-GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": true,
+          "message": "skill.md found"
+        },
+        {
+          "name": "README.md exists",
+          "passed": false,
+          "message": "README.md missing (required)"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": false,
+          "message": "examples/ directory missing (required)"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": false,
+          "message": "examples/ directory missing"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": false,
+          "message": "Files should be categorized: deep-research-orchestrator-process.dot"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": false,
+          "message": "Invalid directory names: docs, scripts"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": false,
+          "message": "Orphaned files: deep-research-orchestrator-process.dot \u2192 should be in graphviz/"
+        }
+      ],
+      "score": 0.14285714285714285
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": true,
+          "message": "Valid YAML frontmatter found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": true,
+          "message": "Imperative voice detected (6 verbs)"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": false,
+          "message": "README.md not found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": false,
+          "message": "README.md not found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": false,
+          "message": "examples/ directory not found"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": true,
+          "message": "File naming conventions followed"
+        }
+      ],
+      "score": 0.5
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Incomplete",
+      "file_count": 2,
+      "components": {
+        "skill.md": true,
+        "README.md": false,
+        "examples/": false,
+        "references/": false,
+        "resources/": true,
+        "graphviz/": false,
+        "tests/": false
+      },
+      "score": 0.0
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 4,
+    "failed": 9,
+    "violations": [
+      "[STRUCTURE] README.md exists: README.md missing (required)",
+      "[STRUCTURE] examples/ directory exists: examples/ directory missing (required)",
+      "[STRUCTURE] At least 1 example present: examples/ directory missing",
+      "[STRUCTURE] No files in root (except required): Files should be categorized: deep-research-orchestrator-process.dot",
+      "[STRUCTURE] Proper directory naming (lowercase): Invalid directory names: docs, scripts",
+      "[STRUCTURE] No orphaned files: Orphaned files: deep-research-orchestrator-process.dot \u2192 should be in graphviz/",
+      "[CONTENT] README.md has overview: README.md not found",
+      "[CONTENT] README.md has quick start: README.md not found",
+      "[CONTENT] Examples are concrete (not abstract): examples/ directory not found"
+    ],
+    "passes": [
+      "[STRUCTURE] skill.md exists",
+      "[CONTENT] skill.md has YAML frontmatter",
+      "[CONTENT] skill.md uses imperative voice",
+      "[CONTENT] File naming conventions followed"
+    ]
+  }
+}

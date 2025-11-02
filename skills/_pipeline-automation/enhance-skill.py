@@ -19,6 +19,123 @@ class SkillEnhancer:
         self.target_tier = target_tier
         self.enhancements = []
 
+    def pre_enhancement_check(self) -> Dict:
+        """
+        Validate skill structure before enhancement begins.
+        Returns validation status and issues found.
+        """
+        print(f"\n[VALIDATE] Running pre-enhancement checks on {self.skill_name}...")
+
+        issues = []
+        warnings = []
+
+        # CRITICAL: Check if skill.md exists
+        skill_md = self.skill_path / 'skill.md'
+        skill_md_alt = self.skill_path / 'SKILL.md'
+
+        if not skill_md.exists() and not skill_md_alt.exists():
+            issues.append({
+                'severity': 'CRITICAL',
+                'category': 'missing_file',
+                'message': 'skill.md (or SKILL.md) does not exist - REQUIRED for enhancement',
+                'fix': 'Create skill.md before enhancement OR abort'
+            })
+
+        # Check for invalid directory names
+        valid_dirs = {'examples', 'references', 'resources', 'graphviz', 'tests', '.claude-flow', '__pycache__'}
+        for item in self.skill_path.iterdir():
+            if item.is_dir() and item.name not in valid_dirs:
+                # Check if it's a legacy skill directory (contains "when-" or "use-")
+                if 'when-' in item.name or 'use-' in item.name:
+                    issues.append({
+                        'severity': 'MODERATE',
+                        'category': 'invalid_directory',
+                        'message': f'Invalid directory name: {item.name} (legacy structure)',
+                        'fix': f'Remove or migrate content from {item.name}'
+                    })
+
+        # Identify orphaned files (files in root except allowed)
+        allowed_root_files = {'skill.md', 'SKILL.md', 'README.md', '.gitignore'}
+        orphaned_files = []
+
+        for item in self.skill_path.iterdir():
+            if item.is_file() and item.name not in allowed_root_files:
+                orphaned_files.append({
+                    'file': item.name,
+                    'suggested_location': self._suggest_file_location(item.name)
+                })
+
+        if orphaned_files:
+            warnings.append({
+                'severity': 'MODERATE',
+                'category': 'orphaned_files',
+                'message': f'Found {len(orphaned_files)} orphaned file(s) in root',
+                'files': orphaned_files
+            })
+
+        # Check for naming convention violations
+        naming_issues = []
+        for file_path in self.skill_path.rglob('*'):
+            if file_path.is_file():
+                # Check for uppercase in markdown files (except SKILL.md, README.md in root)
+                if file_path.suffix == '.md':
+                    if file_path.parent != self.skill_path:  # Not in root
+                        if file_path.name != file_path.name.lower():
+                            naming_issues.append({
+                                'file': str(file_path.relative_to(self.skill_path)),
+                                'issue': 'Uppercase letters in filename',
+                                'expected': file_path.name.lower()
+                            })
+
+        if naming_issues:
+            warnings.append({
+                'severity': 'MINOR',
+                'category': 'naming_conventions',
+                'message': f'Found {len(naming_issues)} naming convention violation(s)',
+                'files': naming_issues
+            })
+
+        # Determine if enhancement can proceed
+        can_proceed = len([i for i in issues if i['severity'] == 'CRITICAL']) == 0
+
+        validation = {
+            'can_proceed': can_proceed,
+            'critical_issues': len([i for i in issues if i['severity'] == 'CRITICAL']),
+            'total_issues': len(issues),
+            'total_warnings': len(warnings),
+            'issues': issues,
+            'warnings': warnings
+        }
+
+        # Print validation results
+        if not can_proceed:
+            print(f"[VALIDATE] [X] CRITICAL ISSUES FOUND - Cannot proceed with enhancement")
+            for issue in issues:
+                if issue['severity'] == 'CRITICAL':
+                    print(f"  [X] {issue['message']}")
+                    print(f"     Fix: {issue['fix']}")
+        else:
+            print(f"[VALIDATE] [OK] Pre-enhancement checks passed")
+            if warnings:
+                print(f"[VALIDATE] [!] Found {len(warnings)} warning(s) - will be cleaned during enhancement")
+
+        return validation
+
+    def _suggest_file_location(self, filename: str) -> str:
+        """Suggest correct location for orphaned file"""
+        if filename.endswith('.dot'):
+            return 'graphviz/'
+        elif filename.endswith('.py') or filename.endswith('.sh'):
+            return 'resources/scripts/'
+        elif filename.endswith('.json') or filename.endswith('.yaml') or filename.endswith('.yml'):
+            return 'resources/templates/'
+        elif 'enhancement' in filename.lower() or 'summary' in filename.lower():
+            return 'references/ or DELETE (build artifact)'
+        elif filename.endswith('.md'):
+            return 'references/ or examples/'
+        else:
+            return 'resources/assets/'
+
     def analyze_current_state(self) -> Dict:
         """Analyze current skill structure"""
         print(f"\n[ANALYZE] Analyzing {self.skill_name}...")
@@ -196,6 +313,14 @@ class SkillEnhancer:
 **Target Tier**: {plan['target_tier']}
 **Current Tier**: {plan['current_tier']}
 **Estimated Time**: {plan['estimated_time_hours']} hours
+
+## ⚠️ CRITICAL: Preserve Existing Files
+
+**BEFORE starting any work**:
+1. [!] DO NOT modify or delete existing skill.md/SKILL.md
+2. [!] DO NOT modify or delete existing README.md (unless improving it)
+3. [!] CREATE new files in proper MECE directories only
+4. [!] FOLLOW file naming conventions (lowercase for all .md files except SKILL.md, README.md in root)
 
 ## Skill Purpose
 {skill_purpose}...
@@ -386,6 +511,19 @@ def main():
     args = parser.parse_args()
 
     enhancer = SkillEnhancer(args.skill_path, args.tier)
+
+    # Phase 0: Pre-Enhancement Validation
+    validation = enhancer.pre_enhancement_check()
+
+    if not validation['can_proceed']:
+        print(f"\n{'='*80}")
+        print("[X] PRE-ENHANCEMENT VALIDATION FAILED")
+        print(f"{'='*80}")
+        print(f"\nCritical issues found: {validation['critical_issues']}")
+        print(f"Total issues: {validation['total_issues']}")
+        print(f"\nFix the critical issues above before enhancement can proceed.")
+        print(f"{'='*80}\n")
+        sys.exit(1)
 
     # Phase 1: Analyze
     state = enhancer.analyze_current_state()

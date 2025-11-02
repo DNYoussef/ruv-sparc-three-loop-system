@@ -1,0 +1,236 @@
+// Cascade Orchestrator Workflow Patterns
+// Generate PNG: dot -Tpng workflow.dot -o workflow.png
+// Generate SVG: dot -Tsvg workflow.dot -o workflow.svg
+
+digraph cascade_orchestrator_patterns {
+    // Global graph settings
+    rankdir=TB;
+    node [shape=box, style=filled, fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+    bgcolor="#f8f9fa";
+
+    // Title
+    labelloc="t";
+    label="Cascade Orchestrator - Workflow Patterns";
+    fontsize=16;
+    fontname="Arial Bold";
+
+    // Pattern 1: Sequential Pipeline
+    subgraph cluster_sequential {
+        label="Pattern 1: Sequential Pipeline";
+        style=filled;
+        color="#e3f2fd";
+
+        seq_input [label="Input Data", fillcolor="#90caf9"];
+        seq_extract [label="Extract\nData", fillcolor="#64b5f6"];
+        seq_validate [label="Validate\nSchema", fillcolor="#42a5f5"];
+        seq_transform [label="Transform\nFormat", fillcolor="#2196f3"];
+        seq_load [label="Load\nWarehouse", fillcolor="#1976d2"];
+        seq_output [label="Final Output", fillcolor="#0d47a1"];
+
+        seq_input -> seq_extract [label="raw"];
+        seq_extract -> seq_validate [label="extracted"];
+        seq_validate -> seq_transform [label="valid"];
+        seq_transform -> seq_load [label="transformed"];
+        seq_load -> seq_output [label="loaded"];
+
+        seq_note [label="Use Case:\nETL pipelines\nData flows\nOrdered execution", shape=note, fillcolor="#fff9c4"];
+        seq_output -> seq_note [style=dashed, dir=none];
+    }
+
+    // Pattern 2: Parallel Fan-Out
+    subgraph cluster_parallel {
+        label="Pattern 2: Parallel Fan-Out";
+        style=filled;
+        color="#f3e5f5";
+
+        par_input [label="Codebase", fillcolor="#ce93d8"];
+
+        par_lint [label="Lint\nCode", fillcolor="#ba68c8"];
+        par_security [label="Security\nScan", fillcolor="#ab47bc"];
+        par_tests [label="Run\nTests", fillcolor="#9c27b0"];
+        par_complexity [label="Analyze\nComplexity", fillcolor="#8e24aa"];
+
+        par_aggregate [label="Aggregate\nResults", fillcolor="#7b1fa2"];
+        par_output [label="Quality\nReport", fillcolor="#6a1b9a"];
+
+        par_input -> par_lint;
+        par_input -> par_security;
+        par_input -> par_tests;
+        par_input -> par_complexity;
+
+        par_lint -> par_aggregate [label="score: 82"];
+        par_security -> par_aggregate [label="score: 75"];
+        par_tests -> par_aggregate [label="score: 89"];
+        par_complexity -> par_aggregate [label="score: 88"];
+
+        par_aggregate -> par_output [label="overall: 83"];
+
+        par_note [label="Use Case:\nCode quality\nIndependent tasks\nMax throughput", shape=note, fillcolor="#fff9c4"];
+        par_output -> par_note [style=dashed, dir=none];
+
+        par_swarm [label="Swarm:\n4 agents\nMesh topology\nBalanced", shape=cylinder, fillcolor="#f8bbd0"];
+        par_input -> par_swarm [style=dotted, label="coordinate"];
+    }
+
+    // Pattern 3: Conditional Branching
+    subgraph cluster_conditional {
+        label="Pattern 3: Conditional Branching";
+        style=filled;
+        color="#e8f5e9";
+
+        cond_input [label="Bug Report", fillcolor="#a5d6a7"];
+        cond_analyze [label="Analyze\nComplexity", fillcolor="#81c784"];
+
+        cond_decision [label="Complexity\nRouting", shape=diamond, fillcolor="#66bb6a"];
+
+        cond_simple [label="Codex\nQuick Fix", fillcolor="#4caf50"];
+        cond_medium [label="Claude\nAnalysis +\nImplementation", fillcolor="#43a047"];
+        cond_complex [label="Multi-Model\nCollaboration\n(Gemini+Codex+Claude)", fillcolor="#388e3c"];
+
+        cond_test1 [label="Test\n(3 iter)", fillcolor="#2e7d32"];
+        cond_test2 [label="Test\n(5 iter)", fillcolor="#2e7d32"];
+        cond_test3 [label="Test\n(10 iter)", fillcolor="#2e7d32"];
+
+        cond_output [label="Validated\nFix", fillcolor="#1b5e20"];
+
+        cond_input -> cond_analyze;
+        cond_analyze -> cond_decision [label="complexity"];
+
+        cond_decision -> cond_simple [label="< 30\nsimple"];
+        cond_decision -> cond_medium [label="30-70\nmedium"];
+        cond_decision -> cond_complex [label=">= 70\ncomplex"];
+
+        cond_simple -> cond_test1;
+        cond_medium -> cond_test2;
+        cond_complex -> cond_test3;
+
+        cond_test1 -> cond_output;
+        cond_test2 -> cond_output;
+        cond_test3 -> cond_output;
+
+        cond_note [label="Use Case:\nAdaptive workflows\nRisk-based routing\nComplexity-aware", shape=note, fillcolor="#fff9c4"];
+        cond_output -> cond_note [style=dashed, dir=none];
+    }
+
+    // Pattern 4: Iterative Refinement
+    subgraph cluster_iterative {
+        label="Pattern 4: Iterative Refinement";
+        style=filled;
+        color="#fff3e0";
+
+        iter_input [label="Initial\nCode", fillcolor="#ffcc80"];
+        iter_test [label="Run\nTests", fillcolor="#ffb74d"];
+        iter_check [label="All\nPassed?", shape=diamond, fillcolor="#ffa726"];
+        iter_fix [label="Codex\nAuto-Fix", fillcolor="#ff9800"];
+        iter_output [label="Quality\nCode", fillcolor="#f57c00"];
+
+        iter_input -> iter_test;
+        iter_test -> iter_check;
+        iter_check -> iter_output [label="yes"];
+        iter_check -> iter_fix [label="no"];
+        iter_fix -> iter_test [label="iteration++", constraint=false];
+
+        iter_max [label="Max: 5\niterations", shape=note, fillcolor="#ffe082"];
+        iter_fix -> iter_max [style=dashed, dir=none];
+
+        iter_note [label="Use Case:\nQuality loops\nAuto-correction\nConvergence", shape=note, fillcolor="#fff9c4"];
+        iter_output -> iter_note [style=dashed, dir=none];
+    }
+
+    // Pattern 5: Codex Sandbox Iteration
+    subgraph cluster_sandbox {
+        label="Pattern 5: Codex Sandbox Iteration";
+        style=filled;
+        color="#fce4ec";
+
+        sand_input [label="Code +\nTests", fillcolor="#f48fb1"];
+
+        sand_sandbox [label="Sandbox\nEnvironment", shape=box3d, fillcolor="#f06292"];
+
+        sand_execute [label="Execute\nTests", fillcolor="#ec407a"];
+        sand_result [label="Test\nResult", shape=diamond, fillcolor="#e91e63"];
+        sand_codex [label="Codex\nAnalyze +\nFix", fillcolor="#d81b60"];
+        sand_apply [label="Apply\nPatch", fillcolor="#c2185b"];
+
+        sand_output [label="All Tests\nPass", fillcolor="#ad1457"];
+
+        sand_input -> sand_sandbox;
+        sand_sandbox -> sand_execute;
+        sand_execute -> sand_result;
+        sand_result -> sand_output [label="pass"];
+        sand_result -> sand_codex [label="fail"];
+        sand_codex -> sand_apply;
+        sand_apply -> sand_execute [label="retry"];
+
+        sand_note [label="Use Case:\nSafe testing\nAuto-fixing\nRegression prevention", shape=note, fillcolor="#fff9c4"];
+        sand_output -> sand_note [style=dashed, dir=none];
+
+        sand_isolated [label="Isolated:\nNo network\nNo filesystem\nSafe execution", shape=note, fillcolor="#ffccbc"];
+        sand_sandbox -> sand_isolated [style=dashed, dir=none];
+    }
+
+    // Pattern 6: Hybrid Sequential-Parallel
+    subgraph cluster_hybrid {
+        label="Pattern 6: Hybrid Sequential-Parallel";
+        style=filled;
+        color="#e0f2f1";
+
+        hyb_checkout [label="Checkout\nCode", fillcolor="#80cbc4"];
+
+        hyb_build_fe [label="Build\nFrontend", fillcolor="#4db6ac"];
+        hyb_build_be [label="Build\nBackend", fillcolor="#4db6ac"];
+        hyb_build_wk [label="Build\nWorkers", fillcolor="#4db6ac"];
+
+        hyb_integrate [label="Integration\nTests", fillcolor="#26a69a"];
+
+        hyb_deploy_us [label="Deploy\nUS-East", fillcolor="#009688"];
+        hyb_deploy_eu [label="Deploy\nEU-West", fillcolor="#009688"];
+
+        hyb_smoke [label="Smoke\nTests", fillcolor="#00796b"];
+        hyb_output [label="Production\nReady", fillcolor="#004d40"];
+
+        hyb_checkout -> hyb_build_fe;
+        hyb_checkout -> hyb_build_be;
+        hyb_checkout -> hyb_build_wk;
+
+        hyb_build_fe -> hyb_integrate;
+        hyb_build_be -> hyb_integrate;
+        hyb_build_wk -> hyb_integrate;
+
+        hyb_integrate -> hyb_deploy_us;
+        hyb_integrate -> hyb_deploy_eu;
+
+        hyb_deploy_us -> hyb_smoke;
+        hyb_deploy_eu -> hyb_smoke;
+
+        hyb_smoke -> hyb_output;
+
+        hyb_note [label="Use Case:\nCI/CD pipelines\nOptimal throughput\nDependency handling", shape=note, fillcolor="#fff9c4"];
+        hyb_output -> hyb_note [style=dashed, dir=none];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#ffffff";
+
+        leg_seq [label="Sequential", fillcolor="#90caf9"];
+        leg_par [label="Parallel", fillcolor="#ce93d8"];
+        leg_cond [label="Conditional", fillcolor="#a5d6a7"];
+        leg_iter [label="Iterative", fillcolor="#ffcc80"];
+        leg_sand [label="Sandbox", fillcolor="#f48fb1"];
+        leg_hyb [label="Hybrid", fillcolor="#80cbc4"];
+
+        leg_seq -> leg_par [style=invis];
+        leg_par -> leg_cond [style=invis];
+        leg_cond -> leg_iter [style=invis];
+        leg_iter -> leg_sand [style=invis];
+        leg_sand -> leg_hyb [style=invis];
+    }
+
+    // Layout hints
+    {rank=same; seq_input; par_input; cond_input}
+    {rank=same; seq_output; par_output; cond_output}
+}

@@ -1,0 +1,2487 @@
+Analyzing skills in: ..
+{
+  "total_skills": 78,
+  "meta_skills": [
+    "agent-creator",
+    "cascade-orchestrator",
+    "deep-research-orchestrator",
+    "functionality-audit",
+    "intent-analyzer",
+    "micro-skill-creator",
+    "quick-quality-check",
+    "reproducibility-audit",
+    "skill-creator-agent",
+    "skill-forge",
+    "sop-dogfooding-quality-detection",
+    "style-audit",
+    "theater-detection-audit",
+    "verification-quality"
+  ],
+  "meta_skills_count": 14,
+  "tier_distribution": {
+    "Incomplete": 76,
+    "Platinum": 1,
+    "Gold": 1
+  },
+  "missing_components": {
+    "README.md": 76,
+    "examples/": 75,
+    "references/": 72,
+    "resources/": 67,
+    "graphviz/": 76,
+    "tests/": 76
+  },
+  "completion_percentages": {
+    "README.md": "2.6%",
+    "examples/": "3.8%",
+    "references/": "7.7%",
+    "resources/": "14.1%",
+    "graphviz/": "2.6%",
+    "tests/": "2.6%"
+  },
+  "enhancement_needed": {
+    "to_bronze": 76,
+    "to_silver": 76,
+    "to_gold": 76,
+    "to_platinum": 77
+  },
+  "skills": {
+    "agent-creator": {
+      "path": "..\\agent-creator",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "agent-creator",
+        "description": "Creates specialized AI agents with optimized system prompts using the official 4-phase SOP methodology from Desktop .claude-flow, combined with evidence-based prompting techniques and Claude Agent SDK implementation. Use this skill when creating production-ready agents for specific domains, workflows, or tasks requiring consistent high-quality performance with deeply embedded domain knowledge."
+      }
+    },
+    "agentdb-advanced": {
+      "path": "..\\agentdb-advanced",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "AgentDB Advanced Features",
+        "description": "Master advanced AgentDB features including QUIC synchronization, multi-database management, custom distance metrics, hybrid search, and distributed systems integration. Use when building distributed AI systems, multi-agent coordination, or advanced vector search applications."
+      }
+    },
+    "agentdb-learning": {
+      "path": "..\\agentdb-learning",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "AgentDB Learning Plugins",
+        "description": "Create and train AI learning plugins with AgentDB's 9 reinforcement learning algorithms. Includes Decision Transformer, Q-Learning, SARSA, Actor-Critic, and more. Use when building self-learning agents, implementing RL, or optimizing agent behavior through experience."
+      }
+    },
+    "agentdb-memory-patterns": {
+      "path": "..\\agentdb-memory-patterns",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "AgentDB Memory Patterns",
+        "description": "Implement persistent memory patterns for AI agents using AgentDB. Includes session memory, long-term storage, pattern learning, and context management. Use when building stateful agents, chat systems, or intelligent assistants."
+      }
+    },
+    "agentdb-optimization": {
+      "path": "..\\agentdb-optimization",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "AgentDB Performance Optimization",
+        "description": "Optimize AgentDB performance with quantization (4-32x memory reduction), HNSW indexing (150x faster search), caching, and batch operations. Use when optimizing memory usage, improving search speed, or scaling to millions of vectors."
+      }
+    },
+    "agentdb-vector-search": {
+      "path": "..\\agentdb-vector-search",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "AgentDB Vector Search",
+        "description": "Implement semantic vector search with AgentDB for intelligent document retrieval, similarity matching, and context-aware querying. Use when building RAG systems, semantic search engines, or intelligent knowledge bases."
+      }
+    },
+    "baseline-replication": {
+      "path": "..\\baseline-replication",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Baseline Replication",
+        "description": "Replicate published ML baseline experiments with exact reproducibility (\u00b11% tolerance) for Deep Research SOP Pipeline D. Use when validating baselines, reproducing experiments, verifying published results, or preparing for novel method development."
+      }
+    },
+    "cascade-orchestrator": {
+      "path": "..\\cascade-orchestrator",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": true,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "cascade-orchestrator",
+        "description": "Creates sophisticated workflow cascades coordinating multiple micro-skills with sequential pipelines, parallel execution, conditional branching, and Codex sandbox iteration. Enhanced with multi-model routing (Gemini/Codex), ruv-swarm coordination, memory persistence, and audit-pipeline patterns for production workflows.",
+        "tags": [
+          "orchestration",
+          "workflows",
+          "cascades",
+          "multi-model",
+          "codex-integration",
+          "tier-2"
+        ],
+        "version": "2.0.0"
+      }
+    },
+    "cicd-intelligent-recovery": {
+      "path": "..\\cicd-intelligent-recovery",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "cicd-intelligent-recovery",
+        "description": "Loop 3 of the Three-Loop Integrated Development System. CI/CD automation with intelligent failure recovery, root cause analysis, and comprehensive quality validation. Receives implementation from Loop 2, feeds failure patterns back to Loop 1. Achieves 100% test success through automated repair and theater validation. v2.0.0 with explicit agent SOPs."
+      }
+    },
+    "code-review-assistant": {
+      "path": "..\\code-review-assistant",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "code-review-assistant",
+        "description": "Comprehensive PR review using multi-agent swarm with specialized reviewers for security, performance, style, tests, and documentation. Provides detailed feedback with auto-fix suggestions and merge readiness assessment.",
+        "tags": [
+          "review",
+          "pr",
+          "github",
+          "swarm",
+          "essential",
+          "tier-1"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "deep-research-orchestrator": {
+      "path": "..\\deep-research-orchestrator",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Deep Research Orchestrator",
+        "description": "Meta-orchestrator for complete Deep Research SOP lifecycle managing 3 phases, 9 pipelines (A-I), and 3 quality gates. Use when starting new research projects, conducting systematic ML research, or ensuring rigorous scientific methodology from literature review through production deployment. Coordinates all SOP skills and agents for end-to-end research execution."
+      }
+    },
+    "deployment-readiness": {
+      "path": "..\\deployment-readiness",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Deployment Readiness",
+        "description": "Production deployment validation for Deep Research SOP Pipeline H ensuring models ready for real-world deployment. Use before deploying to production, creating deployment plans, or validating infrastructure requirements. Validates performance benchmarks, monitoring setup, incident response plans, rollback strategies, and infrastructure scalability for Quality Gate 3."
+      }
+    },
+    "feature-dev-complete": {
+      "path": "..\\feature-dev-complete",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "feature-dev-complete",
+        "description": "Complete feature development lifecycle from research to deployment. Uses Gemini Search for best practices, architecture design, Codex prototyping, comprehensive testing, and documentation generation. Full 12-stage workflow.",
+        "tags": [
+          "feature",
+          "development",
+          "lifecycle",
+          "multi-model",
+          "essential",
+          "tier-1"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "flow-nexus-neural": {
+      "path": "..\\flow-nexus-neural",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "flow-nexus-neural",
+        "description": "Train and deploy neural networks in distributed E2B sandboxes with Flow Nexus",
+        "version": "1.0.0",
+        "category": "ai-ml",
+        "tags": [
+          "neural-networks",
+          "distributed-training",
+          "machine-learning",
+          "deep-learning",
+          "flow-nexus",
+          "e2b-sandboxes"
+        ],
+        "requires_auth": true,
+        "mcp_server": "flow-nexus"
+      }
+    },
+    "flow-nexus-platform": {
+      "path": "..\\flow-nexus-platform",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "flow-nexus-platform",
+        "description": "Comprehensive Flow Nexus platform management - authentication, sandboxes, app deployment, payments, and challenges",
+        "category": "platform",
+        "version": "1.0.0",
+        "author": "Flow Nexus",
+        "tags": [
+          "authentication",
+          "sandboxes",
+          "deployment",
+          "payments",
+          "gamification",
+          "cloud"
+        ]
+      }
+    },
+    "flow-nexus-swarm": {
+      "path": "..\\flow-nexus-swarm",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "flow-nexus-swarm",
+        "description": "Cloud-based AI swarm deployment and event-driven workflow automation with Flow Nexus platform",
+        "category": "orchestration",
+        "tags": [
+          "swarm",
+          "workflow",
+          "cloud",
+          "agents",
+          "automation",
+          "message-queue"
+        ],
+        "version": "1.0.0",
+        "requires": [
+          "flow-nexus MCP server",
+          "Active Flow Nexus account (register at flow-nexus.ruv.io)"
+        ]
+      }
+    },
+    "functionality-audit": {
+      "path": "..\\functionality-audit",
+      "has_skill_md": true,
+      "has_readme": true,
+      "has_examples": true,
+      "has_references": true,
+      "has_resources": true,
+      "has_graphviz": true,
+      "has_tests": true,
+      "file_count": 31,
+      "missing_required": [],
+      "missing_optional": [],
+      "tier": "Platinum",
+      "frontmatter": {
+        "name": "functionality-audit",
+        "description": "Validates that code actually works through sandbox testing, execution verification, and systematic debugging. Use this skill after code generation or modification to ensure functionality is genuine rather than assumed. The skill creates isolated test environments, executes code with realistic inputs, identifies bugs through systematic analysis, and applies best practices to fix issues without breaking existing functionality. This ensures code delivers its intended behavior reliably."
+      }
+    },
+    "gate-validation": {
+      "path": "..\\gate-validation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Gate Validation",
+        "description": "Validate Deep Research SOP quality gates (Gates 1-3) ensuring rigorous GO/NO-GO decisions based on comprehensive requirement checklists with statistical validation. Use at end of research phases (Foundations\u2192Development\u2192Production) to determine if criteria met for phase transition. Coordinates evaluator agent with ethics-agent, data-steward, and archivist for systematic validation across data quality, baseline replication, novel methods, holistic evaluation, reproducibility, and production readiness. Implements multiple comparison correction (Bonferroni), effect size calculation (Cohen's d), and statistical power analysis (1-\u03b2 \u2265 0.8).",
+        "pipeline": "Quality Gates (Gates 1, 2, 3)",
+        "quality_gate": "All three gates (1, 2, 3)",
+        "phase": "Phase transitions (1\u21922\u21923)",
+        "agents": "evaluator (lead), ethics-agent, data-steward, archivist",
+        "time_estimate": "2-4 hours per gate",
+        "keywords": [
+          "quality-gate",
+          "go-no-go-decision",
+          "gate-validation",
+          "evaluator-agent",
+          "phase-transition",
+          "statistical-rigor",
+          "multiple-comparison",
+          "bonferroni-correction",
+          "cohens-d",
+          "power-analysis",
+          "reproducibility-validation",
+          "ethics-review"
+        ]
+      }
+    },
+    "github-code-review": {
+      "path": "..\\github-code-review",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "github-code-review",
+        "version": "1.0.0",
+        "description": "Comprehensive GitHub code review with AI-powered swarm coordination",
+        "category": "github",
+        "tags": [
+          "code-review",
+          "github",
+          "swarm",
+          "pr-management",
+          "automation"
+        ],
+        "author": "Claude Code Flow",
+        "requires": [
+          "github-cli",
+          "ruv-swarm",
+          "claude-flow"
+        ],
+        "capabilities": [
+          "Multi-agent code review",
+          "Automated PR management",
+          "Security and performance analysis",
+          "Swarm-based review orchestration",
+          "Intelligent comment generation",
+          "Quality gate enforcement"
+        ]
+      }
+    },
+    "github-multi-repo": {
+      "path": "..\\github-multi-repo",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "github-multi-repo",
+        "version": "1.0.0",
+        "description": "Multi-repository coordination, synchronization, and architecture management with AI swarm orchestration",
+        "category": "github-integration",
+        "tags": [
+          "multi-repo",
+          "synchronization",
+          "architecture",
+          "coordination",
+          "github"
+        ],
+        "author": "Claude Flow Team",
+        "requires": [
+          "ruv-swarm@^1.0.11",
+          "gh-cli@^2.0.0"
+        ],
+        "capabilities": [
+          "cross-repository coordination",
+          "package synchronization",
+          "architecture optimization",
+          "template management",
+          "distributed workflows"
+        ]
+      }
+    },
+    "github-project-management": {
+      "path": "..\\github-project-management",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "github-project-management",
+        "title": "GitHub Project Management",
+        "version": "2.0.0",
+        "category": "github",
+        "description": "Comprehensive GitHub project management with swarm-coordinated issue tracking, project board automation, and sprint planning",
+        "author": "Claude Code",
+        "tags": [
+          "github",
+          "project-management",
+          "issue-tracking",
+          "project-boards",
+          "sprint-planning",
+          "agile",
+          "swarm-coordination"
+        ],
+        "difficulty": "intermediate",
+        "prerequisites": [
+          "GitHub CLI (gh) installed and authenticated",
+          "ruv-swarm or claude-flow MCP server configured",
+          "Repository access permissions"
+        ],
+        "tools_required": [
+          "mcp__github__*",
+          "mcp__claude-flow__*",
+          "Bash",
+          "Read",
+          "Write",
+          "TodoWrite"
+        ],
+        "related_skills": [
+          "github-pr-workflow",
+          "github-release-management",
+          "sparc-orchestrator"
+        ],
+        "estimated_time": "30-45 minutes"
+      }
+    },
+    "github-release-management": {
+      "path": "..\\github-release-management",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "github-release-management",
+        "version": "2.0.0",
+        "description": "Comprehensive GitHub release orchestration with AI swarm coordination for automated versioning, testing, deployment, and rollback management",
+        "category": "github",
+        "tags": [
+          "release",
+          "deployment",
+          "versioning",
+          "automation",
+          "ci-cd",
+          "swarm",
+          "orchestration"
+        ],
+        "author": "Claude Flow Team",
+        "requires": [
+          "gh (GitHub CLI)",
+          "claude-flow",
+          "ruv-swarm (optional for enhanced coordination)",
+          "mcp-github (optional for MCP integration)"
+        ],
+        "dependencies": [
+          "git",
+          "npm or yarn",
+          "node >= 20.0.0"
+        ],
+        "related_skills": [
+          "github-pr-management",
+          "github-issue-tracking",
+          "github-workflow-automation",
+          "multi-repo-coordination"
+        ]
+      }
+    },
+    "github-workflow-automation": {
+      "path": "..\\github-workflow-automation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "github-workflow-automation",
+        "version": "1.0.0",
+        "category": "github",
+        "description": "Advanced GitHub Actions workflow automation with AI swarm coordination, intelligent CI/CD pipelines, and comprehensive repository management",
+        "tags": [
+          "github",
+          "github-actions",
+          "ci-cd",
+          "workflow-automation",
+          "swarm-coordination",
+          "deployment",
+          "security"
+        ],
+        "authors": [
+          "claude-flow"
+        ],
+        "requires": [
+          "gh (GitHub CLI)",
+          "git",
+          "claude-flow@alpha",
+          "node (v16+)"
+        ],
+        "priority": "high",
+        "progressive_disclosure": true
+      }
+    },
+    "hive-mind-advanced": {
+      "path": "..\\hive-mind-advanced",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "hive-mind-advanced",
+        "description": "Advanced Hive Mind collective intelligence system for queen-led multi-agent coordination with consensus mechanisms and persistent memory",
+        "version": "1.0.0",
+        "category": "coordination",
+        "tags": [
+          "hive-mind",
+          "swarm",
+          "queen-worker",
+          "consensus",
+          "collective-intelligence",
+          "multi-agent",
+          "coordination"
+        ],
+        "author": "Claude Flow Team"
+      }
+    },
+    "holistic-evaluation": {
+      "path": "..\\holistic-evaluation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Holistic Evaluation",
+        "description": "Comprehensive multi-dimensional model evaluation across accuracy, fairness, robustness, efficiency, interpretability, and safety for Deep Research SOP Pipeline E. Use after method development when Quality Gate 2 validation is required, ensuring models meet production-ready standards across 6+ evaluation dimensions before deployment."
+      }
+    },
+    "hooks-automation": {
+      "path": "..\\hooks-automation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Hooks Automation",
+        "description": "Automated coordination, formatting, and learning from Claude Code operations using intelligent hooks with MCP integration. Includes pre/post task hooks, session management, Git integration, memory coordination, and neural pattern training for enhanced development workflows."
+      }
+    },
+    "i18n-automation": {
+      "path": "..\\i18n-automation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "i18n-automation",
+        "description": "Automate internationalization and localization workflows for web applications with translation, key generation, and library setup",
+        "tags": [
+          "i18n",
+          "translation",
+          "localization",
+          "automation",
+          "react",
+          "nextjs"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "intent-analyzer": {
+      "path": "..\\intent-analyzer",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": true,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 3,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "intent-analyzer",
+        "description": "Advanced intent interpretation system that analyzes user requests using cognitive science principles and extrapolates logical volition. Use when user requests are ambiguous, when deeper understanding would improve response quality, or when helping users clarify what they truly need. Applies probabilistic intent mapping, first principles decomposition, and Socratic clarification to transform vague requests into well-understood goals."
+      }
+    },
+    "interactive-planner": {
+      "path": "..\\interactive-planner",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "interactive-planner",
+        "description": "Use Claude Code's interactive question tool to gather comprehensive requirements through structured multi-select questions",
+        "tags": [
+          "planning",
+          "requirements",
+          "questions",
+          "scoping",
+          "interactive"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "literature-synthesis": {
+      "path": "..\\literature-synthesis",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Literature Synthesis",
+        "description": "Systematic literature review and synthesis for Deep Research SOP Pipeline A. Use when starting research projects, conducting SOTA analysis, identifying research gaps, or preparing academic papers. Implements PRISMA-compliant systematic review methodology with automated search, screening, and synthesis across ArXiv, Semantic Scholar, and Papers with Code."
+      }
+    },
+    "method-development": {
+      "path": "..\\method-development",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Method Development",
+        "description": "Develop novel machine learning methods with rigorous ablation studies for Deep Research SOP Pipeline D. Use after baseline replication passes Quality Gate 1, when creating new algorithms, proposing modifications to existing methods, or conducting systematic experimental validation. Includes architectural innovation, hyperparameter optimization, and component-wise ablation analysis leading to Quality Gate 2."
+      }
+    },
+    "micro-skill-creator": {
+      "path": "..\\micro-skill-creator",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": true,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "micro-skill-creator",
+        "description": "Rapidly creates atomic, focused skills optimized with evidence-based prompting, specialist agents, and systematic testing. Each micro-skill does one thing exceptionally well using self-consistency, program-of-thought, and plan-and-solve patterns. Enhanced with agent-creator principles and functionality-audit validation. Perfect for building composable workflow components.",
+        "tags": [
+          "skill-creation",
+          "atomic",
+          "modular",
+          "evidence-based",
+          "specialist-agents",
+          "tier-1"
+        ],
+        "version": "2.0.0"
+      }
+    },
+    "ml-expert": {
+      "path": "..\\ml-expert",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "ml-training-debugger": {
+      "path": "..\\ml-training-debugger",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "network-security-setup": {
+      "path": "..\\network-security-setup",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "network-security-setup",
+        "description": "Configure Claude Code sandbox network isolation with trusted domains, custom access policies, and environment variables",
+        "tags": [
+          "security",
+          "network",
+          "isolation",
+          "trusted-domains",
+          "configuration"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "pair-programming": {
+      "path": "..\\pair-programming",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Pair Programming",
+        "description": "AI-assisted pair programming with multiple modes (driver/navigator/switch), real-time verification, quality monitoring, and comprehensive testing. Supports TDD, debugging, refactoring, and learning sessions. Features automatic role switching, continuous code review, security scanning, and performance optimization with truth-score verification."
+      }
+    },
+    "parallel-swarm-implementation": {
+      "path": "..\\parallel-swarm-implementation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "parallel-swarm-implementation",
+        "description": "Loop 2 of the Three-Loop Integrated Development System. META-SKILL that dynamically compiles Loop 1 plans into agent+skill execution graphs. Queen Coordinator selects optimal agents from 86-agent registry and assigns skills (when available) or custom instructions. 9-step swarm with theater detection and reality validation. Receives plans from research-driven-planning, feeds to cicd-intelligent-recovery. Use for adaptive, theater-free implementation."
+      }
+    },
+    "performance-analysis": {
+      "path": "..\\performance-analysis",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "performance-analysis",
+        "version": "1.0.0",
+        "description": "Comprehensive performance analysis, bottleneck detection, and optimization recommendations for Claude Flow swarms",
+        "category": "monitoring",
+        "tags": [
+          "performance",
+          "bottleneck",
+          "optimization",
+          "profiling",
+          "metrics",
+          "analysis"
+        ],
+        "author": "Claude Flow Team"
+      }
+    },
+    "pptx-generation": {
+      "path": "..\\pptx-generation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": true,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 7,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "pptx-generation",
+        "description": "Enterprise-grade PowerPoint deck generation system using evidence-based prompting techniques, workflow enforcement, and constraint-based design. Use when creating professional presentations (board decks, reports, analyses) requiring consistent visual quality, accessibility compliance, and integration of complex data from multiple sources. Implements html2pptx workflow with spatial layout optimization, validation gates, and multi-chat architecture for 30+ slide decks."
+      }
+    },
+    "production-readiness": {
+      "path": "..\\production-readiness",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "production-readiness",
+        "description": "Comprehensive pre-deployment validation ensuring code is production-ready. Runs complete audit pipeline, performance benchmarks, security scan, documentation check, and generates deployment checklist.",
+        "tags": [
+          "deployment",
+          "production",
+          "validation",
+          "essential",
+          "tier-1"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "prompt-architect": {
+      "path": "..\\prompt-architect",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": true,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 3,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "prompt-architect",
+        "description": "Comprehensive framework for analyzing, creating, and refining prompts for AI systems. Use when creating prompts for Claude, ChatGPT, or other language models, improving existing prompts, or applying evidence-based prompt engineering techniques. Applies structural optimization, self-consistency patterns, and anti-pattern detection to transform prompts into highly effective versions."
+      }
+    },
+    "quick-quality-check": {
+      "path": "..\\quick-quality-check",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "quick-quality-check",
+        "description": "Lightning-fast quality check using parallel command execution. Runs theater detection, linting, security scan, and basic tests in parallel for instant feedback on code quality.",
+        "tags": [
+          "quality",
+          "quick",
+          "parallel",
+          "essential",
+          "tier-1"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "reasoningbank-agentdb": {
+      "path": "..\\reasoningbank-agentdb",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "ReasoningBank with AgentDB",
+        "description": "Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems."
+      }
+    },
+    "reasoningbank-intelligence": {
+      "path": "..\\reasoningbank-intelligence",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "ReasoningBank Intelligence",
+        "description": "Implement adaptive learning with ReasoningBank for pattern recognition, strategy optimization, and continuous improvement. Use when building self-learning agents, optimizing workflows, or implementing meta-cognitive systems."
+      }
+    },
+    "reproducibility-audit": {
+      "path": "..\\reproducibility-audit",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Reproducibility Audit",
+        "description": "Comprehensive audit of ML reproducibility packages ensuring ACM Artifact Evaluation compliance with statistical validation for Deep Research SOP Pipeline G. Use before Quality Gate 3 validation when reproducibility packages created, archiving research artifacts to Zenodo/HuggingFace, or preparing for academic publication (NeurIPS, ICML, CVPR). Validates Docker environment builds, README instructions (\u22645 steps), dependency pinning, deterministic execution with fixed seeds, and requires 3/3 successful reproduction runs within \u00b11% tolerance using paired t-tests. Recommends ACM badges (Available, Functional, Reproduced, Reusable) based on audit results.",
+        "pipeline": "Pipeline G (Reproducibility & Archival)",
+        "quality_gate": "Gate 3",
+        "phase": "Phase 3 (Production)",
+        "agents": "tester (lead), archivist",
+        "time_estimate": "1-2 days",
+        "acm_badges": "Available, Functional, Reproduced, Reusable",
+        "keywords": [
+          "reproducibility-audit",
+          "acm-artifact-evaluation",
+          "docker-validation",
+          "deterministic-execution",
+          "statistical-validation",
+          "paired-t-test",
+          "tolerance-checking",
+          "zenodo-archival",
+          "huggingface-hub",
+          "neurips-checklist",
+          "gate-3-validation",
+          "publication-readiness"
+        ]
+      }
+    },
+    "research-driven-planning": {
+      "path": "..\\research-driven-planning",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "research-driven-planning",
+        "description": "Loop 1 of the Three-Loop Integrated Development System. Research-driven requirements analysis with iterative risk mitigation through 5x pre-mortem cycles using multi-agent consensus. Feeds validated, risk-mitigated plans to parallel-swarm-implementation. Use when starting new features or projects requiring comprehensive planning with <3% failure confidence and evidence-based technology selection."
+      }
+    },
+    "research-publication": {
+      "path": "..\\research-publication",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": true,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Research Publication",
+        "description": "Academic publication preparation for Deep Research SOP Pipeline I including paper writing, reproducibility artifacts, and venue submission. Use when preparing research for publication after Gate 3 APPROVED, submitting to conferences (NeurIPS, ICML, CVPR), or creating ACM artifact submissions. Ensures reproducibility checklists complete, supplementary materials prepared, and all artifacts publicly accessible."
+      }
+    },
+    "reverse-engineering-deep": {
+      "path": "..\\reverse-engineering-deep",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Reverse Engineering: Deep Analysis",
+        "description": "Advanced binary analysis with runtime execution and symbolic path exploration (RE Levels 3-4). Use when need runtime behavior, memory dumps, secret extraction, or input synthesis to reach specific program states. Completes in 3-7 hours with GDB+Angr."
+      }
+    },
+    "reverse-engineering-firmware": {
+      "path": "..\\reverse-engineering-firmware",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Reverse Engineering: Firmware Analysis",
+        "description": "Firmware extraction and IoT security analysis (RE Level 5) for routers and embedded systems. Use when analyzing IoT firmware, extracting embedded filesystems (SquashFS/JFFS2/CramFS), finding hardcoded credentials, performing CVE scans, or auditing embedded system security. Handles encrypted firmware with known decryption schemes. Completes in 2-8 hours with binwalk+firmadyne+QEMU emulation.",
+        "re_level": 5,
+        "category": "IoT Security, Embedded Systems, Firmware Reverse Engineering",
+        "timebox": "2-8 hours",
+        "agents": "RE-Firmware-Analyst, security-manager, data-steward",
+        "difficulty": "Advanced",
+        "badges": [
+          "RE Level 5",
+          "Firmware Analysis",
+          "\u23f1\ufe0f 2-8 hours"
+        ],
+        "keywords": [
+          "firmware",
+          "binwalk",
+          "iot-security",
+          "router-analysis",
+          "embedded-systems",
+          "squashfs",
+          "jffs2",
+          "cramfs",
+          "qemu-emulation",
+          "cve-scanning",
+          "credential-extraction",
+          "vulnerability-assessment"
+        ]
+      }
+    },
+    "reverse-engineering-quick": {
+      "path": "..\\reverse-engineering-quick",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Reverse Engineering: Quick Triage",
+        "description": "Fast binary analysis with string reconnaissance and static disassembly (RE Levels 1-2). Use when triaging suspicious binaries, extracting IOCs quickly, or performing initial malware analysis. Completes in \u22642 hours with automated decision gates."
+      }
+    },
+    "sandbox-configurator": {
+      "path": "..\\sandbox-configurator",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sandbox-configurator",
+        "description": "Configure Claude Code sandbox security with file system and network isolation boundaries",
+        "tags": [
+          "security",
+          "sandbox",
+          "configuration",
+          "network-isolation"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "skill-creator-agent": {
+      "path": "..\\skill-creator-agent",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "skill-creator-agent",
+        "description": "Creates Claude Code skills where each skill is tied to a specialist agent optimized with evidence-based prompting techniques. Use this skill when users need to create reusable skills that leverage specialized agents for consistent high-quality performance. The skill ensures that each created skill spawns an appropriately crafted agent that communicates effectively with the parent Claude Code instance using best practices."
+      }
+    },
+    "skill-forge": {
+      "path": "..\\skill-forge",
+      "has_skill_md": true,
+      "has_readme": true,
+      "has_examples": true,
+      "has_references": true,
+      "has_resources": true,
+      "has_graphviz": true,
+      "has_tests": true,
+      "file_count": 18,
+      "missing_required": [],
+      "missing_optional": [],
+      "tier": "Gold",
+      "frontmatter": {
+        "name": "skill-forge",
+        "description": "Advanced skill creation system for Claude Code that combines deep intent analysis, evidence-based prompting principles, and systematic skill engineering. Use when creating new skills or refining existing skills to ensure they are well-structured, follow best practices, and incorporate sophisticated prompt engineering techniques. This skill transforms skill creation from template filling into a strategic design process."
+      }
+    },
+    "slash-command-encoder": {
+      "path": "..\\slash-command-encoder",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "slash-command-encoder",
+        "description": "Creates ergonomic slash commands (/command) that provide fast, unambiguous access to micro-skills, cascades, and agents. Enhanced with auto-discovery, intelligent routing, parameter validation, and command chaining. Generates comprehensive command catalogs for all installed skills with multi-model integration.",
+        "tags": [
+          "commands",
+          "interface",
+          "ergonomics",
+          "auto-discovery",
+          "composition",
+          "tier-3"
+        ],
+        "version": "2.0.0"
+      }
+    },
+    "smart-bug-fix": {
+      "path": "..\\smart-bug-fix",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "smart-bug-fix",
+        "description": "Intelligent bug fixing workflow combining root cause analysis, multi-model reasoning, Codex auto-fix, and comprehensive testing. Uses RCA agent, Codex iteration, and validation to systematically fix bugs.",
+        "tags": [
+          "debugging",
+          "rca",
+          "codex",
+          "testing",
+          "essential",
+          "tier-1"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "sop-api-development": {
+      "path": "..\\sop-api-development",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-api-development",
+        "description": "Complete REST API development workflow coordinating backend, database, testing, documentation, and DevOps agents. 2-week timeline with TDD approach."
+      }
+    },
+    "sop-code-review": {
+      "path": "..\\sop-code-review",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-code-review",
+        "description": "Comprehensive code review workflow coordinating quality, security, performance, and documentation reviewers. 4-hour timeline for thorough multi-agent review."
+      }
+    },
+    "sop-dogfooding-continuous-improvement": {
+      "path": "..\\sop-dogfooding-continuous-improvement",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-dogfooding-continuous-improvement",
+        "description": "3-part dogfooding workflow Phase 3 - Full cycle orchestration combining Quality Detection + Pattern Retrieval + Application with automated metrics tracking. 60-120 seconds execution time.",
+        "agents": "hierarchical-coordinator, code-analyzer, coder, reviewer",
+        "mcp_tools": "connascence-analyzer, memory-mcp, claude-flow",
+        "scripts": "dogfood-continuous-improvement.bat, generate-cycle-summary.js, update-dashboard.js"
+      }
+    },
+    "sop-dogfooding-pattern-retrieval": {
+      "path": "..\\sop-dogfooding-pattern-retrieval",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-dogfooding-pattern-retrieval",
+        "description": "3-part dogfooding workflow Phase 2 - Query Memory-MCP for similar past fixes using vector search, rank patterns, optionally apply transformations. 10-30 seconds execution time.",
+        "agents": "code-analyzer, coder, reviewer",
+        "mcp_tools": "memory-mcp",
+        "scripts": "dogfood-memory-retrieval.bat, query-memory-mcp.js, apply-fix-pattern.js"
+      }
+    },
+    "sop-dogfooding-quality-detection": {
+      "path": "..\\sop-dogfooding-quality-detection",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-dogfooding-quality-detection",
+        "description": "3-part dogfooding workflow Phase 1 - Run Connascence analysis, store results in Memory-MCP with WHO/WHEN/PROJECT/WHY tagging. 30-60 seconds execution time.",
+        "agents": "code-analyzer, reviewer",
+        "mcp_tools": "connascence-analyzer, memory-mcp",
+        "scripts": "dogfood-quality-check.bat, store-connascence-results.js"
+      }
+    },
+    "sop-product-launch": {
+      "path": "..\\sop-product-launch",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sop-product-launch",
+        "description": "Complete product launch workflow coordinating 15+ specialist agents across research, development, marketing, sales, and operations. Uses sequential and parallel orchestration for 10-week launch timeline."
+      }
+    },
+    "sparc-methodology": {
+      "path": "..\\sparc-methodology",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "sparc-methodology",
+        "description": "SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) comprehensive development methodology with multi-agent orchestration",
+        "version": "2.7.0",
+        "category": "development",
+        "tags": [
+          "sparc",
+          "tdd",
+          "architecture",
+          "orchestration",
+          "methodology",
+          "multi-agent"
+        ],
+        "author": "Claude Flow"
+      }
+    },
+    "stream-chain": {
+      "path": "..\\stream-chain",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "stream-chain",
+        "description": "Stream-JSON chaining for multi-agent pipelines, data transformation, and sequential workflows",
+        "version": "1.0.0",
+        "category": "workflow",
+        "tags": [
+          "streaming",
+          "pipeline",
+          "chaining",
+          "multi-agent",
+          "workflow"
+        ]
+      }
+    },
+    "style-audit": {
+      "path": "..\\style-audit",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "style-audit",
+        "description": "Audits code against CI/CD style rules, quality guidelines, and best practices, then rewrites code to meet standards without breaking functionality. Use this skill after functionality validation to ensure code is not just correct but also maintainable, readable, and production-ready. The skill applies linting rules, enforces naming conventions, improves code organization, and refactors for clarity while preserving all behavioral correctness verified by functionality audits."
+      }
+    },
+    "swarm-advanced": {
+      "path": "..\\swarm-advanced",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "swarm-advanced",
+        "description": "Advanced swarm orchestration patterns for research, development, testing, and complex distributed workflows",
+        "version": "2.0.0",
+        "category": "orchestration",
+        "tags": [
+          "swarm",
+          "distributed",
+          "parallel",
+          "research",
+          "testing",
+          "development",
+          "coordination"
+        ],
+        "author": "Claude Flow Team"
+      }
+    },
+    "swarm-orchestration": {
+      "path": "..\\swarm-orchestration",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Swarm Orchestration",
+        "description": "Orchestrate multi-agent swarms with agentic-flow for parallel task execution, dynamic topology, and intelligent coordination. Use when scaling beyond single agents, implementing complex workflows, or building distributed AI systems."
+      }
+    },
+    "theater-detection-audit": {
+      "path": "..\\theater-detection-audit",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "theater-detection-audit",
+        "description": "Performs comprehensive audits to detect placeholder code, mock data, TODO markers, and incomplete implementations in codebases. Use this skill when you need to find all instances of \"theater\" in code such as hardcoded mock responses, stub functions, commented-out production logic, or fake data that needs to be replaced with real implementations. The skill systematically identifies these instances, reads their full context, and completes them with production-quality code."
+      }
+    },
+    "verification-quality": {
+      "path": "..\\verification-quality",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "Verification & Quality Assurance",
+        "description": "Comprehensive truth scoring, code quality verification, and automatic rollback system with 0.95 accuracy threshold for ensuring high-quality agent outputs and codebase reliability.",
+        "version": "2.0.0",
+        "category": "quality-assurance",
+        "tags": [
+          "verification",
+          "truth-scoring",
+          "quality",
+          "rollback",
+          "metrics",
+          "ci-cd"
+        ]
+      }
+    },
+    "web-cli-teleport": {
+      "path": "..\\web-cli-teleport",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "web-cli-teleport",
+        "description": "Guide users on when to use Claude Code Web vs CLI and seamlessly teleport sessions between environments",
+        "tags": [
+          "workflow",
+          "teleport",
+          "session-management",
+          "web",
+          "cli"
+        ],
+        "version": "1.0.0"
+      }
+    },
+    "when-automating-workflows-use-hooks-automation": {
+      "path": "..\\when-automating-workflows-use-hooks-automation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "when-building-backend-api-orchestrate-api-development": {
+      "path": "..\\when-building-backend-api-orchestrate-api-development",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "when-building-backend-api-orchestrate-api-development",
+        "type": "sop-workflow",
+        "description": "Use when building a production-ready REST API from requirements through deployment.\nOrchestrates 8-12 specialist agents across 5 phases using Test-Driven Development methodology.\nCovers planning, architecture, TDD implementation, comprehensive testing, documentation, and\nblue-green deployment over a 2-week timeline with emphasis on quality and reliability.\n",
+        "agents": [
+          "product-manager",
+          "system-architect",
+          "database-architect",
+          "qa-engineer",
+          "backend-developer",
+          "security-specialist",
+          "performance-analyst",
+          "api-documentation-specialist",
+          "devops-engineer",
+          "production-validator",
+          "performance-monitor",
+          "code-reviewer"
+        ],
+        "phases": 5,
+        "memory_pattern": "api-development/{api-id}/phase-{N}/{agent}/{deliverable}"
+      }
+    },
+    "when-collaborative-coding-use-pair-programming": {
+      "path": "..\\when-collaborative-coding-use-pair-programming",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "when-developing-complete-feature-use-feature-dev-complete": {
+      "path": "..\\when-developing-complete-feature-use-feature-dev-complete",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "when-fixing-complex-bug-use-smart-bug-fix": {
+      "path": "..\\when-fixing-complex-bug-use-smart-bug-fix",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "when-internationalizing-app-use-i18n-automation": {
+      "path": "..\\when-internationalizing-app-use-i18n-automation",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    },
+    "when-releasing-new-product-orchestrate-product-launch": {
+      "path": "..\\when-releasing-new-product-orchestrate-product-launch",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "when-releasing-new-product-orchestrate-product-launch",
+        "type": "sop-workflow",
+        "description": "Use when launching a new product end-to-end from market research through post-launch monitoring.\nOrchestrates 15+ specialist agents across 5 phases in a 10-week coordinated workflow including\nresearch, development, marketing, sales preparation, launch execution, and ongoing optimization.\nEmploys hierarchical coordination with parallel execution for efficiency and comprehensive coverage.\n",
+        "agents": [
+          "market-researcher",
+          "business-analyst",
+          "product-manager",
+          "backend-developer",
+          "frontend-developer",
+          "mobile-developer",
+          "database-architect",
+          "security-specialist",
+          "qa-engineer",
+          "marketing-specialist",
+          "sales-specialist",
+          "content-creator",
+          "seo-specialist",
+          "devops-engineer",
+          "production-validator",
+          "performance-monitor",
+          "customer-support-specialist"
+        ],
+        "phases": 5,
+        "memory_pattern": "product-launch/{launch-id}/phase-{N}/{agent}/{deliverable}"
+      }
+    },
+    "when-reviewing-pull-request-orchestrate-comprehensive-code-review": {
+      "path": "..\\when-reviewing-pull-request-orchestrate-comprehensive-code-review",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 2,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete",
+      "frontmatter": {
+        "name": "when-reviewing-pull-request-orchestrate-comprehensive-code-review",
+        "type": "sop-workflow",
+        "description": "Use when conducting comprehensive code review for pull requests across multiple quality dimensions.\nOrchestrates 12-15 specialized reviewer agents across 4 phases using star topology coordination.\nCovers automated checks, parallel specialized reviews (quality, security, performance, architecture,\ndocumentation), integration analysis, and final merge recommendation in a 4-hour workflow.\n",
+        "agents": [
+          "pr-manager",
+          "code-analyzer",
+          "security-manager",
+          "performance-analyzer",
+          "system-architect",
+          "api-documentation-specialist",
+          "tester",
+          "qa-engineer",
+          "devops-engineer",
+          "style-auditor",
+          "dependency-analyzer",
+          "test-coverage-reviewer",
+          "documentation-reviewer",
+          "system-integrator",
+          "code-reviewer"
+        ],
+        "phases": 4,
+        "memory_pattern": "code-review/{pr-id}/phase-{N}/{reviewer}/{findings}"
+      }
+    },
+    "when-using-sparc-methodology-use-sparc-workflow": {
+      "path": "..\\when-using-sparc-methodology-use-sparc-workflow",
+      "has_skill_md": true,
+      "has_readme": false,
+      "has_examples": false,
+      "has_references": false,
+      "has_resources": false,
+      "has_graphviz": false,
+      "has_tests": false,
+      "file_count": 1,
+      "missing_required": [
+        "README.md",
+        "examples/"
+      ],
+      "missing_optional": [
+        "references/",
+        "resources/",
+        "graphviz/",
+        "tests/"
+      ],
+      "tier": "Incomplete"
+    }
+  }
+}

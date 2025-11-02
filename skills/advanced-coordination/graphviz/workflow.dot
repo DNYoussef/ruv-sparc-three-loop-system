@@ -1,0 +1,393 @@
+// Advanced Coordination Workflow Diagram
+// Visualization of RAFT, Gossip, and Byzantine coordination topologies
+
+digraph advanced_coordination {
+    // Graph settings
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    compound=true;
+    newrank=true;
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=11,
+        margin=0.2
+    ];
+
+    // Edge defaults
+    edge [
+        fontname="Arial",
+        fontsize=10,
+        color="#555555"
+    ];
+
+    // ========================================
+    // RAFT CONSENSUS TOPOLOGY
+    // ========================================
+    subgraph cluster_raft {
+        label=<<B>RAFT Consensus (Leader-Based)</B><BR/><FONT POINT-SIZE="10">5-20 agents • Strong consistency • N/2+1 fault tolerance</FONT>>;
+        style=filled;
+        color="#e3f2fd";
+        fontsize=12;
+
+        // Leader
+        raft_leader [
+            label="Leader\n(Agent 1)\n\nRole: Coordinator\nElection: Majority votes\nHeartbeat: 50ms",
+            fillcolor="#1976d2",
+            fontcolor=white,
+            shape=doubleoctagon
+        ];
+
+        // Followers
+        raft_follower1 [label="Follower\n(Agent 2)\n\nRole: Replica", fillcolor="#64b5f6"];
+        raft_follower2 [label="Follower\n(Agent 3)\n\nRole: Replica", fillcolor="#64b5f6"];
+        raft_follower3 [label="Follower\n(Agent 4)\n\nRole: Replica", fillcolor="#64b5f6"];
+        raft_follower4 [label="Follower\n(Agent 5)\n\nRole: Replica", fillcolor="#64b5f6"];
+
+        // Candidate (during election)
+        raft_candidate [
+            label="Candidate\n(During election)\n\nRole: Leader election\nTimeout: 150-300ms",
+            fillcolor="#ff9800",
+            style="rounded,dashed"
+        ];
+
+        // Heartbeat edges
+        raft_leader -> raft_follower1 [label="Heartbeat\n50ms", color="#1976d2", style=bold];
+        raft_leader -> raft_follower2 [label="Heartbeat\n50ms", color="#1976d2", style=bold];
+        raft_leader -> raft_follower3 [label="Heartbeat\n50ms", color="#1976d2", style=bold];
+        raft_leader -> raft_follower4 [label="Heartbeat\n50ms", color="#1976d2", style=bold];
+
+        // Log replication edges
+        raft_follower1 -> raft_leader [label="ACK", color="#4caf50", style=dashed];
+        raft_follower2 -> raft_leader [label="ACK", color="#4caf50", style=dashed];
+        raft_follower3 -> raft_leader [label="ACK", color="#4caf50", style=dashed];
+        raft_follower4 -> raft_leader [label="ACK", color="#4caf50", style=dashed];
+
+        // Election edges
+        raft_candidate -> raft_follower1 [label="RequestVote", color="#ff9800", constraint=false];
+        raft_candidate -> raft_follower2 [label="RequestVote", color="#ff9800", constraint=false];
+
+        // Metrics box
+        raft_metrics [
+            label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR><TD COLSPAN="2" BGCOLOR="#1976d2"><FONT COLOR="white"><B>RAFT Metrics</B></FONT></TD></TR>
+                <TR><TD ALIGN="LEFT">Latency:</TD><TD>25ms (1-2 RTT)</TD></TR>
+                <TR><TD ALIGN="LEFT">Throughput:</TD><TD>2,500 ops/sec</TD></TR>
+                <TR><TD ALIGN="LEFT">Quorum:</TD><TD>3/5 (majority)</TD></TR>
+                <TR><TD ALIGN="LEFT">Fault Tolerance:</TD><TD>2 failures</TD></TR>
+                <TR><TD ALIGN="LEFT">Use Case:</TD><TD>Critical workflows</TD></TR>
+            </TABLE>>,
+            shape=plaintext
+        ];
+    }
+
+    // ========================================
+    // GOSSIP PROTOCOL TOPOLOGY
+    // ========================================
+    subgraph cluster_gossip {
+        label=<<B>Gossip Protocol (Peer-to-Peer)</B><BR/><FONT POINT-SIZE="10">100-1000+ agents • Eventual consistency • High partition tolerance</FONT>>;
+        style=filled;
+        color="#e8f5e9";
+        fontsize=12;
+
+        // Gossip agents (mesh)
+        gossip_agent1 [label="Agent 1\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+        gossip_agent2 [label="Agent 2\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+        gossip_agent3 [label="Agent 3\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+        gossip_agent4 [label="Agent 4\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+        gossip_agent5 [label="Agent 5\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+        gossip_agent6 [label="Agent 6\n\nFanout: 3\nInterval: 100ms", fillcolor="#66bb6a"];
+
+        // More agents indicator
+        gossip_more [
+            label="... + 144 more agents",
+            fillcolor="#c8e6c9",
+            style="rounded,dashed"
+        ];
+
+        // Gossip edges (epidemic spread)
+        gossip_agent1 -> gossip_agent2 [label="Gossip", color="#388e3c", dir=both];
+        gossip_agent1 -> gossip_agent4 [label="Gossip", color="#388e3c", dir=both];
+        gossip_agent1 -> gossip_agent5 [label="Gossip", color="#388e3c", dir=both];
+
+        gossip_agent2 -> gossip_agent3 [label="Gossip", color="#388e3c", dir=both];
+        gossip_agent2 -> gossip_agent6 [label="Gossip", color="#388e3c", dir=both];
+
+        gossip_agent3 -> gossip_agent5 [label="Gossip", color="#388e3c", dir=both];
+        gossip_agent3 -> gossip_agent4 [label="Gossip", color="#388e3c", dir=both];
+
+        gossip_agent4 -> gossip_agent6 [label="Gossip", color="#388e3c", dir=both];
+
+        gossip_agent5 -> gossip_agent6 [label="Gossip", color="#388e3c", dir=both];
+
+        gossip_agent1 -> gossip_more [style=dotted, color="#388e3c"];
+        gossip_agent2 -> gossip_more [style=dotted, color="#388e3c"];
+        gossip_agent3 -> gossip_more [style=dotted, color="#388e3c"];
+
+        // Anti-entropy box
+        gossip_antientropy [
+            label="Anti-Entropy\n(Every 10s)\n\nFull state sync\nConflict resolution",
+            fillcolor="#ffeb3b",
+            shape=note
+        ];
+
+        gossip_more -> gossip_antientropy [style=dashed, color="#f57f17"];
+
+        // Metrics box
+        gossip_metrics [
+            label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR><TD COLSPAN="2" BGCOLOR="#388e3c"><FONT COLOR="white"><B>Gossip Metrics</B></FONT></TD></TR>
+                <TR><TD ALIGN="LEFT">Latency:</TD><TD>700ms (O(log N))</TD></TR>
+                <TR><TD ALIGN="LEFT">Throughput:</TD><TD>8,333 ops/sec</TD></TR>
+                <TR><TD ALIGN="LEFT">Convergence:</TD><TD>7 rounds (150 agents)</TD></TR>
+                <TR><TD ALIGN="LEFT">Fault Tolerance:</TD><TD>Very high</TD></TR>
+                <TR><TD ALIGN="LEFT">Use Case:</TD><TD>Scalable caching</TD></TR>
+            </TABLE>>,
+            shape=plaintext
+        ];
+    }
+
+    // ========================================
+    // BYZANTINE FAULT TOLERANCE TOPOLOGY
+    // ========================================
+    subgraph cluster_byzantine {
+        label=<<B>Byzantine Fault Tolerance (3F+1 Redundancy)</B><BR/><FONT POINT-SIZE="10">7-20 agents • Strong consistency • Malicious fault tolerance</FONT>>;
+        style=filled;
+        color="#fce4ec";
+        fontsize=12;
+
+        // Primary
+        bft_primary [
+            label="Primary\n(Agent 1)\n\nRole: Transaction proposer\nView: 1\nSignature: Ed25519",
+            fillcolor="#c2185b",
+            fontcolor=white,
+            shape=doubleoctagon
+        ];
+
+        // Correct replicas
+        bft_replica1 [label="Replica 2\n✓ Correct\n\nVerifies signatures", fillcolor="#f06292"];
+        bft_replica2 [label="Replica 3\n✓ Correct\n\nVerifies signatures", fillcolor="#f06292"];
+        bft_replica3 [label="Replica 4\n✓ Correct\n\nVerifies signatures", fillcolor="#f06292"];
+        bft_replica4 [label="Replica 5\n✓ Correct\n\nVerifies signatures", fillcolor="#f06292"];
+
+        // Malicious replicas
+        bft_malicious1 [
+            label="Replica 6\n⚠ Malicious\n\nCorrupted signatures",
+            fillcolor="#d32f2f",
+            fontcolor=white,
+            style="rounded,filled,bold"
+        ];
+        bft_malicious2 [
+            label="Replica 7\n⚠ Malicious\n\nDouble-spend attempts",
+            fillcolor="#d32f2f",
+            fontcolor=white,
+            style="rounded,filled,bold"
+        ];
+
+        // PRE-PREPARE phase
+        bft_primary -> bft_replica1 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+        bft_primary -> bft_replica2 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+        bft_primary -> bft_replica3 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+        bft_primary -> bft_replica4 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+        bft_primary -> bft_malicious1 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+        bft_primary -> bft_malicious2 [label="PRE-PREPARE\n+ Signature", color="#c2185b", style=bold];
+
+        // PREPARE phase (quorum voting)
+        bft_replica1 -> bft_replica2 [label="PREPARE", color="#7b1fa2", dir=both];
+        bft_replica2 -> bft_replica3 [label="PREPARE", color="#7b1fa2", dir=both];
+        bft_replica3 -> bft_replica4 [label="PREPARE", color="#7b1fa2", dir=both];
+
+        // COMMIT phase (quorum 2F+1 = 5)
+        bft_replica1 -> bft_primary [label="COMMIT", color="#4caf50", style=dashed];
+        bft_replica2 -> bft_primary [label="COMMIT", color="#4caf50", style=dashed];
+        bft_replica3 -> bft_primary [label="COMMIT", color="#4caf50", style=dashed];
+        bft_replica4 -> bft_primary [label="COMMIT", color="#4caf50", style=dashed];
+
+        // Malicious detection edges
+        bft_malicious1 -> bft_replica1 [label="Invalid sig", color="#d32f2f", style=dotted];
+        bft_malicious2 -> bft_replica2 [label="Conflicting tx", color="#d32f2f", style=dotted];
+
+        // Quorum indicator
+        bft_quorum [
+            label="Quorum: 5/7\n(2F+1 for F=2)\n\nQuarantined:\n• Replica 6\n• Replica 7",
+            fillcolor="#ffeb3b",
+            shape=note
+        ];
+
+        bft_replica1 -> bft_quorum [style=invis];
+
+        // Metrics box
+        bft_metrics [
+            label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR><TD COLSPAN="2" BGCOLOR="#c2185b"><FONT COLOR="white"><B>Byzantine Metrics</B></FONT></TD></TR>
+                <TR><TD ALIGN="LEFT">Latency:</TD><TD>85ms (3-5 RTT)</TD></TR>
+                <TR><TD ALIGN="LEFT">Throughput:</TD><TD>470 ops/sec</TD></TR>
+                <TR><TD ALIGN="LEFT">Quorum:</TD><TD>5/7 (2F+1)</TD></TR>
+                <TR><TD ALIGN="LEFT">Fault Tolerance:</TD><TD>2 Byzantine</TD></TR>
+                <TR><TD ALIGN="LEFT">Use Case:</TD><TD>Financial systems</TD></TR>
+            </TABLE>>,
+            shape=plaintext
+        ];
+    }
+
+    // ========================================
+    // COORDINATION STRATEGY DECISION TREE
+    // ========================================
+    subgraph cluster_decision {
+        label=<<B>Coordination Strategy Selection</B>>;
+        style=filled;
+        color="#fff3e0";
+        fontsize=12;
+
+        decision_start [
+            label="Start:\nChoose Coordination\nStrategy",
+            fillcolor="#ff6f00",
+            fontcolor=white,
+            shape=ellipse
+        ];
+
+        decision_malicious [
+            label="Protect against\nmalicious agents?",
+            fillcolor="#ffe0b2",
+            shape=diamond
+        ];
+
+        decision_consistency [
+            label="Need strong\nconsistency?",
+            fillcolor="#ffe0b2",
+            shape=diamond
+        ];
+
+        decision_scale [
+            label="Need >50 agents?",
+            fillcolor="#ffe0b2",
+            shape=diamond
+        ];
+
+        result_byzantine [
+            label="Use Byzantine\nFault Tolerance",
+            fillcolor="#c2185b",
+            fontcolor=white
+        ];
+
+        result_raft [
+            label="Use RAFT\nConsensus",
+            fillcolor="#1976d2",
+            fontcolor=white
+        ];
+
+        result_gossip [
+            label="Use Gossip\nProtocol",
+            fillcolor="#388e3c",
+            fontcolor=white
+        ];
+
+        // Decision flow
+        decision_start -> decision_malicious;
+        decision_malicious -> result_byzantine [label="YES", color="#c2185b"];
+        decision_malicious -> decision_consistency [label="NO"];
+        decision_consistency -> result_raft [label="YES", color="#1976d2"];
+        decision_consistency -> decision_scale [label="NO"];
+        decision_scale -> result_gossip [label="YES", color="#388e3c"];
+        decision_scale -> result_raft [label="NO", color="#1976d2"];
+    }
+
+    // ========================================
+    // INTEGRATION WITH CLAUDE-FLOW MCP
+    // ========================================
+    subgraph cluster_integration {
+        label=<<B>Claude-Flow MCP Integration</B>>;
+        style=filled;
+        color="#f3e5f5";
+        fontsize=12;
+
+        mcp_init [
+            label="npx claude-flow@alpha\nswarm init\n--topology [mesh|hierarchical|star]",
+            fillcolor="#9c27b0",
+            fontcolor=white,
+            shape=box3d
+        ];
+
+        mcp_consensus [
+            label="npx claude-flow@alpha\nconsensus config\n--protocol [raft|gossip|byzantine]",
+            fillcolor="#ba68c8",
+            shape=box3d
+        ];
+
+        mcp_monitor [
+            label="npx claude-flow@alpha\nswarm status --watch\nagent metrics",
+            fillcolor="#ce93d8",
+            shape=box3d
+        ];
+
+        mcp_memory [
+            label="Memory MCP\nPersistent state storage\nCross-session coordination",
+            fillcolor="#e1bee7",
+            shape=cylinder
+        ];
+
+        mcp_hooks [
+            label="Hooks Integration\npre-task: Init topology\npost-edit: Update state\nsession-end: Export metrics",
+            fillcolor="#f3e5f5",
+            shape=note
+        ];
+
+        mcp_init -> mcp_consensus [label="Configure"];
+        mcp_consensus -> mcp_monitor [label="Monitor"];
+        mcp_monitor -> mcp_memory [label="Persist"];
+        mcp_memory -> mcp_hooks [label="Automate"];
+    }
+
+    // ========================================
+    // CROSS-CLUSTER RELATIONSHIPS
+    // ========================================
+
+    // Link decision tree to topologies
+    result_raft -> raft_leader [lhead=cluster_raft, color="#1976d2", style=bold];
+    result_gossip -> gossip_agent1 [lhead=cluster_gossip, color="#388e3c", style=bold];
+    result_byzantine -> bft_primary [lhead=cluster_byzantine, color="#c2185b", style=bold];
+
+    // Link integration to topologies
+    mcp_consensus -> raft_leader [lhead=cluster_raft, color="#9c27b0", style=dashed, constraint=false];
+    mcp_consensus -> gossip_agent1 [lhead=cluster_gossip, color="#9c27b0", style=dashed, constraint=false];
+    mcp_consensus -> bft_primary [lhead=cluster_byzantine, color="#9c27b0", style=dashed, constraint=false];
+
+    // ========================================
+    // LEGEND
+    // ========================================
+    subgraph cluster_legend {
+        label=<<B>Legend</B>>;
+        style=filled;
+        color="#eceff1";
+        fontsize=12;
+
+        legend [
+            label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="4">
+                <TR><TD COLSPAN="2" ALIGN="LEFT"><B>Symbols:</B></TD></TR>
+                <TR><TD ALIGN="LEFT">⬛ Leader/Primary:</TD><TD>Coordinator agent (double octagon)</TD></TR>
+                <TR><TD ALIGN="LEFT">▬ Follower/Replica:</TD><TD>Replica agent (rounded box)</TD></TR>
+                <TR><TD ALIGN="LEFT">⚠ Malicious:</TD><TD>Byzantine/faulty agent (bold red)</TD></TR>
+                <TR><TD ALIGN="LEFT">──────▶:</TD><TD>Synchronous message (solid)</TD></TR>
+                <TR><TD ALIGN="LEFT">- - - - ▶:</TD><TD>Asynchronous message (dashed)</TD></TR>
+                <TR><TD ALIGN="LEFT">······▶:</TD><TD>Gossip/broadcast (dotted)</TD></TR>
+                <TR><TD></TD><TD></TD></TR>
+                <TR><TD COLSPAN="2" ALIGN="LEFT"><B>Colors:</B></TD></TR>
+                <TR><TD BGCOLOR="#1976d2" WIDTH="30"></TD><TD ALIGN="LEFT">RAFT (Blue)</TD></TR>
+                <TR><TD BGCOLOR="#388e3c" WIDTH="30"></TD><TD ALIGN="LEFT">Gossip (Green)</TD></TR>
+                <TR><TD BGCOLOR="#c2185b" WIDTH="30"></TD><TD ALIGN="LEFT">Byzantine (Pink)</TD></TR>
+                <TR><TD BGCOLOR="#9c27b0" WIDTH="30"></TD><TD ALIGN="LEFT">MCP Integration (Purple)</TD></TR>
+            </TABLE>>,
+            shape=plaintext
+        ];
+    }
+
+    // Layout hints
+    {rank=same; raft_metrics; gossip_metrics; bft_metrics;}
+    {rank=source; decision_start;}
+    {rank=min; mcp_init;}
+}

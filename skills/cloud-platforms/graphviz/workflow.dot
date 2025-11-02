@@ -1,0 +1,168 @@
+digraph multi_cloud_deployment {
+  // Graph settings
+  rankdir=TB;
+  node [shape=box, style=rounded, fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  // Define node colors
+  node [fillcolor=lightblue, style="rounded,filled"];
+
+  // Title
+  label="Multi-Cloud Deployment Architecture\nwith Infrastructure as Code";
+  labelloc=t;
+  fontsize=16;
+  fontname="Arial Bold";
+
+  // Subgraph for Development Phase
+  subgraph cluster_development {
+    label="Development Phase";
+    style=filled;
+    fillcolor=lightyellow;
+
+    requirements [label="Define Requirements\n• Workload type\n• Scaling needs\n• Compliance\n• Budget"];
+    design [label="Architecture Design\n• Service selection\n• High availability\n• Disaster recovery"];
+    iac [label="Infrastructure as Code\n• Terraform modules\n• CloudFormation\n• ARM templates"];
+
+    requirements -> design -> iac;
+  }
+
+  // Subgraph for Cloud Providers
+  subgraph cluster_providers {
+    label="Cloud Providers";
+    style=filled;
+    fillcolor=lightgray;
+
+    // AWS Services
+    subgraph cluster_aws {
+      label="AWS";
+      style=filled;
+      fillcolor="#FF9900";
+
+      aws_compute [label="Compute\n• EC2\n• Lambda\n• ECS/Fargate", fillcolor=white];
+      aws_storage [label="Storage\n• S3\n• EBS\n• EFS", fillcolor=white];
+      aws_database [label="Database\n• RDS\n• DynamoDB\n• Aurora", fillcolor=white];
+      aws_network [label="Networking\n• VPC\n• Route 53\n• CloudFront", fillcolor=white];
+    }
+
+    // GCP Services
+    subgraph cluster_gcp {
+      label="Google Cloud Platform";
+      style=filled;
+      fillcolor="#4285F4";
+
+      gcp_compute [label="Compute\n• Compute Engine\n• Cloud Functions\n• GKE/Cloud Run", fillcolor=white];
+      gcp_storage [label="Storage\n• Cloud Storage\n• Persistent Disk\n• Filestore", fillcolor=white];
+      gcp_database [label="Database\n• Cloud SQL\n• Firestore\n• BigQuery", fillcolor=white];
+      gcp_network [label="Networking\n• VPC\n• Cloud CDN\n• Load Balancing", fillcolor=white];
+    }
+
+    // Azure Services
+    subgraph cluster_azure {
+      label="Microsoft Azure";
+      style=filled;
+      fillcolor="#0078D4";
+
+      azure_compute [label="Compute\n• VMs\n• Functions\n• AKS/Containers", fillcolor=white];
+      azure_storage [label="Storage\n• Blob Storage\n• Disk Storage\n• Azure Files", fillcolor=white];
+      azure_database [label="Database\n• SQL Database\n• Cosmos DB\n• Synapse", fillcolor=white];
+      azure_network [label="Networking\n• Virtual Network\n• Traffic Manager\n• Front Door", fillcolor=white];
+    }
+  }
+
+  // Subgraph for Deployment Pipeline
+  subgraph cluster_pipeline {
+    label="CI/CD Pipeline";
+    style=filled;
+    fillcolor=lightgreen;
+
+    git [label="Git Repository\n• Version control\n• Code review"];
+    ci [label="CI Server\n• GitHub Actions\n• GitLab CI\n• Jenkins"];
+    test [label="Testing\n• Terraform validate\n• Security scan\n• Cost estimation"];
+    deploy [label="Terraform Apply\n• Plan review\n• Auto-approval\n• State management"];
+
+    git -> ci -> test -> deploy;
+  }
+
+  // Subgraph for Monitoring & Operations
+  subgraph cluster_monitoring {
+    label="Monitoring & Observability";
+    style=filled;
+    fillcolor=lightcoral;
+
+    logs [label="Logging\n• CloudWatch\n• Cloud Logging\n• Log Analytics"];
+    metrics [label="Metrics\n• Prometheus\n• Datadog\n• New Relic"];
+    alerts [label="Alerting\n• PagerDuty\n• Slack\n• Email"];
+
+    logs -> metrics -> alerts;
+  }
+
+  // Main workflow connections
+  iac -> git;
+
+  deploy -> aws_compute;
+  deploy -> aws_storage;
+  deploy -> aws_database;
+  deploy -> aws_network;
+
+  deploy -> gcp_compute;
+  deploy -> gcp_storage;
+  deploy -> gcp_database;
+  deploy -> gcp_network;
+
+  deploy -> azure_compute;
+  deploy -> azure_storage;
+  deploy -> azure_database;
+  deploy -> azure_network;
+
+  // Monitoring connections
+  aws_compute -> logs;
+  gcp_compute -> logs;
+  azure_compute -> logs;
+
+  // Feedback loop
+  alerts -> requirements [style=dashed, label="Optimize", color=red];
+
+  // Cost optimization
+  subgraph cluster_cost {
+    label="Cost Optimization";
+    style=filled;
+    fillcolor=lightpink;
+
+    budget [label="Budget Alerts\n• Monthly limits\n• Anomaly detection"];
+    optimize [label="Optimization\n• Right-sizing\n• Reserved instances\n• Spot instances"];
+    report [label="Cost Reports\n• AWS Cost Explorer\n• GCP Billing\n• Azure Cost Mgmt"];
+
+    budget -> optimize -> report;
+  }
+
+  metrics -> budget;
+
+  // Security
+  subgraph cluster_security {
+    label="Security & Compliance";
+    style=filled;
+    fillcolor=lavender;
+
+    iam [label="IAM & Access\n• Least privilege\n• MFA\n• Key rotation"];
+    encryption [label="Encryption\n• At rest\n• In transit\n• Key management"];
+    compliance [label="Compliance\n• HIPAA\n• PCI-DSS\n• SOC 2"];
+
+    iam -> encryption -> compliance;
+  }
+
+  deploy -> iam;
+
+  // High Availability
+  ha [label="High Availability\n• Multi-AZ\n• Multi-region\n• Auto-scaling\n• Load balancing", fillcolor=gold, style="rounded,filled"];
+
+  aws_network -> ha;
+  gcp_network -> ha;
+  azure_network -> ha;
+
+  // Disaster Recovery
+  dr [label="Disaster Recovery\n• Automated backups\n• Cross-region replication\n• RTO/RPO targets", fillcolor=orange, style="rounded,filled"];
+
+  aws_storage -> dr;
+  gcp_storage -> dr;
+  azure_storage -> dr;
+}

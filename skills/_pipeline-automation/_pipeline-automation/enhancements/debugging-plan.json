@@ -1,0 +1,36 @@
+{
+  "skill_name": "debugging",
+  "current_tier": "Incomplete",
+  "target_tier": "Silver",
+  "missing_components": [
+    "skill.md",
+    "README.md",
+    "examples/",
+    "references/",
+    "graphviz/"
+  ],
+  "tasks": [
+    {
+      "type": "create_readme",
+      "agent": "technical-writer",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_examples",
+      "agent": "researcher",
+      "estimated_hours": 1.0,
+      "count": 1
+    },
+    {
+      "type": "create_references",
+      "agent": "technical-writer",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_graphviz",
+      "agent": "architect",
+      "estimated_hours": 0.5
+    }
+  ],
+  "estimated_time_hours": 2.5
+}

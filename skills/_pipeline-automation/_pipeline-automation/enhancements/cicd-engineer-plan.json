@@ -1,0 +1,54 @@
+{
+  "skill_name": "cicd-engineer",
+  "current_tier": "Incomplete",
+  "target_tier": "Gold",
+  "missing_components": [
+    "skill.md",
+    "README.md",
+    "examples/",
+    "references/",
+    "graphviz/",
+    "resources/scripts/",
+    "resources/templates/",
+    "tests/"
+  ],
+  "tasks": [
+    {
+      "type": "create_readme",
+      "agent": "technical-writer",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_examples",
+      "agent": "researcher",
+      "estimated_hours": 1.0,
+      "count": 3
+    },
+    {
+      "type": "create_references",
+      "agent": "technical-writer",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_graphviz",
+      "agent": "architect",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_resources",
+      "agent": "coder",
+      "estimated_hours": 1.0
+    },
+    {
+      "type": "create_resources",
+      "agent": "coder",
+      "estimated_hours": 1.0
+    },
+    {
+      "type": "create_tests",
+      "agent": "tester",
+      "estimated_hours": 0.5
+    }
+  ],
+  "estimated_time_hours": 5.0
+}

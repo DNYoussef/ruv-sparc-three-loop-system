@@ -1,0 +1,24 @@
+{
+  "skill_name": "..",
+  "current_tier": "Incomplete",
+  "target_tier": "Bronze",
+  "missing_components": [
+    "skill.md",
+    "README.md",
+    "examples/"
+  ],
+  "tasks": [
+    {
+      "type": "create_readme",
+      "agent": "technical-writer",
+      "estimated_hours": 0.5
+    },
+    {
+      "type": "create_examples",
+      "agent": "researcher",
+      "estimated_hours": 1.0,
+      "count": 1
+    }
+  ],
+  "estimated_time_hours": 1.5
+}

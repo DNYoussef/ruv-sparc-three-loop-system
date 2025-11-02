@@ -1,0 +1,186 @@
+// 4-Phase Agent Creation Workflow
+// Render: dot -Tpng workflow.dot -o workflow.png
+// Or: dot -Tsvg workflow.dot -o workflow.svg
+
+digraph AgentCreationWorkflow {
+    // Graph settings
+    rankdir=TB;
+    node [shape=box, style=filled, fontname="Arial", fontsize=12];
+    edge [fontname="Arial", fontsize=10];
+
+    // Color scheme
+    bgcolor="#f5f5f5";
+
+    // Title
+    label="Agent Creation - 4-Phase SOP Workflow";
+    labelloc="t";
+    fontsize=20;
+    fontname="Arial Bold";
+
+    // Phase 1: Specification
+    subgraph cluster_phase1 {
+        label="Phase 1: Specification";
+        style=filled;
+        fillcolor="#e3f2fd";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        spec_start [label="Start:\nAgent Need\nIdentified", fillcolor="#90caf9", shape=ellipse];
+        spec_define [label="Define Agent\nPurpose & Domain", fillcolor="#bbdefb"];
+        spec_capabilities [label="Identify Core\nCapabilities", fillcolor="#bbdefb"];
+        spec_io [label="Define Input/Output\nFormats", fillcolor="#bbdefb"];
+        spec_quality [label="Specify Quality\nCriteria", fillcolor="#bbdefb"];
+        spec_doc [label="Create Specification\nDocument", fillcolor="#64b5f6"];
+
+        spec_start -> spec_define;
+        spec_define -> spec_capabilities;
+        spec_capabilities -> spec_io;
+        spec_io -> spec_quality;
+        spec_quality -> spec_doc;
+    }
+
+    // Phase 2: Prompt Engineering
+    subgraph cluster_phase2 {
+        label="Phase 2: Prompt Engineering";
+        style=filled;
+        fillcolor="#f3e5f5";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        prompt_role [label="Define Role &\nExpertise", fillcolor="#ce93d8"];
+        prompt_context [label="Provide Context &\nBackground", fillcolor="#ce93d8"];
+        prompt_decomp [label="Apply Task\nDecomposition", fillcolor="#ce93d8"];
+        prompt_cot [label="Add Chain-of-Thought\nReasoning", fillcolor="#ce93d8"];
+        prompt_fewshot [label="Create Few-Shot\nExamples (3-5)", fillcolor="#ce93d8"];
+        prompt_format [label="Define Output\nFormat", fillcolor="#ce93d8"];
+        prompt_constraints [label="Set Quality\nConstraints", fillcolor="#ce93d8"];
+        prompt_complete [label="Complete Agent\nPrompt", fillcolor="#ab47bc"];
+
+        prompt_role -> prompt_context;
+        prompt_context -> prompt_decomp;
+        prompt_decomp -> prompt_cot;
+        prompt_cot -> prompt_fewshot;
+        prompt_fewshot -> prompt_format;
+        prompt_format -> prompt_constraints;
+        prompt_constraints -> prompt_complete;
+    }
+
+    // Phase 3: Testing & Validation
+    subgraph cluster_phase3 {
+        label="Phase 3: Testing & Validation";
+        style=filled;
+        fillcolor="#fff3e0";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        test_simple [label="Test with Simple\nCases", fillcolor="#ffcc80"];
+        test_complex [label="Test with Complex\nCases", fillcolor="#ffcc80"];
+        test_edge [label="Test Edge Cases &\nError Handling", fillcolor="#ffcc80"];
+        test_validate [label="Validate Output\nQuality", fillcolor="#ffcc80"];
+        test_metrics [label="Measure Performance\nMetrics", fillcolor="#ffcc80"];
+        test_iterate [label="Analyze Failures &\nIterate", fillcolor="#ff9800"];
+        test_decision [label="Quality Criteria\nMet?", fillcolor="#fb8c00", shape=diamond];
+        test_passed [label="Testing Complete", fillcolor="#ef6c00"];
+
+        test_simple -> test_complex;
+        test_complex -> test_edge;
+        test_edge -> test_validate;
+        test_validate -> test_metrics;
+        test_metrics -> test_decision;
+        test_decision -> test_iterate [label="No\n(Refine Prompt)"];
+        test_iterate -> test_simple [style=dashed, color="#d84315"];
+        test_decision -> test_passed [label="Yes"];
+    }
+
+    // Phase 4: Integration
+    subgraph cluster_phase4 {
+        label="Phase 4: Integration";
+        style=filled;
+        fillcolor="#e8f5e9";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        int_hooks [label="Setup Coordination\nProtocol (Hooks)", fillcolor="#a5d6a7"];
+        int_memory [label="Configure Memory\nIntegration", fillcolor="#a5d6a7"];
+        int_comm [label="Define Communication\nPatterns", fillcolor="#a5d6a7"];
+        int_monitor [label="Setup Monitoring &\nMetrics", fillcolor="#a5d6a7"];
+        int_deploy [label="Deploy Agent with\nDocumentation", fillcolor="#66bb6a"];
+        int_end [label="Agent Ready\nfor Use", fillcolor="#4caf50", shape=ellipse];
+
+        int_hooks -> int_memory;
+        int_memory -> int_comm;
+        int_comm -> int_monitor;
+        int_monitor -> int_deploy;
+        int_deploy -> int_end;
+    }
+
+    // Phase transitions
+    spec_doc -> prompt_role [label="Spec\nComplete", penwidth=2];
+    prompt_complete -> test_simple [label="Prompt\nReady", penwidth=2];
+    test_passed -> int_hooks [label="Tests\nPassed", penwidth=2];
+
+    // Feedback loops
+    test_iterate -> prompt_cot [label="Refine\nPrompt", style=dashed, color="#d84315"];
+    int_monitor -> test_metrics [label="Production\nIssues", style=dashed, color="#1976d2"];
+
+    // Evidence-Based Principles (side annotations)
+    subgraph cluster_principles {
+        label="Evidence-Based Principles Applied";
+        style=filled;
+        fillcolor="#fce4ec";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        principle_1 [label="1. Role Definition\n(Zhou et al. 2023)", fillcolor="#f8bbd0", shape=note];
+        principle_2 [label="2. Chain-of-Thought\n(Wei et al. 2022)", fillcolor="#f8bbd0", shape=note];
+        principle_3 [label="3. Few-Shot Learning\n(Brown et al. 2020)", fillcolor="#f8bbd0", shape=note];
+        principle_4 [label="4. Output Formatting\n(Zhou et al. 2023)", fillcolor="#f8bbd0", shape=note];
+        principle_5 [label="5. Constraints\n(Liu et al. 2023)", fillcolor="#f8bbd0", shape=note];
+        principle_6 [label="6. Task Decomposition\n(Khot et al. 2022)", fillcolor="#f8bbd0", shape=note];
+        principle_7 [label="7. Context Provision\n(Press et al. 2022)", fillcolor="#f8bbd0", shape=note];
+    }
+
+    // Link principles to phases
+    principle_1 -> prompt_role [style=dotted, color="#c2185b"];
+    principle_2 -> prompt_cot [style=dotted, color="#c2185b"];
+    principle_3 -> prompt_fewshot [style=dotted, color="#c2185b"];
+    principle_4 -> prompt_format [style=dotted, color="#c2185b"];
+    principle_5 -> prompt_constraints [style=dotted, color="#c2185b"];
+    principle_6 -> prompt_decomp [style=dotted, color="#c2185b"];
+    principle_7 -> prompt_context [style=dotted, color="#c2185b"];
+
+    // Agent Types (output options)
+    subgraph cluster_types {
+        label="Agent Types (Output)";
+        style=filled;
+        fillcolor="#fff9c4";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        type_specialist [label="Specialist Agent\n(Deep Expertise)", fillcolor="#fff59d", shape=box3d];
+        type_coordinator [label="Coordinator Agent\n(Orchestration)", fillcolor="#fff59d", shape=box3d];
+        type_hybrid [label="Hybrid Agent\n(Multi-Domain)", fillcolor="#fff59d", shape=box3d];
+    }
+
+    int_end -> type_specialist [style=dotted];
+    int_end -> type_coordinator [style=dotted];
+    int_end -> type_hybrid [style=dotted];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor="#ffffff";
+        fontsize=10;
+        fontname="Arial";
+
+        legend_1 [label="Main Workflow", fillcolor="#90caf9"];
+        legend_2 [label="Decision Point", fillcolor="#fb8c00", shape=diamond];
+        legend_3 [label="Feedback Loop", color="#d84315", style=dashed];
+        legend_4 [label="Evidence-Based\nPrinciple", fillcolor="#f8bbd0", shape=note];
+
+        legend_1 -> legend_2 [style=invis];
+        legend_2 -> legend_3 [style=invis];
+        legend_3 -> legend_4 [style=invis];
+    }
+}

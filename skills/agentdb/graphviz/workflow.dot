@@ -1,0 +1,140 @@
+// AgentDB Vector Search Pipeline Workflow
+// Render: dot -Tpng workflow.dot -o workflow.png
+
+digraph agentdb_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#ffffff";
+    fontname="Arial";
+    fontsize=12;
+
+    // Node styling
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    // Edge styling
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#333333"
+    ];
+
+    // Define node colors by category
+    subgraph cluster_ingestion {
+        label="1. Document Ingestion";
+        style=filled;
+        color="#e3f2fd";
+        fontsize=11;
+
+        doc [label="Raw\nDocument", fillcolor="#90caf9"];
+        chunk [label="Chunk\nDocument\n(512 chars)", fillcolor="#90caf9"];
+        clean [label="Clean &\nNormalize", fillcolor="#90caf9"];
+    }
+
+    subgraph cluster_embedding {
+        label="2. Embedding Generation";
+        style=filled;
+        color="#f3e5f5";
+        fontsize=11;
+
+        tokenize [label="Tokenize\n(512 tokens max)", fillcolor="#ce93d8"];
+        bert [label="Sentence-BERT\n(all-MiniLM-L6-v2)", fillcolor="#ce93d8"];
+        embed [label="384-dim\nEmbedding", fillcolor="#ce93d8"];
+    }
+
+    subgraph cluster_indexing {
+        label="3. HNSW Indexing";
+        style=filled;
+        color="#fff3e0";
+        fontsize=11;
+
+        hnsw [label="HNSW Index\nM=16, ef=200", fillcolor="#ffb74d"];
+        graph [label="Multi-Layer\nGraph", fillcolor="#ffb74d"];
+        persist [label="Persist to\nDisk", fillcolor="#ffb74d"];
+    }
+
+    subgraph cluster_query {
+        label="4. Query Processing";
+        style=filled;
+        color="#e8f5e9";
+        fontsize=11;
+
+        user_query [label="User Query", fillcolor="#81c784", shape=ellipse];
+        query_embed [label="Query\nEmbedding", fillcolor="#81c784"];
+        hnsw_search [label="HNSW Search\nO(log N)", fillcolor="#81c784"];
+    }
+
+    subgraph cluster_retrieval {
+        label="5. Result Retrieval";
+        style=filled;
+        color="#fce4ec";
+        fontsize=11;
+
+        similarity [label="Cosine\nSimilarity", fillcolor="#f06292"];
+        rank [label="Rank by\nScore", fillcolor="#f06292"];
+        filter [label="Apply Metadata\nFilters", fillcolor="#f06292"];
+        topk [label="Top-K Results\n(k=5)", fillcolor="#f06292"];
+    }
+
+    results [label="Search Results\n+ Metadata", fillcolor="#4caf50", fontcolor=white, shape=box, style="rounded,filled"];
+
+    // Ingestion flow
+    doc -> chunk [label="split"];
+    chunk -> clean [label="normalize"];
+
+    // Embedding flow
+    clean -> tokenize;
+    tokenize -> bert [label="max 512\ntokens"];
+    bert -> embed [label="forward\npass"];
+
+    // Indexing flow
+    embed -> hnsw [label="insert"];
+    hnsw -> graph [label="build\nlayers"];
+    graph -> persist [label="write"];
+
+    // Query flow
+    user_query -> query_embed [label="embed"];
+    query_embed -> hnsw_search;
+    persist -> hnsw_search [label="load index", style=dashed];
+
+    // Retrieval flow
+    hnsw_search -> similarity [label="candidates"];
+    similarity -> rank [label="score"];
+    rank -> filter [label="apply"];
+    filter -> topk [label="select"];
+    topk -> results;
+
+    // Performance annotations
+    chunk -> tokenize [label="0.1ms", color="#999999", style=dashed];
+    bert -> embed [label="1ms/doc", color="#999999", style=dashed];
+    hnsw -> graph [label="2ms/doc", color="#999999", style=dashed];
+    hnsw_search -> similarity [label="3-5ms", color="#999999", style=dashed];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#f5f5f5";
+        fontsize=10;
+
+        legend_input [label="Input", fillcolor="#90caf9", shape=box, style="rounded,filled"];
+        legend_process [label="Process", fillcolor="#ce93d8", shape=box, style="rounded,filled"];
+        legend_index [label="Index", fillcolor="#ffb74d", shape=box, style="rounded,filled"];
+        legend_search [label="Search", fillcolor="#81c784", shape=box, style="rounded,filled"];
+        legend_result [label="Result", fillcolor="#f06292", shape=box, style="rounded,filled"];
+
+        legend_input -> legend_process -> legend_index -> legend_search -> legend_result [style=invis];
+    }
+
+    // Add notes
+    note1 [label="150x faster than\ntraditional databases", shape=note, fillcolor="#ffffcc"];
+    note2 [label="Sub-millisecond\nquery latency", shape=note, fillcolor="#ffffcc"];
+
+    hnsw_search -> note1 [style=dotted, arrowhead=none];
+    topk -> note2 [style=dotted, arrowhead=none];
+}

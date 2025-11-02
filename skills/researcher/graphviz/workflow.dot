@@ -1,0 +1,138 @@
+digraph researcher_workflow {
+    // Graph configuration
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Arial";
+    fontsize=12;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11];
+    edge [fontname="Arial", fontsize=10];
+
+    // Main workflow nodes
+    start [label="Research Need\nIdentified", shape=ellipse, style=filled, fillcolor="#E3F2FD", color="#1976D2", penwidth=2];
+
+    formulate [label="Phase 1: Question Formulation\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Define scope and objectives\n• Break into sub-questions\n• Identify constraints\n• Define success criteria\n• Estimate time required", shape=box, style="rounded,filled", fillcolor="#FFF3E0", color="#F57C00", penwidth=2];
+
+    search [label="Phase 2: Multi-Source Research\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Execute Gemini Search\n• Gather academic sources\n• Find case studies\n• Review documentation\n• Collect benchmarks", shape=box, style="rounded,filled", fillcolor="#F3E5F5", color="#7B1FA2", penwidth=2];
+
+    evaluate [label="Phase 3: Source Evaluation\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Assess credibility (5 dimensions)\n• Calculate credibility scores\n• Triangulate across sources\n• Identify consensus\n• Resolve conflicts", shape=box, style="rounded,filled", fillcolor="#E8F5E9", color="#388E3C", penwidth=2];
+
+    synthesize [label="Phase 4: Synthesis & Documentation\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n• Decision matrix / Trade-off analysis\n• Phased strategy if needed\n• Create recommendations\n• Document rationale\n• Store in Memory-MCP", shape=box, style="rounded,filled", fillcolor="#FFF9C4", color="#F9A825", penwidth=2];
+
+    complete [label="Actionable\nRecommendations ✓", shape=ellipse, style=filled, fillcolor="#C8E6C9", color="#2E7D32", penwidth=3];
+
+    // Main workflow edges
+    start -> formulate [label="Define scope", color="#1976D2", penwidth=2];
+    formulate -> search [label="Execute research", color="#F57C00", penwidth=2];
+    search -> evaluate [label="Assess sources", color="#7B1FA2", penwidth=2];
+    evaluate -> synthesize [label="Combine findings", color="#388E3C", penwidth=2];
+    synthesize -> complete [label="Recommendations ready", color="#F9A825", penwidth=2];
+
+    // Research depth decision
+    depth_check [label="Research\nDepth?", shape=diamond, style=filled, fillcolor="#FFE0B2", color="#E65100", penwidth=2, width=1.5, height=1.5];
+    formulate -> depth_check [label="Assess complexity", color="#F57C00", style=dashed];
+
+    // Research levels
+    quick [label="Level 1: Quick Research\n━━━━━━━━━━━━━━━━━\n30-60 min\n2-3 sources\n85%+ credibility", shape=box, style="rounded,dashed", fillcolor="#E1F5FE", color="#0277BD"];
+
+    multi [label="Level 2: Multi-Source\n━━━━━━━━━━━━━━━━━\n2-4 hours\n5-7 sources\n90%+ credibility", shape=box, style="rounded,dashed", fillcolor="#F3E5F5", color="#6A1B9A"];
+
+    deep [label="Level 3: Deep Dive\n━━━━━━━━━━━━━━━━━\n1-2 days\n8-12 sources\nExperimental validation", shape=box, style="rounded,dashed", fillcolor="#FFF3E0", color="#EF6C00"];
+
+    depth_check -> quick [label="Simple\nquestion", color="#0277BD", penwidth=1.5];
+    depth_check -> multi [label="Moderate\ncomplexity", color="#6A1B9A", penwidth=1.5];
+    depth_check -> deep [label="High stakes\ndecision", color="#EF6C00", penwidth=1.5];
+
+    quick -> search [style=dashed, color="#0277BD"];
+    multi -> search [style=dashed, color="#6A1B9A"];
+    deep -> search [style=dashed, color="#EF6C00"];
+
+    // Integration tools cluster
+    subgraph cluster_tools {
+        label="Research Tools & Integrations";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#BBDEFB";
+        fillcolor="#E3F2FD";
+
+        gemini [label="Gemini Search\n━━━━━━━━━━━\nGrounded web search\nSource citations\nRecent information", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+
+        memory [label="Memory-MCP\n━━━━━━━━━━━\nPersistent storage\nCross-session context\nVector search", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+
+        e2b [label="E2B Sandboxes\n━━━━━━━━━━━\nExperimental validation\nBenchmark reproduction\nProof of concept", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+    }
+
+    // Tool connections
+    search -> gemini [style=dashed, color="#1565C0", label="Web\nresearch"];
+    deep -> e2b [style=dashed, color="#1565C0", label="Validate\nexperimentally"];
+    synthesize -> memory [style=dashed, color="#1565C0", label="Store\nfindings"];
+    formulate -> memory [style=dashed, color="#1565C0", label="Retrieve\nprior research"];
+
+    // Synthesis techniques cluster
+    subgraph cluster_synthesis {
+        label="Synthesis Techniques";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#C8E6C9";
+        fillcolor="#E8F5E9";
+
+        decision_matrix [label="Decision Matrix\n━━━━━━━━━━━━\nObjective scoring\nWeighted criteria", shape=box, style="rounded,filled", fillcolor="white", color="#2E7D32"];
+
+        phased [label="Phased Strategy\n━━━━━━━━━━━━\nRisk mitigation\nIncremental rollout", shape=box, style="rounded,filled", fillcolor="white", color="#2E7D32"];
+
+        tradeoff [label="Trade-off Analysis\n━━━━━━━━━━━━\nPros/cons evaluation\nContext sensitivity", shape=box, style="rounded,filled", fillcolor="white", color="#2E7D32"];
+
+        consensus [label="Consensus Mapping\n━━━━━━━━━━━━\nSource triangulation\nExpert agreement", shape=box, style="rounded,filled", fillcolor="white", color="#2E7D32"];
+    }
+
+    // Synthesis technique selection
+    synthesize -> decision_matrix [style=dotted, color="#2E7D32", label="Objective\ncomparison"];
+    synthesize -> phased [style=dotted, color="#2E7D32", label="High risk/\nuncertainty"];
+    synthesize -> tradeoff [style=dotted, color="#2E7D32", label="No clear\nwinner"];
+    synthesize -> consensus [style=dotted, color="#2E7D32", label="Many\nsources"];
+
+    // Quality metrics cluster
+    subgraph cluster_quality {
+        label="Quality Metrics";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#FFECB3";
+        fillcolor="#FFF9C4";
+
+        sources [label="Sources: 3-12\n(depends on depth)", shape=box, style="rounded,filled", fillcolor="white"];
+        credibility [label="Avg Credibility:\n85-95%", shape=box, style="rounded,filled", fillcolor="white"];
+        triangulation [label="Triangulation:\n3+ sources agree", shape=box, style="rounded,filled", fillcolor="white"];
+    }
+
+    // Quality connections
+    evaluate -> sources [style=dotted, color="#F9A825"];
+    evaluate -> credibility [style=dotted, color="#F9A825"];
+    evaluate -> triangulation [style=dotted, color="#F9A825"];
+
+    // Iteration loop
+    insufficient [label="Insufficient\nInformation?", shape=diamond, style=filled, fillcolor="#FFCDD2", color="#C62828", penwidth=2];
+    evaluate -> insufficient [style=dashed, color="#C62828"];
+    insufficient -> search [label="YES\nMore sources needed", color="#C62828", penwidth=1.5, style=dashed];
+    insufficient -> synthesize [label="NO\nProceed to synthesis", color="#388E3C", penwidth=1.5];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Research Workflow Legend";
+        fontsize=12;
+        fontname="Arial Bold";
+        style=filled;
+        fillcolor="#FAFAFA";
+        color="#757575";
+
+        leg_main [label="Main workflow phases", shape=box, style="rounded,filled", fillcolor="#E3F2FD"];
+        leg_tools [label="Research tools", shape=box, style="rounded,dashed", fillcolor="white"];
+        leg_synthesis [label="Synthesis technique", shape=box, style="rounded,dotted", fillcolor="white"];
+
+        leg_main -> leg_tools [style=invis];
+        leg_tools -> leg_synthesis [style=invis];
+    }
+}

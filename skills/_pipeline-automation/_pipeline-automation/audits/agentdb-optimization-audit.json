@@ -1,0 +1,122 @@
+{
+  "skill_name": "agentdb-optimization",
+  "audit_timestamp": "2025-11-02T13:12:26.527459",
+  "overall_score": 0.91,
+  "quality_tier": "Silver",
+  "decision": "GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": true,
+          "message": "skill.md found"
+        },
+        {
+          "name": "README.md exists",
+          "passed": true,
+          "message": "README.md found"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": true,
+          "message": "examples/ directory found"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": true,
+          "message": "3 example(s) found"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": true,
+          "message": "No orphaned root files"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": true,
+          "message": "Directory naming conventions followed"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": true,
+          "message": "No orphaned files detected"
+        }
+      ],
+      "score": 1.0
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": true,
+          "message": "Valid YAML frontmatter found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": true,
+          "message": "Imperative voice detected (3 verbs)"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": true,
+          "message": "Overview section found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": true,
+          "message": "Quick start section found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": true,
+          "message": "Examples appear concrete (4 indicators)"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": true,
+          "message": "File naming conventions followed"
+        }
+      ],
+      "score": 1.0
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Silver",
+      "file_count": 8,
+      "components": {
+        "skill.md": true,
+        "README.md": true,
+        "examples/": true,
+        "references/": true,
+        "resources/": false,
+        "graphviz/": true,
+        "tests/": false
+      },
+      "score": 0.7
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 13,
+    "failed": 0,
+    "violations": [],
+    "passes": [
+      "[STRUCTURE] skill.md exists",
+      "[STRUCTURE] README.md exists",
+      "[STRUCTURE] examples/ directory exists",
+      "[STRUCTURE] At least 1 example present",
+      "[STRUCTURE] No files in root (except required)",
+      "[STRUCTURE] Proper directory naming (lowercase)",
+      "[STRUCTURE] No orphaned files",
+      "[CONTENT] skill.md has YAML frontmatter",
+      "[CONTENT] skill.md uses imperative voice",
+      "[CONTENT] README.md has overview",
+      "[CONTENT] README.md has quick start",
+      "[CONTENT] Examples are concrete (not abstract)",
+      "[CONTENT] File naming conventions followed"
+    ]
+  }
+}

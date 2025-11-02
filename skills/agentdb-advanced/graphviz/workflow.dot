@@ -1,0 +1,157 @@
+digraph AgentDBAdvancedWorkflow {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fontname="Arial"];
+
+    // Color scheme
+    node [fillcolor="#E3F2FD"];
+
+    // Title
+    label="AgentDB Advanced Distributed Architecture";
+    labelloc=t;
+    fontsize=20;
+    fontname="Arial Bold";
+
+    // Application Layer
+    subgraph cluster_app {
+        label="Application Layer";
+        style=filled;
+        fillcolor="#F5F5F5";
+
+        app [label="AI Application\n(Multi-Agent System)", fillcolor="#BBDEFB"];
+        router [label="Database Router\n(Domain/Shard Selection)", fillcolor="#90CAF9"];
+        coordinator [label="Query Coordinator\n(Aggregation & Ranking)", fillcolor="#64B5F6"];
+    }
+
+    // AgentDB Layer
+    subgraph cluster_agentdb {
+        label="AgentDB Distributed Layer";
+        style=filled;
+        fillcolor="#E8F5E9";
+
+        // Domain-based databases
+        subgraph cluster_domains {
+            label="Domain-Based Databases";
+            style=filled;
+            fillcolor="#C8E6C9";
+
+            db_knowledge [label="Knowledge DB\n50K vectors\nScalar Quantization\nCache: 2000", fillcolor="#A5D6A7"];
+            db_chat [label="Conversation DB\n10K vectors\nBinary Quantization\nCache: 500", fillcolor="#A5D6A7"];
+            db_code [label="Code DB\n20K vectors\nNo Quantization\nCache: 1000", fillcolor="#A5D6A7"];
+        }
+
+        // Sharded databases
+        subgraph cluster_shards {
+            label="Hash-Based Sharding (10M vectors)";
+            style=filled;
+            fillcolor="#FFF9C4";
+
+            shard0 [label="Shard 0\n2.5M vectors\nHash: 0-63", fillcolor="#FFF59D"];
+            shard1 [label="Shard 1\n2.5M vectors\nHash: 64-127", fillcolor="#FFF59D"];
+            shard2 [label="Shard 2\n2.5M vectors\nHash: 128-191", fillcolor="#FFF59D"];
+            shard3 [label="Shard 3\n2.5M vectors\nHash: 192-255", fillcolor="#FFF59D"];
+        }
+
+        // Replicas
+        subgraph cluster_replicas {
+            label="Replication (HA)";
+            style=filled;
+            fillcolor="#FFCCBC";
+
+            replica0 [label="Replica 0\n(Backup)", fillcolor="#FFAB91"];
+            replica1 [label="Replica 1\n(Backup)", fillcolor="#FFAB91"];
+            replica2 [label="Replica 2\n(Backup)", fillcolor="#FFAB91"];
+            replica3 [label="Replica 3\n(Backup)", fillcolor="#FFAB91"];
+        }
+    }
+
+    // QUIC Synchronization Layer
+    subgraph cluster_quic {
+        label="QUIC Synchronization Layer";
+        style=filled;
+        fillcolor="#E1BEE7";
+
+        quic_node1 [label="Node 1\n192.168.1.10:4433\nQUIC Server", fillcolor="#CE93D8"];
+        quic_node2 [label="Node 2\n192.168.1.11:4433\nQUIC Server", fillcolor="#CE93D8"];
+        quic_node3 [label="Node 3\n192.168.1.12:4433\nQUIC Server", fillcolor="#CE93D8"];
+
+        quic_sync [label="QUIC Protocol\n• <1ms latency\n• TLS 1.3 encryption\n• Multiplexed streams\n• Auto recovery",
+                   shape=note, fillcolor="#BA68C8"];
+    }
+
+    // Storage Layer
+    subgraph cluster_storage {
+        label="Storage & Indexing Layer";
+        style=filled;
+        fillcolor="#CFD8DC";
+
+        sqlite [label="SQLite + WAL\n• Write-Ahead Logging\n• 64MB page cache\n• Memory-mapped I/O", fillcolor="#B0BEC5"];
+        hnsw [label="HNSW Index\n• M=16 (connections)\n• EF=100 (search quality)\n• Sub-ms search", fillcolor="#B0BEC5"];
+        quantization [label="Quantization Engine\n• Scalar: 4x reduction\n• Binary: 32x reduction\n• Product: 8-16x reduction", fillcolor="#B0BEC5"];
+    }
+
+    // Connections - Application Layer
+    app -> router [label="Query Intent"];
+    router -> coordinator [label="Route Selection"];
+
+    // Connections - Router to Databases
+    coordinator -> db_knowledge [label="Domain: knowledge", style=dashed];
+    coordinator -> db_chat [label="Domain: chat", style=dashed];
+    coordinator -> db_code [label="Domain: code", style=dashed];
+
+    coordinator -> shard0 [label="Hash: 0-63", style=dashed];
+    coordinator -> shard1 [label="Hash: 64-127", style=dashed];
+    coordinator -> shard2 [label="Hash: 128-191", style=dashed];
+    coordinator -> shard3 [label="Hash: 192-255", style=dashed];
+
+    // Connections - Replication
+    shard0 -> replica0 [label="Async Replication", style=dotted, color=red];
+    shard1 -> replica1 [label="Async Replication", style=dotted, color=red];
+    shard2 -> replica2 [label="Async Replication", style=dotted, color=red];
+    shard3 -> replica3 [label="Async Replication", style=dotted, color=red];
+
+    // Connections - QUIC Sync (Mesh Topology)
+    db_knowledge -> quic_node1 [style=bold];
+    db_chat -> quic_node2 [style=bold];
+    db_code -> quic_node3 [style=bold];
+
+    quic_node1 -> quic_node2 [label="<1ms sync", style=bold, color=purple, dir=both];
+    quic_node2 -> quic_node3 [label="<1ms sync", style=bold, color=purple, dir=both];
+    quic_node3 -> quic_node1 [label="<1ms sync", style=bold, color=purple, dir=both];
+
+    quic_node1 -> quic_sync [style=dashed];
+    quic_node2 -> quic_sync [style=dashed];
+    quic_node3 -> quic_sync [style=dashed];
+
+    // Connections - Storage Layer
+    db_knowledge -> sqlite [style=dotted];
+    db_chat -> sqlite [style=dotted];
+    db_code -> sqlite [style=dotted];
+    shard0 -> sqlite [style=dotted];
+    shard1 -> sqlite [style=dotted];
+    shard2 -> sqlite [style=dotted];
+    shard3 -> sqlite [style=dotted];
+
+    sqlite -> hnsw [label="Index"];
+    sqlite -> quantization [label="Compress"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor="#FFFFFF";
+
+        legend1 [label="Solid Line: Primary Path", shape=plaintext];
+        legend2 [label="Dashed Line: Query Routing", shape=plaintext];
+        legend3 [label="Dotted Line: Data Flow", shape=plaintext];
+        legend4 [label="Bold Purple: QUIC Sync", shape=plaintext];
+        legend5 [label="Bold Red: Replication", shape=plaintext];
+
+        legend1 -> legend2 -> legend3 -> legend4 -> legend5 [style=invis];
+    }
+
+    // Performance Annotations
+    perf1 [label="Performance Metrics:\n• Search: 0.5-6ms\n• QUIC Sync: <1ms\n• Throughput: 850 inserts/sec\n• Memory: 128MB (80K vectors)",
+           shape=note, fillcolor="#FFFDE7", fontsize=10];
+
+    perf1 -> coordinator [style=invis];
+}

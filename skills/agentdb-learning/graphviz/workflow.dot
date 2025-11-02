@@ -1,0 +1,128 @@
+digraph AgentDBLearningWorkflow {
+  // Graph attributes
+  rankdir=TB;
+  bgcolor="transparent";
+  fontname="Arial";
+  fontsize=14;
+
+  // Node styling
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Arial",
+    fontsize=12,
+    margin=0.3
+  ];
+
+  // Edge styling
+  edge [
+    fontname="Arial",
+    fontsize=10,
+    color="#555555"
+  ];
+
+  // Subgraph: Initialization Phase
+  subgraph cluster_init {
+    label="Phase 1: Initialization";
+    style=dashed;
+    color="#2196F3";
+    fontsize=14;
+
+    init [label="Initialize AgentDB\n(enableLearning: true)", fillcolor="#E3F2FD"];
+    select_algo [label="Select RL Algorithm\n(Q-Learning, SARSA, Actor-Critic, etc.)", fillcolor="#E3F2FD"];
+    config [label="Configure Hyperparameters\n(learning_rate, gamma, epsilon)", fillcolor="#E3F2FD"];
+
+    init -> select_algo [label="1"];
+    select_algo -> config [label="2"];
+  }
+
+  // Subgraph: Experience Collection Phase
+  subgraph cluster_collect {
+    label="Phase 2: Experience Collection";
+    style=dashed;
+    color="#4CAF50";
+    fontsize=14;
+
+    env_reset [label="Reset Environment\nstate = env.reset()", fillcolor="#E8F5E9"];
+    select_action [label="Select Action\n(ε-greedy, policy network)", fillcolor="#E8F5E9"];
+    execute [label="Execute Action\nenv.step(action)", fillcolor="#E8F5E9"];
+    store [label="Store Experience\nAdapterDB.insertPattern()", fillcolor="#E8F5E9"];
+    check_done [label="Episode Done?", shape=diamond, fillcolor="#FFF9C4"];
+
+    env_reset -> select_action [label="3"];
+    select_action -> execute [label="4"];
+    execute -> store [label="5"];
+    store -> check_done [label="6"];
+    check_done -> select_action [label="No\n(continue episode)", color="#4CAF50"];
+    check_done -> compute_targets [label="Yes\n(episode complete)", color="#FF9800"];
+  }
+
+  // Subgraph: Training Phase
+  subgraph cluster_train {
+    label="Phase 3: Model Training";
+    style=dashed;
+    color="#FF9800";
+    fontsize=14;
+
+    compute_targets [label="Compute TD Targets\nr + γ * V(s')", fillcolor="#FFF3E0"];
+    update_model [label="Update Neural Model\nadapter.train(epochs, batchSize)", fillcolor="#FFF3E0"];
+    update_policy [label="Update Policy/Value Functions\n(Actor-Critic, Q-values)", fillcolor="#FFF3E0"];
+
+    compute_targets -> update_model [label="7"];
+    update_model -> update_policy [label="8"];
+  }
+
+  // Subgraph: Evaluation Phase
+  subgraph cluster_eval {
+    label="Phase 4: Evaluation";
+    style=dashed;
+    color="#9C27B0";
+    fontsize=14;
+
+    eval_start [label="Evaluation Mode\n(ε = 0, greedy policy)", fillcolor="#F3E5F5"];
+    eval_retrieve [label="Retrieve Best Actions\nadapter.retrieveWithReasoning()", fillcolor="#F3E5F5"];
+    eval_metrics [label="Compute Metrics\n(avg reward, success rate)", fillcolor="#F3E5F5"];
+
+    update_policy -> eval_start [label="9"];
+    eval_start -> eval_retrieve [label="10"];
+    eval_retrieve -> eval_metrics [label="11"];
+  }
+
+  // Decision Point: Continue Training?
+  decision [label="Performance\nSatisfactory?", shape=diamond, fillcolor="#FFF9C4"];
+
+  // Final Phase: Deployment
+  deploy [label="Deploy Policy\n(production environment)", shape=box, style="rounded,filled", fillcolor="#C8E6C9"];
+
+  // Connections between phases
+  config -> env_reset [label="Start Training"];
+  eval_metrics -> decision [label="12"];
+  decision -> env_reset [label="No\n(continue training)", color="#FF5722"];
+  decision -> deploy [label="Yes\n(deploy)", color="#4CAF50"];
+
+  // Loop annotations
+  loop_label [label="Training Loop\n(1000-10000 episodes)", shape=note, fillcolor="#FFFDE7", style="filled"];
+  loop_label -> select_action [style=dashed, color="#FFC107"];
+
+  // Key components
+  subgraph cluster_legend {
+    label="Key Components";
+    style=solid;
+    color="#777777";
+    fontsize=12;
+
+    legend_agentdb [label="AgentDB Vector Memory", shape=cylinder, fillcolor="#E1F5FE"];
+    legend_rl [label="RL Algorithm\n(Q-Learning, SARSA, A2C)", shape=box3d, fillcolor="#F3E5F5"];
+    legend_neural [label="WASM Neural Engine\n(10-100x faster)", shape=component, fillcolor="#FFF3E0"];
+
+    legend_agentdb -> legend_rl [style=invis];
+    legend_rl -> legend_neural [style=invis];
+  }
+
+  // Annotations
+  note1 [label="Experience Replay:\nStore in vector memory\nfor batch training", shape=note, fillcolor="#E3F2FD", style="filled"];
+  note2 [label="Advantage Calculation:\nA(s,a) = Q(s,a) - V(s)", shape=note, fillcolor="#F3E5F5", style="filled"];
+
+  note1 -> store [style=dashed, color="#2196F3"];
+  note2 -> compute_targets [style=dashed, color="#9C27B0"];
+}

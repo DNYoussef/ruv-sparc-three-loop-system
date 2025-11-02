@@ -1,0 +1,191 @@
+digraph ComplianceValidationWorkflow {
+  // Graph settings
+  rankdir=TB;
+  node [shape=box, style=filled, fillcolor=lightblue, fontname="Arial"];
+  edge [fontname="Arial"];
+
+  // Define nodes
+  start [label="Start\nCompliance Initiative", shape=ellipse, fillcolor=lightgreen];
+
+  // Phase 1: Requirements Identification
+  identify_regs [label="Identify Applicable\nRegulations", fillcolor=lightyellow];
+  map_processes [label="Map Business\nProcesses to Controls"];
+  assess_gaps [label="Assess Current\nCompliance Gaps"];
+
+  // Phase 2: Control Implementation
+  design_controls [label="Design Technical\nand Administrative Controls"];
+  implement_tech [label="Implement Technical\nControls\n(Encryption, Access Control)"];
+  implement_admin [label="Implement Administrative\nControls\n(Policies, Training)"];
+  implement_physical [label="Implement Physical\nControls\n(Facility Security)"];
+  document_controls [label="Document Controls\nand Evidence"];
+
+  // Phase 3: Validation and Testing
+  automated_scan [label="Run Automated\nCompliance Scans", fillcolor=lightcyan];
+  manual_testing [label="Conduct Manual\nControl Testing"];
+  collect_evidence [label="Collect Control\nEvidence"];
+  gap_analysis [label="Perform Gap\nAnalysis"];
+
+  // Decision points
+  decision_gaps [label="Gaps\nIdentified?", shape=diamond, fillcolor=lightyellow];
+  decision_compliant [label="Compliant?", shape=diamond, fillcolor=lightyellow];
+
+  // Phase 4: Remediation
+  prioritize_gaps [label="Prioritize\nRemediation"];
+  implement_fixes [label="Implement\nCorrective Actions"];
+  retest_controls [label="Retest\nControls"];
+
+  // Phase 5: Ongoing Compliance
+  continuous_monitor [label="Continuous\nMonitoring", fillcolor=lightcyan];
+  quarterly_review [label="Quarterly\nAccess Reviews"];
+  annual_audit [label="Annual\nRisk Assessment"];
+  training_program [label="Security Awareness\nTraining"];
+
+  // Phase 6: Audit Preparation
+  preaudit_assess [label="Pre-Audit\nAssessment"];
+  organize_evidence [label="Organize\nAudit Evidence"];
+  engage_auditor [label="Engage External\nAuditor"];
+
+  // Decision: Audit ready?
+  decision_audit_ready [label="Audit\nReady?", shape=diamond, fillcolor=lightyellow];
+
+  // Phase 7: External Audit
+  audit_execution [label="Audit Execution\n(Type II: 12 months)"];
+  respond_findings [label="Respond to\nAudit Findings"];
+
+  // Decision: Certification achieved?
+  decision_certified [label="Certification\nAchieved?", shape=diamond, fillcolor=lightyellow];
+
+  // Outcomes
+  certification [label="Certification/\nCompliance Achieved", shape=ellipse, fillcolor=lightgreen];
+  maintenance [label="Compliance\nMaintenance Program", fillcolor=lightcyan];
+  surveillance [label="Surveillance\nAudits\n(Annual)"];
+
+  end [label="End", shape=ellipse, fillcolor=lightcoral];
+
+  // Define edges (workflow)
+  start -> identify_regs;
+  identify_regs -> map_processes;
+  map_processes -> assess_gaps;
+  assess_gaps -> decision_gaps;
+
+  // Gaps decision
+  decision_gaps -> design_controls [label="Yes"];
+  decision_gaps -> continuous_monitor [label="No (Already Compliant)"];
+
+  // Control implementation
+  design_controls -> implement_tech;
+  implement_tech -> implement_admin;
+  implement_admin -> implement_physical;
+  implement_physical -> document_controls;
+
+  // Validation phase
+  document_controls -> automated_scan;
+  automated_scan -> manual_testing;
+  manual_testing -> collect_evidence;
+  collect_evidence -> gap_analysis;
+  gap_analysis -> decision_compliant;
+
+  // Compliance decision
+  decision_compliant -> continuous_monitor [label="Yes"];
+  decision_compliant -> prioritize_gaps [label="No"];
+
+  // Remediation loop
+  prioritize_gaps -> implement_fixes;
+  implement_fixes -> retest_controls;
+  retest_controls -> gap_analysis [label="Revalidate"];
+
+  // Ongoing compliance activities
+  continuous_monitor -> quarterly_review;
+  continuous_monitor -> annual_audit;
+  continuous_monitor -> training_program;
+  quarterly_review -> continuous_monitor [style=dashed];
+  annual_audit -> continuous_monitor [style=dashed];
+  training_program -> continuous_monitor [style=dashed];
+
+  // Audit preparation
+  continuous_monitor -> preaudit_assess [label="Prepare for\nAudit"];
+  preaudit_assess -> organize_evidence;
+  organize_evidence -> engage_auditor;
+  engage_auditor -> decision_audit_ready;
+
+  // Audit ready decision
+  decision_audit_ready -> audit_execution [label="Yes"];
+  decision_audit_ready -> implement_fixes [label="No"];
+
+  // External audit
+  audit_execution -> respond_findings;
+  respond_findings -> decision_certified;
+
+  // Certification decision
+  decision_certified -> certification [label="Yes"];
+  decision_certified -> implement_fixes [label="No\n(Findings)"];
+
+  // Post-certification
+  certification -> maintenance;
+  maintenance -> surveillance;
+  surveillance -> maintenance [label="Pass"];
+  surveillance -> implement_fixes [label="Findings"];
+
+  // Continuous cycle
+  maintenance -> continuous_monitor [style=dashed, label="Ongoing"];
+
+  // End state
+  certification -> end [style=dashed, label="Optional\nExit"];
+
+  // Automated checks feedback loop
+  automated_scan -> continuous_monitor [style=dashed, color=blue, label="Automated\nMonitoring"];
+
+  // Subgraph for automated checks
+  subgraph cluster_automated {
+    label="Automated Compliance Checks";
+    style=filled;
+    fillcolor=lightcyan;
+
+    check_access [label="Access Control\nValidation", shape=note];
+    check_encryption [label="Encryption\nValidation", shape=note];
+    check_logging [label="Logging\nValidation", shape=note];
+    check_network [label="Network Security\nValidation", shape=note];
+    check_vuln [label="Vulnerability\nManagement", shape=note];
+
+    automated_scan -> check_access [style=dashed];
+    automated_scan -> check_encryption [style=dashed];
+    automated_scan -> check_logging [style=dashed];
+    automated_scan -> check_network [style=dashed];
+    automated_scan -> check_vuln [style=dashed];
+  }
+
+  // Subgraph for compliance frameworks
+  subgraph cluster_frameworks {
+    label="Compliance Frameworks";
+    style=filled;
+    fillcolor=lightyellow;
+
+    gdpr [label="GDPR", shape=note];
+    hipaa [label="HIPAA", shape=note];
+    soc2 [label="SOC 2", shape=note];
+    pci [label="PCI-DSS", shape=note];
+    iso [label="ISO 27001", shape=note];
+
+    identify_regs -> gdpr [style=dashed];
+    identify_regs -> hipaa [style=dashed];
+    identify_regs -> soc2 [style=dashed];
+    identify_regs -> pci [style=dashed];
+    identify_regs -> iso [style=dashed];
+  }
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style=filled;
+    fillcolor=white;
+
+    legend_process [label="Process Step", shape=box, fillcolor=lightblue];
+    legend_decision [label="Decision Point", shape=diamond, fillcolor=lightyellow];
+    legend_automated [label="Automated Check", shape=box, fillcolor=lightcyan];
+    legend_start_end [label="Start/End", shape=ellipse, fillcolor=lightgreen];
+
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_automated [style=invis];
+    legend_automated -> legend_start_end [style=invis];
+  }
+}

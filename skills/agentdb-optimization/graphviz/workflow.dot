@@ -1,0 +1,151 @@
+digraph AgentDBOptimizationWorkflow {
+    // Graph settings
+    rankdir=TB;
+    node [shape=box, style=rounded, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Color scheme
+    node [fillcolor=lightblue, style="rounded,filled"];
+
+    // Title
+    label="AgentDB Performance Optimization Workflow";
+    labelloc=t;
+    fontsize=20;
+    fontname="Arial Bold";
+
+    // Start node
+    start [label="Start\nAgentDB Project", shape=ellipse, fillcolor=lightgreen];
+
+    // Phase 1: Assessment
+    assess [label="Assess Requirements\n• Dataset size\n• Accuracy needs\n• Memory constraints\n• Latency targets", fillcolor=lightyellow];
+
+    // Phase 2: Quantization Selection
+    quant_decision [label="Select Quantization", shape=diamond, fillcolor=orange];
+    quant_none [label="No Quantization\n• Full precision\n• 100% accuracy\n• 1x memory", fillcolor=lightcyan];
+    quant_scalar [label="Scalar Quantization\n• 4x compression\n• 98-99% accuracy\n• 3x faster", fillcolor=lightcyan];
+    quant_product [label="Product Quantization\n• 8-16x compression\n• 93-97% accuracy\n• 5x faster", fillcolor=lightcyan];
+    quant_binary [label="Binary Quantization\n• 32x compression\n• 95-98% accuracy\n• 10x faster", fillcolor=lightcyan];
+
+    // Phase 3: HNSW Configuration
+    hnsw_config [label="Configure HNSW\nParameters", fillcolor=lightyellow];
+
+    hnsw_m [label="Set M\n(connections per layer)\n• Small: M=8\n• Medium: M=16\n• Large: M=32-48", fillcolor=lightcyan];
+
+    hnsw_efc [label="Set efConstruction\n(build quality)\n• Fast: 100\n• Balanced: 200\n• Quality: 400", fillcolor=lightcyan];
+
+    hnsw_efs [label="Set efSearch\n(search quality)\n• Fast: 50\n• Balanced: 100\n• Accurate: 200", fillcolor=lightcyan];
+
+    // Phase 4: Cache Strategy
+    cache_config [label="Configure Cache\n• Small: 100-500\n• Medium: 500-2000\n• Large: 2000-5000", fillcolor=lightyellow];
+
+    // Phase 5: Build Index
+    build [label="Build HNSW Index\n• Insert patterns\n• Build graph structure\n• Optimize layout", fillcolor=lightpink];
+
+    // Phase 6: Benchmark
+    benchmark [label="Run Benchmarks\n• Search latency\n• Recall accuracy\n• Memory usage\n• Throughput", fillcolor=lightyellow];
+
+    // Phase 7: Evaluation
+    eval_decision [label="Meets Requirements?", shape=diamond, fillcolor=orange];
+
+    // Phase 8: Optimization Paths
+    opt_speed [label="Optimize for Speed\n• Decrease efSearch\n• Decrease M\n• Enable quantization", fillcolor=lightcyan];
+
+    opt_accuracy [label="Optimize for Accuracy\n• Increase efSearch\n• Increase M\n• Increase efConstruction", fillcolor=lightcyan];
+
+    opt_memory [label="Optimize for Memory\n• Enable quantization\n• Decrease M\n• Prune patterns", fillcolor=lightcyan];
+
+    // Phase 9: Batch Operations
+    batch_opt [label="Add Batch Operations\n• Batch inserts (500x)\n• Parallel retrieval (10x)\n• Chunked processing", fillcolor=lightyellow];
+
+    // Phase 10: Production
+    production [label="Deploy to Production\n• Monitor performance\n• Track metrics\n• Continuous tuning", fillcolor=lightgreen];
+
+    // End node
+    end [label="Optimized\nAgentDB System", shape=ellipse, fillcolor=lightgreen];
+
+    // Main flow
+    start -> assess;
+    assess -> quant_decision;
+
+    // Quantization branches
+    quant_decision -> quant_none [label="<10K vectors"];
+    quant_decision -> quant_scalar [label="10K-100K"];
+    quant_decision -> quant_product [label="100K-1M"];
+    quant_decision -> quant_binary [label=">1M or\nmobile"];
+
+    // Converge to HNSW
+    quant_none -> hnsw_config;
+    quant_scalar -> hnsw_config;
+    quant_product -> hnsw_config;
+    quant_binary -> hnsw_config;
+
+    // HNSW configuration sequence
+    hnsw_config -> hnsw_m;
+    hnsw_m -> hnsw_efc;
+    hnsw_efc -> hnsw_efs;
+
+    // Cache and build
+    hnsw_efs -> cache_config;
+    cache_config -> build;
+    build -> benchmark;
+
+    // Evaluation
+    benchmark -> eval_decision;
+
+    eval_decision -> batch_opt [label="Yes"];
+    eval_decision -> opt_speed [label="Too slow"];
+    eval_decision -> opt_accuracy [label="Low recall"];
+    eval_decision -> opt_memory [label="High memory"];
+
+    // Optimization loops back to build
+    opt_speed -> build [style=dashed];
+    opt_accuracy -> build [style=dashed];
+    opt_memory -> build [style=dashed];
+
+    // Production deployment
+    batch_opt -> production;
+    production -> end;
+
+    // Subgraph for performance metrics
+    subgraph cluster_metrics {
+        label="Performance Targets";
+        style=dashed;
+        fontsize=14;
+
+        target_speed [label="Speed\n<100µs search\n>10K QPS", shape=note, fillcolor=white];
+        target_accuracy [label="Accuracy\n>97% recall\n<2% error", shape=note, fillcolor=white];
+        target_memory [label="Memory\n<100MB/1M vectors\n4-32x reduction", shape=note, fillcolor=white];
+    }
+
+    // Connect metrics to evaluation
+    benchmark -> target_speed [style=dotted];
+    benchmark -> target_accuracy [style=dotted];
+    benchmark -> target_memory [style=dotted];
+
+    // Subgraph for tools
+    subgraph cluster_tools {
+        label="AgentDB Tools";
+        style=dashed;
+        fontsize=14;
+
+        tool_bench [label="npx agentdb@latest\nbenchmark", shape=note, fillcolor=white];
+        tool_stats [label="npx agentdb@latest\nstats", shape=note, fillcolor=white];
+        tool_api [label="createAgentDBAdapter()\nAPI", shape=note, fillcolor=white];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=dashed;
+        fontsize=12;
+
+        legend_decision [label="Decision Point", shape=diamond, fillcolor=orange];
+        legend_action [label="Action/Config", shape=box, style=rounded, fillcolor=lightyellow];
+        legend_option [label="Option", shape=box, style=rounded, fillcolor=lightcyan];
+        legend_milestone [label="Milestone", shape=ellipse, fillcolor=lightgreen];
+
+        legend_decision -> legend_action [style=invis];
+        legend_action -> legend_option [style=invis];
+        legend_option -> legend_milestone [style=invis];
+    }
+}

@@ -1,0 +1,199 @@
+digraph DebuggingWorkflow {
+  // Graph settings
+  rankdir=TB;
+  bgcolor="white";
+  fontname="Arial";
+  fontsize=12;
+  node [fontname="Arial", fontsize=10, style="filled", shape="box"];
+  edge [fontname="Arial", fontsize=9];
+
+  // Define color scheme
+  start [label="🐛 Bug Reported", shape="ellipse", fillcolor="#FFE6E6", color="#CC0000", penwidth=2];
+  end [label="✅ Bug Fixed & Prevented", shape="ellipse", fillcolor="#E6FFE6", color="#00CC00", penwidth=2];
+
+  // Phase 1: Symptom Identification
+  subgraph cluster_phase1 {
+    label="Phase 1: Symptom Identification";
+    style="rounded";
+    color="#4A90E2";
+    fillcolor="#E3F2FD";
+    fontsize=11;
+    fontcolor="#1565C0";
+
+    reproduce [label="Can you reproduce\nthe bug?", shape="diamond", fillcolor="#FFF9C4"];
+    gather_info [label="Gather Information:\n• Error messages\n• Stack traces\n• Logs\n• User reports", fillcolor="#BBDEFB"];
+    document_steps [label="Document\nReproduction Steps", fillcolor="#BBDEFB"];
+    classify [label="Classify Issue:\n• Severity\n• Frequency\n• Impact", fillcolor="#BBDEFB"];
+    symptom_report [label="📋 Symptom Report", shape="note", fillcolor="#C5E1A5"];
+  }
+
+  // Phase 2: Root Cause Analysis
+  subgraph cluster_phase2 {
+    label="Phase 2: Root Cause Analysis";
+    style="rounded";
+    color="#7B1FA2";
+    fillcolor="#F3E5F5";
+    fontsize=11;
+    fontcolor="#6A1B9A";
+
+    analyze_method [label="Select Analysis Method:\n• Binary search\n• Backtrace\n• Five Whys\n• Scientific method", shape="diamond", fillcolor="#FFF9C4"];
+    trace_execution [label="Trace Execution Flow:\n• Entry point → Failure\n• Variable states\n• Data transformations", fillcolor="#E1BEE7"];
+    examine_changes [label="Examine Recent Changes:\n• Git history\n• Deployments\n• Config changes", fillcolor="#E1BEE7"];
+    hypothesis [label="Form Hypothesis:\nWhy does bug occur?", fillcolor="#E1BEE7"];
+    test_hypothesis [label="Test Hypothesis:\nValidate with evidence", shape="diamond", fillcolor="#FFF9C4"];
+    root_cause [label="📋 Root Cause Statement\n+ Evidence", shape="note", fillcolor="#C5E1A5"];
+  }
+
+  // Phase 3: Fix Generation
+  subgraph cluster_phase3 {
+    label="Phase 3: Fix Generation";
+    style="rounded";
+    color="#E65100";
+    fillcolor="#FFF3E0";
+    fontsize=11;
+    fontcolor="#BF360C";
+
+    generate_solutions [label="Generate 2-3\nSolution Approaches", fillcolor="#FFE0B2"];
+    evaluate_tradeoffs [label="Evaluate Trade-offs:\n• Correctness\n• Performance\n• Maintainability\n• Risk", fillcolor="#FFE0B2"];
+    select_solution [label="Select Optimal\nSolution", fillcolor="#FFE0B2"];
+    implement_fix [label="Implement Fix:\n• Clear code\n• Comments\n• Documentation", fillcolor="#FFE0B2"];
+    fix_complete [label="📋 Fix Implementation\n+ Explanation", shape="note", fillcolor="#C5E1A5"];
+  }
+
+  // Phase 4: Validation Testing
+  subgraph cluster_phase4 {
+    label="Phase 4: Validation Testing";
+    style="rounded";
+    color="#2E7D32";
+    fillcolor="#E8F5E9";
+    fontsize=11;
+    fontcolor="#1B5E20";
+
+    write_test [label="Write Test That\nReproduces Bug", fillcolor="#C8E6C9"];
+    test_fails [label="Test fails\nbefore fix?", shape="diamond", fillcolor="#FFF9C4"];
+    apply_fix [label="Apply Fix", fillcolor="#C8E6C9"];
+    test_passes [label="Test passes\nafter fix?", shape="diamond", fillcolor="#FFF9C4"];
+    regression_tests [label="Run Full\nRegression Suite", fillcolor="#C8E6C9"];
+    regressions [label="Any\nregressions?", shape="diamond", fillcolor="#FFF9C4"];
+    validation_complete [label="📋 Validation Report\n+ Test Coverage", shape="note", fillcolor="#C5E1A5"];
+  }
+
+  // Phase 5: Regression Prevention
+  subgraph cluster_phase5 {
+    label="Phase 5: Regression Prevention";
+    style="rounded";
+    color="#D32F2F";
+    fillcolor="#FFEBEE";
+    fontsize=11;
+    fontcolor="#B71C1C";
+
+    add_to_suite [label="Add Test to\nPermanent Suite", fillcolor="#FFCDD2"];
+    document_bug [label="Document:\n• Bug details\n• Root cause\n• Fix rationale\n• Lessons learned", fillcolor="#FFCDD2"];
+    update_guidelines [label="Update Development\nGuidelines", fillcolor="#FFCDD2"];
+    add_monitoring [label="Add Monitoring/\nAlerts", fillcolor="#FFCDD2"];
+    similar_bugs [label="Check for Similar\nBugs in Codebase", fillcolor="#FFCDD2"];
+    prevention_complete [label="📋 Prevention Report\n+ Action Items", shape="note", fillcolor="#C5E1A5"];
+  }
+
+  // Decision nodes for common scenarios
+  need_help [label="Need help?", shape="diamond", fillcolor="#FFCCBC"];
+  ask_colleague [label="Ask Colleague\nor Senior Engineer", fillcolor="#FFCCBC"];
+  take_break [label="Take Break:\n• Walk\n• Coffee\n• Sleep", fillcolor="#FFCCBC"];
+  stuck [label="Stuck for\n> 2 hours?", shape="diamond", fillcolor="#FFF9C4"];
+
+  // Main flow
+  start -> gather_info;
+  gather_info -> reproduce;
+
+  // Reproduction decision
+  reproduce -> document_steps [label="Yes"];
+  reproduce -> gather_info [label="No\nGather more data", color="red"];
+
+  document_steps -> classify;
+  classify -> symptom_report;
+
+  // Phase 1 to Phase 2
+  symptom_report -> analyze_method;
+
+  // Root cause analysis
+  analyze_method -> trace_execution [label="Binary/Backtrace"];
+  analyze_method -> hypothesis [label="Five Whys"];
+  trace_execution -> examine_changes;
+  examine_changes -> hypothesis;
+  hypothesis -> test_hypothesis;
+
+  // Hypothesis validation
+  test_hypothesis -> root_cause [label="Confirmed"];
+  test_hypothesis -> hypothesis [label="Rejected\nRefine hypothesis", color="red"];
+  test_hypothesis -> stuck [label="Inconclusive"];
+
+  // Stuck handling
+  stuck -> need_help [label="Yes"];
+  stuck -> trace_execution [label="No\nContinue"];
+  need_help -> ask_colleague [label="Complex/Critical"];
+  need_help -> take_break [label="Need clarity"];
+  ask_colleague -> trace_execution;
+  take_break -> trace_execution;
+
+  // Phase 2 to Phase 3
+  root_cause -> generate_solutions;
+
+  // Fix generation
+  generate_solutions -> evaluate_tradeoffs;
+  evaluate_tradeoffs -> select_solution;
+  select_solution -> implement_fix;
+  implement_fix -> fix_complete;
+
+  // Phase 3 to Phase 4
+  fix_complete -> write_test;
+
+  // Test validation
+  write_test -> test_fails;
+  test_fails -> apply_fix [label="Yes\nTest is valid"];
+  test_fails -> write_test [label="No\nFix test", color="red"];
+
+  apply_fix -> test_passes;
+  test_passes -> regression_tests [label="Yes"];
+  test_passes -> implement_fix [label="No\nFix doesn't work", color="red"];
+
+  regression_tests -> regressions;
+  regressions -> implement_fix [label="Yes\nFix breaks\nexisting code", color="red"];
+  regressions -> validation_complete [label="No\nAll tests pass"];
+
+  // Phase 4 to Phase 5
+  validation_complete -> add_to_suite;
+
+  // Regression prevention
+  add_to_suite -> document_bug;
+  document_bug -> update_guidelines;
+  update_guidelines -> add_monitoring;
+  add_monitoring -> similar_bugs;
+  similar_bugs -> prevention_complete;
+
+  // Phase 5 to end
+  prevention_complete -> end;
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style="rounded";
+    color="#757575";
+    fillcolor="#FAFAFA";
+    fontsize=10;
+
+    legend_decision [label="Decision Point", shape="diamond", fillcolor="#FFF9C4"];
+    legend_action [label="Action/Process", shape="box", fillcolor="#BBDEFB"];
+    legend_output [label="Output/Document", shape="note", fillcolor="#C5E1A5"];
+    legend_start [label="Start/End", shape="ellipse", fillcolor="#FFE6E6"];
+
+    legend_decision -> legend_action [style="invis"];
+    legend_action -> legend_output [style="invis"];
+    legend_output -> legend_start [style="invis"];
+  }
+
+  // Notes
+  notes [label="Key Principles:\n\n• Reproduce before fixing\n• Understand root cause\n• Test-driven debugging\n• Prevent recurrence\n• Document learnings", shape="note", fillcolor="#FFF9C4", color="#F57C00", penwidth=2];
+
+  // Position notes
+  {rank=same; start; notes}
+}

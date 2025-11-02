@@ -1,0 +1,185 @@
+digraph agent_creator_workflow {
+    rankdir=TB;
+    node [shape=box, style=filled, fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+
+    // Define colors
+    node [fillcolor=lightblue];
+    phase1 [label="Phase 1: Initial Analysis\n& Intent Decoding\n(30-60 min)", fillcolor="#E3F2FD"];
+    phase2 [label="Phase 2: Meta-Cognitive\nExtraction\n(30-45 min)", fillcolor="#E1F5FE"];
+    phase3 [label="Phase 3: Agent Architecture\nDesign\n(45-60 min)", fillcolor="#B3E5FC"];
+    phase4 [label="Phase 4: Deep Technical\nEnhancement\n(60-90 min)", fillcolor="#81D4FA"];
+    phase5 [label="Phase 5: SDK Implementation\n(30-60 min)", fillcolor="#4FC3F7"];
+    phase6 [label="Phase 6: Testing & Validation\n(30-45 min)", fillcolor="#29B6F6"];
+    phase7 [label="Phase 7: Documentation\n& Packaging\n(15-30 min)", fillcolor="#039BE5"];
+
+    // Outputs
+    node [shape=note, fillcolor=lightyellow];
+    output1a [label="Domain Analysis Doc"];
+    output1b [label="Tech Stack Inventory"];
+    output1c [label="Integration Requirements"];
+
+    output2a [label="Agent Specification"];
+    output2b [label="Example Outputs\n(Good/Bad)"];
+    output2c [label="Edge Case Inventory"];
+
+    output3a [label="Base System Prompt\nv1.0"];
+    output3b [label="Cognitive Framework"];
+    output3c [label="Guardrails Doc"];
+
+    output4a [label="Enhanced System Prompt\nv2.0"];
+    output4b [label="Code Pattern Library"];
+    output4c [label="Failure Mode Handbook"];
+    output4d [label="Integration Pattern Guide"];
+    output4e [label="Metrics Specification"];
+
+    output5a [label="TypeScript SDK\nImplementation"];
+    output5b [label="Python SDK\nImplementation\n(optional)"];
+    output5c [label="MCP Server Config"];
+
+    output6a [label="Test Suite\n(Typical, Edge, Error)"];
+    output6b [label="Validation Report"];
+    output6c [label="Performance Metrics"];
+
+    output7a [label="Agent README"];
+    output7b [label="Usage Examples"];
+    output7c [label="Complete Agent Package"];
+
+    // Validation gates
+    node [shape=diamond, fillcolor=lightgreen];
+    gate1 [label="Phase 1\nValidation Gate"];
+    gate2 [label="Phase 2\nValidation Gate"];
+    gate3 [label="Phase 3\nValidation Gate"];
+    gate4 [label="Phase 4\nValidation Gate"];
+    productionReady [label="Production\nReady", fillcolor="#4CAF50"];
+
+    // Final output
+    node [shape=doublecircle, fillcolor=lightcoral];
+    finalAgent [label="Production-Ready Agent\nwith Deep Domain Expertise"];
+
+    // Phase 1 flow
+    start [label="Start: Agent Requirement", shape=ellipse, fillcolor=lightgreen];
+    start -> phase1;
+
+    phase1 -> output1a;
+    phase1 -> output1b;
+    phase1 -> output1c;
+
+    output1a -> gate1;
+    output1b -> gate1;
+    output1c -> gate1;
+
+    gate1 -> phase2 [label="✓ Domain understood\n✓ Tech stack mapped\n✓ Integrations clear"];
+    gate1 -> phase1 [label="✗ Missing info", style=dashed, color=red];
+
+    // Phase 2 flow
+    phase2 -> output2a;
+    phase2 -> output2b;
+    phase2 -> output2c;
+
+    output2a -> gate2;
+    output2b -> gate2;
+    output2c -> gate2;
+
+    gate2 -> phase3 [label="✓ 3+ expertise domains\n✓ 5+ heuristics\n✓ Complete spec"];
+    gate2 -> phase2 [label="✗ Incomplete", style=dashed, color=red];
+
+    // Phase 3 flow
+    phase3 -> output3a;
+    phase3 -> output3b;
+    phase3 -> output3c;
+
+    output3a -> gate3;
+    output3b -> gate3;
+    output3c -> gate3;
+
+    gate3 -> phase4 [label="✓ Prompt follows template\n✓ Evidence-based techniques\n✓ 2+ workflow examples"];
+    gate3 -> phase3 [label="✗ Incomplete", style=dashed, color=red];
+
+    // Phase 4 flow
+    phase4 -> output4a;
+    phase4 -> output4b;
+    phase4 -> output4c;
+    phase4 -> output4d;
+    phase4 -> output4e;
+
+    output4a -> gate4;
+    output4b -> gate4;
+    output4c -> gate4;
+    output4d -> gate4;
+    output4e -> gate4;
+
+    gate4 -> phase5 [label="✓ Code patterns with refs\n✓ Failure modes + prevention\n✓ MCP patterns + metrics"];
+    gate4 -> phase4 [label="✗ Incomplete", style=dashed, color=red];
+
+    // Phase 5 flow
+    phase5 -> output5a;
+    phase5 -> output5b;
+    phase5 -> output5c;
+
+    output5a -> phase6;
+    output5b -> phase6;
+    output5c -> phase6;
+
+    // Phase 6 flow
+    phase6 -> output6a;
+    phase6 -> output6b;
+    phase6 -> output6c;
+
+    output6a -> productionReady;
+    output6b -> productionReady;
+    output6c -> productionReady;
+
+    productionReady -> phase7 [label="✓ All tests pass\n✓ 10/10 validation"];
+    productionReady -> phase6 [label="✗ Tests fail", style=dashed, color=red];
+
+    // Phase 7 flow
+    phase7 -> output7a;
+    phase7 -> output7b;
+    phase7 -> output7c;
+
+    output7a -> finalAgent;
+    output7b -> finalAgent;
+    output7c -> finalAgent;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        fontsize=10;
+        style=dashed;
+
+        legendPhase [label="Phase\n(Time estimate)", fillcolor=lightblue];
+        legendOutput [label="Output\nArtifact", shape=note, fillcolor=lightyellow];
+        legendGate [label="Validation\nGate", shape=diamond, fillcolor=lightgreen];
+        legendFinal [label="Final\nResult", shape=doublecircle, fillcolor=lightcoral];
+
+        legendPhase -> legendOutput [style=invis];
+        legendOutput -> legendGate [style=invis];
+        legendGate -> legendFinal [style=invis];
+    }
+
+    // Timeline annotation
+    subgraph cluster_timeline {
+        label="Total Time: 3.5-5.5 hours (first-time) | 2-3 hours (speed-run)";
+        fontsize=12;
+        style=filled;
+        fillcolor=lightyellow;
+
+        timeline1 [label="Phase 1-2: Domain Research & Expertise Extraction (60-105 min)", shape=plaintext];
+        timeline2 [label="Phase 3-4: Architecture & Technical Enhancement (105-150 min)", shape=plaintext];
+        timeline3 [label="Phase 5-7: Implementation, Testing, Documentation (75-135 min)", shape=plaintext];
+
+        timeline1 -> timeline2 [style=invis];
+        timeline2 -> timeline3 [style=invis];
+    }
+
+    // Best practices annotation
+    subgraph cluster_best_practices {
+        label="Best Practices";
+        fontsize=10;
+        style=filled;
+        fillcolor=lightcyan;
+
+        bp1 [label="• Validate at each gate before proceeding\n• Use templates to speed up phases\n• Extract real code patterns (file:line refs)\n• Test guardrails explicitly (try to violate)\n• Track metrics from day 1", shape=plaintext];
+    }
+}

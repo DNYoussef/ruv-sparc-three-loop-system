@@ -1,0 +1,171 @@
+digraph BaselineReplication {
+    // Graph configuration
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+
+    // Color scheme
+    node [fillcolor="#E3F2FD"];
+
+    // Title
+    label="Baseline Replication Workflow\nDeep Research SOP - Pipeline D - Quality Gate 1";
+    labelloc="t";
+    fontsize=14;
+    fontname="Arial Bold";
+
+    // Phase 1: Paper Analysis
+    subgraph cluster_phase1 {
+        label="Phase 1: Paper Analysis (15 min)";
+        style=filled;
+        fillcolor="#FFF3E0";
+
+        paper_input [label="Published Paper\n+ Code Repository", fillcolor="#FFECB3"];
+        extract_method [label="Extract Methodology\n(researcher)", fillcolor="#FFE082"];
+        validate_spec [label="Validate\nCompleteness", fillcolor="#FFD54F"];
+        spec_output [label="Baseline\nSpecification", fillcolor="#FFCA28", shape=note];
+
+        paper_input -> extract_method;
+        extract_method -> validate_spec;
+        validate_spec -> spec_output;
+    }
+
+    // Phase 2: Dataset Validation
+    subgraph cluster_phase2 {
+        label="Phase 2: Dataset Validation (20 min)";
+        style=filled;
+        fillcolor="#E8F5E9";
+
+        dataset_input [label="Dataset\n(SQuAD 2.0)", fillcolor="#C8E6C9"];
+        validate_dataset [label="Validate Dataset\n(data-steward)", fillcolor="#A5D6A7"];
+        check_integrity [label="Check Integrity\n+ Checksums", fillcolor="#81C784"];
+        dataset_report [label="Dataset Validation\nReport", fillcolor="#66BB6A", shape=note];
+
+        dataset_input -> validate_dataset;
+        validate_dataset -> check_integrity;
+        check_integrity -> dataset_report;
+    }
+
+    // Phase 3: Implementation
+    subgraph cluster_phase3 {
+        label="Phase 3: Implementation (2 hours)";
+        style=filled;
+        fillcolor="#F3E5F5";
+
+        spec_input [label="Baseline Spec\n+ Dataset", fillcolor="#E1BEE7"];
+        implement_baseline [label="Implement Baseline\n(coder)", fillcolor="#CE93D8"];
+        unit_tests [label="Write Unit Tests\n(tester)", fillcolor="#BA68C8"];
+        code_review [label="Code Review\n(reviewer)", fillcolor="#AB47BC"];
+        implementation [label="Tested\nImplementation", fillcolor="#9C27B0", shape=note];
+
+        spec_input -> implement_baseline;
+        implement_baseline -> unit_tests;
+        unit_tests -> code_review;
+        code_review -> implementation;
+    }
+
+    // Phase 4: Experiment Execution
+    subgraph cluster_phase4 {
+        label="Phase 4: Experiment Execution (4-8 hours)";
+        style=filled;
+        fillcolor="#E0F7FA";
+
+        env_setup [label="Environment Setup\n(Docker)", fillcolor="#B2EBF2"];
+        train_model [label="Train Model\n(3 epochs, monitored)", fillcolor="#80DEEA"];
+        save_checkpoints [label="Save Checkpoints\n+ Logs", fillcolor="#4DD0E1"];
+        collect_metrics [label="Collect Metrics\n(JSON)", fillcolor="#26C6DA"];
+
+        env_setup -> train_model;
+        train_model -> save_checkpoints;
+        save_checkpoints -> collect_metrics;
+    }
+
+    // Phase 5: Results Validation
+    subgraph cluster_phase5 {
+        label="Phase 5: Results Validation (30 min)";
+        style=filled;
+        fillcolor="#FCE4EC";
+
+        compare_results [label="Compare Results\n(reproduced vs published)", fillcolor="#F8BBD0"];
+        statistical_tests [label="Statistical Tests\n(t-test, CI, Cohen's d)", fillcolor="#F48FB1"];
+        check_tolerance [label="Check ±1%\nTolerance", fillcolor="#F06292"];
+        validation_report [label="Results Validation\nReport", fillcolor="#EC407A", shape=note];
+
+        compare_results -> statistical_tests;
+        statistical_tests -> check_tolerance;
+        check_tolerance -> validation_report;
+    }
+
+    // Phase 6: Reproducibility Packaging
+    subgraph cluster_phase6 {
+        label="Phase 6: Reproducibility Packaging (30 min)";
+        style=filled;
+        fillcolor="#FFF9C4";
+
+        create_package [label="Create Repro Package\n(archivist)", fillcolor="#FFF59D"];
+        docker_test [label="Test in Fresh\nDocker", fillcolor="#FFF176"];
+        test_3runs [label="3 Independent\nRuns", fillcolor="#FFEE58"];
+        repro_package [label="Reproducibility\nPackage + DOI", fillcolor="#FFEB3B", shape=note];
+
+        create_package -> docker_test;
+        docker_test -> test_3runs;
+        test_3runs -> repro_package;
+    }
+
+    // Phase 7: Quality Gate 1
+    subgraph cluster_phase7 {
+        label="Phase 7: Quality Gate 1 Validation (15 min)";
+        style=filled;
+        fillcolor="#E8EAF6";
+
+        gate_checklist [label="Quality Gate 1\nChecklist", fillcolor="#C5CAE9"];
+        evaluate_requirements [label="Evaluate Requirements\n(evaluator)", fillcolor="#9FA8DA"];
+        make_decision [label="Make Decision\n(APPROVE/CONDITIONAL/REJECT)", fillcolor="#7986CB"];
+
+        gate_checklist -> evaluate_requirements;
+        evaluate_requirements -> make_decision;
+    }
+
+    // Decision outcomes
+    approved [label="APPROVED\n✓ Proceed to Method Development", fillcolor="#4CAF50", fontcolor="white", shape=box, style="rounded,filled"];
+    conditional [label="CONDITIONAL\n⚠ Minor gaps, fixable", fillcolor="#FF9800", fontcolor="white", shape=box, style="rounded,filled"];
+    rejected [label="REJECTED\n✗ Requires rework", fillcolor="#F44336", fontcolor="white", shape=box, style="rounded,filled"];
+
+    // Connections between phases
+    spec_output -> spec_input [style=dashed, color=blue];
+    dataset_report -> spec_input [style=dashed, color=blue];
+    implementation -> env_setup [style=dashed, color=blue];
+    collect_metrics -> compare_results [style=dashed, color=blue];
+    validation_report -> create_package [style=dashed, color=blue];
+    repro_package -> gate_checklist [style=dashed, color=blue];
+
+    // Decision paths
+    make_decision -> approved [label="Results ≤±1%\np > 0.05\n3/3 repro ✓", color="#4CAF50", fontcolor="#4CAF50"];
+    make_decision -> conditional [label="Results ≤±1.5%\n2/3 repro ✓", color="#FF9800", fontcolor="#FF9800"];
+    make_decision -> rejected [label="Results >±2%\nOR <2/3 repro", color="#F44336", fontcolor="#F44336"];
+
+    // Feedback loops
+    rejected -> paper_input [label="Re-analyze", style=dashed, color="#F44336"];
+    conditional -> compare_results [label="Additional runs", style=dashed, color="#FF9800"];
+
+    // Agents involved (legend)
+    subgraph cluster_agents {
+        label="Agents Involved";
+        style=filled;
+        fillcolor="#FAFAFA";
+        rank=same;
+
+        agent_researcher [label="researcher", shape=ellipse, fillcolor="#FFE082"];
+        agent_data_steward [label="data-steward", shape=ellipse, fillcolor="#A5D6A7"];
+        agent_coder [label="coder", shape=ellipse, fillcolor="#CE93D8"];
+        agent_tester [label="tester", shape=ellipse, fillcolor="#80DEEA"];
+        agent_reviewer [label="reviewer", shape=ellipse, fillcolor="#BA68C8"];
+        agent_archivist [label="archivist", shape=ellipse, fillcolor="#FFF59D"];
+        agent_evaluator [label="evaluator", shape=ellipse, fillcolor="#9FA8DA"];
+    }
+
+    // Time estimates
+    time_estimate [label="Total Time: 8-12 hours (first baseline)\n4-6 hours (subsequent baselines)", shape=plaintext, fontsize=11, fontcolor="#666666"];
+
+    // Ordering
+    {rank=same; approved; conditional; rejected}
+}

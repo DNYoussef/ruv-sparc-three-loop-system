@@ -1,0 +1,164 @@
+digraph APIDocumentationWorkflow {
+  // Graph styling
+  rankdir=TB;
+  bgcolor="#ffffff";
+  fontname="Arial";
+  fontsize=14;
+  node [fontname="Arial", fontsize=12, style=filled];
+  edge [fontname="Arial", fontsize=10];
+
+  // Title
+  labelloc="t";
+  label=<<B>API Documentation Generation Workflow</B><BR/>Automated process from code to interactive docs>;
+
+  // Subgraph: Source Analysis
+  subgraph cluster_source {
+    label="1. Source Code Analysis";
+    style=filled;
+    color="#e3f2fd";
+
+    code [label="API Source Code\n(Routes, Controllers)", shape=box, fillcolor="#bbdefb"];
+    annotations [label="Code Annotations\n(JSDoc, Decorators)", shape=box, fillcolor="#bbdefb"];
+    schemas [label="Data Models\n(Mongoose, TypeORM)", shape=box, fillcolor="#bbdefb"];
+  }
+
+  // Subgraph: Extraction
+  subgraph cluster_extract {
+    label="2. Documentation Extraction";
+    style=filled;
+    color="#e8f5e9";
+
+    parser [label="Parser\n(swagger-jsdoc,\ntypedoc)", shape=ellipse, fillcolor="#c8e6c9"];
+    introspection [label="Schema\nIntrospection", shape=ellipse, fillcolor="#c8e6c9"];
+    validator [label="Syntax\nValidator", shape=ellipse, fillcolor="#c8e6c9"];
+  }
+
+  // Subgraph: Spec Generation
+  subgraph cluster_spec {
+    label="3. Specification Generation";
+    style=filled;
+    color="#fff3e0";
+
+    openapi [label="OpenAPI Spec\n(YAML/JSON)", shape=box, fillcolor="#ffe0b2"];
+    graphql_schema [label="GraphQL Schema\n(SDL)", shape=box, fillcolor="#ffe0b2"];
+    postman [label="Postman Collection", shape=box, fillcolor="#ffe0b2"];
+  }
+
+  // Subgraph: Validation
+  subgraph cluster_validate {
+    label="4. Validation & Quality";
+    style=filled;
+    color="#f3e5f5";
+
+    spec_validator [label="Spec Validator\n(swagger-cli)", shape=diamond, fillcolor="#e1bee7"];
+    link_checker [label="Link Checker", shape=diamond, fillcolor="#e1bee7"];
+    example_tester [label="Example Tester", shape=diamond, fillcolor="#e1bee7"];
+  }
+
+  // Subgraph: Documentation
+  subgraph cluster_docs {
+    label="5. Interactive Documentation";
+    style=filled;
+    color="#fce4ec";
+
+    swagger_ui [label="Swagger UI\n(Interactive REST)", shape=box, fillcolor="#f8bbd0"];
+    redoc [label="Redoc\n(Beautiful Docs)", shape=box, fillcolor="#f8bbd0"];
+    graphql_playground [label="GraphQL Playground\n(Interactive GraphQL)", shape=box, fillcolor="#f8bbd0"];
+  }
+
+  // Subgraph: Deployment
+  subgraph cluster_deploy {
+    label="6. Deployment & Distribution";
+    style=filled;
+    color="#e0f2f1";
+
+    static_site [label="Static Site\n(GitHub Pages)", shape=box, fillcolor="#b2dfdb"];
+    cdn [label="CDN Distribution", shape=box, fillcolor="#b2dfdb"];
+    sdk_gen [label="SDK Generation\n(OpenAPI Generator)", shape=box, fillcolor="#b2dfdb"];
+  }
+
+  // Subgraph: Monitoring
+  subgraph cluster_monitor {
+    label="7. Monitoring & Updates";
+    style=filled;
+    color="#fff9c4";
+
+    ci_cd [label="CI/CD Pipeline\n(Auto-generate)", shape=ellipse, fillcolor="#fff59d"];
+    version_check [label="Version Checker", shape=ellipse, fillcolor="#fff59d"];
+    deprecation_warn [label="Deprecation Alerts", shape=ellipse, fillcolor="#fff59d"];
+  }
+
+  // Flow connections: Source Analysis
+  code -> parser [label="Parse routes"];
+  annotations -> parser [label="Extract JSDoc"];
+  schemas -> introspection [label="Analyze models"];
+
+  // Flow connections: Extraction to Spec
+  parser -> validator [label="Validate syntax"];
+  introspection -> validator;
+  validator -> openapi [label="Valid" color="green"];
+  validator -> graphql_schema [label="Valid" color="green"];
+  validator -> postman [label="Valid" color="green"];
+
+  // Error handling
+  validator -> code [label="Errors found\n(Fix annotations)" color="red" style=dashed];
+
+  // Flow connections: Spec to Validation
+  openapi -> spec_validator [label="Validate"];
+  graphql_schema -> spec_validator [label="Validate"];
+
+  spec_validator -> link_checker [label="Valid" color="green"];
+  spec_validator -> openapi [label="Invalid\n(Fix spec)" color="red" style=dashed];
+
+  link_checker -> example_tester [label="Links OK" color="green"];
+  link_checker -> openapi [label="Broken links\n(Fix references)" color="red" style=dashed];
+
+  example_tester -> swagger_ui [label="Examples work" color="green"];
+  example_tester -> openapi [label="Example errors\n(Fix examples)" color="red" style=dashed];
+
+  // Flow connections: Validation to Documentation
+  openapi -> swagger_ui [label="Generate"];
+  openapi -> redoc [label="Generate"];
+  graphql_schema -> graphql_playground [label="Mount"];
+
+  // Flow connections: Documentation to Deployment
+  swagger_ui -> static_site [label="Build"];
+  redoc -> static_site [label="Build"];
+  graphql_playground -> static_site [label="Build"];
+
+  static_site -> cdn [label="Deploy"];
+  openapi -> sdk_gen [label="Generate SDKs"];
+
+  // Flow connections: Monitoring
+  ci_cd -> parser [label="Trigger on commit" style=dashed];
+  version_check -> ci_cd [label="Version changed" style=dashed];
+  code -> version_check [label="Monitor" style=dotted];
+
+  deprecation_warn -> static_site [label="Add warnings" style=dashed];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style=filled;
+    color="#f5f5f5";
+    rankdir=LR;
+
+    legend_success [label="Success Path", shape=plaintext];
+    legend_error [label="Error Path", shape=plaintext];
+    legend_monitor [label="Monitoring", shape=plaintext];
+
+    legend_success -> legend_error [label="" color="green"];
+    legend_error -> legend_monitor [label="" color="red" style=dashed];
+    legend_monitor -> legend_success [label="" style=dotted];
+  }
+
+  // Notes
+  note1 [label="⚡ Automated:\nRuns on every commit", shape=note, fillcolor="#fff9c4"];
+  note2 [label="📊 Metrics:\nValidation time < 30s\nGeneration time < 2min", shape=note, fillcolor="#fff9c4"];
+  note3 [label="🔄 Versioning:\nMultiple versions supported\nDeprecation tracking", shape=note, fillcolor="#fff9c4"];
+
+  // Position notes
+  note1 -> ci_cd [style=invis];
+  note2 -> spec_validator [style=invis];
+  note3 -> openapi [style=invis];
+}

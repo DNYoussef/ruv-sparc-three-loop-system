@@ -1,0 +1,198 @@
+// AgentDB Vector Search - RAG Pipeline Workflow
+// Visualize the complete RAG pipeline from document ingestion to answer generation
+// Compile: dot -Tpng workflow.dot -o workflow.png
+// Compile: dot -Tsvg workflow.dot -o workflow.svg
+
+digraph RAGPipeline {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+
+    // Node styling
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=11,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=10,
+        color="#495057"
+    ];
+
+    // Color scheme
+    // Blue: Input/User actions
+    // Green: Processing stages
+    // Orange: Storage/Database
+    // Purple: Output/Results
+    // Gray: Infrastructure
+
+    // ========================================
+    // INDEXING PIPELINE (Left side)
+    // ========================================
+
+    subgraph cluster_indexing {
+        label="Document Indexing Pipeline";
+        style=filled;
+        color="#e9ecef";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        // Input
+        docs [label="Documents\n(PDF, MD, TXT)", fillcolor="#cfe2ff", color="#0d6efd"];
+
+        // Processing stages
+        chunk [label="Chunking\n(500 words, 50 overlap)", fillcolor="#d1e7dd", color="#198754"];
+        embed_docs [label="Generate Embeddings\n(OpenAI/sentence-transformers)", fillcolor="#d1e7dd", color="#198754"];
+        metadata [label="Extract Metadata\n(title, author, date)", fillcolor="#d1e7dd", color="#198754"];
+
+        // Storage
+        agentdb_index [label="AgentDB\nVector Storage\n(HNSW Index)", fillcolor="#ffe5cc", color="#fd7e14", shape=cylinder];
+
+        // Flow
+        docs -> chunk [label="Split"];
+        chunk -> embed_docs [label="Each chunk"];
+        chunk -> metadata [label="Extract"];
+        embed_docs -> agentdb_index [label="Store vectors"];
+        metadata -> agentdb_index [label="Store metadata"];
+    }
+
+    // ========================================
+    // QUERY PIPELINE (Center/Right)
+    // ========================================
+
+    subgraph cluster_query {
+        label="Query Processing Pipeline";
+        style=filled;
+        color="#e9ecef";
+        fontsize=14;
+        fontname="Arial Bold";
+
+        // User input
+        user_query [label="User Query\n\"How do quantum computers work?\"", fillcolor="#cfe2ff", color="#0d6efd"];
+
+        // Query processing
+        query_analysis [label="Query Analysis\n• Intent detection\n• Keyword extraction", fillcolor="#d1e7dd", color="#198754"];
+        embed_query [label="Generate Query\nEmbedding", fillcolor="#d1e7dd", color="#198754"];
+
+        // Retrieval stages
+        subgraph cluster_retrieval {
+            label="Multi-Stage Retrieval";
+            style=filled;
+            color="#dee2e6";
+
+            stage1 [label="Stage 1: Vector Search\n• HNSW index\n• Top-100 candidates\n• <100µs", fillcolor="#d1e7dd", color="#198754"];
+            stage2 [label="Stage 2: Reranking\n• Cross-encoder\n• Top-20 results\n• 50-200ms", fillcolor="#d1e7dd", color="#198754"];
+            stage3 [label="Stage 3: MMR\n• Diversity\n• Top-5 final\n• <10µs", fillcolor="#d1e7dd", color="#198754"];
+        }
+
+        // Context assembly
+        context [label="Assemble Context\n• Top results\n• Add citations\n• Format prompt", fillcolor="#d1e7dd", color="#198754"];
+
+        // LLM generation
+        llm [label="LLM Generation\n(GPT-4, Claude)", fillcolor="#d1e7dd", color="#198754"];
+
+        // Output
+        answer [label="Answer with Citations\n[1] Source A\n[2] Source B", fillcolor="#e0cffc", color="#6f42c1"];
+
+        // Flow
+        user_query -> query_analysis;
+        query_analysis -> embed_query;
+        embed_query -> stage1 [label="Semantic search"];
+        stage1 -> stage2 [label="100 candidates"];
+        stage2 -> stage3 [label="20 results"];
+        stage3 -> context [label="5 diverse results"];
+        context -> llm [label="Prompt with context"];
+        llm -> answer [label="Generated answer"];
+    }
+
+    // ========================================
+    // DATABASE INTERACTIONS
+    // ========================================
+
+    // Query to database
+    embed_query -> agentdb_index [label="Vector similarity\n(cosine distance)", style=dashed, color="#fd7e14"];
+    agentdb_index -> stage1 [label="Retrieved candidates", style=dashed, color="#fd7e14"];
+
+    // ========================================
+    // PERFORMANCE ANNOTATIONS
+    // ========================================
+
+    subgraph cluster_performance {
+        label="Performance Characteristics";
+        style=filled;
+        color="#fff3cd";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        perf_indexing [label="Indexing:\n• 500x faster batch insert\n• 2ms for 100 vectors", shape=note, fillcolor="#fff3cd", color="#664d03"];
+        perf_retrieval [label="Retrieval:\n• Stage 1: <100µs (HNSW)\n• Stage 2: 50-200ms (rerank)\n• Stage 3: <10µs (MMR)\n• Total: <300ms", shape=note, fillcolor="#fff3cd", color="#664d03"];
+        perf_e2e [label="End-to-End:\n• Retrieval: <300ms\n• LLM: 2-3s\n• Total: ~3s", shape=note, fillcolor="#fff3cd", color="#664d03"];
+    }
+
+    // ========================================
+    // OPTIMIZATION OPTIONS
+    // ========================================
+
+    subgraph cluster_optimization {
+        label="Optimization Options";
+        style=filled;
+        color="#d1e7dd";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        opt_quantization [label="Binary Quantization\n32x memory reduction", shape=note, fillcolor="#d1e7dd", color="#198754"];
+        opt_caching [label="Query Caching\n1000 pattern cache", shape=note, fillcolor="#d1e7dd", color="#198754"];
+        opt_batching [label="Batch Processing\n32-100 items per batch", shape=note, fillcolor="#d1e7dd", color="#198754"];
+    }
+
+    // ========================================
+    // ARCHITECTURE PATTERNS
+    // ========================================
+
+    subgraph cluster_patterns {
+        label="Architecture Patterns";
+        style=filled;
+        color="#f8d7da";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        pattern_naive [label="Naive RAG\n• Single-stage\n• Fast\n• 75-85% accuracy", shape=note, fillcolor="#f8d7da", color="#842029"];
+        pattern_hybrid [label="Hybrid RAG\n• Vector + Metadata\n• Medium speed\n• 85-90% accuracy", shape=note, fillcolor="#f8d7da", color="#842029"];
+        pattern_multistage [label="Multi-Stage RAG\n• 3 stages\n• Highest quality\n• 90-95% accuracy", shape=note, fillcolor="#f8d7da", color="#842029"];
+    }
+
+    // ========================================
+    // LEGEND
+    // ========================================
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#e9ecef";
+        fontsize=12;
+        fontname="Arial Bold";
+
+        legend_input [label="Input/User", fillcolor="#cfe2ff", color="#0d6efd"];
+        legend_process [label="Processing", fillcolor="#d1e7dd", color="#198754"];
+        legend_storage [label="Storage", fillcolor="#ffe5cc", color="#fd7e14"];
+        legend_output [label="Output", fillcolor="#e0cffc", color="#6f42c1"];
+
+        {rank=same; legend_input; legend_process; legend_storage; legend_output;}
+    }
+
+    // ========================================
+    // LAYOUT HINTS
+    // ========================================
+
+    // Align indexing and query pipelines
+    {rank=same; docs; user_query;}
+
+    // Performance notes on right
+    {rank=same; answer; perf_e2e;}
+}

@@ -1,0 +1,196 @@
+digraph AgentDBMemoryLifecycle {
+  // Graph styling
+  rankdir=TB;
+  node [shape=box, style=rounded, fontname="Arial", fontsize=11];
+  edge [fontname="Arial", fontsize=10];
+
+  // Color scheme
+  bgcolor="#f8f9fa";
+
+  // Title
+  label="AgentDB Memory Lifecycle: From Input to Retrieval";
+  labelloc=t;
+  fontsize=14;
+  fontname="Arial Bold";
+
+  // Subgraph: Input Layer
+  subgraph cluster_input {
+    label="Input Layer";
+    style=filled;
+    color=lightblue;
+    fontsize=12;
+
+    input [label="Raw Input\n(Text, Context, Metadata)", shape=ellipse, fillcolor=lightcyan, style=filled];
+    preprocess [label="Preprocessing\n(Tokenization, Normalization)", fillcolor=lightyellow, style=filled];
+
+    input -> preprocess;
+  }
+
+  // Subgraph: Embedding Layer
+  subgraph cluster_embedding {
+    label="Embedding Layer";
+    style=filled;
+    color=lightgreen;
+    fontsize=12;
+
+    embed_compute [label="Compute Embedding\n(384/768-dim vector)", fillcolor=palegreen, style=filled];
+    embed_quantize [label="Quantization\n(Scalar 4x / Binary 32x)", fillcolor=palegreen, style=filled];
+
+    embed_compute -> embed_quantize [label="Optional"];
+  }
+
+  // Subgraph: Storage Layer
+  subgraph cluster_storage {
+    label="Storage Layer";
+    style=filled;
+    color=lightyellow;
+    fontsize=12;
+
+    pattern_create [label="Create Pattern\n(ID, type, domain, embedding)", fillcolor=lightgoldenrodyellow, style=filled];
+    metadata_attach [label="Attach Metadata\n(confidence, usage_count,\ncreated_at, timestamps)", fillcolor=lightgoldenrodyellow, style=filled];
+    domain_assign [label="Domain Assignment\n(session, experience,\nknowledge, etc.)", fillcolor=lightgoldenrodyellow, style=filled];
+
+    pattern_create -> metadata_attach -> domain_assign;
+  }
+
+  // Subgraph: Indexing Layer
+  subgraph cluster_indexing {
+    label="Indexing Layer";
+    style=filled;
+    color=lightcoral;
+    fontsize=12;
+
+    hnsw_index [label="HNSW Indexing\n(M=16, efConstruction=200)", fillcolor=mistyrose, style=filled];
+    meta_index [label="Metadata Indexing\n(domain, timestamp,\nconfidence)", fillcolor=mistyrose, style=filled];
+    bloom_filter [label="Bloom Filter\n(Existence checks)", fillcolor=mistyrose, style=filled];
+
+    hnsw_index -> meta_index;
+    hnsw_index -> bloom_filter;
+  }
+
+  // Subgraph: Cache Layer
+  subgraph cluster_cache {
+    label="Cache Layer (Multi-Level)";
+    style=filled;
+    color=plum;
+    fontsize=12;
+
+    l1_cache [label="L1 Cache\n(100 items, <1ms)", fillcolor=lavender, style=filled];
+    l2_cache [label="L2 Cache\n(1000 items, <5ms)", fillcolor=lavender, style=filled];
+    l3_cache [label="L3 Cache\n(10000 items, <10ms)", fillcolor=lavender, style=filled];
+
+    l1_cache -> l2_cache [label="Demote on eviction"];
+    l2_cache -> l3_cache [label="Demote on eviction"];
+  }
+
+  // Subgraph: Retrieval Layer
+  subgraph cluster_retrieval {
+    label="Retrieval Layer";
+    style=filled;
+    color=lightsteelblue;
+    fontsize=12;
+
+    query_input [label="Query\n(Text or Embedding)", shape=ellipse, fillcolor=aliceblue, style=filled];
+    query_embed [label="Query Embedding\n(If text input)", fillcolor=lightblue, style=filled];
+    cache_check [label="Cache Lookup\n(L1 → L2 → L3)", fillcolor=lightblue, style=filled];
+    vector_search [label="Vector Search\n(HNSW + MMR)", fillcolor=lightblue, style=filled];
+    filter_apply [label="Apply Filters\n(domain, threshold,\ntimestamp range)", fillcolor=lightblue, style=filled];
+
+    query_input -> query_embed -> cache_check;
+    cache_check -> vector_search [label="Cache miss"];
+    vector_search -> filter_apply;
+  }
+
+  // Subgraph: Reasoning Layer
+  subgraph cluster_reasoning {
+    label="Reasoning Layer";
+    style=filled;
+    color=lightgoldenrod;
+    fontsize=12;
+
+    pattern_match [label="PatternMatcher\n(Find similar patterns)", fillcolor=khaki, style=filled];
+    context_synth [label="ContextSynthesizer\n(Generate rich context)", fillcolor=khaki, style=filled];
+    memory_opt [label="MemoryOptimizer\n(Consolidate patterns)", fillcolor=khaki, style=filled];
+    experience_curate [label="ExperienceCurator\n(Filter by quality)", fillcolor=khaki, style=filled];
+
+    pattern_match -> context_synth;
+    context_synth -> experience_curate;
+    memory_opt -> experience_curate [style=dashed, label="Background"];
+  }
+
+  // Subgraph: Learning Layer
+  subgraph cluster_learning {
+    label="Learning Layer";
+    style=filled;
+    color=lightpink;
+    fontsize=12;
+
+    rl_train [label="RL Training\n(9 algorithms:\nQ-Learning, SARSA,\nActor-Critic, etc.)", fillcolor=pink, style=filled];
+    pattern_learn [label="Pattern Learning\n(Success/failure\ntracking)", fillcolor=pink, style=filled];
+    experience_replay [label="Experience Replay\n(Prioritized/Random)", fillcolor=pink, style=filled];
+
+    rl_train -> pattern_learn;
+    pattern_learn -> experience_replay;
+  }
+
+  // Subgraph: Maintenance Layer
+  subgraph cluster_maintenance {
+    label="Maintenance Layer (Background)";
+    style=filled;
+    color=lightgray;
+    fontsize=12;
+
+    consolidate [label="Consolidation\n(Merge duplicates)", fillcolor=gainsboro, style=filled];
+    prune [label="Pruning\n(TTL, importance,\ncapacity-based)", fillcolor=gainsboro, style=filled];
+    optimize [label="Optimization\n(Reindex, compress)", fillcolor=gainsboro, style=filled];
+
+    consolidate -> prune -> optimize;
+  }
+
+  // Main flow connections
+  preprocess -> embed_compute;
+  embed_quantize -> pattern_create;
+  domain_assign -> hnsw_index;
+  hnsw_index -> l1_cache;
+
+  filter_apply -> pattern_match;
+  experience_curate -> output [label="Results"];
+
+  // Output
+  output [label="Output\n(Ranked patterns +\nsynthesized context)", shape=ellipse, fillcolor=lightgreen, style=filled];
+
+  // Feedback loops
+  output -> rl_train [style=dashed, label="Success/failure feedback"];
+  output -> l1_cache [style=dashed, label="Cache frequently accessed"];
+
+  // Background processes
+  hnsw_index -> consolidate [style=dotted, label="Periodic"];
+  consolidate -> hnsw_index [style=dotted, label="Reindex"];
+
+  // Learning integration
+  experience_replay -> hnsw_index [style=dashed, label="Update patterns"];
+
+  // Usage tracking
+  filter_apply -> metadata_attach [style=dashed, label="Increment usage_count"];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style=filled;
+    color=white;
+    fontsize=10;
+
+    legend_solid [label="Primary flow", shape=plaintext];
+    legend_dashed [label="Feedback/Update", shape=plaintext];
+    legend_dotted [label="Background process", shape=plaintext];
+
+    legend_solid -> legend_dashed [style=invis];
+    legend_dashed -> legend_dotted [style=invis];
+  }
+
+  // Performance annotations
+  embed_compute [xlabel="~10ms", fontcolor=gray, fontsize=9];
+  hnsw_index [xlabel="<100µs search", fontcolor=gray, fontsize=9];
+  l1_cache [xlabel="<1ms", fontcolor=gray, fontsize=9];
+  vector_search [xlabel="<100µs", fontcolor=gray, fontsize=9];
+}
