@@ -325,6 +325,55 @@ Explicitly plan before execution and validate at each stage:
 
 ---
 
+## Available Slash Commands
+
+### Workflow Orchestration (10 commands)
+- `/workflow:development` - Complete development workflow automation
+- `/workflow:testing` - Automated testing workflow
+- `/workflow:cicd` - CI/CD pipeline workflow
+- `/workflow:deployment` - Deployment workflow with validation
+- `/build-feature` - 12-stage feature development orchestration
+- `/sparc` - SPARC 5-phase methodology orchestration
+- `/research:literature-review` - Research-driven planning
+- `/swarm-init` - Initialize multi-agent swarm coordination
+- `/task-orchestrate` - Orchestrate complex tasks across agents
+- `/agent-spawn` - Spawn specialized agents for tasks
+
+### Usage Examples
+```bash
+# Orchestrate complete development workflow
+/workflow:development "Build authentication system"
+
+# Testing workflow
+/workflow:testing "Comprehensive test suite"
+
+# CI/CD pipeline setup
+/workflow:cicd "Deploy to production"
+
+# Deployment workflow
+/workflow:deployment "Release v2.0.0"
+
+# Feature development orchestration
+/build-feature "User registration with email verification"
+
+# SPARC methodology
+/sparc "Build payment processing system"
+
+# Research-driven planning
+/research:literature-review "Best practices for microservices"
+
+# Initialize swarm coordination
+/swarm-init --topology mesh --max-agents 8
+
+# Orchestrate complex task
+/task-orchestrate "Migrate database schema" --strategy adaptive
+
+# Spawn specialized agents
+/agent-spawn --type researcher --capabilities "market-analysis,competitor-research"
+```
+
+---
+
 ## Agent Metadata
 
 **Version**: 2.0.0 (Enhanced with commands + MCP tools)

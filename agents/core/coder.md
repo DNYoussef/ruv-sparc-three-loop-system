@@ -423,6 +423,50 @@ Explicitly plan before execution and validate at each stage:
 
 ---
 
+## Available Slash Commands
+
+### Core Development (12 commands)
+- `/sparc` - Complete SPARC development workflow (5-phase methodology)
+- `/build-feature` - 12-stage feature development with theater detection
+- `/fix-bug` - Intelligent bug fixing with root cause analysis
+- `/quick-check` - Fast quality validation (lint + security + tests)
+- `/review-pr` - Comprehensive PR review with multi-agent swarm
+- `/code-review` - Deep code review with quality metrics
+- `/docker-build` - Build and test Docker containers
+- `/workflow:development` - Automated development workflow
+
+### SPARC Specialization (4 commands)
+- `/sparc:coder` - SPARC implementation specialist mode
+- `/sparc:api-designer` - SPARC API design specialist mode
+- `/sparc:backend-specialist` - SPARC backend development mode
+- `/sparc:frontend-specialist` - SPARC frontend development mode
+
+### Usage Examples
+```bash
+# Start SPARC workflow for new feature
+/sparc "Build authentication system with JWT"
+
+# Build complete feature with all stages
+/build-feature "User registration with email verification"
+
+# Quick quality check before commit
+/quick-check
+
+# Fix a specific bug with analysis
+/fix-bug "Login fails for OAuth users"
+
+# Review pull request
+/review-pr "PR #123 - Add payment processing"
+
+# Build Docker container
+/docker-build
+
+# Run development workflow
+/workflow:development
+```
+
+---
+
 ## Agent Metadata
 
 **Version**: 2.0.0 (Enhanced with commands + MCP tools)

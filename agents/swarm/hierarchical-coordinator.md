@@ -126,6 +126,41 @@ WORKERS WORKERS WORKERS WORKERS
 - `/timestamp` - Get current time
 - `/uuid-gen` - Generate UUID
 
+### Specialized Slash Commands (Hierarchical Coordinator)
+
+**Swarm Management** (8 commands):
+- `/swarm-init` - Initialize hierarchical swarm: `--topology hierarchical --maxAgents <num> --strategy <centralized|adaptive>`
+- `/agent-spawn` - Spawn specialized worker: `--type <researcher|coder|analyst|tester> --capabilities "<cap1,cap2>"`
+- `/task-orchestrate` - Orchestrate complex workflow: `--task "<description>" --strategy <sequential|parallel|adaptive> --priority <low|medium|high|critical>`
+- `/agent-health-check` - Check all worker health: `--detailed true --export-report <path>`
+- `/agent-retire` - Retire underperforming agent: `--agent-id <id> --reason "<reason>"`
+- `/agent-clone` - Clone high-performing agent: `--agent-id <id> --num-clones <count>`
+- `/agent-benchmark` - Benchmark worker performance: `--agent-id <id> --metrics "<metric1,metric2>"`
+- `/coordination-visualize` - Generate hierarchy visualization: `--format <svg|png|dot> --output <path>`
+
+**Delegation & Assignment** (5 commands):
+- `/queen-delegate` - Delegate high-level task to workers: `--task "<description>" --workers "<worker1,worker2>" --deadline <timestamp>`
+- `/worker-execute` - Direct worker execution: `--worker-id <id> --command "<command>" --parameters "<params>"`
+- `/task-priority-set` - Set task priority: `--task-id <id> --priority <low|medium|high|critical>`
+- `/task-reassign` - Reassign failed task: `--task-id <id> --from <worker1> --to <worker2>`
+- `/task-escalate` - Escalate blocked task: `--task-id <id> --escalation-reason "<reason>"`
+
+**Monitoring & Reporting** (6 commands):
+- `/swarm-monitor` - Monitor swarm health: `--interval <ms> --metrics "<metrics>" --alert-threshold <value>`
+- `/performance-report` - Generate performance report: `--format <json|html|pdf> --timeframe <24h|7d|30d>`
+- `/agent-metrics` - Get detailed agent metrics: `--agent-id <id> --metrics "<cpu,memory,tasks,performance>"`
+- `/bottleneck-detect` - Detect coordination bottlenecks: `--component <coordination|agents|tasks>"`
+- `/monitoring-configure` - Configure monitoring: `--alerts true --interval <ms> --thresholds <config>`
+- `/metrics-export` - Export metrics: `--format <json|csv|prometheus> --output <path>`
+
+**Memory & State Management** (6 commands):
+- `/memory-store` - Store coordination state: `--key "swarm/hierarchical/<key>" --value "<json>" --namespace coordination`
+- `/memory-retrieve` - Retrieve coordination data: `--key "swarm/hierarchical/<key>" --namespace coordination`
+- `/memory-persist` - Persist swarm state: `--export <path>` or `--import <path>`
+- `/memory-merge` - Merge worker memory: `--workers "<worker1,worker2>" --strategy <latest|consensus|priority>`
+- `/state-checkpoint` - Create state checkpoint: `--checkpoint-id <id> --include-workers true`
+- `/state-restore` - Restore from checkpoint: `--checkpoint-id <id> --verify true`
+
 
 ## Specialized Worker Types
 

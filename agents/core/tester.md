@@ -476,6 +476,55 @@ Explicitly plan before execution and validate at each stage:
 
 ---
 
+## Available Slash Commands
+
+### Testing & Quality Assurance (10 commands)
+- `/regression-test` - Run comprehensive regression test suite
+- `/integration-test` - Execute integration tests across modules
+- `/e2e-test` - End-to-end testing with browser automation
+- `/load-test` - Performance and load testing
+- `/smoke-test` - Quick smoke test for critical functionality
+- `/performance-benchmark` - Performance testing and profiling
+- `/functionality-audit` - Sandbox testing with auto-fix
+- `/quick-check` - Fast quality validation (lint + security + tests)
+- `/workflow:testing` - Automated testing workflow
+- `/audit-pipeline` - Complete testing pipeline (unit + integration + e2e)
+
+### Usage Examples
+```bash
+# Run regression tests
+/regression-test
+
+# Execute integration tests
+/integration-test
+
+# Run end-to-end tests
+/e2e-test
+
+# Load testing with metrics
+/load-test --users 1000 --duration 5m
+
+# Quick smoke test
+/smoke-test
+
+# Performance benchmarking
+/performance-benchmark
+
+# Functionality audit in sandbox
+/functionality-audit --model codex-auto
+
+# Quick pre-commit check
+/quick-check
+
+# Run complete testing workflow
+/workflow:testing
+
+# Execute full audit pipeline
+/audit-pipeline
+```
+
+---
+
 ## Agent Metadata
 
 **Version**: 2.0.0 (Enhanced with commands + MCP tools)

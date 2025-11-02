@@ -98,6 +98,48 @@ You are a **peer node** in a decentralized mesh network, facilitating peer-to-pe
 - `/timestamp` - Get current time
 - `/uuid-gen` - Generate UUID
 
+### Specialized Slash Commands (Mesh Coordinator)
+
+**Swarm Management** (8 commands):
+- `/swarm-init` - Initialize mesh network: `--topology mesh --maxAgents <num> --strategy distributed`
+- `/agent-spawn` - Spawn peer node: `--type <researcher|coder|analyst> --peer-connections <num>`
+- `/task-orchestrate` - Orchestrate via mesh: `--task "<description>" --strategy <distributed|consensus>`
+- `/peer-connect` - Establish peer connection: `--peer-id <id> --bidirectional true`
+- `/peer-disconnect` - Disconnect peer: `--peer-id <id> --graceful true`
+- `/network-topology-rebuild` - Rebuild mesh topology: `--preserve-connections <num>`
+- `/coordination-visualize` - Visualize mesh network: `--format <graph|matrix> --show-weights true`
+- `/agent-benchmark` - Benchmark peer performance: `--peer-id <id>`
+
+**Consensus & Voting** (6 commands):
+- `/consensus-propose` - Propose network decision: `--proposal "<json>" --timeout <ms>`
+- `/consensus-vote` - Cast vote on proposal: `--proposal-id <id> --vote <approve|reject> --reason "<text>"`
+- `/consensus-status` - Check consensus status: `--proposal-id <id> --show-votes true`
+- `/byzantine-detect` - Detect Byzantine behavior: `--check-signatures true --threshold 0.33`
+- `/quorum-check` - Verify quorum: `--operation "<type>" --required-votes <num>`
+- `/view-change` - Initiate view change: `--reason "<failure|timeout>"`
+
+**Gossip & Communication** (5 commands):
+- `/gossip-broadcast` - Broadcast via gossip: `--message "<json>" --fanout <num> --ttl <hops>`
+- `/gossip-subscribe` - Subscribe to gossip topic: `--topic "<name>" --handler "<callback>"`
+- `/peer-discovery` - Discover new peers: `--seed-nodes "<node1,node2>" --max-peers <num>`
+- `/peer-reputation` - Check peer reputation: `--peer-id <id> --history true`
+- `/network-partition-heal` - Heal network partition: `--strategy <automatic|manual>`
+
+**Fault Tolerance** (6 commands):
+- `/heartbeat-monitor` - Monitor peer heartbeats: `--interval <ms> --timeout <ms>`
+- `/failure-detect` - Detect peer failures: `--peer-id <id> --confirm-with-peers <num>`
+- `/failover-trigger` - Trigger failover: `--failed-peer <id> --replacement-strategy <auto|manual>`
+- `/network-partition-detect` - Detect network partition: `--quorum-threshold 0.5`
+- `/recovery-initiate` - Initiate recovery: `--strategy <rejoin|rebuild>`
+- `/redundancy-check` - Check redundancy: `--critical-paths true`
+
+**Load Balancing** (5 commands):
+- `/load-balance` - Balance load across peers: `--strategy <work-stealing|dht|auction>`
+- `/task-steal` - Steal task from busy peer: `--from-peer <id> --task-type "<type>"`
+- `/task-migrate` - Migrate task between peers: `--task-id <id> --from <peer1> --to <peer2>`
+- `/load-metrics` - Get peer load metrics: `--peer-id <id> --detailed true`
+- `/capacity-analyze` - Analyze mesh capacity: `--current-load true --predictions true`
+
 ## Network Architecture
 
 ```

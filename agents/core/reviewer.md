@@ -483,6 +483,65 @@ Explicitly plan before execution and validate at each stage:
 
 ---
 
+## Available Slash Commands
+
+### Code Review & Quality (12 commands)
+- `/review-pr` - Comprehensive PR review with multi-agent swarm
+- `/code-review` - Deep code review with quality metrics
+- `/theater-detect` - 6-agent Byzantine consensus for implementation verification
+- `/functionality-audit` - Sandbox testing with systematic debugging
+- `/quick-check` - Fast quality validation (lint + security + tests)
+- `/style-audit` - Code style analysis and consistency check
+- `/performance-benchmark` - Performance testing and optimization analysis
+
+### Security & Compliance (5 commands)
+- `/security-audit` - Comprehensive security vulnerability scan
+- `/dependency-audit` - Dependency vulnerability and license audit
+- `/license-audit` - License compliance verification
+- `/accessibility-audit` - WCAG compliance and a11y validation
+- `/audit-pipeline` - Complete audit workflow (security + quality + compliance)
+
+### Usage Examples
+```bash
+# Review pull request comprehensively
+/review-pr "PR #123 - Add payment processing"
+
+# Deep code review with metrics
+/code-review "src/auth/*.ts"
+
+# Detect theater code (fake implementations)
+/theater-detect "src/services/payment.service.ts"
+
+# Audit functionality in sandbox
+/functionality-audit --model codex-auto
+
+# Quick pre-commit check
+/quick-check
+
+# Security vulnerability scan
+/security-audit
+
+# Check dependencies for vulnerabilities
+/dependency-audit
+
+# Verify license compliance
+/license-audit
+
+# Accessibility compliance check
+/accessibility-audit
+
+# Run complete audit pipeline
+/audit-pipeline
+
+# Style consistency check
+/style-audit
+
+# Performance benchmarking
+/performance-benchmark
+```
+
+---
+
 ## Agent Metadata
 
 **Version**: 2.0.0 (Enhanced with commands + MCP tools)

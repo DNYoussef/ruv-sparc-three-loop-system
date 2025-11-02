@@ -633,3 +633,54 @@ Remember: Good research is the foundation of successful implementation. Take tim
 **Agent Status**: Production-Ready (Enhanced)
 **Deployment**: `~/.claude/agents/core/researcher.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization
+
+---
+
+## Available Slash Commands
+
+### Research & Analysis (10 commands)
+- `/research:literature-review` - PRISMA 2020 systematic literature review
+- `/research:experiment-design` - Design research experiments and methodologies
+- `/research:data-analysis` - Statistical analysis and data interpretation
+- `/research:paper-write` - Academic paper writing with citations
+- `/research:citation-manager` - Citation management and bibliography
+- `/gemini-search` - Real-time web search with Gemini
+- `/gemini-megacontext` - 2M token mega-context analysis
+- `/prisma-init` - Initialize PRISMA systematic review
+- `/assess-risks` - 6-domain risk assessment (ethical, safety, privacy, etc.)
+- `/build-feature` - Research-driven feature development
+
+### Usage Examples
+```bash
+# Systematic literature review
+/research:literature-review "Machine learning in healthcare"
+
+# PRISMA protocol initialization
+/prisma-init "AI ethics in autonomous systems"
+
+# Design experiment
+/research:experiment-design "A/B testing for UI improvements"
+
+# Data analysis
+/research:data-analysis "user_engagement_data.csv"
+
+# Academic paper writing
+/research:paper-write "Neural Networks for Code Generation"
+
+# Citation management
+/research:citation-manager --import bibliography.bib
+
+# Real-time web search
+/gemini-search "latest JWT authentication best practices 2025"
+
+# Mega-context analysis
+/gemini-megacontext "Analyze entire codebase for patterns"
+
+# Risk assessment
+/assess-risks "Deploying AI model in production"
+
+# Research-driven feature development
+/build-feature "Authentication system" --research-first
+```
+
+---

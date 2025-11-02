@@ -107,6 +107,63 @@ claude mcp add memory-mcp /path/to/memory-mcp/venv/Scripts/python.exe -u -m src.
 
 ---
 
+## 📋 Complete Command Taxonomy
+
+**Total Commands**: 224 (149 original + 75 new)
+**MECE Coverage**: 100% across 10 domains
+**GraphViz Diagrams**: 25 workflow visualizations
+
+### Command Distribution
+
+| Category | Commands | Documentation |
+|----------|----------|---------------|
+| Core Infrastructure | 3 | System help, memory, swarm |
+| Agent Lifecycle | 18 | Agent spawning, coordination, health |
+| Development Workflow | 67 | SPARC methodology, workflows |
+| Quality & Validation | 29 | Audits, testing, benchmarking |
+| Performance & Optimization | 18 | Profiling, resource optimization |
+| Memory & State | 18 | Memory management, checkpointing |
+| Monitoring & Telemetry | 18 | Observability, metrics, tracing |
+| Integration & External | 21 | GitHub, deployment, CI/CD |
+| Research & Analysis | 20 | Reverse engineering, research |
+| Automation & Hooks | 22 | Lifecycle hooks, automation |
+
+**Complete Reference**: [MASTER-COMMAND-INDEX.md](docs/MASTER-COMMAND-INDEX.md)
+**MECE Analysis**: [MECE-COMMAND-TAXONOMY.md](docs/command-taxonomy/MECE-COMMAND-TAXONOMY.md)
+**Visual Workflows**: [GraphViz Diagrams](docs/workflows/graphviz/) (25 diagrams)
+
+### New Commands (Phases 1-4)
+
+**Phase 1 - Critical Infrastructure** (21 commands):
+- Security: `/security-audit`, `/dependency-audit`, `/license-audit`, `/accessibility-audit`
+- Testing: `/regression-test`, `/integration-test`, `/e2e-test`, `/load-test`, `/smoke-test`
+- Deployment: `/docker-build`, `/docker-deploy`, `/k8s-deploy`, `/github-release`
+- Workflows: `/workflow:cicd`, `/workflow:deployment`, `/workflow:rollback`
+- Monitoring: `/agent-health-check`, `/monitoring-configure`, `/alert-configure`, `/log-stream`, `/trace-request`
+- Profiling: `/profiler-start`, `/profiler-stop`
+
+**Phase 2 - Memory & State** (14 commands):
+- Memory: `/memory-clear`, `/memory-export`, `/memory-import`, `/memory-merge`, `/memory-stats`, `/memory-gc`
+- State: `/state-checkpoint`, `/state-restore`, `/state-diff`
+- Agents: `/agent-retire`, `/agent-clone`, `/agent-benchmark`
+- Visualization: `/coordination-visualize`, `/metrics-export`
+
+**Phase 3 - Development Enhancement** (20 commands):
+- SPARC Specialists: `/sparc:api-designer`, `/sparc:database-architect`, `/sparc:frontend-specialist`, `/sparc:backend-specialist`, `/sparc:mobile-specialist`
+- Workflows: `/workflow:testing`, `/workflow:hotfix`
+- Optimization: `/resource-optimize`, `/memory-optimize`, `/cpu-optimize`, `/network-optimize`, `/bundle-optimize`, `/query-optimize`, `/render-optimize`
+- Deployment: `/cloudflare-deploy`, `/vercel-deploy`
+- Audits: `/performance-benchmark`
+
+**Phase 4 - Integration & Research** (26 commands):
+- External Integration: `/aws-deploy`, `/github-actions`, `/github-pages`, `/jira-sync`, `/slack-notify`, `/docker-compose`, `/terraform-apply`, `/ansible-deploy`
+- Reverse Engineering: `/re:malware-sandbox`, `/re:network-traffic`, `/re:memory-dump`, `/re:decompile`
+- Research: `/research:literature-review`, `/research:experiment-design`, `/research:data-analysis`, `/research:paper-write`, `/research:citation-manager`
+- Hooks: `/hook:on-error`, `/hook:on-success`, `/hook:on-commit`, `/hook:on-push`, `/hook:on-pr`, `/hook:on-deploy`
+- Automation: `/automation:retry-failed`, `/automation:schedule-task`, `/automation:cron-job`
+
+---
+
 ## 🔬 Specialized Capability Areas
 
 ### Reverse Engineering & Binary Analysis

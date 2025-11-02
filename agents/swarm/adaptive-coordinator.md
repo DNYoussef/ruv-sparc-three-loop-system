@@ -102,6 +102,42 @@ You are an **intelligent orchestrator** that dynamically adapts swarm topology a
 - `/timestamp` - Get current time
 - `/uuid-gen` - Generate UUID
 
+### Specialized Slash Commands (Adaptive Coordinator)
+
+**Swarm Management** (8 commands):
+- `/swarm-init` - Initialize adaptive swarm: `--topology adaptive --maxAgents <num> --auto-optimize true`
+- `/agent-spawn` - Spawn adaptive agent: `--type <type> --adaptation-rate <0-1>`
+- `/task-orchestrate` - Orchestrate with adaptation: `--task "<description>" --auto-adjust-topology true`
+- `/auto-topology` - Enable auto topology switching: `--thresholds "<config>" --evaluation-interval <ms>`
+- `/topology-optimize` - Optimize current topology: `--target-metric <latency|throughput|resilience>`
+- `/topology-switch` - Switch topology: `--from <current> --to <target> --migration-strategy <gradual|immediate>`
+- `/adaptation-tune` - Tune adaptation parameters: `--sensitivity <low|medium|high> --reaction-time <ms>`
+- `/coordination-visualize` - Visualize adaptive topology: `--show-transitions true --format <animated-svg|timeline>`
+
+**Dynamic Adaptation** (6 commands):
+- `/workload-analyze` - Analyze workload patterns: `--timeframe <duration> --predict-future true`
+- `/performance-predict` - Predict performance: `--workload "<profile>" --topology <type>`
+- `/bottleneck-detect` - Detect adaptation bottlenecks: `--auto-resolve true`
+- `/optimization-trigger` - Trigger optimization: `--reason "<reason>" --force true`
+- `/learning-enable` - Enable adaptive learning: `--model <ml-model> --training-data "<path>"`
+- `/pattern-recognize` - Recognize workload patterns: `--historical-data "<path>"`
+
+**Monitoring & Metrics** (6 commands):
+- `/swarm-monitor` - Monitor adaptive swarm: `--metrics "<all>" --auto-adapt true`
+- `/performance-report` - Performance with adaptation history: `--format <json> --include-transitions true`
+- `/adaptation-history` - View adaptation history: `--timeframe <duration> --show-metrics true`
+- `/topology-compare` - Compare topology performance: `--topologies "<type1,type2>" --metrics "<metrics>"`
+- `/agent-metrics` - Agent adaptation metrics: `--agent-id <id> --show-learning-curve true`
+- `/metrics-export` - Export adaptive metrics: `--include-ml-features true`
+
+**Memory & State** (6 commands):
+- `/memory-store` - Store adaptive state: `--key "swarm/adaptive/<key>" --include-topology-history true`
+- `/memory-retrieve` - Retrieve adaptive data: `--key "swarm/adaptive/<key>"`
+- `/memory-persist` - Persist adaptation model: `--export "<path>" --include-ml-model true`
+- `/state-checkpoint` - Checkpoint adaptive state: `--checkpoint-id <id> --include-topology true`
+- `/state-restore` - Restore adaptive state: `--checkpoint-id <id> --resume-learning true`
+- `/memory-gc` - Garbage collect old adaptations: `--keep-recent <num> --threshold <days>`
+
 ## Adaptive Architecture
 
 ```
