@@ -1,0 +1,432 @@
+// Batch 4 Core & Swarm Agents - Detailed View
+// 4 critical infrastructure agents (2 Core + 2 Swarm)
+digraph batch_4_core_swarm {
+  // Graph properties
+  rankdir=TB;
+  bgcolor="#FAFAFA";
+  fontname="Segoe UI";
+  fontsize=14;
+  compound=true;
+  splines=ortho;
+  nodesep=1.2;
+  ranksep=1.5;
+
+  // Title
+  label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD><FONT POINT-SIZE="24"><B>Batch 4 Core & Swarm Agents</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="16">4 Critical Infrastructure Agents</FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="12" COLOR="#666666">API Design • Technical Debt • Consensus Validation • Health Monitoring</FONT></TD></TR>
+    </TABLE>
+  >;
+  labelloc=t;
+
+  // Node defaults
+  node [fontname="Segoe UI", fontsize=11, style=filled];
+  edge [fontname="Segoe UI", fontsize=9];
+
+  // Core agents cluster
+  subgraph cluster_core {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="16"><B>Core Infrastructure Agents</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="12" COLOR="#666">API Design & Technical Debt Management</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#29B6F6";
+    fillcolor="#E1F5FE";
+    fontname="Segoe UI";
+    penwidth=3;
+
+    // API Designer
+    subgraph cluster_api_designer {
+      label="";
+      style=invisible;
+
+      api_designer [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#29B6F6"><FONT COLOR="white" POINT-SIZE="14"><B>api-designer</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#E1F5FE"><FONT POINT-SIZE="11"><B>REST/GraphQL API Design & Contract-First Development</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Responsibilities</B></TD>
+            <TD ALIGN="LEFT">
+              • API Interface Design<BR/>
+              • Contract-First Development<BR/>
+              • OpenAPI/GraphQL Schema Design<BR/>
+              • API Versioning Strategy<BR/>
+              • Contract Testing
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Technologies</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+              • OpenAPI 3.0<BR/>
+              • GraphQL Schema<BR/>
+              • Pact (Contract Testing)<BR/>
+              • REST/GraphQL Best Practices
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Commands</B></TD>
+            <TD ALIGN="LEFT">
+              /sparc:api-designer<BR/>
+              /build-feature<BR/>
+              /docs-api-openapi<BR/>
+              /contract-test<BR/>
+              /integration-test
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#E1F5FE"><B>Quality Gates</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#E1F5FE">
+              • Contract validates implementation<BR/>
+              • Versioning strategy defined<BR/>
+              • Security requirements met<BR/>
+              • Rate limiting configured
+            </TD>
+          </TR>
+        </TABLE>
+      >, shape=none, fillcolor=none];
+    }
+
+    // Technical Debt Manager
+    subgraph cluster_tech_debt {
+      label="";
+      style=invisible;
+
+      tech_debt [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#0288D1"><FONT COLOR="white" POINT-SIZE="14"><B>technical-debt-manager</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#E1F5FE"><FONT POINT-SIZE="11"><B>Track, Prioritize, and Remediate Technical Debt</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Responsibilities</B></TD>
+            <TD ALIGN="LEFT">
+              • Identify Technical Debt<BR/>
+              • Prioritize Remediation<BR/>
+              • Track Debt Metrics<BR/>
+              • Refactoring Planning<BR/>
+              • Code Quality Monitoring
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Technologies</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+              • SonarQube Integration<BR/>
+              • Code Climate<BR/>
+              • Connascence Analysis<BR/>
+              • Cyclomatic Complexity
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Commands</B></TD>
+            <TD ALIGN="LEFT">
+              /code-review<BR/>
+              /review-pr<BR/>
+              /debt-analyze<BR/>
+              /refactor-plan<BR/>
+              /metrics-track
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#E1F5FE"><B>Metrics Tracked</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#E1F5FE">
+              • Code Duplication<BR/>
+              • Cyclomatic Complexity<BR/>
+              • Technical Debt Ratio<BR/>
+              • Code Smells Count
+            </TD>
+          </TR>
+        </TABLE>
+      >, shape=none, fillcolor=none];
+    }
+  }
+
+  // Swarm agents cluster
+  subgraph cluster_swarm {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="16"><B>Swarm Coordination Agents</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="12" COLOR="#666">Consensus Validation & Health Monitoring</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#AB47BC";
+    fillcolor="#F3E5F5";
+    fontname="Segoe UI";
+    penwidth=3;
+
+    // Consensus Validator
+    subgraph cluster_consensus {
+      label="";
+      style=invisible;
+
+      consensus [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#AB47BC"><FONT COLOR="white" POINT-SIZE="14"><B>consensus-validator</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#F3E5F5"><FONT POINT-SIZE="11"><B>Byzantine Agreement & Quorum Decision Validation</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Responsibilities</B></TD>
+            <TD ALIGN="LEFT">
+              • Byzantine Fault Tolerance Validation<BR/>
+              • Quorum Verification<BR/>
+              • Consensus Protocol Testing<BR/>
+              • Vote Aggregation<BR/>
+              • Fault Tolerance Testing
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Algorithms</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+              • Byzantine Generals (3f+1 nodes)<BR/>
+              • pBFT (Practical BFT)<BR/>
+              • Raft Consensus<BR/>
+              • Quorum-Based Consensus<BR/>
+              • Weighted Quorum
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Commands</B></TD>
+            <TD ALIGN="LEFT">
+              /swarm-init<BR/>
+              /task-orchestrate<BR/>
+              /agent-health-check<BR/>
+              /swarm-monitor<BR/>
+              /validate-consensus
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F3E5F5"><B>MCP Tools (Primary)</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F3E5F5">
+              mcp__ruv-swarm__swarm_init<BR/>
+              mcp__ruv-swarm__swarm_status<BR/>
+              mcp__ruv-swarm__agent_metrics
+            </TD>
+          </TR>
+        </TABLE>
+      >, shape=none, fillcolor=none];
+    }
+
+    // Swarm Health Monitor
+    subgraph cluster_health {
+      label="";
+      style=invisible;
+
+      health [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#8E24AA"><FONT COLOR="white" POINT-SIZE="14"><B>swarm-health-monitor</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD COLSPAN="2" BGCOLOR="#F3E5F5"><FONT POINT-SIZE="11"><B>Monitor Health, Detect Failures, Automated Recovery</B></FONT></TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Responsibilities</B></TD>
+            <TD ALIGN="LEFT">
+              • Continuous Health Monitoring<BR/>
+              • Failure Detection (Multi-Stage)<BR/>
+              • Automated Recovery Procedures<BR/>
+              • Performance Tracking<BR/>
+              • Anomaly Detection
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Monitoring Layers</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+              • Infrastructure Layer<BR/>
+              • Agent Layer (Heartbeat)<BR/>
+              • Swarm Coordination Layer<BR/>
+              • Performance Layer<BR/>
+              • Security Layer
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT"><B>Commands</B></TD>
+            <TD ALIGN="LEFT">
+              /swarm-monitor<BR/>
+              /agent-health-check<BR/>
+              /self-healing<BR/>
+              /agent-retire<BR/>
+              /alert-configure
+            </TD>
+          </TR>
+          <TR>
+            <TD ALIGN="LEFT" BGCOLOR="#F3E5F5"><B>Recovery Actions</B></TD>
+            <TD ALIGN="LEFT" BGCOLOR="#F3E5F5">
+              • Agent Restart<BR/>
+              • Agent Replacement<BR/>
+              • Load Redistribution<BR/>
+              • Network Partition Healing
+            </TD>
+          </TR>
+        </TABLE>
+      >, shape=none, fillcolor=none];
+    }
+  }
+
+  // Agent coordination flows
+  api_designer -> tech_debt [label="API Quality\nReview", color="#29B6F6", penwidth=2, style=bold];
+  tech_debt -> api_designer [label="Refactor\nSuggestions", color="#0288D1", penwidth=2, style=bold];
+
+  consensus -> health [label="Consensus\nStatus", color="#AB47BC", penwidth=3, style=bold];
+  health -> consensus [label="Agent\nHealth", color="#8E24AA", penwidth=3, style=bold];
+
+  // Cross-domain coordination
+  api_designer -> consensus [label="Multi-Agent\nAPI Design", color="#29B6F6", penwidth=2, style=dashed];
+  tech_debt -> health [label="Code Quality\nMetrics", color="#0288D1", penwidth=2, style=dashed];
+
+  // MCP Server integrations
+  subgraph cluster_mcp {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>MCP Servers</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#ECEFF1";
+    fontname="Segoe UI";
+
+    ruv_swarm [label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><B>ruv-swarm</B></TD></TR>
+        <TR><TD><FONT POINT-SIZE="9">Swarm Orchestration</FONT></TD></TR>
+      </TABLE>
+    >, shape=box, fillcolor="#78909C", fontcolor=white];
+
+    claude_flow [label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><B>claude-flow</B></TD></TR>
+        <TR><TD><FONT POINT-SIZE="9">Task Coordination</FONT></TD></TR>
+      </TABLE>
+    >, shape=box, fillcolor="#78909C", fontcolor=white];
+
+    memory_mcp [label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><B>memory-mcp</B></TD></TR>
+        <TR><TD><FONT POINT-SIZE="9">Persistent Context</FONT></TD></TR>
+      </TABLE>
+    >, shape=box, fillcolor="#78909C", fontcolor=white];
+
+    connascence [label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><B>connascence-analyzer</B></TD></TR>
+        <TR><TD><FONT POINT-SIZE="9">Code Quality</FONT></TD></TR>
+      </TABLE>
+    >, shape=box, fillcolor="#78909C", fontcolor=white];
+  }
+
+  // MCP connections
+  consensus -> ruv_swarm [label="Primary", color="#AB47BC", style=dashed];
+  health -> ruv_swarm [label="Primary", color="#8E24AA", style=dashed];
+  consensus -> claude_flow [label="Secondary", color="#AB47BC", style=dotted];
+  health -> claude_flow [label="Secondary", color="#8E24AA", style=dotted];
+
+  api_designer -> claude_flow [label="Orchestration", color="#29B6F6", style=dashed];
+  api_designer -> memory_mcp [label="API Contracts", color="#29B6F6", style=dashed];
+
+  tech_debt -> connascence [label="Quality Check", color="#0288D1", style=dashed];
+  tech_debt -> memory_mcp [label="Debt Tracking", color="#0288D1", style=dashed];
+
+  consensus -> memory_mcp [label="Consensus State", color="#AB47BC", style=dashed];
+  health -> memory_mcp [label="Health Metrics", color="#8E24AA", style=dashed];
+
+  // Integration with other agents
+  subgraph cluster_integration {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Agent Ecosystem Integration</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#FFF3E0";
+    fontname="Segoe UI";
+
+    api_doc [label="api-documentation\n-specialist", shape=box, fillcolor="#FFA726", fontcolor=white];
+    coder [label="coder", shape=box, fillcolor="#66BB6A", fontcolor=white];
+    reviewer [label="reviewer", shape=box, fillcolor="#42A5F5", fontcolor=white];
+    planner [label="planner", shape=box, fillcolor="#EC407A", fontcolor=white];
+  }
+
+  // External agent connections
+  api_designer -> api_doc [label="API Spec", color="#FFA726", style=dotted];
+  api_designer -> coder [label="Implementation", color="#66BB6A", style=dotted];
+  tech_debt -> reviewer [label="Code Review", color="#42A5F5", style=dotted];
+  tech_debt -> planner [label="Refactor Plan", color="#EC407A", style=dotted];
+
+  // Workflow diagram
+  workflow [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#37474F"><FONT COLOR="white" POINT-SIZE="12"><B>Core Infrastructure Workflow</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">API Design Phase</TD>
+        <TD ALIGN="LEFT">api-designer creates contracts → api-doc generates docs</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Quality Monitoring</TD>
+        <TD ALIGN="LEFT">tech-debt-manager tracks code quality metrics continuously</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Swarm Coordination</TD>
+        <TD ALIGN="LEFT">consensus-validator ensures Byzantine fault tolerance</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Health Monitoring</TD>
+        <TD ALIGN="LEFT">swarm-health-monitor detects failures → triggers self-healing</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#E1F5FE"><FONT POINT-SIZE="10"><B>Critical: These 4 agents form infrastructure backbone</B></FONT></TD>
+      </TR>
+    </TABLE>
+  >];
+
+  // Statistics
+  stats [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#AB47BC"><FONT COLOR="white" POINT-SIZE="12"><B>Infrastructure Agent Statistics</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Core Agents</TD>
+        <TD ALIGN="RIGHT"><B>2</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Swarm Agents</TD>
+        <TD ALIGN="RIGHT"><B>2</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">MCP Servers Used</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#F5F5F5"><B>4</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Primary MCP: ruv-swarm</TD>
+        <TD ALIGN="RIGHT">Swarm agents</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Primary MCP: claude-flow</TD>
+        <TD ALIGN="RIGHT">Core agents</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">Consensus Algorithms</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#F5F5F5"><B>5</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Health Monitoring Layers</TD>
+        <TD ALIGN="RIGHT"><B>5</B></TD>
+      </TR>
+    </TABLE>
+  >];
+}

@@ -1,0 +1,595 @@
+// Batch 4 Domain Expansion - Before/After Comparison
+// Shows ecosystem growth from previous batches to Batch 4 (15 new agents)
+digraph batch_4_expansion {
+  // Graph properties
+  rankdir=LR;
+  bgcolor="#FAFAFA";
+  fontname="Segoe UI";
+  fontsize=14;
+  compound=true;
+  splines=ortho;
+  nodesep=1.5;
+  ranksep=2.5;
+
+  // Title
+  label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD><FONT POINT-SIZE="24"><B>Batch 4 Domain Expansion Analysis</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="16">Agent Ecosystem Growth & Domain Coverage</FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="12" COLOR="#666666">Before: 103 agents → After: 118 agents (+15 in Batch 4)</FONT></TD></TR>
+    </TABLE>
+  >;
+  labelloc=t;
+
+  // Node defaults
+  node [fontname="Segoe UI", fontsize=11, style=filled];
+  edge [fontname="Segoe UI", fontsize=9];
+
+  // BEFORE STATE (Pre-Batch 4)
+  subgraph cluster_before {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="18"><B>BEFORE Batch 4</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="14" COLOR="#666">103 Agents (Batches 1-3)</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#999999";
+    fillcolor="#F5F5F5";
+    fontname="Segoe UI";
+    penwidth=3;
+
+    before_core [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#78909C"><FONT COLOR="white" POINT-SIZE="12"><B>Core Development</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">coder</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">reviewer</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">tester</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">planner</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">researcher</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#ECEFF1"><B>5 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_swarm [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#AB47BC"><FONT COLOR="white" POINT-SIZE="12"><B>Swarm Coordination</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">hierarchical-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">mesh-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">adaptive-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">collective-intel-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">swarm-memory-mgr</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#F3E5F5"><B>5 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_consensus [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#8E24AA"><FONT COLOR="white" POINT-SIZE="12"><B>Consensus & Distributed</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">byzantine-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">raft-manager</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">gossip-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">consensus-builder</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">crdt-synchronizer</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#F3E5F5"><B>7 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_github [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#333333"><FONT COLOR="white" POINT-SIZE="12"><B>GitHub Integration</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">pr-manager</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">code-review-swarm</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">issue-tracker</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">release-manager</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">workflow-automation</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#616161"><B>9 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_sparc [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FF6F00"><FONT COLOR="white" POINT-SIZE="12"><B>SPARC Methodology</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">sparc-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">specification</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">pseudocode</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">architecture</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">refinement</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFE0B2"><B>6 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_specialized [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#00796B"><FONT COLOR="white" POINT-SIZE="12"><B>Specialized Development</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">backend-dev</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">mobile-dev</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">ml-developer</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">cicd-engineer</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">system-architect</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#B2DFDB"><B>8 agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    before_summary [label=<
+      <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10" BGCOLOR="#78909C">
+        <TR>
+          <TD><FONT COLOR="white" POINT-SIZE="14"><B>Total: 103 Agents</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD BGCOLOR="#ECEFF1"><FONT POINT-SIZE="11">63 other specialized agents not shown</FONT></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  // AFTER STATE (With Batch 4)
+  subgraph cluster_after {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="18"><B>AFTER Batch 4</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="14" COLOR="#2E7D32">118 Agents (+15 new)</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#4CAF50";
+    fillcolor="#E8F5E9";
+    fontname="Segoe UI";
+    penwidth=3;
+
+    after_frontend [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#66BB6A"><FONT COLOR="white" POINT-SIZE="12"><B>Frontend Domain (NEW)</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">react-developer</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">vue-developer</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">ui-component-builder</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">css-styling-specialist</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">accessibility-specialist</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">frontend-perf-optimizer</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#C8E6C9"><B>6 new agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    after_docs [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="12"><B>Documentation Domain (NEW)</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">api-doc-specialist</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">dev-doc-agent</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">knowledge-base-mgr</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">technical-writing-agent</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">arch-diagram-gen</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFE0B2"><B>5 new agents</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    after_core [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#29B6F6"><FONT COLOR="white" POINT-SIZE="12"><B>Core Domain (EXPANDED)</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">coder</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">reviewer</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">tester</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">planner</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">researcher</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">api-designer</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">tech-debt-manager</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#B3E5FC"><B>7 agents (+2)</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    after_swarm [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#AB47BC"><FONT COLOR="white" POINT-SIZE="12"><B>Swarm Domain (EXPANDED)</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">hierarchical-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">mesh-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">adaptive-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">collective-intel-coord</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">swarm-memory-mgr</TD>
+          <TD ALIGN="RIGHT">✓</TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">consensus-validator</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT">swarm-health-monitor</TD>
+          <TD ALIGN="RIGHT"><FONT COLOR="#4CAF50"><B>NEW</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#E1BEE7"><B>7 agents (+2)</B></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+
+    after_summary [label=<
+      <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10" BGCOLOR="#4CAF50">
+        <TR>
+          <TD><FONT COLOR="white" POINT-SIZE="14"><B>Total: 118 Agents</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD BGCOLOR="#C8E6C9"><FONT POINT-SIZE="11"><B>+15 new agents in Batch 4</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD BGCOLOR="#E8F5E9"><FONT POINT-SIZE="10">103 existing + 15 new = 118 total</FONT></TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  // Expansion arrows
+  before_summary -> after_summary [label=<
+    <TABLE BORDER="0" CELLBORDER="0">
+      <TR><TD><FONT POINT-SIZE="14"><B>+15 Agents</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="11" COLOR="#4CAF50">+14.6% Growth</FONT></TD></TR>
+    </TABLE>
+  >, color="#4CAF50", penwidth=4, style=bold];
+
+  before_specialized -> after_frontend [label="New\nDomain", color="#66BB6A", penwidth=2, style=dashed];
+  before_core -> after_docs [label="New\nDomain", color="#FFA726", penwidth=2, style=dashed];
+  before_core -> after_core [label="+2", color="#29B6F6", penwidth=2];
+  before_swarm -> after_swarm [label="+2", color="#AB47BC", penwidth=2];
+
+  // Domain coverage comparison
+  coverage [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="3" BGCOLOR="#37474F"><FONT COLOR="white" POINT-SIZE="14"><B>Domain Coverage Analysis</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD BGCOLOR="#ECEFF1"><B>Domain</B></TD>
+        <TD BGCOLOR="#ECEFF1"><B>Before</B></TD>
+        <TD BGCOLOR="#ECEFF1"><B>After</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Core Development</TD>
+        <TD ALIGN="CENTER">5</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#C8E6C9"><B>7 (+40%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Swarm Coordination</TD>
+        <TD ALIGN="CENTER">5</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#C8E6C9"><B>7 (+40%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Frontend Development</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#FFEBEE">0</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#C8E6C9"><B>6 (NEW)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Documentation</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#FFEBEE">0</TD>
+        <TD ALIGN="CENTER" BGCOLOR="#C8E6C9"><B>5 (NEW)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Consensus & Distributed</TD>
+        <TD ALIGN="CENTER">7</TD>
+        <TD ALIGN="CENTER">7</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">GitHub Integration</TD>
+        <TD ALIGN="CENTER">9</TD>
+        <TD ALIGN="CENTER">9</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">SPARC Methodology</TD>
+        <TD ALIGN="CENTER">6</TD>
+        <TD ALIGN="CENTER">6</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Specialized Dev</TD>
+        <TD ALIGN="CENTER">8</TD>
+        <TD ALIGN="CENTER">8</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="3" BGCOLOR="#4CAF50"><FONT COLOR="white" POINT-SIZE="12"><B>KEY IMPROVEMENTS</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="3" BGCOLOR="#E8F5E9">
+          <B>2 NEW DOMAINS:</B> Frontend • Documentation<BR/>
+          <B>2 EXPANDED DOMAINS:</B> Core • Swarm<BR/>
+          <B>COVERAGE INCREASE:</B> 40% in expanded domains
+        </TD>
+      </TR>
+    </TABLE>
+  >];
+
+  // Command coverage
+  commands [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#29B6F6"><FONT COLOR="white" POINT-SIZE="14"><B>Command Coverage Improvement</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Universal Commands</TD>
+        <TD ALIGN="RIGHT">5</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Specialist Commands (New)</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#C8E6C9"><B>+6</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Total Command Pool</TD>
+        <TD ALIGN="RIGHT"><B>11</B></TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#E1F5FE">
+          <B>New Commands:</B><BR/>
+          /component-build<BR/>
+          /bundle-optimize<BR/>
+          /docs-api-openapi<BR/>
+          /contract-test<BR/>
+          /swarm-monitor<BR/>
+          /self-healing
+        </TD>
+      </TR>
+    </TABLE>
+  >];
+
+  // Technology coverage
+  tech [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="14"><B>Technology Stack Expansion</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FFF3E0"><B>Frontend Technologies (6 agents)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">React 18+</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Vue 3 Composition API</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Storybook CSF3</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Tailwind CSS</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">WCAG 2.1 Accessibility</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FFF3E0"><B>Documentation Technologies (5 agents)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">OpenAPI 3.0</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">AsyncAPI 2.0</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">GraphQL Schema</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Mermaid/PlantUML/GraphViz</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">ADR (Architecture Decisions)</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FFF3E0"><B>Infrastructure Technologies (4 agents)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Byzantine Fault Tolerance</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">pBFT, Raft Consensus</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Self-Healing Systems</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Anomaly Detection (ML)</TD>
+        <TD ALIGN="RIGHT">✓</TD>
+      </TR>
+    </TABLE>
+  >];
+}

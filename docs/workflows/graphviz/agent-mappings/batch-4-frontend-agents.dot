@@ -1,0 +1,383 @@
+// Batch 4 Frontend Agents - Detailed View
+// 6 Frontend specialists with technologies, commands, and coordination patterns
+digraph batch_4_frontend {
+  // Graph properties
+  rankdir=TB;
+  bgcolor="#FAFAFA";
+  fontname="Segoe UI";
+  fontsize=14;
+  compound=true;
+  splines=ortho;
+  nodesep=1.0;
+  ranksep=1.2;
+
+  // Title
+  label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD><FONT POINT-SIZE="24"><B>Batch 4 Frontend Agents</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="16">6 Specialized Frontend Development Agents</FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="12" COLOR="#666666">React • Vue • Components • Styling • Accessibility • Performance</FONT></TD></TR>
+    </TABLE>
+  >;
+  labelloc=t;
+
+  // Node defaults
+  node [fontname="Segoe UI", fontsize=11, style=filled];
+  edge [fontname="Segoe UI", fontsize=9];
+
+  // Agent clusters with technologies
+  subgraph cluster_react {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>React Developer</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Production React Specialist</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#66BB6A";
+    fillcolor="#E8F5E9";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    react_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#66BB6A"><FONT COLOR="white" POINT-SIZE="12"><B>react-developer</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • React 18+ (Concurrent)<BR/>
+            • TypeScript<BR/>
+            • Hooks Patterns<BR/>
+            • State Management
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Component Architecture<BR/>
+            • Performance Optimization<BR/>
+            • Testing (RTL, Vitest)<BR/>
+            • Build Tools (Vite, Next.js)
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /component-build<BR/>
+            /bundle-optimize<BR/>
+            /sparc:frontend-specialist
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_vue {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Vue Developer</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Vue.js Specialist</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#42A5F5";
+    fillcolor="#E3F2FD";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    vue_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#42A5F5"><FONT COLOR="white" POINT-SIZE="12"><B>vue-developer</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • Vue 3 Composition API<BR/>
+            • TypeScript<BR/>
+            • Pinia State Management<BR/>
+            • Vite Build Tool
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • SFC Development<BR/>
+            • Reactive Systems<BR/>
+            • Teleport & Suspense<BR/>
+            • Vue Router
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /component-build<BR/>
+            /sparc<BR/>
+            /build-feature
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_ui_builder {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>UI Component Builder</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Design System Specialist</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#AB47BC";
+    fillcolor="#F3E5F5";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    ui_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#AB47BC"><FONT COLOR="white" POINT-SIZE="12"><B>ui-component-builder</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • Storybook CSF3<BR/>
+            • Design Tokens<BR/>
+            • Class Variance Authority<BR/>
+            • Chromatic (Visual Testing)
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Component Libraries<BR/>
+            • Atomic Design<BR/>
+            • Variant Systems<BR/>
+            • Visual Regression
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /component-build<BR/>
+            /style-audit<BR/>
+            /accessibility-audit
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_css {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>CSS Styling Specialist</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Modern CSS Expert</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#EC407A";
+    fillcolor="#FCE4EC";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    css_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#EC407A"><FONT COLOR="white" POINT-SIZE="12"><B>css-styling-specialist</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • Tailwind CSS<BR/>
+            • CSS Modules<BR/>
+            • Styled-Components<BR/>
+            • PostCSS
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Responsive Design<BR/>
+            • CSS Grid & Flexbox<BR/>
+            • Animations<BR/>
+            • Theme Systems
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /style-optimize<BR/>
+            /quick-check<BR/>
+            /code-review
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_a11y {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Accessibility Specialist</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">WCAG Compliance Expert</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FFA726";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    a11y_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="12"><B>accessibility-specialist</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • axe-core<BR/>
+            • ARIA Attributes<BR/>
+            • Lighthouse<BR/>
+            • Screen Readers
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • WCAG 2.1 AA/AAA<BR/>
+            • Keyboard Navigation<BR/>
+            • Focus Management<BR/>
+            • Semantic HTML
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /accessibility-audit<BR/>
+            /quick-check<BR/>
+            /code-review
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_perf {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Frontend Performance Optimizer</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Performance Expert</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#26A69A";
+    fillcolor="#E0F2F1";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    perf_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#26A69A"><FONT COLOR="white" POINT-SIZE="12"><B>frontend-performance-optimizer</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Technologies</B></TD>
+          <TD ALIGN="LEFT">
+            • Lighthouse<BR/>
+            • Bundle Analyzer<BR/>
+            • React DevTools Profiler<BR/>
+            • Web Vitals
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Code Splitting<BR/>
+            • Lazy Loading<BR/>
+            • Memoization<BR/>
+            • Bundle Optimization
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /bundle-optimize<BR/>
+            /render-optimize<BR/>
+            /quick-check
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  // MCP Server connections
+  subgraph cluster_mcp {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>MCP Tools</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#ECEFF1";
+    fontname="Segoe UI";
+
+    claude_flow [label="claude-flow\n(Coordination)", shape=box, fillcolor="#78909C", fontcolor=white];
+    memory_mcp [label="memory-mcp\n(Context)", shape=box, fillcolor="#78909C", fontcolor=white];
+    connascence [label="connascence-analyzer\n(Quality)", shape=box, fillcolor="#78909C", fontcolor=white];
+    playwright [label="playwright\n(E2E Testing)", shape=box, fillcolor="#78909C", fontcolor=white];
+  }
+
+  // Agent coordination patterns
+  react_agent -> ui_agent [label="Components", color="#66BB6A", penwidth=2];
+  vue_agent -> ui_agent [label="Components", color="#42A5F5", penwidth=2];
+  ui_agent -> a11y_agent [label="A11y Review", color="#AB47BC", penwidth=2];
+  ui_agent -> css_agent [label="Styling", color="#AB47BC", penwidth=2];
+  react_agent -> perf_agent [label="Optimization", color="#66BB6A", penwidth=2];
+  vue_agent -> perf_agent [label="Optimization", color="#42A5F5", penwidth=2];
+  react_agent -> a11y_agent [label="A11y Check", color="#66BB6A", penwidth=2];
+  css_agent -> perf_agent [label="Style Perf", color="#EC407A", penwidth=2];
+
+  // MCP connections
+  react_agent -> claude_flow [style=dashed, color="#999"];
+  vue_agent -> claude_flow [style=dashed, color="#999"];
+  ui_agent -> claude_flow [style=dashed, color="#999"];
+  react_agent -> memory_mcp [style=dashed, color="#999"];
+  react_agent -> connascence [style=dashed, color="#999"];
+  ui_agent -> playwright [style=dashed, color="#999"];
+
+  // Workflow legend
+  workflow [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#37474F"><FONT COLOR="white" POINT-SIZE="12"><B>Frontend Development Workflow</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">1. Component Development</TD>
+        <TD ALIGN="LEFT">React/Vue developers build components</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">2. Design System</TD>
+        <TD ALIGN="LEFT">UI Builder integrates into design system</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">3. Styling</TD>
+        <TD ALIGN="LEFT">CSS Specialist handles styling</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">4. Accessibility</TD>
+        <TD ALIGN="LEFT">A11y Specialist ensures WCAG compliance</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">5. Performance</TD>
+        <TD ALIGN="LEFT">Perf Optimizer checks bundle & render</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#E8F5E9"><FONT POINT-SIZE="10"><B>All coordinated via claude-flow MCP</B></FONT></TD>
+      </TR>
+    </TABLE>
+  >];
+}

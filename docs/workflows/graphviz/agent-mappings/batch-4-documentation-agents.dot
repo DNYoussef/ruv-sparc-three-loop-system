@@ -1,0 +1,426 @@
+// Batch 4 Documentation Agents - Detailed View
+// 5 Documentation specialists with workflows and integrations
+digraph batch_4_documentation {
+  // Graph properties
+  rankdir=TB;
+  bgcolor="#FAFAFA";
+  fontname="Segoe UI";
+  fontsize=14;
+  compound=true;
+  splines=ortho;
+  nodesep=1.0;
+  ranksep=1.2;
+
+  // Title
+  label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD><FONT POINT-SIZE="24"><B>Batch 4 Documentation Agents</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="16">5 Specialized Documentation Agents</FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="12" COLOR="#666666">API Docs • Developer Docs • Knowledge Base • Technical Writing • Architecture Diagrams</FONT></TD></TR>
+    </TABLE>
+  >;
+  labelloc=t;
+
+  // Node defaults
+  node [fontname="Segoe UI", fontsize=11, style=filled];
+  edge [fontname="Segoe UI", fontsize=9];
+
+  // Agent clusters
+  subgraph cluster_api_doc {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>API Documentation Specialist</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">OpenAPI & AsyncAPI Expert</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FFA726";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    api_doc_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="12"><B>api-documentation-specialist</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Specializations</B></TD>
+          <TD ALIGN="LEFT">
+            • OpenAPI 3.0<BR/>
+            • AsyncAPI 2.0<BR/>
+            • Swagger UI<BR/>
+            • ReDoc
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Interactive Documentation<BR/>
+            • Contract-First Design<BR/>
+            • API Versioning<BR/>
+            • Contract Testing
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /docs-api-openapi<BR/>
+            /sparc:api-designer<BR/>
+            /github-pages
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0"><B>Output</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">
+            openapi.yaml<BR/>
+            swagger-ui.html<BR/>
+            redoc.html
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_dev_doc {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Developer Documentation Agent</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Developer-Focused Documentation</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FF9800";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    dev_doc_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FF9800"><FONT COLOR="white" POINT-SIZE="12"><B>developer-documentation-agent</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Specializations</B></TD>
+          <TD ALIGN="LEFT">
+            • Getting Started Guides<BR/>
+            • Code Examples<BR/>
+            • Integration Guides<BR/>
+            • Troubleshooting
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Developer Tutorials<BR/>
+            • Code Snippets<BR/>
+            • Best Practices<BR/>
+            • Migration Guides
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /build-feature<BR/>
+            /review-pr<BR/>
+            /docs-generate
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0"><B>Output</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">
+            README.md<BR/>
+            CONTRIBUTING.md<BR/>
+            SETUP.md
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_kb {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Knowledge Base Manager</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Centralized Knowledge Management</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FFA726";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    kb_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="12"><B>knowledge-base-manager</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Specializations</B></TD>
+          <TD ALIGN="LEFT">
+            • FAQs<BR/>
+            • How-To Articles<BR/>
+            • Design Decisions<BR/>
+            • Architecture Records
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • ADR (Architecture Decisions)<BR/>
+            • Documentation Search<BR/>
+            • Cross-Linking<BR/>
+            • Version Control
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /build-feature<BR/>
+            /memory-store<BR/>
+            /vector-search
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0"><B>Output</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">
+            docs/adr/<BR/>
+            docs/faq/<BR/>
+            docs/wiki/
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_tech_writer {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Technical Writing Agent</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Professional Technical Communication</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FF9800";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    tech_writer_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FF9800"><FONT COLOR="white" POINT-SIZE="12"><B>technical-writing-agent</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Specializations</B></TD>
+          <TD ALIGN="LEFT">
+            • User Manuals<BR/>
+            • Release Notes<BR/>
+            • Technical Specifications<BR/>
+            • White Papers
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Clear Writing<BR/>
+            • Style Consistency<BR/>
+            • Accessibility (WCAG)<BR/>
+            • Localization-Ready
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /build-feature<BR/>
+            /review-pr<BR/>
+            /style-guide
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0"><B>Output</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">
+            docs/user-guide/<BR/>
+            CHANGELOG.md<BR/>
+            docs/specs/
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  subgraph cluster_arch_diag {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Architecture Diagram Generator</B></FONT></TD></TR>
+        <TR><TD><FONT POINT-SIZE="10" COLOR="#666">Visual Documentation Expert</FONT></TD></TR>
+      </TABLE>
+    >;
+    style=rounded;
+    color="#FFA726";
+    fillcolor="#FFF3E0";
+    fontname="Segoe UI";
+    penwidth=2;
+
+    arch_diag_agent [label=<
+      <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+        <TR>
+          <TD COLSPAN="2" BGCOLOR="#FFA726"><FONT COLOR="white" POINT-SIZE="12"><B>architecture-diagram-generator</B></FONT></TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Specializations</B></TD>
+          <TD ALIGN="LEFT">
+            • System Architecture<BR/>
+            • Component Diagrams<BR/>
+            • Sequence Diagrams<BR/>
+            • Data Flow Diagrams
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5"><B>Capabilities</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#F5F5F5">
+            • Mermaid.js<BR/>
+            • PlantUML<BR/>
+            • GraphViz<BR/>
+            • C4 Model
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT"><B>Commands</B></TD>
+          <TD ALIGN="LEFT">
+            /build-feature<BR/>
+            /diagram-generate<BR/>
+            /c4-model
+          </TD>
+        </TR>
+        <TR>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0"><B>Output</B></TD>
+          <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">
+            *.mermaid<BR/>
+            *.puml<BR/>
+            *.dot
+          </TD>
+        </TR>
+      </TABLE>
+    >, shape=none, fillcolor=none];
+  }
+
+  // Documentation workflow connections
+  api_doc_agent -> dev_doc_agent [label="API Examples", color="#FFA726", penwidth=2];
+  dev_doc_agent -> kb_agent [label="Store Guides", color="#FF9800", penwidth=2];
+  kb_agent -> tech_writer_agent [label="Content Source", color="#FFA726", penwidth=2];
+  arch_diag_agent -> api_doc_agent [label="API Diagrams", color="#FFA726", penwidth=2];
+  arch_diag_agent -> dev_doc_agent [label="System Diagrams", color="#FFA726", penwidth=2];
+  arch_diag_agent -> kb_agent [label="Architecture ADRs", color="#FFA726", penwidth=2];
+  tech_writer_agent -> dev_doc_agent [label="Polished Docs", color="#FF9800", penwidth=2];
+
+  // Integration with other agents
+  subgraph cluster_integration {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Integration Points</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#E3F2FD";
+    fontname="Segoe UI";
+
+    api_designer [label="api-designer\n(Core)", shape=box, fillcolor="#29B6F6", fontcolor=white];
+    backend_dev [label="backend-dev\n(Development)", shape=box, fillcolor="#29B6F6", fontcolor=white];
+    coder [label="coder\n(Core)", shape=box, fillcolor="#29B6F6", fontcolor=white];
+  }
+
+  // External integrations
+  api_designer -> api_doc_agent [label="API Contract", color="#29B6F6", style=dashed];
+  backend_dev -> api_doc_agent [label="Implementation", color="#29B6F6", style=dashed];
+  coder -> dev_doc_agent [label="Code Examples", color="#29B6F6", style=dashed];
+
+  // Deployment targets
+  subgraph cluster_deployment {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Deployment Targets</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#F3E5F5";
+    fontname="Segoe UI";
+
+    github_pages [label="GitHub Pages", shape=box, fillcolor="#AB47BC", fontcolor=white];
+    vercel [label="Vercel", shape=box, fillcolor="#AB47BC", fontcolor=white];
+    docusaurus [label="Docusaurus", shape=box, fillcolor="#AB47BC", fontcolor=white];
+    confluence [label="Confluence", shape=box, fillcolor="#AB47BC", fontcolor=white];
+  }
+
+  // Deployment connections
+  api_doc_agent -> github_pages [color="#999", style=dashed];
+  api_doc_agent -> vercel [color="#999", style=dashed];
+  dev_doc_agent -> docusaurus [color="#999", style=dashed];
+  kb_agent -> confluence [color="#999", style=dashed];
+
+  // Documentation lifecycle
+  lifecycle [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#37474F"><FONT COLOR="white" POINT-SIZE="12"><B>Documentation Lifecycle</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">1. API Design</TD>
+        <TD ALIGN="LEFT">API Designer → API Doc Specialist</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">2. OpenAPI Generation</TD>
+        <TD ALIGN="LEFT">API Doc Specialist creates OpenAPI spec</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">3. Diagram Creation</TD>
+        <TD ALIGN="LEFT">Arch Diagram Generator visualizes system</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">4. Developer Guides</TD>
+        <TD ALIGN="LEFT">Dev Doc Agent creates tutorials</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">5. Knowledge Base</TD>
+        <TD ALIGN="LEFT">KB Manager organizes & indexes docs</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">6. Polish & Publish</TD>
+        <TD ALIGN="LEFT">Tech Writer polishes, deploys to platforms</TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FFF3E0"><FONT POINT-SIZE="10"><B>All versioned in Git, deployed automatically</B></FONT></TD>
+      </TR>
+    </TABLE>
+  >];
+
+  // Documentation quality standards
+  quality [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#FF9800"><FONT COLOR="white" POINT-SIZE="12"><B>Quality Standards</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">Completeness</TD>
+        <TD ALIGN="LEFT">All endpoints documented</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Accuracy</TD>
+        <TD ALIGN="LEFT">Matches implementation</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">Accessibility</TD>
+        <TD ALIGN="LEFT">WCAG 2.1 AA compliant</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Versioning</TD>
+        <TD ALIGN="LEFT">API versions tracked</TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">Examples</TD>
+        <TD ALIGN="LEFT">All operations have examples</TD>
+      </TR>
+    </TABLE>
+  >];
+}

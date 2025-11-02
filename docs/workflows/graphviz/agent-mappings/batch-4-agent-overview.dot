@@ -1,0 +1,227 @@
+// Batch 4 Agent Overview - Complete Agent × Command Bipartite Graph
+// 15 new agents across 4 domains with command assignments
+digraph batch_4_overview {
+  // Graph properties
+  rankdir=LR;
+  bgcolor="#FAFAFA";
+  fontname="Segoe UI";
+  fontsize=14;
+  concentrate=false;
+  splines=polyline;
+  nodesep=0.8;
+  ranksep=1.5;
+
+  // Title
+  label=<
+    <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+      <TR><TD><FONT POINT-SIZE="24"><B>Batch 4 Agent Overview</B></FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="16">15 New Agents × Command Assignments</FONT></TD></TR>
+      <TR><TD><FONT POINT-SIZE="12" COLOR="#666666">4 Domains: Frontend (6) • Documentation (5) • Core (2) • Swarm (2)</FONT></TD></TR>
+    </TABLE>
+  >;
+  labelloc=t;
+
+  // Node defaults
+  node [fontname="Segoe UI", fontsize=11, style=filled];
+  edge [fontname="Segoe UI", fontsize=9, color="#999999"];
+
+  // Domain clusters
+  subgraph cluster_frontend {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Frontend Agents (6)</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#E8F5E9";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    react_dev [label="react-developer", shape=box, fillcolor="#66BB6A", fontcolor=white];
+    vue_dev [label="vue-developer", shape=box, fillcolor="#42A5F5", fontcolor=white];
+    ui_builder [label="ui-component-builder", shape=box, fillcolor="#66BB6A", fontcolor=white];
+    css_spec [label="css-styling-specialist", shape=box, fillcolor="#42A5F5", fontcolor=white];
+    a11y_spec [label="accessibility-specialist", shape=box, fillcolor="#66BB6A", fontcolor=white];
+    perf_opt [label="frontend-performance-optimizer", shape=box, fillcolor="#42A5F5", fontcolor=white];
+  }
+
+  subgraph cluster_documentation {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Documentation Agents (5)</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#FFF3E0";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    api_doc [label="api-documentation-specialist", shape=box, fillcolor="#FFA726", fontcolor=white];
+    dev_doc [label="developer-documentation-agent", shape=box, fillcolor="#FF9800", fontcolor=white];
+    kb_mgr [label="knowledge-base-manager", shape=box, fillcolor="#FFA726", fontcolor=white];
+    tech_writer [label="technical-writing-agent", shape=box, fillcolor="#FF9800", fontcolor=white];
+    arch_diag [label="architecture-diagram-generator", shape=box, fillcolor="#FFA726", fontcolor=white];
+  }
+
+  subgraph cluster_core {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Core Agents (2)</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#E1F5FE";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    api_design [label="api-designer", shape=box, fillcolor="#29B6F6", fontcolor=white];
+    tech_debt [label="technical-debt-manager", shape=box, fillcolor="#0288D1", fontcolor=white];
+  }
+
+  subgraph cluster_swarm {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Swarm Agents (2)</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#F3E5F5";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    consensus [label="consensus-validator", shape=box, fillcolor="#AB47BC", fontcolor=white];
+    health [label="swarm-health-monitor", shape=box, fillcolor="#8E24AA", fontcolor=white];
+  }
+
+  // Command nodes
+  subgraph cluster_commands {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Universal Commands</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#ECEFF1";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    sparc [label="/sparc", shape=ellipse, fillcolor="#78909C", fontcolor=white];
+    build_feat [label="/build-feature", shape=ellipse, fillcolor="#78909C", fontcolor=white];
+    review_pr [label="/review-pr", shape=ellipse, fillcolor="#78909C", fontcolor=white];
+    quick_check [label="/quick-check", shape=ellipse, fillcolor="#78909C", fontcolor=white];
+    code_review [label="/code-review", shape=ellipse, fillcolor="#78909C", fontcolor=white];
+  }
+
+  subgraph cluster_specialist_commands {
+    label=<
+      <TABLE BORDER="0" CELLBORDER="0">
+        <TR><TD><FONT POINT-SIZE="14"><B>Specialist Commands</B></FONT></TD></TR>
+      </TABLE>
+    >;
+    style=filled;
+    color="#FCE4EC";
+    fontname="Segoe UI";
+    fontsize=12;
+
+    component_build [label="/component-build", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+    bundle_opt [label="/bundle-optimize", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+    docs_api [label="/docs-api-openapi", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+    contract_test [label="/contract-test", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+    swarm_monitor [label="/swarm-monitor", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+    self_heal [label="/self-healing", shape=ellipse, fillcolor="#EC407A", fontcolor=white];
+  }
+
+  // Frontend → Commands (Green gradient edges)
+  react_dev -> sparc [color="#66BB6A"];
+  react_dev -> build_feat [color="#66BB6A"];
+  react_dev -> quick_check [color="#66BB6A"];
+  react_dev -> component_build [color="#66BB6A"];
+  react_dev -> bundle_opt [color="#66BB6A"];
+
+  vue_dev -> sparc [color="#42A5F5"];
+  vue_dev -> build_feat [color="#42A5F5"];
+  vue_dev -> component_build [color="#42A5F5"];
+
+  ui_builder -> build_feat [color="#66BB6A"];
+  ui_builder -> component_build [color="#66BB6A"];
+  ui_builder -> review_pr [color="#66BB6A"];
+
+  css_spec -> quick_check [color="#42A5F5"];
+  css_spec -> code_review [color="#42A5F5"];
+
+  a11y_spec -> quick_check [color="#66BB6A"];
+  a11y_spec -> code_review [color="#66BB6A"];
+
+  perf_opt -> bundle_opt [color="#42A5F5"];
+  perf_opt -> quick_check [color="#42A5F5"];
+
+  // Documentation → Commands (Orange edges)
+  api_doc -> docs_api [color="#FFA726"];
+  api_doc -> review_pr [color="#FFA726"];
+  api_doc -> build_feat [color="#FFA726"];
+
+  dev_doc -> build_feat [color="#FF9800"];
+  dev_doc -> review_pr [color="#FF9800"];
+
+  kb_mgr -> build_feat [color="#FFA726"];
+
+  tech_writer -> build_feat [color="#FF9800"];
+  tech_writer -> review_pr [color="#FF9800"];
+
+  arch_diag -> build_feat [color="#FFA726"];
+
+  // Core → Commands (Blue edges)
+  api_design -> sparc [color="#29B6F6"];
+  api_design -> build_feat [color="#29B6F6"];
+  api_design -> docs_api [color="#29B6F6"];
+  api_design -> contract_test [color="#29B6F6"];
+
+  tech_debt -> code_review [color="#0288D1"];
+  tech_debt -> review_pr [color="#0288D1"];
+
+  // Swarm → Commands (Purple edges)
+  consensus -> swarm_monitor [color="#AB47BC"];
+
+  health -> swarm_monitor [color="#8E24AA"];
+  health -> self_heal [color="#8E24AA"];
+
+  // Statistics legend
+  legend [shape=none, margin=0, label=<
+    <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="8" BGCOLOR="white">
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#37474F"><FONT COLOR="white" POINT-SIZE="12"><B>Batch 4 Statistics</B></FONT></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Total Agents</TD>
+        <TD ALIGN="RIGHT"><B>15</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#E8F5E9">Frontend Domain</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#E8F5E9"><B>6 agents (40%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#FFF3E0">Documentation Domain</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#FFF3E0"><B>5 agents (33%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#E1F5FE">Core Domain</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#E1F5FE"><B>2 agents (13%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT" BGCOLOR="#F3E5F5">Swarm Domain</TD>
+        <TD ALIGN="RIGHT" BGCOLOR="#F3E5F5"><B>2 agents (13%)</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Universal Commands</TD>
+        <TD ALIGN="RIGHT"><B>5</B></TD>
+      </TR>
+      <TR>
+        <TD ALIGN="LEFT">Specialist Commands</TD>
+        <TD ALIGN="RIGHT"><B>6</B></TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2" BGCOLOR="#F5F5F5"><FONT POINT-SIZE="10">Agent-Command edges: ~35</FONT></TD>
+      </TR>
+    </TABLE>
+  >];
+}
