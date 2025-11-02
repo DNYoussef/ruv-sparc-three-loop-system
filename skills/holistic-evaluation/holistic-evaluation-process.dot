@@ -1,0 +1,208 @@
+digraph HolisticEvaluationProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nHolistic Evaluation\n(Method Development Complete)", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nQuality Gate 2\nAPPROVED", fillcolor=green, fontcolor=white];
+    fail [shape=ellipse, label="Rejected:\nCritical Issues\nUnresolved", fillcolor=red, fontcolor=white];
+
+    // Phase 1: Accuracy Evaluation
+    subgraph cluster_phase1 {
+        label="Phase 1: Accuracy Evaluation (4-8 hours)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        standard_metrics [label="tester agent:\nStandard Metrics\n(Acc, Prec, Recall, F1)"];
+        per_class [label="Per-Class\nPerformance"];
+        error_analysis [label="Error Analysis\n(FP, FN, High-Conf Errors)"];
+
+        standard_metrics -> per_class;
+        per_class -> error_analysis;
+    }
+
+    // Phase 2: Fairness Evaluation
+    subgraph cluster_phase2 {
+        label="Phase 2: Fairness Evaluation (1 day)";
+        fillcolor=lightblue;
+        style=filled;
+
+        demographic_parity [label="ethics-agent:\nDemographic Parity"];
+        equalized_odds [label="Equalized Odds\n(TPR, FPR)"];
+        calibration_groups [label="Calibration\nAcross Groups"];
+        intersectional [label="Intersectional\nFairness"];
+        bias_mitigation [label="Bias Mitigation\nRecommendations"];
+
+        demographic_parity -> equalized_odds;
+        equalized_odds -> calibration_groups;
+        calibration_groups -> intersectional;
+        intersectional -> bias_mitigation;
+    }
+
+    // Fairness check
+    fairness_check [shape=diamond, label="Fairness\nMetrics\nPass\n(<10% gaps)?", fillcolor=yellow];
+    fix_fairness [shape=octagon, label="WARNING:\nPost-Processing\nCalibration Required", fillcolor=orange];
+
+    // Phase 3: Robustness Testing
+    subgraph cluster_phase3 {
+        label="Phase 3: Robustness Testing (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        adversarial [label="tester agent:\nAdversarial Robustness\n(FGSM, PGD, C&W)"];
+        ood_detection [label="Out-of-Distribution\nDetection"];
+        corruption [label="Distribution Shift\n(Corruption, Noise)"];
+        calibration_unc [label="Uncertainty\nCalibration (ECE)"];
+
+        adversarial -> ood_detection;
+        ood_detection -> corruption;
+        corruption -> calibration_unc;
+    }
+
+    // Robustness check
+    robustness_check [shape=diamond, label="Robustness\nAcceptable?\n(Adv>30%,\nOOD AUROC>0.7)", fillcolor=yellow];
+    improve_robustness [shape=octagon, label="CRITICAL:\nAdversarial Training\nor Certified Defenses", fillcolor=orange];
+
+    // Phase 4: Efficiency Profiling
+    subgraph cluster_phase4 {
+        label="Phase 4: Efficiency Profiling (4-8 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        latency [label="tester agent:\nLatency Profiling"];
+        throughput [label="Throughput\n(QPS)"];
+        memory [label="Memory\nProfiling"];
+        energy [label="Energy\nConsumption"];
+
+        latency -> throughput;
+        throughput -> memory;
+        memory -> energy;
+    }
+
+    // Phase 5: Interpretability Analysis
+    subgraph cluster_phase5 {
+        label="Phase 5: Interpretability Analysis (4-8 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        shap [label="tester agent:\nSHAP Analysis"];
+        attention_viz [label="Attention\nVisualization"];
+        saliency [label="Saliency Maps"];
+        counterfactuals [label="Counterfactual\nExplanations"];
+
+        shap -> attention_viz;
+        attention_viz -> saliency;
+        saliency -> counterfactuals;
+    }
+
+    // Phase 6: Safety Evaluation
+    subgraph cluster_phase6 {
+        label="Phase 6: Safety Evaluation (1 day)";
+        fillcolor=lightblue;
+        style=filled;
+
+        harmful_output [label="ethics-agent:\nHarmful Output\nDetection"];
+        bias_amplification [label="Bias\nAmplification"];
+        privacy_leakage [label="Privacy Leakage\n(Membership Inference)"];
+        adversarial_prompts [label="Adversarial\nPrompt Testing"];
+        dual_use [label="Dual-Use\nRisk Assessment"];
+
+        harmful_output -> bias_amplification;
+        bias_amplification -> privacy_leakage;
+        privacy_leakage -> adversarial_prompts;
+        adversarial_prompts -> dual_use;
+    }
+
+    // Safety check
+    safety_check [shape=diamond, label="Safety\nEvaluation\nPass?", fillcolor=yellow];
+    address_safety [shape=octagon, label="CRITICAL:\nAddress Safety Risks\n(Filtering, Mitigation)", fillcolor=orange];
+
+    // Phase 7: Synthesis & Gate 2
+    subgraph cluster_phase7 {
+        label="Phase 7: Synthesis & Gate 2 Validation (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        synthesize [label="evaluator agent:\nSynthesize Results"];
+        generate_report [label="Generate Holistic\nEvaluation Report"];
+        identify_tradeoffs [label="Identify\nTrade-offs"];
+        deployment_rec [label="Deployment\nRecommendations"];
+        validate_gate2 [label="Validate\nGate 2 Requirements"];
+
+        synthesize -> generate_report;
+        generate_report -> identify_tradeoffs;
+        identify_tradeoffs -> deployment_rec;
+        deployment_rec -> validate_gate2;
+    }
+
+    // Gate 2 decision
+    gate2_decision [shape=diamond, label="Gate 2\nDecision?", fillcolor=yellow];
+    approve [label="APPROVED:\nProceed to\nArchival (Gate 3)", fillcolor=lightgreen];
+    conditional [label="CONDITIONAL:\nMitigation Plan\nRequired", fillcolor=lightyellow];
+    reject [label="REJECT:\nCritical Issues", fillcolor=lightcoral];
+
+    // External references
+    test_datasets [shape=cylinder, label="Test Datasets:\nStandard + Fairness\n+ Adversarial + OOD", fillcolor=lightcoral];
+    eval_frameworks [shape=cylinder, label="Evaluation Frameworks:\nFairness Indicators\nFoolbox, SHAP", fillcolor=lightcoral];
+    gpu_cluster [shape=cylinder, label="GPU Cluster\n(Profiling)", fillcolor=lightcoral];
+
+    // Concepts
+    fairness_metrics [shape=folder, label="Fairness Metrics:\nDemographic Parity\nEqualized Odds\nCalibration", fillcolor=lightsalmon];
+    robustness_standards [shape=folder, label="Robustness Standards:\nRobustBench\nImageNet-C", fillcolor=lightsalmon];
+    deep_research_sop [shape=folder, label="Deep Research SOP\nPipeline E\nQuality Gate 2", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> standard_metrics [lhead=cluster_phase1];
+    error_analysis -> demographic_parity [lhead=cluster_phase2];
+
+    // Fairness check
+    bias_mitigation -> fairness_check;
+    fairness_check -> adversarial [label="yes", color=green, lhead=cluster_phase3];
+    fairness_check -> fix_fairness [label="no", color=red];
+    fix_fairness -> demographic_parity [label="retry", style=dashed];
+
+    // Robustness check
+    calibration_unc -> robustness_check;
+    robustness_check -> latency [label="acceptable", color=green, lhead=cluster_phase4];
+    robustness_check -> improve_robustness [label="critical gaps", color=red];
+    improve_robustness -> adversarial [label="retrain & retry", style=dashed];
+
+    // Efficiency to interpretability
+    energy -> shap [lhead=cluster_phase5];
+
+    // Interpretability to safety
+    counterfactuals -> harmful_output [lhead=cluster_phase6];
+
+    // Safety check
+    dual_use -> safety_check;
+    safety_check -> synthesize [label="yes", color=green, lhead=cluster_phase7];
+    safety_check -> address_safety [label="no", color=red];
+    address_safety -> harmful_output [label="mitigate & retry", style=dashed];
+
+    // Gate 2 decision
+    validate_gate2 -> gate2_decision;
+    gate2_decision -> approve [label="approved", color=green];
+    gate2_decision -> conditional [label="conditional", color=orange];
+    gate2_decision -> reject [label="reject", color=red];
+
+    approve -> end;
+    conditional -> end [label="after mitigation"];
+    reject -> fail;
+
+    // External references
+    standard_metrics -> test_datasets [style=dashed, label="uses"];
+    demographic_parity -> eval_frameworks [style=dashed, label="uses"];
+    latency -> gpu_cluster [style=dashed, label="requires"];
+
+    // Concept references
+    equalized_odds -> fairness_metrics [style=dashed, label="implements"];
+    adversarial -> robustness_standards [style=dashed, label="follows"];
+    validate_gate2 -> deep_research_sop [style=dashed, label="implements"];
+
+    labelloc="t";
+    label="Holistic Evaluation Process Flow\nDeep Research SOP - Pipeline E - Quality Gate 2\n7 Phases, 3 Agents, 6+ Evaluation Dimensions";
+    fontsize=16;
+    fontname="Arial Bold";
+}

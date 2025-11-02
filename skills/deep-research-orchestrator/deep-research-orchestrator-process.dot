@@ -1,0 +1,149 @@
+digraph DeepResearchOrchestratorProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nResearch Project\nIdeation", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nProduction Deployment\n+ Publication", fillcolor=green, fontcolor=white];
+    fail [shape=ellipse, label="Rejected:\nQuality Gate\nFailure", fillcolor=red, fontcolor=white];
+
+    // PHASE 1: FOUNDATIONS (2-4 weeks)
+    subgraph cluster_phase1 {
+        label="PHASE 1: FOUNDATIONS (2-4 weeks)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        pipeline_a [label="Pipeline A:\nLiterature Synthesis\n(researcher)", fillcolor=lightblue];
+        pipeline_b [label="Pipeline B:\nData & Ethics Foundation\n(data-steward, ethics-agent)", fillcolor=lightblue];
+        pipeline_c [label="Pipeline C:\nPRISMA Protocol\n(researcher, optional)", fillcolor=lightgray];
+        pipeline_d1 [label="Pipeline D:\nBaseline Replication\n(coder, tester)", fillcolor=lightblue];
+
+        pipeline_a -> pipeline_b;
+        pipeline_b -> pipeline_c [style=dashed, label="if systematic\nreview"];
+        pipeline_b -> pipeline_d1;
+        pipeline_c -> pipeline_d1;
+    }
+
+    // Quality Gate 1
+    gate1 [shape=diamond, label="Quality Gate 1:\nData & Methods\nValidation", fillcolor=gold];
+    gate1_requirements [label="Gate 1 Requirements:\n- Literature review ≥50 papers\n- Datasheet ≥90% complete\n- Ethics APPROVED\n- Baseline ±1% tolerance\n- Reproducibility 3/3 runs", shape=note, fillcolor=lightyellow];
+
+    // Gate 1 decision
+    gate1_decision [shape=diamond, label="Gate 1\nDecision?", fillcolor=yellow];
+    gate1_reject [label="REJECT:\nReturn to Phase 1", fillcolor=lightcoral];
+
+    // PHASE 2: DEVELOPMENT (6-12 weeks)
+    subgraph cluster_phase2 {
+        label="PHASE 2: DEVELOPMENT (6-12 weeks)";
+        fillcolor=lightcyan;
+        style=filled;
+
+        pipeline_d2 [label="Pipeline D:\nMethod Development\n(system-architect, coder)", fillcolor=lightblue];
+        pipeline_e [label="Pipeline E:\nHolistic Evaluation\n(tester)", fillcolor=lightblue];
+        pipeline_f [label="Pipeline F:\nEthics & Safety Review\n(ethics-agent)", fillcolor=lightblue];
+
+        pipeline_d2 -> pipeline_e;
+        pipeline_e -> pipeline_f;
+    }
+
+    // Quality Gate 2
+    gate2 [shape=diamond, label="Quality Gate 2:\nModel & Evaluation\nValidation", fillcolor=gold];
+    gate2_requirements [label="Gate 2 Requirements:\n- Novel method > baseline\n- Ablation studies ≥5 components\n- Holistic eval 6+ dimensions\n- Ethics APPROVED\n- Method card ≥90% complete\n- Reproducibility 3/3 runs", shape=note, fillcolor=lightyellow];
+
+    // Gate 2 decision
+    gate2_decision [shape=diamond, label="Gate 2\nDecision?", fillcolor=yellow];
+    gate2_reject [label="REJECT:\nReturn to Phase 2", fillcolor=lightcoral];
+
+    // PHASE 3: PRODUCTION (2-4 weeks)
+    subgraph cluster_phase3 {
+        label="PHASE 3: PRODUCTION (2-4 weeks)";
+        fillcolor=lightgreen;
+        style=filled;
+
+        pipeline_g [label="Pipeline G:\nReproducibility & Archival\n(archivist)", fillcolor=lightblue];
+        pipeline_h [label="Pipeline H:\nDeployment Readiness\n(tester, archivist)", fillcolor=lightblue];
+        pipeline_i [label="Pipeline I:\nPublication\n(researcher, archivist)", fillcolor=lightblue];
+
+        pipeline_g -> pipeline_h;
+        pipeline_h -> pipeline_i;
+    }
+
+    // Quality Gate 3
+    gate3 [shape=diamond, label="Quality Gate 3:\nProduction & Artifacts\nValidation", fillcolor=gold];
+    gate3_requirements [label="Gate 3 Requirements:\n- Model card ≥90% complete\n- DOIs assigned (data, model, code)\n- Code public (GitHub release)\n- Reproducibility 3/3 runs\n- Deployment plan validated\n- Publication artifacts ready", shape=note, fillcolor=lightyellow];
+
+    // Gate 3 decision
+    gate3_decision [shape=diamond, label="Gate 3\nDecision?", fillcolor=yellow];
+    gate3_reject [label="REJECT:\nReturn to Phase 3", fillcolor=lightcoral];
+
+    // Final deployment
+    deploy [label="DEPLOY:\nProduction Deployment", fillcolor=lightgreen];
+    publish [label="PUBLISH:\nSubmit to Venue", fillcolor=lightgreen];
+
+    // External references
+    sota_benchmarks [shape=cylinder, label="SOTA Benchmarks:\nPapers with Code", fillcolor=lightcoral];
+    datasets [shape=cylinder, label="Datasets:\nPublic Repositories", fillcolor=lightcoral];
+    registries [shape=cylinder, label="Public Registries:\nHuggingFace, Zenodo\nMLflow, GitHub", fillcolor=lightcoral];
+    venues [shape=cylinder, label="Publication Venues:\nNeurIPS, ICML, ACL", fillcolor=lightcoral];
+
+    // Concepts
+    quality_gates [shape=folder, label="Quality Gate System:\n3 Gates, GO/NO-GO\nDecisions", fillcolor=lightsalmon];
+    nine_pipelines [shape=folder, label="9 Pipelines (A-I):\nSystematic Coverage", fillcolor=lightsalmon];
+    four_agents [shape=folder, label="4 P0 Agents:\ndata-steward\nethics-agent\narchivist\nevaluator", fillcolor=lightsalmon];
+    memory_mcp [shape=folder, label="Memory MCP:\nCross-Session\nPersistence", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> pipeline_a [lhead=cluster_phase1];
+    pipeline_d1 -> gate1;
+    gate1 -> gate1_decision;
+
+    // Gate 1 decision branches
+    gate1_decision -> pipeline_d2 [label="APPROVED", color=green, lhead=cluster_phase2];
+    gate1_decision -> gate1_reject [label="REJECT", color=red];
+    gate1_reject -> pipeline_a [label="fix & retry", style=dashed];
+
+    // Phase 2 to Gate 2
+    pipeline_f -> gate2;
+    gate2 -> gate2_decision;
+
+    // Gate 2 decision branches
+    gate2_decision -> pipeline_g [label="APPROVED", color=green, lhead=cluster_phase3];
+    gate2_decision -> gate2_reject [label="REJECT", color=red];
+    gate2_reject -> pipeline_d2 [label="fix & retry", style=dashed];
+
+    // Phase 3 to Gate 3
+    pipeline_i -> gate3;
+    gate3 -> gate3_decision;
+
+    // Gate 3 decision branches
+    gate3_decision -> deploy [label="APPROVED", color=green];
+    gate3_decision -> gate3_reject [label="REJECT", color=red];
+    gate3_reject -> pipeline_g [label="fix & retry", style=dashed];
+
+    deploy -> publish;
+    publish -> end;
+
+    // External references
+    pipeline_a -> sota_benchmarks [style=dashed, label="retrieves"];
+    pipeline_b -> datasets [style=dashed, label="validates"];
+    pipeline_g -> registries [style=dashed, label="publishes to"];
+    pipeline_i -> venues [style=dashed, label="submits to"];
+
+    // Concept references
+    gate1 -> quality_gates [style=dashed, label="implements"];
+    pipeline_a -> nine_pipelines [style=dashed, label="part of"];
+    pipeline_b -> four_agents [style=dashed, label="uses"];
+    gate1 -> memory_mcp [style=dashed, label="persists via"];
+
+    // Gate requirements connections
+    gate1 -> gate1_requirements [style=dotted, label="checks"];
+    gate2 -> gate2_requirements [style=dotted, label="checks"];
+    gate3 -> gate3_requirements [style=dotted, label="checks"];
+
+    labelloc="t";
+    label="Deep Research SOP Orchestrator - Complete Lifecycle\n3 Phases, 9 Pipelines (A-I), 3 Quality Gates\n2-6 Months End-to-End";
+    fontsize=16;
+    fontname="Arial Bold";
+}

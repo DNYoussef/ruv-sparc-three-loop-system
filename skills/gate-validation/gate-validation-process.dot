@@ -1,0 +1,168 @@
+digraph GateValidationProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start nodes for each gate
+    start_gate1 [shape=ellipse, label="Start:\nGate 1 Validation\n(End of Phase 1)", fillcolor=lightgreen];
+    start_gate2 [shape=ellipse, label="Start:\nGate 2 Validation\n(End of Phase 2)", fillcolor=lightgreen];
+    start_gate3 [shape=ellipse, label="Start:\nGate 3 Validation\n(End of Phase 3)", fillcolor=lightgreen];
+
+    // Gate selection
+    gate_selector [shape=diamond, label="Which\nQuality Gate?", fillcolor=lightyellow];
+
+    // GATE 1 VALIDATION CLUSTER
+    subgraph cluster_gate1 {
+        label="Gate 1: Data & Methods Validation";
+        fillcolor=lightcyan;
+        style=filled;
+
+        gate1_lit_review [label="Check Literature Review\n≥50 papers"];
+        gate1_datasheet [label="data-steward:\nValidate Datasheet\n≥90% complete"];
+        gate1_bias [label="data-steward:\nCheck Bias Audit\n<10% gaps"];
+        gate1_ethics [label="ethics-agent:\nValidate Ethics Review\nAPPROVED"];
+        gate1_baseline [label="Check Baseline Replication\n±1% tolerance"];
+        gate1_repro [label="Test Reproducibility\n3/3 runs"];
+
+        gate1_lit_review -> gate1_datasheet;
+        gate1_datasheet -> gate1_bias;
+        gate1_bias -> gate1_ethics;
+        gate1_ethics -> gate1_baseline;
+        gate1_baseline -> gate1_repro;
+    }
+
+    // Gate 1 decision
+    gate1_decision [shape=diamond, label="Gate 1\nDecision?", fillcolor=gold];
+    gate1_approved [label="APPROVED:\nProceed to Phase 2", fillcolor=lightgreen];
+    gate1_conditional [label="CONDITIONAL:\nMinor Gaps", fillcolor=lightyellow];
+    gate1_rejected [label="REJECTED:\nReturn to Phase 1", fillcolor=lightcoral];
+
+    // GATE 2 VALIDATION CLUSTER
+    subgraph cluster_gate2 {
+        label="Gate 2: Model & Evaluation Validation";
+        fillcolor=lightcyan;
+        style=filled;
+
+        gate2_performance [label="Check Novel Method\n> Baseline (p<0.05)"];
+        gate2_ablations [label="Validate Ablation Studies\n≥5 components"];
+        gate2_holistic [label="Check Holistic Evaluation\n6+ dimensions"];
+        gate2_ethics [label="ethics-agent:\nValidate Ethics Review\nAPPROVED"];
+        gate2_method_card [label="archivist:\nValidate Method Card\n≥90% complete"];
+        gate2_repro [label="Test Reproducibility\n3/3 runs"];
+
+        gate2_performance -> gate2_ablations;
+        gate2_ablations -> gate2_holistic;
+        gate2_holistic -> gate2_ethics;
+        gate2_ethics -> gate2_method_card;
+        gate2_method_card -> gate2_repro;
+    }
+
+    // Gate 2 decision
+    gate2_decision [shape=diamond, label="Gate 2\nDecision?", fillcolor=gold];
+    gate2_approved [label="APPROVED:\nProceed to Phase 3", fillcolor=lightgreen];
+    gate2_conditional [label="CONDITIONAL:\nMitigation Plan", fillcolor=lightyellow];
+    gate2_rejected [label="REJECTED:\nReturn to Phase 2", fillcolor=lightcoral];
+
+    // GATE 3 VALIDATION CLUSTER
+    subgraph cluster_gate3 {
+        label="Gate 3: Production & Artifacts Validation";
+        fillcolor=lightcyan;
+        style=filled;
+
+        gate3_model_card [label="archivist:\nValidate Model Card\n≥90% complete"];
+        gate3_repro_pkg [label="Test Reproducibility Package\n3/3 runs"];
+        gate3_dois [label="archivist:\nCheck DOI Assignment\n(data, model, code)"];
+        gate3_public [label="archivist:\nValidate Public Registry\nGitHub, Zenodo, HF"];
+        gate3_deployment [label="Check Deployment Readiness\nPlan validated"];
+        gate3_publication [label="Check Publication Artifacts\nReproducibility checklist"];
+
+        gate3_model_card -> gate3_repro_pkg;
+        gate3_repro_pkg -> gate3_dois;
+        gate3_dois -> gate3_public;
+        gate3_public -> gate3_deployment;
+        gate3_deployment -> gate3_publication;
+    }
+
+    // Gate 3 decision
+    gate3_decision [shape=diamond, label="Gate 3\nDecision?", fillcolor=gold];
+    gate3_approved [label="APPROVED:\nDEPLOY + PUBLISH", fillcolor=lightgreen];
+    gate3_conditional [label="CONDITIONAL:\nDocumentation Fixes", fillcolor=lightyellow];
+    gate3_rejected [label="REJECTED:\nReturn to Phase 3", fillcolor=lightcoral];
+
+    // Memory storage
+    store_gate1 [label="Store Gate 1 Status\nin Memory MCP"];
+    store_gate2 [label="Store Gate 2 Status\nin Memory MCP"];
+    store_gate3 [label="Store Gate 3 Status\nin Memory MCP"];
+
+    // End nodes
+    end_gate1 [shape=ellipse, label="Gate 1 Complete:\nPhase Transition\nDecided", fillcolor=green, fontcolor=white];
+    end_gate2 [shape=ellipse, label="Gate 2 Complete:\nPhase Transition\nDecided", fillcolor=green, fontcolor=white];
+    end_gate3 [shape=ellipse, label="Gate 3 Complete:\nDeploy/Publish\nAuthorized", fillcolor=green, fontcolor=white];
+
+    // External references
+    phase1_outputs [shape=cylinder, label="Phase 1 Outputs:\nLiterature, Datasheet\nBaseline, Ethics", fillcolor=lightcoral];
+    phase2_outputs [shape=cylinder, label="Phase 2 Outputs:\nNovel Method, Ablations\nHolistic Eval, Ethics", fillcolor=lightcoral];
+    phase3_outputs [shape=cylinder, label="Phase 3 Outputs:\nModel Card, DOIs\nDeployment Plan", fillcolor=lightcoral];
+
+    // Concepts
+    quality_gates [shape=folder, label="Quality Gate System:\n3 Gates, GO/NO-GO\nDecisions", fillcolor=lightsalmon];
+    evaluator_agent [shape=folder, label="evaluator Agent:\nLeads All Gate\nValidations", fillcolor=lightsalmon];
+
+    // Main flow - Gate selection
+    start_gate1 -> gate_selector;
+    start_gate2 -> gate_selector;
+    start_gate3 -> gate_selector;
+
+    gate_selector -> gate1_lit_review [label="Gate 1", lhead=cluster_gate1];
+    gate_selector -> gate2_performance [label="Gate 2", lhead=cluster_gate2];
+    gate_selector -> gate3_model_card [label="Gate 3", lhead=cluster_gate3];
+
+    // Gate 1 flow
+    gate1_repro -> gate1_decision;
+    gate1_decision -> gate1_approved [label="approved", color=green];
+    gate1_decision -> gate1_conditional [label="conditional", color=orange];
+    gate1_decision -> gate1_rejected [label="rejected", color=red];
+
+    gate1_approved -> store_gate1;
+    gate1_conditional -> store_gate1;
+    gate1_rejected -> store_gate1;
+    store_gate1 -> end_gate1;
+
+    // Gate 2 flow
+    gate2_repro -> gate2_decision;
+    gate2_decision -> gate2_approved [label="approved", color=green];
+    gate2_decision -> gate2_conditional [label="conditional", color=orange];
+    gate2_decision -> gate2_rejected [label="rejected", color=red];
+
+    gate2_approved -> store_gate2;
+    gate2_conditional -> store_gate2;
+    gate2_rejected -> store_gate2;
+    store_gate2 -> end_gate2;
+
+    // Gate 3 flow
+    gate3_publication -> gate3_decision;
+    gate3_decision -> gate3_approved [label="approved", color=green];
+    gate3_decision -> gate3_conditional [label="conditional", color=orange];
+    gate3_decision -> gate3_rejected [label="rejected", color=red];
+
+    gate3_approved -> store_gate3;
+    gate3_conditional -> store_gate3;
+    gate3_rejected -> store_gate3;
+    store_gate3 -> end_gate3;
+
+    // External references
+    gate1_lit_review -> phase1_outputs [style=dashed, label="checks"];
+    gate2_performance -> phase2_outputs [style=dashed, label="checks"];
+    gate3_model_card -> phase3_outputs [style=dashed, label="checks"];
+
+    // Concept references
+    gate1_decision -> quality_gates [style=dashed, label="implements"];
+    gate2_decision -> evaluator_agent [style=dashed, label="led by"];
+    gate3_decision -> quality_gates [style=dashed, label="implements"];
+
+    labelloc="t";
+    label="Gate Validation Process Flow\nDeep Research SOP - 3 Quality Gates\nGO/NO-GO Decisions for Phase Transitions";
+    fontsize=16;
+    fontname="Arial Bold";
+}

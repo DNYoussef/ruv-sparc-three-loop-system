@@ -1,0 +1,161 @@
+digraph ReproducibilityAuditProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nReproducibility Audit\n(Package Created)", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nACM Badge Recommended\n3/3 Runs Successful", fillcolor=green, fontcolor=white];
+    fail [shape=ellipse, label="Failed:\nRemediation Required", fillcolor=red, fontcolor=white];
+
+    // Phase 1: Package Structure Audit
+    subgraph cluster_phase1 {
+        label="Phase 1: Package Structure Audit (2-4 hours)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        check_files [label="tester agent:\nCheck Required Files"];
+        validate_readme [label="Validate README\n(≤5 steps)"];
+        validate_dockerfile [label="Validate Dockerfile\n(builds successfully)"];
+
+        check_files -> validate_readme;
+        validate_readme -> validate_dockerfile;
+    }
+
+    // Structure check
+    structure_check [shape=diamond, label="All Required\nFiles Present?", fillcolor=yellow];
+    fix_structure [shape=octagon, label="WARNING:\nAdd Missing Files", fillcolor=orange];
+
+    // Phase 2: Environment Reproducibility
+    subgraph cluster_phase2 {
+        label="Phase 2: Environment Reproducibility (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        check_pinning [label="Check Dependency\nPinning"];
+        check_seeds [label="Verify Seed\nConfiguration"];
+        test_build [label="Test Docker Build"];
+
+        check_pinning -> check_seeds;
+        check_seeds -> test_build;
+    }
+
+    // Phase 3: Execution Reproducibility
+    subgraph cluster_phase3 {
+        label="Phase 3: Execution Reproducibility (8-24 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        run1 [label="Run 1\n(seed=42)"];
+        run2 [label="Run 2\n(seed=123)"];
+        run3 [label="Run 3\n(seed=456)"];
+
+        run1 -> run2;
+        run2 -> run3;
+    }
+
+    // Execution check
+    execution_check [shape=diamond, label="3/3 Runs\nSuccessful?", fillcolor=yellow];
+    debug_failures [shape=octagon, label="CRITICAL:\nDebug Failures", fillcolor=orange];
+
+    // Phase 4: Results Validation
+    subgraph cluster_phase4 {
+        label="Phase 4: Results Validation (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        load_results [label="Load Original\n+ Reproduced Results"];
+        statistical_comparison [label="Statistical Comparison\n(t-test)"];
+        variance_analysis [label="Variance Analysis\n(across runs)"];
+        tolerance_check [label="Check ±1%\nTolerance"];
+
+        load_results -> statistical_comparison;
+        statistical_comparison -> variance_analysis;
+        variance_analysis -> tolerance_check;
+    }
+
+    // Tolerance check
+    tolerance_decision [shape=diamond, label="Results\nWithin ±1%\nTolerance?", fillcolor=yellow];
+    fix_determinism [shape=octagon, label="CRITICAL:\nFix Non-Deterministic\nBehavior", fillcolor=orange];
+
+    // Phase 5: ACM Compliance
+    subgraph cluster_phase5 {
+        label="Phase 5: ACM Artifact Evaluation Compliance (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        check_available [label="Check Artifact\nAvailable\n(code + data public)"];
+        check_functional [label="Check Artifact\nFunctional\n(executes correctly)"];
+        check_reproduced [label="Check Artifact\nReproduced\n(results match)"];
+        check_reusable [label="Check Artifact\nReusable\n(well-documented)"];
+
+        check_available -> check_functional;
+        check_functional -> check_reproduced;
+        check_reproduced -> check_reusable;
+    }
+
+    // ACM badge recommendation
+    recommend_badge [label="Recommend\nACM Badge"];
+
+    // Phase 6: Remediation (if needed)
+    remediation [label="Phase 6: Remediation\n(4-8 hours, if needed)", fillcolor=lightyellow, style="filled,dashed"];
+
+    // Deliverables
+    deliverables [label="Deliverables:\n- Audit report (PASS/FAIL)\n- 3/3 reproduction runs\n- Deviation analysis (±1%)\n- ACM badge recommendation"];
+
+    // External references
+    repro_package [shape=cylinder, label="Reproducibility Package:\nDocker + Code + Data", fillcolor=lightcoral];
+    original_results [shape=cylinder, label="Original Results:\nFor Comparison", fillcolor=lightcoral];
+
+    // Concepts
+    acm_standards [shape=folder, label="ACM Artifact Evaluation:\nAvailable, Functional\nReproduced, Reusable", fillcolor=lightsalmon];
+    determinism [shape=folder, label="Deterministic Computing:\nSeeds, Flags, Env Vars", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> check_files [lhead=cluster_phase1];
+
+    // Structure check
+    validate_dockerfile -> structure_check;
+    structure_check -> check_pinning [label="yes", color=green, lhead=cluster_phase2];
+    structure_check -> fix_structure [label="no", color=red];
+    fix_structure -> check_files [label="retry", style=dashed];
+
+    // Environment to execution
+    test_build -> run1 [lhead=cluster_phase3];
+
+    // Execution check
+    run3 -> execution_check;
+    execution_check -> load_results [label="yes", color=green, lhead=cluster_phase4];
+    execution_check -> debug_failures [label="no", color=red];
+    debug_failures -> run1 [label="fix & retry", style=dashed];
+
+    // Results validation
+    tolerance_check -> tolerance_decision;
+    tolerance_decision -> check_available [label="yes", color=green, lhead=cluster_phase5];
+    tolerance_decision -> fix_determinism [label="no", color=red];
+    fix_determinism -> run1 [label="fix & retry", style=dashed];
+
+    // ACM compliance to badge
+    check_reusable -> recommend_badge;
+
+    // Badge to deliverables or remediation
+    recommend_badge -> deliverables [label="PASS"];
+    recommend_badge -> remediation [label="FAIL", style=dashed];
+    remediation -> check_files [label="retry", style=dashed];
+
+    deliverables -> end;
+
+    // External references
+    check_files -> repro_package [style=dashed, label="audits"];
+    load_results -> original_results [style=dashed, label="compares with"];
+
+    // Concept references
+    check_available -> acm_standards [style=dashed, label="follows"];
+    check_seeds -> determinism [style=dashed, label="implements"];
+
+    labelloc="t";
+    label="Reproducibility Audit Process Flow\nDeep Research SOP - Pipeline G - Gate 3\n6 Phases, tester + archivist agents, ACM Compliance";
+    fontsize=16;
+    fontname="Arial Bold";
+}

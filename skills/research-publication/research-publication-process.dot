@@ -1,0 +1,171 @@
+digraph ResearchPublicationProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nResearch Publication\n(Gate 3 APPROVED)", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nPaper Submitted\nArtifacts Public", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Paper Writing
+    subgraph cluster_phase1 {
+        label="Phase 1: Paper Writing (1-2 weeks)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        paper_structure [label="researcher agent:\nDefine Paper Structure"];
+        auto_generate [label="Auto-Generate Sections\n(from artifacts)"];
+        write_sections [label="Write Intro,\nDiscussion, Conclusion"];
+        revise [label="Revise and Polish"];
+
+        paper_structure -> auto_generate;
+        auto_generate -> write_sections;
+        write_sections -> revise;
+    }
+
+    // Phase 2: Reproducibility Checklist
+    subgraph cluster_phase2 {
+        label="Phase 2: Reproducibility Checklist (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        select_venue [label="Select Venue\n(NeurIPS, ICML, CVPR)"];
+        fill_checklist [label="Fill Reproducibility\nChecklist"];
+        verify_artifacts [label="Verify All Artifacts\nAccessible"];
+
+        select_venue -> fill_checklist;
+        fill_checklist -> verify_artifacts;
+    }
+
+    // Checklist validation
+    checklist_check [shape=diamond, label="Checklist\n100%\nComplete?", fillcolor=yellow];
+    fix_checklist [shape=octagon, label="WARNING:\nComplete Missing\nItems", fillcolor=orange];
+
+    // Phase 3: Supplementary Materials
+    subgraph cluster_phase3 {
+        label="Phase 3: Supplementary Materials (2-3 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        appendices [label="Write Appendices\n(Proofs, Details)"];
+        additional_results [label="Additional Results\n(Ablations, Visualizations)"];
+        broader_impact [label="Extended Broader\nImpact Statement"];
+        compile_supp [label="Compile Supplementary\nPDF"];
+
+        appendices -> additional_results;
+        additional_results -> broader_impact;
+        broader_impact -> compile_supp;
+    }
+
+    // Phase 4: ACM Artifact Submission
+    subgraph cluster_phase4 {
+        label="Phase 4: ACM Artifact Submission (2-3 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        package_artifact [label="archivist agent:\nPackage Artifact"];
+        artifact_description [label="Write Artifact\nDescription"];
+        test_artifact [label="Test Artifact\n(Fresh Environment)"];
+        request_badges [label="Request ACM Badges\n(Available, Functional,\nReproduced, Reusable)"];
+
+        package_artifact -> artifact_description;
+        artifact_description -> test_artifact;
+        test_artifact -> request_badges;
+    }
+
+    // Artifact test check
+    artifact_check [shape=diamond, label="Artifact\nTest\nSuccessful?", fillcolor=yellow];
+    fix_artifact [shape=octagon, label="CRITICAL:\nFix Artifact Issues", fillcolor=orange];
+
+    // Phase 5: Code Release
+    subgraph cluster_phase5 {
+        label="Phase 5: Code Release (2-3 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        github_setup [label="archivist agent:\nSetup GitHub Repo"];
+        create_release [label="Create GitHub\nRelease (v1.0.0)"];
+        zenodo_doi [label="Assign Zenodo DOI"];
+        update_readme [label="Update README\nwith DOI Badge"];
+
+        github_setup -> create_release;
+        create_release -> zenodo_doi;
+        zenodo_doi -> update_readme;
+    }
+
+    // Phase 6: Presentation Slides
+    subgraph cluster_phase6 {
+        label="Phase 6: Presentation Slides (3-5 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        slide_structure [label="researcher agent:\nDefine Slide Structure"];
+        create_slides [label="Create Slides\n(15-20 slides)"];
+        practice [label="Practice Presentation\n(15 min talk)"];
+
+        slide_structure -> create_slides;
+        create_slides -> practice;
+    }
+
+    // Submission
+    submit_paper [label="Submit Paper\nto Venue"];
+    submit_artifact [label="Submit Artifact\nto ACM"];
+
+    // Deliverables
+    deliverables [label="Deliverables:\n- Research paper (LaTeX)\n- Reproducibility checklist\n- Supplementary materials\n- ACM artifact package\n- GitHub release + DOI\n- Presentation slides"];
+
+    // External references
+    phase1_outputs [shape=cylinder, label="Phase 1-3 Outputs:\nLiterature Review\nMethod Card\nHolistic Evaluation", fillcolor=lightcoral];
+    github_zenodo [shape=cylinder, label="Public Repositories:\nGitHub + Zenodo\nHuggingFace", fillcolor=lightcoral];
+    venues [shape=cylinder, label="Publication Venues:\nNeurIPS, ICML\nCVPR, ACL", fillcolor=lightcoral];
+
+    // Concepts
+    reproducibility_standards [shape=folder, label="Reproducibility Standards:\nNeurIPS Checklist\nACM Artifact Evaluation", fillcolor=lightsalmon];
+    acm_badges [shape=folder, label="ACM Badges:\nAvailable, Functional\nReproduced, Reusable", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> paper_structure [lhead=cluster_phase1];
+    revise -> select_venue [lhead=cluster_phase2];
+
+    // Checklist validation
+    verify_artifacts -> checklist_check;
+    checklist_check -> appendices [label="yes", color=green, lhead=cluster_phase3];
+    checklist_check -> fix_checklist [label="no", color=red];
+    fix_checklist -> fill_checklist [label="retry", style=dashed];
+
+    // Supplementary to artifact
+    compile_supp -> package_artifact [lhead=cluster_phase4];
+
+    // Artifact test
+    request_badges -> artifact_check;
+    artifact_check -> github_setup [label="yes", color=green, lhead=cluster_phase5];
+    artifact_check -> fix_artifact [label="no", color=red];
+    fix_artifact -> test_artifact [label="fix & retry", style=dashed];
+
+    // Code release to presentation
+    update_readme -> slide_structure [lhead=cluster_phase6];
+
+    // Presentation to submission
+    practice -> submit_paper;
+    practice -> submit_artifact;
+
+    submit_paper -> deliverables;
+    submit_artifact -> deliverables;
+
+    deliverables -> end;
+
+    // External references
+    auto_generate -> phase1_outputs [style=dashed, label="uses"];
+    zenodo_doi -> github_zenodo [style=dashed, label="publishes to"];
+    submit_paper -> venues [style=dashed, label="submits to"];
+
+    // Concept references
+    fill_checklist -> reproducibility_standards [style=dashed, label="follows"];
+    request_badges -> acm_badges [style=dashed, label="requests"];
+
+    labelloc="t";
+    label="Research Publication Process Flow\nDeep Research SOP - Pipeline I - Post-Gate 3\n6 Phases, researcher + archivist agents, Academic Submission";
+    fontsize=16;
+    fontname="Arial Bold";
+}

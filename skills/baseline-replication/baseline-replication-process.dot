@@ -1,0 +1,192 @@
+digraph BaselineReplicationProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nBaseline Replication\nRequest", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nQuality Gate 1\nAPPROVED", fillcolor=green, fontcolor=white];
+    fail [shape=ellipse, label="Rejected:\nResults > ±1%\nor Non-reproducible", fillcolor=red, fontcolor=white];
+
+    // Phase 1: Paper Analysis
+    subgraph cluster_phase1 {
+        label="Phase 1: Paper Analysis (15 min)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        analyze_paper [label="researcher agent:\nAnalyze Paper"];
+        extract_hyper [label="Extract 47+\nHyperparameters"];
+        check_official_code [label="Check Official\nCode Repository"];
+
+        analyze_paper -> extract_hyper;
+        extract_hyper -> check_official_code;
+    }
+
+    // Missing hyperparameters decision
+    hyper_complete [shape=diamond, label="All\nHyperparameters\nFound?", fillcolor=yellow];
+    contact_authors [shape=octagon, label="WARNING:\nContact Authors\nfor Missing Details", fillcolor=orange];
+
+    // Phase 2: Dataset Validation
+    subgraph cluster_phase2 {
+        label="Phase 2: Dataset Validation (20 min)";
+        fillcolor=lightblue;
+        style=filled;
+
+        validate_dataset [label="data-steward agent:\nValidate Dataset"];
+        check_splits [label="Check Splits\n& Sample Counts"];
+        verify_preprocessing [label="Verify\nPreprocessing"];
+
+        validate_dataset -> check_splits;
+        check_splits -> verify_preprocessing;
+    }
+
+    // Phase 3: Implementation
+    subgraph cluster_phase3 {
+        label="Phase 3: Implementation (2 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        implement [label="coder agent:\nImplement Baseline"];
+        add_tests [label="Add Unit Tests\n(100% coverage)"];
+        enable_deterministic [label="Enable\nDeterministic Mode"];
+
+        implement -> add_tests;
+        add_tests -> enable_deterministic;
+    }
+
+    // Phase 4: Experiment Execution
+    subgraph cluster_phase4 {
+        label="Phase 4: Experiment Execution (4-8 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        setup_docker [label="tester agent:\nSetup Docker Env"];
+        run_training [label="Run Training\nwith Monitoring"];
+        save_checkpoints [label="Save Best\nCheckpoint"];
+
+        setup_docker -> run_training;
+        run_training -> save_checkpoints;
+    }
+
+    // Phase 5: Results Validation
+    subgraph cluster_phase5 {
+        label="Phase 5: Results Validation (30 min)";
+        fillcolor=lightblue;
+        style=filled;
+
+        compare_results [label="Statistical\nComparison"];
+        calculate_diff [label="Calculate\n% Difference"];
+        run_ttest [label="Paired t-test\n& CI"];
+
+        compare_results -> calculate_diff;
+        calculate_diff -> run_ttest;
+    }
+
+    // Tolerance check decision
+    tolerance_check [shape=diamond, label="Results\nWithin ±1%\nTolerance?", fillcolor=yellow];
+    debug_divergence [shape=octagon, label="CRITICAL:\nDebug > 1%\nDivergence", fillcolor=orange];
+
+    // Phase 6: Reproducibility Packaging
+    subgraph cluster_phase6 {
+        label="Phase 6: Reproducibility Packaging (30 min)";
+        fillcolor=lightblue;
+        style=filled;
+
+        create_package [label="archivist agent:\nCreate Repro Package"];
+        bundle_artifacts [label="Bundle Code +\nData + Environment"];
+        write_readme [label="Write README\n(≤5 steps)"];
+
+        create_package -> bundle_artifacts;
+        bundle_artifacts -> write_readme;
+    }
+
+    // Reproducibility test
+    test_repro [label="Test Fresh\nDocker Reproduction\n(3 runs)"];
+    repro_check [shape=diamond, label="3/3\nReproductions\nSuccessful?", fillcolor=yellow];
+    fix_repro [shape=octagon, label="WARNING:\nFix Non-deterministic\nBehavior", fillcolor=orange];
+
+    // Phase 7: Quality Gate 1 Validation
+    subgraph cluster_phase7 {
+        label="Phase 7: Gate 1 Validation (15 min)";
+        fillcolor=lightblue;
+        style=filled;
+
+        validate_gate [label="evaluator agent:\nValidate Gate 1"];
+        check_requirements [label="Check All\nRequirements"];
+        generate_checklist [label="Generate\nGate 1 Checklist"];
+
+        validate_gate -> check_requirements;
+        check_requirements -> generate_checklist;
+    }
+
+    // Final decision
+    gate_decision [shape=diamond, label="Gate 1\nDecision?", fillcolor=yellow];
+    approve [label="APPROVED:\nProceed to\nNovel Methods", fillcolor=lightgreen];
+    conditional [label="CONDITIONAL:\nMinor Fixes\nRequired", fillcolor=lightyellow];
+    reject [label="REJECT:\nMajor Issues", fillcolor=lightcoral];
+
+    // External references
+    baseline_paper [shape=cylinder, label="Published\nBaseline Paper", fillcolor=lightcoral];
+    official_code [shape=cylinder, label="Official\nCode Repository", fillcolor=lightcoral];
+    dataset_repo [shape=cylinder, label="Dataset\nRepository", fillcolor=lightcoral];
+
+    // Concepts
+    reproducibility_standards [shape=folder, label="Reproducibility\nStandards:\nACM Artifact\nEvaluation", fillcolor=lightsalmon];
+    deep_research_sop [shape=folder, label="Deep Research SOP\nPipeline D\nQuality Gate 1", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> analyze_paper [lhead=cluster_phase1];
+    check_official_code -> hyper_complete;
+
+    // Hyperparameter completeness branch
+    hyper_complete -> validate_dataset [label="yes", color=green, lhead=cluster_phase2];
+    hyper_complete -> contact_authors [label="no", color=red];
+    contact_authors -> analyze_paper [label="retry", style=dashed];
+
+    // Dataset validation to implementation
+    verify_preprocessing -> implement [lhead=cluster_phase3];
+
+    // Implementation to execution
+    enable_deterministic -> setup_docker [lhead=cluster_phase4];
+
+    // Execution to validation
+    save_checkpoints -> compare_results [lhead=cluster_phase5];
+
+    // Results validation
+    run_ttest -> tolerance_check;
+    tolerance_check -> create_package [label="yes", color=green, lhead=cluster_phase6];
+    tolerance_check -> debug_divergence [label="no", color=red];
+    debug_divergence -> setup_docker [label="fix & retry", style=dashed, lhead=cluster_phase4];
+
+    // Reproducibility testing
+    write_readme -> test_repro;
+    test_repro -> repro_check;
+    repro_check -> validate_gate [label="yes", color=green, lhead=cluster_phase7];
+    repro_check -> fix_repro [label="no", color=red];
+    fix_repro -> enable_deterministic [label="fix & retry", style=dashed];
+
+    // Gate validation
+    generate_checklist -> gate_decision;
+    gate_decision -> approve [label="approved", color=green];
+    gate_decision -> conditional [label="conditional", color=orange];
+    gate_decision -> reject [label="reject", color=red];
+
+    approve -> end;
+    conditional -> end [label="after fixes"];
+    reject -> fail;
+
+    // External references
+    analyze_paper -> baseline_paper [style=dashed, label="uses"];
+    check_official_code -> official_code [style=dashed, label="checks"];
+    validate_dataset -> dataset_repo [style=dashed, label="validates"];
+
+    // Concept references
+    test_repro -> reproducibility_standards [style=dashed, label="follows"];
+    validate_gate -> deep_research_sop [style=dashed, label="implements"];
+
+    labelloc="t";
+    label="Baseline Replication Process Flow\nDeep Research SOP - Pipeline D - Quality Gate 1\n7 Phases, 6 Agents, Statistical Validation";
+    fontsize=16;
+    fontname="Arial Bold";
+}
