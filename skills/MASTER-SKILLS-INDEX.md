@@ -1,8 +1,10 @@
 # Master Skills Index - Complete Claude Code Skill Library
 
-**Total Skills:** 62
-**Last Updated:** 2025-10-30
+**Total Skills:** 93
+**Last Updated:** 2025-11-02
 **Naming Convention:** Trigger-first (`when-{situation}-{action}-{function}`)
+
+**Recent Additions**: +31 skills added (Deep Research SOPs, Reverse Engineering, Infrastructure & Cloud)
 
 ---
 
@@ -1298,6 +1300,241 @@ Project: [YOUR PROJECT DESCRIPTION]"
 
 ---
 
-**Total Skills: 65** (62 + 3 new Three-Loop skills)
+---
+
+## 🔬 Deep Research SOPs (9 skills) 🆕
+
+**Purpose**: Academic ML research pipeline with quality gates and statistical rigor
+
+### Research Foundations
+#### when-replicating-baselines-use-baseline-replication
+- **Original Name:** baseline-replication
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + statistical validation + ACM compliance
+- **When to Use:** Replicating published ML baselines with ±1% tolerance
+- **Key Agents:** Researcher, Data Scientist, Statistician, Validator
+- **File Location:** `~/.claude/skills/baseline-replication/`
+
+#### when-synthesizing-literature-use-literature-synthesis
+- **Original Name:** literature-synthesis
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + PRISMA 2020 + gap analysis
+- **When to Use:** Systematic literature review and research positioning
+- **Key Agents:** Researcher, Librarian, Gap Analyzer, Synthesizer
+- **File Location:** `~/.claude/skills/literature-synthesis/`
+
+### Method Development
+#### when-developing-methods-use-method-development
+- **Original Name:** method-development
+- **Category:** Deep Research SOPs
+- **Complexity:** Very High
+- **Components:** Skill + ablation studies + statistical rigor
+- **When to Use:** Novel ML algorithm design with Bonferroni correction
+- **Key Agents:** Algorithm Designer, Ablation Engineer, Statistician
+- **File Location:** `~/.claude/skills/method-development/`
+
+### Evaluation & Validation
+#### when-evaluating-holistically-use-holistic-evaluation
+- **Original Name:** holistic-evaluation
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + multi-metric evaluation
+- **When to Use:** Comprehensive model evaluation (performance, efficiency, robustness)
+- **Key Agents:** Evaluator, Performance Analyst, Robustness Tester
+- **File Location:** `~/.claude/skills/holistic-evaluation/`
+
+### Production & Deployment
+#### when-validating-deployment-use-deployment-readiness
+- **Original Name:** deployment-readiness
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + monitoring + A/B testing
+- **When to Use:** Production ML deployment with rollback strategies
+- **Key Agents:** DevOps Engineer, Monitor, A/B Tester
+- **File Location:** `~/.claude/skills/deployment-readiness/`
+
+### Orchestration
+#### when-orchestrating-research-use-deep-research-orchestrator
+- **Original Name:** deep-research-orchestrator
+- **Category:** Deep Research SOPs
+- **Complexity:** Very High
+- **Components:** Skill + full pipeline + multi-agent coordination
+- **When to Use:** Complete research workflow orchestration
+- **Key Agents:** Research Coordinator, Pipeline Manager, Quality Gate Validator
+- **File Location:** `~/.claude/skills/deep-research-orchestrator/`
+
+### Reproducibility & Archival
+#### when-auditing-reproducibility-use-reproducibility-audit
+- **Original Name:** reproducibility-audit
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + ACM Artifact Evaluation + Docker + Zenodo
+- **When to Use:** ACM compliance, artifact validation, archival
+- **Key Agents:** Archivist, Docker Specialist, Reproducibility Validator
+- **File Location:** `~/.claude/skills/reproducibility-audit/`
+
+#### when-publishing-research-use-research-publication
+- **Original Name:** research-publication
+- **Category:** Deep Research SOPs
+- **Complexity:** High
+- **Components:** Skill + paper writing + conference submission
+- **When to Use:** Academic paper submission and peer review response
+- **Key Agents:** Technical Writer, Submission Specialist, Peer Reviewer
+- **File Location:** `~/.claude/skills/research-publication/`
+
+### Quality Gates
+#### when-validating-gates-use-gate-validation
+- **Original Name:** gate-validation
+- **Category:** Deep Research SOPs
+- **Complexity:** Medium
+- **Components:** Skill + GO/NO-GO decision framework
+- **When to Use:** Quality Gates 1-3 phase transition validation
+- **Key Agents:** Evaluator, Quality Gate Validator, Requirements Checker
+- **File Location:** `~/.claude/skills/gate-validation/`
+
+---
+
+## 🛡️ Reverse Engineering & Binary Analysis (3 skills) 🆕
+
+**Purpose**: Malware analysis, vulnerability research, IoT security
+
+### Level 1-2: Quick Analysis
+#### when-analyzing-binaries-quickly-use-reverse-engineering-quick
+- **Original Name:** reverse-engineering-quick
+- **Category:** Reverse Engineering
+- **Complexity:** Medium
+- **Components:** Skill + strings + static analysis (≤2 hours)
+- **When to Use:** Malware triage, IOC extraction, initial binary analysis
+- **Key Agents:** Security Analyst, Strings Extractor, Static Analyzer
+- **File Location:** `~/.claude/skills/reverse-engineering-quick/`
+
+### Level 3-4: Deep Analysis
+#### when-analyzing-binaries-deeply-use-reverse-engineering-deep
+- **Original Name:** reverse-engineering-deep
+- **Category:** Reverse Engineering
+- **Complexity:** Very High
+- **Components:** Skill + GDB + Angr symbolic execution (4-8 hours)
+- **When to Use:** Advanced malware analysis, vulnerability research, CTF challenges
+- **Key Agents:** Reverse Engineer, Debugger, Symbolic Executor
+- **File Location:** `~/.claude/skills/reverse-engineering-deep/`
+
+### Level 5: Firmware Analysis
+#### when-analyzing-firmware-use-reverse-engineering-firmware
+- **Original Name:** reverse-engineering-firmware
+- **Category:** Reverse Engineering
+- **Complexity:** Very High
+- **Components:** Skill + binwalk + QEMU + firmadyne (2-8 hours)
+- **When to Use:** IoT security audits, embedded systems, router vulnerabilities
+- **Key Agents:** IoT Specialist, Firmware Extractor, Emulation Engineer
+- **File Location:** `~/.claude/skills/reverse-engineering-firmware/`
+
+---
+
+## ☁️ Infrastructure & Cloud (10 skills) 🆕
+
+**Purpose**: Modern cloud platforms, containers, IaC, observability
+
+### Language Specialists
+#### when-developing-python-use-python-specialist
+- **Original Name:** python-specialist
+- **Category:** Language Specialists
+- **Complexity:** Medium
+- **Components:** Skill + FastAPI + async patterns
+- **When to Use:** Python development with FastAPI, Django, Flask
+- **Key Agents:** Python Developer, FastAPI Specialist, Async Expert
+- **File Location:** `~/.claude/skills/language-specialists/python-specialist/`
+
+#### when-developing-typescript-use-typescript-specialist
+- **Original Name:** typescript-specialist
+- **Category:** Language Specialists
+- **Complexity:** Medium
+- **Components:** Skill + TypeScript + monorepos
+- **When to Use:** TypeScript with Nest.js, Node.js, npm workspaces
+- **Key Agents:** TypeScript Developer, Nest.js Specialist, Monorepo Expert
+- **File Location:** `~/.claude/skills/language-specialists/typescript-specialist/`
+
+### Frontend Specialists
+#### when-developing-react-use-react-specialist
+- **Original Name:** react-specialist
+- **Category:** Frontend Specialists
+- **Complexity:** Medium
+- **Components:** Skill + React 18+ + hooks
+- **When to Use:** React development with Next.js, Zustand, React Query
+- **Key Agents:** React Developer, Next.js Specialist, State Management Expert
+- **File Location:** `~/.claude/skills/frontend-specialists/react-specialist/`
+
+### Database Specialists
+#### when-optimizing-databases-use-sql-database-specialist
+- **Original Name:** sql-database-specialist
+- **Category:** Database Specialists
+- **Complexity:** Medium
+- **Components:** Skill + PostgreSQL + query optimization
+- **When to Use:** SQL optimization, index design, EXPLAIN plans
+- **Key Agents:** Database Architect, Query Optimizer, Index Specialist
+- **File Location:** `~/.claude/skills/database-specialists/sql-database-specialist/`
+
+### Cloud Platforms
+#### when-deploying-aws-use-aws-specialist
+- **Original Name:** aws-specialist
+- **Category:** Cloud Platforms
+- **Complexity:** High
+- **Components:** Skill + AWS services + CDK
+- **When to Use:** AWS deployment with Lambda, ECS, Fargate, CDK
+- **Key Agents:** AWS Architect, Lambda Specialist, ECS Expert
+- **File Location:** `~/.claude/skills/cloud-platforms/aws-specialist/`
+
+#### when-orchestrating-kubernetes-use-kubernetes-specialist
+- **Original Name:** kubernetes-specialist
+- **Category:** Cloud Platforms
+- **Complexity:** Very High
+- **Components:** Skill + K8s + Helm + operators
+- **When to Use:** Kubernetes deployment, Helm charts, service mesh
+- **Key Agents:** K8s Admin, Helm Specialist, Service Mesh Expert
+- **File Location:** `~/.claude/skills/cloud-platforms/kubernetes-specialist/`
+
+### Infrastructure as Code
+#### when-containerizing-use-docker-containerization
+- **Original Name:** docker-containerization
+- **Category:** Infrastructure
+- **Complexity:** Medium
+- **Components:** Skill + Docker + multi-stage builds
+- **When to Use:** Container optimization, multi-stage builds, security
+- **Key Agents:** Docker Specialist, Container Optimizer, Security Hardener
+- **File Location:** `~/.claude/skills/infrastructure/docker-containerization/`
+
+#### when-provisioning-infrastructure-use-terraform-iac
+- **Original Name:** terraform-iac
+- **Category:** Infrastructure
+- **Complexity:** High
+- **Components:** Skill + Terraform + HCL
+- **When to Use:** Infrastructure as Code, Terraform modules, state management
+- **Key Agents:** IaC Specialist, Terraform Expert, State Manager
+- **File Location:** `~/.claude/skills/infrastructure/terraform-iac/`
+
+### Observability
+#### when-tracing-distributed-systems-use-opentelemetry-observability
+- **Original Name:** opentelemetry-observability
+- **Category:** Observability
+- **Complexity:** High
+- **Components:** Skill + OpenTelemetry + distributed tracing
+- **When to Use:** Distributed tracing, metrics, logs correlation
+- **Key Agents:** Observability Engineer, Trace Specialist, Metrics Expert
+- **File Location:** `~/.claude/skills/observability/opentelemetry-observability/`
+
+### Compliance & Accessibility
+#### when-ensuring-accessibility-use-wcag-accessibility
+- **Original Name:** wcag-accessibility
+- **Category:** Compliance
+- **Complexity:** Medium
+- **Components:** Skill + WCAG 2.1 AA/AAA + a11y testing
+- **When to Use:** Accessibility compliance, screen reader testing, WCAG audit
+- **Key Agents:** Accessibility Specialist, WCAG Auditor, Screen Reader Tester
+- **File Location:** `~/.claude/skills/compliance/wcag-accessibility/`
+
+---
+
+**Total Skills: 93** (62 original + 31 new)
 **Three-Loop System Status**: Production-Ready ✨
-**Last Updated**: 2025-10-30
+**Last Updated**: 2025-11-02
