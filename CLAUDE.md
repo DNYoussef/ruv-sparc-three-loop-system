@@ -84,7 +84,7 @@ This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Co
 - **Clean Architecture**: Separate concerns
 - **Documentation**: Keep updated
 
-## 🚀 Available Agents (130 Total)
+## 🚀 Available Agents (131 Total)
 
 ### Core Development (8 agents)
 `coder`, `coder-enhanced`, `reviewer`, `tester`, `planner`, `researcher`, `api-designer`, `technical-debt-manager`
@@ -477,6 +477,26 @@ Remember: **Claude Flow coordinates, Claude Code creates!**
 - `reverse-engineer-debug` - "understand code", "reverse engineer" → Code comprehension + debugging
 - `ml-training-debugger` - "training failed", "model not converging" → ML-specific debugging
 
+**Self-Improvement & Dogfooding** 🆕
+- `sop-dogfooding-quality-detection` - "analyze code quality", "detect violations", "connascence check" → Phase 1: Run Connascence analysis, store in Memory-MCP with WHO/WHEN/PROJECT/WHY (30-60s)
+- `sop-dogfooding-pattern-retrieval` - "find similar fixes", "pattern search", "past solutions" → Phase 2: Vector search Memory-MCP for patterns, rank & optionally apply (10-30s)
+- `sop-dogfooding-continuous-improvement` - "run improvement cycle", "dogfood", "automated fixes" → Phase 3: Full cycle orchestration with sandbox testing & metrics (60-120s)
+
+**Trigger Patterns:**
+```javascript
+// Quality detection → Auto-spawn code-analyzer + reviewer
+"Check code quality for memory-mcp" → sop-dogfooding-quality-detection
+"Run connascence analysis" → sop-dogfooding-quality-detection
+
+// Pattern retrieval → Auto-spawn code-analyzer + coder
+"Find fixes for God Object" → sop-dogfooding-pattern-retrieval
+"How to fix Parameter Bomb?" → sop-dogfooding-pattern-retrieval
+
+// Full cycle → Auto-spawn hierarchical-coordinator
+"Run dogfooding cycle" → sop-dogfooding-continuous-improvement
+"Improve the MCP servers" → sop-dogfooding-continuous-improvement
+```
+
 ---
 
 ### 🛠️ Specialized Development (Auto-trigger by tech stack)
@@ -639,11 +659,22 @@ Remember: **Claude Flow coordinates, Claude Code creates!**
 
 ### 🔬 Deep Research SOP (Auto-trigger for research workflows)
 
-**Quality Gate System - Research Lifecycle Management**
+**Quality Gate System - Research Lifecycle Management (4 agents)**
 - `data-steward` - "dataset", "datasheet", "bias audit", "data quality", "DVC", "Quality Gate 1" → Dataset documentation, bias auditing, data versioning, datasheet completion (Form F-C1)
 - `ethics-agent` - "ethics review", "risk assessment", "safety evaluation", "fairness metrics", "privacy audit", "compliance" → Ethics & safety review across all Quality Gates, 6-domain risk assessment (ethical, safety, privacy, dual-use, reproducibility, environmental)
 - `archivist` - "reproducibility", "DOI", "archive artifacts", "model card", "Quality Gate 3" → Artifact archival, version control, reproducibility packaging, DOI assignment, model card creation (Form F-G2)
 - `evaluator` - "Quality Gate", "GO/NO-GO", "gate approval", "gate review" → Final authority for all Quality Gate approvals (Gates 1, 2, 3), multi-agent coordination, requirements validation
+
+**Comprehensive Research Pipeline (9 skills)** 🆕
+- `baseline-replication` - "replicate baseline", "reproduce results", "±1% tolerance", "statistical validation" → Baseline replication with ACM compliance, paired t-tests, effect size calculation
+- `literature-synthesis` - "systematic review", "PRISMA 2020", "gap analysis", "research positioning" → Multi-database literature search, citation management, synthesis
+- `method-development` - "novel algorithm", "ablation studies", "Bonferroni correction", "statistical rigor" → Algorithm design with statistical power analysis, hypothesis testing
+- `holistic-evaluation` - "multi-metric evaluation", "performance + efficiency + robustness", "interpretability" → Comprehensive model evaluation beyond accuracy
+- `deployment-readiness` - "production deployment", "A/B testing", "monitoring", "rollback" → Production ML with canary deployments, observability, incident response
+- `deep-research-orchestrator` - "complete research workflow", "Pipeline F", "multi-agent coordination" → Full research pipeline orchestration from literature review to publication
+- `reproducibility-audit` - "ACM Artifact Evaluation", "Docker validation", "Zenodo archival", "DOI" → Reproducibility verification, artifact badges (Available, Functional, Reproduced, Reusable)
+- `research-publication` - "paper writing", "conference submission", "peer review response", "LaTeX" → Academic paper creation, citation management, submission workflows
+- `gate-validation` - "Quality Gate validation", "GO/NO-GO framework", "requirement checklists" → Phase transition validation for Gates 1-3
 
 **Trigger Patterns:**
 ```javascript
@@ -681,6 +712,17 @@ Remember: **Claude Flow coordinates, Claude Code creates!**
 - **Gate 1** (Data & Methods): Literature review complete, Datasheet ≥80%, Bias audit acceptable, Ethics review initiated
 - **Gate 2** (Model & Evaluation): Baseline replicated, Ablations complete, HELM + CheckList passed, Fairness metrics acceptable
 - **Gate 3** (Production & Artifacts): Model Card ≥90%, DOIs assigned, Reproducibility tested, ML Test Score ≥8
+
+---
+
+### 🛡️ Reverse Engineering & Binary Analysis (Auto-trigger for malware/security analysis) 🆕
+
+**3 Specialized Levels for Comprehensive Binary Analysis**
+- `reverse-engineering-quick` - "malware triage", "IOC extraction", "strings analysis", "static analysis" → RE Levels 1-2 (≤2 hours): String reconnaissance + disassembly with Ghidra/radare2
+- `reverse-engineering-deep` - "advanced malware", "vulnerability research", "CTF", "symbolic execution" → RE Levels 3-4 (4-8 hours): GDB debugging + Angr symbolic execution for path exploration
+- `reverse-engineering-firmware` - "IoT security", "firmware extraction", "router vulnerabilities", "embedded systems" → RE Level 5 (2-8 hours): binwalk + QEMU + firmadyne for firmware analysis and emulation
+
+**Security Features**: ⚠️ VM/Docker/E2B sandboxing required for all binary execution, comprehensive malware analysis best practices
 
 ---
 
