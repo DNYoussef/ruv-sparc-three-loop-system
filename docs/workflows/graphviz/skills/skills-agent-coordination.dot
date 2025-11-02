@@ -1,0 +1,254 @@
+// Skills-Agent Coordination - Bipartite Graph
+// 106 Skills × 130 Agents with PRIMARY agent assignments
+// Generated: 2025-11-02
+
+digraph SkillsAgentCoordination {
+    // Graph settings
+    rankdir=LR;
+    splines=ortho;
+    nodesep=0.6;
+    ranksep=2.0;
+    bgcolor="#FAFAFA";
+
+    // Title
+    title [
+        label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10">
+                <TR><TD BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="24"><B>Skills-Agent Coordination Map</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">106 Skills × 130 Agents | PRIMARY Assignments + Coordination Patterns</FONT></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Legend
+    legend [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#424242"><FONT COLOR="white"><B>Coordination Patterns</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#4CAF50">Primary Agent</TD><TD>Main skill owner (thick edge)</TD></TR>
+                <TR><TD BGCOLOR="#2196F3">Hierarchical</TD><TD>Queen-workers (1:N)</TD></TR>
+                <TR><TD BGCOLOR="#FF9800">Parallel</TD><TD>Equal peers (N:N)</TD></TR>
+                <TR><TD BGCOLOR="#9C27B0">Consensus</TD><TD>Byzantine (3+ agents)</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#E0E0E0"><B>Avg Agents/Skill: 2.4 | Avg Skills/Agent: 1.96</B></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Skill nodes grouped by complexity
+    subgraph cluster_skills {
+        label="Skills (106 Total)";
+        style=filled;
+        color="#E3F2FD";
+
+        // Very High Complexity Skills (24 skills)
+        subgraph cluster_vh {
+            label="Very High Complexity (24 skills)";
+            style=filled;
+            color="#FFEBEE";
+
+            s_feature [label="feature-dev-complete\n(12-stage)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_theater [label="theater-detection\n(6-agent consensus)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_prod [label="production-readiness\n(audit pipeline)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_sparc [label="sparc-workflow\n(5-phase)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_cicd_rec [label="cicd-intelligent-recovery\n(root cause)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_swarm_adv [label="swarm-advanced", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_swarm_orch [label="swarm-orchestration", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_hive [label="hive-mind-advanced", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_neural [label="flow-nexus-neural", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_nexus_swarm [label="flow-nexus-swarm", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_adb_learn [label="agentdb-learning\n(9 RL algos)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_reason [label="reasoningbank-agentdb\n(46% faster)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_gh_multi [label="github-multi-repo", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_agent_create [label="agent-creator\n(4-phase SOP)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_forge [label="skill-forge", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_reason_intel [label="reasoningbank-intelligence", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_codex [label="codex-auto", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_research [label="research-driven-planning", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_sop_launch [label="sop-product-launch", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_backend [label="backend-api-orchestrator", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_ml [label="ml-expert", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_sparc_method [label="sparc-methodology", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_system_arch [label="system-architect", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+            s_incident [label="incident-response", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white", width=2.2];
+        }
+
+        // High Complexity Skills (32 skills) - Sample shown
+        subgraph cluster_high {
+            label="High Complexity (32 skills) - Key Skills";
+            style=filled;
+            color="#FFF3E0";
+
+            s_pair [label="pair-programming", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_func [label="functionality-audit", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_test [label="testing-framework", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_security [label="security-analyzer", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_cascade [label="cascade-orchestrator", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_review [label="code-review-assistant", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_bugfix [label="smart-bug-fix", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_reverse [label="reverse-engineer-debug", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_gh_pr [label="github-code-review", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+            s_react [label="react-developer", shape=box, style="filled,rounded", fillcolor="#FF9800", width=2.0];
+        }
+
+        // Medium & Low Complexity (50 skills) - Sample shown
+        subgraph cluster_med_low {
+            label="Medium & Low Complexity (50 skills) - Sample";
+            style=filled;
+            color="#F1F8E9";
+
+            s_intent [label="intent-analyzer", shape=box, style="filled,rounded", fillcolor="#FFC107", width=1.8];
+            s_planner [label="interactive-planner", shape=box, style="filled,rounded", fillcolor="#4CAF50", width=1.8];
+            s_doc [label="doc-generator", shape=box, style="filled,rounded", fillcolor="#4CAF50", width=1.8];
+            s_gem_search [label="gemini-search", shape=box, style="filled,rounded", fillcolor="#4CAF50", width=1.8];
+            s_slash [label="slash-command-encoder", shape=box, style="filled,rounded", fillcolor="#4CAF50", width=1.8];
+        }
+    }
+
+    // Agent nodes grouped by role
+    subgraph cluster_agents {
+        label="Agents (130 Total)";
+        style=filled;
+        color="#E8F5E9";
+
+        // Core Development Agents (5 agents)
+        subgraph cluster_core {
+            label="Core Development";
+            style=filled;
+            color="#C8E6C9";
+
+            a_coder [label="coder\n(12 skills)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=11];
+            a_reviewer [label="reviewer\n(9 skills)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=11];
+            a_tester [label="tester\n(11 skills)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=11];
+            a_planner [label="planner\n(7 skills)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=11];
+            a_researcher [label="researcher\n(6 skills)", shape=ellipse, style=filled, fillcolor="#4CAF50", fontsize=11];
+        }
+
+        // Swarm Coordination Agents (5 agents)
+        subgraph cluster_swarm {
+            label="Swarm Coordination";
+            style=filled;
+            color="#BBDEFB";
+
+            a_hier [label="hierarchical-coordinator\n(8 skills)", shape=ellipse, style=filled, fillcolor="#2196F3", fontsize=11];
+            a_mesh [label="mesh-coordinator\n(6 skills)", shape=ellipse, style=filled, fillcolor="#2196F3", fontsize=11];
+            a_adaptive [label="adaptive-coordinator\n(7 skills)", shape=ellipse, style=filled, fillcolor="#2196F3", fontsize=11];
+            a_collective [label="collective-intelligence\n(5 skills)", shape=ellipse, style=filled, fillcolor="#2196F3", fontsize=11];
+            a_memory [label="swarm-memory-manager\n(4 skills)", shape=ellipse, style=filled, fillcolor="#2196F3", fontsize=11];
+        }
+
+        // Specialized Agents (Sample of 120+ agents)
+        subgraph cluster_specialized {
+            label="Specialized Agents (Sample of 120+)";
+            style=filled;
+            color="#F3E5F5";
+
+            a_backend [label="backend-dev\n(8 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_mobile [label="mobile-dev\n(5 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_ml [label="ml-developer\n(6 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_cicd [label="cicd-engineer\n(7 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_api_docs [label="api-docs\n(4 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_system_arch [label="system-architect\n(9 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_analyzer [label="code-analyzer\n(8 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_template [label="base-template-generator\n(3 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_gh_pr [label="pr-manager\n(6 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_security [label="security-manager\n(7 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_perf [label="perf-analyzer\n(5 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_react [label="react-developer\n(4 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_vue [label="vue-developer\n(4 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_db_design [label="database-design-specialist\n(5 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+            a_e2e [label="e2e-testing-specialist\n(6 skills)", shape=ellipse, style=filled, fillcolor="#9C27B0", fontsize=10];
+        }
+
+        // Research SOP Agents (4 agents)
+        subgraph cluster_research_sop {
+            label="Deep Research SOP";
+            style=filled;
+            color="#FFF9C4";
+
+            a_data_steward [label="data-steward\n(Quality Gate 1)", shape=ellipse, style=filled, fillcolor="#FDD835", fontsize=11];
+            a_ethics [label="ethics-agent\n(All Gates)", shape=ellipse, style=filled, fillcolor="#FDD835", fontsize=11];
+            a_archivist [label="archivist\n(Quality Gate 3)", shape=ellipse, style=filled, fillcolor="#FDD835", fontsize=11];
+            a_evaluator [label="evaluator\n(GO/NO-GO)", shape=ellipse, style=filled, fillcolor="#FDD835", fontsize=11];
+        }
+    }
+
+    // Agent utilization statistics
+    stats [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="3" BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="14"><B>Agent Utilization Statistics</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><B>Category</B></TD><TD><B>Agents</B></TD><TD><B>Avg Skills/Agent</B></TD></TR>
+                <TR><TD>Core Development</TD><TD>5</TD><TD>9.0</TD></TR>
+                <TR><TD>Swarm Coordination</TD><TD>5</TD><TD>6.0</TD></TR>
+                <TR><TD>Testing & Validation</TD><TD>12</TD><TD>2.8</TD></TR>
+                <TR><TD>Frontend Development</TD><TD>6</TD><TD>3.5</TD></TR>
+                <TR><TD>Database & Data</TD><TD>6</TD><TD>4.2</TD></TR>
+                <TR><TD>Backend & API</TD><TD>8</TD><TD>3.9</TD></TR>
+                <TR><TD>Infrastructure</TD><TD>10</TD><TD>2.7</TD></TR>
+                <TR><TD>GitHub Integration</TD><TD>8</TD><TD>3.1</TD></TR>
+                <TR><TD>Security & Compliance</TD><TD>7</TD><TD>2.4</TD></TR>
+                <TR><TD>ML & AI</TD><TD>6</TD><TD>4.0</TD></TR>
+                <TR><TD>Research SOP</TD><TD>4</TD><TD>5.5</TD></TR>
+                <TR><TD>Other Specialized</TD><TD>53</TD><TD>1.2</TD></TR>
+                <TR><TD COLSPAN="3" BGCOLOR="#E0E0E0"><B>Total: 130 Agents | Avg: 1.96 skills/agent</B></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Edges - Skill to Agent assignments
+    // Primary agents (thick edges) - Very High Complexity
+    s_feature -> {a_coder a_tester a_reviewer a_cicd a_system_arch} [color="#F44336", penwidth=3, label="PRIMARY"];
+    s_theater -> {a_reviewer a_tester a_analyzer a_security a_coder a_researcher} [color="#9C27B0", penwidth=3, label="CONSENSUS"];
+    s_prod -> {a_cicd a_reviewer a_security a_tester a_analyzer} [color="#F44336", penwidth=3];
+    s_sparc -> {a_system_arch a_planner a_coder a_tester a_reviewer} [color="#F44336", penwidth=3];
+    s_cicd_rec -> {a_cicd a_analyzer a_researcher a_coder} [color="#F44336", penwidth=3];
+
+    // Swarm coordination
+    s_swarm_adv -> {a_hier a_mesh a_adaptive} [color="#2196F3", penwidth=3, label="HIERARCHICAL"];
+    s_swarm_orch -> {a_hier a_collective a_memory} [color="#2196F3", penwidth=3];
+    s_hive -> {a_collective a_hier a_mesh} [color="#2196F3", penwidth=2];
+
+    // Platform skills
+    s_neural -> {a_ml a_system_arch a_cicd} [color="#9C27B0", penwidth=2];
+    s_adb_learn -> {a_ml a_researcher a_analyzer} [color="#9C27B0", penwidth=2];
+    s_gh_multi -> {a_gh_pr a_cicd a_system_arch} [color="#9C27B0", penwidth=2];
+
+    // Agent creation & skill management
+    s_agent_create -> {a_system_arch a_planner a_researcher a_coder} [color="#FF9800", penwidth=2];
+    s_forge -> {a_system_arch a_coder a_planner} [color="#FF9800", penwidth=2];
+
+    // Research & Analysis
+    s_research -> {a_researcher a_planner a_system_arch a_data_steward a_ethics} [color="#689F38", penwidth=2];
+    s_sop_launch -> {a_planner a_cicd a_gh_pr a_evaluator} [color="#689F38", penwidth=2];
+
+    // Specialized Development
+    s_backend -> {a_backend a_system_arch a_api_docs} [color="#7B1FA2", penwidth=2];
+    s_ml -> {a_ml a_researcher a_analyzer} [color="#7B1FA2", penwidth=2];
+    s_react -> {a_react a_coder a_reviewer} [color="#7B1FA2", penwidth=2];
+
+    // High Complexity - Parallel coordination
+    s_pair -> {a_coder a_reviewer} [color="#FF9800", penwidth=2, label="PARALLEL"];
+    s_func -> {a_tester a_coder a_analyzer} [color="#FF9800", penwidth=2];
+    s_test -> {a_tester a_e2e a_analyzer} [color="#FF9800", penwidth=2];
+    s_security -> {a_security a_reviewer a_analyzer} [color="#FF9800", penwidth=2];
+    s_cascade -> {a_hier a_adaptive a_planner} [color="#FF9800", penwidth=2];
+    s_review -> {a_reviewer a_analyzer a_security a_coder} [color="#FF9800", penwidth=2];
+    s_bugfix -> {a_coder a_analyzer a_tester} [color="#FF9800", penwidth=2];
+
+    // Medium & Low Complexity
+    s_intent -> a_planner [color="#4CAF50", penwidth=1];
+    s_planner -> {a_planner a_researcher} [color="#4CAF50", penwidth=1];
+    s_doc -> {a_api_docs a_coder} [color="#4CAF50", penwidth=1];
+    s_gem_search -> a_researcher [color="#4CAF50", penwidth=1];
+    s_slash -> a_coder [color="#4CAF50", penwidth=1];
+
+    // Research SOP Quality Gate System
+    s_research -> {a_data_steward a_ethics a_archivist a_evaluator} [color="#FDD835", penwidth=2.5, label="QUALITY GATES"];
+
+    // Layout ordering
+    {rank=same; title}
+    {rank=same; legend stats}
+}

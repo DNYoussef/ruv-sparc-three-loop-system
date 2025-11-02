@@ -1,0 +1,235 @@
+// Skills Dependency Graph - Prerequisite Chains & Critical Paths
+// Shows skill dependencies, foundation vs specialized, and critical path
+// Generated: 2025-11-02
+
+digraph SkillsDependencyGraph {
+    // Graph settings
+    rankdir=TB;
+    splines=spline;
+    nodesep=0.8;
+    ranksep=1.5;
+    bgcolor="#FAFAFA";
+
+    // Title
+    title [
+        label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10">
+                <TR><TD BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="24"><B>Skills Dependency Graph</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">Prerequisite Chains | Foundation → Specialized | Critical Path Analysis</FONT></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Legend
+    legend [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#424242"><FONT COLOR="white"><B>Dependency Types</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#4CAF50">Foundation</TD><TD>No prerequisites, base skills</TD></TR>
+                <TR><TD BGCOLOR="#2196F3">Intermediate</TD><TD>Requires 1-2 foundation skills</TD></TR>
+                <TR><TD BGCOLOR="#FF9800">Advanced</TD><TD>Requires 3+ skills or intermediate skills</TD></TR>
+                <TR><TD BGCOLOR="#F44336">Expert</TD><TD>Requires advanced skills + domain expertise</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#E0E0E0"><B>Edge Types</B></TD></TR>
+                <TR><TD>Solid → </TD><TD>Direct prerequisite (MUST have)</TD></TR>
+                <TR><TD>Dashed ⇢</TD><TD>Recommended (SHOULD have)</TD></TR>
+                <TR><TD>Bold ═══></TD><TD>Critical path</TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Foundation Skills (Layer 0 - No prerequisites)
+    subgraph cluster_foundation {
+        label="Foundation Skills (Layer 0)";
+        style=filled;
+        color="#C8E6C9";
+        rank=same;
+
+        f_planner [label="interactive-planner\n(Requirements)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+        f_doc [label="doc-generator\n(Documentation)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+        f_slash [label="slash-command-encoder\n(CLI Tools)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+        f_gem_search [label="gemini-search\n(Web Research)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+        f_gem_ext [label="gemini-extensions\n(External APIs)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+        f_template [label="base-template-generator\n(Boilerplate)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white"];
+    }
+
+    // Intermediate Skills (Layer 1 - Requires 1-2 foundation)
+    subgraph cluster_intermediate {
+        label="Intermediate Skills (Layer 1)";
+        style=filled;
+        color="#BBDEFB";
+
+        i_intent [label="intent-analyzer\n(Requires: planner)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_deps [label="dependency-mapper\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_hooks [label="hooks-automation\n(Requires: slash)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_i18n [label="i18n-automation\n(Requires: template)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_style [label="style-audit\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_quick [label="quick-quality-check\n(Requires: tester)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_debug [label="debugging-assistant\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_stream [label="stream-chain\n(Requires: cascade)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_sandbox [label="sandbox-configurator\n(Requires: security)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_token [label="token-budget-advisor\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_micro [label="micro-skill-creator\n(Requires: builder)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_gem_mega [label="gemini-megacontext\n(Requires: search)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_gem_media [label="gemini-media\n(Requires: search)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_pptx [label="pptx-generation\n(Requires: doc)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+        i_context [label="context-management\n(Requires: memory)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white"];
+    }
+
+    // Advanced Skills (Layer 2 - Requires 3+ or intermediate)
+    subgraph cluster_advanced {
+        label="Advanced Skills (Layer 2)";
+        style=filled;
+        color="#FFE0B2";
+
+        a_gaps [label="skill-gap-analyzer\n(Requires: planner, analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_pair [label="pair-programming\n(Requires: coder, reviewer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_test [label="testing-framework\n(Requires: tester, analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_func [label="functionality-audit\n(Requires: tester, sandbox)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_security [label="security-analyzer\n(Requires: analyzer, tester)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_network [label="network-security-setup\n(Requires: security, sandbox)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_profiler [label="performance-profiler\n(Requires: analyzer, tester)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_perf [label="performance-analysis\n(Requires: profiler, metrics)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_cascade [label="cascade-orchestrator\n(Requires: swarm basics)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_review [label="code-review-assistant\n(Requires: reviewer, analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_bugfix [label="smart-bug-fix\n(Requires: debug, analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_reverse [label="reverse-engineer-debug\n(Requires: debug, analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_nexus [label="flow-nexus-platform\n(Requires: cloud basics)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_adb_adv [label="agentdb-advanced\n(Requires: vector search)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_adb_mem [label="agentdb-memory\n(Requires: context)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_adb_opt [label="agentdb-optimization\n(Requires: vector search)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_adb_vec [label="agentdb-vector-search\n(Requires: search basics)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_gh_pr [label="github-code-review\n(Requires: review, github)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_gh_proj [label="github-project-mgmt\n(Requires: planner, github)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_gh_rel [label="github-release-mgmt\n(Requires: cicd, github)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_gh_workflow [label="github-workflow-auto\n(Requires: cicd, github)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_builder [label="skill-builder\n(Requires: template)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_skill_agent [label="skill-creator-agent\n(Requires: agent basics)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_prompt [label="prompt-optimization\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_prompt_arch [label="prompt-architect\n(Requires: prompt opt)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_codex_reason [label="codex-reasoning\n(Requires: sandbox)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_multi [label="multi-model\n(Requires: gemini)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_sop_api [label="sop-api-development\n(Requires: backend)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_sop_review [label="sop-code-review\n(Requires: review)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_code_analysis [label="code-analyzer\n(Requires: analyzer)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_backend_dev [label="backend-developer\n(Requires: coder)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_mobile [label="mobile-dev\n(Requires: coder)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_ml_debug [label="ml-training-debugger\n(Requires: ml, debug)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+        a_arch_design [label="architecture-designer\n(Requires: planner)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white"];
+    }
+
+    // Expert Skills (Layer 3 - Requires advanced + domain expertise)
+    subgraph cluster_expert {
+        label="Expert Skills (Layer 3)";
+        style=filled;
+        color="#FFCDD2";
+
+        e_feature [label="feature-dev-complete\n(12-stage workflow)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_theater [label="theater-detection\n(6-agent Byzantine)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_prod [label="production-readiness\n(Audit pipeline)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_sparc [label="sparc-workflow\n(5-phase SDLC)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_cicd_rec [label="cicd-intelligent-recovery\n(Root cause AI)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_swarm_adv [label="swarm-advanced\n(Complex coordination)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_swarm_orch [label="swarm-orchestration\n(Multi-agent)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_hive [label="hive-mind-advanced\n(Queen-led)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_neural [label="flow-nexus-neural\n(Distributed training)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_nexus_swarm [label="flow-nexus-swarm\n(Cloud swarm)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_adb_learn [label="agentdb-learning\n(9 RL algorithms)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_reason [label="reasoningbank-agentdb\n(Adaptive learning)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_gh_multi [label="github-multi-repo\n(Multi-repo sync)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_agent_create [label="agent-creator\n(4-phase SOP)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_forge [label="skill-forge\n(Advanced design)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_reason_intel [label="reasoningbank-intelligence\n(Pattern recognition)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_codex [label="codex-auto\n(Autonomous coding)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_research [label="research-driven-planning\n(5x pre-mortem)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_sop_launch [label="sop-product-launch\n(Complete workflow)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_backend [label="backend-api-orchestrator\n(Full API dev)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_ml [label="ml-expert\n(ML pipelines)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_sparc_method [label="sparc-methodology\n(Complete SPARC)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_sparc_coord [label="sparc-coordinator\n(SPARC orchestration)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+        e_system_arch [label="system-architect\n(System design)", shape=box, style="filled,rounded", fillcolor="#F44336", fontcolor="white"];
+    }
+
+    // Critical Path Indicators
+    critical_path [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#D32F2F"><FONT COLOR="white" POINT-SIZE="14"><B>Critical Path Skills</B></FONT></TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#FFEBEE">Essential skills that unlock the most advanced capabilities</TD></TR>
+                <TR><TD>1.</TD><TD>interactive-planner → intent-analyzer → feature-dev-complete</TD></TR>
+                <TR><TD>2.</TD><TD>code-analyzer → debugging → smart-bug-fix → theater-detection</TD></TR>
+                <TR><TD>3.</TD><TD>security-analyzer → network-security → production-readiness</TD></TR>
+                <TR><TD>4.</TD><TD>cascade-orchestrator → swarm-orchestration → hive-mind</TD></TR>
+                <TR><TD>5.</TD><TD>agentdb-vector-search → optimization → learning → reasoningbank</TD></TR>
+                <TR><TD>6.</TD><TD>template-generator → skill-builder → agent-creator → skill-forge</TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Foundation → Intermediate dependencies (Direct prerequisites)
+    f_planner -> i_intent [color="#2196F3", penwidth=2];
+    f_slash -> i_hooks [color="#2196F3", penwidth=2];
+    f_template -> i_i18n [color="#2196F3", penwidth=2];
+    f_gem_search -> {i_gem_mega i_gem_media} [color="#2196F3", penwidth=2];
+    f_doc -> i_pptx [color="#2196F3", penwidth=2];
+
+    // Intermediate → Advanced dependencies
+    i_intent -> a_gaps [color="#FF9800", penwidth=2];
+    i_debug -> {a_bugfix a_reverse} [color="#FF9800", penwidth=2];
+    i_sandbox -> {a_network a_func} [color="#FF9800", penwidth=2];
+    i_token -> a_gaps [color="#FF9800", style=dashed];
+    i_hooks -> a_cascade [color="#FF9800", style=dashed];
+    i_context -> a_adb_mem [color="#FF9800", penwidth=2];
+
+    // Advanced → Expert dependencies (Critical path in bold)
+    a_gaps -> e_agent_create [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_pair -> e_feature [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_test -> e_prod [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_func -> {e_theater e_prod} [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_security -> e_prod [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_network -> e_prod [color="#F44336", penwidth=2];
+    a_profiler -> a_perf [color="#FF9800", penwidth=2];
+    a_perf -> e_prod [color="#F44336", style=dashed];
+    a_cascade -> e_swarm_orch [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_review -> e_theater [color="#F44336", penwidth=2];
+    a_bugfix -> e_cicd_rec [color="#F44336", penwidth=2];
+    a_reverse -> e_theater [color="#F44336", style=dashed];
+    a_nexus -> {e_neural e_nexus_swarm} [color="#F44336", penwidth=2];
+    a_adb_adv -> e_reason [color="#F44336", penwidth=2];
+    a_adb_mem -> e_adb_learn [color="#F44336", penwidth=2];
+    a_adb_opt -> e_adb_learn [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_adb_vec -> {a_adb_opt a_adb_adv} [color="#FF9800", penwidth=4, label="CRITICAL"];
+    a_gh_pr -> e_gh_multi [color="#F44336", penwidth=2];
+    a_gh_workflow -> e_gh_multi [color="#F44336", penwidth=2];
+    a_builder -> {a_skill_agent e_forge} [color="#F44336", penwidth=4, label="CRITICAL"];
+    a_skill_agent -> e_agent_create [color="#F44336", penwidth=2];
+    a_prompt_arch -> e_research [color="#F44336", style=dashed];
+    a_codex_reason -> e_codex [color="#F44336", penwidth=2];
+    a_sop_api -> e_backend [color="#F44336", penwidth=2];
+    a_backend_dev -> e_backend [color="#F44336", penwidth=2];
+    a_ml_debug -> e_ml [color="#F44336", penwidth=2];
+
+    // Expert → Expert dependencies (Complementary skills)
+    e_swarm_orch -> e_swarm_adv [color="#9C27B0", style=dashed, label="COMPLEMENT"];
+    e_swarm_adv -> e_hive [color="#9C27B0", style=dashed];
+    e_adb_learn -> e_reason [color="#9C27B0", penwidth=2];
+    e_reason -> e_reason_intel [color="#9C27B0", style=dashed];
+    e_agent_create -> e_forge [color="#9C27B0", style=dashed];
+    e_research -> e_sop_launch [color="#9C27B0", style=dashed];
+    e_sparc_method -> e_sparc_coord [color="#9C27B0", penwidth=2];
+    e_sparc_coord -> e_sparc [color="#9C27B0", penwidth=2];
+
+    // Cross-layer recommended dependencies (dashed)
+    f_planner -> e_research [color="#4CAF50", style=dashed, label="RECOMMENDED"];
+    f_gem_search -> e_research [color="#4CAF50", style=dashed];
+    f_template -> e_agent_create [color="#4CAF50", style=dashed];
+    i_deps -> e_system_arch [color="#2196F3", style=dashed];
+    a_code_analysis -> e_theater [color="#FF9800", style=dashed];
+
+    // Layout ordering
+    {rank=same; title}
+    {rank=source; f_planner f_doc f_slash f_gem_search f_gem_ext f_template}
+    {rank=same; legend critical_path}
+}

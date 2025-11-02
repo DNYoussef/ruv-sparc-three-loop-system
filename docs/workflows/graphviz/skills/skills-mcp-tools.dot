@@ -1,0 +1,259 @@
+// Skills × MCP Tools Mapping - Tool Usage Patterns
+// Shows 106 skills × MCP tools relationships grouped by MCP server
+// Generated: 2025-11-02
+
+digraph SkillsMCPTools {
+    // Graph settings
+    rankdir=LR;
+    splines=ortho;
+    nodesep=0.7;
+    ranksep=2.5;
+    bgcolor="#FAFAFA";
+
+    // Title
+    title [
+        label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10">
+                <TR><TD BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="24"><B>Skills × MCP Tools Integration Map</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">106 Skills × 200+ MCP Tools | 8 MCP Servers | Usage Patterns</FONT></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Legend
+    legend [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#424242"><FONT COLOR="white"><B>Tool Usage Patterns</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#4CAF50">Core Tools</TD><TD>Used by 20+ skills</TD></TR>
+                <TR><TD BGCOLOR="#2196F3">Common Tools</TD><TD>Used by 10-19 skills</TD></TR>
+                <TR><TD BGCOLOR="#FF9800">Specialized Tools</TD><TD>Used by 5-9 skills</TD></TR>
+                <TR><TD BGCOLOR="#9C27B0">Niche Tools</TD><TD>Used by 1-4 skills</TD></TR>
+                <TR><TD COLSPAN="2" BGCOLOR="#E0E0E0"><B>Avg Tools/Skill: 4.2 | Avg Skills/Tool: 2.1</B></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // MCP SERVERS & TOOLS
+    // Claude-Flow MCP (Required - Core coordination)
+    subgraph cluster_claude_flow {
+        label="Claude-Flow MCP (Required)";
+        style=filled;
+        color="#E3F2FD";
+
+        cf_swarm_init [label="swarm_init\n(35 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        cf_agent_spawn [label="agent_spawn\n(42 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        cf_task_orchestrate [label="task_orchestrate\n(38 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        cf_swarm_status [label="swarm_status\n(28 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        cf_agent_list [label="agent_list\n(15 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        cf_task_status [label="task_status\n(22 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        cf_hooks [label="hooks (pre/post)\n(18 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        cf_memory [label="memory ops\n(12 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        cf_neural [label="neural_status\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        cf_github [label="github_swarm\n(7 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+    }
+
+    // Memory MCP (Required - Cross-session persistence)
+    subgraph cluster_memory_mcp {
+        label="Memory MCP (Required)";
+        style=filled;
+        color="#F3E5F5";
+
+        mem_store [label="memory_store\n(48 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        mem_search [label="vector_search\n(32 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        mem_retrieve [label="memory_retrieve\n(28 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        mem_tag [label="tagging_protocol\n(45 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        mem_layer [label="triple_layer\n(15 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+    }
+
+    // Connascence Analyzer (Code quality agents only)
+    subgraph cluster_connascence {
+        label="Connascence Analyzer MCP (14 Code Quality Agents)";
+        style=filled;
+        color="#FFF9C4";
+
+        conn_analyze [label="analyze_file\n(12 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        conn_workspace [label="analyze_workspace\n(10 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        conn_health [label="health_check\n(6 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+    }
+
+    // Flow-Nexus MCP (Optional - Advanced cloud features)
+    subgraph cluster_flow_nexus {
+        label="Flow-Nexus MCP (Optional - 70+ Tools)";
+        style=filled;
+        color="#FFE0B2";
+
+        // Sandbox tools (most used)
+        fn_sandbox_create [label="sandbox_create\n(18 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        fn_sandbox_execute [label="sandbox_execute\n(22 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        fn_sandbox_configure [label="sandbox_configure\n(9 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+
+        // Neural AI tools
+        fn_neural_train [label="neural_train\n(6 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        fn_neural_predict [label="neural_predict\n(5 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        fn_seraphina [label="seraphina_chat\n(12 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+
+        // GitHub integration
+        fn_github_analyze [label="github_repo_analyze\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        fn_github_pr [label="github_pr_manage\n(7 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+
+        // Templates & Storage
+        fn_template_deploy [label="template_deploy\n(5 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        fn_storage [label="storage ops\n(4 skills)", shape=box, style="filled,rounded", fillcolor="#9C27B0", fontcolor="white", width=1.4];
+    }
+
+    // Playwright MCP (Browser automation)
+    subgraph cluster_playwright {
+        label="Playwright MCP";
+        style=filled;
+        color="#E8F5E9";
+
+        pw_snapshot [label="browser_snapshot\n(5 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+        pw_click [label="browser_click\n(4 skills)", shape=box, style="filled,rounded", fillcolor="#9C27B0", fontcolor="white", width=1.4];
+        pw_navigate [label="browser_navigate\n(4 skills)", shape=box, style="filled,rounded", fillcolor="#9C27B0", fontcolor="white", width=1.4];
+        pw_screenshot [label="browser_screenshot\n(3 skills)", shape=box, style="filled,rounded", fillcolor="#9C27B0", fontcolor="white", width=1.4];
+    }
+
+    // Filesystem MCP (File operations)
+    subgraph cluster_filesystem {
+        label="Filesystem MCP";
+        style=filled;
+        color="#FCE4EC";
+
+        fs_read [label="read_text_file\n(25 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        fs_write [label="write_file\n(28 skills)", shape=box, style="filled,rounded", fillcolor="#4CAF50", fontcolor="white", width=2.0];
+        fs_edit [label="edit_file\n(22 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        fs_search [label="search_files\n(15 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+        fs_dir_tree [label="directory_tree\n(8 skills)", shape=box, style="filled,rounded", fillcolor="#FF9800", fontcolor="white", width=1.6];
+    }
+
+    // Sequential-Thinking MCP (Reasoning)
+    subgraph cluster_sequential {
+        label="Sequential-Thinking MCP";
+        style=filled;
+        color="#E1F5FE";
+
+        seq_think [label="sequentialthinking\n(14 skills)", shape=box, style="filled,rounded", fillcolor="#2196F3", fontcolor="white", width=1.8];
+    }
+
+    // TOC MCP (Documentation)
+    subgraph cluster_toc {
+        label="TOC MCP";
+        style=filled;
+        color="#F1F8E9";
+
+        toc_gen [label="generate_toc\n(3 skills)", shape=box, style="filled,rounded", fillcolor="#9C27B0", fontcolor="white", width=1.4];
+    }
+
+    // SKILL CATEGORIES (simplified for readability)
+    subgraph cluster_skills_high {
+        label="High-Usage Skills (Top 20)";
+        style=filled;
+        color="#C8E6C9";
+
+        s_feature [label="feature-dev-complete", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_theater [label="theater-detection", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_prod [label="production-readiness", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_sparc [label="sparc-workflow", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_cicd_rec [label="cicd-intelligent-recovery", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_swarm_adv [label="swarm-advanced", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_swarm_orch [label="swarm-orchestration", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_hive [label="hive-mind-advanced", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_neural [label="flow-nexus-neural", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_gh_multi [label="github-multi-repo", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_agent_create [label="agent-creator", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_forge [label="skill-forge", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_backend [label="backend-api-orchestrator", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_ml [label="ml-expert", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_func [label="functionality-audit", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_review [label="code-review-assistant", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_research [label="research-driven-planning", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_codex [label="codex-auto", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_adb_learn [label="agentdb-learning", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+        s_reason [label="reasoningbank-agentdb", shape=ellipse, style=filled, fillcolor="#66BB6A", fontsize=11];
+    }
+
+    // Tool Usage Statistics
+    stats [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="4" BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="14"><B>MCP Tool Distribution</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><B>MCP Server</B></TD><TD><B>Tools</B></TD><TD><B>Skills Using</B></TD><TD><B>Avg/Skill</B></TD></TR>
+                <TR><TD>Claude-Flow</TD><TD>25+</TD><TD>58</TD><TD>6.2</TD></TR>
+                <TR><TD>Memory MCP</TD><TD>8</TD><TD>62</TD><TD>3.8</TD></TR>
+                <TR><TD>Connascence</TD><TD>5</TD><TD>14</TD><TD>2.1</TD></TR>
+                <TR><TD>Flow-Nexus</TD><TD>70+</TD><TD>28</TD><TD>3.4</TD></TR>
+                <TR><TD>Playwright</TD><TD>15+</TD><TD>8</TD><TD>2.5</TD></TR>
+                <TR><TD>Filesystem</TD><TD>12</TD><TD>52</TD><TD>3.2</TD></TR>
+                <TR><TD>Sequential-Thinking</TD><TD>1</TD><TD>14</TD><TD>1.0</TD></TR>
+                <TR><TD>TOC</TD><TD>1</TD><TD>3</TD><TD>1.0</TD></TR>
+                <TR><TD COLSPAN="4" BGCOLOR="#E0E0E0"><B>Total: 200+ Tools across 8 MCP Servers</B></TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // Tool usage patterns
+    patterns [
+        label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6" BGCOLOR="white">
+                <TR><TD COLSPAN="2" BGCOLOR="#4CAF50"><FONT COLOR="white" POINT-SIZE="14"><B>Tool Usage Patterns</B></FONT></TD></TR>
+                <TR><TD BGCOLOR="#C8E6C9"><B>Pattern</B></TD><TD><B>Description</B></TD></TR>
+                <TR><TD>Core Tools (5)</TD><TD>memory_store, agent_spawn, task_orchestrate, fs_write, fs_read</TD></TR>
+                <TR><TD>Coordination (4)</TD><TD>swarm_init, task_status, swarm_status, agent_list</TD></TR>
+                <TR><TD>Code Quality (3)</TD><TD>analyze_file, analyze_workspace, health_check</TD></TR>
+                <TR><TD>Sandboxes (3)</TD><TD>sandbox_create, sandbox_execute, sandbox_configure</TD></TR>
+                <TR><TD>GitHub (4)</TD><TD>github_swarm, github_analyze, github_pr, github_workflow</TD></TR>
+                <TR><TD>Neural AI (3)</TD><TD>neural_train, neural_predict, seraphina_chat</TD></TR>
+                <TR><TD>Browser (4)</TD><TD>browser_snapshot, browser_click, browser_navigate, screenshot</TD></TR>
+                <TR><TD>Reasoning (1)</TD><TD>sequentialthinking (used by complex planning skills)</TD></TR>
+            </TABLE>
+        >
+        shape=plaintext
+    ];
+
+    // EDGES - Skill to Tool mappings (showing key relationships)
+    // Very High Complexity Skills → Core Tools
+    s_feature -> {cf_agent_spawn cf_task_orchestrate mem_store mem_tag fs_write fs_read seq_think} [color="#F44336", penwidth=2];
+    s_theater -> {cf_agent_spawn cf_task_orchestrate mem_store conn_analyze fn_sandbox_execute} [color="#F44336", penwidth=2];
+    s_prod -> {cf_swarm_init cf_task_orchestrate mem_store conn_workspace fs_read} [color="#F44336", penwidth=2];
+    s_sparc -> {cf_swarm_init cf_agent_spawn cf_task_orchestrate mem_store fs_write seq_think} [color="#F44336", penwidth=2];
+    s_cicd_rec -> {cf_agent_spawn cf_task_status mem_search fs_read seq_think} [color="#F44336", penwidth=2];
+
+    // Swarm coordination skills → Claude-Flow tools
+    s_swarm_adv -> {cf_swarm_init cf_agent_spawn cf_swarm_status cf_neural mem_store} [color="#2196F3", penwidth=2];
+    s_swarm_orch -> {cf_swarm_init cf_task_orchestrate cf_agent_list cf_hooks mem_store} [color="#2196F3", penwidth=2];
+    s_hive -> {cf_swarm_init cf_agent_spawn cf_task_orchestrate mem_store} [color="#2196F3", penwidth=2];
+
+    // Platform skills → Flow-Nexus tools
+    s_neural -> {fn_neural_train fn_neural_predict fn_sandbox_create fn_sandbox_execute mem_store} [color="#9C27B0", penwidth=2];
+    s_gh_multi -> {fn_github_analyze fn_github_pr cf_github mem_store fs_write} [color="#9C27B0", penwidth=2];
+
+    // Agent/Skill creation → Meta tools
+    s_agent_create -> {cf_agent_spawn mem_store mem_search fs_write seq_think} [color="#FF9800", penwidth=2];
+    s_forge -> {mem_store mem_search fs_write seq_think toc_gen} [color="#FF9800", penwidth=2];
+
+    // Code quality skills → Connascence tools
+    s_func -> {conn_analyze fn_sandbox_execute fs_read mem_store} [color="#FFC107", penwidth=2];
+    s_review -> {conn_analyze conn_workspace mem_search fs_read} [color="#FFC107", penwidth=2];
+
+    // Backend/ML development → Sandbox tools
+    s_backend -> {fn_sandbox_create fn_sandbox_execute fs_write fs_read mem_store} [color="#7B1FA2", penwidth=2];
+    s_ml -> {fn_neural_train fn_sandbox_create fs_write mem_store} [color="#7B1FA2", penwidth=2];
+
+    // Research skills → Search & reasoning tools
+    s_research -> {mem_search seq_think fs_read fn_seraphina} [color="#689F38", penwidth=2];
+
+    // Autonomous coding → Codex sandbox
+    s_codex -> {fn_sandbox_create fn_sandbox_execute mem_store fs_write} [color="#00897B", penwidth=2];
+
+    // AgentDB skills → Memory tools
+    s_adb_learn -> {mem_store mem_search mem_layer cf_neural} [color="#512DA8", penwidth=2];
+    s_reason -> {mem_store mem_search mem_layer seq_think} [color="#512DA8", penwidth=2];
+
+    // Layout
+    {rank=same; title}
+    {rank=same; legend stats patterns}
+}
