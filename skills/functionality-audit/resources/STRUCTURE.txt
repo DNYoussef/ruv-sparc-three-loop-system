@@ -1,0 +1,169 @@
+functionality-audit/resources/
+│
+├── scripts/                           # Executable automation scripts
+│   ├── validate_code.py               # Main validation orchestrator (22KB, 738 lines)
+│   │   └── Features: E2B/Docker/Local sandboxes, test execution, reporting
+│   │
+│   ├── sandbox_manager.sh             # Sandbox lifecycle manager (13KB, 450+ lines)
+│   │   └── Features: Create, start, stop, cleanup, install, monitor
+│   │
+│   └── test_generator.py              # Automated test generator (20KB, 600+ lines)
+│       └── Features: AST analysis, edge cases, boundaries, pytest/Jest
+│
+├── templates/                         # Configuration templates
+│   ├── validation-report.yaml         # Report template (3.8KB)
+│   │   └── Sections: Metadata, results, failures, recommendations, verdict
+│   │
+│   └── sandbox-config.json            # Sandbox config (6.4KB)
+│       └── Templates: python, node, typescript, react, nextjs, base
+│
+├── examples/                          # Usage examples
+│   └── example_usage.py               # Programmatic usage examples (7.4KB)
+│       └── Examples: Basic validation, test generation, sandbox management, full workflow
+│
+├── README.md                          # Comprehensive documentation (13KB)
+│   └── Contents: Overview, scripts, templates, integration, troubleshooting
+│
+├── QUICK-REFERENCE.md                 # Quick reference card (7.3KB)
+│   └── Contents: Commands, workflows, options, exit codes, troubleshooting
+│
+├── CREATION-SUMMARY.md                # Creation summary (14KB)
+│   └── Contents: What was created, statistics, usage, integration, validation
+│
+└── STRUCTURE.txt                      # This file
+    └── Visual representation of directory structure
+
+
+STATISTICS
+==========
+Total Files:        9
+Total Size:         106.9KB
+Total Lines:        ~3,400
+
+Scripts:            3 files (55KB)
+Templates:          2 files (10.2KB)
+Documentation:      3 files (27KB)
+Examples:           1 file (7.4KB)
+
+Languages:
+  - Python:         ~1,400 lines
+  - Bash:           ~450 lines
+  - YAML:           ~150 lines
+  - JSON:           ~200 lines
+  - Markdown:       ~1,200 lines
+
+
+USAGE FLOW
+==========
+
+User Request
+    │
+    ├─> Skill: functionality-audit
+    │       │
+    │       └─> validate_code.py
+    │               │
+    │               ├─> sandbox_manager.sh (create sandbox)
+    │               │       └─> E2B / Docker / Local
+    │               │
+    │               ├─> test_generator.py (generate tests, if needed)
+    │               │       └─> AST analysis → pytest/Jest tests
+    │               │
+    │               ├─> Execute tests in sandbox
+    │               │       └─> pytest / Jest runner
+    │               │
+    │               └─> Generate report
+    │                       └─> validation-report.yaml → YAML/JSON
+    │
+    └─> Results returned to user
+
+
+KEY CAPABILITIES
+================
+
+Code Validation:
+  ✅ Automatic test generation
+  ✅ Existing test suite execution
+  ✅ Multi-language support (Python, JS, TS)
+  ✅ Edge case testing
+  ✅ Boundary value testing
+  ✅ Coverage tracking
+  ✅ Performance monitoring
+
+Sandbox Management:
+  ✅ E2B sandbox support
+  ✅ Docker sandbox support
+  ✅ Local sandbox support
+  ✅ Resource monitoring
+  ✅ State persistence
+  ✅ Batch operations
+  ✅ Auto-cleanup
+
+Reporting:
+  ✅ Detailed failure analysis
+  ✅ Root cause identification
+  ✅ Prioritized recommendations
+  ✅ Quality metrics
+  ✅ Security findings
+  ✅ Verdict generation
+  ✅ Audit trail
+
+Test Generation:
+  ✅ AST-based code analysis
+  ✅ Function extraction
+  ✅ Class extraction
+  ✅ Edge case generation
+  ✅ Boundary test generation
+  ✅ Mock data generation
+  ✅ pytest/Jest output
+
+
+QUICK START
+===========
+
+1. Basic Validation (1 command)
+   $ python validate_code.py --code-path ./src/module.py --auto-generate-tests
+
+2. Test Generation (1 command)
+   $ python test_generator.py --code-path ./src --output ./tests
+
+3. Sandbox Management (3 commands)
+   $ ./sandbox_manager.sh create --template python
+   $ ./sandbox_manager.sh list
+   $ ./sandbox_manager.sh cleanup-all --force
+
+4. Run Examples (1 command)
+   $ python examples/example_usage.py
+
+
+DEPENDENCIES
+============
+
+Required:
+  - Python 3.8+
+  - bash 4.0+
+  - jq (JSON processing)
+
+Optional:
+  - Docker (for Docker sandboxes)
+  - npx (for E2B sandboxes)
+
+Python Packages:
+  - pytest, pytest-cov, pytest-json-report
+  - PyYAML
+  - hypothesis
+
+
+VERDICT SYSTEM
+==============
+
+APPROVED        ≥95% pass rate    Production-ready
+CONDITIONAL     80-95% pass rate  Minor issues, review recommended
+NEEDS_WORK      50-80% pass rate  Significant issues, refactoring required
+REJECTED        <50% pass rate    Major failures, complete rewrite needed
+
+
+STATUS
+======
+✅ PRODUCTION READY
+Version: 1.0.0
+Date: 2025-11-02

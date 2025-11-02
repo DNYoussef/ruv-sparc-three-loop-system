@@ -1,0 +1,123 @@
+{
+  "skill_name": "functionality-audit",
+  "audit_timestamp": "2025-11-02T10:08:59.788135",
+  "overall_score": 0.893,
+  "quality_tier": "Platinum",
+  "decision": "GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": true,
+          "message": "skill.md found"
+        },
+        {
+          "name": "README.md exists",
+          "passed": true,
+          "message": "README.md found"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": true,
+          "message": "examples/ directory found"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": true,
+          "message": "3 example(s) found"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": true,
+          "message": "No orphaned root files"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": true,
+          "message": "Directory naming conventions followed"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": false,
+          "message": "Orphaned files: resources\\examples\\example_usage.py \u2192 should be in resources/scripts/; resources\\scripts\\sandbox_manager.sh \u2192 should be in resources/scripts/; resources\\scripts\\test_generator.py \u2192 should be in resources/scripts/; resources\\scripts\\validate_code.py \u2192 should be in resources/scripts/; resources\\templates\\sandbox-config.json \u2192 should be in resources/templates/; resources\\templates\\validation-report.yaml \u2192 should be in resources/templates/"
+        }
+      ],
+      "score": 0.8571428571428571
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": true,
+          "message": "Valid YAML frontmatter found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": true,
+          "message": "Imperative voice detected (9 verbs)"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": true,
+          "message": "Overview section found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": true,
+          "message": "Quick start section found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": true,
+          "message": "Examples appear concrete (5 indicators)"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": false,
+          "message": "Naming issues: graphviz\\CREATION-SUMMARY.md: should be lowercase; graphviz\\INDEX.md: should be lowercase; graphviz\\QUICK-REFERENCE.md: should be lowercase"
+        }
+      ],
+      "score": 0.8333333333333334
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Platinum",
+      "file_count": 31,
+      "components": {
+        "skill.md": true,
+        "README.md": true,
+        "examples/": true,
+        "references/": true,
+        "resources/": true,
+        "graphviz/": true,
+        "tests/": true
+      },
+      "score": 1.0
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 11,
+    "failed": 2,
+    "violations": [
+      "[STRUCTURE] No orphaned files: Orphaned files: resources\\examples\\example_usage.py \u2192 should be in resources/scripts/; resources\\scripts\\sandbox_manager.sh \u2192 should be in resources/scripts/; resources\\scripts\\test_generator.py \u2192 should be in resources/scripts/; resources\\scripts\\validate_code.py \u2192 should be in resources/scripts/; resources\\templates\\sandbox-config.json \u2192 should be in resources/templates/; resources\\templates\\validation-report.yaml \u2192 should be in resources/templates/",
+      "[CONTENT] File naming conventions followed: Naming issues: graphviz\\CREATION-SUMMARY.md: should be lowercase; graphviz\\INDEX.md: should be lowercase; graphviz\\QUICK-REFERENCE.md: should be lowercase"
+    ],
+    "passes": [
+      "[STRUCTURE] skill.md exists",
+      "[STRUCTURE] README.md exists",
+      "[STRUCTURE] examples/ directory exists",
+      "[STRUCTURE] At least 1 example present",
+      "[STRUCTURE] No files in root (except required)",
+      "[STRUCTURE] Proper directory naming (lowercase)",
+      "[CONTENT] skill.md has YAML frontmatter",
+      "[CONTENT] skill.md uses imperative voice",
+      "[CONTENT] README.md has overview",
+      "[CONTENT] README.md has quick start",
+      "[CONTENT] Examples are concrete (not abstract)"
+    ]
+  }
+}

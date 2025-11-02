@@ -1,0 +1,100 @@
+digraph functionality_audit_workflow {
+    // Graph configuration
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Arial";
+    fontsize=12;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11];
+    edge [fontname="Arial", fontsize=10];
+
+    // Main workflow nodes
+    start [label="Code Needs\nValidation", shape=ellipse, style=filled, fillcolor="#E3F2FD", color="#1976D2", penwidth=2];
+
+    sandbox [label="Step 1: Create Sandbox\n━━━━━━━━━━━━━━━━━━\n• Isolated environment\n• E2B integration\n• Resource limits\n• Clean state", shape=box, style="rounded,filled", fillcolor="#FFF3E0", color="#F57C00", penwidth=2];
+
+    test_gen [label="Step 2: Generate Tests\n━━━━━━━━━━━━━━━━━━\n• Comprehensive test cases\n• Edge cases & boundary conditions\n• Error scenarios\n• Integration points", shape=box, style="rounded,filled", fillcolor="#F3E5F5", color="#7B1FA2", penwidth=2];
+
+    execute [label="Step 3: Execute & Monitor\n━━━━━━━━━━━━━━━━━━\n• Run tests in sandbox\n• Capture stdout/stderr\n• Monitor resource usage\n• Timeout protection", shape=box, style="rounded,filled", fillcolor="#E8F5E9", color="#388E3C", penwidth=2];
+
+    analyze [label="Step 4: Analyze Results\n━━━━━━━━━━━━━━━━━━\n• Compare expected vs actual\n• Categorize failures\n• Root cause identification\n• Performance metrics", shape=box, style="rounded,filled", fillcolor="#FFF9C4", color="#F9A825", penwidth=2];
+
+    decision [label="All Tests\nPass?", shape=diamond, style=filled, fillcolor="#FFE0B2", color="#E65100", penwidth=2, width=1.5, height=1.5];
+
+    debug [label="Step 5: Debug & Fix\n━━━━━━━━━━━━━━━━━━\n• Systematic investigation\n• Hypothesis testing\n• Incremental fixes\n• Code changes", shape=box, style="rounded,filled", fillcolor="#FFCDD2", color="#C62828", penwidth=2];
+
+    verify [label="Step 6: Verify Fix\n━━━━━━━━━━━━━━━━━━\n• Regression testing\n• Full test suite re-run\n• Performance validation\n• Documentation update", shape=box, style="rounded,filled", fillcolor="#E1BEE7", color="#6A1B9A", penwidth=2];
+
+    complete [label="Validated\nCode ✓", shape=ellipse, style=filled, fillcolor="#C8E6C9", color="#2E7D32", penwidth=3];
+
+    // Main workflow edges
+    start -> sandbox [label="Initialize", color="#1976D2", penwidth=2];
+    sandbox -> test_gen [label="Environment ready", color="#F57C00", penwidth=2];
+    test_gen -> execute [label="Tests generated", color="#7B1FA2", penwidth=2];
+    execute -> analyze [label="Results captured", color="#388E3C", penwidth=2];
+    analyze -> decision [label="Evaluate", color="#F9A825", penwidth=2];
+    decision -> complete [label="YES\nAll Pass", color="#2E7D32", penwidth=3, style=bold];
+    decision -> debug [label="NO\nFailures Found", color="#C62828", penwidth=2];
+    debug -> verify [label="Fix applied", color="#6A1B9A", penwidth=2];
+    verify -> execute [label="Retest", color="#F57C00", penwidth=2, style=dashed];
+
+    // Integration tools cluster
+    subgraph cluster_tools {
+        label="External Integrations";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#BBDEFB";
+        fillcolor="#E3F2FD";
+
+        e2b [label="E2B Sandboxes\n━━━━━━━━━━━\nCode execution\nNode/Python/React\nResource isolation", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+
+        flow [label="Flow-Nexus\n━━━━━━━━━━━\nCloud orchestration\nSwarm coordination\nTask distribution", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+
+        memory [label="Memory-MCP\n━━━━━━━━━━━\nResult persistence\nPattern learning\nCross-session context", shape=box, style="rounded,filled", fillcolor="white", color="#1565C0"];
+    }
+
+    // Integration connections
+    sandbox -> e2b [style=dashed, color="#1565C0", label="Create\nenvironment"];
+    execute -> e2b [style=dashed, color="#1565C0", label="Run\ntests"];
+    analyze -> flow [style=dashed, color="#1565C0", label="Orchestrate\ndebugging"];
+    analyze -> memory [style=dashed, color="#1565C0", label="Store\nresults"];
+    debug -> memory [style=dashed, color="#1565C0", label="Retrieve\npatterns"];
+
+    // Metrics and monitoring cluster
+    subgraph cluster_metrics {
+        label="Metrics & Monitoring";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#C8E6C9";
+        fillcolor="#E8F5E9";
+
+        coverage [label="Code Coverage", shape=box, style="rounded,filled", fillcolor="white"];
+        perf [label="Performance\nMetrics", shape=box, style="rounded,filled", fillcolor="white"];
+        quality [label="Quality Score", shape=box, style="rounded,filled", fillcolor="white"];
+    }
+
+    // Metrics connections
+    analyze -> coverage [style=dotted, color="#388E3C"];
+    analyze -> perf [style=dotted, color="#388E3C"];
+    analyze -> quality [style=dotted, color="#388E3C"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        fontsize=12;
+        fontname="Arial Bold";
+        style=filled;
+        fillcolor="#FAFAFA";
+        color="#757575";
+
+        leg_main [label="Main workflow", shape=box, style="rounded,filled", fillcolor="#E3F2FD"];
+        leg_loop [label="Retry loop", shape=box, style="rounded,filled", fillcolor="#FFCDD2"];
+        leg_integration [label="Integration", shape=box, style="rounded,dashed", fillcolor="white"];
+
+        leg_main -> leg_loop [style=invis];
+        leg_loop -> leg_integration [style=invis];
+    }
+}

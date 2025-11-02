@@ -1,0 +1,157 @@
+digraph debugging_decision_tree {
+    // Graph configuration
+    rankdir=TB;
+    bgcolor="white";
+    fontname="Arial";
+    fontsize=12;
+
+    // Node styling
+    node [fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+
+    // Entry point
+    start [label="Bug Detected\nin Audit", shape=ellipse, style=filled, fillcolor="#FFCDD2", color="#C62828", penwidth=3, fontsize=12];
+
+    // First decision: Reproducibility
+    q_reproduce [label="Can Bug Be\nReproduced?", shape=diamond, style=filled, fillcolor="#FFE0B2", color="#E65100", penwidth=2, width=2, height=1.5];
+
+    start -> q_reproduce [penwidth=2];
+
+    // Non-reproducible path
+    non_repro [label="Non-Reproducible Bug\n━━━━━━━━━━━━━━━━━━\n• Race condition\n• Timing issue\n• Environment dependency", shape=box, style="rounded,filled", fillcolor="#FFF3E0", color="#F57C00"];
+
+    non_repro_actions [label="Actions:\n━━━━━━━━\n1. Add logging/instrumentation\n2. Increase test iterations (100-1000x)\n3. Use stress testing tools\n4. Check for async issues\n5. Monitor resource contention", shape=box, style="rounded,filled", fillcolor="#FFF9C4", color="#F9A825"];
+
+    q_reproduce -> non_repro [label="NO", color="#F57C00", penwidth=2];
+    non_repro -> non_repro_actions [color="#F57C00"];
+
+    // Reproducible path
+    repro [label="Reproducible Bug\n━━━━━━━━━━━━━━━━━━\n• Consistent failure\n• Predictable behavior", shape=box, style="rounded,filled", fillcolor="#E8F5E9", color="#388E3C"];
+
+    q_reproduce -> repro [label="YES", color="#388E3C", penwidth=2];
+
+    // Second decision: Bug category
+    q_category [label="Bug\nCategory?", shape=diamond, style=filled, fillcolor="#E1BEE7", color="#6A1B9A", penwidth=2, width=1.8, height=1.5];
+
+    repro -> q_category [color="#388E3C"];
+
+    // Category 1: Logic Error
+    logic_error [label="Logic Error\n━━━━━━━━━━━━━━━━━━\n• Incorrect algorithm\n• Wrong conditions\n• Math errors\n• State management", shape=box, style="rounded,filled", fillcolor="#BBDEFB", color="#1976D2"];
+
+    logic_actions [label="Debug Strategy:\n━━━━━━━━\n1. Add breakpoints/console.log\n2. Step through execution\n3. Verify assumptions\n4. Check variable states\n5. Review algorithm logic\n6. Unit test edge cases", shape=box, style="rounded,filled", fillcolor="#E3F2FD", color="#1565C0"];
+
+    q_category -> logic_error [label="Logic", color="#1976D2", penwidth=2];
+    logic_error -> logic_actions [color="#1976D2"];
+
+    // Category 2: Integration Issue
+    integration [label="Integration Issue\n━━━━━━━━━━━━━━━━━━\n• API contract mismatch\n• Dependency failure\n• Data format error\n• Communication breakdown", shape=box, style="rounded,filled", fillcolor="#F3E5F5", color="#7B1FA2"];
+
+    integration_actions [label="Debug Strategy:\n━━━━━━━━\n1. Verify API contracts\n2. Check request/response payloads\n3. Mock external dependencies\n4. Test integration points in isolation\n5. Validate data transformations\n6. Review dependency versions", shape=box, style="rounded,filled", fillcolor="#F3E5F5", color="#6A1B9A"];
+
+    q_category -> integration [label="Integration", color="#7B1FA2", penwidth=2];
+    integration -> integration_actions [color="#7B1FA2"];
+
+    // Category 3: Performance Issue
+    performance [label="Performance Issue\n━━━━━━━━━━━━━━━━━━\n• Timeout\n• Memory leak\n• CPU bottleneck\n• I/O blocking", shape=box, style="rounded,filled", fillcolor="#FFF9C4", color="#F9A825"];
+
+    performance_actions [label="Debug Strategy:\n━━━━━━━━\n1. Profile execution (CPU/memory)\n2. Identify bottlenecks\n3. Check algorithmic complexity\n4. Optimize hot paths\n5. Add caching/memoization\n6. Parallelize operations\n7. Use performance monitoring tools", shape=box, style="rounded,filled", fillcolor="#FFFDE7", color="#F57F17"];
+
+    q_category -> performance [label="Performance", color="#F9A825", penwidth=2];
+    performance -> performance_actions [color="#F9A825"];
+
+    // Category 4: Correctness Issue
+    correctness [label="Correctness Issue\n━━━━━━━━━━━━━━━━━━\n• Wrong output\n• Type mismatch\n• Validation failure\n• Contract violation", shape=box, style="rounded,filled", fillcolor="#C8E6C9", color="#388E3C"];
+
+    correctness_actions [label="Debug Strategy:\n━━━━━━━━\n1. Compare expected vs actual output\n2. Add input validation\n3. Check type conversions\n4. Verify invariants\n5. Add assertions\n6. Property-based testing", shape=box, style="rounded,filled", fillcolor="#E8F5E9", color="#2E7D32"];
+
+    q_category -> correctness [label="Correctness", color="#388E3C", penwidth=2];
+    correctness -> correctness_actions [color="#388E3C"];
+
+    // All paths converge to fix verification
+    fix_applied [label="Fix Applied", shape=box, style="rounded,filled", fillcolor="#E1BEE7", color="#6A1B9A", penwidth=2];
+
+    non_repro_actions -> fix_applied [color="#F9A825"];
+    logic_actions -> fix_applied [color="#1976D2"];
+    integration_actions -> fix_applied [color="#7B1FA2"];
+    performance_actions -> fix_applied [color="#F9A825"];
+    correctness_actions -> fix_applied [color="#388E3C"];
+
+    // Verification decision
+    q_verify [label="Fix\nVerified?", shape=diamond, style=filled, fillcolor="#C8E6C9", color="#2E7D32", penwidth=2, width=1.5, height=1.5];
+
+    fix_applied -> q_verify [penwidth=2];
+
+    // Verification outcomes
+    success [label="Bug Fixed ✓\n━━━━━━━━━━━━━━━━━━\n• All tests pass\n• Regression suite OK\n• Performance acceptable\n• Documentation updated", shape=box, style="rounded,filled", fillcolor="#C8E6C9", color="#2E7D32", penwidth=3];
+
+    regression [label="Regression\nDetected!", shape=box, style="rounded,filled", fillcolor="#FFCDD2", color="#C62828", penwidth=2];
+
+    regression_actions [label="Regression Actions:\n━━━━━━━━\n1. Revert change\n2. Isolate side effects\n3. Add missing test cases\n4. Re-apply fix carefully\n5. Verify all affected areas", shape=box, style="rounded,filled", fillcolor="#FFEBEE", color="#D32F2F"];
+
+    q_verify -> success [label="YES\nNo Regression", color="#2E7D32", penwidth=3, style=bold];
+    q_verify -> regression [label="NO\nNew Issues", color="#C62828", penwidth=2];
+    regression -> regression_actions [color="#C62828"];
+    regression_actions -> fix_applied [label="Retry", color="#E65100", style=dashed];
+
+    // Tools and techniques cluster
+    subgraph cluster_tools {
+        label="Debugging Tools & Techniques";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#BBDEFB";
+        fillcolor="#E3F2FD";
+
+        tools_static [label="Static Analysis\n━━━━━━━━━━━\n• TypeScript compiler\n• ESLint\n• SonarQube\n• Code review", shape=box, style="rounded,filled", fillcolor="white"];
+
+        tools_dynamic [label="Dynamic Analysis\n━━━━━━━━━━━\n• Debuggers (Node, Chrome)\n• Profilers\n• Memory analyzers\n• Network monitors", shape=box, style="rounded,filled", fillcolor="white"];
+
+        tools_testing [label="Testing Tools\n━━━━━━━━━━━\n• Jest/Mocha\n• Property testing\n• Mutation testing\n• E2E frameworks", shape=box, style="rounded,filled", fillcolor="white"];
+
+        tools_monitoring [label="Monitoring\n━━━━━━━━━━━\n• APM (Application Performance)\n• Error tracking (Sentry)\n• Log aggregation\n• Metrics dashboards", shape=box, style="rounded,filled", fillcolor="white"];
+    }
+
+    // Tool connections
+    logic_actions -> tools_dynamic [style=dashed, color="#1565C0"];
+    integration_actions -> tools_testing [style=dashed, color="#1565C0"];
+    performance_actions -> tools_monitoring [style=dashed, color="#1565C0"];
+    correctness_actions -> tools_static [style=dashed, color="#1565C0"];
+
+    // Best practices cluster
+    subgraph cluster_practices {
+        label="Best Practices";
+        fontsize=14;
+        fontname="Arial Bold";
+        style=filled;
+        color="#C8E6C9";
+        fillcolor="#E8F5E9";
+
+        practice1 [label="1. Isolate the problem\n   Minimal reproduction", shape=box, style="rounded,filled", fillcolor="white"];
+        practice2 [label="2. Form hypothesis\n   Test systematically", shape=box, style="rounded,filled", fillcolor="white"];
+        practice3 [label="3. Fix incrementally\n   One change at a time", shape=box, style="rounded,filled", fillcolor="white"];
+        practice4 [label="4. Add tests first\n   Prevent regression", shape=box, style="rounded,filled", fillcolor="white"];
+
+        practice1 -> practice2 [style=invis];
+        practice2 -> practice3 [style=invis];
+        practice3 -> practice4 [style=invis];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Decision Tree Legend";
+        fontsize=12;
+        fontname="Arial Bold";
+        style=filled;
+        fillcolor="#FAFAFA";
+        color="#757575";
+
+        leg_decision [label="Decision point", shape=diamond, style=filled, fillcolor="#FFE0B2"];
+        leg_category [label="Bug category", shape=box, style="rounded,filled", fillcolor="#BBDEFB"];
+        leg_action [label="Debug actions", shape=box, style="rounded,filled", fillcolor="#FFF9C4"];
+        leg_tool [label="Tool/technique", shape=box, style="rounded,dashed", fillcolor="white"];
+
+        leg_decision -> leg_category [style=invis];
+        leg_category -> leg_action [style=invis];
+        leg_action -> leg_tool [style=invis];
+    }
+}

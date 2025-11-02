@@ -1,0 +1,47 @@
+Analyzing skills in: ..
+{
+  "total_skills": 78,
+  "meta_skills": [
+    "agent-creator",
+    "cascade-orchestrator",
+    "deep-research-orchestrator",
+    "functionality-audit",
+    "intent-analyzer",
+    "micro-skill-creator",
+    "quick-quality-check",
+    "reproducibility-audit",
+    "skill-creator-agent",
+    "skill-forge",
+    "sop-dogfooding-quality-detection",
+    "style-audit",
+    "theater-detection-audit",
+    "verification-quality"
+  ],
+  "meta_skills_count": 14,
+  "tier_distribution": {
+    "Incomplete": 77,
+    "Gold": 1
+  },
+  "missing_components": {
+    "README.md": 77,
+    "examples/": 76,
+    "references/": 73,
+    "resources/": 68,
+    "graphviz/": 77,
+    "tests/": 77
+  },
+  "completion_percentages": {
+    "README.md": "1.3%",
+    "examples/": "2.6%",
+    "references/": "6.4%",
+    "resources/": "12.8%",
+    "graphviz/": "1.3%",
+    "tests/": "1.3%"
+  },
+  "enhancement_needed": {
+    "to_bronze": 77,
+    "to_silver": 77,
+    "to_gold": 77,
+    "to_platinum": 78
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "sandbox_config": {
+    "version": "1.0.0",
+    "description": "E2B sandbox configuration for functionality-audit testing",
+
+    "templates": {
+      "python": {
+        "template": "python",
+        "base_image": "python:3.11-slim",
+        "timeout": 600,
+        "memory_limit_mb": 512,
+        "cpu_limit": 1.0,
+        "network_enabled": false,
+        "env_vars": {
+          "PYTHONPATH": "/workspace",
+          "PYTEST_CACHE_DIR": "/tmp/.pytest_cache"
+        },
+        "install_packages": [
+          "pytest",
+          "pytest-cov",
+          "pytest-json-report",
+          "pytest-timeout",
+          "coverage",
+          "hypothesis"
+        ],
+        "working_dir": "/workspace",
+        "startup_script": "pip install --upgrade pip && pip install pytest pytest-cov pytest-json-report"
+      },
+
+      "node": {
+        "template": "node",
+        "base_image": "node:20-slim",
+        "timeout": 600,
+        "memory_limit_mb": 512,
+        "cpu_limit": 1.0,
+        "network_enabled": false,
+        "env_vars": {
+          "NODE_ENV": "test",
+          "NPM_CONFIG_CACHE": "/tmp/.npm"
+        },
+        "install_packages": [
+          "jest",
+          "mocha",
+          "chai",
+          "@jest/globals"
+        ],
+        "working_dir": "/workspace",
+        "startup_script": "npm install -g jest mocha chai"
+      },
+
+      "typescript": {
+        "template": "node",
+        "base_image": "node:20-slim",
+        "timeout": 600,
+        "memory_limit_mb": 512,
+        "cpu_limit": 1.0,
+        "network_enabled": false,
+        "env_vars": {
+          "NODE_ENV": "test",
+          "TS_NODE_PROJECT": "/workspace/tsconfig.json"
+        },
+        "install_packages": [
+          "typescript",
+          "ts-node",
+          "jest",
+          "@types/jest",
+          "ts-jest"
+        ],
+        "working_dir": "/workspace",
+        "startup_script": "npm install -g typescript ts-node jest ts-jest"
+      },
+
+      "react": {
+        "template": "node",
+        "base_image": "node:20-slim",
+        "timeout": 900,
+        "memory_limit_mb": 1024,
+        "cpu_limit": 2.0,
+        "network_enabled": false,
+        "env_vars": {
+          "NODE_ENV": "test",
+          "CI": "true"
+        },
+        "install_packages": [
+          "react",
+          "react-dom",
+          "@testing-library/react",
+          "@testing-library/jest-dom",
+          "jest"
+        ],
+        "working_dir": "/workspace",
+        "startup_script": "npm install -g create-react-app"
+      },
+
+      "nextjs": {
+        "template": "nextjs",
+        "base_image": "node:20-slim",
+        "timeout": 900,
+        "memory_limit_mb": 1024,
+        "cpu_limit": 2.0,
+        "network_enabled": false,
+        "env_vars": {
+          "NODE_ENV": "test",
+          "NEXT_TELEMETRY_DISABLED": "1"
+        },
+        "install_packages": [
+          "next",
+          "react",
+          "react-dom",
+          "jest"
+        ],
+        "working_dir": "/workspace",
+        "startup_script": "npm install -g next"
+      },
+
+      "base": {
+        "template": "base",
+        "base_image": "ubuntu:22.04",
+        "timeout": 300,
+        "memory_limit_mb": 256,
+        "cpu_limit": 0.5,
+        "network_enabled": false,
+        "env_vars": {},
+        "install_packages": [],
+        "working_dir": "/workspace",
+        "startup_script": "apt-get update && apt-get install -y curl"
+      }
+    },
+
+    "security": {
+      "network_isolation": true,
+      "read_only_filesystem": false,
+      "drop_capabilities": [
+        "NET_RAW",
+        "NET_ADMIN"
+      ],
+      "max_processes": 100,
+      "ulimits": {
+        "nofile": 1024,
+        "nproc": 64
+      }
+    },
+
+    "monitoring": {
+      "enable_metrics": true,
+      "metrics_interval_seconds": 5,
+      "enable_logging": true,
+      "log_level": "INFO",
+      "track_resources": true
+    },
+
+    "cleanup": {
+      "auto_cleanup": true,
+      "cleanup_after_seconds": 3600,
+      "retain_logs": true,
+      "retain_artifacts": true
+    },
+
+    "testing_defaults": {
+      "test_timeout_seconds": 300,
+      "test_retry_count": 2,
+      "parallel_execution": false,
+      "fail_fast": false,
+      "capture_output": true,
+      "verbose": true
+    },
+
+    "paths": {
+      "code_dir": "/workspace/code",
+      "test_dir": "/workspace/tests",
+      "output_dir": "/workspace/output",
+      "temp_dir": "/tmp",
+      "cache_dir": "/workspace/.cache"
+    }
+  },
+
+  "usage_examples": {
+    "python_basic": {
+      "description": "Basic Python testing",
+      "template": "python",
+      "install_packages": ["pytest", "coverage"],
+      "test_command": "pytest tests.py --cov=code --cov-report=json"
+    },
+
+    "python_advanced": {
+      "description": "Advanced Python with property-based testing",
+      "template": "python",
+      "install_packages": ["pytest", "hypothesis", "pytest-cov"],
+      "test_command": "pytest tests/ --hypothesis-show-statistics --cov=src"
+    },
+
+    "javascript_jest": {
+      "description": "JavaScript testing with Jest",
+      "template": "node",
+      "install_packages": ["jest"],
+      "test_command": "jest --coverage --json --outputFile=results.json"
+    },
+
+    "typescript_jest": {
+      "description": "TypeScript testing with Jest",
+      "template": "typescript",
+      "install_packages": ["jest", "ts-jest", "@types/jest"],
+      "test_command": "jest --config jest.config.ts --coverage"
+    }
+  },
+
+  "best_practices": {
+    "performance": [
+      "Use appropriate memory/CPU limits for workload",
+      "Enable parallel test execution when safe",
+      "Cache dependencies when possible",
+      "Set reasonable timeouts"
+    ],
+
+    "security": [
+      "Always disable network unless required",
+      "Use minimal base images",
+      "Drop unnecessary Linux capabilities",
+      "Set resource limits",
+      "Enable read-only filesystem when possible"
+    ],
+
+    "reliability": [
+      "Enable auto-cleanup to prevent resource leaks",
+      "Set appropriate retry counts",
+      "Monitor resource usage",
+      "Capture logs and artifacts",
+      "Use health checks"
+    ]
+  },
+
+  "troubleshooting": {
+    "timeout_issues": "Increase timeout or optimize tests for speed",
+    "memory_issues": "Increase memory_limit_mb or reduce test parallelism",
+    "network_errors": "Enable network_enabled if tests require external access",
+    "permission_errors": "Check file permissions and working directory",
+    "package_install_fails": "Verify package names and check startup_script logs"
+  }
+}
