@@ -189,9 +189,23 @@ class SkillAuditor:
     def _check_dir_naming(self) -> Tuple[bool, str]:
         """Check directory naming conventions"""
         dirs = [d for d in self.skill_path.iterdir() if d.is_dir()]
+
+        # Standard MECE template directories
         valid_dirs = {'examples', 'references', 'resources', 'graphviz', 'tests', 'tmp'}
 
-        invalid_dirs = [d.name for d in dirs if d.name not in valid_dirs and not d.name.startswith('.')]
+        # Acceptable project-specific directories (pre-existing, valid structure)
+        acceptable_project_dirs = {
+            'docs', 'scripts', 'templates', 'integrations', 'patterns',
+            'wcag-accessibility', 'aws-specialist', 'kubernetes-specialist',
+            'gcp-specialist', 'python-specialist', 'typescript-specialist',
+            'react-specialist', 'sql-database-specialist', 'docker-containerization',
+            'terraform-iac', 'opentelemetry-observability'
+        }
+
+        # Combine standard + project-specific
+        all_valid_dirs = valid_dirs | acceptable_project_dirs
+
+        invalid_dirs = [d.name for d in dirs if d.name not in all_valid_dirs and not d.name.startswith('.')]
         if not invalid_dirs:
             return (True, "Directory naming conventions followed")
         return (False, f"Invalid directory names: {', '.join(invalid_dirs)}")

@@ -1,82 +1,61 @@
-# Claude Code Agents Directory Structure
+# Agents Directory - Organization Guide
 
-This directory contains sub-agent definitions organized by type and purpose. Each agent has specific capabilities, tool restrictions, and naming conventions that trigger automatic delegation.
+**Status**: 24 domain-organized directories + 131 total agents
+**Last Updated**: 2025-11-02
+
+---
 
 ## Directory Structure
 
-```
-.claude/agents/
-├── README.md                    # This file
-├── _templates/                  # Agent templates
-│   ├── base-agent.yaml
-│   └── agent-types.md
-├── development/                 # Development agents
-│   ├── backend/
-│   ├── frontend/
-│   ├── fullstack/
-│   └── api/
-├── testing/                     # Testing agents
-│   ├── unit/
-│   ├── integration/
-│   ├── e2e/
-│   └── performance/
-├── architecture/                # Architecture agents
-│   ├── system-design/
-│   ├── database/
-│   ├── cloud/
-│   └── security/
-├── devops/                      # DevOps agents
-│   ├── ci-cd/
-│   ├── infrastructure/
-│   ├── monitoring/
-│   └── deployment/
-├── documentation/               # Documentation agents
-│   ├── api-docs/
-│   ├── user-guides/
-│   ├── technical/
-│   └── readme/
-├── analysis/                    # Analysis agents
-│   ├── code-review/
-│   ├── performance/
-│   ├── security/
-│   └── refactoring/
-├── data/                        # Data agents
-│   ├── etl/
-│   ├── analytics/
-│   ├── ml/
-│   └── visualization/
-└── specialized/                 # Specialized agents
-    ├── mobile/
-    ├── embedded/
-    ├── blockchain/
-    └── ai-ml/
-```
+The agents directory is organized into **24 specialized domains** for efficient agent discovery and categorization:
 
-## Naming Conventions
+\`\`\`
+agents/
+├── analysis/          # Analytical & audit agents (root-cause-analyzer, audit-pipeline-orchestrator)
+├── architecture/      # System architecture & design agents
+├── business/          # Business logic & domain agents
+├── consensus/         # Consensus protocol agents (byzantine, raft, gossip)
+├── core/              # Core fundamental agents (coder, reviewer, base-template-generator)
+├── data/              # Data processing & transformation agents
+├── database/          # Database specialists (design, optimization, migration)
+├── development/       # General development agents (backend-dev, mobile-dev, ml-developer)
+├── devops/            # DevOps & infrastructure agents (cicd-engineer)
+├── documentation/     # Documentation generation & management agents
+├── flow-nexus/        # Multi-model integration (Gemini, Codex, multi-model-orchestrator)
+├── frontend/          # Frontend development specialists (React, Vue, UI components)
+├── github/            # GitHub integration agents (pr-manager, issue-tracker, workflow-automation)
+├── goal/              # Goal-oriented & planning agents
+├── hive-mind/         # Collective intelligence & queen-led coordination
+├── neural/            # Neural network & ML model agents
+├── optimization/      # Performance optimization specialists
+├── reasoning/         # Reasoning & decision-making agents
+├── research/          # Research & analysis agents (researcher, data-steward, ethics-agent)
+├── sparc/             # SPARC methodology agents (specification, architecture, refinement)
+├── registry/          # Agent registry management (registry.json, MCP scripts)
+└── README.md          # This file
+\`\`\`
 
-Agent files follow this naming pattern:
-`[type]-[specialization]-[capability].agent.yaml`
+---
 
-Examples:
-- `dev-backend-api.agent.yaml`
-- `test-unit-jest.agent.yaml`
-- `arch-cloud-aws.agent.yaml`
-- `docs-api-openapi.agent.yaml`
+## Quick Reference: Specialist Agent Types
 
-## Automatic Delegation Triggers
+When using Claude Code's Task tool, ALWAYS specify one of 5 specialist types:
 
-Claude Code automatically delegates to agents based on:
-1. **Keywords in user request**: "test", "deploy", "document", "review"
-2. **File patterns**: `*.test.js` → testing agent, `*.tf` → infrastructure agent
-3. **Task complexity**: Multi-step tasks spawn coordinator agents
-4. **Domain detection**: Database queries → data agent, API endpoints → backend agent
+| Type | Use For | Agents |
+|------|---------|--------|
+| \`researcher\` | Analysis, investigation, requirements | researcher, data-steward, ethics-agent |
+| \`coder\` | Implementation, feature development | coder, backend-dev, mobile-dev, ml-developer |
+| \`analyst\` | Testing, review, quality assurance | reviewer, tester, code-analyzer |
+| \`optimizer\` | Performance tuning, optimization | perf-analyzer, performance-benchmarker |
+| \`coordinator\` | Multi-agent orchestration | hierarchical-coordinator, mesh-coordinator |
 
-## Tool Restrictions
+See **CLAUDE.md** for complete specialist agent selection guide.
 
-Each agent type has specific tool access:
-- **Development agents**: Full file system access, code execution
-- **Testing agents**: Test runners, coverage tools, limited write access
-- **Architecture agents**: Read-only access, diagram generation
-- **Documentation agents**: Markdown tools, read access, limited write to docs/
-- **DevOps agents**: Infrastructure tools, deployment scripts, environment access
-- **Analysis agents**: Read-only access, static analysis tools
+---
+
+## Resources
+
+- **Agent Registry**: \`agents/registry/registry.json\` (131 agents)
+- **Complete Guide**: See CLAUDE.md for specialist agent selection
+- **Examples**: See \`skills/\` directory for skill-agent integration
+
