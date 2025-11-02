@@ -1,0 +1,157 @@
+digraph LiteratureSynthesisProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nLiterature Synthesis\n(Phase 1 - Pipeline A)", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\n50-70 Papers Synthesized\nResearch Gaps Identified", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Search Strategy
+    subgraph cluster_phase1 {
+        label="Phase 1: Search Strategy Development (2-4 hours)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        formulate_question [label="researcher agent:\nFormulate Research Question\n(PICO Framework)"];
+        define_criteria [label="Define Inclusion/\nExclusion Criteria"];
+        define_search_terms [label="Define Search Terms\n(Boolean Query)"];
+
+        formulate_question -> define_criteria;
+        define_criteria -> define_search_terms;
+    }
+
+    // Phase 2: Database Search
+    subgraph cluster_phase2 {
+        label="Phase 2: Database Search (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        search_arxiv [label="Search ArXiv\n(~200 papers)"];
+        search_semantic [label="Search Semantic Scholar\n(~200 papers)"];
+        search_pwc [label="Search Papers with Code\n(~100 papers)"];
+        merge_results [label="Merge Results\n(~500 papers total)"];
+
+        search_arxiv -> merge_results;
+        search_semantic -> merge_results;
+        search_pwc -> merge_results;
+    }
+
+    // Phase 3: Screening
+    subgraph cluster_phase3 {
+        label="Phase 3: Screening (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        remove_duplicates [label="Remove Duplicates\n(~150 removed)"];
+        title_abstract_screen [label="Title/Abstract Screening\n(~250 excluded)"];
+        screened_papers [label="Screened Papers\n(~100 remaining)"];
+
+        remove_duplicates -> title_abstract_screen;
+        title_abstract_screen -> screened_papers;
+    }
+
+    // Phase 4: Full-Text Review
+    subgraph cluster_phase4 {
+        label="Phase 4: Full-Text Review (3-5 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        download_pdfs [label="Download PDFs"];
+        extract_info [label="Extract Key Info\n(methods, metrics, datasets)"];
+        final_review [label="Final Inclusion\nDecision"];
+        selected_papers [label="Selected Papers\n(50-70 final)"];
+
+        download_pdfs -> extract_info;
+        extract_info -> final_review;
+        final_review -> selected_papers;
+    }
+
+    // Minimum papers check
+    min_papers_check [shape=diamond, label="≥50 Papers\nSelected?", fillcolor=yellow];
+    expand_search [shape=octagon, label="WARNING:\nExpand Search\nCriteria", fillcolor=orange];
+
+    // Phase 5: Synthesis
+    subgraph cluster_phase5 {
+        label="Phase 5: Synthesis (2-3 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        extract_sota [label="Extract SOTA\nBenchmarks"];
+        identify_gaps [label="Identify\nResearch Gaps"];
+        formulate_hypotheses [label="Formulate\nHypotheses"];
+
+        extract_sota -> identify_gaps;
+        identify_gaps -> formulate_hypotheses;
+    }
+
+    // Phase 6: Writing
+    subgraph cluster_phase6 {
+        label="Phase 6: Writing (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        structure_review [label="Structure\nLiterature Review"];
+        write_sections [label="Write Sections\n(Intro, Background, etc.)"];
+        generate_bibtex [label="Generate BibTeX\nCitations"];
+
+        structure_review -> write_sections;
+        write_sections -> generate_bibtex;
+    }
+
+    // Phase 7: PRISMA (Optional)
+    prisma [label="Phase 7: PRISMA Diagram\n(Optional, 1 hour)", fillcolor=lightgray, style="filled,dashed"];
+
+    // Deliverables
+    deliverables [label="Deliverables:\n- Literature review (50-70 papers)\n- SOTA benchmarks table\n- Research gap analysis\n- Hypothesis formulation\n- BibTeX bibliography"];
+
+    // External references
+    databases [shape=cylinder, label="Databases:\nArXiv\nSemantic Scholar\nPapers with Code", fillcolor=lightcoral];
+    selected_papers_db [shape=cylinder, label="Selected Papers:\nPDFs + Metadata", fillcolor=lightcoral];
+
+    // Concepts
+    prisma_guidelines [shape=folder, label="PRISMA 2020:\nSystematic Review\nGuidelines", fillcolor=lightsalmon];
+    pico_framework [shape=folder, label="PICO Framework:\nPopulation, Intervention\nComparison, Outcome", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> formulate_question [lhead=cluster_phase1];
+    define_search_terms -> search_arxiv [lhead=cluster_phase2];
+    merge_results -> remove_duplicates [lhead=cluster_phase3];
+
+    // Screening to full-text review
+    screened_papers -> download_pdfs [lhead=cluster_phase4];
+
+    // Minimum papers check
+    selected_papers -> min_papers_check;
+    min_papers_check -> extract_sota [label="yes", color=green, lhead=cluster_phase5];
+    min_papers_check -> expand_search [label="no", color=red];
+    expand_search -> search_arxiv [label="retry", style=dashed];
+
+    // Synthesis to writing
+    formulate_hypotheses -> structure_review [lhead=cluster_phase6];
+
+    // Writing to PRISMA
+    generate_bibtex -> prisma [style=dashed, label="if systematic\nreview"];
+
+    // PRISMA to deliverables
+    generate_bibtex -> deliverables;
+    prisma -> deliverables;
+
+    deliverables -> end;
+
+    // External references
+    search_arxiv -> databases [style=dashed, label="queries"];
+    search_semantic -> databases [style=dashed, label="queries"];
+    search_pwc -> databases [style=dashed, label="queries"];
+    download_pdfs -> selected_papers_db [style=dashed, label="stores"];
+
+    // Concept references
+    formulate_question -> pico_framework [style=dashed, label="uses"];
+    prisma -> prisma_guidelines [style=dashed, label="follows"];
+
+    labelloc="t";
+    label="Literature Synthesis Process Flow\nDeep Research SOP - Pipeline A - Phase 1\n7 Phases, researcher agent, 50-70 Papers Synthesized";
+    fontsize=16;
+    fontname="Arial Bold";
+}

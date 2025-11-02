@@ -1,0 +1,206 @@
+digraph MethodDevelopmentProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nMethod Development\n(Gate 1 APPROVED)", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nQuality Gate 2\nAPPROVED", fillcolor=green, fontcolor=white];
+    fail [shape=ellipse, label="Rejected:\nGate 2 Failed\nor Performance\nRegression", fillcolor=red, fontcolor=white];
+
+    // Phase 1: Architecture Design
+    subgraph cluster_phase1 {
+        label="Phase 1: Architecture Design (4-8 hours)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        analyze_baseline [label="system-architect agent:\nAnalyze Baseline\nArchitecture"];
+        identify_improvements [label="Identify\nImprovement\nOpportunities"];
+        design_novel [label="Design Novel\nComponents"];
+        theoretical_justification [label="Theoretical\nJustification"];
+        architecture_review [label="reviewer agent:\nArchitecture Review"];
+
+        analyze_baseline -> identify_improvements;
+        identify_improvements -> design_novel;
+        design_novel -> theoretical_justification;
+        theoretical_justification -> architecture_review;
+    }
+
+    // Phase 2: Prototype Implementation
+    subgraph cluster_phase2 {
+        label="Phase 2: Prototype Implementation (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        implement_components [label="coder agent:\nImplement Novel\nComponents"];
+        test_suite [label="tester agent:\nCreate Test Suite\n(100% coverage)"];
+        integration_test [label="Integration Test:\nBackward Compatible"];
+        ablation_flags [label="Add Ablation\nFlags"];
+
+        implement_components -> test_suite;
+        test_suite -> integration_test;
+        integration_test -> ablation_flags;
+    }
+
+    // Test coverage check
+    coverage_check [shape=diamond, label="Test\nCoverage\n≥100%?", fillcolor=yellow];
+    fix_tests [shape=octagon, label="WARNING:\nAdd Missing\nTests", fillcolor=orange];
+
+    // Phase 3: Ablation Studies
+    subgraph cluster_phase3 {
+        label="Phase 3: Ablation Studies (2-3 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        create_matrix [label="Create Ablation\nMatrix (≥5 components)"];
+        run_experiments [label="tester agent:\nRun Experiments\n(3 seeds)"];
+        statistical_analysis [label="Statistical\nAnalysis\n(paired t-test)"];
+        rank_importance [label="Rank Component\nImportance"];
+
+        create_matrix -> run_experiments;
+        run_experiments -> statistical_analysis;
+        statistical_analysis -> rank_importance;
+    }
+
+    // Ablation significance check
+    significance_check [shape=diamond, label="Components\nSignificantly\nImprove\nPerformance?", fillcolor=yellow];
+    redesign [shape=octagon, label="CRITICAL:\nRedesign or\nRemove Ineffective\nComponents", fillcolor=orange];
+
+    // Phase 4: Hyperparameter Optimization
+    subgraph cluster_phase4 {
+        label="Phase 4: Hyperparameter Optimization (1-2 days)";
+        fillcolor=lightblue;
+        style=filled;
+
+        define_search_space [label="Define Search\nSpace"];
+        bayesian_opt [label="coder agent:\nBayesian\nOptimization"];
+        sensitivity [label="Sensitivity\nAnalysis"];
+        optimal_config [label="Document\nOptimal Config"];
+
+        define_search_space -> bayesian_opt;
+        bayesian_opt -> sensitivity;
+        sensitivity -> optimal_config;
+    }
+
+    // Phase 5: Comparative Evaluation
+    subgraph cluster_phase5 {
+        label="Phase 5: Comparative Evaluation (4-8 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        benchmark_suite [label="tester agent:\nBenchmark Suite"];
+        compare_baseline [label="Compare vs.\nBaseline"];
+        statistical_test [label="Statistical\nSignificance Test"];
+        generalization [label="Test\nGeneralization"];
+
+        benchmark_suite -> compare_baseline;
+        compare_baseline -> statistical_test;
+        statistical_test -> generalization;
+    }
+
+    // Performance check
+    performance_check [shape=diamond, label="Novel Method\n≥ Baseline\n+ Significant\nImprovement?", fillcolor=yellow];
+    debug_performance [shape=octagon, label="CRITICAL:\nDebug Performance\nRegression", fillcolor=orange];
+
+    // Phase 6: Documentation
+    subgraph cluster_phase6 {
+        label="Phase 6: Documentation (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        method_card [label="archivist agent:\nCreate Method Card"];
+        arch_diagrams [label="Architectural\nDiagrams"];
+        repro_docs [label="Reproducibility\nDocumentation"];
+        readme [label="Write README\n(≤5 steps)"];
+
+        method_card -> arch_diagrams;
+        arch_diagrams -> repro_docs;
+        repro_docs -> readme;
+    }
+
+    // Phase 7: Gate 2 Validation
+    subgraph cluster_phase7 {
+        label="Phase 7: Gate 2 Validation (2-4 hours)";
+        fillcolor=lightblue;
+        style=filled;
+
+        validate_gate2 [label="evaluator agent:\nValidate Gate 2"];
+        ethics_review [label="ethics-agent:\nEthics Review\n(Safety, Fairness, Privacy)"];
+        repro_test [label="Reproducibility\nTest (3 runs)"];
+        gate2_checklist [label="Generate\nGate 2 Checklist"];
+
+        validate_gate2 -> ethics_review;
+        ethics_review -> repro_test;
+        repro_test -> gate2_checklist;
+    }
+
+    // Gate 2 decision
+    gate2_decision [shape=diamond, label="Gate 2\nDecision?", fillcolor=yellow];
+    approve [label="APPROVED:\nProceed to\nHolistic Evaluation", fillcolor=lightgreen];
+    conditional [label="CONDITIONAL:\nMinor Fixes\nRequired", fillcolor=lightyellow];
+    reject [label="REJECT:\nMajor Issues", fillcolor=lightcoral];
+
+    // External references
+    baseline_package [shape=cylinder, label="Baseline\nReproducibility\nPackage", fillcolor=lightcoral];
+    datasets [shape=cylinder, label="Datasets\n(Train/Val/Test)", fillcolor=lightcoral];
+    gpu_cluster [shape=cylinder, label="GPU Cluster\n4-8 GPUs", fillcolor=lightcoral];
+
+    // Concepts
+    ablation_theory [shape=folder, label="Ablation Study\nMethodology:\nDror et al. 2018", fillcolor=lightsalmon];
+    method_cards [shape=folder, label="Method Cards:\nMitchell et al. 2019", fillcolor=lightsalmon];
+    deep_research_sop [shape=folder, label="Deep Research SOP\nPipeline D\nQuality Gate 2", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> analyze_baseline [lhead=cluster_phase1];
+    architecture_review -> implement_components [lhead=cluster_phase2];
+
+    // Test coverage check
+    ablation_flags -> coverage_check;
+    coverage_check -> create_matrix [label="yes", color=green, lhead=cluster_phase3];
+    coverage_check -> fix_tests [label="no", color=red];
+    fix_tests -> test_suite [label="retry", style=dashed];
+
+    // Ablation studies
+    rank_importance -> significance_check;
+    significance_check -> define_search_space [label="yes", color=green, lhead=cluster_phase4];
+    significance_check -> redesign [label="no", color=red];
+    redesign -> design_novel [label="redesign & retry", style=dashed];
+
+    // Hyperparameter optimization to evaluation
+    optimal_config -> benchmark_suite [lhead=cluster_phase5];
+
+    // Performance check
+    generalization -> performance_check;
+    performance_check -> method_card [label="yes", color=green, lhead=cluster_phase6];
+    performance_check -> debug_performance [label="no", color=red];
+    debug_performance -> implement_components [label="fix & retry", style=dashed, lhead=cluster_phase2];
+
+    // Documentation to Gate 2
+    readme -> validate_gate2 [lhead=cluster_phase7];
+
+    // Gate 2 decision
+    gate2_checklist -> gate2_decision;
+    gate2_decision -> approve [label="approved", color=green];
+    gate2_decision -> conditional [label="conditional", color=orange];
+    gate2_decision -> reject [label="reject", color=red];
+
+    approve -> end;
+    conditional -> end [label="after fixes"];
+    reject -> fail;
+
+    // External references
+    analyze_baseline -> baseline_package [style=dashed, label="uses"];
+    run_experiments -> datasets [style=dashed, label="uses"];
+    bayesian_opt -> gpu_cluster [style=dashed, label="requires"];
+
+    // Concept references
+    statistical_analysis -> ablation_theory [style=dashed, label="follows"];
+    method_card -> method_cards [style=dashed, label="implements"];
+    validate_gate2 -> deep_research_sop [style=dashed, label="implements"];
+
+    labelloc="t";
+    label="Method Development Process Flow\nDeep Research SOP - Pipeline D - Quality Gate 2\n7 Phases, 6 Agents, Novel Architecture + Ablation Studies";
+    fontsize=16;
+    fontname="Arial Bold";
+}
