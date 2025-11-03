@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Graphviz Diagram Library</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 10% 20%, #1f2937 0%, #0b1120 100%);
+      color: #f9fafb;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2rem;
+    }
+    header {
+      max-width: 960px;
+      margin: 0 auto 2rem auto;
+    }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .card {
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: rgba(30, 41, 59, 0.75);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+    a {
+      color: #38bdf8;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Graphviz Diagram Library</h1>
+    <p>Browse the reorganized skill and agent Graphviz diagrams. Render them with <code>validate-all-diagrams.sh</code> or the
+    accompanying PowerShell script, then open the generated SVGs inside the <code>rendered/</code> folder.</p>
+  </header>
+  <main>
+    <div class="grid">
+      <section class="card">
+        <h2>Skill Diagrams</h2>
+        <p>High-level workflow diagrams for each skill family.</p>
+        <ul>
+          <li><a href="skills/README.md">skills/README.md</a></li>
+          <li><a href="skills/skills-agent-coordination.dot">skills/skills-agent-coordination.dot</a></li>
+          <li><a href="skills/skills-coverage-heatmap.dot">skills/skills-coverage-heatmap.dot</a></li>
+          <li><a href="skills/skills-ecosystem-overview.dot">skills/skills-ecosystem-overview.dot</a></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Agent Mappings</h2>
+        <p>Topology diagrams describing swarm and coordination layouts.</p>
+        <ul>
+          <li><a href="agent-mappings/batch-4-agent-overview.dot">agent-mappings/batch-4-agent-overview.dot</a></li>
+          <li><a href="agent-mappings/batch-4-core-swarm-agents.dot">agent-mappings/batch-4-core-swarm-agents.dot</a></li>
+          <li><a href="agent-mappings/batch-4-domain-expansion.dot">agent-mappings/batch-4-domain-expansion.dot</a></li>
+        </ul>
+      </section>
+      <section class="card">
+        <h2>Resources</h2>
+        <p>Use the scripts and templates below to extend the library.</p>
+        <ul>
+          <li><a href="validate-all-diagrams.sh">validate-all-diagrams.sh</a></li>
+          <li><a href="validate-all-diagrams.ps1">validate-all-diagrams.ps1</a></li>
+          <li><a href="templates/skill-process.dot.template">templates/skill-process.dot.template</a></li>
+          <li><a href="templates/agent-process.dot.template">templates/agent-process.dot.template</a></li>
+          <li><a href="templates/command-process.dot.template">templates/command-process.dot.template</a></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <footer>
+    Generated as part of the docs/workflows/graphviz reorganization (2025-11-02).
+  </footer>
+</body>
+</html>

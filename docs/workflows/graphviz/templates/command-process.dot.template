@@ -1,0 +1,14 @@
+digraph "command-process" {
+  rankdir=LR;
+  node [shape=rectangle, style="rounded,filled", fontsize=11, fillcolor="#0ea5e9", fontcolor="#0f172a"];
+
+  parse [label="Parse Args"];
+  validate [label="Validate Context", fillcolor="#38bdf8"];
+  execute [label="Invoke MCP / Tools", fillcolor="#22d3ee"];
+  handle [label="Handle Errors", fillcolor="#facc15"];
+  respond [label="Return Result", fillcolor="#2dd4bf"];
+
+  parse -> validate -> execute -> respond;
+  execute -> handle [label="failure", color="#fb7185"];
+  handle -> respond;
+}

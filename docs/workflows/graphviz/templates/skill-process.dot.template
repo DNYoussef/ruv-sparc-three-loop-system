@@ -1,0 +1,25 @@
+digraph "skill-process" {
+  rankdir=LR;
+  node [shape=rectangle, style="rounded,filled", fillcolor="#2563eb", fontcolor="white", fontsize=12];
+
+  subgraph cluster_inputs {
+    label = "Inputs";
+    style = "rounded,dashed";
+    color = "#60a5fa";
+    input1 [label="Task Brief"];
+    input2 [label="Context Files"];
+  }
+
+  validate [label="Validate Requirements", fillcolor="#38bdf8"];
+  process [label="Execute Skill Steps"];
+  review [label="Quality Review", fillcolor="#0ea5e9"];
+  output [label="Deliverables", fillcolor="#14b8a6"];
+  fallback [label="Escalation", fillcolor="#f97316", shape=hexagon];
+
+  input1 -> validate;
+  input2 -> validate;
+  validate -> process;
+  process -> review;
+  review -> output;
+  review -> fallback [label="failure", color="#facc15"];
+}

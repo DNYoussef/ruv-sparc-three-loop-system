@@ -11,32 +11,32 @@
 
   "skills": {
     "research-driven-planning": {
-      "path": "../../.claude/skills/research-driven-planning",
+      "path": "../../skills/research/research-driven-planning",
       "description": "Loop 1: Research-driven requirements analysis with 5x pre-mortem cycles",
       "category": "planning"
     },
     "parallel-swarm-implementation": {
-      "path": "../../.claude/skills/parallel-swarm-implementation",
+      "path": "../../skills/orchestration/parallel-swarm-implementation",
       "description": "Loop 2: Dynamic agent swarm execution with 6.75x speedup",
       "category": "implementation"
     },
     "cicd-intelligent-recovery": {
-      "path": "../../.claude/skills/cicd-intelligent-recovery",
+      "path": "../../skills/operations/cicd-intelligent-recovery",
       "description": "Loop 3: CI/CD automation with intelligent failure recovery",
       "category": "quality"
     },
     "multi-model": {
-      "path": "../../.claude/skills/multi-model",
+      "path": "../../skills/references/multi-model.md",
       "description": "Multi-model routing (Gemini search + Codex execution)",
       "category": "coordination"
     },
     "cascade-orchestrator": {
-      "path": "../../.claude/skills/cascade-orchestrator",
+      "path": "../../skills/orchestration/cascade-orchestrator",
       "description": "Sophisticated workflow cascades with sequential/parallel/conditional execution",
       "category": "orchestration"
     },
     "feature-dev-complete": {
-      "path": "../../.claude/skills/feature-dev-complete",
+      "path": "../../skills/delivery/feature-dev-complete",
       "description": "Complete feature development lifecycle from research to deployment",
       "category": "development"
     }
@@ -44,27 +44,27 @@
 
   "commands": {
     "/sparc:integration": {
-      "path": "../../.claude/commands/sparc/integration.md",
+      "path": "../../commands/delivery/sparc/integration.md",
       "description": "System integration and merging"
     },
     "/sparc:devops": {
-      "path": "../../.claude/commands/sparc/devops.md",
+      "path": "../../commands/delivery/sparc/devops.md",
       "description": "DevOps automation and deployment"
     },
     "/development": {
-      "path": "../../.claude/commands/development-commands/development.md",
+      "path": "../../commands/delivery/workflows/development.md",
       "description": "Complete development workflow (all 3 loops)"
     },
     "/build-feature": {
-      "path": "../../.claude/commands/development-commands/build-feature.md",
+      "path": "../../commands/delivery/essential-commands/build-feature.md",
       "description": "Build feature with research, implementation, and recovery"
     },
     "/gemini-search": {
-      "path": "../../.claude/commands/development-commands/gemini-search.md",
+      "path": "../../commands/platforms/multi-model-commands/gemini-search.md",
       "description": "Gemini-powered research and pattern discovery"
     },
     "/codex-auto": {
-      "path": "../../.claude/commands/development-commands/codex-auto.md",
+      "path": "../../commands/platforms/multi-model-commands/codex-auto.md",
       "description": "Codex-powered auto-implementation with sandbox testing"
     }
   },

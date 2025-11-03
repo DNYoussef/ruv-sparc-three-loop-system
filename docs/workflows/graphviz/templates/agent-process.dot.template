@@ -1,0 +1,25 @@
+digraph "agent-process" {
+  graph [splines=true, ranksep=0.7];
+  node [shape=rectangle, style="rounded,filled", fillcolor="#9333ea", fontcolor="white", fontsize=11];
+
+  receive [label="Receive Task"];
+  analyze [label="Analyze Context", fillcolor="#a855f7"];
+  plan [label="Plan Actions", fillcolor="#c084fc"];
+  execute [label="Execute" , fillcolor="#6d28d9"];
+  report [label="Report & Persist", fillcolor="#38bdf8"];
+
+  receive -> analyze -> plan -> execute -> report;
+
+  subgraph cluster_feedback {
+    label="Feedback";
+    style="rounded,dotted";
+    color="#c4b5fd";
+    qa [label="Quality Signals", fillcolor="#f97316"];
+    memory [label="Memory Updates", fillcolor="#14b8a6"];
+  }
+
+  report -> qa;
+  report -> memory;
+  qa -> analyze [style=dashed, label="Adjust"];
+  memory -> plan [style=dashed, label="Reuse"];
+}
