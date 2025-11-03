@@ -1,0 +1,194 @@
+# Performance Profiling Configuration
+# Customize profiling behavior and thresholds
+
+profiling:
+  # Profiling modes
+  modes:
+    quick:
+      duration: 30
+      sample_interval: 1000
+      targets: ["cpu", "memory"]
+    standard:
+      duration: 300
+      sample_interval: 1000
+      targets: ["cpu", "memory", "io"]
+    deep:
+      duration: 1800
+      sample_interval: 500
+      targets: ["cpu", "memory", "io", "network"]
+    continuous:
+      duration: -1  # Run indefinitely
+      sample_interval: 5000
+      targets: ["all"]
+
+  # Sampling configuration
+  sampling:
+    cpu_rate_hz: 99
+    stack_depth: 128
+    include_native: false
+    track_allocations: true
+
+# Performance thresholds
+thresholds:
+  # CPU thresholds
+  cpu:
+    hot_path_percent: 10.0
+    function_time_ms: 100
+    total_calls: 10000
+
+  # Memory thresholds
+  memory:
+    leak_growth_mb: 10
+    max_heap_mb: 1024
+    gc_frequency_ms: 100
+    fragmentation_percent: 20
+
+  # I/O thresholds
+  io:
+    slow_query_ms: 100
+    slow_request_ms: 1000
+    disk_latency_ms: 50
+    network_latency_ms: 100
+
+  # Event loop thresholds (Node.js)
+  event_loop:
+    lag_ms: 100
+    max_lag_ms: 500
+    async_delay_ms: 50
+
+  # System thresholds
+  system:
+    cpu_usage_percent: 80
+    memory_usage_percent: 80
+    swap_usage_percent: 50
+    disk_io_mbps: 100
+
+# Bottleneck detection
+bottleneck_detection:
+  enabled: true
+  categories:
+    - event_loop_lag
+    - memory_leak
+    - slow_query
+    - slow_request
+    - async_delay
+    - cpu_hotspot
+
+  severity_rules:
+    critical:
+      - event_loop_lag > 500ms
+      - memory_leak > 100MB
+      - slow_query > 1000ms
+    high:
+      - event_loop_lag > 200ms
+      - memory_leak > 50MB
+      - slow_query > 500ms
+      - cpu_usage > 90%
+    medium:
+      - event_loop_lag > 100ms
+      - memory_leak > 10MB
+      - slow_query > 100ms
+      - cpu_usage > 70%
+    low:
+      - slow_request > 1000ms
+      - async_delay > 50ms
+
+# Output configuration
+output:
+  dir: "./performance-reports"
+  formats:
+    - json
+    - html
+    - flamegraph
+
+  reports:
+    flamegraph:
+      enabled: true
+      format: svg
+      min_width: 1
+    heap_snapshot:
+      enabled: true
+      max_size_mb: 500
+    call_tree:
+      enabled: true
+      max_depth: 20
+    recommendations:
+      enabled: true
+      min_severity: medium
+
+# Optimization settings
+optimization:
+  auto_apply: false
+  require_approval: true
+  run_tests_before: true
+  run_benchmarks_after: true
+
+  strategies:
+    - algorithmic
+    - caching
+    - parallelization
+    - database
+    - memory
+    - network
+
+# Benchmark configuration
+benchmarking:
+  iterations: 10
+  warmup_iterations: 2
+  comparison_baseline: "./baseline-metrics.json"
+
+  metrics:
+    - throughput
+    - latency
+    - p50
+    - p95
+    - p99
+    - cpu_usage
+    - memory_usage
+
+# Integration settings
+integrations:
+  apm_tools:
+    - name: datadog
+      enabled: false
+      api_key: "${DATADOG_API_KEY}"
+    - name: newrelic
+      enabled: false
+      license_key: "${NEWRELIC_LICENSE_KEY}"
+    - name: prometheus
+      enabled: false
+      endpoint: "http://localhost:9090"
+
+  notification:
+    enabled: true
+    channels:
+      - type: slack
+        webhook: "${SLACK_WEBHOOK_URL}"
+      - type: email
+        recipients: ["devops@example.com"]
+
+# Advanced settings
+advanced:
+  # Memory profiling
+  memory:
+    snapshot_interval: 60000
+    compare_snapshots: true
+    track_retention: true
+
+  # CPU profiling
+  cpu:
+    profile_native_code: false
+    track_syscalls: false
+    generate_perf_map: true
+
+  # Database profiling
+  database:
+    explain_queries: true
+    track_connection_pool: true
+    analyze_indexes: true
+
+  # Network profiling
+  network:
+    track_connections: true
+    analyze_bandwidth: true
+    monitor_dns: false

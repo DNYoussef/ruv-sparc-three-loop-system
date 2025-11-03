@@ -1,0 +1,88 @@
+# Q-Learning Configuration Template
+# Value-based reinforcement learning algorithm (off-policy)
+
+algorithm: "q-learning"
+description: "Discrete action space learning with epsilon-greedy exploration"
+
+# Learning parameters
+hyperparameters:
+  learning_rate: 0.001
+  gamma: 0.99              # Discount factor
+  epsilon: 0.1             # Exploration rate
+  epsilon_decay: 0.995     # Epsilon decay per episode
+  epsilon_min: 0.01        # Minimum epsilon value
+
+# Environment configuration
+environment:
+  state_dim: 4             # Continuous state space dimension
+  action_dim: 2            # Discrete action space
+  max_steps: 100           # Maximum steps per episode
+
+# Training configuration
+training:
+  num_episodes: 1000       # Total training episodes
+  batch_size: 32           # Batch size for experience replay
+  replay_buffer_size: 10000
+  target_update_freq: 10   # Update target network every N episodes
+
+# Experience replay
+replay:
+  enabled: true
+  prioritized: false       # Use prioritized experience replay
+  alpha: 0.6              # Priority exponent
+  beta: 0.4               # Importance sampling weight
+
+# Neural network architecture (if using DQN)
+network:
+  hidden_layers: [64, 64]
+  activation: "relu"
+  optimizer: "adam"
+  loss_function: "mse"
+
+# Evaluation
+evaluation:
+  eval_frequency: 50       # Evaluate every N episodes
+  eval_episodes: 10        # Number of episodes per evaluation
+  render: false           # Render environment during eval
+
+# Logging and checkpointing
+logging:
+  log_frequency: 10        # Log metrics every N episodes
+  save_frequency: 100      # Save model every N episodes
+  log_dir: "./logs/q-learning"
+  checkpoint_dir: "./checkpoints/q-learning"
+
+# AgentDB integration
+agentdb:
+  db_path: "./.agentdb/q-learning.db"
+  enable_learning: true
+  enable_reasoning: true
+  cache_size: 1000
+  pattern_domain: "q-learning"
+
+  # Memory consolidation
+  consolidation:
+    enabled: true
+    min_confidence: 0.7
+    merge_similar: true
+
+# Performance optimization
+performance:
+  use_wasm: true          # WASM-accelerated inference
+  quantization: false     # Model quantization
+  parallel_envs: 1        # Number of parallel environments
+
+# Use cases
+use_cases:
+  - "Grid world navigation"
+  - "Board games (Chess, Go)"
+  - "Resource allocation"
+  - "Discrete decision-making problems"
+
+# Best practices
+notes: |
+  - Start with high epsilon (0.3-0.5) for exploration
+  - Use experience replay for sample efficiency
+  - Monitor epsilon decay to avoid premature convergence
+  - Tune learning rate based on convergence behavior
+  - Consider DQN variants for continuous state spaces

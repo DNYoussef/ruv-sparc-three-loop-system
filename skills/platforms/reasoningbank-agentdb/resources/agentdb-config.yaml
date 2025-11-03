@@ -1,0 +1,153 @@
+# AgentDB Configuration for ReasoningBank
+# Optimized settings for adaptive learning and trajectory tracking
+
+# Database Configuration
+database:
+  path: ".agentdb/reasoningbank.db"
+  dimension: 1536  # OpenAI text-embedding-ada-002 dimension
+  auto_vacuum: true
+  cache_size: 10000  # 10K pattern cache
+  synchronous: "NORMAL"  # Balance between safety and performance
+
+# Vector Search Configuration
+vector_search:
+  index_type: "HNSW"  # Hierarchical Navigable Small World
+  ef_construction: 200  # Index build parameter (higher = better recall, slower build)
+  ef_search: 50  # Search parameter (higher = better recall, slower search)
+  m: 16  # Number of connections per layer
+  enable_mmr: true  # Maximal Marginal Relevance for diversity
+  diversity_weight: 0.3  # Balance between relevance and diversity
+
+# Learning Configuration
+learning:
+  enable_learning: true
+  enable_reasoning: true
+  min_confidence: 0.5  # Minimum confidence for pattern retrieval
+  success_threshold: 0.7  # Success rate threshold for high-quality patterns
+  usage_threshold: 3  # Minimum usage count for reliable patterns
+
+# Pattern Management
+patterns:
+  max_patterns: 100000  # Maximum patterns to store
+  consolidation:
+    enabled: true
+    similarity_threshold: 0.95  # Threshold for identifying duplicates
+    min_usage: 5  # Minimum usage before consolidation
+  pruning:
+    enabled: true
+    quality_threshold: 0.2  # Prune patterns below this quality
+    age_threshold_days: 90  # Prune unused patterns older than this
+  optimization:
+    auto_optimize: true
+    optimization_interval_hours: 24  # Run optimization daily
+    confidence_recalibration: true
+
+# Trajectory Tracking
+trajectories:
+  enabled: true
+  log_path: ".agentdb/trajectories.jsonl"
+  max_trajectory_age_days: 30
+  auto_analysis: true
+  analysis_interval_hours: 6
+
+# Memory Distillation
+distillation:
+  enabled: true
+  distillation_threshold: 10  # Distill after 10 similar experiences
+  min_sample_size: 5  # Minimum samples for distillation
+  confidence_boost: 0.1  # Confidence increase for distilled patterns
+
+# Reasoning Agents
+reasoning:
+  pattern_matcher:
+    enabled: true
+    k: 10  # Number of patterns to retrieve
+    use_mmr: true
+    diversity_weight: 0.3
+  context_synthesizer:
+    enabled: true
+    max_context_length: 2048
+    synthesis_mode: "summary"  # summary, detailed, or hybrid
+  memory_optimizer:
+    enabled: true
+    auto_consolidate: true
+    consolidation_frequency_hours: 24
+  experience_curator:
+    enabled: true
+    min_quality: 0.6
+    filter_outliers: true
+
+# Performance
+performance:
+  batch_size: 100  # Batch size for bulk operations
+  parallel_queries: 4  # Parallel query execution
+  cache_embeddings: true
+  preload_patterns: true  # Preload frequently used patterns
+
+# Domains
+domains:
+  default: "general"
+  allowed_domains:
+    - "general"
+    - "code-generation"
+    - "debugging"
+    - "api-optimization"
+    - "database-optimization"
+    - "testing"
+    - "refactoring"
+    - "architecture"
+    - "security"
+    - "performance"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARN, ERROR
+  log_file: ".agentdb/reasoningbank.log"
+  max_log_size_mb: 100
+  log_rotation: true
+  structured_logging: true
+
+# Monitoring
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  collect_metrics: true
+  metrics:
+    - "pattern_retrieval_latency"
+    - "pattern_quality"
+    - "success_rate"
+    - "consolidation_rate"
+    - "pruning_rate"
+
+# Backup
+backup:
+  enabled: true
+  backup_interval_hours: 24
+  backup_path: ".agentdb/backups"
+  max_backups: 7  # Keep 7 daily backups
+  compress: true
+
+# Migration
+migration:
+  auto_migrate: true
+  validate_after_migration: true
+  backup_before_migration: true
+
+# Integration
+integration:
+  mcp_server:
+    enabled: true
+    port: 8765
+  claude_flow:
+    enabled: true
+    hooks_enabled: true
+  memory_mcp:
+    enabled: true
+    cross_reference: true  # Cross-reference with Memory MCP
+
+# Advanced
+advanced:
+  enable_quantization: true  # Reduce memory usage
+  quantization_bits: 8  # 8-bit quantization (4-8x memory reduction)
+  enable_gpu: false  # GPU acceleration (requires CUDA)
+  experimental_features: false

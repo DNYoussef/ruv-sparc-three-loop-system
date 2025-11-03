@@ -1,0 +1,330 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loss Curve Data Format",
+  "description": "JSON schema for ML training loss curve data",
+  "type": "object",
+  "required": ["metadata", "metrics"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["experiment_id", "created"],
+      "properties": {
+        "experiment_id": {
+          "type": "string",
+          "description": "Unique identifier for this training run"
+        },
+        "model_name": {
+          "type": "string",
+          "description": "Name or architecture of the model"
+        },
+        "dataset": {
+          "type": "string",
+          "description": "Dataset used for training"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when training started"
+        },
+        "framework": {
+          "type": "string",
+          "enum": ["pytorch", "tensorflow", "jax", "other"],
+          "description": "ML framework used"
+        },
+        "hardware": {
+          "type": "object",
+          "properties": {
+            "gpu": {
+              "type": "string",
+              "description": "GPU model (e.g., 'NVIDIA A100')"
+            },
+            "cpu": {
+              "type": "string"
+            },
+            "memory_gb": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "hyperparameters": {
+      "type": "object",
+      "description": "Training hyperparameters",
+      "properties": {
+        "learning_rate": {
+          "type": "number"
+        },
+        "batch_size": {
+          "type": "integer"
+        },
+        "optimizer": {
+          "type": "string"
+        },
+        "weight_decay": {
+          "type": "number"
+        },
+        "dropout": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "gradient_clip_norm": {
+          "type": "number"
+        },
+        "scheduler": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["cosine", "step", "exponential", "plateau", "none"]
+            },
+            "params": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Training and validation metrics over time",
+      "required": ["epochs"],
+      "properties": {
+        "epochs": {
+          "type": "array",
+          "description": "Array of epoch numbers",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "steps": {
+          "type": "array",
+          "description": "Array of global step numbers",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "train_loss": {
+          "type": "array",
+          "description": "Training loss values",
+          "items": {
+            "type": "number"
+          }
+        },
+        "val_loss": {
+          "type": "array",
+          "description": "Validation loss values",
+          "items": {
+            "type": "number"
+          }
+        },
+        "train_accuracy": {
+          "type": "array",
+          "description": "Training accuracy values (if applicable)",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "val_accuracy": {
+          "type": "array",
+          "description": "Validation accuracy values (if applicable)",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "learning_rates": {
+          "type": "array",
+          "description": "Learning rate at each epoch",
+          "items": {
+            "type": "number"
+          }
+        },
+        "gradient_norms": {
+          "type": "array",
+          "description": "Gradient norm at each epoch",
+          "items": {
+            "type": "number"
+          }
+        },
+        "timestamps": {
+          "type": "array",
+          "description": "Wall-clock time at each epoch",
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "epoch_durations": {
+          "type": "array",
+          "description": "Time taken for each epoch (seconds)",
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "custom_metrics": {
+      "type": "object",
+      "description": "Additional custom metrics",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Notable events during training",
+      "items": {
+        "type": "object",
+        "required": ["epoch", "type", "message"],
+        "properties": {
+          "epoch": {
+            "type": "integer"
+          },
+          "step": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["divergence", "plateau", "checkpoint", "error", "warning", "info"]
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "description": "Saved model checkpoints",
+      "items": {
+        "type": "object",
+        "required": ["epoch", "path"],
+        "properties": {
+          "epoch": {
+            "type": "integer"
+          },
+          "step": {
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          },
+          "val_loss": {
+            "type": "number"
+          },
+          "is_best": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "final_metrics": {
+      "type": "object",
+      "description": "Final training metrics",
+      "properties": {
+        "best_epoch": {
+          "type": "integer"
+        },
+        "best_val_loss": {
+          "type": "number"
+        },
+        "final_train_loss": {
+          "type": "number"
+        },
+        "final_val_loss": {
+          "type": "number"
+        },
+        "total_epochs": {
+          "type": "integer"
+        },
+        "total_steps": {
+          "type": "integer"
+        },
+        "training_time_seconds": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "metadata": {
+        "experiment_id": "exp-20250102-123456",
+        "model_name": "transformer-base",
+        "dataset": "wikitext-103",
+        "created": "2025-01-02T12:34:56Z",
+        "framework": "pytorch",
+        "hardware": {
+          "gpu": "NVIDIA A100",
+          "memory_gb": 80
+        }
+      },
+      "hyperparameters": {
+        "learning_rate": 0.001,
+        "batch_size": 32,
+        "optimizer": "AdamW",
+        "weight_decay": 0.01,
+        "dropout": 0.1,
+        "gradient_clip_norm": 1.0,
+        "scheduler": {
+          "type": "cosine",
+          "params": {
+            "T_max": 100,
+            "eta_min": 1e-6
+          }
+        }
+      },
+      "metrics": {
+        "epochs": [0, 1, 2, 3, 4, 5],
+        "steps": [0, 1000, 2000, 3000, 4000, 5000],
+        "train_loss": [4.521, 3.842, 3.215, 2.987, 2.756, 2.543],
+        "val_loss": [4.312, 3.654, 3.187, 2.921, 2.712, 2.598],
+        "learning_rates": [0.001, 0.001, 0.00095, 0.00087, 0.00076, 0.00063],
+        "gradient_norms": [1.24, 0.98, 0.87, 0.76, 0.69, 0.64],
+        "epoch_durations": [3600, 3580, 3590, 3610, 3595, 3600]
+      },
+      "events": [
+        {
+          "epoch": 2,
+          "step": 2000,
+          "type": "checkpoint",
+          "message": "Saved best model checkpoint",
+          "timestamp": "2025-01-02T14:30:45Z"
+        }
+      ],
+      "checkpoints": [
+        {
+          "epoch": 2,
+          "step": 2000,
+          "path": "checkpoints/model_epoch_2.pt",
+          "val_loss": 3.187,
+          "is_best": true
+        }
+      ],
+      "final_metrics": {
+        "best_epoch": 2,
+        "best_val_loss": 3.187,
+        "final_train_loss": 2.543,
+        "final_val_loss": 2.598,
+        "total_epochs": 6,
+        "total_steps": 5000,
+        "training_time_seconds": 21575
+      }
+    }
+  ]
+}

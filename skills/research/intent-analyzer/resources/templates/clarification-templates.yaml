@@ -1,0 +1,306 @@
+# Clarification Question Templates
+#
+# Organized library of question templates for various clarification scenarios
+# including disambiguation, constraint revelation, context gathering, and
+# assumption validation strategies.
+
+# Disambiguation Questions
+# Choose between competing interpretations
+disambiguation:
+  binary_choice:
+    - template: "Are you looking to {option_a} or {option_b}?"
+      context: "Two distinct interpretations with similar probability"
+      example: "Are you looking to learn how it works or get code that implements it?"
+
+    - template: "Is your goal {goal_a} or {goal_b}?"
+      context: "Different end goals for similar requests"
+      example: "Is your goal to understand the concept or build a working solution?"
+
+    - template: "Would you prefer {approach_a} or {approach_b}?"
+      context: "Different approaches to same problem"
+      example: "Would you prefer a simple working example or a production-ready implementation?"
+
+  multiple_choice:
+    - template: "Which of these best describes what you're looking for?"
+      context: "Three or more interpretations"
+      options_format: "numbered_list"
+      example: |
+        Which of these best describes what you're looking for?
+        1. Explanation of how X works
+        2. Working code example for X
+        3. Comparison of X vs alternatives
+        4. Tutorial on implementing X
+
+    - template: "What's your primary focus here?"
+      context: "Multiple aspects of complex request"
+      options_format: "bulleted_aspects"
+      example: |
+        What's your primary focus here?
+        - Understanding the underlying concepts
+        - Getting something working quickly
+        - Learning best practices
+        - Optimizing an existing solution
+
+  intent_category:
+    - template: "Are you trying to {intent_a} or {intent_b}?"
+      context: "Different intent categories detected"
+      categories:
+        creative_vs_analytical: "create something new or analyze something existing"
+        learning_vs_doing: "understand how it works or get it done"
+        decision_vs_understanding: "make a choice or understand the options"
+
+# Constraint Revelation Questions
+# Surface unstated requirements and limitations
+constraint_revelation:
+  purpose:
+    - "What will you use this for?"
+    - "What problem are you trying to solve?"
+    - "What's the end goal of this task?"
+    - "What outcome are you hoping to achieve?"
+    - "How does this fit into your larger goal?"
+
+  audience:
+    - "Who is the audience for this?"
+    - "Who will be using/reading this?"
+    - "Is this for technical or non-technical users?"
+    - "What's the expertise level of your audience?"
+    - "Is this for personal use or presentation to others?"
+
+  experience:
+    - "What have you tried already?"
+    - "What's your experience level with {technology}?"
+    - "Are you familiar with {concept}?"
+    - "Have you worked with {tool} before?"
+    - "What's your background in {domain}?"
+
+  timeline:
+    - "What's your timeline for this?"
+    - "Is this time-sensitive?"
+    - "When do you need this by?"
+    - "Are you working under a deadline?"
+    - "How urgent is this?"
+
+  technical:
+    - "Are there specific technologies you need to use?"
+    - "What's your current tech stack?"
+    - "Do you have any technical constraints?"
+    - "What tools/frameworks are you working with?"
+    - "Are you limited to specific languages or platforms?"
+
+  resources:
+    - "What resources do you have available?"
+    - "Are there budget or licensing constraints?"
+    - "Do you have access to {tool/service}?"
+    - "What limitations should I be aware of?"
+    - "Can you use paid services or only free/open-source?"
+
+  quality:
+    - "Is this for production use or learning?"
+    - "How important is {performance/security/maintainability}?"
+    - "What quality standards need to be met?"
+    - "Does this need to be production-ready?"
+    - "Are there specific requirements for {aspect}?"
+
+  scope:
+    - "How comprehensive should this be?"
+    - "Are you looking for a complete solution or a starting point?"
+    - "Do you need a quick prototype or a robust implementation?"
+    - "Should I focus on breadth or depth?"
+
+# Context Gathering Questions
+# Build essential understanding of situation
+context_gathering:
+  general:
+    - "What's the broader context for this request?"
+    - "Can you tell me more about your situation?"
+    - "What led you to this question?"
+    - "Is there important background I should understand?"
+    - "What's the bigger picture here?"
+
+  requirements:
+    - "Are there specific requirements or constraints I should know about?"
+    - "What are the must-haves vs nice-to-haves?"
+    - "Are there any non-negotiable requirements?"
+    - "What factors are most important to you?"
+
+  success_criteria:
+    - "What would success look like for you?"
+    - "How will you know if this meets your needs?"
+    - "What would make this response ideal?"
+    - "What outcomes matter most?"
+
+  previous_attempts:
+    - "What have you tried so far?"
+    - "Have you looked at any existing solutions?"
+    - "What approaches have you considered?"
+    - "Is there something you've seen that's close to what you want?"
+
+  environment:
+    - "What's your development environment?"
+    - "What constraints does your environment impose?"
+    - "Are you working in a specific context (company, school, etc.)?"
+    - "What's the deployment target?"
+
+# Assumption Validation Questions
+# Verify implicit assumptions before proceeding
+assumption_validation:
+  interpretation:
+    - template: "I'm interpreting this as {interpretation}. Does that match what you meant?"
+      context: "Validate overall interpretation"
+      example: "I'm interpreting this as a request for production-ready code. Does that match what you meant?"
+
+    - template: "I'm assuming {assumption}. Is that correct?"
+      context: "Validate specific assumption"
+      example: "I'm assuming you want Python 3.x. Is that correct?"
+
+  priority:
+    - template: "Should I focus on {aspect_a} or is {aspect_b} more important?"
+      context: "Validate priority when multiple aspects exist"
+      example: "Should I focus on code clarity or performance optimization?"
+
+    - template: "Am I right in thinking {priority} is the main priority?"
+      context: "Confirm inferred priority"
+      example: "Am I right in thinking speed of delivery is the main priority?"
+
+  approach:
+    - template: "It seems like {observation}. Is that accurate?"
+      context: "Validate inferred approach preference"
+      example: "It seems like you prefer a simple, straightforward solution over a complex but flexible one. Is that accurate?"
+
+    - template: "Based on {signal}, I'm planning to {approach}. Does that work?"
+      context: "Validate approach based on detected signals"
+      example: "Based on your urgency, I'm planning to provide a quick working solution rather than a comprehensive tutorial. Does that work?"
+
+# Domain-Specific Question Sets
+# Specialized questions for particular domains
+domain_specific:
+  technical_implementation:
+    setup:
+      - "What's your development environment (OS, IDE, versions)?"
+      - "Are you working with an existing codebase or starting fresh?"
+      - "What dependencies or libraries are you already using?"
+
+    constraints:
+      - "Are there performance requirements?"
+      - "What's your target deployment platform?"
+      - "Do you have testing requirements?"
+
+    experience:
+      - "What's your comfort level with {language/framework}?"
+      - "Have you worked with {pattern/concept} before?"
+
+  creative_content:
+    style:
+      - "What tone are you aiming for (formal, casual, professional, friendly)?"
+      - "Do you have examples of styles you like?"
+      - "Who is the target audience?"
+
+    constraints:
+      - "Is there a specific length or format?"
+      - "Are there topics or approaches to avoid?"
+      - "Do you have brand guidelines or style requirements?"
+
+    purpose:
+      - "Where will this be published/used?"
+      - "What action do you want the audience to take?"
+
+  analytical_tasks:
+    criteria:
+      - "What criteria should I use for evaluation?"
+      - "What metrics or factors are most important?"
+      - "Are there specific aspects you want me to focus on?"
+
+    context:
+      - "What decision are you trying to make?"
+      - "What would make one option clearly better than another?"
+      - "Are there deal-breakers I should know about?"
+
+  learning_requests:
+    level:
+      - "What's your current understanding of {topic}?"
+      - "Have you studied {prerequisite} before?"
+      - "What's your learning goal (overview, working knowledge, expertise)?"
+
+    style:
+      - "Do you prefer examples or conceptual explanations?"
+      - "Should I assume knowledge of {related_concept}?"
+      - "What's the best way for you to learn (step-by-step, big picture first, etc.)?"
+
+# Multi-Turn Clarification Strategies
+# Progressive refinement through conversation
+multi_turn:
+  progressive_refinement:
+    turn_1:
+      strategy: "Ask highest-priority question only"
+      example: "What's your primary goal here?"
+
+    turn_2:
+      strategy: "Based on turn 1 response, ask domain-specific follow-up"
+      example: "Since you're focused on learning, what's your experience level?"
+
+    turn_3:
+      strategy: "Validate interpretation and confirm ready to proceed"
+      example: "So you want a tutorial-style explanation with examples for beginners. Ready to proceed?"
+
+  adaptive_depth:
+    simple_request:
+      questions: 0
+      strategy: "Proceed directly if interpretation is obvious"
+
+    moderate_ambiguity:
+      questions: 1
+      strategy: "Ask single disambiguating question"
+
+    high_ambiguity:
+      questions: 2-3
+      strategy: "Ask critical questions only, refine progressively"
+
+# Question Combination Strategies
+# How to combine different question types effectively
+combination_strategies:
+  disambiguation_first:
+    description: "Always disambiguate before gathering constraints"
+    pattern:
+      - disambiguation
+      - constraint_revelation
+      - assumption_validation
+
+  constraint_then_validate:
+    description: "Gather constraints then validate interpretation"
+    pattern:
+      - constraint_revelation
+      - assumption_validation
+
+  adaptive_priority:
+    description: "Prioritize based on confidence and stakes"
+    high_stakes:
+      - disambiguation
+      - constraint_revelation (critical only)
+      - assumption_validation
+
+    low_stakes:
+      - assumption_validation
+      - context_gathering (if needed)
+
+# Anti-Patterns to Avoid
+# Common clarification mistakes
+anti_patterns:
+  question_overload:
+    description: "Asking too many questions at once"
+    max_questions: 3
+    advice: "Prioritize ruthlessly - ask only critical questions"
+
+  interrogation_style:
+    description: "Sounding like an interrogation"
+    advice: "Make questions conversational, explain why you're asking"
+    example: |
+      ❌ "What's your tech stack? What's your timeline? Who's the audience?"
+      ✅ "To give you the most relevant solution, I'd like to know: what's your tech stack and timeline?"
+
+  premature_depth:
+    description: "Asking detailed questions before understanding basics"
+    advice: "Start broad, narrow progressively"
+
+  ignoring_signals:
+    description: "Asking questions that are already answered"
+    advice: "Use detected signals to avoid redundant questions"

@@ -1,0 +1,535 @@
+# Multi-Environment Progressive Deployment Pipeline
+# Demonstrates intelligent deployment with:
+# - Environment-specific configurations
+# - Progressive rollout strategies (canary, blue-green, rolling)
+# - Automated smoke tests and health checks
+# - Rollback capabilities
+# - Multi-region deployment
+
+name: Multi-Environment Progressive Deployment
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      regions:
+        description: 'Deployment regions (comma-separated)'
+        required: false
+        default: 'us-east-1'
+      strategy:
+        description: 'Deployment strategy'
+        required: false
+        type: choice
+        options:
+          - auto
+          - canary
+          - blue-green
+          - rolling
+        default: 'auto'
+
+permissions:
+  contents: read
+  deployments: write
+  packages: read
+
+env:
+  AWS_REGION: us-east-1
+  HEALTH_CHECK_TIMEOUT: 300
+  ROLLBACK_WINDOW: 3600
+
+jobs:
+  # ========================================
+  # Preparation and Risk Assessment
+  # ========================================
+
+  prepare-deployment:
+    name: Prepare Deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      environment: ${{ steps.config.outputs.environment }}
+      regions: ${{ steps.config.outputs.regions }}
+      strategy: ${{ steps.config.outputs.strategy }}
+      risk-level: ${{ steps.risk.outputs.level }}
+      version: ${{ steps.version.outputs.version }}
+      previous-version: ${{ steps.version.outputs.previous }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Determine deployment configuration
+        id: config
+        run: |
+          # Environment
+          if [[ "${{ github.event.inputs.environment }}" != "" ]]; then
+            ENV="${{ github.event.inputs.environment }}"
+          elif [[ "${{ github.ref }}" =~ ^refs/tags/v.*-rc.* ]]; then
+            ENV="staging"
+          elif [[ "${{ github.ref }}" =~ ^refs/tags/v.* ]]; then
+            ENV="production"
+          else
+            ENV="development"
+          fi
+          echo "environment=${ENV}" >> $GITHUB_OUTPUT
+
+          # Regions
+          if [[ "${{ github.event.inputs.regions }}" != "" ]]; then
+            REGIONS="${{ github.event.inputs.regions }}"
+          else
+            case "$ENV" in
+              production)
+                REGIONS="us-east-1,us-west-2,eu-west-1"
+                ;;
+              staging)
+                REGIONS="us-east-1,eu-west-1"
+                ;;
+              *)
+                REGIONS="us-east-1"
+                ;;
+            esac
+          fi
+          echo "regions=${REGIONS}" >> $GITHUB_OUTPUT
+
+          # Strategy
+          STRATEGY="${{ github.event.inputs.strategy }}"
+          if [[ -z "$STRATEGY" || "$STRATEGY" == "auto" ]]; then
+            case "$ENV" in
+              production)
+                STRATEGY="canary"
+                ;;
+              staging)
+                STRATEGY="blue-green"
+                ;;
+              *)
+                STRATEGY="rolling"
+                ;;
+            esac
+          fi
+          echo "strategy=${STRATEGY}" >> $GITHUB_OUTPUT
+
+      - name: Extract version information
+        id: version
+        run: |
+          # Current version
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+            VERSION="${{ github.ref_name }}"
+          else
+            VERSION="$(git describe --tags --always)"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+          # Previous version
+          PREVIOUS=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "none")
+          echo "previous=${PREVIOUS}" >> $GITHUB_OUTPUT
+
+      - name: Assess deployment risk
+        id: risk
+        run: |
+          # Analyze changes since last deployment
+          RISK_ASSESSMENT=$(npx ruv-swarm actions deploy-risk \
+            --environment ${{ steps.config.outputs.environment }} \
+            --version ${{ steps.version.outputs.version }} \
+            --previous ${{ steps.version.outputs.previous }} \
+            --output json)
+
+          RISK_LEVEL=$(echo "$RISK_ASSESSMENT" | jq -r '.level')
+          echo "level=${RISK_LEVEL}" >> $GITHUB_OUTPUT
+
+          # Store detailed risk report
+          echo "$RISK_ASSESSMENT" | jq '.' > risk-assessment.json
+
+      - name: Upload risk assessment
+        uses: actions/upload-artifact@v3
+        with:
+          name: risk-assessment
+          path: risk-assessment.json
+
+      - name: Create deployment record
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: '${{ steps.config.outputs.environment }}',
+              description: 'Deploying ${{ steps.version.outputs.version }} via ${{ steps.config.outputs.strategy }}',
+              auto_merge: false,
+              required_contexts: []
+            });
+
+  # ========================================
+  # Pre-deployment Validation
+  # ========================================
+
+  pre-deployment-checks:
+    name: Pre-Deployment Checks
+    needs: prepare-deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate deployment configuration
+        run: |
+          npx ruv-swarm actions deploy-validate \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --strategy ${{ needs.prepare-deployment.outputs.strategy }} \
+            --regions "${{ needs.prepare-deployment.outputs.regions }}"
+
+      - name: Check infrastructure readiness
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          # Verify target infrastructure is healthy
+          for region in ${REGIONS//,/ }; do
+            echo "Checking $region..."
+            npx ruv-swarm actions infra-health \
+              --region "$region" \
+              --environment ${{ needs.prepare-deployment.outputs.environment }}
+          done
+        env:
+          REGIONS: ${{ needs.prepare-deployment.outputs.regions }}
+
+      - name: Run smoke tests on staging
+        if: needs.prepare-deployment.outputs.environment == 'production'
+        run: |
+          # Require passing smoke tests on staging before production
+          npx ruv-swarm actions test-suite \
+            --environment staging \
+            --suite smoke \
+            --timeout 300
+
+  # ========================================
+  # Multi-Region Deployment (Parallel)
+  # ========================================
+
+  deploy-region:
+    name: Deploy to ${{ matrix.region }}
+    needs: [prepare-deployment, pre-deployment-checks]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      matrix:
+        region: ${{ fromJSON(format('["{0}"]', needs.prepare-deployment.outputs.regions).replace(',', '", "')) }}
+      max-parallel: 2  # Deploy to max 2 regions at once
+      fail-fast: false
+    environment:
+      name: ${{ needs.prepare-deployment.outputs.environment }}-${{ matrix.region }}
+      url: https://${{ matrix.region }}.${{ needs.prepare-deployment.outputs.environment }}.example.com
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ matrix.region }}
+
+      - name: Initialize deployment
+        run: |
+          echo "🚀 Deploying to ${{ matrix.region }} using ${{ needs.prepare-deployment.outputs.strategy }} strategy"
+
+      # === Canary Deployment ===
+      - name: Canary - Deploy initial traffic (10%)
+        if: needs.prepare-deployment.outputs.strategy == 'canary'
+        run: |
+          npx ruv-swarm actions canary-deploy \
+            --region ${{ matrix.region }} \
+            --version ${{ needs.prepare-deployment.outputs.version }} \
+            --traffic 10
+
+      - name: Canary - Monitor metrics (10%)
+        if: needs.prepare-deployment.outputs.strategy == 'canary'
+        run: |
+          npx ruv-swarm actions canary-monitor \
+            --region ${{ matrix.region }} \
+            --duration 5m \
+            --baseline-version ${{ needs.prepare-deployment.outputs.previous-version }} \
+            --canary-version ${{ needs.prepare-deployment.outputs.version }}
+
+      - name: Canary - Increase to 25%
+        if: needs.prepare-deployment.outputs.strategy == 'canary'
+        run: |
+          npx ruv-swarm actions canary-traffic --traffic 25 --region ${{ matrix.region }}
+          npx ruv-swarm actions canary-monitor --duration 5m --region ${{ matrix.region }}
+
+      - name: Canary - Increase to 50%
+        if: needs.prepare-deployment.outputs.strategy == 'canary'
+        run: |
+          npx ruv-swarm actions canary-traffic --traffic 50 --region ${{ matrix.region }}
+          npx ruv-swarm actions canary-monitor --duration 10m --region ${{ matrix.region }}
+
+      - name: Canary - Full rollout (100%)
+        if: needs.prepare-deployment.outputs.strategy == 'canary'
+        run: |
+          npx ruv-swarm actions canary-traffic --traffic 100 --region ${{ matrix.region }}
+
+      # === Blue-Green Deployment ===
+      - name: Blue-Green - Deploy to green environment
+        if: needs.prepare-deployment.outputs.strategy == 'blue-green'
+        run: |
+          npx ruv-swarm actions blue-green-deploy \
+            --region ${{ matrix.region }} \
+            --target green \
+            --version ${{ needs.prepare-deployment.outputs.version }}
+
+      - name: Blue-Green - Run validation tests
+        if: needs.prepare-deployment.outputs.strategy == 'blue-green'
+        run: |
+          npx ruv-swarm actions test-suite \
+            --environment green \
+            --region ${{ matrix.region }} \
+            --suite smoke,integration
+
+      - name: Blue-Green - Switch traffic
+        if: needs.prepare-deployment.outputs.strategy == 'blue-green'
+        run: |
+          npx ruv-swarm actions blue-green-switch \
+            --region ${{ matrix.region }} \
+            --from blue \
+            --to green \
+            --verify-health
+
+      # === Rolling Deployment ===
+      - name: Rolling - Deploy with zero downtime
+        if: needs.prepare-deployment.outputs.strategy == 'rolling'
+        run: |
+          npx ruv-swarm actions rolling-deploy \
+            --region ${{ matrix.region }} \
+            --version ${{ needs.prepare-deployment.outputs.version }} \
+            --max-surge 25% \
+            --max-unavailable 0
+
+      # === Post-Deployment Validation ===
+      - name: Health check
+        run: |
+          npx ruv-swarm actions health-check \
+            --region ${{ matrix.region }} \
+            --timeout ${{ env.HEALTH_CHECK_TIMEOUT }} \
+            --retries 3
+
+      - name: Run smoke tests
+        run: |
+          npx ruv-swarm actions test-suite \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --region ${{ matrix.region }} \
+            --suite smoke
+
+      - name: Performance baseline
+        run: |
+          npx ruv-swarm actions perf-baseline \
+            --region ${{ matrix.region }} \
+            --version ${{ needs.prepare-deployment.outputs.version }} \
+            --save
+
+  # ========================================
+  # Post-Deployment Validation
+  # ========================================
+
+  post-deployment-validation:
+    name: Post-Deployment Validation
+    needs: [prepare-deployment, deploy-region]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Global health check
+        run: |
+          IFS=',' read -ra REGIONS <<< "${{ needs.prepare-deployment.outputs.regions }}"
+          for region in "${REGIONS[@]}"; do
+            npx ruv-swarm actions health-check \
+              --region "$region" \
+              --global-check
+          done
+
+      - name: Run integration tests
+        run: |
+          npx ruv-swarm actions test-suite \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --suite integration \
+            --cross-region
+
+      - name: Performance regression check
+        run: |
+          npx ruv-swarm actions perf-compare \
+            --current ${{ needs.prepare-deployment.outputs.version }} \
+            --baseline ${{ needs.prepare-deployment.outputs.previous-version }} \
+            --threshold 10%
+
+      - name: Security scan
+        run: |
+          npx ruv-swarm actions security-scan \
+            --runtime \
+            --environment ${{ needs.prepare-deployment.outputs.environment }}
+
+  # ========================================
+  # Monitoring Setup
+  # ========================================
+
+  setup-monitoring:
+    name: Configure Monitoring & Alerts
+    needs: [prepare-deployment, deploy-region]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure alerts
+        run: |
+          npx ruv-swarm actions monitoring-config \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --version ${{ needs.prepare-deployment.outputs.version }} \
+            --enable-alerts \
+            --alert-channels slack,pagerduty
+
+      - name: Setup dashboards
+        run: |
+          npx ruv-swarm actions dashboard-create \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --version ${{ needs.prepare-deployment.outputs.version }}
+
+      - name: Schedule automated rollback
+        run: |
+          # Auto-rollback if critical errors within rollback window
+          npx ruv-swarm actions auto-rollback-config \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --window ${{ env.ROLLBACK_WINDOW }} \
+            --error-threshold 1%
+
+  # ========================================
+  # Rollback (On Failure)
+  # ========================================
+
+  rollback:
+    name: Emergency Rollback
+    needs: [prepare-deployment, deploy-region, post-deployment-validation]
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Execute rollback
+        run: |
+          echo "🚨 Initiating emergency rollback"
+          IFS=',' read -ra REGIONS <<< "${{ needs.prepare-deployment.outputs.regions }}"
+          for region in "${REGIONS[@]}"; do
+            npx ruv-swarm actions rollback \
+              --region "$region" \
+              --environment ${{ needs.prepare-deployment.outputs.environment }} \
+              --to-version ${{ needs.prepare-deployment.outputs.previous-version }} \
+              --strategy immediate
+          done
+
+      - name: Verify rollback
+        run: |
+          IFS=',' read -ra REGIONS <<< "${{ needs.prepare-deployment.outputs.regions }}"
+          for region in "${REGIONS[@]}"; do
+            npx ruv-swarm actions health-check --region "$region"
+          done
+
+      - name: Create incident
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Deployment Rollback: ${{ needs.prepare-deployment.outputs.version }}',
+              body: `## Emergency Rollback Executed
+
+**Version**: ${{ needs.prepare-deployment.outputs.version }}
+**Environment**: ${{ needs.prepare-deployment.outputs.environment }}
+**Regions**: ${{ needs.prepare-deployment.outputs.regions }}
+**Strategy**: ${{ needs.prepare-deployment.outputs.strategy }}
+**Rolled back to**: ${{ needs.prepare-deployment.outputs.previous-version }}
+
+**Reason**: Deployment validation failed
+
+**Next Steps**:
+1. Review deployment logs
+2. Investigate root cause
+3. Fix issues
+4. Retry deployment
+              `,
+              labels: ['incident', 'deployment', 'rollback', 'critical']
+            });
+
+  # ========================================
+  # Deployment Report
+  # ========================================
+
+  deployment-report:
+    name: Generate Deployment Report
+    needs: [prepare-deployment, deploy-region, post-deployment-validation]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate comprehensive report
+        run: |
+          npx ruv-swarm actions deploy-report \
+            --environment ${{ needs.prepare-deployment.outputs.environment }} \
+            --version ${{ needs.prepare-deployment.outputs.version }} \
+            --strategy ${{ needs.prepare-deployment.outputs.strategy }} \
+            --regions "${{ needs.prepare-deployment.outputs.regions }}" \
+            --status ${{ job.status }} \
+            --format markdown > deployment-report.md
+
+      - name: Add workflow summary
+        run: cat deployment-report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Notify team
+        if: needs.prepare-deployment.outputs.environment == 'production'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('deployment-report.md', 'utf8');
+            const status = '${{ job.status }}' === 'success' ? '✅' : '❌';
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `${status} Production Deployment: ${{ needs.prepare-deployment.outputs.version }}`,
+              body: report,
+              labels: ['deployment', 'production', 'report']
+            });
+
+      - name: Update deployment status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const deployments = await github.rest.repos.listDeployments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: '${{ needs.prepare-deployment.outputs.environment }}'
+            });
+
+            if (deployments.data.length > 0) {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deployments.data[0].id,
+                state: '${{ job.status }}' === 'success' ? 'success' : 'failure',
+                description: 'Deployment ${{ job.status }}',
+                environment_url: 'https://${{ needs.prepare-deployment.outputs.environment }}.example.com'
+              });
+            }

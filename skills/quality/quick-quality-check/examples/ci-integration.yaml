@@ -1,0 +1,436 @@
+# CI Integration Example
+#
+# Demonstrates integration of quick-quality-check into CI/CD pipelines
+# across GitHub Actions, GitLab CI, Jenkins, and CircleCI
+#
+# Part of quick-quality-check Enhanced tier examples (150-300 lines)
+
+# ==============================================================================
+# GITHUB ACTIONS INTEGRATION
+# ==============================================================================
+
+github_actions:
+  workflow_file: .github/workflows/quality-check.yml
+
+  workflow_content: |
+    name: Quick Quality Check
+
+    on:
+      push:
+        branches: [main, develop]
+      pull_request:
+        branches: [main, develop]
+
+    jobs:
+      quick-quality-check:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+
+          - name: Setup Node.js
+            uses: actions/setup-node@v3
+            with:
+              node-version: '18'
+              cache: 'npm'
+
+          - name: Setup Python
+            uses: actions/setup-python@v4
+            with:
+              python-version: '3.10'
+              cache: 'pip'
+
+          - name: Install dependencies
+            run: |
+              npm ci
+              pip install bandit semgrep
+
+          - name: Run Quick Quality Check
+            run: |
+              node examples/instant-validation.js .
+            continue-on-error: false
+
+          - name: Upload quality reports
+            if: always()
+            uses: actions/upload-artifact@v3
+            with:
+              name: quality-reports
+              path: .quality-reports/
+              retention-days: 7
+
+          - name: Comment on PR
+            if: github.event_name == 'pull_request'
+            uses: actions/github-script@v6
+            with:
+              script: |
+                const fs = require('fs');
+                const reportPath = '.quality-reports/quality-report.json';
+
+                if (fs.existsSync(reportPath)) {
+                  const report = JSON.parse(fs.readFileSync(reportPath));
+
+                  const comment = `
+                  ## 🔍 Quick Quality Check Results
+
+                  **Quality Score:** ${report.quality_score}/100 (${report.status})
+
+                  ### Summary
+                  - Lint issues: ${report.summary.lint.total_issues || 0}
+                  - Security issues: ${report.summary.security.total_issues || 0}
+                  - Test failures: ${report.summary.tests.failed || 0}
+
+                  ### Status: ${report.passed ? '✅ PASSED' : '❌ FAILED'}
+
+                  ${report.recommendations.join('\n')}
+                  `;
+
+                  github.rest.issues.createComment({
+                    issue_number: context.issue.number,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: comment
+                  });
+                }
+
+# ==============================================================================
+# GITLAB CI INTEGRATION
+# ==============================================================================
+
+gitlab_ci:
+  config_file: .gitlab-ci.yml
+
+  config_content: |
+    stages:
+      - quality
+
+    quick-quality-check:
+      stage: quality
+      image: node:18
+      timeout: 5m
+
+      before_script:
+        - apt-get update && apt-get install -y python3 python3-pip
+        - npm ci
+        - pip3 install bandit semgrep
+
+      script:
+        - node examples/instant-validation.js .
+
+      artifacts:
+        when: always
+        paths:
+          - .quality-reports/
+        expire_in: 7 days
+
+      rules:
+        - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+        - if: '$CI_COMMIT_BRANCH == "main"'
+        - if: '$CI_COMMIT_BRANCH == "develop"'
+
+    quality-gate:
+      stage: quality
+      dependencies:
+        - quick-quality-check
+      script:
+        - |
+          QUALITY_SCORE=$(jq '.quality_score' .quality-reports/quality-report.json)
+          if [ "$QUALITY_SCORE" -lt 75 ]; then
+            echo "Quality score $QUALITY_SCORE is below threshold (75)"
+            exit 1
+          fi
+      allow_failure: false
+
+# ==============================================================================
+# JENKINS INTEGRATION
+# ==============================================================================
+
+jenkins:
+  jenkinsfile: Jenkinsfile
+
+  jenkinsfile_content: |
+    pipeline {
+      agent any
+
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+      }
+
+      stages {
+        stage('Setup') {
+          steps {
+            sh 'npm ci'
+            sh 'pip3 install bandit semgrep'
+          }
+        }
+
+        stage('Quick Quality Check') {
+          parallel {
+            stage('Linting') {
+              steps {
+                sh 'bash skills/quick-quality-check/resources/fast-linter.sh . .quality-reports/lint.json'
+              }
+            }
+
+            stage('Security') {
+              steps {
+                sh 'python3 skills/quick-quality-check/resources/security-scanner.py . -o .quality-reports/security.json'
+              }
+            }
+
+            stage('Tests') {
+              steps {
+                sh 'node skills/quick-quality-check/resources/test-runner.js . .quality-reports/tests.json'
+              }
+            }
+          }
+        }
+
+        stage('Generate Report') {
+          steps {
+            sh '''
+              python3 skills/quick-quality-check/resources/quality-reporter.py \
+                --lint .quality-reports/lint.json \
+                --security .quality-reports/security.json \
+                --tests .quality-reports/tests.json \
+                -o .quality-reports/quality-report.json
+            '''
+          }
+        }
+
+        stage('Quality Gate') {
+          steps {
+            script {
+              def report = readJSON file: '.quality-reports/quality-report.json'
+
+              echo "Quality Score: ${report.quality_score}/100"
+
+              if (report.quality_score < 75) {
+                error("Quality score ${report.quality_score} is below threshold (75)")
+              }
+
+              if (report.scan_summary.critical > 0) {
+                error("Critical security issues found: ${report.scan_summary.critical}")
+              }
+            }
+          }
+        }
+      }
+
+      post {
+        always {
+          archiveArtifacts artifacts: '.quality-reports/**/*', allowEmptyArchive: true
+          publishHTML([
+            reportDir: '.quality-reports',
+            reportFiles: 'quality-report.json',
+            reportName: 'Quality Report'
+          ])
+        }
+
+        failure {
+          emailext(
+            subject: "Quality Check Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}",
+            body: "Quality check failed. See attached report.",
+            attachmentsPattern: '.quality-reports/quality-report.json'
+          )
+        }
+      }
+    }
+
+# ==============================================================================
+# CIRCLECI INTEGRATION
+# ==============================================================================
+
+circleci:
+  config_file: .circleci/config.yml
+
+  config_content: |
+    version: 2.1
+
+    orbs:
+      node: circleci/node@5.0
+
+    executors:
+      quality-executor:
+        docker:
+          - image: cimg/node:18.0
+        resource_class: medium
+
+    jobs:
+      quick-quality-check:
+        executor: quality-executor
+        steps:
+          - checkout
+
+          - restore_cache:
+              keys:
+                - v1-deps-{{ checksum "package-lock.json" }}
+                - v1-deps-
+
+          - run:
+              name: Install dependencies
+              command: |
+                npm ci
+                sudo apt-get update && sudo apt-get install -y python3-pip
+                pip3 install bandit semgrep
+
+          - save_cache:
+              paths:
+                - node_modules
+              key: v1-deps-{{ checksum "package-lock.json" }}
+
+          - run:
+              name: Run quality checks
+              command: node examples/instant-validation.js .
+              no_output_timeout: 5m
+
+          - store_artifacts:
+              path: .quality-reports
+              destination: quality-reports
+
+          - store_test_results:
+              path: .quality-reports
+
+    workflows:
+      quality-workflow:
+        jobs:
+          - quick-quality-check:
+              filters:
+                branches:
+                  only:
+                    - main
+                    - develop
+
+# ==============================================================================
+# DOCKER INTEGRATION
+# ==============================================================================
+
+docker:
+  dockerfile: Dockerfile.quality-check
+
+  dockerfile_content: |
+    FROM node:18-alpine
+
+    # Install Python and dependencies
+    RUN apk add --no-cache python3 py3-pip bash
+
+    WORKDIR /app
+
+    # Copy skill resources
+    COPY skills/quick-quality-check /app/skills/quick-quality-check
+
+    # Install Node.js dependencies
+    COPY package*.json ./
+    RUN npm ci --only=production
+
+    # Install Python dependencies
+    RUN pip3 install bandit semgrep
+
+    # Entry point
+    ENTRYPOINT ["node", "/app/skills/quick-quality-check/examples/instant-validation.js"]
+
+  docker_compose: |
+    version: '3.8'
+
+    services:
+      quality-check:
+        build:
+          context: .
+          dockerfile: Dockerfile.quality-check
+        volumes:
+          - ./:/app/code:ro
+          - ./.quality-reports:/app/.quality-reports
+        command: /app/code
+        environment:
+          - QUICK_MODE=true
+          - TIMEOUT=30000
+
+# ==============================================================================
+# PRE-COMMIT HOOK INTEGRATION
+# ==============================================================================
+
+pre_commit:
+  hook_file: .git/hooks/pre-commit
+
+  hook_content: |
+    #!/bin/bash
+    # Pre-commit hook for quick quality check
+
+    echo "Running quick quality check..."
+
+    # Run instant validation
+    node examples/instant-validation.js .
+
+    if [ $? -ne 0 ]; then
+      echo ""
+      echo "❌ Quality check failed. Commit aborted."
+      echo "Fix issues or use 'git commit --no-verify' to skip checks."
+      exit 1
+    fi
+
+    echo "✅ Quality check passed"
+    exit 0
+
+  installation_script: |
+    #!/bin/bash
+    # Install pre-commit hook
+
+    HOOK_FILE=".git/hooks/pre-commit"
+
+    cat > "$HOOK_FILE" << 'EOF'
+    #!/bin/bash
+    node examples/instant-validation.js .
+    EOF
+
+    chmod +x "$HOOK_FILE"
+    echo "Pre-commit hook installed successfully"
+
+# ==============================================================================
+# AZURE DEVOPS INTEGRATION
+# ==============================================================================
+
+azure_devops:
+  pipeline_file: azure-pipelines.yml
+
+  pipeline_content: |
+    trigger:
+      - main
+      - develop
+
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '18.x'
+        displayName: 'Install Node.js'
+
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.10'
+        displayName: 'Install Python'
+
+      - script: |
+          npm ci
+          pip install bandit semgrep
+        displayName: 'Install dependencies'
+
+      - script: |
+          node examples/instant-validation.js .
+        displayName: 'Run quality checks'
+        continueOnError: false
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '.quality-reports'
+          ArtifactName: 'quality-reports'
+        condition: always()
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '.quality-reports/test-results.json'
+        condition: always()

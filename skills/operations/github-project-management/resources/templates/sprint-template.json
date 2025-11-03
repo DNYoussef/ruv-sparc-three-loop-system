@@ -1,0 +1,232 @@
+{
+  "version": "1.0",
+  "sprintTemplate": {
+    "metadata": {
+      "templateName": "Standard 2-Week Sprint",
+      "description": "Standard Agile sprint template with capacity planning and velocity tracking",
+      "author": "Claude Code",
+      "created": "2025-11-02"
+    },
+    "sprint": {
+      "duration": 14,
+      "durationUnit": "days",
+      "ceremonies": [
+        {
+          "name": "Sprint Planning",
+          "day": 1,
+          "duration": 2,
+          "participants": ["team", "product-owner", "scrum-master"]
+        },
+        {
+          "name": "Daily Standup",
+          "days": [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
+          "duration": 0.25,
+          "participants": ["team"]
+        },
+        {
+          "name": "Sprint Review",
+          "day": 14,
+          "duration": 1.5,
+          "participants": ["team", "stakeholders", "product-owner"]
+        },
+        {
+          "name": "Sprint Retrospective",
+          "day": 14,
+          "duration": 1.5,
+          "participants": ["team", "scrum-master"]
+        }
+      ]
+    },
+    "capacity": {
+      "totalStoryPoints": 40,
+      "bufferPercentage": 20,
+      "teamSize": 5,
+      "availabilityPercentage": 80,
+      "calculation": {
+        "formula": "(teamSize * workingDays * hoursPerDay * availabilityPercentage) / averageHoursPerPoint",
+        "workingDays": 10,
+        "hoursPerDay": 8,
+        "averageHoursPerPoint": 4
+      }
+    },
+    "goals": [
+      "Complete authentication feature",
+      "Improve test coverage to 90%",
+      "Reduce technical debt"
+    ],
+    "metrics": {
+      "trackVelocity": true,
+      "trackBurndown": true,
+      "trackCycleTime": true,
+      "trackDefectRate": true,
+      "customMetrics": [
+        {
+          "name": "Code Coverage",
+          "target": 90,
+          "unit": "percentage"
+        },
+        {
+          "name": "Performance Score",
+          "target": 85,
+          "unit": "points"
+        }
+      ]
+    },
+    "issueTypes": {
+      "features": {
+        "maxPercentage": 70,
+        "priorityWeight": 3
+      },
+      "bugs": {
+        "maxPercentage": 20,
+        "priorityWeight": 4
+      },
+      "technical-debt": {
+        "maxPercentage": 10,
+        "priorityWeight": 2
+      },
+      "documentation": {
+        "maxPercentage": 5,
+        "priorityWeight": 1
+      }
+    },
+    "swarmCoordination": {
+      "enabled": true,
+      "topology": "mesh",
+      "maxAgents": 8,
+      "agentAssignment": {
+        "features": ["architect", "coder", "tester"],
+        "bugs": ["debugger", "coder", "tester"],
+        "technical-debt": ["analyst", "coder", "reviewer"],
+        "documentation": ["researcher", "technical-writer", "reviewer"]
+      }
+    },
+    "automationRules": [
+      {
+        "trigger": "issue.assigned",
+        "condition": "sprint:current",
+        "action": "move-to:In Progress"
+      },
+      {
+        "trigger": "pr.approved",
+        "action": "move-to:Review"
+      },
+      {
+        "trigger": "issue.closed",
+        "action": "move-to:Done"
+      },
+      {
+        "trigger": "daily-standup",
+        "action": "generate-progress-report"
+      }
+    ],
+    "definitionOfDone": [
+      "Code review completed",
+      "Tests passing (90%+ coverage)",
+      "Documentation updated",
+      "No critical bugs",
+      "Performance benchmarks met",
+      "Security scan passed"
+    ],
+    "definitionOfReady": [
+      "User story defined",
+      "Acceptance criteria clear",
+      "Dependencies identified",
+      "Effort estimated",
+      "Technical approach reviewed"
+    ],
+    "riskManagement": {
+      "identifiedRisks": [
+        {
+          "risk": "Team member unavailability",
+          "probability": "medium",
+          "impact": "high",
+          "mitigation": "Cross-train team members, maintain documentation"
+        },
+        {
+          "risk": "Scope creep",
+          "probability": "high",
+          "impact": "medium",
+          "mitigation": "Strict sprint scope control, parking lot for new items"
+        },
+        {
+          "risk": "Technical blockers",
+          "probability": "medium",
+          "impact": "high",
+          "mitigation": "Early spike work, daily blocker resolution"
+        }
+      ]
+    },
+    "reportingSchedule": {
+      "daily": {
+        "standupReport": true,
+        "burndownUpdate": true,
+        "blockerSummary": true
+      },
+      "midSprint": {
+        "progressReview": true,
+        "scopeAdjustment": true,
+        "riskAssessment": true
+      },
+      "endOfSprint": {
+        "velocityReport": true,
+        "completionRate": true,
+        "retrospectiveNotes": true,
+        "carryoverItems": true
+      }
+    }
+  },
+  "examples": {
+    "sprintBacklog": [
+      {
+        "issueNumber": 123,
+        "title": "Implement OAuth authentication",
+        "type": "feature",
+        "storyPoints": 8,
+        "priority": "high",
+        "assignedAgents": ["architect", "coder", "tester"]
+      },
+      {
+        "issueNumber": 124,
+        "title": "Fix memory leak in data processing",
+        "type": "bug",
+        "storyPoints": 5,
+        "priority": "critical",
+        "assignedAgents": ["debugger", "coder"]
+      },
+      {
+        "issueNumber": 125,
+        "title": "Refactor database layer",
+        "type": "technical-debt",
+        "storyPoints": 5,
+        "priority": "medium",
+        "assignedAgents": ["analyst", "coder", "reviewer"]
+      },
+      {
+        "issueNumber": 126,
+        "title": "Update API documentation",
+        "type": "documentation",
+        "storyPoints": 3,
+        "priority": "low",
+        "assignedAgents": ["technical-writer", "reviewer"]
+      }
+    ]
+  },
+  "customization": {
+    "instructions": [
+      "Adjust capacity based on team size and velocity",
+      "Modify ceremony schedule to fit team preferences",
+      "Add/remove issue types as needed",
+      "Customize swarm agent assignments",
+      "Update automation rules for your workflow"
+    ],
+    "variables": {
+      "teamSize": "number",
+      "sprintDuration": "number (days)",
+      "capacityPoints": "number",
+      "ceremonies": "array of objects",
+      "goals": "array of strings",
+      "swarmTopology": "mesh | hierarchical | ring | star"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+digraph DogfoodingSystem {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end with semantic ellipse
+    start [shape=ellipse, label="Start:\nCode Generation\nor Modification", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nImproved Code\nwith Metrics", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Quality Detection
+    subgraph cluster_phase1 {
+        label="Phase 1: Quality Detection (30-60s)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        p1_step1 [label="Run Connascence\nAnalysis", fillcolor=lightblue];
+        p1_step2 [label="Parse 7+ Violation\nTypes", fillcolor=lightblue];
+        p1_step3 [label="Store in Memory-MCP\nwith WHO/WHEN/\nPROJECT/WHY Tags", fillcolor=lightblue];
+        p1_step4 [label="Update Grafana\nDashboard", fillcolor=lightblue];
+        p1_step5 [label="Generate Summary\nReport", fillcolor=lightblue];
+
+        p1_step1 -> p1_step2 -> p1_step3 -> p1_step4 -> p1_step5;
+    }
+
+    // Phase 2: Pattern Retrieval
+    subgraph cluster_phase2 {
+        label="Phase 2: Pattern Retrieval (10-30s)";
+        fillcolor=lightcyan;
+        style=filled;
+
+        p2_step1 [label="Generate 384-dim\nEmbedding", fillcolor=lightblue];
+        p2_step2 [label="Query ChromaDB\nHNSW Index", fillcolor=lightblue];
+        p2_step3 [label="Apply Metadata\nFilters", fillcolor=lightblue];
+        p2_step4 [label="Rank Patterns:\n40% similarity\n30% success_rate\n20% context\n10% recency", fillcolor=lightblue];
+        p2_step5 [label="Select Best\nTransformation\nStrategy", fillcolor=lightblue];
+
+        p2_step1 -> p2_step2 -> p2_step3 -> p2_step4 -> p2_step5;
+    }
+
+    // Phase 3: Safe Application
+    subgraph cluster_phase3 {
+        label="Phase 3: Safe Application (20-40s)";
+        fillcolor=lightpink;
+        style=filled;
+
+        p3_step1 [label="Create Sandbox\nEnvironment", fillcolor=lightblue];
+        p3_step2 [label="Apply AST\nTransformation", fillcolor=lightblue];
+        p3_step3 [label="Run Tests in\nSandbox", fillcolor=lightblue];
+        p3_decision1 [shape=diamond, label="Tests\nPass?", fillcolor=yellow];
+        p3_step4 [label="Git Stash\nBackup", fillcolor=lightblue];
+        p3_step5 [label="Apply to\nProduction", fillcolor=lightblue];
+        p3_step6 [label="Verify Production\nTests", fillcolor=lightblue];
+        p3_decision2 [shape=diamond, label="Production\nTests Pass?", fillcolor=yellow];
+        p3_step7 [label="Git Commit\nwith Metadata", fillcolor=green, fontcolor=white];
+        p3_rollback [label="Git Stash Pop\n(Rollback)", fillcolor=red, fontcolor=white];
+        p3_reject [label="Reject Fix\nLog Failure", fillcolor=red, fontcolor=white];
+
+        p3_step1 -> p3_step2 -> p3_step3 -> p3_decision1;
+        p3_decision1 -> p3_step4 [label="yes", color=green];
+        p3_decision1 -> p3_reject [label="no", color=red];
+        p3_step4 -> p3_step5 -> p3_step6 -> p3_decision2;
+        p3_decision2 -> p3_step7 [label="yes", color=green];
+        p3_decision2 -> p3_rollback [label="no", color=red];
+    }
+
+    // Phase 4: Verification
+    subgraph cluster_phase4 {
+        label="Phase 4: Verification (15s)";
+        fillcolor=lightgray;
+        style=filled;
+
+        p4_step1 [label="Re-run Connascence\nAnalysis", fillcolor=lightblue];
+        p4_step2 [label="Compare Before/\nAfter Metrics", fillcolor=lightblue];
+        p4_step3 [label="Check for\nRegressions", fillcolor=lightblue];
+        p4_decision [shape=diamond, label="Regressions\nDetected?", fillcolor=yellow];
+        p4_rollback [label="Rollback Entire\nCycle", fillcolor=red, fontcolor=white];
+        p4_pass [label="Verification\nSuccessful", fillcolor=green, fontcolor=white];
+
+        p4_step1 -> p4_step2 -> p4_step3 -> p4_decision;
+        p4_decision -> p4_rollback [label="yes", color=red];
+        p4_decision -> p4_pass [label="no", color=green];
+    }
+
+    // Phase 5: Summary & Metrics
+    subgraph cluster_phase5 {
+        label="Phase 5: Summary & Metrics (10-20s)";
+        fillcolor=lavender;
+        style=filled;
+
+        p5_step1 [label="Generate Cycle\nSummary", fillcolor=lightblue];
+        p5_step2 [label="Update SQLite\nTracking DB", fillcolor=lightblue];
+        p5_step3 [label="Update Grafana\nDashboard", fillcolor=lightblue];
+        p5_step4 [label="Store Cycle Results\nin Memory-MCP", fillcolor=lightblue];
+        p5_step5 [label="Archive All\nArtifacts", fillcolor=lightblue];
+        p5_step6 [label="Schedule Next\nCycle (24h)", fillcolor=lightblue];
+
+        p5_step1 -> p5_step2 -> p5_step3 -> p5_step4 -> p5_step5 -> p5_step6;
+    }
+
+    // External MCP references
+    connascence_mcp [shape=cylinder, label="Connascence\nAnalyzer MCP\n(7+ violation types)", fillcolor=lightcoral];
+    memory_mcp [shape=cylinder, label="Memory-MCP\nTriple System\n(384-dim vectors)", fillcolor=lightcoral];
+
+    // Safety rules reference
+    safety_rules [shape=folder, label="Safety Rules\n(5 mandatory checks)", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> p1_step1;
+    p1_step5 -> p2_step1 [label="violations found"];
+    p2_step5 -> p3_step1 [label="patterns ranked"];
+    p3_step7 -> p4_step1 [label="fixes applied"];
+    p3_reject -> p4_step1 [label="fixes rejected", style=dashed];
+    p4_pass -> p5_step1;
+    p4_rollback -> start [label="retry cycle", style=dashed, color=red];
+    p5_step6 -> end;
+
+    // External connections
+    p1_step1 -> connascence_mcp [style=dashed, label="uses"];
+    p1_step3 -> memory_mcp [style=dashed, label="stores"];
+    p2_step2 -> memory_mcp [style=dashed, label="queries"];
+    p5_step4 -> memory_mcp [style=dashed, label="stores"];
+    p3_step1 -> safety_rules [style=dashed, label="enforces"];
+
+    // Warning nodes
+    warning_test_coverage [shape=octagon, label="STOP:\nTest Coverage < 70%", fillcolor=orange];
+    warning_no_sandbox [shape=octagon, label="STOP:\nSandbox Testing\nNot Run", fillcolor=orange];
+
+    // Safety checks
+    p3_step3 -> warning_no_sandbox [style=dashed, label="if skipped", color=red];
+    p3_step4 -> warning_test_coverage [style=dashed, label="if coverage low", color=red];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        fillcolor=white;
+        style=dashed;
+
+        legend1 [label="Process Step", fillcolor=lightblue];
+        legend2 [shape=diamond, label="Decision Point", fillcolor=yellow];
+        legend3 [shape=ellipse, label="Start/End", fillcolor=lightgreen];
+        legend4 [shape=cylinder, label="External MCP", fillcolor=lightcoral];
+        legend5 [shape=folder, label="Guidelines", fillcolor=lightsalmon];
+        legend6 [shape=octagon, label="Warning", fillcolor=orange];
+
+        legend1 -> legend2 -> legend3 -> legend4 -> legend5 -> legend6 [style=invis];
+    }
+
+    labelloc="t";
+    label="Dogfooding System: 3-Phase Self-Improvement Workflow\n(Quality Detection → Pattern Retrieval → Continuous Improvement)";
+    fontsize=16;
+    fontname="Arial Bold";
+}

@@ -1,0 +1,295 @@
+# Tool Manifest Schema
+# Defines metadata and configuration for generated tools
+
+# Basic information
+name: example-tool
+version: 1.0.0
+description: Example tool description
+author: Tool Creator
+license: MIT
+repository: https://github.com/user/example-tool
+homepage: https://example-tool.com
+
+# Tool classification
+type: transformer  # Options: validator, transformer, analyzer, generator, orchestrator
+category: utility  # Options: utility, development, testing, deployment, monitoring
+tags:
+  - automation
+  - development
+  - productivity
+
+# Input specification
+inputs:
+  - name: data
+    type: object
+    required: true
+    description: Input data to process
+    schema:
+      type: object
+      properties:
+        value:
+          type: string
+          required: true
+    default: null
+    validation:
+      - type: schema
+        rule: object
+      - type: custom
+        function: validateData
+
+  - name: options
+    type: object
+    required: false
+    description: Processing options
+    default:
+      format: json
+      validate: true
+    validation:
+      - type: schema
+        rule: object
+
+# Output specification
+outputs:
+  - name: result
+    type: object
+    description: Processed result
+    schema:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, error]
+        data:
+          type: any
+
+  - name: metadata
+    type: object
+    description: Processing metadata
+    schema:
+      type: object
+      properties:
+        duration_ms:
+          type: number
+        timestamp:
+          type: string
+
+# Configuration
+configuration:
+  # Execution settings
+  timeout: 30000  # milliseconds
+  retries: 3
+  retry_delay: 1000  # milliseconds
+
+  # Performance settings
+  max_memory_mb: 512
+  max_cpu_percent: 80
+
+  # Caching
+  cache:
+    enabled: true
+    ttl_seconds: 3600
+    max_size_mb: 100
+    strategy: lru  # Options: lru, lfu, fifo
+
+  # Parallelization
+  parallel:
+    enabled: true
+    max_workers: 4
+    strategy: auto  # Options: auto, fixed, adaptive
+
+  # Monitoring
+  monitoring:
+    enabled: true
+    metrics:
+      - execution_time
+      - memory_usage
+      - success_rate
+    logging:
+      level: info  # Options: debug, info, warn, error
+      format: json
+
+  # Error handling
+  error_handling:
+    mode: fail-fast  # Options: fail-fast, continue, retry
+    on_error: log  # Options: log, throw, ignore
+    max_errors: 10
+
+# Dependencies
+dependencies:
+  # Runtime dependencies
+  runtime:
+    - name: lodash
+      version: ^4.17.21
+      optional: false
+    - name: axios
+      version: ^1.6.0
+      optional: false
+
+  # Development dependencies
+  development:
+    - name: jest
+      version: ^29.0.0
+    - name: eslint
+      version: ^8.0.0
+
+  # Peer dependencies
+  peer:
+    - name: node
+      version: '>=18.0.0'
+
+# Tool capabilities
+capabilities:
+  - validation
+  - transformation
+  - error-handling
+  - caching
+  - parallelization
+  - monitoring
+
+# Interfaces
+interfaces:
+  # CLI interface
+  cli:
+    enabled: true
+    command: example-tool
+    options:
+      - name: --input
+        alias: -i
+        type: string
+        required: true
+        description: Input file path
+      - name: --output
+        alias: -o
+        type: string
+        required: false
+        description: Output file path
+      - name: --verbose
+        alias: -v
+        type: boolean
+        default: false
+        description: Verbose output
+
+  # API interface
+  api:
+    enabled: true
+    type: rest  # Options: rest, graphql, grpc
+    version: v1
+    endpoints:
+      - path: /execute
+        method: POST
+        description: Execute the tool
+      - path: /status
+        method: GET
+        description: Get tool status
+
+  # Library interface
+  library:
+    enabled: true
+    exports:
+      - ExampleTool
+      - execute
+      - validate
+
+# Hooks
+hooks:
+  # Pre-execution hooks
+  pre_execute:
+    - validate_inputs
+    - prepare_environment
+    - log_start
+
+  # Post-execution hooks
+  post_execute:
+    - validate_outputs
+    - cleanup
+    - log_completion
+
+  # Error hooks
+  on_error:
+    - log_error
+    - cleanup_partial
+    - notify_error
+
+# Quality metrics
+quality:
+  test_coverage: 85
+  complexity_score: 7
+  maintainability_index: 75
+  security_score: 90
+
+# Metadata
+metadata:
+  generated_by: tool-generator.py
+  generated_at: 2024-01-15T10:00:00Z
+  template_version: 1.0.0
+  last_updated: 2024-01-15T10:00:00Z
+
+# Changelog
+changelog:
+  - version: 1.0.0
+    date: 2024-01-15
+    changes:
+      - Initial release
+      - Added validation
+      - Added caching
+
+# Documentation
+documentation:
+  readme: README.md
+  api: docs/API.md
+  examples: examples/
+  changelog: CHANGELOG.md
+
+# Platform support
+platforms:
+  - linux
+  - darwin
+  - win32
+
+# Architecture support
+architectures:
+  - x64
+  - arm64
+
+# Engine compatibility
+engines:
+  node: '>=18.0.0'
+  npm: '>=9.0.0'
+
+# Keywords for discovery
+keywords:
+  - tool
+  - automation
+  - development
+  - meta-tools
+
+# Badges
+badges:
+  - name: Build Status
+    url: https://github.com/user/example-tool/actions
+    image: https://github.com/user/example-tool/workflows/CI/badge.svg
+  - name: Coverage
+    url: https://codecov.io/gh/user/example-tool
+    image: https://codecov.io/gh/user/example-tool/branch/main/graph/badge.svg
+
+# Support
+support:
+  issues: https://github.com/user/example-tool/issues
+  discussions: https://github.com/user/example-tool/discussions
+  email: support@example-tool.com
+
+# Contributing
+contributing:
+  guide: CONTRIBUTING.md
+  code_of_conduct: CODE_OF_CONDUCT.md
+
+# Security
+security:
+  policy: SECURITY.md
+  contact: security@example-tool.com
+
+# License
+license:
+  type: MIT
+  file: LICENSE
+  url: https://opensource.org/licenses/MIT

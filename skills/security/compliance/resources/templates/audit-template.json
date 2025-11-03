@@ -1,0 +1,550 @@
+{
+  "audit_metadata": {
+    "audit_id": "AUD-${YEAR}-${SEQUENCE}",
+    "audit_date": "${AUDIT_DATE}",
+    "audit_type": "compliance",
+    "framework": "${FRAMEWORK}",
+    "auditor": {
+      "name": "${AUDITOR_NAME}",
+      "organization": "${AUDITOR_ORG}",
+      "email": "${AUDITOR_EMAIL}",
+      "certification": "${AUDITOR_CERT}"
+    },
+    "scope": {
+      "organization": "${ORG_NAME}",
+      "departments": ["${DEPT_1}", "${DEPT_2}", "${DEPT_N}"],
+      "systems": ["${SYSTEM_1}", "${SYSTEM_2}", "${SYSTEM_N}"],
+      "locations": ["${LOCATION_1}", "${LOCATION_2}", "${LOCATION_N}"],
+      "data_types": ["${DATA_TYPE_1}", "${DATA_TYPE_2}", "${DATA_TYPE_N}"],
+      "audit_period": {
+        "start_date": "${START_DATE}",
+        "end_date": "${END_DATE}"
+      }
+    },
+    "report_version": "1.0",
+    "last_updated": "${LAST_UPDATED}"
+  },
+  "executive_summary": {
+    "overall_compliance_status": "${COMPLIANT|PARTIALLY_COMPLIANT|NON_COMPLIANT}",
+    "compliance_score": "${SCORE}/100",
+    "previous_score": "${PREV_SCORE}/100",
+    "trend": "${IMPROVING|STABLE|DECLINING}",
+    "key_findings": [
+      {
+        "type": "positive",
+        "title": "${FINDING_TITLE}",
+        "description": "${FINDING_DESC}",
+        "evidence": "${EVIDENCE_REF}"
+      },
+      {
+        "type": "concern",
+        "title": "${FINDING_TITLE}",
+        "description": "${FINDING_DESC}",
+        "severity": "${CRITICAL|HIGH|MEDIUM|LOW}",
+        "evidence": "${EVIDENCE_REF}"
+      }
+    ],
+    "critical_gaps": [
+      {
+        "gap_id": "GAP-${ID}",
+        "requirement": "${REQUIREMENT_ID}",
+        "description": "${GAP_DESC}",
+        "risk_level": "${CRITICAL|HIGH|MEDIUM|LOW}",
+        "remediation_deadline": "${DEADLINE}"
+      }
+    ],
+    "recommendations_summary": {
+      "critical": "${COUNT}",
+      "high": "${COUNT}",
+      "medium": "${COUNT}",
+      "low": "${COUNT}"
+    },
+    "certification_status": "${CERTIFIED|CONDITIONAL|DENIED}",
+    "next_audit_date": "${NEXT_AUDIT_DATE}"
+  },
+  "compliance_score": {
+    "overall": {
+      "score": "${SCORE}",
+      "max_score": 100,
+      "percentage": "${PERCENTAGE}%",
+      "grade": "${A|B|C|D|F}"
+    },
+    "by_domain": [
+      {
+        "domain": "${DOMAIN_NAME}",
+        "score": "${SCORE}",
+        "max_score": "${MAX}",
+        "percentage": "${PERCENTAGE}%",
+        "status": "${COMPLIANT|NON_COMPLIANT}",
+        "controls_passed": "${PASSED}",
+        "controls_total": "${TOTAL}"
+      }
+    ],
+    "trends": {
+      "current_quarter": "${Q_SCORE}",
+      "previous_quarter": "${PQ_SCORE}",
+      "year_to_date_average": "${YTD_AVG}",
+      "historical_scores": [
+        {
+          "period": "${YYYY-QN}",
+          "score": "${SCORE}"
+        }
+      ]
+    },
+    "benchmarking": {
+      "industry_average": "${AVG_SCORE}",
+      "top_quartile": "${TOP_25_SCORE}",
+      "percentile_rank": "${PERCENTILE}"
+    }
+  },
+  "findings": {
+    "summary": {
+      "total_findings": "${TOTAL}",
+      "by_severity": {
+        "critical": "${COUNT}",
+        "high": "${COUNT}",
+        "medium": "${COUNT}",
+        "low": "${COUNT}",
+        "informational": "${COUNT}"
+      },
+      "by_status": {
+        "open": "${COUNT}",
+        "in_progress": "${COUNT}",
+        "resolved": "${COUNT}",
+        "accepted_risk": "${COUNT}"
+      }
+    },
+    "detailed_findings": [
+      {
+        "finding_id": "F-${FRAMEWORK}-${SEQUENCE}",
+        "severity": "${CRITICAL|HIGH|MEDIUM|LOW|INFO}",
+        "status": "${OPEN|IN_PROGRESS|RESOLVED|ACCEPTED}",
+        "category": "${CATEGORY}",
+        "requirement_id": "${REQ_ID}",
+        "requirement_title": "${REQ_TITLE}",
+        "finding_title": "${FINDING_TITLE}",
+        "description": "${DETAILED_DESCRIPTION}",
+        "evidence": {
+          "type": "${SCREENSHOT|DOCUMENT|LOG|CONFIG|CODE}",
+          "location": "${FILE_PATH_OR_URL}",
+          "description": "${EVIDENCE_DESC}",
+          "collected_date": "${DATE}",
+          "attachments": ["${ATTACHMENT_1}", "${ATTACHMENT_N}"]
+        },
+        "impact": {
+          "business": "${BUSINESS_IMPACT}",
+          "technical": "${TECHNICAL_IMPACT}",
+          "regulatory": "${REGULATORY_IMPACT}",
+          "risk_score": "${RISK_SCORE}"
+        },
+        "root_cause": "${ROOT_CAUSE_ANALYSIS}",
+        "affected_systems": ["${SYSTEM_1}", "${SYSTEM_N}"],
+        "remediation": {
+          "recommendation": "${REMEDIATION_STEPS}",
+          "priority": "${CRITICAL|HIGH|MEDIUM|LOW}",
+          "estimated_effort": "${HOURS_OR_DAYS}",
+          "responsible_party": "${OWNER}",
+          "target_date": "${TARGET_DATE}",
+          "resources_required": ["${RESOURCE_1}", "${RESOURCE_N}"]
+        },
+        "compensating_controls": [
+          {
+            "control_id": "CC-${ID}",
+            "description": "${CONTROL_DESC}",
+            "effectiveness": "${HIGH|MEDIUM|LOW}"
+          }
+        ],
+        "recurrence": {
+          "is_repeat_finding": "${true|false}",
+          "previous_finding_id": "${PREV_FINDING_ID}",
+          "times_occurred": "${COUNT}"
+        }
+      }
+    ]
+  },
+  "controls_assessment": {
+    "total_controls": "${TOTAL}",
+    "controls_tested": "${TESTED}",
+    "controls_passed": "${PASSED}",
+    "controls_failed": "${FAILED}",
+    "controls_not_applicable": "${NA}",
+    "by_control": [
+      {
+        "control_id": "${CONTROL_ID}",
+        "control_name": "${CONTROL_NAME}",
+        "control_objective": "${OBJECTIVE}",
+        "domain": "${DOMAIN}",
+        "status": "${EFFECTIVE|INEFFECTIVE|PARTIALLY_EFFECTIVE|NOT_TESTED}",
+        "test_date": "${TEST_DATE}",
+        "test_method": "${INSPECTION|OBSERVATION|INQUIRY|REPERFORMANCE}",
+        "sample_size": "${SAMPLE_SIZE}",
+        "exceptions_found": "${EXCEPTION_COUNT}",
+        "evidence_collected": [
+          {
+            "evidence_id": "EV-${ID}",
+            "type": "${TYPE}",
+            "description": "${DESC}",
+            "location": "${PATH}"
+          }
+        ],
+        "control_owner": "${OWNER}",
+        "frequency": "${CONTINUOUS|DAILY|WEEKLY|MONTHLY|QUARTERLY|ANNUAL}",
+        "automation_level": "${FULLY_AUTOMATED|PARTIALLY_AUTOMATED|MANUAL}",
+        "recommendations": ["${REC_1}", "${REC_N}"]
+      }
+    ]
+  },
+  "evidence": {
+    "evidence_summary": {
+      "total_evidence_items": "${TOTAL}",
+      "by_type": {
+        "documentation": "${COUNT}",
+        "screenshots": "${COUNT}",
+        "logs": "${COUNT}",
+        "configurations": "${COUNT}",
+        "code_samples": "${COUNT}",
+        "interviews": "${COUNT}"
+      }
+    },
+    "evidence_repository": {
+      "location": "${STORAGE_PATH_OR_URL}",
+      "access_control": "${RESTRICTED|AUDITOR_ONLY}",
+      "retention_period": "${YEARS}",
+      "encryption": "${ENCRYPTED|NOT_ENCRYPTED}"
+    },
+    "evidence_items": [
+      {
+        "evidence_id": "EV-${SEQUENCE}",
+        "type": "${TYPE}",
+        "title": "${TITLE}",
+        "description": "${DESCRIPTION}",
+        "related_finding_id": "${FINDING_ID}",
+        "related_control_id": "${CONTROL_ID}",
+        "collected_by": "${AUDITOR_NAME}",
+        "collected_date": "${DATE}",
+        "file_path": "${PATH}",
+        "file_hash": "${SHA256_HASH}",
+        "file_size": "${SIZE_BYTES}",
+        "metadata": {
+          "source_system": "${SYSTEM}",
+          "timestamp": "${TIMESTAMP}",
+          "version": "${VERSION}"
+        }
+      }
+    ]
+  },
+  "recommendations": {
+    "summary": {
+      "total_recommendations": "${TOTAL}",
+      "by_priority": {
+        "critical": "${COUNT}",
+        "high": "${COUNT}",
+        "medium": "${COUNT}",
+        "low": "${COUNT}"
+      },
+      "estimated_total_effort": "${TOTAL_HOURS_OR_DAYS}"
+    },
+    "prioritized_actions": [
+      {
+        "recommendation_id": "REC-${SEQUENCE}",
+        "priority": "${CRITICAL|HIGH|MEDIUM|LOW}",
+        "title": "${REC_TITLE}",
+        "description": "${DETAILED_DESCRIPTION}",
+        "rationale": "${WHY_NEEDED}",
+        "related_findings": ["${FINDING_ID_1}", "${FINDING_ID_N}"],
+        "implementation_steps": [
+          {
+            "step_number": "${N}",
+            "description": "${STEP_DESC}",
+            "responsible_party": "${OWNER}",
+            "estimated_effort": "${HOURS}",
+            "dependencies": ["${DEP_1}", "${DEP_N}"]
+          }
+        ],
+        "estimated_cost": {
+          "labor": "${COST}",
+          "tools": "${COST}",
+          "external_services": "${COST}",
+          "total": "${TOTAL_COST}"
+        },
+        "expected_benefits": [
+          "${BENEFIT_1}",
+          "${BENEFIT_N}"
+        ],
+        "success_criteria": [
+          "${CRITERIA_1}",
+          "${CRITERIA_N}"
+        ],
+        "target_completion_date": "${DATE}",
+        "status": "${NOT_STARTED|IN_PROGRESS|COMPLETED|DEFERRED}"
+      }
+    ]
+  },
+  "risk_assessment": {
+    "risk_summary": {
+      "total_risks_identified": "${TOTAL}",
+      "by_severity": {
+        "critical": "${COUNT}",
+        "high": "${COUNT}",
+        "medium": "${COUNT}",
+        "low": "${COUNT}"
+      },
+      "residual_risk_rating": "${CRITICAL|HIGH|MEDIUM|LOW|MINIMAL}"
+    },
+    "risks": [
+      {
+        "risk_id": "RISK-${SEQUENCE}",
+        "title": "${RISK_TITLE}",
+        "description": "${RISK_DESC}",
+        "category": "${COMPLIANCE|OPERATIONAL|FINANCIAL|REPUTATIONAL|STRATEGIC}",
+        "likelihood": "${VERY_HIGH|HIGH|MEDIUM|LOW|VERY_LOW}",
+        "impact": "${VERY_HIGH|HIGH|MEDIUM|LOW|VERY_LOW}",
+        "inherent_risk_score": "${SCORE}",
+        "current_controls": [
+          {
+            "control_id": "${CONTROL_ID}",
+            "effectiveness": "${HIGH|MEDIUM|LOW}"
+          }
+        ],
+        "residual_risk_score": "${SCORE}",
+        "treatment_strategy": "${MITIGATE|ACCEPT|TRANSFER|AVOID}",
+        "treatment_plan": "${PLAN_DESCRIPTION}",
+        "risk_owner": "${OWNER}",
+        "review_date": "${DATE}"
+      }
+    ]
+  },
+  "framework_specific": {
+    "gdpr": {
+      "data_processing_activities": "${COUNT}",
+      "dpia_required": "${COUNT}",
+      "dpia_completed": "${COUNT}",
+      "data_subject_requests": {
+        "total": "${COUNT}",
+        "access": "${COUNT}",
+        "rectification": "${COUNT}",
+        "erasure": "${COUNT}",
+        "portability": "${COUNT}",
+        "average_response_time_days": "${DAYS}"
+      },
+      "data_breaches": {
+        "total": "${COUNT}",
+        "notified_to_authority": "${COUNT}",
+        "notified_to_subjects": "${COUNT}"
+      },
+      "lawful_basis": {
+        "consent": "${PERCENTAGE}%",
+        "contract": "${PERCENTAGE}%",
+        "legal_obligation": "${PERCENTAGE}%",
+        "legitimate_interest": "${PERCENTAGE}%"
+      }
+    },
+    "hipaa": {
+      "phi_systems": "${COUNT}",
+      "business_associates": "${COUNT}",
+      "baa_signed": "${COUNT}",
+      "security_risk_assessment_date": "${DATE}",
+      "workforce_training_completion": "${PERCENTAGE}%",
+      "incident_reports": "${COUNT}",
+      "breach_notifications": "${COUNT}"
+    },
+    "soc2": {
+      "report_type": "${TYPE_I|TYPE_II}",
+      "trust_services_categories": ["${CATEGORY_1}", "${CATEGORY_N}"],
+      "audit_period_months": "${MONTHS}",
+      "subservice_organizations": "${COUNT}",
+      "complementary_user_entity_controls": "${COUNT}",
+      "management_assertion": "${ASSERTION_TEXT}"
+    },
+    "pci_dss": {
+      "merchant_level": "${LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4}",
+      "cde_systems": "${COUNT}",
+      "quarterly_scans": {
+        "last_internal_scan": "${DATE}",
+        "last_external_scan": "${DATE}",
+        "asv_vendor": "${VENDOR_NAME}",
+        "vulnerabilities": {
+          "high": "${COUNT}",
+          "medium": "${COUNT}",
+          "low": "${COUNT}"
+        }
+      },
+      "penetration_testing": {
+        "last_test_date": "${DATE}",
+        "next_test_date": "${DATE}",
+        "findings": "${COUNT}"
+      },
+      "attestation_of_compliance": {
+        "status": "${COMPLIANT|NON_COMPLIANT}",
+        "submission_date": "${DATE}",
+        "qsa_name": "${QSA_NAME}"
+      }
+    },
+    "iso27001": {
+      "certification_status": "${CERTIFIED|IN_PROGRESS|NOT_CERTIFIED}",
+      "certificate_number": "${CERT_NUM}",
+      "certification_body": "${CB_NAME}",
+      "issue_date": "${DATE}",
+      "expiry_date": "${DATE}",
+      "surveillance_audit_date": "${DATE}",
+      "isms_scope": "${SCOPE_DESCRIPTION}",
+      "soa_controls": {
+        "total": "${TOTAL}",
+        "applicable": "${COUNT}",
+        "implemented": "${COUNT}",
+        "not_applicable": "${COUNT}"
+      },
+      "risk_assessment": {
+        "last_assessment_date": "${DATE}",
+        "total_risks": "${COUNT}",
+        "high_risks": "${COUNT}",
+        "risk_treatment_plan_completion": "${PERCENTAGE}%"
+      },
+      "internal_audit_findings": {
+        "major_nonconformities": "${COUNT}",
+        "minor_nonconformities": "${COUNT}",
+        "observations": "${COUNT}"
+      }
+    }
+  },
+  "compliance_posture": {
+    "maturity_level": {
+      "overall": "${INITIAL|DEVELOPING|DEFINED|MANAGED|OPTIMIZING}",
+      "by_domain": [
+        {
+          "domain": "${DOMAIN_NAME}",
+          "maturity": "${LEVEL}",
+          "description": "${DESC}"
+        }
+      ]
+    },
+    "compliance_metrics": [
+      {
+        "metric_name": "${METRIC_NAME}",
+        "current_value": "${VALUE}",
+        "target_value": "${TARGET}",
+        "trend": "${IMPROVING|STABLE|DECLINING}",
+        "unit": "${UNIT}"
+      }
+    ],
+    "continuous_monitoring": {
+      "enabled": "${true|false}",
+      "tools": ["${TOOL_1}", "${TOOL_N}"],
+      "monitoring_frequency": "${REAL_TIME|DAILY|WEEKLY}",
+      "alert_thresholds": [
+        {
+          "metric": "${METRIC_NAME}",
+          "threshold": "${VALUE}",
+          "action": "${ACTION}"
+        }
+      ]
+    }
+  },
+  "action_plan": {
+    "remediation_timeline": {
+      "30_days": ["${REC_ID_1}", "${REC_ID_N}"],
+      "60_days": ["${REC_ID_1}", "${REC_ID_N}"],
+      "90_days": ["${REC_ID_1}", "${REC_ID_N}"],
+      "6_months": ["${REC_ID_1}", "${REC_ID_N}"],
+      "12_months": ["${REC_ID_1}", "${REC_ID_N}"]
+    },
+    "responsible_parties": [
+      {
+        "role": "${ROLE}",
+        "name": "${NAME}",
+        "email": "${EMAIL}",
+        "assigned_items": ["${REC_ID_1}", "${REC_ID_N}"]
+      }
+    ],
+    "milestones": [
+      {
+        "milestone_id": "M-${ID}",
+        "description": "${MILESTONE_DESC}",
+        "target_date": "${DATE}",
+        "dependencies": ["${DEP_1}", "${DEP_N}"],
+        "success_criteria": "${CRITERIA}"
+      }
+    ],
+    "follow_up_audit": {
+      "scheduled_date": "${DATE}",
+      "scope": "${SCOPE}",
+      "focus_areas": ["${AREA_1}", "${AREA_N}"]
+    }
+  },
+  "appendices": {
+    "appendix_a_methodology": {
+      "audit_approach": "${APPROACH_DESC}",
+      "standards_used": ["${STANDARD_1}", "${STANDARD_N}"],
+      "testing_procedures": [
+        {
+          "procedure": "${PROCEDURE_NAME}",
+          "description": "${DESC}",
+          "sample_size": "${SIZE}"
+        }
+      ]
+    },
+    "appendix_b_scope_boundaries": {
+      "in_scope": ["${ITEM_1}", "${ITEM_N}"],
+      "out_of_scope": ["${ITEM_1}", "${ITEM_N}"],
+      "assumptions": ["${ASSUMPTION_1}", "${ASSUMPTION_N}"],
+      "limitations": ["${LIMITATION_1}", "${LIMITATION_N}"]
+    },
+    "appendix_c_references": {
+      "regulations": [
+        {
+          "name": "${REG_NAME}",
+          "version": "${VERSION}",
+          "url": "${URL}"
+        }
+      ],
+      "standards": [
+        {
+          "name": "${STANDARD_NAME}",
+          "version": "${VERSION}",
+          "url": "${URL}"
+        }
+      ],
+      "internal_documents": [
+        {
+          "title": "${DOC_TITLE}",
+          "version": "${VERSION}",
+          "date": "${DATE}"
+        }
+      ]
+    },
+    "appendix_d_glossary": {
+      "terms": [
+        {
+          "term": "${TERM}",
+          "definition": "${DEFINITION}"
+        }
+      ]
+    },
+    "appendix_e_attestation": {
+      "management_representation": "${REPRESENTATION_TEXT}",
+      "signed_by": "${NAME}",
+      "title": "${TITLE}",
+      "date": "${DATE}",
+      "signature": "${SIGNATURE_IMAGE_PATH}"
+    }
+  },
+  "formatting": {
+    "report_theme": "${PROFESSIONAL|CORPORATE|MINIMAL}",
+    "color_scheme": "${BLUE|GREEN|GRAY|CUSTOM}",
+    "logo": "${LOGO_IMAGE_PATH}",
+    "page_size": "${A4|LETTER}",
+    "font_family": "${ARIAL|HELVETICA|TIMES}",
+    "include_table_of_contents": true,
+    "include_executive_summary": true,
+    "include_charts": true,
+    "chart_types": ["${BAR|PIE|LINE|RADAR}"]
+  },
+  "compliance_thresholds": {
+    "passing_score": 80,
+    "satisfactory_score": 90,
+    "excellent_score": 95,
+    "critical_finding_max": 0,
+    "high_finding_max": 5,
+    "control_effectiveness_min": 85
+  }
+}

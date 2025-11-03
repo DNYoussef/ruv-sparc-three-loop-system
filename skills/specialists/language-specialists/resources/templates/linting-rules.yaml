@@ -1,0 +1,71 @@
+# Shared Linting Rules for Multi-Language Projects
+# Compatible with Python (ruff) and TypeScript (ESLint)
+
+# Code Style
+max_line_length: 88  # Python: black default, TypeScript: Prettier default
+indent_size: 2  # TypeScript, 4 for Python
+trailing_whitespace: remove
+final_newline: require
+
+# Complexity Thresholds
+max_cyclomatic_complexity: 10
+max_cognitive_complexity: 15
+max_function_length: 50
+max_file_length: 500
+max_parameters: 6  # NASA JPL standard
+
+# Naming Conventions
+class_naming: PascalCase
+function_naming: snake_case  # Python, camelCase for TypeScript
+variable_naming: snake_case  # Python, camelCase for TypeScript
+constant_naming: SCREAMING_SNAKE_CASE
+
+# Import Organization
+sort_imports: true
+group_imports:
+  - standard_library
+  - third_party
+  - first_party
+  - local
+
+# Security Rules
+no_hardcoded_secrets: true
+no_eval: true
+no_shell_injection: true
+validate_input: require
+sanitize_sql: require
+
+# Quality Rules
+require_docstrings: true  # Python
+require_jsdoc: true  # TypeScript
+require_type_annotations: true
+no_unused_variables: error
+no_unused_imports: error
+no_dead_code: error
+
+# Testing Rules
+min_test_coverage: 85
+require_tests_for_public_api: true
+test_naming_convention: "test_*"  # Python, "*.test.ts" for TypeScript
+
+# Git Hooks Integration
+pre_commit:
+  - format_code
+  - lint_code
+  - type_check
+  - run_tests
+
+pre_push:
+  - full_test_suite
+  - coverage_check
+  - security_scan
+
+# Exceptions (files/patterns to ignore)
+ignore_patterns:
+  - "*/node_modules/*"
+  - "*/.venv/*"
+  - "*/dist/*"
+  - "*/build/*"
+  - "*/__pycache__/*"
+  - "*.pyc"
+  - "*.min.js"

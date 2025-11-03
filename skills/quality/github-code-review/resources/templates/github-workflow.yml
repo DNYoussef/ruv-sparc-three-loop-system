@@ -1,0 +1,274 @@
+# GitHub Actions Workflow for Automated Code Review
+#
+# This workflow triggers multi-agent code review swarms on PR events.
+# Place this file at .github/workflows/code-review-swarm.yml
+
+name: Automated Code Review Swarm
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+
+# Prevent concurrent reviews on the same PR
+concurrency:
+  group: review-swarm-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  # Analyze PR and determine review strategy
+  analyze-pr:
+    name: Analyze PR Complexity
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && !github.event.pull_request.draft
+    outputs:
+      complexity: ${{ steps.analysis.outputs.complexity }}
+      topology: ${{ steps.analysis.outputs.topology }}
+      agents: ${{ steps.analysis.outputs.agents }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup GitHub CLI
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Install dependencies
+        run: |
+          npm install -g ruv-swarm@latest
+
+      - name: Analyze PR
+        id: analysis
+        run: |
+          # Run PR analysis script
+          PR_NUM=${{ github.event.pull_request.number }}
+
+          # Get analysis results
+          ANALYSIS=$(node .github/scripts/pr-analysis.js $PR_NUM --json)
+
+          # Extract key metrics
+          COMPLEXITY=$(echo "$ANALYSIS" | jq -r '.complexity')
+          TOPOLOGY=$(echo "$ANALYSIS" | jq -r '.recommendedTopology')
+          AGENTS=$(echo "$ANALYSIS" | jq -r '.recommendedAgents | join(",")')
+
+          # Set outputs
+          echo "complexity=$COMPLEXITY" >> $GITHUB_OUTPUT
+          echo "topology=$TOPOLOGY" >> $GITHUB_OUTPUT
+          echo "agents=$AGENTS" >> $GITHUB_OUTPUT
+
+          # Save full analysis
+          echo "$ANALYSIS" > pr-analysis.json
+
+      - name: Upload analysis results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-analysis
+          path: pr-analysis.json
+
+  # Initialize review swarm
+  init-swarm:
+    name: Initialize Review Swarm
+    runs-on: ubuntu-latest
+    needs: analyze-pr
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install ruv-swarm
+        run: npm install -g ruv-swarm@latest
+
+      - name: Initialize swarm
+        run: |
+          npx ruv-swarm swarm init \
+            --topology ${{ needs.analyze-pr.outputs.topology }} \
+            --max-agents 8
+
+      - name: Post initialization status
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "
+          🚀 **Review Swarm Initialized**
+
+          **Configuration:**
+          - Complexity: ${{ needs.analyze-pr.outputs.complexity }}
+          - Topology: ${{ needs.analyze-pr.outputs.topology }}
+          - Agents: ${{ needs.analyze-pr.outputs.agents }}
+
+          Review in progress... 🔍
+          "
+
+  # Run security review
+  security-review:
+    name: Security Review
+    runs-on: ubuntu-latest
+    needs: [analyze-pr, init-swarm]
+    if: contains(needs.analyze-pr.outputs.agents, 'security')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run security analysis
+        run: |
+          # Security scanning
+          npx ruv-swarm agent spawn \
+            --type analyst \
+            --name "Security Reviewer" \
+            --capabilities "security-audit,vulnerability-scanning,owasp"
+
+          # Run security checks
+          npx ruv-swarm task assign \
+            --agent "Security Reviewer" \
+            --task "Security audit for PR ${{ github.event.pull_request.number }}"
+
+      - name: Post security findings
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get security results and post to PR
+          RESULTS=$(npx ruv-swarm task results --agent "Security Reviewer")
+          gh pr comment ${{ github.event.pull_request.number }} --body "$RESULTS"
+
+  # Run performance review
+  performance-review:
+    name: Performance Review
+    runs-on: ubuntu-latest
+    needs: [analyze-pr, init-swarm]
+    if: contains(needs.analyze-pr.outputs.agents, 'performance')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run performance analysis
+        run: |
+          npx ruv-swarm agent spawn \
+            --type optimizer \
+            --name "Performance Analyst" \
+            --capabilities "performance-profiling,bottleneck-analysis"
+
+          npx ruv-swarm task assign \
+            --agent "Performance Analyst" \
+            --task "Performance review for PR ${{ github.event.pull_request.number }}"
+
+      - name: Post performance findings
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RESULTS=$(npx ruv-swarm task results --agent "Performance Analyst")
+          gh pr comment ${{ github.event.pull_request.number }} --body "$RESULTS"
+
+  # Run style review
+  style-review:
+    name: Style & Convention Review
+    runs-on: ubuntu-latest
+    needs: [analyze-pr, init-swarm]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run style analysis
+        run: |
+          npx ruv-swarm agent spawn \
+            --type analyst \
+            --name "Style Reviewer" \
+            --capabilities "code-style,linting,formatting"
+
+          npx ruv-swarm task assign \
+            --agent "Style Reviewer" \
+            --task "Style review for PR ${{ github.event.pull_request.number }}"
+
+      - name: Auto-fix style issues
+        run: |
+          # Attempt auto-fix for common style issues
+          npm run lint:fix || true
+
+      - name: Commit auto-fixes
+        if: success()
+        run: |
+          if [[ -n $(git status -s) ]]; then
+            git config user.name "Review Swarm Bot"
+            git config user.email "bot@review-swarm.com"
+            git add .
+            git commit -m "🤖 Auto-fix: Style improvements"
+            git push
+          fi
+
+  # Generate final review report
+  review-summary:
+    name: Generate Review Summary
+    runs-on: ubuntu-latest
+    needs: [security-review, performance-review, style-review]
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate summary
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Collect all review results
+          SUMMARY=$(npx ruv-swarm swarm report --format markdown)
+
+          # Post comprehensive summary
+          gh pr comment ${{ github.event.pull_request.number }} --body "
+          ## 📊 Review Swarm Summary
+
+          $SUMMARY
+
+          ---
+          *Automated review powered by RUV Swarm*
+          "
+
+      - name: Update PR labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Add labels based on review results
+          if echo "$SUMMARY" | grep -q "critical"; then
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "review-required"
+          else
+            gh pr edit ${{ github.event.pull_request.number }} --add-label "review-complete"
+          fi
+
+  # Handle comment commands
+  comment-commands:
+    name: Handle Comment Commands
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/swarm')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Parse and execute command
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMAND="${{ github.event.comment.body }}"
+          PR_NUM=${{ github.event.issue.number }}
+
+          # Execute swarm command
+          npx ruv-swarm github handle-comment \
+            --pr $PR_NUM \
+            --command "$COMMAND"

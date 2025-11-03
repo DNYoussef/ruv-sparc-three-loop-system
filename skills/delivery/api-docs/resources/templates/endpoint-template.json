@@ -1,0 +1,235 @@
+{
+  "endpoint": {
+    "path": "/api/resource/{id}",
+    "method": "GET",
+    "summary": "Get resource by ID",
+    "description": "Retrieve detailed information about a specific resource using its unique identifier.",
+    "tags": ["Resources"],
+    "operationId": "getResourceById",
+    "security": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "The unique identifier of the resource",
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        }
+      },
+      {
+        "name": "include",
+        "in": "query",
+        "required": false,
+        "description": "Related resources to include in the response",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["metadata", "relationships", "history"]
+          }
+        },
+        "style": "form",
+        "explode": false
+      },
+      {
+        "name": "fields",
+        "in": "query",
+        "required": false,
+        "description": "Specific fields to return (sparse fieldsets)",
+        "schema": {
+          "type": "string",
+          "example": "name,description,createdAt"
+        }
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "description": "Resource retrieved successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "$ref": "#/components/schemas/Resource"
+                }
+              }
+            },
+            "examples": {
+              "full": {
+                "summary": "Complete resource object",
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "name": "Sample Resource",
+                    "description": "This is a sample resource",
+                    "status": "active",
+                    "createdAt": "2024-01-15T10:30:00Z",
+                    "updatedAt": "2024-01-20T14:45:00Z"
+                  }
+                }
+              },
+              "minimal": {
+                "summary": "Minimal resource with sparse fields",
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "name": "Sample Resource"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "headers": {
+          "X-RateLimit-Limit": {
+            "description": "Request limit per hour",
+            "schema": {
+              "type": "integer",
+              "example": 1000
+            }
+          },
+          "X-RateLimit-Remaining": {
+            "description": "Remaining requests",
+            "schema": {
+              "type": "integer",
+              "example": 999
+            }
+          },
+          "X-RateLimit-Reset": {
+            "description": "Time when rate limit resets (Unix timestamp)",
+            "schema": {
+              "type": "integer",
+              "example": 1705329600
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request - Invalid parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "invalidId": {
+                "summary": "Invalid ID format",
+                "value": {
+                  "success": false,
+                  "error": "ValidationError",
+                  "message": "Invalid UUID format for parameter 'id'",
+                  "details": [
+                    {
+                      "field": "id",
+                      "message": "Must be a valid UUID"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized - Authentication required",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden - Insufficient permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "examples": {
+              "notFound": {
+                "summary": "Resource not found",
+                "value": {
+                  "success": false,
+                  "error": "NotFoundError",
+                  "message": "Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many requests - Rate limit exceeded",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        },
+        "headers": {
+          "Retry-After": {
+            "description": "Seconds to wait before retrying",
+            "schema": {
+              "type": "integer",
+              "example": 60
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "Service unavailable - Temporary maintenance",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "codeExamples": {
+    "curl": "curl -X GET 'https://api.example.com/api/resource/123e4567-e89b-12d3-a456-426614174000' \\\n  -H 'Authorization: Bearer YOUR_TOKEN' \\\n  -H 'Accept: application/json'",
+    "javascript": "const response = await fetch('https://api.example.com/api/resource/123e4567-e89b-12d3-a456-426614174000', {\n  method: 'GET',\n  headers: {\n    'Authorization': `Bearer ${token}`,\n    'Accept': 'application/json'\n  }\n});\nconst data = await response.json();",
+    "python": "import requests\n\nresponse = requests.get(\n    'https://api.example.com/api/resource/123e4567-e89b-12d3-a456-426614174000',\n    headers={\n        'Authorization': f'Bearer {token}',\n        'Accept': 'application/json'\n    }\n)\ndata = response.json()",
+    "go": "req, _ := http.NewRequest(\"GET\", \"https://api.example.com/api/resource/123e4567-e89b-12d3-a456-426614174000\", nil)\nreq.Header.Add(\"Authorization\", \"Bearer \"+token)\nreq.Header.Add(\"Accept\", \"application/json\")\n\nresp, _ := http.DefaultClient.Do(req)\ndefer resp.Body.Close()"
+  }
+}

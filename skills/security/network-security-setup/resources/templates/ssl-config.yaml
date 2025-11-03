@@ -1,0 +1,286 @@
+# SSL/TLS Configuration Template
+# Certificate management and SSL security settings
+
+apiVersion: v1
+kind: SSLConfiguration
+metadata:
+  name: network-security-ssl
+  description: SSL/TLS certificate configuration for network security
+  version: "1.0.0"
+
+spec:
+  # Certificate Authority configuration
+  ca:
+    enabled: true
+    certificate_path: "/etc/network-security/ca/ca.crt"
+    private_key_path: "/etc/network-security/ca/ca.key"
+
+    # CA generation settings
+    generation:
+      common_name: "Network Security Root CA"
+      organization: "Network Security"
+      organizational_unit: "Infrastructure"
+      country: "US"
+      state: "California"
+      locality: "San Francisco"
+      validity_days: 3650  # 10 years
+      key_size: 4096
+      digest: "sha256"
+
+  # Server certificate configuration
+  server_certificates:
+    default:
+      enabled: true
+      certificate_path: "/etc/network-security/certs/server.crt"
+      private_key_path: "/etc/network-security/certs/server.key"
+
+      # Certificate generation settings
+      generation:
+        common_name: "sandbox.local"
+        subject_alternative_names:
+          - "*.sandbox.local"
+          - "localhost"
+          - "127.0.0.1"
+          - "::1"
+        organization: "Network Security"
+        organizational_unit: "Sandbox"
+        country: "US"
+        state: "California"
+        locality: "San Francisco"
+        validity_days: 365
+        key_size: 2048
+        digest: "sha256"
+
+  # Client certificate configuration (optional)
+  client_certificates:
+    enabled: false
+    require_client_cert: false
+    ca_certificate_path: "/etc/network-security/ca/ca.crt"
+
+  # SSL/TLS protocol settings
+  protocols:
+    # Minimum TLS version
+    min_version: "TLSv1.2"
+
+    # Allowed TLS versions
+    allowed_versions:
+      - "TLSv1.2"
+      - "TLSv1.3"
+
+    # Disabled protocols (insecure)
+    disabled_versions:
+      - "SSLv2"
+      - "SSLv3"
+      - "TLSv1.0"
+      - "TLSv1.1"
+
+  # Cipher suite configuration
+  cipher_suites:
+    # Recommended cipher suites (ordered by preference)
+    preferred:
+      - "TLS_AES_256_GCM_SHA384"
+      - "TLS_CHACHA20_POLY1305_SHA256"
+      - "TLS_AES_128_GCM_SHA256"
+      - "ECDHE-RSA-AES256-GCM-SHA384"
+      - "ECDHE-RSA-AES128-GCM-SHA256"
+      - "ECDHE-RSA-CHACHA20-POLY1305"
+
+    # Disabled cipher suites (insecure)
+    disabled:
+      - ".*-CBC-.*"  # CBC mode ciphers (vulnerable to BEAST/LUCKY13)
+      - ".*-RC4-.*"  # RC4 ciphers (insecure)
+      - ".*-MD5-.*"  # MD5 hash (weak)
+      - ".*-DES-.*"  # DES encryption (weak)
+      - ".*-NULL-.*" # No encryption
+
+  # Certificate validation settings
+  validation:
+    # Validate certificate chain
+    verify_chain: true
+
+    # Check certificate revocation
+    check_revocation: true
+    crl_url: ""
+    ocsp_url: ""
+
+    # Certificate expiration warnings
+    expiry_warning_days: 30
+
+    # Hostname verification
+    verify_hostname: true
+
+  # Certificate rotation and renewal
+  rotation:
+    # Auto-renewal settings
+    auto_renew: true
+    renew_before_days: 30
+
+    # Rotation schedule
+    schedule: "0 2 * * 0"  # Weekly at 2 AM on Sundays
+
+    # Notification settings
+    notifications:
+      enabled: true
+      email:
+        - "admin@example.com"
+      slack_webhook: ""
+
+  # Trust store configuration
+  trust_store:
+    # System trust store locations
+    system_locations:
+      linux:
+        - "/etc/ssl/certs"
+        - "/usr/local/share/ca-certificates"
+      macos:
+        - "/System/Library/Keychains/SystemRootCertificates.keychain"
+      windows:
+        - "Cert:\\LocalMachine\\Root"
+
+    # Custom trust store
+    custom:
+      enabled: false
+      path: "/etc/network-security/trust"
+      certificates: []
+
+  # OCSP (Online Certificate Status Protocol) settings
+  ocsp:
+    enabled: false
+    responder_url: ""
+    timeout_seconds: 5
+    cache_duration_hours: 24
+
+  # Certificate pinning (optional)
+  pinning:
+    enabled: false
+    pins:
+      - domain: "api.example.com"
+        sha256_hashes:
+          - "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+
+  # HSTS (HTTP Strict Transport Security) settings
+  hsts:
+    enabled: true
+    max_age_seconds: 31536000  # 1 year
+    include_subdomains: true
+    preload: false
+
+  # Security headers
+  security_headers:
+    # Content Security Policy
+    content_security_policy: "default-src 'self'; script-src 'self' 'unsafe-inline'"
+
+    # X-Frame-Options
+    x_frame_options: "DENY"
+
+    # X-Content-Type-Options
+    x_content_type_options: "nosniff"
+
+    # X-XSS-Protection
+    x_xss_protection: "1; mode=block"
+
+  # Logging configuration
+  logging:
+    enabled: true
+    log_file: "/var/log/network-security/ssl.log"
+    log_level: "info"  # debug, info, warning, error
+
+    # Log SSL handshakes
+    log_handshakes: false
+
+    # Log certificate validation failures
+    log_validation_failures: true
+
+  # Performance settings
+  performance:
+    # SSL session cache
+    session_cache:
+      enabled: true
+      size: 1000
+      timeout_seconds: 300
+
+    # OCSP stapling
+    ocsp_stapling:
+      enabled: true
+      cache_size: 100
+      timeout_seconds: 5
+
+    # TLS session tickets
+    session_tickets:
+      enabled: true
+      rotation_interval_hours: 24
+
+  # Compliance settings
+  compliance:
+    # PCI DSS compliance
+    pci_dss:
+      enabled: true
+      version: "3.2.1"
+
+    # FIPS 140-2 compliance
+    fips_140_2:
+      enabled: false
+      mode: "strict"
+
+    # NIST guidelines
+    nist:
+      enabled: true
+      publication: "SP 800-52 Rev. 2"
+
+  # Development/testing settings (DISABLE IN PRODUCTION)
+  development:
+    # Allow self-signed certificates
+    allow_self_signed: false
+
+    # Skip hostname verification
+    skip_hostname_verification: false
+
+    # Accept expired certificates
+    accept_expired: false
+
+    # Verbose logging
+    verbose_logging: false
+
+# Examples for different environments
+
+# Production configuration
+production:
+  protocols:
+    min_version: "TLSv1.2"
+  cipher_suites:
+    preferred:
+      - "TLS_AES_256_GCM_SHA384"
+      - "TLS_CHACHA20_POLY1305_SHA256"
+  validation:
+    verify_chain: true
+    check_revocation: true
+  development:
+    allow_self_signed: false
+    skip_hostname_verification: false
+
+# Staging configuration
+staging:
+  protocols:
+    min_version: "TLSv1.2"
+  cipher_suites:
+    preferred:
+      - "TLS_AES_256_GCM_SHA384"
+      - "TLS_CHACHA20_POLY1305_SHA256"
+  validation:
+    verify_chain: true
+    check_revocation: true
+  development:
+    allow_self_signed: true
+    skip_hostname_verification: false
+
+# Development configuration
+development_config:
+  protocols:
+    min_version: "TLSv1.2"
+  validation:
+    verify_chain: false
+    check_revocation: false
+  development:
+    allow_self_signed: true
+    skip_hostname_verification: true
+    verbose_logging: true

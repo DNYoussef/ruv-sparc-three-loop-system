@@ -1,0 +1,242 @@
+# Platform Integration Configuration Template
+
+# Platform Definitions
+platforms:
+  # Example: Salesforce
+  - name: salesforce
+    type: api
+    base_url: https://your-instance.salesforce.com
+    api_version: v57.0
+    auth:
+      type: oauth2
+      client_id: ${SALESFORCE_CLIENT_ID}
+      client_secret: ${SALESFORCE_CLIENT_SECRET}
+      token_url: https://login.salesforce.com/services/oauth2/token
+      scopes:
+        - api
+        - refresh_token
+    rate_limits:
+      requests_per_second: 100
+      daily_limit: 100000
+    webhooks:
+      enabled: true
+      signature_header: X-Salesforce-Signature
+      secret: ${SALESFORCE_WEBHOOK_SECRET}
+      events:
+        - contact.created
+        - contact.updated
+        - account.created
+
+  # Example: Stripe
+  - name: stripe
+    type: api
+    base_url: https://api.stripe.com
+    api_version: v1
+    auth:
+      type: bearer
+      token: ${STRIPE_API_KEY}
+    rate_limits:
+      requests_per_second: 100
+    webhooks:
+      enabled: true
+      signature_header: Stripe-Signature
+      secret: ${STRIPE_WEBHOOK_SECRET}
+      events:
+        - payment_intent.succeeded
+        - payment_intent.payment_failed
+        - charge.succeeded
+        - customer.created
+
+  # Example: HubSpot
+  - name: hubspot
+    type: api
+    base_url: https://api.hubapi.com
+    auth:
+      type: bearer
+      token: ${HUBSPOT_ACCESS_TOKEN}
+    rate_limits:
+      requests_per_second: 100
+      burst_limit: 150
+    webhooks:
+      enabled: true
+      signature_header: X-HubSpot-Signature
+      events:
+        - contact.creation
+        - contact.propertyChange
+        - deal.creation
+
+# Integration Configuration
+integration:
+  # Synchronization Settings
+  synchronization:
+    enabled: true
+    direction: bidirectional  # bidirectional | source_to_target | target_to_source
+    frequency: real_time      # real_time | hourly | daily | weekly
+    batch_size: 1000
+
+    # Conflict Resolution
+    conflict_resolution:
+      strategy: last_write_wins  # last_write_wins | source_wins | target_wins | merge | manual
+      merge_fields:
+        - updated_at
+        - status
+
+    # Data Filters
+    filters:
+      include:
+        - field: status
+          operator: in
+          values: [active, pending]
+      exclude:
+        - field: deleted
+          operator: eq
+          value: true
+
+    # Field Mappings
+    field_mappings:
+      salesforce_to_hubspot:
+        Id: vid
+        Email: email
+        FirstName: firstname
+        LastName: lastname
+        Phone: phone
+        Company: company
+
+      hubspot_to_salesforce:
+        vid: External_ID__c
+        email: Email
+        firstname: FirstName
+        lastname: LastName
+        phone: Phone
+
+  # Webhook Configuration
+  webhooks:
+    enabled: true
+    base_url: https://your-domain.com
+    verification_required: true
+    retry_strategy:
+      max_attempts: 3
+      backoff: exponential
+      initial_delay: 1000  # ms
+
+    # Dead Letter Queue
+    dead_letter_queue:
+      enabled: true
+      type: sqs  # sqs | redis | database
+      url: ${DLQ_URL}
+
+  # Error Handling
+  error_handling:
+    strategy: retry  # retry | dead_letter | alert | fallback
+    max_retries: 3
+    retry_delay: 1000  # ms
+    backoff_multiplier: 2
+
+    # Alerts
+    alerts:
+      - type: email
+        threshold: 10  # errors before alerting
+        recipients:
+          - ops@example.com
+      - type: slack
+        webhook_url: ${SLACK_WEBHOOK_URL}
+
+  # Monitoring
+  monitoring:
+    enabled: true
+    metrics:
+      - api_latency
+      - webhook_success_rate
+      - sync_throughput
+      - error_rate
+
+    # Logging
+    logging:
+      level: info  # debug | info | warn | error
+      format: json
+      destination: stdout
+
+    # Metrics Export
+    metrics_export:
+      prometheus:
+        enabled: true
+        port: 9090
+        path: /metrics
+
+# Data Transformations
+transformations:
+  # Custom transformation rules
+  rules:
+    - name: normalize_phone
+      description: Normalize phone numbers to E.164 format
+      fields: [phone, mobile]
+      function: normalize_phone_number
+
+    - name: uppercase_email
+      description: Ensure emails are lowercase
+      fields: [email]
+      function: lowercase
+
+    - name: parse_address
+      description: Split address into components
+      fields: [address]
+      function: parse_address
+
+# Security
+security:
+  # Encryption
+  encryption:
+    at_rest: true
+    in_transit: true
+    algorithm: AES-256-GCM
+
+  # Secrets Management
+  secrets:
+    provider: env  # env | vault | aws-secrets-manager
+
+  # Access Control
+  access_control:
+    require_authentication: true
+    allowed_ips:
+      - 0.0.0.0/0  # Replace with actual IPs
+
+  # Audit Logging
+  audit:
+    enabled: true
+    log_all_requests: true
+    retention_days: 90
+
+# Performance
+performance:
+  # Caching
+  caching:
+    enabled: true
+    provider: redis
+    ttl: 3600  # seconds
+
+  # Connection Pooling
+  connection_pool:
+    min_connections: 5
+    max_connections: 20
+    idle_timeout: 60000  # ms
+
+  # Batch Processing
+  batch_processing:
+    enabled: true
+    batch_size: 1000
+    batch_timeout: 5000  # ms
+
+# Testing
+testing:
+  # Mock Mode
+  mock_mode: false
+
+  # Test Fixtures
+  fixtures:
+    contacts: test/fixtures/contacts.json
+    accounts: test/fixtures/accounts.json
+
+  # Integration Tests
+  integration_tests:
+    enabled: true
+    timeout: 30000  # ms

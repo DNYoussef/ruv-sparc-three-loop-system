@@ -1,0 +1,312 @@
+# Evaluation Metrics Configuration
+# Comprehensive metrics for model evaluation
+
+classification_metrics:
+  # Basic metrics
+  - name: accuracy
+    description: Overall classification accuracy
+    compute: true
+
+  - name: balanced_accuracy
+    description: Balanced accuracy for imbalanced datasets
+    compute: true
+
+  # Per-class metrics
+  - name: precision
+    description: Precision per class
+    compute: true
+    average: macro  # Options: micro, macro, weighted
+
+  - name: recall
+    description: Recall per class (sensitivity, TPR)
+    compute: true
+    average: macro
+
+  - name: f1_score
+    description: F1 score (harmonic mean of precision and recall)
+    compute: true
+    average: macro
+
+  - name: specificity
+    description: Specificity (TNR)
+    compute: true
+
+  # ROC and PR curves
+  - name: roc_auc
+    description: Area under ROC curve
+    compute: true
+    multi_class: ovr  # Options: ovr, ovo
+
+  - name: pr_auc
+    description: Area under Precision-Recall curve
+    compute: true
+
+  # Multi-class metrics
+  - name: cohen_kappa
+    description: Cohen's kappa coefficient
+    compute: true
+
+  - name: matthews_corrcoef
+    description: Matthews correlation coefficient
+    compute: true
+
+  # Confusion matrix
+  - name: confusion_matrix
+    description: Confusion matrix
+    compute: true
+    normalize: true  # Options: true, pred, all, false
+
+regression_metrics:
+  # Error metrics
+  - name: mse
+    description: Mean Squared Error
+    compute: true
+
+  - name: rmse
+    description: Root Mean Squared Error
+    compute: true
+
+  - name: mae
+    description: Mean Absolute Error
+    compute: true
+
+  - name: mape
+    description: Mean Absolute Percentage Error
+    compute: true
+
+  # Goodness of fit
+  - name: r2_score
+    description: R-squared (coefficient of determination)
+    compute: true
+
+  - name: adjusted_r2
+    description: Adjusted R-squared
+    compute: true
+
+  - name: explained_variance
+    description: Explained variance score
+    compute: true
+
+  # Robust metrics
+  - name: median_absolute_error
+    description: Median Absolute Error
+    compute: true
+
+  - name: max_error
+    description: Maximum residual error
+    compute: true
+
+fairness_metrics:
+  enabled: true
+
+  # Sensitive attributes to analyze
+  sensitive_attributes:
+    - name: gender
+      values: [male, female, other]
+
+    - name: age_group
+      values: [young, middle, senior]
+
+    - name: ethnicity
+      values: [group_a, group_b, group_c, group_d]
+
+  # Fairness criteria
+  criteria:
+    - name: demographic_parity
+      description: Similar positive prediction rates across groups
+      threshold: 0.1  # Maximum allowed disparity
+
+    - name: equalized_odds
+      description: Similar TPR and FPR across groups
+      threshold: 0.1
+
+    - name: equal_opportunity
+      description: Similar TPR across groups
+      threshold: 0.1
+
+    - name: calibration
+      description: Predicted probabilities match actual outcomes
+      threshold: 0.05
+
+    - name: predictive_parity
+      description: Similar precision across groups
+      threshold: 0.1
+
+  # Bias detection
+  bias_detection:
+    - name: statistical_parity_difference
+      compute: true
+
+    - name: disparate_impact_ratio
+      compute: true
+      threshold: 0.8  # 80% rule
+
+    - name: average_odds_difference
+      compute: true
+
+interpretability_metrics:
+  enabled: true
+
+  # Feature importance methods
+  feature_importance:
+    - name: shap
+      description: SHapley Additive exPlanations
+      enabled: true
+      params:
+        max_samples: 100
+        background_samples: 50
+
+    - name: lime
+      description: Local Interpretable Model-agnostic Explanations
+      enabled: true
+      params:
+        num_features: 10
+        num_samples: 1000
+
+    - name: integrated_gradients
+      description: Integrated Gradients (for neural networks)
+      enabled: true
+      params:
+        n_steps: 50
+        internal_batch_size: 32
+
+    - name: permutation_importance
+      description: Permutation-based feature importance
+      enabled: true
+      params:
+        n_repeats: 10
+
+  # Model inspection
+  model_inspection:
+    - name: partial_dependence
+      description: Partial dependence plots
+      enabled: true
+      features: [0, 1, 2]  # Feature indices
+
+    - name: individual_conditional_expectation
+      description: ICE plots
+      enabled: true
+      features: [0, 1, 2]
+
+robustness_metrics:
+  enabled: true
+
+  # Adversarial robustness
+  adversarial:
+    - name: fgsm_accuracy
+      description: Accuracy under FGSM attack
+      enabled: true
+      epsilon: [0.01, 0.05, 0.1]
+
+    - name: pgd_accuracy
+      description: Accuracy under PGD attack
+      enabled: true
+      epsilon: 0.1
+      iterations: 10
+
+  # Distribution shift
+  distribution_shift:
+    - name: covariate_shift
+      description: Performance under covariate shift
+      enabled: true
+
+    - name: label_shift
+      description: Performance under label shift
+      enabled: true
+
+  # Noise robustness
+  noise_robustness:
+    - name: gaussian_noise
+      description: Accuracy with Gaussian noise
+      enabled: true
+      std: [0.1, 0.2, 0.3]
+
+    - name: salt_pepper_noise
+      description: Accuracy with salt-and-pepper noise
+      enabled: true
+      amount: [0.01, 0.05, 0.1]
+
+efficiency_metrics:
+  # Computational efficiency
+  - name: inference_time
+    description: Average inference time per sample
+    compute: true
+    unit: milliseconds
+
+  - name: throughput
+    description: Samples processed per second
+    compute: true
+
+  - name: memory_usage
+    description: Peak memory usage during inference
+    compute: true
+    unit: megabytes
+
+  - name: model_size
+    description: Model file size
+    compute: true
+    unit: megabytes
+
+  - name: flops
+    description: Floating point operations
+    compute: true
+
+  # Resource utilization
+  - name: gpu_utilization
+    description: GPU utilization percentage
+    compute: true
+
+  - name: cpu_utilization
+    description: CPU utilization percentage
+    compute: true
+
+calibration_metrics:
+  enabled: true
+
+  # Calibration metrics
+  - name: expected_calibration_error
+    description: Expected Calibration Error (ECE)
+    compute: true
+    n_bins: 10
+
+  - name: maximum_calibration_error
+    description: Maximum Calibration Error (MCE)
+    compute: true
+    n_bins: 10
+
+  - name: brier_score
+    description: Brier score for probability calibration
+    compute: true
+
+  # Reliability diagrams
+  - name: reliability_diagram
+    description: Reliability diagram for calibration visualization
+    compute: true
+    n_bins: 10
+
+reporting:
+  # Report generation
+  formats:
+    - json
+    - yaml
+    - html
+    - pdf
+
+  # Visualization
+  visualizations:
+    - confusion_matrix_heatmap
+    - roc_curves
+    - precision_recall_curves
+    - feature_importance_bar
+    - calibration_curve
+    - fairness_disparity_plot
+
+  # Comparison
+  compare_models: true
+  baseline_models: []
+
+  # Thresholds
+  alert_thresholds:
+    accuracy_below: 0.8
+    fairness_disparity_above: 0.1
+    calibration_error_above: 0.1

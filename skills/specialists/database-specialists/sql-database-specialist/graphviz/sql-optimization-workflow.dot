@@ -1,0 +1,192 @@
+digraph SQLDatabaseSpecialist {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end points
+    start [shape=ellipse, label="Start:\nDatabase Task", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nOptimized Database", fillcolor=green, fontcolor=white];
+
+    // ==========================================================================
+    // PHASE 1: ANALYSIS
+    // ==========================================================================
+
+    subgraph cluster_analysis {
+        label="Phase 1: Analysis & Diagnostics";
+        fillcolor=lightyellow;
+        style=filled;
+
+        analyze_start [label="Identify\nProblem Type"];
+
+        slow_query [label="Slow Query?\nEXPLAIN Analysis"];
+        schema_issues [label="Schema Design?\nValidation"];
+        missing_indexes [label="Missing Indexes?\nAnalysis"];
+        migration_needed [label="Schema Change?\nMigration Planning"];
+
+        analyze_start -> slow_query;
+        analyze_start -> schema_issues;
+        analyze_start -> missing_indexes;
+        analyze_start -> migration_needed;
+    }
+
+    // ==========================================================================
+    // PHASE 2: TOOLS & SCRIPTS
+    // ==========================================================================
+
+    subgraph cluster_tools {
+        label="Phase 2: Automated Tools";
+        fillcolor=lightblue;
+        style=filled;
+
+        script_schema [shape=cylinder, label="schema-validator.js\n(Validate Schema)", fillcolor=lightcoral];
+        script_query [shape=cylinder, label="query-optimizer.js\n(Analyze EXPLAIN)", fillcolor=lightcoral];
+        script_index [shape=cylinder, label="index-analyzer.js\n(Find Missing Indexes)", fillcolor=lightcoral];
+        script_migration [shape=cylinder, label="migration-generator.js\n(Zero-Downtime Migrations)", fillcolor=lightcoral];
+
+        slow_query -> script_query [label="run", style=dashed];
+        schema_issues -> script_schema [label="run", style=dashed];
+        missing_indexes -> script_index [label="run", style=dashed];
+        migration_needed -> script_migration [label="run", style=dashed];
+    }
+
+    // ==========================================================================
+    // DECISION POINTS
+    // ==========================================================================
+
+    decision_critical [shape=diamond, label="Critical\nIssues?", fillcolor=yellow];
+    decision_safe [shape=diamond, label="Migration\nSafe?", fillcolor=yellow];
+
+    script_query -> decision_critical;
+    script_schema -> decision_critical;
+    script_index -> decision_critical;
+
+    // ==========================================================================
+    // PHASE 3: REMEDIATION
+    // ==========================================================================
+
+    subgraph cluster_remediation {
+        label="Phase 3: Apply Fixes";
+        fillcolor=lightgreen;
+        style=filled;
+
+        fix_query [label="Rewrite Query\n(JOINs, Indexes)"];
+        fix_schema [label="Fix Schema\n(PKs, FKs, Types)"];
+        fix_indexes [label="Create Indexes\n(CONCURRENT/ONLINE)"];
+        fix_migration [label="Run Migration\n(Batched, Paused)"];
+
+        decision_critical -> fix_query [label="query issue"];
+        decision_critical -> fix_schema [label="schema issue"];
+        decision_critical -> fix_indexes [label="missing index"];
+    }
+
+    script_migration -> decision_safe;
+    decision_safe -> fix_migration [label="yes", color=green];
+
+    // ==========================================================================
+    // WARNINGS & SAFEGUARDS
+    // ==========================================================================
+
+    warning_migration [shape=octagon, label="STOP:\nReview Migration\nBackup First", fillcolor=orange];
+    warning_downtime [shape=octagon, label="WARNING:\nPotential Downtime", fillcolor=orange];
+
+    decision_safe -> warning_migration [label="no", color=red];
+    warning_migration -> script_migration [label="revise", style=dashed];
+
+    fix_migration -> warning_downtime [style=dashed, label="check"];
+
+    // ==========================================================================
+    // PHASE 4: VALIDATION
+    // ==========================================================================
+
+    subgraph cluster_validation {
+        label="Phase 4: Validation & Monitoring";
+        fillcolor=lightcyan;
+        style=filled;
+
+        validate_performance [label="Benchmark\nPerformance"];
+        validate_schema [label="Re-validate\nSchema"];
+        validate_indexes [label="Check Index\nUsage"];
+        monitor_logs [label="Monitor Slow\nQuery Logs"];
+
+        fix_query -> validate_performance;
+        fix_schema -> validate_schema;
+        fix_indexes -> validate_indexes;
+        fix_migration -> validate_performance;
+
+        validate_performance -> monitor_logs;
+        validate_schema -> monitor_logs;
+        validate_indexes -> monitor_logs;
+    }
+
+    // ==========================================================================
+    // FINAL DECISION
+    // ==========================================================================
+
+    decision_success [shape=diamond, label="Performance\nImproved?", fillcolor=yellow];
+
+    monitor_logs -> decision_success;
+    decision_success -> end [label="yes", color=green];
+    decision_success -> analyze_start [label="no", color=red, style=dashed, label="iterate"];
+
+    // ==========================================================================
+    // EXTERNAL REFERENCES
+    // ==========================================================================
+
+    template_postgres [shape=cylinder, label="postgresql-\nproduction.conf", fillcolor=lightsalmon];
+    template_mysql [shape=cylinder, label="mysql-\nproduction.cnf", fillcolor=lightsalmon];
+    template_schema [shape=cylinder, label="schema-\nbest-practices.sql", fillcolor=lightsalmon];
+
+    fix_schema -> template_schema [style=dashed, label="reference"];
+    validate_performance -> template_postgres [style=dashed, label="tune"];
+    validate_performance -> template_mysql [style=dashed, label="tune"];
+
+    // ==========================================================================
+    // BEST PRACTICES
+    // ==========================================================================
+
+    subgraph cluster_principles {
+        label="Database Best Practices";
+        fillcolor=lightyellow;
+        style=filled;
+
+        principle1 [shape=folder, label="Index all FKs\nUse DECIMAL for money\nTimestamps on all tables", fillcolor=lightsalmon];
+        principle2 [shape=folder, label="EXPLAIN before deploy\nConcurrent index creation\nZero-downtime migrations", fillcolor=lightsalmon];
+        principle3 [shape=folder, label="Monitor pg_stat_statements\nVACUUM regularly\nConnection pooling", fillcolor=lightsalmon];
+
+        principle1 -> fix_schema [style=dashed, label="apply"];
+        principle2 -> fix_indexes [style=dashed, label="apply"];
+        principle3 -> monitor_logs [style=dashed, label="apply"];
+    }
+
+    // ==========================================================================
+    // CRITICAL PATHS
+    // ==========================================================================
+
+    critical_seqscan [shape=box, label="Sequential Scan\n>1000 rows", fillcolor=red, fontcolor=white];
+    critical_nomoney [shape=box, label="FLOAT/DOUBLE\nfor money", fillcolor=red, fontcolor=white];
+    critical_nopk [shape=box, label="Missing\nPrimary Key", fillcolor=red, fontcolor=white];
+
+    script_query -> critical_seqscan [style=dashed, label="detects"];
+    script_schema -> critical_nomoney [style=dashed, label="detects"];
+    script_schema -> critical_nopk [style=dashed, label="detects"];
+
+    critical_seqscan -> fix_indexes [color=red];
+    critical_nomoney -> fix_schema [color=red];
+    critical_nopk -> fix_schema [color=red];
+
+    // ==========================================================================
+    // WORKFLOW ENTRY
+    // ==========================================================================
+
+    start -> analyze_start;
+
+    // ==========================================================================
+    // METADATA
+    // ==========================================================================
+
+    labelloc="t";
+    label="SQL Database Specialist: Comprehensive Optimization Workflow\nFrom slow queries to production-ready schemas";
+    fontsize=16;
+    fontname="Arial Bold";
+}

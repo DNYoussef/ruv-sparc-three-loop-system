@@ -1,0 +1,129 @@
+{
+  "name": "transformer-nlp",
+  "description": "Transformer architecture for NLP tasks with multi-head attention and positional encoding",
+  "architecture": {
+    "type": "transformer",
+    "layers": [
+      {
+        "type": "embedding",
+        "vocab_size": 10000,
+        "embedding_dim": 512,
+        "mask_zero": true
+      },
+      {
+        "type": "positional_encoding",
+        "max_len": 512
+      },
+      {
+        "type": "transformer_encoder",
+        "num_heads": 8,
+        "ff_dim": 2048,
+        "num_layers": 6,
+        "dropout": 0.1,
+        "activation": "relu"
+      },
+      {
+        "type": "global_average_pooling_1d"
+      },
+      {
+        "type": "dense",
+        "units": 256,
+        "activation": "relu"
+      },
+      {
+        "type": "dropout",
+        "rate": 0.3
+      },
+      {
+        "type": "dense",
+        "units": 128,
+        "activation": "relu"
+      },
+      {
+        "type": "dropout",
+        "rate": 0.2
+      },
+      {
+        "type": "dense",
+        "units": 2,
+        "activation": "softmax",
+        "name": "classification_output"
+      }
+    ]
+  },
+  "training": {
+    "epochs": 50,
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "optimizer": "adam",
+    "loss": "categorical_crossentropy",
+    "metrics": ["accuracy", "f1_score", "precision", "recall"]
+  },
+  "divergent": {
+    "enabled": true,
+    "pattern": "associative",
+    "factor": 0.4
+  },
+  "text_config": {
+    "max_sequence_length": 512,
+    "tokenizer": "wordpiece",
+    "lowercase": true,
+    "remove_punctuation": false,
+    "padding": "post",
+    "truncation": true
+  },
+  "regularization": {
+    "attention_dropout": 0.1,
+    "hidden_dropout": 0.1,
+    "layer_norm": true,
+    "early_stopping": {
+      "enabled": true,
+      "patience": 5,
+      "monitor": "val_f1_score",
+      "mode": "max"
+    }
+  },
+  "warmup_schedule": {
+    "enabled": true,
+    "warmup_steps": 1000,
+    "total_steps": 10000
+  },
+  "callbacks": [
+    {
+      "type": "model_checkpoint",
+      "filepath": "checkpoints/transformer-{epoch:02d}-{val_accuracy:.4f}.h5",
+      "monitor": "val_accuracy",
+      "save_best_only": true
+    },
+    {
+      "type": "learning_rate_schedule",
+      "schedule": "warmup_cosine_decay",
+      "warmup_steps": 1000
+    },
+    {
+      "type": "wandb",
+      "project": "flow-nexus-nlp",
+      "enabled": false
+    }
+  ],
+  "use_cases": [
+    "Sentiment analysis",
+    "Text classification",
+    "Named entity recognition",
+    "Question answering",
+    "Document categorization",
+    "Intent detection"
+  ],
+  "performance_targets": {
+    "accuracy": 0.94,
+    "f1_score": 0.92,
+    "inference_latency_ms": 50,
+    "memory_mb": 800
+  },
+  "metadata": {
+    "author": "Flow Nexus",
+    "version": "1.0.0",
+    "created": "2025-10-19",
+    "tags": ["transformer", "nlp", "attention", "bert-like", "text-classification"]
+  }
+}

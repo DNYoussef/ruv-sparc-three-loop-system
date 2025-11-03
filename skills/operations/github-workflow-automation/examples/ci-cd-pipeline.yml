@@ -1,0 +1,646 @@
+# Complete CI/CD Pipeline with Swarm Coordination
+# This example demonstrates a full-featured CI/CD pipeline with:
+# - Multi-language support (Node.js, Python, Go)
+# - Intelligent test selection
+# - Parallel execution with swarm coordination
+# - Security scanning
+# - Progressive deployment
+# - Automated rollback
+
+name: Complete CI/CD Pipeline with Swarm
+
+on:
+  push:
+    branches: [main, develop, 'feature/**']
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      skip-tests:
+        description: 'Skip test execution'
+        required: false
+        type: boolean
+        default: false
+      deployment-environment:
+        description: 'Deployment environment'
+        required: false
+        type: choice
+        options:
+          - none
+          - staging
+          - production
+
+permissions:
+  contents: write
+  packages: write
+  deployments: write
+  pull-requests: write
+  security-events: write
+  checks: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  NODE_VERSION: '18.x'
+  PYTHON_VERSION: '3.11'
+  GO_VERSION: '1.21'
+
+jobs:
+  # ========================================
+  # Phase 1: Initialize and Analyze
+  # ========================================
+
+  swarm-init:
+    name: Initialize Swarm Coordination
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      swarm-id: ${{ steps.init.outputs.swarm-id }}
+      languages: ${{ steps.detect.outputs.languages }}
+      test-strategy: ${{ steps.strategy.outputs.strategy }}
+      changed-files: ${{ steps.changes.outputs.files }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Detect repository technologies
+        id: detect
+        run: |
+          # Auto-detect languages and frameworks
+          python3 resources/workflow-generator.py --analyze > analysis.json
+          LANGUAGES=$(jq -r '.languages | join(",")' analysis.json)
+          echo "languages=${LANGUAGES}" >> $GITHUB_OUTPUT
+          echo "Detected languages: ${LANGUAGES}"
+
+      - name: Detect changed files
+        id: changes
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | jq -R . | jq -s .)
+          else
+            FILES=$(git diff --name-only HEAD~1 HEAD | jq -R . | jq -s .)
+          fi
+          echo "files=${FILES}" >> $GITHUB_OUTPUT
+
+      - name: Initialize swarm coordination
+        id: init
+        run: |
+          # Initialize multi-agent swarm for workflow coordination
+          SWARM_ID=$(npx ruv-swarm init \
+            --topology mesh \
+            --max-agents 10 \
+            --output json | jq -r '.id')
+          echo "swarm-id=${SWARM_ID}" >> $GITHUB_OUTPUT
+          echo "Initialized swarm: ${SWARM_ID}"
+
+      - name: Determine test strategy
+        id: strategy
+        run: |
+          # Smart test selection based on changes
+          if [[ "${{ github.event.inputs.skip-tests }}" == "true" ]]; then
+            STRATEGY="skip"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            STRATEGY="incremental"
+          else
+            STRATEGY="full"
+          fi
+          echo "strategy=${STRATEGY}" >> $GITHUB_OUTPUT
+
+      - name: Store swarm context
+        run: |
+          npx claude-flow@alpha hooks pre-task \
+            --description "CI/CD Pipeline Execution" \
+            --context "swarm-${{ steps.init.outputs.swarm-id }}"
+
+  # ========================================
+  # Phase 2: Build and Test (Parallel)
+  # ========================================
+
+  node-build-test:
+    name: Node.js Build & Test
+    needs: swarm-init
+    if: contains(needs.swarm-init.outputs.languages, 'javascript') || contains(needs.swarm-init.outputs.languages, 'typescript')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Type check
+        if: contains(needs.swarm-init.outputs.languages, 'typescript')
+        run: npm run typecheck
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage --maxWorkers=4
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          flags: node-${{ matrix.node-version }}
+          files: ./coverage/coverage-final.json
+
+      - name: Upload build artifacts
+        if: matrix.node-version == '18.x'
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-build
+          path: dist/
+          retention-days: 7
+
+      - name: Notify swarm of completion
+        run: |
+          npx claude-flow@alpha hooks notify \
+            --message "Node.js ${{ matrix.node-version }} build completed" \
+            --type "build-complete"
+
+  python-build-test:
+    name: Python Build & Test
+    needs: swarm-init
+    if: contains(needs.swarm-init.outputs.languages, 'python')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Type check with mypy
+        run: mypy .
+
+      - name: Run tests with pytest
+        run: |
+          pytest \
+            --cov \
+            --cov-report=xml \
+            --cov-report=html \
+            --junitxml=pytest-report.xml \
+            -v
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          flags: python-${{ matrix.python-version }}
+          files: ./coverage.xml
+
+      - name: Notify swarm
+        run: |
+          npx claude-flow@alpha hooks notify \
+            --message "Python ${{ matrix.python-version }} build completed"
+
+  go-build-test:
+    name: Go Build & Test
+    needs: swarm-init
+    if: contains(needs.swarm-init.outputs.languages, 'go')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        go-version: ['1.19', '1.20', '1.21']
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ matrix.go-version }}-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-${{ matrix.go-version }}-
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Run linters
+        run: |
+          go fmt ./...
+          go vet ./...
+
+      - name: Run tests
+        run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+
+      - name: Build binaries
+        run: |
+          go build -v ./...
+          go build -o bin/ ./cmd/...
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          flags: go-${{ matrix.go-version }}
+          files: ./coverage.txt
+
+      - name: Upload binaries
+        if: matrix.go-version == '1.21'
+        uses: actions/upload-artifact@v3
+        with:
+          name: go-binaries
+          path: bin/
+
+  # ========================================
+  # Phase 3: Security & Quality
+  # ========================================
+
+  security-scan:
+    name: Security Scanning
+    needs: swarm-init
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Dependency review
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@v3
+
+      - name: Swarm security analysis
+        run: |
+          npx ruv-swarm actions security \
+            --deep-scan \
+            --compliance-check \
+            --format json > security-report.json
+
+      - name: Upload security report
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-report
+          path: security-report.json
+
+  code-quality:
+    name: Code Quality Analysis
+    needs: swarm-init
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Run complexity analysis
+        run: |
+          npx ruv-swarm actions analyze \
+            --metrics complexity,maintainability \
+            --threshold-complexity 15
+
+  # ========================================
+  # Phase 4: Integration & E2E Tests
+  # ========================================
+
+  integration-tests:
+    name: Integration Tests
+    needs: [swarm-init, node-build-test]
+    if: needs.swarm-init.outputs.test-strategy != 'skip'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: testdb
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: node-build
+          path: dist/
+
+      - name: Run integration tests
+        env:
+          DATABASE_URL: postgresql://test:test@localhost:5432/testdb
+          REDIS_URL: redis://localhost:6379
+        run: npm run test:integration
+
+  e2e-tests:
+    name: E2E Tests (${{ matrix.browser }})
+    needs: [swarm-init, node-build-test]
+    if: needs.swarm-init.outputs.test-strategy == 'full'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run E2E tests
+        run: npx playwright test --project=${{ matrix.browser }}
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-${{ matrix.browser }}-results
+          path: |
+            test-results/
+            playwright-report/
+
+  # ========================================
+  # Phase 5: Build Container Images
+  # ========================================
+
+  container-build:
+    name: Build Container Images
+    needs: [node-build-test, python-build-test, security-scan]
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+      digest: ${{ steps.build.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            VERSION=${{ github.sha }}
+            BUILD_DATE=${{ github.event.repository.updated_at }}
+
+      - name: Scan container image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          format: 'sarif'
+          output: 'container-scan.sarif'
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'container-scan.sarif'
+
+  # ========================================
+  # Phase 6: Deploy (Conditional)
+  # ========================================
+
+  deploy:
+    name: Deploy to ${{ needs.determine-environment.outputs.environment }}
+    needs: [swarm-init, container-build, determine-environment]
+    if: needs.determine-environment.outputs.should-deploy == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ needs.determine-environment.outputs.environment }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Assess deployment risk
+        id: risk
+        run: |
+          RISK=$(npx ruv-swarm actions deploy-risk \
+            --changes ${{ github.sha }} \
+            --history 30d \
+            --output json | jq -r '.level')
+          echo "risk-level=${RISK}" >> $GITHUB_OUTPUT
+
+      - name: Choose deployment strategy
+        id: strategy
+        run: |
+          RISK="${{ steps.risk.outputs.risk-level }}"
+          case "$RISK" in
+            "low") STRATEGY="rolling" ;;
+            "medium") STRATEGY="blue-green" ;;
+            *) STRATEGY="canary" ;;
+          esac
+          echo "strategy=${STRATEGY}" >> $GITHUB_OUTPUT
+
+      - name: Execute deployment
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          npx ruv-swarm actions deploy \
+            --strategy ${{ steps.strategy.outputs.strategy }} \
+            --environment ${{ needs.determine-environment.outputs.environment }} \
+            --image ${{ needs.container-build.outputs.image-tag }} \
+            --rollback-on-failure
+
+  determine-environment:
+    name: Determine Deployment Environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.env.outputs.environment }}
+      should-deploy: ${{ steps.env.outputs.should-deploy }}
+    steps:
+      - id: env
+        run: |
+          if [[ "${{ github.event.inputs.deployment-environment }}" != "" && "${{ github.event.inputs.deployment-environment }}" != "none" ]]; then
+            echo "environment=${{ github.event.inputs.deployment-environment }}" >> $GITHUB_OUTPUT
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "environment=none" >> $GITHUB_OUTPUT
+            echo "should-deploy=false" >> $GITHUB_OUTPUT
+          fi
+
+  # ========================================
+  # Phase 7: Coordination & Reporting
+  # ========================================
+
+  swarm-coordinate:
+    name: Swarm Coordination & Reporting
+    needs:
+      - swarm-init
+      - node-build-test
+      - python-build-test
+      - security-scan
+      - code-quality
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Aggregate swarm results
+        run: |
+          npx ruv-swarm actions coordinate \
+            --swarm-id ${{ needs.swarm-init.outputs.swarm-id }} \
+            --analyze-results \
+            --generate-report \
+            --format markdown > swarm-report.md
+
+      - name: Generate workflow summary
+        run: |
+          cat swarm-report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('swarm-report.md', 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## 🤖 Swarm CI/CD Report\n\n' + report
+            });
+
+      - name: Store swarm metrics
+        run: |
+          npx claude-flow@alpha hooks post-task \
+            --task-id "cicd-${{ github.run_id }}" \
+            --export-metrics

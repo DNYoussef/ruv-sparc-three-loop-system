@@ -1,0 +1,246 @@
+# Atomic Micro-Skill Template
+# This template provides the structure for creating evidence-based atomic micro-skills
+# Version: 2.0.0
+
+# ===========================
+# SKILL METADATA (Required)
+# ===========================
+name: skill-name-kebab-case
+description: >
+  Clear, concise description of what this skill does and when to use it.
+  Should be 1-2 sentences focusing on the single responsibility.
+tags:
+  - domain-area
+  - task-type
+  - evidence-pattern
+version: 1.0.0
+
+# ===========================
+# SKILL CONFIGURATION
+# ===========================
+config:
+  # Evidence-based prompting pattern
+  evidence_pattern: self-consistency | program-of-thought | plan-and-solve
+
+  # Specialist agent configuration
+  agent:
+    role: "domain specialist"
+    expertise:
+      - Core competency 1
+      - Core competency 2
+      - Edge case handling
+
+  # Performance settings
+  performance:
+    max_tokens: 2000  # Keep atomic skills under 2000 tokens
+    timeout: 60       # Execution timeout in seconds
+
+  # Integration settings
+  integration:
+    cascades: true      # Can be used in cascade workflows
+    commands: true      # Can be bound to slash commands
+    neural_training: true  # Enable neural pattern training
+
+# ===========================
+# INPUT CONTRACT
+# ===========================
+input:
+  # Define required and optional input fields
+  required:
+    field_name:
+      type: string | number | boolean | object | array
+      description: Clear description of this field
+      validation:
+        - rule: validation rule description
+        - example: example valid value
+
+  optional:
+    optional_field:
+      type: string
+      description: Optional field description
+      default: default_value
+
+# ===========================
+# OUTPUT CONTRACT
+# ===========================
+output:
+  # Define output structure
+  format: json | markdown | code | text
+
+  structure:
+    result:
+      type: object
+      description: Main result object
+      fields:
+        - field_name: type (description)
+
+    metadata:
+      type: object
+      description: Execution metadata
+      fields:
+        - confidence: number (0.0-1.0)
+        - processing_time: number (milliseconds)
+        - quality_score: string (high|medium|low)
+
+    status:
+      type: string
+      description: Execution status
+      values: [success, partial, failed]
+
+# ===========================
+# METHODOLOGY TEMPLATE
+# ===========================
+methodology:
+  # Select appropriate pattern based on task type
+
+  # PATTERN 1: Self-Consistency (for factual/extraction tasks)
+  self_consistency:
+    steps:
+      - "Extract information from multiple perspectives"
+      - "Cross-reference findings for consistency"
+      - "Flag any inconsistencies or ambiguities"
+      - "Provide confidence scores"
+      - "Return validated results"
+
+  # PATTERN 2: Program-of-Thought (for analytical/logical tasks)
+  program_of_thought:
+    steps:
+      - "Decompose problem into logical components"
+      - "Work through each component systematically"
+      - "Show intermediate reasoning"
+      - "Validate logical consistency"
+      - "Synthesize final analysis"
+
+  # PATTERN 3: Plan-and-Solve (for complex/multi-step tasks)
+  plan_and_solve:
+    steps:
+      - "Create comprehensive plan with dependencies"
+      - "Break into executable steps"
+      - "Execute plan systematically"
+      - "Validate completion at each step"
+      - "Return complete solution"
+
+# ===========================
+# FAILURE MODES
+# ===========================
+failure_modes:
+  # Document known failure modes and handling strategies
+
+  ambiguous_input:
+    detection: How to detect this failure
+    mitigation: How to handle or prevent
+    fallback: What to do if mitigation fails
+
+  insufficient_data:
+    detection: Detection criteria
+    mitigation: Request additional information
+    fallback: Return partial results with warnings
+
+  validation_failure:
+    detection: Output doesn't meet quality standards
+    mitigation: Retry with refined approach
+    fallback: Flag for human review
+
+# ===========================
+# VALIDATION RULES
+# ===========================
+validation:
+  input:
+    - rule: Input must match schema
+    - rule: Required fields must be present
+    - rule: Type validation for all fields
+
+  processing:
+    - rule: Methodology must be followed
+    - rule: Intermediate results validated
+    - rule: Error handling applied
+
+  output:
+    - rule: Output matches contract
+    - rule: Quality standards met
+    - rule: Metadata complete
+
+# ===========================
+# TEST CASES
+# ===========================
+test_cases:
+  - name: Normal Operation
+    input:
+      field_name: valid_value
+    expected_output:
+      status: success
+      result: expected_result
+
+  - name: Boundary Condition
+    input:
+      field_name: edge_value
+    expected_output:
+      status: success
+      result: edge_case_result
+      metadata:
+        warnings: ["Edge case handled"]
+
+  - name: Error Case
+    input:
+      field_name: invalid_value
+    expected_output:
+      status: failed
+      error:
+        type: validation_error
+        message: specific_error_message
+
+# ===========================
+# INTEGRATION POINTS
+# ===========================
+integration:
+  # Cascade composition examples
+  cascades:
+    sequential:
+      - upstream_skill → this_skill → downstream_skill
+
+    parallel:
+      - input → [this_skill + sibling_skill] → merge_results
+
+    conditional:
+      - validator → (if pass: this_skill) OR (if fail: error_handler)
+
+  # Slash command binding
+  commands:
+    - command: /skill-name
+      parameters:
+        - param: --input <value>
+        - param: --output <path>
+
+  # Dependencies
+  dependencies:
+    skills: []  # Other skills this depends on
+    resources: []  # Required resource files
+
+# ===========================
+# NEURAL TRAINING
+# ===========================
+neural_training:
+  enabled: true
+  pattern: convergent | divergent | lateral
+  feedback_collection: true
+  improvement_iteration: true
+  success_metrics:
+    - accuracy
+    - performance
+    - user_satisfaction
+
+# ===========================
+# DOCUMENTATION
+# ===========================
+documentation:
+  # Links to additional resources
+  references:
+    - "Link to methodology paper"
+    - "Link to domain documentation"
+
+  examples:
+    - "Path to example 1"
+    - "Path to example 2"
+
+  related_skills:
+    - skill_name: "Description of relationship"

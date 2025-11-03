@@ -1,0 +1,301 @@
+version: '3.8'
+
+# Multi-Service Docker Compose Configuration
+# Version: 2.0.0
+# Purpose: Orchestrate microservices with service discovery, health checks, auto-restart
+
+services:
+  # ==================== Frontend Service ====================
+  frontend:
+    image: ${REGISTRY:-docker.io}/frontend:${VERSION:-latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production
+      args:
+        - NODE_ENV=production
+        - API_URL=${API_URL:-http://api:3000}
+    container_name: ${PROJECT_NAME:-app}-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api:3000
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - frontend
+      - backend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      api:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN:-localhost}`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+
+  # ==================== API Service ====================
+  api:
+    image: ${REGISTRY:-docker.io}/api:${VERSION:-latest}
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+      target: production
+      args:
+        - NODE_ENV=production
+    container_name: ${PROJECT_NAME:-app}-api
+    restart: unless-stopped
+    ports:
+      - "${API_PORT:-3000}:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-password}@database:5432/${DB_NAME:-app}
+      - REDIS_URL=redis://cache:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    networks:
+      - backend
+      - database
+    volumes:
+      - api-logs:/app/logs
+      - ./api/uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # ==================== Database Service ====================
+  database:
+    image: postgres:15-alpine
+    container_name: ${PROJECT_NAME:-app}-database
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+      - POSTGRES_DB=${DB_NAME:-app}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - database
+    volumes:
+      - database-data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+      - ./database/backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  # ==================== Cache Service (Redis) ====================
+  cache:
+    image: redis:7-alpine
+    container_name: ${PROJECT_NAME:-app}-cache
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+    networks:
+      - backend
+    volumes:
+      - cache-data:/data
+      - ./cache/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================== Worker Service ====================
+  worker:
+    image: ${REGISTRY:-docker.io}/worker:${VERSION:-latest}
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME:-app}-worker
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-password}@database:5432/${DB_NAME:-app}
+      - REDIS_URL=redis://cache:6379
+      - QUEUE_NAME=${QUEUE_NAME:-default}
+      - CONCURRENCY=${WORKER_CONCURRENCY:-5}
+    networks:
+      - backend
+      - database
+    volumes:
+      - worker-logs:/app/logs
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    deploy:
+      replicas: ${WORKER_REPLICAS:-2}
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  # ==================== Message Queue (RabbitMQ) ====================
+  messagequeue:
+    image: rabbitmq:3-management-alpine
+    container_name: ${PROJECT_NAME:-app}-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "${RABBITMQ_PORT:-5672}:5672"
+      - "${RABBITMQ_MGMT_PORT:-15672}:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER:-guest}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD:-guest}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_VHOST:-/}
+    networks:
+      - backend
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ==================== Reverse Proxy (Nginx) ====================
+  nginx:
+    image: nginx:alpine
+    container_name: ${PROJECT_NAME:-app}-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    environment:
+      - NGINX_HOST=${DOMAIN:-localhost}
+      - NGINX_PORT=80
+    networks:
+      - frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - frontend
+      - api
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==================== Monitoring (Prometheus) ====================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ${PROJECT_NAME:-app}-prometheus
+    restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+    networks:
+      - monitoring
+      - backend
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/prometheus/alerts:/etc/prometheus/alerts:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==================== Visualization (Grafana) ====================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ${PROJECT_NAME:-app}-grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-clock-panel
+    networks:
+      - monitoring
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# ==================== Networks ====================
+networks:
+  frontend:
+    driver: bridge
+    name: ${PROJECT_NAME:-app}-frontend
+  backend:
+    driver: bridge
+    name: ${PROJECT_NAME:-app}-backend
+  database:
+    driver: bridge
+    name: ${PROJECT_NAME:-app}-database
+  monitoring:
+    driver: bridge
+    name: ${PROJECT_NAME:-app}-monitoring
+
+# ==================== Volumes ====================
+volumes:
+  database-data:
+    name: ${PROJECT_NAME:-app}-database-data
+  cache-data:
+    name: ${PROJECT_NAME:-app}-cache-data
+  rabbitmq-data:
+    name: ${PROJECT_NAME:-app}-rabbitmq-data
+  prometheus-data:
+    name: ${PROJECT_NAME:-app}-prometheus-data
+  grafana-data:
+    name: ${PROJECT_NAME:-app}-grafana-data
+  api-logs:
+    name: ${PROJECT_NAME:-app}-api-logs
+  worker-logs:
+    name: ${PROJECT_NAME:-app}-worker-logs
+  nginx-logs:
+    name: ${PROJECT_NAME:-app}-nginx-logs

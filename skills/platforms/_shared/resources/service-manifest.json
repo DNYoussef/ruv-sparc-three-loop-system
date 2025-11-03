@@ -1,0 +1,336 @@
+{
+  "version": "1.0.0",
+  "services": [
+    {
+      "name": "api",
+      "displayName": "API Server",
+      "description": "Main API server handling HTTP requests",
+      "type": "web",
+      "command": "node services/app.js",
+      "workingDir": "platform",
+      "port": 3000,
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": "3000",
+        "LOG_LEVEL": "info"
+      },
+      "dependencies": [
+        "database",
+        "redis"
+      ],
+      "healthCheck": {
+        "type": "http",
+        "endpoint": "http://localhost:3000/health",
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3
+      },
+      "resources": {
+        "cpu": "1",
+        "memory": "512Mi",
+        "storage": "1Gi"
+      },
+      "scaling": {
+        "minReplicas": 1,
+        "maxReplicas": 5,
+        "targetCPUUtilization": 70
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    },
+    {
+      "name": "worker",
+      "displayName": "Background Worker",
+      "description": "Processes background jobs and async tasks",
+      "type": "worker",
+      "command": "node services/worker.js",
+      "workingDir": "platform",
+      "env": {
+        "NODE_ENV": "production",
+        "WORKER_CONCURRENCY": "5",
+        "LOG_LEVEL": "info"
+      },
+      "dependencies": [
+        "database",
+        "redis"
+      ],
+      "healthCheck": {
+        "type": "command",
+        "command": "node scripts/worker-health.js",
+        "interval": 60,
+        "timeout": 10
+      },
+      "resources": {
+        "cpu": "0.5",
+        "memory": "256Mi",
+        "storage": "512Mi"
+      },
+      "scaling": {
+        "minReplicas": 1,
+        "maxReplicas": 3,
+        "targetQueueLength": 100
+      },
+      "restartPolicy": "on-failure",
+      "maxRestarts": 5
+    },
+    {
+      "name": "database",
+      "displayName": "PostgreSQL Database",
+      "description": "Primary data store",
+      "type": "database",
+      "command": "pg_ctl start -D data/postgres",
+      "workingDir": "platform",
+      "port": 5432,
+      "env": {
+        "POSTGRES_DB": "platform",
+        "POSTGRES_USER": "platform_user",
+        "POSTGRES_PASSWORD": "${DATABASE_PASSWORD}"
+      },
+      "healthCheck": {
+        "type": "tcp",
+        "endpoint": "localhost:5432",
+        "interval": 30,
+        "timeout": 5
+      },
+      "resources": {
+        "cpu": "1",
+        "memory": "1Gi",
+        "storage": "10Gi"
+      },
+      "backup": {
+        "enabled": true,
+        "schedule": "0 2 * * *",
+        "retention": 7
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    },
+    {
+      "name": "redis",
+      "displayName": "Redis Cache",
+      "description": "In-memory cache and message queue",
+      "type": "cache",
+      "command": "redis-server --port 6379 --maxmemory 256mb --maxmemory-policy allkeys-lru",
+      "workingDir": "platform",
+      "port": 6379,
+      "env": {
+        "REDIS_PASSWORD": "${REDIS_PASSWORD}"
+      },
+      "healthCheck": {
+        "type": "command",
+        "command": "redis-cli ping",
+        "interval": 30,
+        "timeout": 5
+      },
+      "resources": {
+        "cpu": "0.5",
+        "memory": "256Mi",
+        "storage": "1Gi"
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    },
+    {
+      "name": "metrics",
+      "displayName": "Metrics Collector",
+      "description": "Collects and exposes Prometheus metrics",
+      "type": "monitoring",
+      "command": "node services/metrics.js",
+      "workingDir": "platform",
+      "port": 9090,
+      "env": {
+        "METRICS_PORT": "9090",
+        "METRICS_INTERVAL": "60000"
+      },
+      "dependencies": [
+        "api",
+        "database",
+        "redis"
+      ],
+      "healthCheck": {
+        "type": "http",
+        "endpoint": "http://localhost:9090/metrics",
+        "interval": 60,
+        "timeout": 5
+      },
+      "resources": {
+        "cpu": "0.25",
+        "memory": "128Mi",
+        "storage": "512Mi"
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    },
+    {
+      "name": "scheduler",
+      "displayName": "Task Scheduler",
+      "description": "Schedules and executes periodic tasks",
+      "type": "scheduler",
+      "command": "node services/scheduler.js",
+      "workingDir": "platform",
+      "env": {
+        "NODE_ENV": "production",
+        "SCHEDULER_INTERVAL": "60000"
+      },
+      "dependencies": [
+        "database",
+        "redis"
+      ],
+      "healthCheck": {
+        "type": "command",
+        "command": "node scripts/scheduler-health.js",
+        "interval": 60,
+        "timeout": 10
+      },
+      "resources": {
+        "cpu": "0.25",
+        "memory": "128Mi",
+        "storage": "256Mi"
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    },
+    {
+      "name": "proxy",
+      "displayName": "Nginx Proxy",
+      "description": "Reverse proxy and load balancer",
+      "type": "proxy",
+      "command": "nginx -g 'daemon off;'",
+      "workingDir": "platform",
+      "port": 80,
+      "env": {
+        "NGINX_WORKER_PROCESSES": "auto",
+        "NGINX_WORKER_CONNECTIONS": "1024"
+      },
+      "dependencies": [
+        "api"
+      ],
+      "healthCheck": {
+        "type": "http",
+        "endpoint": "http://localhost:80/health",
+        "interval": 30,
+        "timeout": 5
+      },
+      "resources": {
+        "cpu": "0.5",
+        "memory": "256Mi",
+        "storage": "512Mi"
+      },
+      "restartPolicy": "always",
+      "maxRestarts": 3
+    }
+  ],
+  "networks": [
+    {
+      "name": "frontend",
+      "services": [
+        "api",
+        "proxy"
+      ]
+    },
+    {
+      "name": "backend",
+      "services": [
+        "api",
+        "worker",
+        "database",
+        "redis"
+      ]
+    },
+    {
+      "name": "monitoring",
+      "services": [
+        "metrics"
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "database-data",
+      "mountPath": "/var/lib/postgresql/data",
+      "size": "10Gi",
+      "services": [
+        "database"
+      ]
+    },
+    {
+      "name": "redis-data",
+      "mountPath": "/var/lib/redis",
+      "size": "1Gi",
+      "services": [
+        "redis"
+      ]
+    },
+    {
+      "name": "logs",
+      "mountPath": "/var/log",
+      "size": "5Gi",
+      "services": [
+        "api",
+        "worker",
+        "scheduler"
+      ]
+    }
+  ],
+  "secrets": [
+    {
+      "name": "database-password",
+      "env": "DATABASE_PASSWORD",
+      "required": true
+    },
+    {
+      "name": "redis-password",
+      "env": "REDIS_PASSWORD",
+      "required": false
+    },
+    {
+      "name": "jwt-secret",
+      "env": "JWT_SECRET",
+      "required": true
+    },
+    {
+      "name": "anthropic-api-key",
+      "env": "ANTHROPIC_API_KEY",
+      "required": false
+    }
+  ],
+  "lifecycle": {
+    "preStart": [
+      {
+        "name": "database-migration",
+        "command": "npm run migrate",
+        "services": [
+          "api",
+          "worker"
+        ]
+      },
+      {
+        "name": "cache-warmup",
+        "command": "node scripts/warm-cache.js",
+        "services": [
+          "api"
+        ]
+      }
+    ],
+    "postStart": [
+      {
+        "name": "health-notification",
+        "command": "node scripts/notify-start.js",
+        "services": [
+          "api"
+        ]
+      }
+    ],
+    "preStop": [
+      {
+        "name": "graceful-shutdown",
+        "command": "node scripts/graceful-shutdown.js",
+        "timeout": 30,
+        "services": [
+          "api",
+          "worker"
+        ]
+      }
+    ]
+  }
+}

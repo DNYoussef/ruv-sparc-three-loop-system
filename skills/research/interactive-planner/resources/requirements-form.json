@@ -1,0 +1,428 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Interactive Planning Requirements Form",
+  "description": "Structured form for collecting comprehensive project requirements through interactive questions",
+  "type": "object",
+  "required": [
+    "project_info",
+    "technical_decisions",
+    "quality_requirements"
+  ],
+  "properties": {
+    "project_info": {
+      "type": "object",
+      "description": "High-level project information and scope",
+      "required": ["project_type", "primary_goal"],
+      "properties": {
+        "project_type": {
+          "type": "string",
+          "enum": [
+            "web_application",
+            "mobile_application",
+            "api_backend",
+            "library_package",
+            "cli_tool",
+            "desktop_application",
+            "other"
+          ],
+          "description": "Type of project being developed"
+        },
+        "primary_goal": {
+          "type": "string",
+          "enum": [
+            "new_feature",
+            "refactoring",
+            "bug_fix",
+            "performance_optimization",
+            "security_improvement",
+            "prototype",
+            "production_system"
+          ],
+          "description": "Primary objective of this work"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "moderate", "complex", "large_scale"],
+          "description": "Estimated project complexity"
+        },
+        "timeline": {
+          "type": "string",
+          "enum": ["urgent_today", "this_week", "this_month", "flexible"],
+          "description": "Timeline constraints"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed project description",
+          "maxLength": 2000
+        }
+      }
+    },
+    "technical_decisions": {
+      "type": "object",
+      "description": "Technical architecture and implementation decisions",
+      "properties": {
+        "framework": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "enum": [
+                "react_nextjs",
+                "vue_nuxt",
+                "angular",
+                "svelte_sveltekit",
+                "nodejs_express",
+                "python_fastapi",
+                "python_django",
+                "golang",
+                "rust",
+                "other"
+              ]
+            },
+            "version": {
+              "type": "string",
+              "description": "Framework version or version range"
+            },
+            "justification": {
+              "type": "string",
+              "description": "Why this framework was chosen"
+            }
+          }
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "postgresql",
+                "mysql",
+                "mongodb",
+                "redis",
+                "sqlite",
+                "firebase",
+                "supabase",
+                "dynamodb",
+                "none",
+                "other"
+              ]
+            },
+            "orm_library": {
+              "type": "string",
+              "description": "ORM or database library if applicable"
+            }
+          }
+        },
+        "authentication": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "oauth2",
+                "jwt",
+                "session_cookies",
+                "magic_links",
+                "saml",
+                "none",
+                "other"
+              ]
+            },
+            "providers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "google",
+                  "github",
+                  "microsoft",
+                  "facebook",
+                  "custom",
+                  "email_password"
+                ]
+              },
+              "description": "OAuth providers or auth methods"
+            }
+          }
+        },
+        "backend_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "rest_api",
+              "graphql",
+              "websockets",
+              "grpc",
+              "message_queue",
+              "event_driven",
+              "microservices",
+              "serverless"
+            ]
+          },
+          "description": "Backend architectural patterns"
+        },
+        "deployment": {
+          "type": "object",
+          "properties": {
+            "platform": {
+              "type": "string",
+              "enum": [
+                "vercel",
+                "netlify",
+                "aws",
+                "gcp",
+                "azure",
+                "docker_kubernetes",
+                "self_hosted",
+                "other"
+              ]
+            },
+            "ci_cd": {
+              "type": "string",
+              "enum": [
+                "github_actions",
+                "gitlab_ci",
+                "circle_ci",
+                "jenkins",
+                "none",
+                "other"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "description": "Core features and functionality",
+      "properties": {
+        "core_features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "user_management",
+              "authentication_authorization",
+              "data_crud",
+              "search_filtering",
+              "real_time_updates",
+              "file_upload_download",
+              "notifications",
+              "analytics_reporting",
+              "collaboration",
+              "api_integration",
+              "payment_processing",
+              "other"
+            ]
+          },
+          "description": "Core features to implement",
+          "minItems": 1
+        },
+        "user_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key user actions supported"
+        },
+        "data_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Types of data being managed"
+        }
+      }
+    },
+    "quality_requirements": {
+      "type": "object",
+      "description": "Quality, testing, and scale requirements",
+      "required": ["quality_level", "testing_coverage"],
+      "properties": {
+        "quality_level": {
+          "type": "string",
+          "enum": [
+            "quick_prototype",
+            "production_mvp",
+            "enterprise_grade",
+            "research_experimental"
+          ],
+          "description": "Expected quality standard"
+        },
+        "testing_coverage": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "unit_tests",
+              "integration_tests",
+              "e2e_tests",
+              "performance_tests",
+              "security_tests",
+              "none"
+            ]
+          },
+          "description": "Required testing types",
+          "minItems": 1
+        },
+        "test_coverage_target": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Target code coverage percentage"
+        },
+        "performance_requirements": {
+          "type": "object",
+          "properties": {
+            "response_time_ms": {
+              "type": "number",
+              "description": "Target API response time in milliseconds"
+            },
+            "throughput_rps": {
+              "type": "number",
+              "description": "Target requests per second"
+            },
+            "scalability": {
+              "type": "string",
+              "enum": [
+                "single_user",
+                "small_scale_hundreds",
+                "medium_scale_thousands",
+                "large_scale_millions"
+              ]
+            }
+          }
+        },
+        "documentation": {
+          "type": "object",
+          "properties": {
+            "api_docs": {
+              "type": "boolean",
+              "description": "Generate API documentation"
+            },
+            "user_docs": {
+              "type": "boolean",
+              "description": "Create user documentation"
+            },
+            "developer_docs": {
+              "type": "boolean",
+              "description": "Write developer guides"
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Constraints and context",
+      "properties": {
+        "budget": {
+          "type": "string",
+          "enum": ["very_limited", "limited", "moderate", "flexible"],
+          "description": "Budget constraints"
+        },
+        "team_size": {
+          "type": "number",
+          "minimum": 1,
+          "description": "Number of developers working on this"
+        },
+        "existing_systems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "integration_type": {
+                "type": "string",
+                "enum": ["api", "database", "file_system", "event_stream"]
+              }
+            }
+          },
+          "description": "Existing systems to integrate with"
+        },
+        "compliance": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "gdpr",
+              "hipaa",
+              "sox",
+              "pci_dss",
+              "none",
+              "other"
+            ]
+          },
+          "description": "Compliance requirements"
+        }
+      }
+    },
+    "user_experience": {
+      "type": "object",
+      "description": "User experience and interface requirements",
+      "properties": {
+        "target_users": {
+          "type": "string",
+          "description": "Who will use this system"
+        },
+        "accessibility": {
+          "type": "string",
+          "enum": [
+            "wcag_aa",
+            "wcag_aaa",
+            "basic",
+            "none"
+          ],
+          "description": "Accessibility compliance level"
+        },
+        "responsive_design": {
+          "type": "boolean",
+          "description": "Must work on mobile/tablet"
+        },
+        "i18n": {
+          "type": "object",
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "languages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Collection metadata",
+      "properties": {
+        "collected_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "total_questions": {
+          "type": "number"
+        },
+        "batches_used": {
+          "type": "number"
+        },
+        "confidence_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "missing_information": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

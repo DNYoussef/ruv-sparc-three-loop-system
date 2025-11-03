@@ -1,0 +1,369 @@
+# Code Review Checklist for Pair Programming
+# Use during review mode or pre-commit verification
+
+version: "1.0.0"
+description: "Comprehensive code review checklist for pair programming sessions"
+
+# Code Quality Checks
+code_quality:
+  readability:
+    - name: "Clear naming conventions"
+      description: "Variables, functions, and classes have descriptive names"
+      severity: high
+      auto_fixable: false
+
+    - name: "Consistent formatting"
+      description: "Code follows project style guide and formatting standards"
+      severity: medium
+      auto_fixable: true
+
+    - name: "Appropriate comments"
+      description: "Complex logic is explained, no obvious/redundant comments"
+      severity: medium
+      auto_fixable: false
+
+    - name: "No commented code"
+      description: "Unused code is removed, not commented out"
+      severity: low
+      auto_fixable: true
+
+  structure:
+    - name: "Single Responsibility"
+      description: "Functions/classes do one thing well"
+      severity: high
+      auto_fixable: false
+
+    - name: "DRY principle"
+      description: "No code duplication, logic is reused appropriately"
+      severity: high
+      auto_fixable: false
+
+    - name: "Appropriate abstraction"
+      description: "Abstractions are neither too specific nor too generic"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Proper error handling"
+      description: "Errors are caught and handled appropriately"
+      severity: high
+      auto_fixable: false
+
+  complexity:
+    - name: "Cyclomatic complexity < 10"
+      description: "Functions have reasonable complexity"
+      severity: high
+      auto_fixable: false
+      threshold: 10
+
+    - name: "Nesting depth < 4"
+      description: "No excessive nesting of control structures"
+      severity: medium
+      auto_fixable: false
+      threshold: 4
+
+    - name: "Function length < 50 lines"
+      description: "Functions are reasonably sized"
+      severity: medium
+      auto_fixable: false
+      threshold: 50
+
+    - name: "Parameter count < 5"
+      description: "Functions don't have too many parameters"
+      severity: medium
+      auto_fixable: false
+      threshold: 5
+
+# Security Checks
+security:
+  authentication:
+    - name: "No hardcoded credentials"
+      description: "Passwords, API keys, tokens are not in code"
+      severity: critical
+      auto_fixable: false
+
+    - name: "Secure password handling"
+      description: "Passwords are hashed, not stored in plain text"
+      severity: critical
+      auto_fixable: false
+
+  input_validation:
+    - name: "Input sanitization"
+      description: "User input is validated and sanitized"
+      severity: high
+      auto_fixable: false
+
+    - name: "SQL injection prevention"
+      description: "Parameterized queries used, no string concatenation"
+      severity: critical
+      auto_fixable: false
+
+    - name: "XSS prevention"
+      description: "Output is properly escaped"
+      severity: high
+      auto_fixable: false
+
+  data_protection:
+    - name: "Sensitive data encryption"
+      description: "PII and sensitive data is encrypted"
+      severity: high
+      auto_fixable: false
+
+    - name: "Secure communications"
+      description: "HTTPS/TLS used for network communications"
+      severity: high
+      auto_fixable: false
+
+  dependencies:
+    - name: "No known vulnerabilities"
+      description: "Dependencies are up-to-date and secure"
+      severity: high
+      auto_fixable: true
+
+# Performance Checks
+performance:
+  efficiency:
+    - name: "No N+1 queries"
+      description: "Database queries are optimized"
+      severity: high
+      auto_fixable: false
+
+    - name: "Appropriate caching"
+      description: "Expensive operations are cached when appropriate"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Lazy loading"
+      description: "Resources loaded only when needed"
+      severity: medium
+      auto_fixable: false
+
+  resource_management:
+    - name: "Memory leaks prevented"
+      description: "Resources are properly released"
+      severity: high
+      auto_fixable: false
+
+    - name: "No unnecessary allocations"
+      description: "Object creation is minimized in hot paths"
+      severity: medium
+      auto_fixable: false
+
+  algorithms:
+    - name: "Time complexity reasonable"
+      description: "Algorithms have acceptable time complexity"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Space complexity reasonable"
+      description: "Memory usage is acceptable"
+      severity: medium
+      auto_fixable: false
+
+# Testing Checks
+testing:
+  coverage:
+    - name: "Minimum coverage met"
+      description: "Code coverage meets project threshold (default 80%)"
+      severity: high
+      auto_fixable: false
+      threshold: 80
+
+    - name: "Critical paths covered"
+      description: "Important business logic has tests"
+      severity: high
+      auto_fixable: false
+
+  quality:
+    - name: "Tests are isolated"
+      description: "Tests don't depend on each other"
+      severity: high
+      auto_fixable: false
+
+    - name: "Tests are deterministic"
+      description: "Tests produce consistent results"
+      severity: high
+      auto_fixable: false
+
+    - name: "Good assertions"
+      description: "Tests check for specific expected behavior"
+      severity: medium
+      auto_fixable: false
+
+  types:
+    - name: "Unit tests present"
+      description: "Individual components are tested"
+      severity: high
+      auto_fixable: false
+
+    - name: "Integration tests present"
+      description: "Components work together correctly"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Edge cases tested"
+      description: "Boundary conditions are tested"
+      severity: medium
+      auto_fixable: false
+
+# Documentation Checks
+documentation:
+  code_level:
+    - name: "Public API documented"
+      description: "Public functions/classes have documentation"
+      severity: high
+      auto_fixable: false
+
+    - name: "Complex logic explained"
+      description: "Non-obvious code has explanatory comments"
+      severity: medium
+      auto_fixable: false
+
+    - name: "TODOs tracked"
+      description: "TODO comments reference issues/tickets"
+      severity: low
+      auto_fixable: false
+
+  project_level:
+    - name: "README updated"
+      description: "Project README reflects current state"
+      severity: medium
+      auto_fixable: false
+
+    - name: "API docs updated"
+      description: "API documentation matches implementation"
+      severity: high
+      auto_fixable: false
+
+    - name: "CHANGELOG updated"
+      description: "Changes are documented in CHANGELOG"
+      severity: low
+      auto_fixable: false
+
+# Best Practices
+best_practices:
+  version_control:
+    - name: "Atomic commits"
+      description: "Commits are focused and cohesive"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Good commit messages"
+      description: "Commit messages are descriptive"
+      severity: medium
+      auto_fixable: false
+
+    - name: "No debug code"
+      description: "Debug statements and breakpoints removed"
+      severity: low
+      auto_fixable: true
+
+  dependencies:
+    - name: "Minimal dependencies"
+      description: "Only necessary dependencies are added"
+      severity: medium
+      auto_fixable: false
+
+    - name: "Dependencies pinned"
+      description: "Dependency versions are specified"
+      severity: medium
+      auto_fixable: true
+
+  configuration:
+    - name: "Environment-based config"
+      description: "Configuration varies by environment"
+      severity: high
+      auto_fixable: false
+
+    - name: "No secrets in code"
+      description: "Secrets loaded from environment/vault"
+      severity: critical
+      auto_fixable: false
+
+# Language-Specific Checks
+language_specific:
+  javascript:
+    - name: "Strict mode enabled"
+      description: "'use strict' is present"
+      severity: medium
+      auto_fixable: true
+
+    - name: "No var declarations"
+      description: "Use const/let instead of var"
+      severity: low
+      auto_fixable: true
+
+    - name: "Promises handled"
+      description: "Promises have .catch() or try/catch"
+      severity: high
+      auto_fixable: false
+
+  python:
+    - name: "PEP 8 compliance"
+      description: "Code follows PEP 8 style guide"
+      severity: medium
+      auto_fixable: true
+
+    - name: "Type hints present"
+      description: "Functions have type annotations"
+      severity: low
+      auto_fixable: false
+
+    - name: "Virtual environment used"
+      description: "Dependencies isolated in venv"
+      severity: medium
+      auto_fixable: false
+
+  go:
+    - name: "go fmt applied"
+      description: "Code is formatted with go fmt"
+      severity: high
+      auto_fixable: true
+
+    - name: "Errors checked"
+      description: "All errors are handled"
+      severity: critical
+      auto_fixable: false
+
+    - name: "No goroutine leaks"
+      description: "Goroutines are properly terminated"
+      severity: high
+      auto_fixable: false
+
+# Review Workflow
+review_process:
+  pre_review:
+    - "Run all tests locally"
+    - "Run linter and fix issues"
+    - "Check for sensitive data"
+    - "Verify commit message quality"
+
+  during_review:
+    - "Check each item in relevant categories"
+    - "Mark auto-fixable issues for batch fixing"
+    - "Document non-obvious decisions"
+    - "Request clarification on unclear code"
+
+  post_review:
+    - "Apply auto-fixes if approved"
+    - "Create follow-up tickets for deferred items"
+    - "Update metrics (truth score, coverage, etc.)"
+    - "Commit or rollback based on threshold"
+
+# Scoring
+scoring:
+  weights:
+    critical: 1.0
+    high: 0.5
+    medium: 0.2
+    low: 0.05
+
+  thresholds:
+    excellent: 0.98
+    good: 0.95
+    acceptable: 0.90
+    poor: 0.80
+    failing: 0.80
+
+  calculation:
+    description: "Score = 1.0 - (sum of weighted violations / total possible violations)"
+    formula: "score = 1.0 - Σ(violation_severity_weight) / Σ(all_checks_weight)"

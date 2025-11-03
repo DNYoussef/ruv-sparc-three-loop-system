@@ -1,0 +1,34 @@
+# Note: Binary PPTX template file would be created separately
+# This is a placeholder indicating the template structure
+
+PowerPoint Template Structure:
+- Master Slides:
+  - Title Slide: Centered layout, large title, subtitle
+  - Content Slide: Title + bullet list, left accent bar
+  - Two-Column: Title + 2 content zones with spacing
+  - Section Break: Full-color gradient background
+  - Data Visual: Title + chart placeholder
+
+Color Scheme:
+  Primary: #1E3A8A (Deep Blue)
+  Secondary: #3B82F6 (Medium Blue)
+  Accent: #F59E0B (Amber)
+  Background: #FFFFFF (White)
+  Text: #1F2937 (Dark Gray)
+
+Typography:
+  Title: Arial Bold 36pt
+  Heading: Arial Bold 24pt
+  Body: Arial Regular 18pt
+  Caption: Arial Regular 14pt
+
+Layout Constraints:
+  Margins: 0.5" all sides
+  Accent Bar: 0.15" wide, 1" tall
+  Spacing: 0.4" between sections
+
+Prohibited Elements:
+  - Border boxes
+  - Outline shapes
+  - Rounded rectangles
+  - Decorative frames

@@ -1,0 +1,293 @@
+# Performance Analysis Report Template
+# Template for generating comprehensive performance reports
+
+metadata:
+  version: "1.0.0"
+  schema: "performance-report-v1"
+  generated_by: "Claude Flow Performance Analysis"
+
+report:
+  title: "Performance Analysis Report"
+  subtitle: "Comprehensive Swarm Performance Metrics and Recommendations"
+
+  header:
+    logo: null
+    organization: "Claude Flow"
+    timestamp: "{{timestamp}}"
+    time_range: "{{time_range}}"
+    swarm_id: "{{swarm_id}}"
+
+  sections:
+    # Executive Summary
+    - name: "executive_summary"
+      title: "Executive Summary"
+      enabled: true
+      content:
+        - type: "summary_card"
+          fields:
+            - label: "Overall Score"
+              value: "{{efficiency_score}}/100"
+              format: "score"
+            - label: "Analysis Period"
+              value: "{{time_range}}"
+              format: "text"
+            - label: "Swarms Analyzed"
+              value: "{{swarm_count}}"
+              format: "number"
+            - label: "Critical Issues"
+              value: "{{critical_issues}}"
+              format: "number"
+              highlight: "critical"
+
+        - type: "key_findings"
+          title: "Key Findings"
+          items:
+            - "{{key_finding_1}}"
+            - "{{key_finding_2}}"
+            - "{{key_finding_3}}"
+
+    # Swarm Overview
+    - name: "swarm_overview"
+      title: "Swarm Overview"
+      enabled: true
+      content:
+        - type: "info_table"
+          title: "Configuration"
+          rows:
+            - label: "Swarm ID"
+              value: "{{swarm_id}}"
+            - label: "Topology"
+              value: "{{topology}}"
+            - label: "Agent Count"
+              value: "{{agent_count}}"
+            - label: "Status"
+              value: "{{status}}"
+
+        - type: "distribution_chart"
+          title: "Agent Distribution"
+          data: "{{agent_distribution}}"
+          chart_type: "pie"
+
+    # Performance Metrics
+    - name: "performance_metrics"
+      title: "Performance Metrics"
+      enabled: true
+      content:
+        - type: "metrics_table"
+          title: "Key Metrics"
+          headers: ["Metric", "Value", "Trend", "Target"]
+          rows:
+            - ["Avg Task Time", "{{avg_task_time}}", "{{task_time_trend}}", "{{task_time_target}}"]
+            - ["Agent Utilization", "{{avg_utilization}}", "{{utilization_trend}}", "{{utilization_target}}"]
+            - ["Cache Hit Rate", "{{cache_hit_rate}}", "{{cache_trend}}", "{{cache_target}}"]
+            - ["Parallel Efficiency", "{{parallel_efficiency}}", "{{efficiency_trend}}", "{{efficiency_target}}"]
+            - ["Throughput", "{{throughput}}", "{{throughput_trend}}", "{{throughput_target}}"]
+
+        - type: "time_series_chart"
+          title: "Performance Trends"
+          metrics:
+            - name: "Task Completion Time"
+              data: "{{task_time_series}}"
+              color: "#4CAF50"
+            - name: "Agent Utilization"
+              data: "{{utilization_series}}"
+              color: "#2196F3"
+            - name: "Throughput"
+              data: "{{throughput_series}}"
+              color: "#FF9800"
+
+    # Bottleneck Analysis
+    - name: "bottleneck_analysis"
+      title: "Bottleneck Analysis"
+      enabled: true
+      content:
+        - type: "bottleneck_summary"
+          critical:
+            count: "{{critical_bottlenecks}}"
+            items: "{{critical_list}}"
+          warning:
+            count: "{{warning_bottlenecks}}"
+            items: "{{warning_list}}"
+          info:
+            count: "{{info_bottlenecks}}"
+            items: "{{info_list}}"
+
+        - type: "bottleneck_details"
+          for_each: "{{bottlenecks}}"
+          template:
+            severity: "{{item.severity}}"
+            type: "{{item.type}}"
+            description: "{{item.description}}"
+            impact: "{{item.impact}}"
+            recommendation: "{{item.recommendation}}"
+
+    # Agent Performance
+    - name: "agent_performance"
+      title: "Individual Agent Performance"
+      enabled: true
+      content:
+        - type: "agent_table"
+          title: "Agent Metrics"
+          headers: ["Agent ID", "Type", "Tasks", "Avg Time", "Utilization", "Status"]
+          rows: "{{agent_metrics_rows}}"
+          sort_by: "utilization"
+          sort_order: "desc"
+
+        - type: "heatmap"
+          title: "Agent Activity Heatmap"
+          data: "{{agent_activity_heatmap}}"
+          x_axis: "Time"
+          y_axis: "Agent"
+          color_scale: "viridis"
+
+    # Comparative Analysis
+    - name: "comparative_analysis"
+      title: "Comparative Analysis"
+      enabled: "{{compare_enabled}}"
+      content:
+        - type: "comparison_table"
+          title: "Performance Comparison"
+          headers: ["Metric", "Current", "Previous", "Change"]
+          rows:
+            - ["Avg Task Time", "{{current.task_time}}", "{{previous.task_time}}", "{{task_time_change}}"]
+            - ["Throughput", "{{current.throughput}}", "{{previous.throughput}}", "{{throughput_change}}"]
+            - ["Efficiency", "{{current.efficiency}}", "{{previous.efficiency}}", "{{efficiency_change}}"]
+
+        - type: "trend_chart"
+          title: "Historical Trends"
+          data: "{{historical_metrics}}"
+          period: "{{comparison_period}}"
+
+    # Optimization Recommendations
+    - name: "recommendations"
+      title: "Optimization Recommendations"
+      enabled: true
+      content:
+        - type: "recommendations_summary"
+          total: "{{total_recommendations}}"
+          by_priority:
+            critical: "{{critical_recommendations}}"
+            high: "{{high_recommendations}}"
+            medium: "{{medium_recommendations}}"
+            low: "{{low_recommendations}}"
+
+        - type: "recommendation_cards"
+          for_each: "{{recommendations}}"
+          template:
+            priority: "{{item.severity}}"
+            title: "{{item.title}}"
+            description: "{{item.description}}"
+            impact: "{{item.impact}}"
+            effort: "{{item.effort_level}}"
+            steps: "{{item.implementation_steps}}"
+            auto_applicable: "{{item.auto_applicable}}"
+
+    # Resource Utilization
+    - name: "resource_utilization"
+      title: "Resource Utilization"
+      enabled: true
+      content:
+        - type: "resource_gauges"
+          metrics:
+            - name: "CPU Usage"
+              value: "{{cpu_usage}}"
+              max: 100
+              warning: 80
+              critical: 90
+            - name: "Memory Usage"
+              value: "{{memory_usage}}"
+              max: 100
+              warning: 80
+              critical: 90
+            - name: "Disk Usage"
+              value: "{{disk_usage}}"
+              max: 100
+              warning: 85
+              critical: 95
+
+        - type: "resource_timeline"
+          title: "Resource Usage Over Time"
+          data: "{{resource_timeline}}"
+
+    # Network Performance
+    - name: "network_performance"
+      title: "Network Performance"
+      enabled: true
+      content:
+        - type: "network_metrics"
+          metrics:
+            - label: "API Latency"
+              value: "{{api_latency}}"
+              unit: "ms"
+            - label: "Message Throughput"
+              value: "{{message_throughput}}"
+              unit: "msg/s"
+            - label: "Failed Requests"
+              value: "{{failed_requests}}"
+              unit: "count"
+
+        - type: "latency_distribution"
+          title: "Latency Distribution"
+          data: "{{latency_histogram}}"
+          percentiles: [50, 75, 90, 95, 99]
+
+formatting:
+  # Color schemes
+  colors:
+    critical: "#f44336"
+    warning: "#ff9800"
+    info: "#2196F3"
+    success: "#4CAF50"
+    neutral: "#9E9E9E"
+
+  # Chart defaults
+  charts:
+    width: 800
+    height: 400
+    font_family: "Arial, sans-serif"
+    font_size: 12
+
+  # Table styling
+  tables:
+    header_bg: "#4CAF50"
+    header_color: "#ffffff"
+    stripe_rows: true
+    border: true
+
+  # Number formatting
+  numbers:
+    decimal_places: 2
+    thousand_separator: ","
+    percentage_symbol: "%"
+
+export:
+  # Export formats
+  formats:
+    - json
+    - markdown
+    - html
+    - pdf
+
+  # File naming
+  filename_template: "performance-report-{{timestamp}}.{{format}}"
+
+  # Include options
+  include:
+    raw_data: true
+    charts: true
+    metadata: true
+    timestamp: true
+
+validation:
+  # Required fields
+  required:
+    - swarm_id
+    - timestamp
+    - efficiency_score
+
+  # Data quality checks
+  checks:
+    - name: "metric_completeness"
+      threshold: 0.9  # 90% of metrics must be present
+    - name: "data_freshness"
+      max_age: 3600   # Data must be less than 1 hour old

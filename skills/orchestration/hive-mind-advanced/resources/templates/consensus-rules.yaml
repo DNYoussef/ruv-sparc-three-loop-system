@@ -1,0 +1,301 @@
+# Consensus Algorithm Rules Configuration
+# Defines decision-making rules for different consensus algorithms
+
+consensus_algorithms:
+  majority:
+    description: "Simple majority voting - option with most votes wins"
+    min_votes: 1
+    threshold: 0.5  # >50% of votes
+
+    rules:
+      - name: "simple_majority"
+        condition: "vote_count > (total_votes / 2)"
+        action: "declare_winner"
+        confidence: "vote_count / total_votes"
+
+      - name: "tie_breaking"
+        condition: "multiple_options_with_same_max_votes"
+        action: "queen_decides"
+        fallback: "first_alphabetically"
+
+    properties:
+      allow_abstain: false
+      require_all_voters: false
+      timeout_seconds: 30
+      tie_breaker: "queen"
+
+    use_cases:
+      - "Low-stakes decisions"
+      - "Quick consensus needed"
+      - "Clear preference expected"
+      - "Small worker groups"
+
+  weighted:
+    description: "Weighted voting where queen vote counts 3x"
+    min_votes: 1
+    threshold: 0.5
+
+    weights:
+      queen: 3
+      specialist: 2
+      worker: 1
+
+    rules:
+      - name: "weighted_majority"
+        condition: "weighted_vote_count > (total_weight / 2)"
+        action: "declare_winner"
+        confidence: "weighted_vote_count / total_weight"
+
+      - name: "queen_override"
+        condition: "queen_vote_weight >= threshold"
+        action: "queen_decision_wins"
+        requires_approval: false
+
+    properties:
+      allow_abstain: false
+      require_all_voters: false
+      timeout_seconds: 30
+      queen_veto_power: true
+
+    use_cases:
+      - "Strategic decisions"
+      - "Architecture choices"
+      - "Technology selection"
+      - "Direction setting"
+
+  byzantine:
+    description: "Byzantine fault tolerant - requires 2/3 supermajority"
+    min_votes: 3
+    threshold: 0.67  # 2/3 supermajority
+
+    rules:
+      - name: "supermajority"
+        condition: "vote_count >= (total_votes * 2 / 3)"
+        action: "declare_winner"
+        confidence: "vote_count / total_votes"
+
+      - name: "no_supermajority"
+        condition: "no_option_reaches_threshold"
+        action: "extend_voting"
+        max_extensions: 2
+        fallback: "weighted_majority"
+
+      - name: "fault_tolerance"
+        condition: "up_to_1/3_voters_can_fail"
+        action: "consensus_still_valid"
+        min_required: "2/3_of_total_workers"
+
+    properties:
+      allow_abstain: true
+      require_all_voters: false
+      timeout_seconds: 60
+      fault_tolerance: true
+      max_failures: "floor(total_voters / 3)"
+
+    use_cases:
+      - "Critical decisions"
+      - "Production deployments"
+      - "Security policies"
+      - "Major architectural changes"
+      - "Resource allocation"
+
+# Decision scenarios and recommended algorithms
+decision_scenarios:
+  architecture_pattern:
+    recommended_algorithm: byzantine
+    rationale: "Critical long-term impact requires strong consensus"
+    examples:
+      - "Microservices vs Monolith"
+      - "REST vs GraphQL vs gRPC"
+      - "SQL vs NoSQL"
+
+  implementation_approach:
+    recommended_algorithm: weighted
+    rationale: "Strategic guidance from queen valuable"
+    examples:
+      - "Library selection"
+      - "Framework choice"
+      - "Design pattern application"
+
+  code_review_approval:
+    recommended_algorithm: majority
+    rationale: "Quick feedback with simple agreement"
+    examples:
+      - "PR approval"
+      - "Style preferences"
+      - "Minor refactoring"
+
+  production_deployment:
+    recommended_algorithm: byzantine
+    rationale: "High-stakes requiring fault tolerance"
+    examples:
+      - "Release go/no-go"
+      - "Rollback decision"
+      - "Emergency patch"
+
+# Voting procedures
+voting_procedures:
+  standard_vote:
+    phases:
+      - name: "initialization"
+        duration_seconds: 5
+        actions:
+          - "announce_topic"
+          - "present_options"
+          - "set_deadline"
+
+      - name: "deliberation"
+        duration_seconds: 15
+        actions:
+          - "analyze_options"
+          - "discuss_trade_offs"
+          - "share_perspectives"
+
+      - name: "voting"
+        duration_seconds: 10
+        actions:
+          - "cast_votes"
+          - "verify_signatures"
+          - "count_votes"
+
+      - name: "resolution"
+        duration_seconds: 5
+        actions:
+          - "apply_algorithm"
+          - "declare_result"
+          - "record_decision"
+
+    total_duration_seconds: 35
+    extensions_allowed: true
+    max_extensions: 2
+
+  rapid_vote:
+    phases:
+      - name: "quick_vote"
+        duration_seconds: 15
+        actions:
+          - "present_question"
+          - "collect_votes"
+          - "calculate_result"
+
+    total_duration_seconds: 15
+    extensions_allowed: false
+    use_case: "Time-sensitive decisions"
+
+# Confidence scoring
+confidence_scoring:
+  high_confidence:
+    threshold: 0.8
+    interpretation: "Strong agreement, proceed with confidence"
+    actions:
+      - "record_as_precedent"
+      - "high_priority_execution"
+
+  medium_confidence:
+    threshold: 0.6
+    interpretation: "Acceptable consensus, monitor execution"
+    actions:
+      - "note_concerns"
+      - "plan_review_point"
+
+  low_confidence:
+    threshold: 0.4
+    interpretation: "Weak consensus, consider alternatives"
+    actions:
+      - "document_dissent"
+      - "plan_reassessment"
+      - "collect_additional_data"
+
+  very_low_confidence:
+    threshold: 0.0
+    interpretation: "No consensus, escalate or defer"
+    actions:
+      - "escalate_to_queen"
+      - "defer_decision"
+      - "gather_more_information"
+
+# Conflict resolution
+conflict_resolution:
+  voting_deadlock:
+    detection:
+      - "equal_vote_counts"
+      - "no_majority_after_extensions"
+
+    resolution_order:
+      - "queen_casting_vote"
+      - "specialist_tiebreaker"
+      - "defer_and_research"
+      - "split_decision_for_parallel_testing"
+
+  invalid_votes:
+    handling:
+      - "log_invalid_vote"
+      - "request_resubmission"
+      - "exclude_from_count"
+      - "notify_voter"
+
+    validity_checks:
+      - "signature_verification"
+      - "voter_authorization"
+      - "option_validity"
+      - "timestamp_check"
+
+  timeout_handling:
+    actions:
+      - "extend_if_allowed"
+      - "count_submitted_votes"
+      - "apply_algorithm_to_partial_votes"
+      - "record_incomplete_consensus"
+
+# Audit and compliance
+audit:
+  record_keeping:
+    required_fields:
+      - "topic"
+      - "timestamp"
+      - "algorithm_used"
+      - "participants"
+      - "votes_cast"
+      - "decision"
+      - "confidence_score"
+      - "dissenting_opinions"
+
+    retention_period: "permanent"
+    storage_location: "collective_memory"
+
+  traceability:
+    enabled: true
+    include_reasoning: true
+    voter_anonymity: false
+    signature_verification: true
+
+  compliance:
+    checks:
+      - "minimum_voters_met"
+      - "threshold_achieved"
+      - "proper_algorithm_applied"
+      - "timeout_not_exceeded"
+      - "all_votes_valid"
+
+# Performance tuning
+performance:
+  batch_voting:
+    enabled: true
+    batch_size: 5
+    topics_per_batch: 3
+
+  parallel_consensus:
+    enabled: false  # Requires careful coordination
+    max_parallel: 2
+    priority_separation: true
+
+  caching:
+    recent_decisions:
+      enabled: true
+      ttl_seconds: 300
+      max_entries: 50
+
+    voter_preferences:
+      enabled: true
+      ttl_seconds: 3600
+      use_for_prediction: false

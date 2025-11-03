@@ -1,0 +1,231 @@
+# Performance Analysis Configuration
+# Configuration for swarm performance analysis and optimization
+
+analysis:
+  # Time windows for metric collection
+  time_windows:
+    real_time: 60        # 1 minute
+    short_term: 3600     # 1 hour
+    medium_term: 86400   # 24 hours
+    long_term: 604800    # 7 days
+
+  # Sampling intervals (seconds)
+  sampling:
+    metrics_collection: 30
+    bottleneck_detection: 60
+    report_generation: 3600
+
+  # Data retention
+  retention:
+    raw_metrics: 30      # days
+    aggregated: 90       # days
+    reports: 365         # days
+
+thresholds:
+  # Communication bottlenecks
+  communication:
+    message_delay_ms: 2000
+    response_time_ms: 2000
+    queue_depth: 10
+    message_loss_rate: 0.01  # 1%
+
+  # Processing bottlenecks
+  processing:
+    task_time_ms: 60000
+    utilization_min: 0.5      # 50%
+    task_failure_rate: 0.05   # 5%
+    pending_queue_depth: 10
+
+  # Memory bottlenecks
+  memory:
+    usage_percent: 0.8        # 80%
+    cache_hit_rate_min: 0.7   # 70%
+    gc_frequency_max: 100     # per minute
+
+  # Network bottlenecks
+  network:
+    api_latency_ms: 1000
+    failed_requests_max: 5
+    timeout_rate: 0.02        # 2%
+
+  # Coordination bottlenecks
+  coordination:
+    agent_imbalance_ratio: 3.0
+    coordination_overhead: 0.2  # 20%
+    topology_efficiency_min: 0.7
+
+optimization:
+  # Auto-fix settings
+  auto_fix:
+    enabled: false
+    dry_run: true
+    max_fixes_per_run: 5
+    require_confirmation: true
+
+  # Optimization priorities
+  priorities:
+    critical: 1
+    high: 2
+    medium: 3
+    low: 4
+
+  # Impact calculations
+  impact_weights:
+    task_time: 0.3
+    throughput: 0.3
+    utilization: 0.2
+    reliability: 0.2
+
+reporting:
+  # Report formats
+  formats:
+    default: markdown
+    available:
+      - json
+      - markdown
+      - html
+      - text
+
+  # Report sections
+  sections:
+    - summary
+    - metrics
+    - bottlenecks
+    - recommendations
+    - trends
+
+  # Export settings
+  export:
+    directory: ./reports
+    filename_template: "performance-{timestamp}.{format}"
+    include_timestamp: true
+    compress_old_reports: true
+
+metrics:
+  # Agent metrics to collect
+  agent:
+    - id
+    - type
+    - status
+    - tasks_completed
+    - tasks_failed
+    - avg_task_time
+    - cpu_usage
+    - memory_usage
+    - message_count
+    - response_time
+    - utilization
+
+  # Swarm metrics to collect
+  swarm:
+    - id
+    - topology
+    - agent_count
+    - total_tasks
+    - completed_tasks
+    - failed_tasks
+    - avg_completion_time
+    - throughput
+    - efficiency_score
+
+  # System metrics to collect
+  system:
+    - cpu_usage
+    - memory_usage
+    - disk_usage
+    - network_latency
+    - load_average
+
+alerts:
+  # Alert thresholds
+  critical:
+    task_failure_rate: 0.1    # 10%
+    memory_usage: 0.9         # 90%
+    agent_failures: 3
+
+  warning:
+    task_time_increase: 0.5   # 50% increase
+    cache_hit_rate: 0.6       # 60%
+    utilization: 0.4          # 40%
+
+  # Alert channels
+  channels:
+    - console
+    - log_file
+    # - email
+    # - slack
+
+  # Alert frequency limits
+  rate_limit:
+    max_per_hour: 10
+    dedup_window: 300  # 5 minutes
+
+storage:
+  # Storage backends
+  backends:
+    metrics: filesystem
+    reports: filesystem
+    # Alternative: s3, database
+
+  # Filesystem settings
+  filesystem:
+    metrics_dir: ./metrics
+    reports_dir: ./reports
+    archive_dir: ./archive
+
+  # Compression
+  compression:
+    enabled: true
+    algorithm: gzip
+    level: 6
+
+# Integration settings
+integrations:
+  # Claude Flow MCP
+  claude_flow:
+    enabled: true
+    mcp_command: "npx claude-flow@alpha"
+    timeout: 30000  # ms
+
+  # Monitoring systems
+  monitoring:
+    prometheus:
+      enabled: false
+      port: 9090
+
+    grafana:
+      enabled: false
+      url: "http://localhost:3000"
+
+  # External tools
+  external:
+    jq:
+      enabled: true
+      path: "jq"
+
+    python:
+      enabled: true
+      path: "python3"
+
+# Advanced features
+advanced:
+  # Machine learning for anomaly detection
+  ml_detection:
+    enabled: false
+    model: isolation_forest
+    sensitivity: 0.1
+
+  # Predictive analytics
+  prediction:
+    enabled: false
+    lookback_window: 7  # days
+    forecast_horizon: 1  # day
+
+  # Automated remediation
+  auto_remediation:
+    enabled: false
+    strategies:
+      - restart_agent
+      - scale_up
+      - clear_cache
+      - switch_topology

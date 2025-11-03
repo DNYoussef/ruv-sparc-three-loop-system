@@ -1,0 +1,168 @@
+# Learning Parameters for ReasoningBank with AgentDB
+# Fine-tuned parameters for optimal adaptive learning performance
+
+# Learning Rate Parameters
+learning_rate:
+  initial: 0.01  # Initial learning rate
+  min: 0.001  # Minimum learning rate
+  max: 0.1  # Maximum learning rate
+  decay: 0.95  # Learning rate decay factor
+  decay_steps: 1000  # Steps between decay applications
+  adaptive: true  # Enable adaptive learning rate
+
+# Experience Replay
+experience_replay:
+  enabled: true
+  buffer_size: 10000  # Maximum experiences to store
+  batch_size: 32  # Batch size for replay
+  prioritized: true  # Use prioritized experience replay
+  alpha: 0.6  # Priority exponent (0=uniform, 1=fully prioritized)
+  beta: 0.4  # Importance sampling weight (0=no correction, 1=full correction)
+  beta_increment: 0.001  # Increment beta over time
+
+# Exploration vs Exploitation
+exploration:
+  strategy: "epsilon-greedy"  # epsilon-greedy, boltzmann, ucb
+  epsilon:
+    initial: 1.0  # Start with full exploration
+    min: 0.01  # Minimum exploration rate
+    decay: 0.995  # Decay factor per step
+  temperature: 1.0  # Boltzmann temperature (for boltzmann strategy)
+  ucb_c: 2.0  # UCB exploration constant (for ucb strategy)
+
+# Reward Shaping
+rewards:
+  success: 1.0  # Reward for successful pattern application
+  failure: -0.5  # Penalty for failed pattern application
+  partial: 0.3  # Reward for partial success
+  time_penalty: -0.01  # Penalty per time unit
+  quality_bonus: 0.2  # Bonus for high-quality patterns
+  discount_factor: 0.99  # Future reward discount (gamma)
+
+# Confidence Calibration
+confidence:
+  initial: 0.5  # Initial confidence for new patterns
+  update_rate: 0.1  # Rate of confidence updates
+  min_samples: 3  # Minimum samples before high confidence
+  calibration_method: "platt"  # platt, isotonic, or temperature
+  temperature_scaling: true
+  temperature: 1.5  # Temperature for calibration
+
+# Pattern Quality Metrics
+quality:
+  weights:
+    success_rate: 0.4  # Weight for success rate
+    confidence: 0.3  # Weight for confidence score
+    usage: 0.2  # Weight for usage count
+    recency: 0.1  # Weight for recency
+  success_threshold: 0.7  # Threshold for high-quality patterns
+  min_usage: 3  # Minimum usage for quality assessment
+  recency_decay_days: 30  # Days for recency to decay to 0.5
+
+# Memory Consolidation
+consolidation:
+  enabled: true
+  similarity_threshold: 0.95  # Threshold for identifying similar patterns
+  min_cluster_size: 3  # Minimum patterns to form a cluster
+  consolidation_method: "weighted-average"  # weighted-average, max-quality, or voting
+  confidence_boost: 0.1  # Confidence increase for consolidated patterns
+  frequency: "daily"  # hourly, daily, weekly, or on-demand
+
+# Distillation
+distillation:
+  enabled: true
+  min_patterns: 5  # Minimum patterns for distillation
+  max_abstraction_level: 3  # Maximum hierarchy levels
+  distillation_threshold: 10  # Distill after N similar patterns
+  distillation_method: "hierarchical"  # hierarchical, clustering, or rule-extraction
+  confidence_transfer: 0.9  # How much confidence transfers to distilled pattern
+
+# Curriculum Learning
+curriculum:
+  enabled: true
+  difficulty_levels:
+    - name: "easy"
+      success_threshold: 0.8
+      complexity_max: 3
+    - name: "medium"
+      success_threshold: 0.6
+      complexity_max: 6
+    - name: "hard"
+      success_threshold: 0.4
+      complexity_max: 10
+  progression_threshold: 0.75  # Success rate to advance to next level
+  adaptive_difficulty: true
+
+# Transfer Learning
+transfer:
+  enabled: true
+  cross_domain: true  # Allow transfer across domains
+  similarity_threshold: 0.7  # Minimum similarity for transfer
+  transfer_rate: 0.5  # How much learning transfers (0-1)
+  domains_mapping:
+    "api-optimization": ["database-optimization", "performance"]
+    "debugging": ["testing", "code-generation"]
+    "refactoring": ["architecture", "code-generation"]
+
+# Meta-Learning
+meta_learning:
+  enabled: true
+  learn_to_learn: true  # Learn optimal learning strategies
+  meta_batch_size: 10  # Number of tasks for meta-learning
+  inner_steps: 5  # Optimization steps per task
+  outer_steps: 100  # Meta-optimization steps
+  meta_lr: 0.001  # Meta-learning rate
+
+# Active Learning
+active_learning:
+  enabled: true
+  query_strategy: "uncertainty"  # uncertainty, diversity, or hybrid
+  budget: 100  # Number of queries allowed
+  uncertainty_threshold: 0.5  # Uncertainty threshold for querying
+  diversity_weight: 0.3  # Weight for diversity in hybrid strategy
+
+# Forgetting
+forgetting:
+  enabled: true
+  method: "exponential-decay"  # exponential-decay, threshold, or none
+  decay_rate: 0.001  # Rate of confidence decay
+  min_confidence: 0.1  # Minimum confidence before pruning
+  inactivity_threshold_days: 90  # Days of inactivity before forgetting
+
+# Online Learning
+online:
+  enabled: true
+  update_frequency: "immediate"  # immediate, batched, or scheduled
+  batch_size: 10  # Batch size for batched updates
+  sliding_window: 1000  # Window size for online statistics
+
+# Multi-Agent Learning
+multi_agent:
+  enabled: true
+  share_experiences: true  # Share patterns across agents
+  consensus_method: "majority-vote"  # majority-vote, weighted-average, or best-of
+  min_agents: 2  # Minimum agents for consensus
+  trust_decay: 0.95  # Decay factor for agent trust
+
+# Performance Optimization
+optimization:
+  cache_patterns: true
+  cache_size: 1000  # Number of patterns to cache
+  precompute_embeddings: true
+  parallel_learning: true
+  num_workers: 4  # Parallel workers
+
+# Monitoring and Logging
+monitoring:
+  log_learning_progress: true
+  log_frequency: 100  # Log every N steps
+  track_metrics:
+    - "success_rate"
+    - "average_confidence"
+    - "pattern_quality"
+    - "exploration_rate"
+    - "consolidation_rate"
+  alert_thresholds:
+    low_success_rate: 0.3
+    high_failure_rate: 0.7
+    low_quality: 0.4

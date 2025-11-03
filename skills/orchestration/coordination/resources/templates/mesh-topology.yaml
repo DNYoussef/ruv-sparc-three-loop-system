@@ -1,0 +1,152 @@
+# Mesh Topology Configuration Template
+# All-to-all peer communication for small to medium agent counts
+
+name: mesh-coordination
+version: 1.0.0
+topology: mesh
+
+# Agent Configuration
+agents:
+  maxAgents: 6
+  strategy: balanced
+
+  # Agent role definitions
+  roles:
+    - name: researcher
+      type: researcher
+      capabilities:
+        - requirements_analysis
+        - pattern_research
+        - best_practices
+
+    - name: coder
+      type: coder
+      capabilities:
+        - implementation
+        - refactoring
+        - bug_fixing
+
+    - name: analyst
+      type: analyst
+      capabilities:
+        - code_review
+        - testing
+        - quality_assurance
+
+    - name: optimizer
+      type: optimizer
+      capabilities:
+        - performance_tuning
+        - resource_optimization
+        - benchmarking
+
+# Communication Configuration
+communication:
+  pattern: all-to-all
+  protocol: direct-messaging
+
+  # Message routing
+  routing:
+    type: broadcast
+    delivery: guaranteed
+
+  # Connection settings
+  connections:
+    persistent: true
+    heartbeat_interval: 5  # seconds
+    timeout: 30  # seconds
+
+# Consensus Configuration
+consensus:
+  mechanism: byzantine
+
+  # Byzantine fault tolerance
+  byzantine:
+    min_quorum: 0.67  # 2f+1 where f is max faults
+    signature_verification: true
+    cryptographic_proofs: true
+
+  # Fallback to Raft for non-critical decisions
+  raft:
+    election_timeout: 150-300  # milliseconds
+    heartbeat_interval: 50  # milliseconds
+    log_replication: true
+
+# State Management
+state:
+  # Shared state store
+  store_type: distributed
+  consistency: eventual
+
+  # Synchronization
+  sync:
+    interval: 10  # seconds
+    conflict_resolution: last-write-wins
+
+  # State persistence
+  persistence:
+    enabled: true
+    backend: claude-flow-memory
+    retention: 7d
+
+# Performance Configuration
+performance:
+  # Load balancing
+  load_balancing:
+    enabled: true
+    strategy: round-robin
+    rebalance_interval: 30  # seconds
+
+  # Resource limits
+  resources:
+    max_concurrent_tasks: 10
+    task_timeout: 300  # seconds
+    memory_limit: 512MB
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+
+  # Metrics collection
+  metrics:
+    - agent_utilization
+    - task_completion_time
+    - consensus_latency
+    - message_throughput
+
+  # Alerting
+  alerts:
+    - type: agent_failure
+      threshold: 1
+      action: spawn_replacement
+
+    - type: consensus_timeout
+      threshold: 30  # seconds
+      action: retry
+
+# Fault Tolerance Configuration
+fault_tolerance:
+  # Agent failure handling
+  agent_failure:
+    detection_interval: 5  # seconds
+    max_failures: 2  # f in 2f+1
+    recovery_strategy: spawn_replacement
+
+  # Network partition handling
+  network_partition:
+    detection: true
+    merge_strategy: consensus-based
+
+# Hooks Integration
+hooks:
+  pre_task:
+    - validate_topology
+    - check_agent_health
+
+  post_task:
+    - collect_metrics
+    - update_state
+
+  session_end:
+    - export_metrics
+    - archive_state

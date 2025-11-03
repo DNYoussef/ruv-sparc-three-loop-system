@@ -1,0 +1,163 @@
+digraph FlowNexusNeuralProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end nodes
+    start [shape=ellipse, label="Start:\nNeural Training Request", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nTrained Model", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Configuration & Planning
+    subgraph cluster_planning {
+        label="Phase 1: Configuration & Planning";
+        fillcolor=lightyellow;
+        style=filled;
+
+        plan1 [label="Analyze\nRequirements"];
+        plan2 [label="Choose\nArchitecture"];
+        plan3 [label="Select Training\nStrategy"];
+
+        plan1 -> plan2;
+        plan2 -> plan3;
+    }
+
+    // Decision: Single vs Distributed
+    decision_mode [shape=diamond, label="Training\nMode?", fillcolor=yellow];
+
+    // Phase 2A: Single-Node Training
+    subgraph cluster_single {
+        label="Phase 2A: Single-Node Training";
+        fillcolor=lightblue;
+        style=filled;
+
+        single1 [label="Load Template\nConfig"];
+        single2 [label="Initialize Model\n(nano-large tier)"];
+        single3 [label="Configure\nDivergent Patterns"];
+        single4 [label="Start Training\nJob"];
+
+        single1 -> single2;
+        single2 -> single3;
+        single3 -> single4;
+    }
+
+    // Phase 2B: Distributed Cluster Training
+    subgraph cluster_distributed {
+        label="Phase 2B: Distributed Cluster Training";
+        fillcolor=lightcyan;
+        style=filled;
+
+        dist1 [label="Initialize Cluster\n(mesh/ring/star/hierarchical)"];
+        dist2 [label="Deploy Parameter\nServer"];
+        dist3 [label="Deploy Worker\nNodes"];
+        dist4 [label="Deploy Gradient\nAggregator"];
+        dist5 [label="Connect Cluster\nTopology"];
+        dist6 [label="Start Distributed\nTraining"];
+
+        dist1 -> dist2;
+        dist2 -> dist3;
+        dist3 -> dist4;
+        dist4 -> dist5;
+        dist5 -> dist6;
+    }
+
+    // External references
+    templates [shape=cylinder, label="Template\nMarketplace", fillcolor=lightcoral];
+    e2b [shape=cylinder, label="E2B Sandboxes\n(Cloud Execution)", fillcolor=lightcoral];
+
+    // Phase 3: Monitoring & Checkpointing
+    subgraph cluster_monitoring {
+        label="Phase 3: Monitoring & Checkpointing";
+        fillcolor=lightgoldenrodyellow;
+        style=filled;
+
+        monitor1 [label="Monitor Training\nProgress"];
+        monitor2 [label="Track Metrics\n(loss, accuracy)"];
+        monitor3 [label="Save Checkpoints\n(every N epochs)"];
+
+        monitor1 -> monitor2;
+        monitor2 -> monitor3;
+    }
+
+    // Decision: Training Complete?
+    decision_complete [shape=diamond, label="Training\nComplete?", fillcolor=yellow];
+
+    // Warning: Early Stopping
+    early_stop [shape=octagon, label="EARLY STOP:\nConvergence Detected", fillcolor=orange];
+
+    // Phase 4: Validation & Benchmarking
+    subgraph cluster_validation {
+        label="Phase 4: Validation & Benchmarking";
+        fillcolor=lightsteelblue;
+        style=filled;
+
+        valid1 [label="Run Performance\nBenchmark"];
+        valid2 [label="Validate Accuracy\nMetrics"];
+        valid3 [label="Test Inference\nLatency"];
+        valid4 [label="Measure Memory\nUsage"];
+
+        valid1 -> valid2;
+        valid2 -> valid3;
+        valid3 -> valid4;
+    }
+
+    // Decision: Quality Acceptable?
+    decision_quality [shape=diamond, label="Meets Quality\nTargets?", fillcolor=yellow];
+
+    // Warning: Quality Issues
+    quality_warning [shape=octagon, label="WARNING:\nQuality Below Target", fillcolor=orange];
+
+    // Phase 5: Deployment & Publishing
+    subgraph cluster_deployment {
+        label="Phase 5: Deployment & Publishing";
+        fillcolor=palegreen;
+        style=filled;
+
+        deploy1 [label="Export Trained\nModel"];
+        deploy2 [label="Create Model\nCard"];
+        deploy3 [label="Publish to\nMarketplace"];
+
+        deploy1 -> deploy2;
+        deploy2 -> deploy3;
+    }
+
+    // Main flow
+    start -> plan1;
+    plan3 -> decision_mode;
+
+    // Single-node path
+    decision_mode -> single1 [label="Single Node"];
+    single1 -> templates [style=dashed, label="uses"];
+    single4 -> monitor1;
+
+    // Distributed path
+    decision_mode -> dist1 [label="Distributed"];
+    dist1 -> e2b [style=dashed, label="deploys to"];
+    dist6 -> monitor1;
+
+    // Monitoring loop
+    monitor3 -> decision_complete;
+    decision_complete -> monitor1 [label="no", style=dashed, color=blue];
+    decision_complete -> early_stop [label="converged early", style=dashed, color=orange];
+    early_stop -> valid1;
+    decision_complete -> valid1 [label="yes", color=green];
+
+    // Validation path
+    valid4 -> decision_quality;
+    decision_quality -> quality_warning [label="no", color=red];
+    quality_warning -> plan1 [label="retrain", style=dashed];
+    decision_quality -> deploy1 [label="yes", color=green];
+
+    // Deployment to completion
+    deploy3 -> end;
+
+    // Optional: Federated Learning
+    federated [shape=folder, label="Federated Learning\nMode", fillcolor=lightsalmon];
+    dist6 -> federated [style=dashed, label="optional"];
+
+    // Graph metadata
+    labelloc="t";
+    label="Flow Nexus Neural: Distributed Training Process";
+    fontsize=16;
+    fontname="Arial Bold";
+}

@@ -1,0 +1,433 @@
+# Production Readiness Validation Rules
+# Comprehensive validation rules for deployment readiness
+
+version: "1.0.0"
+
+# File and Directory Structure Validation
+file_structure:
+  required_directories:
+    - path: "src"
+      description: "Source code directory"
+      required_for_production: true
+
+    - path: "tests"
+      description: "Test files directory"
+      required_for_production: true
+      alternatives: ["__tests__", "test"]
+
+    - path: "docs"
+      description: "Documentation directory"
+      required_for_production: true
+
+  required_files:
+    - path: "package.json"
+      description: "Node.js package configuration"
+      required_for_production: true
+      validation:
+        must_contain:
+          - "scripts.build"
+          - "scripts.start"
+          - "scripts.test"
+
+    - path: "package-lock.json"
+      description: "Dependency lockfile"
+      required_for_production: true
+      alternatives: ["yarn.lock", "pnpm-lock.yaml"]
+
+    - path: "README.md"
+      description: "Project documentation"
+      required_for_production: true
+      min_length: 500
+
+    - path: ".gitignore"
+      description: "Git ignore configuration"
+      required_for_production: true
+      must_include:
+        - "node_modules"
+        - ".env"
+        - "*.log"
+
+    - path: ".env.example"
+      description: "Environment variable template"
+      required_for_production: true
+
+    - path: "docs/deployment.md"
+      description: "Deployment guide"
+      required_for_production: true
+      min_length: 1000
+
+    - path: "docs/rollback.md"
+      description: "Rollback procedures"
+      required_for_production: true
+      min_length: 500
+
+  forbidden_files:
+    - pattern: "*.env"
+      description: "Environment files should not be committed"
+      severity: "critical"
+      exclude: [".env.example", ".env.template"]
+
+    - pattern: "*.key"
+      description: "Private keys should not be committed"
+      severity: "critical"
+
+    - pattern: "*.pem"
+      description: "Certificate files should not be committed"
+      severity: "critical"
+
+# Code Quality Validation
+code_quality:
+  linting:
+    eslint:
+      required: true
+      config_files: [".eslintrc.js", ".eslintrc.json", "eslint.config.js"]
+      max_errors: 0
+      max_warnings: 10
+
+    prettier:
+      required: true
+      config_files: [".prettierrc", ".prettierrc.json", "prettier.config.js"]
+
+    typescript:
+      if_exists: "tsconfig.json"
+      command: "tsc --noEmit"
+      must_pass: true
+
+  complexity:
+    max_cyclomatic_complexity: 10
+    max_cognitive_complexity: 15
+    max_nesting_depth: 4
+    max_function_length: 50
+    max_file_length: 500
+
+  duplication:
+    max_duplicate_lines: 20
+    max_duplication_percent: 5
+
+  technical_debt:
+    max_todo_comments: 10
+    max_fixme_comments: 5
+    max_hack_comments: 0
+
+# Security Validation
+security:
+  vulnerability_scanning:
+    npm_audit:
+      enabled: true
+      max_critical: 0
+      max_high: 0
+      max_medium: 5
+      max_low: 10
+
+    snyk:
+      enabled: false
+      api_key: "${SNYK_API_KEY}"
+
+  secrets_detection:
+    patterns:
+      - name: "API Keys"
+        regex: "api[_-]?key.*=.*['\"][a-zA-Z0-9]{20,}['\"]"
+        severity: "critical"
+
+      - name: "Passwords"
+        regex: "password.*=.*['\"][^'\"]{8,}['\"]"
+        severity: "critical"
+
+      - name: "JWT Tokens"
+        regex: "Bearer\\s+[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+"
+        severity: "high"
+
+      - name: "AWS Keys"
+        regex: "AKIA[0-9A-Z]{16}"
+        severity: "critical"
+
+      - name: "OpenAI Keys"
+        regex: "sk-[a-zA-Z0-9]{48}"
+        severity: "critical"
+
+      - name: "GitHub Tokens"
+        regex: "ghp_[a-zA-Z0-9]{36}"
+        severity: "critical"
+
+    exclude_paths:
+      - "tests/"
+      - "__tests__/"
+      - "*.test.js"
+      - "*.test.ts"
+      - "*.spec.js"
+      - "*.spec.ts"
+      - "examples/"
+      - "mocks/"
+
+  security_headers:
+    required:
+      - "X-Content-Type-Options"
+      - "X-Frame-Options"
+      - "X-XSS-Protection"
+      - "Strict-Transport-Security"
+      - "Content-Security-Policy"
+
+  authentication:
+    check_for_patterns:
+      - "passport"
+      - "jsonwebtoken"
+      - "bcrypt"
+      - "express-session"
+
+    validations:
+      - pattern: "jwt.*sign.*secret"
+        min_secret_length: 32
+        severity: "high"
+
+      - pattern: "session.*cookie"
+        must_have: ["secure: true", "httpOnly: true"]
+        severity: "high"
+
+# Performance Validation
+performance:
+  response_times:
+    avg_threshold_ms: 200
+    p50_threshold_ms: 150
+    p95_threshold_ms: 500
+    p99_threshold_ms: 1000
+
+  throughput:
+    min_requests_per_second: 100
+
+  resource_usage:
+    max_cpu_percent: 70
+    max_memory_percent: 80
+    max_heap_size_mb: 512
+
+  database:
+    check_for_issues:
+      - pattern: "SELECT \\*"
+        severity: "medium"
+        message: "Avoid SELECT * queries"
+
+      - pattern: "\\.map.*await|\\.forEach.*await"
+        severity: "high"
+        message: "Potential N+1 query pattern"
+
+      - pattern: "\\.find\\(|.findAll\\("
+        must_have: ["limit", "take", "pagination"]
+        severity: "medium"
+        message: "Missing pagination"
+
+    required_patterns:
+      - pattern: "pool|maxConnections|connectionLimit"
+        description: "Connection pooling configuration"
+
+  caching:
+    check_for_patterns:
+      - "redis"
+      - "cache"
+      - "memoize"
+      - "useMemo"
+      - "Cache-Control"
+      - "ETag"
+
+    min_cache_usage: 3
+
+  optimization:
+    forbidden_patterns:
+      - pattern: "readFileSync|execSync|readdirSync"
+        severity: "high"
+        message: "Avoid synchronous blocking operations"
+        exclude: ["scripts/", "config/"]
+
+# Testing Validation
+testing:
+  coverage:
+    min_total_coverage: 80
+    min_branch_coverage: 75
+    min_function_coverage: 80
+    min_line_coverage: 80
+
+  test_types:
+    unit:
+      required: true
+      min_coverage: 80
+      patterns: ["*.test.js", "*.test.ts", "*.spec.js", "*.spec.ts"]
+
+    integration:
+      required: true
+      min_coverage: 70
+      patterns: ["*.integration.test.js", "*.integration.spec.js"]
+
+    e2e:
+      required_for_production: true
+      min_tests: 5
+      patterns: ["*.e2e.test.js", "*.e2e.spec.js"]
+
+  test_quality:
+    max_skipped_tests: 0
+    max_disabled_tests: 2
+    max_test_duration_ms: 5000
+    min_assertions_per_test: 1
+
+# Infrastructure Validation
+infrastructure:
+  containerization:
+    docker:
+      if_exists: "Dockerfile"
+      validations:
+        - must_have_multi_stage: true
+        - max_layers: 20
+        - must_specify_version: true
+        - no_latest_tag: true
+
+    docker_compose:
+      if_exists: "docker-compose.yml"
+      validations:
+        - version_specified: true
+        - health_checks_defined: true
+
+  orchestration:
+    kubernetes:
+      if_exists: "k8s/"
+      validations:
+        - liveness_probe_defined: true
+        - readiness_probe_defined: true
+        - resource_limits_defined: true
+
+  monitoring:
+    required_for_production:
+      - pattern: "logger\\.(error|warn|info|debug)"
+        description: "Structured logging"
+
+      - pattern: "/health|/healthz|/ready"
+        description: "Health check endpoints"
+
+    recommended:
+      - pattern: "sentry|newrelic|datadog"
+        description: "APM/monitoring tool"
+
+      - pattern: "prometheus|metrics"
+        description: "Metrics collection"
+
+# Documentation Validation
+documentation:
+  readme:
+    required_sections:
+      - "Installation"
+      - "Usage"
+      - "Configuration"
+      - "Development"
+      - "Testing"
+      - "Deployment"
+
+  api_documentation:
+    if_api_exists: true
+    formats: ["swagger", "openapi", "postman", "markdown"]
+    min_endpoint_coverage: 90
+
+  deployment_guide:
+    required_sections:
+      - "Prerequisites"
+      - "Environment Setup"
+      - "Deployment Steps"
+      - "Post-Deployment Verification"
+      - "Troubleshooting"
+
+  rollback_plan:
+    required_sections:
+      - "Rollback Triggers"
+      - "Rollback Steps"
+      - "Verification"
+      - "Recovery Time Objective (RTO)"
+
+# Environment Configuration Validation
+environment:
+  required_variables:
+    - name: "NODE_ENV"
+      values: ["development", "staging", "production"]
+      required_for_production: true
+
+    - name: "PORT"
+      type: "integer"
+      range: [1024, 65535]
+
+    - name: "DATABASE_URL"
+      type: "string"
+      pattern: "^(postgres|mysql|mongodb)://"
+      required_for_production: true
+
+    - name: "LOG_LEVEL"
+      values: ["error", "warn", "info", "debug"]
+
+    - name: "API_KEY"
+      type: "string"
+      min_length: 32
+      source: "environment"  # Must be from env, not hardcoded
+
+  configuration_files:
+    - path: "config/production.js"
+      required_for_production: true
+
+    - path: "config/staging.js"
+      required_for_staging: true
+
+# Deployment Process Validation
+deployment:
+  pre_deployment:
+    required_steps:
+      - "Run all tests"
+      - "Check code quality"
+      - "Security scan"
+      - "Performance validation"
+      - "Create backup"
+
+  deployment:
+    strategies:
+      allowed: ["rolling", "blue-green", "canary"]
+      recommended: "blue-green"
+
+    health_checks:
+      required: true
+      endpoint: "/health"
+      expected_status: 200
+      timeout_seconds: 30
+
+  post_deployment:
+    required_steps:
+      - "Verify health endpoints"
+      - "Check error rates"
+      - "Monitor performance metrics"
+      - "Smoke tests"
+
+  rollback:
+    max_rollback_time_minutes: 5
+    automated_triggers:
+      - error_rate_threshold: 5  # percent
+      - response_time_multiplier: 2  # 2x SLA
+
+# Compliance and Best Practices
+compliance:
+  licenses:
+    allowed: ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC"]
+    forbidden: ["GPL", "AGPL", "LGPL"]
+
+  data_privacy:
+    gdpr_compliance: true
+    data_encryption_at_rest: true
+    data_encryption_in_transit: true
+    pii_handling_documented: true
+
+  accessibility:
+    wcag_level: "AA"
+    if_frontend_exists: true
+
+# Notification Rules
+notifications:
+  on_failure:
+    channels: ["slack", "email", "pagerduty"]
+    severity: "high"
+
+  on_warning:
+    channels: ["slack", "email"]
+    severity: "medium"
+
+  on_success:
+    channels: ["slack"]
+    severity: "low"

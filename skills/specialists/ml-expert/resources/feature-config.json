@@ -1,0 +1,125 @@
+{
+  "version": "1.0.0",
+  "description": "Feature engineering pipeline configuration",
+  "dataset": {
+    "name": "example_dataset",
+    "source": "data/raw/dataset.csv",
+    "target": "label",
+    "features": ["feature1", "feature2", "feature3", "feature4"]
+  },
+  "transformations": [
+    {
+      "feature": "feature1",
+      "method": "standardize",
+      "params": {},
+      "enabled": true,
+      "description": "Z-score normalization for numerical feature"
+    },
+    {
+      "feature": "feature2",
+      "method": "normalize",
+      "params": {
+        "min": 0,
+        "max": 1
+      },
+      "enabled": true,
+      "description": "Min-max scaling to [0, 1] range"
+    },
+    {
+      "feature": "feature3",
+      "method": "one_hot_encode",
+      "params": {},
+      "enabled": true,
+      "description": "One-hot encoding for categorical feature"
+    },
+    {
+      "feature": "feature4",
+      "method": "bin",
+      "params": {
+        "bins": 5,
+        "strategy": "quantile"
+      },
+      "enabled": true,
+      "description": "Discretize continuous feature into 5 bins"
+    },
+    {
+      "feature": "feature1",
+      "method": "polynomial",
+      "params": {
+        "degree": 2
+      },
+      "enabled": false,
+      "description": "Create polynomial features up to degree 2"
+    },
+    {
+      "feature": "feature1",
+      "method": "log_transform",
+      "params": {},
+      "enabled": false,
+      "description": "Log transformation for skewed distribution"
+    },
+    {
+      "method": "interaction",
+      "params": {
+        "features": ["feature1", "feature2"]
+      },
+      "enabled": false,
+      "description": "Create interaction feature between feature1 and feature2"
+    }
+  ],
+  "feature_selection": {
+    "enabled": true,
+    "method": "correlation",
+    "params": {
+      "threshold": 0.7,
+      "top_k": 10
+    },
+    "description": "Select top 10 features by correlation with target"
+  },
+  "validation": {
+    "train_test_split": 0.8,
+    "cross_validation_folds": 5,
+    "stratify": true
+  },
+  "output": {
+    "format": "csv",
+    "path": "data/processed/features.csv",
+    "include_metadata": true,
+    "metadata_path": "data/processed/feature_metadata.json"
+  },
+  "advanced_features": {
+    "temporal": {
+      "enabled": false,
+      "date_column": "timestamp",
+      "extract": ["year", "month", "day", "hour", "dayofweek"],
+      "rolling_windows": [7, 30, 90],
+      "lag_features": [1, 7, 30]
+    },
+    "text": {
+      "enabled": false,
+      "text_column": "description",
+      "methods": ["tfidf", "word_count", "sentiment"],
+      "vectorizer_params": {
+        "max_features": 1000,
+        "ngram_range": [1, 2]
+      }
+    },
+    "categorical_encoding": {
+      "high_cardinality_threshold": 50,
+      "methods": {
+        "low_cardinality": "one_hot",
+        "high_cardinality": "target_encode"
+      }
+    }
+  },
+  "quality_checks": {
+    "missing_value_threshold": 0.5,
+    "variance_threshold": 0.01,
+    "correlation_threshold": 0.95,
+    "outlier_detection": {
+      "enabled": true,
+      "method": "iqr",
+      "action": "cap"
+    }
+  }
+}

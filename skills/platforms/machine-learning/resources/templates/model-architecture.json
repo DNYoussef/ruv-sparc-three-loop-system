@@ -1,0 +1,357 @@
+{
+  "architectures": {
+    "simple_cnn": {
+      "type": "sequential",
+      "description": "Simple CNN for image classification",
+      "layers": [
+        {
+          "type": "conv2d",
+          "in_channels": 3,
+          "out_channels": 32,
+          "kernel_size": 3,
+          "stride": 1,
+          "padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "maxpool2d",
+          "kernel_size": 2,
+          "stride": 2
+        },
+        {
+          "type": "conv2d",
+          "in_channels": 32,
+          "out_channels": 64,
+          "kernel_size": 3,
+          "stride": 1,
+          "padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "maxpool2d",
+          "kernel_size": 2,
+          "stride": 2
+        },
+        {
+          "type": "flatten"
+        },
+        {
+          "type": "linear",
+          "in_features": 12544,
+          "out_features": 128
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "dropout",
+          "p": 0.5
+        },
+        {
+          "type": "linear",
+          "in_features": 128,
+          "out_features": 10
+        }
+      ]
+    },
+
+    "resnet_custom": {
+      "type": "custom",
+      "description": "Custom ResNet-style architecture",
+      "backbone": "resnet50",
+      "pretrained": true,
+      "modifications": [
+        {
+          "layer": "fc",
+          "operation": "replace",
+          "new_layer": {
+            "type": "sequential",
+            "layers": [
+              {
+                "type": "linear",
+                "in_features": 2048,
+                "out_features": 512
+              },
+              {
+                "type": "relu"
+              },
+              {
+                "type": "dropout",
+                "p": 0.5
+              },
+              {
+                "type": "linear",
+                "in_features": 512,
+                "out_features": 10
+              }
+            ]
+          }
+        }
+      ],
+      "freeze_layers": ["layer1", "layer2"]
+    },
+
+    "transformer": {
+      "type": "transformer",
+      "description": "Vision Transformer for image classification",
+      "config": {
+        "image_size": 224,
+        "patch_size": 16,
+        "num_classes": 10,
+        "dim": 768,
+        "depth": 12,
+        "heads": 12,
+        "mlp_dim": 3072,
+        "dropout": 0.1,
+        "emb_dropout": 0.1
+      }
+    },
+
+    "lstm_classifier": {
+      "type": "sequential",
+      "description": "LSTM for sequence classification",
+      "layers": [
+        {
+          "type": "embedding",
+          "num_embeddings": 10000,
+          "embedding_dim": 300
+        },
+        {
+          "type": "lstm",
+          "input_size": 300,
+          "hidden_size": 128,
+          "num_layers": 2,
+          "batch_first": true,
+          "dropout": 0.3,
+          "bidirectional": true
+        },
+        {
+          "type": "linear",
+          "in_features": 256,
+          "out_features": 64
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "dropout",
+          "p": 0.5
+        },
+        {
+          "type": "linear",
+          "in_features": 64,
+          "out_features": 2
+        }
+      ]
+    },
+
+    "multi_input_model": {
+      "type": "multi_input",
+      "description": "Model with multiple inputs and fusion",
+      "inputs": {
+        "image": {
+          "type": "sequential",
+          "layers": [
+            {
+              "type": "conv2d",
+              "in_channels": 3,
+              "out_channels": 64,
+              "kernel_size": 3,
+              "stride": 1,
+              "padding": 1
+            },
+            {
+              "type": "relu"
+            },
+            {
+              "type": "maxpool2d",
+              "kernel_size": 2
+            },
+            {
+              "type": "flatten"
+            },
+            {
+              "type": "linear",
+              "in_features": 50176,
+              "out_features": 128
+            }
+          ]
+        },
+        "tabular": {
+          "type": "sequential",
+          "layers": [
+            {
+              "type": "linear",
+              "in_features": 20,
+              "out_features": 64
+            },
+            {
+              "type": "relu"
+            },
+            {
+              "type": "linear",
+              "in_features": 64,
+              "out_features": 128
+            }
+          ]
+        }
+      },
+      "fusion": {
+        "type": "concat",
+        "layers": [
+          {
+            "type": "linear",
+            "in_features": 256,
+            "out_features": 128
+          },
+          {
+            "type": "relu"
+          },
+          {
+            "type": "dropout",
+            "p": 0.5
+          },
+          {
+            "type": "linear",
+            "in_features": 128,
+            "out_features": 10
+          }
+        ]
+      }
+    },
+
+    "autoencoder": {
+      "type": "autoencoder",
+      "description": "Convolutional autoencoder for dimensionality reduction",
+      "encoder": [
+        {
+          "type": "conv2d",
+          "in_channels": 1,
+          "out_channels": 16,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "conv2d",
+          "in_channels": 16,
+          "out_channels": 8,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "conv2d",
+          "in_channels": 8,
+          "out_channels": 4,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1
+        }
+      ],
+      "decoder": [
+        {
+          "type": "conv_transpose2d",
+          "in_channels": 4,
+          "out_channels": 8,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1,
+          "output_padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "conv_transpose2d",
+          "in_channels": 8,
+          "out_channels": 16,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1,
+          "output_padding": 1
+        },
+        {
+          "type": "relu"
+        },
+        {
+          "type": "conv_transpose2d",
+          "in_channels": 16,
+          "out_channels": 1,
+          "kernel_size": 3,
+          "stride": 2,
+          "padding": 1,
+          "output_padding": 1
+        },
+        {
+          "type": "sigmoid"
+        }
+      ]
+    }
+  },
+
+  "training_strategies": {
+    "transfer_learning": {
+      "description": "Transfer learning with frozen backbone",
+      "steps": [
+        {
+          "phase": 1,
+          "freeze_layers": ["backbone"],
+          "epochs": 10,
+          "learning_rate": 0.01
+        },
+        {
+          "phase": 2,
+          "unfreeze_layers": ["layer4"],
+          "epochs": 20,
+          "learning_rate": 0.001
+        },
+        {
+          "phase": 3,
+          "unfreeze_all": true,
+          "epochs": 30,
+          "learning_rate": 0.0001
+        }
+      ]
+    },
+
+    "progressive_resizing": {
+      "description": "Train with progressively larger image sizes",
+      "stages": [
+        {
+          "image_size": 128,
+          "epochs": 20,
+          "batch_size": 64
+        },
+        {
+          "image_size": 224,
+          "epochs": 30,
+          "batch_size": 32
+        },
+        {
+          "image_size": 384,
+          "epochs": 20,
+          "batch_size": 16
+        }
+      ]
+    },
+
+    "cyclical_learning": {
+      "description": "Cyclical learning rate with restarts",
+      "base_lr": 0.0001,
+      "max_lr": 0.01,
+      "step_size_up": 2000,
+      "mode": "triangular2"
+    }
+  }
+}

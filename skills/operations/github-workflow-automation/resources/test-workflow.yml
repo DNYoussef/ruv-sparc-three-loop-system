@@ -1,0 +1,349 @@
+name: Intelligent Test Suite with Smart Selection
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      test-suite:
+        description: 'Test suite to run'
+        required: true
+        type: choice
+        options:
+          - all
+          - unit
+          - integration
+          - e2e
+          - performance
+          - security
+      coverage-threshold:
+        description: 'Minimum coverage percentage'
+        required: false
+        default: '80'
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  # Intelligent test selection
+  test-selection:
+    runs-on: ubuntu-latest
+    outputs:
+      unit-tests: ${{ steps.select.outputs.unit-tests }}
+      integration-tests: ${{ steps.select.outputs.integration-tests }}
+      e2e-tests: ${{ steps.select.outputs.e2e-tests }}
+      test-matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Detect Changed Files
+        id: changes
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD)
+          fi
+          echo "changed-files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Smart Test Selection
+        id: select
+        run: |
+          CHANGED="${{ steps.changes.outputs.changed-files }}"
+
+          UNIT=$(npx ruv-swarm actions smart-test \
+            --changed-files "$CHANGED" \
+            --test-type unit \
+            --impact-analysis)
+          echo "unit-tests=${UNIT}" >> $GITHUB_OUTPUT
+
+          INTEGRATION=$(npx ruv-swarm actions smart-test \
+            --changed-files "$CHANGED" \
+            --test-type integration \
+            --impact-analysis)
+          echo "integration-tests=${INTEGRATION}" >> $GITHUB_OUTPUT
+
+          E2E=$(npx ruv-swarm actions smart-test \
+            --changed-files "$CHANGED" \
+            --test-type e2e \
+            --impact-analysis)
+          echo "e2e-tests=${E2E}" >> $GITHUB_OUTPUT
+
+      - name: Generate Test Matrix
+        id: matrix
+        run: |
+          MATRIX=$(npx ruv-swarm actions test-matrix \
+            --detect-frameworks \
+            --optimize-coverage \
+            --parallel-safe)
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
+
+  # Unit tests with parallel execution
+  unit-tests:
+    needs: test-selection
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      matrix: ${{ fromJson(needs.test-selection.outputs.test-matrix) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup-env
+        with:
+          language: ${{ matrix.language }}
+          version: ${{ matrix.version }}
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.cache-path }}
+          key: ${{ runner.os }}-${{ matrix.language }}-${{ hashFiles(matrix.cache-key) }}
+
+      - name: Run Unit Tests
+        run: ${{ matrix.test-command }}
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          flags: unit-${{ matrix.language }}
+          files: ${{ matrix.coverage-file }}
+
+  # Integration tests
+  integration-tests:
+    needs: test-selection
+    if: needs.test-selection.outputs.integration-tests != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Test Environment
+        run: |
+          npm install -g wait-on
+          wait-on tcp:5432 tcp:6379
+
+      - name: Run Integration Tests
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+          REDIS_URL: redis://localhost:6379
+        run: |
+          npx ruv-swarm actions test-suite \
+            --suite integration \
+            --tests "${{ needs.test-selection.outputs.integration-tests }}" \
+            --parallel \
+            --coverage
+
+  # E2E tests with browser automation
+  e2e-tests:
+    needs: test-selection
+    if: needs.test-selection.outputs.e2e-tests != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run E2E Tests
+        run: |
+          npx ruv-swarm actions test-suite \
+            --suite e2e \
+            --browser ${{ matrix.browser }} \
+            --tests "${{ needs.test-selection.outputs.e2e-tests }}" \
+            --record-video on-failure
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: e2e-${{ matrix.browser }}-results
+          path: |
+            test-results/
+            playwright-report/
+
+  # Performance tests
+  performance-tests:
+    if: github.event_name == 'push' || github.event.inputs.test-suite == 'performance'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Performance Benchmark
+        run: |
+          npx ruv-swarm actions perf-test \
+            --suite benchmark \
+            --duration 5m \
+            --baseline main \
+            --threshold 10%
+
+      - name: Analyze Performance
+        run: |
+          npx ruv-swarm actions perf-analyze \
+            --compare-baseline \
+            --identify-regressions \
+            --generate-report
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('performance-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## ⚡ Performance Analysis\n\n' + report
+            });
+
+  # Security tests
+  security-tests:
+    if: github.event_name == 'push' || github.event.inputs.test-suite == 'security'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Dependency Scan
+        run: |
+          npx ruv-swarm actions security \
+            --dependency-scan \
+            --severity high,critical
+
+      - name: SAST Analysis
+        uses: github/codeql-action/analyze@v2
+
+      - name: Container Scan
+        if: hashFiles('Dockerfile') != ''
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Coverage aggregation and reporting
+  coverage-report:
+    needs: [unit-tests, integration-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download Coverage Reports
+        uses: actions/download-artifact@v3
+
+      - name: Aggregate Coverage
+        run: |
+          npx ruv-swarm actions coverage-aggregate \
+            --reports coverage-*/ \
+            --format lcov,html,json
+
+      - name: Check Coverage Threshold
+        env:
+          THRESHOLD: ${{ github.event.inputs.coverage-threshold || '80' }}
+        run: |
+          COVERAGE=$(jq -r '.total.lines.percent' coverage-summary.json)
+          echo "Total coverage: ${COVERAGE}%"
+
+          if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
+            echo "❌ Coverage ${COVERAGE}% is below threshold ${THRESHOLD}%"
+            exit 1
+          else
+            echo "✅ Coverage ${COVERAGE}% meets threshold ${THRESHOLD}%"
+          fi
+
+      - name: Generate Coverage Badge
+        run: |
+          npx ruv-swarm actions badge-generate \
+            --metric coverage \
+            --value $(jq -r '.total.lines.percent' coverage-summary.json) \
+            --output coverage-badge.svg
+
+      - name: Comment Coverage Report
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = JSON.parse(fs.readFileSync('coverage-summary.json', 'utf8'));
+            const body = `## 📊 Coverage Report
+
+| Metric | Coverage |
+|--------|----------|
+| Lines | ${coverage.total.lines.percent}% |
+| Statements | ${coverage.total.statements.percent}% |
+| Functions | ${coverage.total.functions.percent}% |
+| Branches | ${coverage.total.branches.percent}% |
+
+Threshold: ${{ github.event.inputs.coverage-threshold || '80' }}%
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
+
+  # Test result summary
+  test-summary:
+    if: always()
+    needs: [unit-tests, integration-tests, e2e-tests, performance-tests, security-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Test Summary
+        run: |
+          npx ruv-swarm actions test-summary \
+            --jobs unit,integration,e2e,performance,security \
+            --format markdown > test-summary.md
+
+      - name: Post Summary
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('test-summary.md', 'utf8');
+            await core.summary
+              .addRaw(summary)
+              .write();

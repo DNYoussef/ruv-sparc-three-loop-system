@@ -1,0 +1,306 @@
+# Coordination Rules for Parallel Swarm Implementation
+# Part of Loop 2: Enhanced Tier
+#
+# Defines rules for agent coordination, communication, and conflict resolution
+
+coordination:
+  model: "hierarchical-queen-led"
+
+  queen:
+    agent: "hierarchical-coordinator"
+    responsibilities:
+      - meta_analysis
+      - agent_selection
+      - skill_assignment
+      - group_validation
+      - conflict_resolution
+      - failure_recovery
+
+    authority:
+      - "final decision on agent assignments"
+      - "approve/block parallel group execution"
+      - "escalate unresolvable conflicts"
+      - "determine Loop 3 transition readiness"
+
+communication:
+  channels:
+    - name: "memory-shared-state"
+      type: "memory-namespace"
+      namespace: "swarm/coordination"
+      read: "all-agents"
+      write: "all-agents"
+
+    - name: "realtime-updates"
+      type: "memory-namespace"
+      namespace: "swarm/realtime"
+      read: "all-agents"
+      write: "all-agents"
+      ttl: "24h"
+
+    - name: "queen-broadcast"
+      type: "memory-namespace"
+      namespace: "swarm/queen-broadcast"
+      read: "all-agents"
+      write: "queen-only"
+
+    - name: "hook-events"
+      type: "event-stream"
+      protocol: "claude-flow-hooks"
+      subscribers: "all-agents"
+
+  protocols:
+    task_claim:
+      description: "Agent claims task before starting"
+      steps:
+        - agent: "check task not already claimed"
+          memory_key: "tasks/{taskId}/claimed_by"
+
+        - agent: "write claim with timestamp"
+          memory_value: "{agentId}:{timestamp}"
+
+        - agent: "notify queen of claim"
+          hook: "post-edit"
+
+    progress_update:
+      description: "Agent reports progress during execution"
+      frequency: "every significant milestone"
+      format:
+        taskId: "string"
+        agentId: "string"
+        progress: "0-100"
+        status: "enum[in_progress, blocked, completed, failed]"
+        message: "string"
+
+      storage:
+        memory_namespace: "swarm/realtime"
+        memory_key: "progress/{taskId}"
+
+    dependency_wait:
+      description: "Agent waits for dependency completion"
+      steps:
+        - agent: "query dependency status"
+          memory_namespace: "swarm/realtime"
+          memory_key: "progress/{dependencyId}"
+
+        - agent: "if not complete, poll every 500ms"
+          max_wait: "30s"
+
+        - agent: "if timeout, notify queen"
+          escalation: true
+
+    completion_notify:
+      description: "Agent notifies completion"
+      steps:
+        - agent: "update task status to completed"
+          memory_key: "tasks/{taskId}/status"
+
+        - agent: "store artifacts list"
+          memory_key: "tasks/{taskId}/artifacts"
+
+        - agent: "run post-task hook"
+          hook: "npx claude-flow@alpha hooks post-task"
+
+        - agent: "notify dependent tasks"
+          broadcast: "swarm/realtime"
+
+conflict_resolution:
+  types:
+    resource_contention:
+      description: "Multiple agents want same resource"
+      resolution: "priority-based"
+      priority_order: ["critical", "high", "medium", "low"]
+      tie_breaker: "queen-decision"
+
+    task_overlap:
+      description: "Tasks have overlapping scope"
+      detection: "MECE-validation"
+      resolution: "queen-redefines-boundaries"
+      prevention: "strict-task-definition"
+
+    dependency_conflict:
+      description: "Circular or conflicting dependencies"
+      detection: "dependency-graph-analysis"
+      resolution: "queen-restructures-groups"
+      blocking: true
+
+    quality_disagreement:
+      description: "Agents disagree on quality assessment"
+      resolution: "byzantine-consensus"
+      threshold: 0.8
+      final_authority: "queen-coordinator"
+
+failure_handling:
+  task_failure:
+    detection:
+      - "task status = failed"
+      - "timeout exceeded"
+      - "error thrown"
+
+    response:
+      - step: "agent reports failure to queen"
+        memory_key: "failures/{taskId}"
+
+      - step: "queen analyzes root cause"
+        agent: "hierarchical-coordinator"
+
+      - step: "queen determines recovery strategy"
+        options: ["retry", "reassign", "escalate"]
+
+      - step: "execute recovery"
+        max_attempts: 3
+
+  theater_detection:
+    detection:
+      - ">=4 of 5 detectors flag theater"
+
+    response:
+      - step: "immediate execution block"
+        blocking: true
+
+      - step: "generate theater report"
+        file: "theater-consensus-report.json"
+
+      - step: "escalate to user"
+        severity: "critical"
+
+      - step: "do not proceed to Loop 3"
+
+  integration_failure:
+    detection:
+      - "tests < 100% pass rate after max iterations"
+
+    response:
+      - step: "queen attempts fix strategies"
+        max_attempts: 3
+
+      - step: "if unresolved, package failure context"
+
+      - step: "escalate to Loop 3"
+        skill: "cicd-intelligent-recovery"
+        context: "integration_failure_package.json"
+
+workload_management:
+  balancing:
+    algorithm: "priority-weighted-round-robin"
+
+    constraints:
+      - "no agent handles >max_tasks for priority"
+      - "respect agent specialization"
+      - "minimize total execution time"
+
+    rebalancing:
+      trigger: "agent workload variance > 50%"
+      action: "queen-redistributes-tasks"
+
+  agent_capacity:
+    monitoring: true
+
+    metrics:
+      - "tasks_in_progress"
+      - "tasks_completed"
+      - "average_task_time"
+      - "error_rate"
+
+    overload_detection:
+      threshold: "max_tasks_for_priority"
+      action: "block new assignments"
+
+synchronization:
+  parallel_group_barriers:
+    description: "Wait for all tasks in group before proceeding"
+
+    implementation:
+      - "each agent notifies completion"
+      - "queen tracks group completion status"
+      - "queen validates all tasks successful"
+      - "queen broadcasts group completion"
+      - "agents proceed to next group"
+
+  dependency_synchronization:
+    description: "Ensure dependencies complete before dependent tasks start"
+
+    implementation:
+      - "task checks dependencies in pre-task hook"
+      - "if incomplete, poll memory for status updates"
+      - "timeout after 30s, escalate to queen"
+      - "proceed only when all dependencies complete"
+
+memory_management:
+  namespaces:
+    coordination:
+      name: "swarm/coordination"
+      purpose: "agent assignments and task definitions"
+      retention: "permanent"
+
+    realtime:
+      name: "swarm/realtime"
+      purpose: "progress updates and agent communication"
+      retention: "24h"
+
+    queen_broadcast:
+      name: "swarm/queen-broadcast"
+      purpose: "queen directives to all agents"
+      retention: "permanent"
+
+    artifacts:
+      name: "swarm/artifacts"
+      purpose: "generated code, docs, test results"
+      retention: "permanent"
+
+  cleanup:
+    schedule: "post-loop2-completion"
+    keep: ["coordination", "artifacts", "queen_broadcast"]
+    purge: ["realtime"]
+
+hooks_integration:
+  pre_task:
+    command: "npx claude-flow@alpha hooks pre-task"
+    purpose: "agent initialization, resource preparation"
+    required: true
+
+  post_edit:
+    command: "npx claude-flow@alpha hooks post-edit --file {file}"
+    purpose: "code formatting, memory update, coordination"
+    required: true
+
+  post_task:
+    command: "npx claude-flow@alpha hooks post-task --task-id {taskId}"
+    purpose: "completion notification, cleanup, metrics"
+    required: true
+
+  session_restore:
+    command: "npx claude-flow@alpha hooks session-restore"
+    purpose: "restore context across sessions"
+    optional: true
+
+  session_end:
+    command: "npx claude-flow@alpha hooks session-end --export-metrics true"
+    purpose: "generate summary, export metrics"
+    required: true
+
+validation_checkpoints:
+  queen_checkpoints:
+    - checkpoint: "post-meta-analysis"
+      validates: ["MECE compliance", "no circular deps", "all tasks covered"]
+
+    - checkpoint: "post-group-execution"
+      validates: ["all tasks successful", "no errors", "dependencies satisfied"]
+
+    - checkpoint: "post-theater-detection"
+      validates: ["zero theater detected", "consensus achieved"]
+
+    - checkpoint: "pre-loop3-transition"
+      validates: ["100% tests pass", "quality metrics met", "delivery package ready"]
+
+  agent_validations:
+    - validation: "task-claim-unique"
+      agent: "all"
+      ensures: "no double-claiming of tasks"
+
+    - validation: "dependency-complete"
+      agent: "all"
+      ensures: "dependencies done before starting"
+
+    - validation: "artifact-stored"
+      agent: "all"
+      ensures: "all outputs saved correctly"

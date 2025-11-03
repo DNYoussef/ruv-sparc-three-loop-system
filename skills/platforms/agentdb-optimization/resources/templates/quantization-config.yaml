@@ -1,0 +1,151 @@
+# AgentDB Quantization Configuration Template
+# Optimize vector storage with 4-32x memory reduction
+
+# Database configuration
+database:
+  # Path to AgentDB database
+  dbPath: ".agentdb/vectors.db"
+
+  # Output path for quantized database
+  outputPath: ".agentdb/quantized.db"
+
+# Quantization settings
+quantization:
+  # Quantization type: binary | scalar | product | none
+  # - binary: 32x reduction, ~2-5% accuracy loss
+  # - scalar: 4x reduction, ~1-2% accuracy loss
+  # - product: 8-16x reduction, ~3-7% accuracy loss
+  # - none: No quantization, full precision
+  type: "scalar"
+
+  # Product quantization specific settings
+  product:
+    # Number of subvectors (only for product quantization)
+    numSubvectors: 8
+
+    # Codebook size (number of centroids per subvector)
+    codebookSize: 256
+
+# Performance tuning
+performance:
+  # Batch size for processing vectors
+  batchSize: 100
+
+  # Enable parallel processing
+  parallel: true
+
+  # Number of worker threads (0 = auto-detect)
+  numWorkers: 0
+
+# Accuracy validation
+validation:
+  # Enable accuracy testing after quantization
+  enabled: true
+
+  # Number of random samples to test
+  sampleSize: 1000
+
+  # Minimum acceptable accuracy (0-1)
+  minAccuracy: 0.95
+
+  # Fail if accuracy below threshold
+  failOnLowAccuracy: false
+
+# Optimization presets
+presets:
+  # Mobile/Edge deployment
+  mobile:
+    quantization:
+      type: "binary"
+    performance:
+      batchSize: 50
+    description: "Maximum memory reduction for mobile/edge devices"
+
+  # Balanced performance
+  balanced:
+    quantization:
+      type: "scalar"
+    performance:
+      batchSize: 100
+    description: "Balanced memory reduction and accuracy"
+
+  # Large-scale deployment
+  largescale:
+    quantization:
+      type: "product"
+      product:
+        numSubvectors: 16
+        codebookSize: 256
+    performance:
+      batchSize: 200
+      parallel: true
+    description: "Optimized for millions of vectors"
+
+  # Maximum accuracy
+  accuracy:
+    quantization:
+      type: "none"
+    description: "No quantization, full precision"
+
+# Metadata
+metadata:
+  # Name of this configuration
+  name: "AgentDB Quantization Config"
+
+  # Version
+  version: "1.0.0"
+
+  # Description
+  description: "Optimize AgentDB vector storage with quantization"
+
+  # Tags
+  tags:
+    - "quantization"
+    - "optimization"
+    - "memory-reduction"
+
+  # Author
+  author: "AgentDB Optimization Tools"
+
+# Usage examples
+examples:
+  # Example 1: Binary quantization for mobile
+  - name: "Mobile Deployment"
+    command: "python quantize_vectors.py --config quantization-config.yaml --preset mobile"
+    description: "32x memory reduction for mobile devices"
+
+  # Example 2: Balanced quantization
+  - name: "Balanced Performance"
+    command: "python quantize_vectors.py --config quantization-config.yaml --preset balanced"
+    description: "4x memory reduction with high accuracy"
+
+  # Example 3: Custom configuration
+  - name: "Custom Settings"
+    command: "python quantize_vectors.py --type scalar --input vectors.db --output quantized.db"
+    description: "Manual configuration with scalar quantization"
+
+# Performance expectations
+expectations:
+  binary:
+    memoryReduction: "32x"
+    accuracyLoss: "2-5%"
+    speedImprovement: "10x"
+    useCase: "Mobile/edge, large-scale (1M+ vectors)"
+
+  scalar:
+    memoryReduction: "4x"
+    accuracyLoss: "1-2%"
+    speedImprovement: "3x"
+    useCase: "Production apps, medium-scale (10K-1M vectors)"
+
+  product:
+    memoryReduction: "8-16x"
+    accuracyLoss: "3-7%"
+    speedImprovement: "5x"
+    useCase: "High-dimensional vectors, large-scale"
+
+  none:
+    memoryReduction: "1x"
+    accuracyLoss: "0%"
+    speedImprovement: "1x"
+    useCase: "Maximum accuracy, small datasets"

@@ -1,0 +1,241 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "description": "Failure pattern templates for Loop 1 feedback",
+    "generatedBy": "cicd-intelligent-recovery",
+    "feedsTo": "research-driven-planning"
+  },
+  "patternTemplates": [
+    {
+      "category": "null-safety",
+      "description": "Null or undefined value access errors",
+      "indicators": [
+        "cannot read property",
+        "undefined is not an object",
+        "null reference",
+        "TypeError: Cannot read property"
+      ],
+      "preventionStrategy": "Add null checks, use optional chaining (?.), validate inputs before use",
+      "premortemQuestion": "What if required data is null or undefined at runtime?",
+      "testingFocus": [
+        "Null input handling",
+        "Undefined edge cases",
+        "Optional chaining coverage",
+        "Default value validation"
+      ],
+      "commonRootCauses": [
+        "Missing data validation",
+        "Async timing issues",
+        "API response structure changes",
+        "Initialization order dependencies"
+      ]
+    },
+    {
+      "category": "type-mismatch",
+      "description": "Type errors and type coercion issues",
+      "indicators": [
+        "expected string, got number",
+        "type error",
+        "invalid type",
+        "TypeError:"
+      ],
+      "preventionStrategy": "Strengthen TypeScript types, add runtime type validation, use type guards",
+      "premortemQuestion": "What if data types don't match our assumptions at runtime?",
+      "testingFocus": [
+        "Type boundary testing",
+        "Runtime type validation",
+        "Type coercion edge cases",
+        "Interface contract validation"
+      ],
+      "commonRootCauses": [
+        "Weak type definitions",
+        "Missing runtime validation",
+        "External API type changes",
+        "Improper type casting"
+      ]
+    },
+    {
+      "category": "async-handling",
+      "description": "Asynchronous operation handling failures",
+      "indicators": [
+        "promise rejection",
+        "unhandled promise",
+        "async/await error",
+        "callback never called"
+      ],
+      "preventionStrategy": "Add proper await keywords, handle promise rejections, use try-catch for async",
+      "premortemQuestion": "What if async operations fail, timeout, or never resolve?",
+      "testingFocus": [
+        "Async error handling",
+        "Promise rejection paths",
+        "Timeout scenarios",
+        "Race condition testing"
+      ],
+      "commonRootCauses": [
+        "Missing error handlers",
+        "Unhandled promise rejections",
+        "Race conditions",
+        "Callback timing issues"
+      ]
+    },
+    {
+      "category": "authorization",
+      "description": "Authentication and permission errors",
+      "indicators": [
+        "permission denied",
+        "unauthorized",
+        "forbidden",
+        "401",
+        "403"
+      ],
+      "preventionStrategy": "Implement defense-in-depth auth, validate at multiple layers, check permissions before operations",
+      "premortemQuestion": "What if user permissions are insufficient or change mid-operation?",
+      "testingFocus": [
+        "Permission boundary tests",
+        "Auth token expiration",
+        "Role-based access control",
+        "Session invalidation"
+      ],
+      "commonRootCauses": [
+        "Single-layer authorization",
+        "Missing permission checks",
+        "Token expiration handling",
+        "Session management issues"
+      ]
+    },
+    {
+      "category": "data-persistence",
+      "description": "Database and data storage failures",
+      "indicators": [
+        "database error",
+        "connection refused",
+        "query failed",
+        "transaction rollback"
+      ],
+      "preventionStrategy": "Add transaction handling, implement retries with backoff, validate before persist",
+      "premortemQuestion": "What if database operations fail mid-transaction or connection is lost?",
+      "testingFocus": [
+        "Transaction rollback tests",
+        "Connection failure recovery",
+        "Data consistency validation",
+        "Retry mechanism testing"
+      ],
+      "commonRootCauses": [
+        "Missing transaction handling",
+        "No retry mechanism",
+        "Connection pool exhaustion",
+        "Data validation gaps"
+      ]
+    },
+    {
+      "category": "network-resilience",
+      "description": "Network connectivity and timeout issues",
+      "indicators": [
+        "network error",
+        "ECONNREFUSED",
+        "timeout",
+        "fetch failed",
+        "request timeout"
+      ],
+      "preventionStrategy": "Add exponential backoff retries, implement circuit breaker, set appropriate timeouts",
+      "premortemQuestion": "What if network is slow, intermittent, or completely fails?",
+      "testingFocus": [
+        "Network timeout scenarios",
+        "Retry logic validation",
+        "Circuit breaker testing",
+        "Degraded mode operation"
+      ],
+      "commonRootCauses": [
+        "No retry mechanism",
+        "Fixed timeout values",
+        "Missing circuit breaker",
+        "Synchronous dependencies"
+      ]
+    }
+  ],
+  "feedbackStructure": {
+    "forPlanning": {
+      "description": "Incorporate failure patterns into Loop 1 pre-mortem analysis",
+      "deliverables": [
+        "Historical failure categories",
+        "Pre-mortem questions derived from actual failures",
+        "Risk mitigation strategies based on past issues"
+      ]
+    },
+    "forArchitecture": {
+      "description": "Address high-connascence issues in system design",
+      "deliverables": [
+        "Coupling analysis from failures",
+        "Refactoring recommendations",
+        "Architectural patterns to prevent cascades"
+      ]
+    },
+    "forTesting": {
+      "description": "Add tests for identified failure categories",
+      "deliverables": [
+        "Edge case scenarios from failures",
+        "Error handling test patterns",
+        "Integration test coverage gaps"
+      ]
+    }
+  },
+  "connascenceMapping": {
+    "name": {
+      "description": "Shared symbols causing cascading failures",
+      "impact": "High - requires bundled fixes across all affected files",
+      "mitigation": "Use interfaces/abstractions to decouple naming dependencies"
+    },
+    "type": {
+      "description": "Type dependencies causing type-related failures",
+      "impact": "Medium-High - requires coordinated type changes",
+      "mitigation": "Strengthen type contracts, use generics for flexibility"
+    },
+    "algorithm": {
+      "description": "Shared logic causing synchronized failures",
+      "impact": "High - indicates tight coupling in business logic",
+      "mitigation": "Extract shared algorithms to separate modules with clear interfaces"
+    }
+  },
+  "severityClassification": {
+    "critical": {
+      "description": "System-wide failures requiring immediate attention",
+      "examples": [
+        "Database connection failures",
+        "Authentication system down",
+        "Core API unavailable"
+      ],
+      "responseTime": "< 1 hour",
+      "approvalRequired": true
+    },
+    "high": {
+      "description": "Major feature failures affecting user experience",
+      "examples": [
+        "Null pointer exceptions",
+        "Syntax errors blocking compilation",
+        "Critical path failures"
+      ],
+      "responseTime": "< 4 hours",
+      "approvalRequired": false
+    },
+    "medium": {
+      "description": "Functional issues with workarounds available",
+      "examples": [
+        "Type mismatches",
+        "Async handling issues",
+        "Import errors"
+      ],
+      "responseTime": "< 1 day",
+      "approvalRequired": false
+    },
+    "low": {
+      "description": "Minor issues with minimal user impact",
+      "examples": [
+        "Warning messages",
+        "Non-critical edge cases",
+        "Performance optimizations"
+      ],
+      "responseTime": "< 1 week",
+      "approvalRequired": false
+    }
+  }
+}

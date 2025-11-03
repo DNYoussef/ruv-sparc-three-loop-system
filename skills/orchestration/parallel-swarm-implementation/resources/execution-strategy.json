@@ -1,0 +1,288 @@
+{
+  "strategyName": "adaptive-parallel-execution",
+  "version": "2.0.0",
+  "description": "Dynamic execution strategy for Loop 2 parallel swarm implementation with adaptive agent+skill selection",
+
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Meta-Analysis",
+      "description": "Queen Coordinator analyzes Loop 1 and creates agent+skill matrix",
+      "agent": "hierarchical-coordinator",
+      "duration": "5-10 minutes",
+      "outputs": [
+        "agent-skill-assignments.json",
+        "task-dependency-graph.json",
+        "parallel-groups.json"
+      ],
+      "validations": [
+        "MECE compliance",
+        "No circular dependencies",
+        "All Loop 1 tasks covered",
+        "Agent availability check"
+      ]
+    },
+
+    {
+      "phase": 2,
+      "name": "Workload Distribution",
+      "description": "Distribute tasks across agents with workload balancing",
+      "agent": "task-orchestrator",
+      "duration": "2-5 minutes",
+      "inputs": [
+        "agent-skill-assignments.json"
+      ],
+      "outputs": [
+        "workload-distribution.json",
+        "agent-assignments.json"
+      ],
+      "constraints": {
+        "max_tasks_per_agent": {
+          "critical": 1,
+          "high": 2,
+          "medium": 3,
+          "low": 4
+        },
+        "max_parallel_agents": 11,
+        "balance_threshold": 0.8
+      }
+    },
+
+    {
+      "phase": 3,
+      "name": "Parallel Group Execution",
+      "description": "Execute parallel groups sequentially with intra-group parallelism",
+      "duration": "30-120 minutes (varies by complexity)",
+      "strategy": "sequential-groups-parallel-tasks",
+      "execution_pattern": {
+        "group_1": {
+          "type": "foundation",
+          "parallelism": "high",
+          "wait_for_completion": true,
+          "validation": "queen-checkpoint"
+        },
+        "group_2": {
+          "type": "implementation",
+          "parallelism": "maximum",
+          "dependencies": ["group_1"],
+          "wait_for_completion": true,
+          "validation": "queen-checkpoint"
+        },
+        "group_3": {
+          "type": "testing",
+          "parallelism": "high",
+          "dependencies": ["group_2"],
+          "wait_for_completion": true,
+          "validation": "queen-checkpoint"
+        },
+        "group_4": {
+          "type": "quality",
+          "parallelism": "medium",
+          "dependencies": ["group_3"],
+          "wait_for_completion": true,
+          "validation": "queen-checkpoint"
+        }
+      }
+    },
+
+    {
+      "phase": 4,
+      "name": "Theater Detection",
+      "description": "Multi-agent Byzantine consensus theater detection",
+      "agent": "byzantine-coordinator",
+      "duration": "10-20 minutes",
+      "detectors": [
+        {
+          "name": "code-theater",
+          "agent": "theater-detection-audit",
+          "skill": "theater-detection-audit",
+          "focus": "completion theater, empty functions, hardcoded returns"
+        },
+        {
+          "name": "test-theater",
+          "agent": "tester",
+          "focus": "meaningless assertions, always-pass tests, 100% mocks"
+        },
+        {
+          "name": "docs-theater",
+          "agent": "docs-writer",
+          "focus": "outdated docs, placeholder text, template copying"
+        },
+        {
+          "name": "sandbox-validation",
+          "agent": "functionality-audit",
+          "skill": "functionality-audit",
+          "focus": "actual execution, realistic inputs, genuine functionality"
+        },
+        {
+          "name": "integration-validation",
+          "agent": "production-validator",
+          "focus": "end-to-end flows, database interactions, system integration"
+        }
+      ],
+      "consensus": {
+        "algorithm": "byzantine",
+        "required_agreement": 0.8,
+        "total_detectors": 5,
+        "tolerance": 0
+      },
+      "outputs": [
+        "theater-consensus-report.json"
+      ]
+    },
+
+    {
+      "phase": 5,
+      "name": "Integration Loop",
+      "description": "Iterative integration until 100% tests pass",
+      "max_iterations": 10,
+      "success_criteria": {
+        "test_pass_rate": 100,
+        "theater_detected": 0,
+        "integration_tests": "all_passing"
+      },
+      "failure_recovery": {
+        "strategy": "queen-analysis",
+        "agent": "hierarchical-coordinator",
+        "actions": [
+          "analyze_failures",
+          "identify_root_cause",
+          "assign_fix_agent",
+          "apply_fix",
+          "rerun_tests"
+        ]
+      }
+    },
+
+    {
+      "phase": 6,
+      "name": "Documentation Sync",
+      "description": "Auto-sync documentation with implementation",
+      "agent": "docs-writer",
+      "duration": "5-10 minutes",
+      "tasks": [
+        "Update README",
+        "Generate API docs",
+        "Create usage examples",
+        "Update CHANGELOG"
+      ]
+    },
+
+    {
+      "phase": 7,
+      "name": "Test Validation",
+      "description": "Verify tests actually test functionality",
+      "agent": "tester",
+      "duration": "5-10 minutes",
+      "validations": [
+        "coverage >= 90%",
+        "no trivial tests",
+        "edge cases covered",
+        "integration tests genuine"
+      ]
+    },
+
+    {
+      "phase": 8,
+      "name": "Delivery Package Creation",
+      "description": "Package results for Loop 3",
+      "duration": "2-5 minutes",
+      "outputs": [
+        "loop2-delivery-package.json"
+      ],
+      "memory_storage": {
+        "namespace": "integration/loop2-to-loop3",
+        "key": "loop2_complete",
+        "includes": [
+          "agent_skill_matrix",
+          "implementation_summary",
+          "quality_metrics",
+          "integration_points"
+        ]
+      }
+    }
+  ],
+
+  "adaptive_behaviors": {
+    "agent_selection": {
+      "description": "Dynamically select agents based on task characteristics",
+      "factors": [
+        "task_type",
+        "complexity",
+        "agent_capabilities",
+        "agent_availability",
+        "agent_specialization_score"
+      ]
+    },
+
+    "skill_assignment": {
+      "description": "Decide between skill-based or custom instructions",
+      "decision_tree": {
+        "if_skill_exists": {
+          "action": "use_skill",
+          "benefit": "reusable SOP, proven patterns"
+        },
+        "if_no_skill": {
+          "action": "custom_instructions",
+          "benefit": "handles novel tasks, fully adaptive"
+        }
+      }
+    },
+
+    "workload_balancing": {
+      "description": "Balance agent workload dynamically",
+      "algorithm": "priority-weighted-distribution",
+      "constraints": {
+        "no_agent_overload": true,
+        "respect_specialization": true,
+        "minimize_wait_time": true
+      }
+    },
+
+    "failure_recovery": {
+      "description": "Intelligent failure analysis and recovery",
+      "strategies": [
+        {
+          "trigger": "test_failure",
+          "action": "queen_analyzes_root_cause",
+          "reassignment": "based_on_root_cause"
+        },
+        {
+          "trigger": "theater_detected",
+          "action": "immediate_block",
+          "escalation": "user_review"
+        },
+        {
+          "trigger": "integration_failure",
+          "action": "escalate_to_loop3",
+          "fallback": "cicd-intelligent-recovery"
+        }
+      ]
+    }
+  },
+
+  "performance_targets": {
+    "speedup": "8.3x vs sequential",
+    "parallelism": "11 parallel agents",
+    "theater_rate": "0%",
+    "test_coverage": ">=90%",
+    "integration_success": "100%",
+    "time_investment": "4-6 hours"
+  },
+
+  "integration_points": {
+    "receives_from": {
+      "loop": 1,
+      "skill": "research-driven-planning",
+      "package": "loop1-planning-package.json",
+      "memory_namespace": "integration/loop1-to-loop2"
+    },
+
+    "feeds_to": {
+      "loop": 3,
+      "skill": "cicd-intelligent-recovery",
+      "package": "loop2-delivery-package.json",
+      "memory_namespace": "integration/loop2-to-loop3"
+    }
+  }
+}

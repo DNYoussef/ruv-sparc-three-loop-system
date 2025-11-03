@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Micro-Skill YAML Frontmatter Schema",
+  "description": "Standard structure for micro-skill SKILL.md YAML frontmatter",
+  "version": "2.0.0",
+  "type": "object",
+  "required": ["name", "description", "version"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Skill name in kebab-case",
+      "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$",
+      "minLength": 3,
+      "maxLength": 50,
+      "examples": [
+        "data-extractor",
+        "api-validator",
+        "code-refactorer"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Clear, concise description (1-2 sentences) of skill purpose and trigger conditions",
+      "minLength": 50,
+      "maxLength": 500,
+      "examples": [
+        "Extract structured data from unstructured documents using self-consistency validation. Use when parsing documents, forms, or reports into JSON schemas.",
+        "Validate API responses against OpenAPI schemas with program-of-thought decomposition. Triggers on API testing, contract validation, or schema compliance checking."
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "description": "Categorization and discovery tags",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "minItems": 2,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "examples": [
+        ["extraction", "validation", "self-consistency"],
+        ["api", "testing", "program-of-thought", "openapi"]
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version (MAJOR.MINOR.PATCH)",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "examples": ["1.0.0", "2.1.3"]
+    },
+    "author": {
+      "type": "string",
+      "description": "Skill author/creator",
+      "examples": ["Jane Developer", "Acme Engineering Team"]
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier",
+      "examples": ["MIT", "Apache-2.0", "Proprietary"]
+    },
+    "evidence_pattern": {
+      "type": "string",
+      "description": "Evidence-based prompting pattern used",
+      "enum": [
+        "self-consistency",
+        "program-of-thought",
+        "plan-and-solve",
+        "hybrid"
+      ],
+      "examples": ["self-consistency"]
+    },
+    "agent_type": {
+      "type": "string",
+      "description": "Specialist agent type",
+      "examples": [
+        "extraction specialist",
+        "validation specialist",
+        "analysis specialist"
+      ]
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other skills this depends on",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["schema-validator", "json-parser"]
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "Specific capabilities this skill provides",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["document-parsing", "schema-extraction", "confidence-scoring"]
+      ]
+    },
+    "max_tokens": {
+      "type": "integer",
+      "description": "Approximate max token count for skill content",
+      "minimum": 500,
+      "maximum": 3000,
+      "default": 2000,
+      "examples": [1500]
+    },
+    "neural_training": {
+      "type": "boolean",
+      "description": "Whether neural training is enabled",
+      "default": true
+    },
+    "cascade_compatible": {
+      "type": "boolean",
+      "description": "Whether skill can be used in cascade workflows",
+      "default": true
+    },
+    "command_binding": {
+      "type": "string",
+      "description": "Slash command binding (if any)",
+      "pattern": "^/[a-z][a-z0-9-]*$",
+      "examples": ["/extract", "/validate-api"]
+    },
+    "quality_tier": {
+      "type": "string",
+      "description": "Skill quality tier based on completeness",
+      "enum": ["bronze", "silver", "gold", "platinum"],
+      "examples": ["gold"]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "name": "data-extractor",
+      "description": "Extract structured data from unstructured documents using self-consistency validation. Use when parsing documents, forms, or reports into JSON schemas.",
+      "tags": ["extraction", "parsing", "self-consistency", "documents"],
+      "version": "1.0.0",
+      "author": "Engineering Team",
+      "evidence_pattern": "self-consistency",
+      "agent_type": "extraction specialist",
+      "capabilities": ["document-parsing", "schema-extraction", "confidence-scoring"],
+      "max_tokens": 1800,
+      "neural_training": true,
+      "cascade_compatible": true,
+      "command_binding": "/extract",
+      "quality_tier": "gold"
+    }
+  ]
+}

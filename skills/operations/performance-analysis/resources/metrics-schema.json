@@ -1,0 +1,329 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claude Flow Performance Metrics Schema",
+  "description": "Schema for performance metrics collected from Claude Flow swarms",
+  "version": "1.0.0",
+
+  "definitions": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp"
+    },
+
+    "percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Percentage value between 0 and 1"
+    },
+
+    "duration_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Duration in milliseconds"
+    },
+
+    "agent_metrics": {
+      "type": "object",
+      "required": ["agent_id", "agent_type", "timestamp"],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "description": "Unique agent identifier"
+        },
+        "agent_type": {
+          "type": "string",
+          "enum": ["researcher", "coder", "analyst", "optimizer", "coordinator"],
+          "description": "Agent specialization type"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["idle", "busy", "error", "terminated"],
+          "description": "Current agent status"
+        },
+        "tasks_completed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total tasks completed"
+        },
+        "tasks_failed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total tasks failed"
+        },
+        "avg_task_time": {
+          "$ref": "#/definitions/duration_ms",
+          "description": "Average task completion time"
+        },
+        "cpu_usage": {
+          "$ref": "#/definitions/percentage",
+          "description": "CPU utilization"
+        },
+        "memory_usage": {
+          "$ref": "#/definitions/percentage",
+          "description": "Memory utilization"
+        },
+        "message_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total messages sent/received"
+        },
+        "response_time": {
+          "$ref": "#/definitions/duration_ms",
+          "description": "Average response time"
+        },
+        "utilization": {
+          "$ref": "#/definitions/percentage",
+          "description": "Agent utilization rate"
+        }
+      }
+    },
+
+    "swarm_metrics": {
+      "type": "object",
+      "required": ["swarm_id", "topology", "timestamp"],
+      "properties": {
+        "swarm_id": {
+          "type": "string",
+          "description": "Unique swarm identifier"
+        },
+        "topology": {
+          "type": "string",
+          "enum": ["mesh", "hierarchical", "ring", "star"],
+          "description": "Swarm topology type"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "agent_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of active agents"
+        },
+        "total_tasks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total tasks processed"
+        },
+        "completed_tasks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Successfully completed tasks"
+        },
+        "failed_tasks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Failed tasks"
+        },
+        "avg_completion_time": {
+          "$ref": "#/definitions/duration_ms",
+          "description": "Average task completion time"
+        },
+        "throughput": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Tasks per minute"
+        },
+        "efficiency_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall efficiency score (0-100)"
+        }
+      }
+    },
+
+    "bottleneck": {
+      "type": "object",
+      "required": ["type", "subtype", "severity", "description"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["communication", "processing", "memory", "network", "coordination"],
+          "description": "Bottleneck category"
+        },
+        "subtype": {
+          "type": "string",
+          "description": "Specific bottleneck type"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "warning", "info"],
+          "description": "Severity level"
+        },
+        "agent_id": {
+          "type": "string",
+          "description": "Affected agent (if applicable)"
+        },
+        "value": {
+          "type": "number",
+          "description": "Measured value"
+        },
+        "threshold": {
+          "type": "number",
+          "description": "Threshold value"
+        },
+        "impact": {
+          "$ref": "#/definitions/percentage",
+          "description": "Estimated performance impact"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "recommendation": {
+          "type": "string",
+          "description": "Recommended fix"
+        },
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        }
+      }
+    },
+
+    "optimization": {
+      "type": "object",
+      "required": ["type", "severity", "title", "description"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["topology", "caching", "concurrency", "priority", "resource", "communication", "coordination"],
+          "description": "Optimization type"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "description": "Priority level"
+        },
+        "title": {
+          "type": "string",
+          "description": "Optimization title"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description"
+        },
+        "impact": {
+          "type": "string",
+          "description": "Expected impact description"
+        },
+        "implementation_steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Step-by-step implementation guide"
+        },
+        "estimated_improvement": {
+          "type": "string",
+          "description": "Estimated performance improvement"
+        },
+        "effort_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "Implementation effort required"
+        },
+        "auto_applicable": {
+          "type": "boolean",
+          "description": "Whether optimization can be auto-applied"
+        },
+        "metrics_affected": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Metrics that will be improved"
+        }
+      }
+    },
+
+    "system_metrics": {
+      "type": "object",
+      "required": ["timestamp"],
+      "properties": {
+        "timestamp": {
+          "$ref": "#/definitions/timestamp"
+        },
+        "cpu_usage": {
+          "$ref": "#/definitions/percentage",
+          "description": "System CPU usage"
+        },
+        "memory_usage": {
+          "$ref": "#/definitions/percentage",
+          "description": "System memory usage"
+        },
+        "disk_usage": {
+          "$ref": "#/definitions/percentage",
+          "description": "Disk usage"
+        },
+        "load_average": {
+          "type": "string",
+          "description": "System load average"
+        },
+        "network_latency": {
+          "$ref": "#/definitions/duration_ms",
+          "description": "Network latency"
+        }
+      }
+    }
+  },
+
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Schema version"
+    },
+    "timestamp": {
+      "$ref": "#/definitions/timestamp",
+      "description": "Collection timestamp"
+    },
+    "swarm_metrics": {
+      "$ref": "#/definitions/swarm_metrics"
+    },
+    "agent_metrics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/agent_metrics"
+      },
+      "description": "Individual agent metrics"
+    },
+    "system_metrics": {
+      "$ref": "#/definitions/system_metrics"
+    },
+    "bottlenecks": {
+      "type": "object",
+      "properties": {
+        "critical": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bottleneck"
+          }
+        },
+        "warning": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bottleneck"
+          }
+        },
+        "info": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bottleneck"
+          }
+        }
+      }
+    },
+    "optimizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/optimization"
+      },
+      "description": "Recommended optimizations"
+    }
+  }
+}

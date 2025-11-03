@@ -1,0 +1,176 @@
+{
+  "name": "Full-Stack Development Swarm",
+  "description": "Complete web application development swarm with frontend, backend, database, and QA specialists",
+  "category": "quickstart",
+  "topology": "hierarchical",
+  "strategy": "specialized",
+  "default_agents": 8,
+  "tags": ["web-dev", "full-stack", "agile"],
+  "agents": [
+    {
+      "type": "coordinator",
+      "name": "Project Manager",
+      "capabilities": [
+        "task_delegation",
+        "progress_tracking",
+        "integration_coordination",
+        "milestone_management"
+      ],
+      "priority": 10
+    },
+    {
+      "type": "researcher",
+      "name": "Technical Architect",
+      "capabilities": [
+        "architecture_design",
+        "tech_stack_selection",
+        "best_practices_research",
+        "security_requirements"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "coder",
+      "name": "Backend Developer",
+      "capabilities": [
+        "api_development",
+        "authentication",
+        "database_integration",
+        "server_logic"
+      ],
+      "priority": 8
+    },
+    {
+      "type": "coder",
+      "name": "Frontend Developer",
+      "capabilities": [
+        "ui_development",
+        "react_components",
+        "state_management",
+        "responsive_design"
+      ],
+      "priority": 8
+    },
+    {
+      "type": "coder",
+      "name": "Database Architect",
+      "capabilities": [
+        "schema_design",
+        "query_optimization",
+        "migrations",
+        "data_modeling"
+      ],
+      "priority": 7
+    },
+    {
+      "type": "analyst",
+      "name": "QA Engineer",
+      "capabilities": [
+        "test_creation",
+        "integration_testing",
+        "e2e_testing",
+        "quality_assurance"
+      ],
+      "priority": 7
+    },
+    {
+      "type": "optimizer",
+      "name": "Performance Engineer",
+      "capabilities": [
+        "performance_profiling",
+        "optimization",
+        "caching_strategies",
+        "load_testing"
+      ],
+      "priority": 6
+    },
+    {
+      "type": "analyst",
+      "name": "DevOps Specialist",
+      "capabilities": [
+        "ci_cd_setup",
+        "docker_containerization",
+        "deployment_automation",
+        "monitoring_setup"
+      ],
+      "priority": 6
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Feature Development",
+      "description": "End-to-end feature implementation workflow",
+      "steps": [
+        {
+          "id": "requirements",
+          "action": "analyze_requirements",
+          "agent": "Project Manager",
+          "parallel": false
+        },
+        {
+          "id": "architecture",
+          "action": "design_architecture",
+          "agent": "Technical Architect",
+          "depends_on": ["requirements"]
+        },
+        {
+          "id": "db_design",
+          "action": "design_database",
+          "agent": "Database Architect",
+          "depends_on": ["architecture"]
+        },
+        {
+          "id": "backend_dev",
+          "action": "develop_api",
+          "agent": "Backend Developer",
+          "depends_on": ["db_design"],
+          "parallel": true
+        },
+        {
+          "id": "frontend_dev",
+          "action": "develop_ui",
+          "agent": "Frontend Developer",
+          "depends_on": ["architecture"],
+          "parallel": true
+        },
+        {
+          "id": "integration",
+          "action": "integrate_components",
+          "agent": "Backend Developer",
+          "depends_on": ["backend_dev", "frontend_dev"]
+        },
+        {
+          "id": "testing",
+          "action": "qa_testing",
+          "agent": "QA Engineer",
+          "depends_on": ["integration"]
+        },
+        {
+          "id": "optimization",
+          "action": "performance_optimization",
+          "agent": "Performance Engineer",
+          "depends_on": ["testing"]
+        },
+        {
+          "id": "deployment",
+          "action": "deploy_feature",
+          "agent": "DevOps Specialist",
+          "depends_on": ["optimization"]
+        }
+      ]
+    }
+  ],
+  "recommended_use_cases": [
+    "Web application development",
+    "API-first projects",
+    "Full-stack product development",
+    "SaaS platform creation",
+    "E-commerce platforms"
+  ],
+  "configuration": {
+    "max_parallel_tasks": 4,
+    "auto_scaling": true,
+    "health_monitoring": true,
+    "metrics_enabled": true
+  }
+}

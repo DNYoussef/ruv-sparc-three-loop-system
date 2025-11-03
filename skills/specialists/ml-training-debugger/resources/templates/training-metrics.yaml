@@ -1,0 +1,296 @@
+# Training Metrics Schema (YAML)
+#
+# Comprehensive schema for ML training metrics tracking and analysis.
+# This template defines the structure for recording all relevant training metrics.
+
+# Metadata
+metadata:
+  experiment_id: "exp-${timestamp}"
+  model_name: "transformer-base"
+  dataset: "wikitext-103"
+  created: "2025-01-02T12:34:56Z"
+  framework: "pytorch"  # pytorch, tensorflow, jax
+  version:
+    framework: "2.1.0"
+    python: "3.10.8"
+    cuda: "12.1"
+  hardware:
+    gpu:
+      model: "NVIDIA A100"
+      count: 1
+      memory_gb: 80
+    cpu:
+      model: "Intel Xeon"
+      cores: 64
+    memory_gb: 512
+  git:
+    commit: "abc123def"
+    branch: "main"
+    dirty: false
+
+# Hyperparameters
+hyperparameters:
+  # Optimization
+  optimizer:
+    name: "AdamW"
+    learning_rate: 0.001
+    betas: [0.9, 0.999]
+    eps: 1.0e-8
+    weight_decay: 0.01
+    amsgrad: false
+
+  # Learning rate schedule
+  scheduler:
+    type: "cosine"  # cosine, step, exponential, plateau, none
+    warmup_steps: 1000
+    warmup_init_lr: 1.0e-6
+    T_max: 100
+    eta_min: 1.0e-6
+
+  # Training configuration
+  training:
+    batch_size: 32
+    gradient_accumulation_steps: 1
+    max_epochs: 100
+    max_steps: null
+    gradient_clip_norm: 1.0
+    gradient_clip_value: null
+    mixed_precision: "fp16"  # fp16, bf16, fp32
+
+  # Regularization
+  regularization:
+    dropout: 0.1
+    attention_dropout: 0.1
+    activation_dropout: 0.0
+    label_smoothing: 0.1
+    weight_noise: 0.0
+
+  # Data
+  data:
+    num_workers: 4
+    pin_memory: true
+    shuffle: true
+    seed: 42
+
+# Model architecture
+architecture:
+  name: "transformer"
+  params:
+    vocab_size: 50257
+    d_model: 512
+    n_heads: 8
+    n_layers: 6
+    d_ff: 2048
+    max_seq_len: 1024
+    activation: "gelu"
+    layer_norm_eps: 1.0e-5
+  total_parameters: 123456789
+  trainable_parameters: 123456789
+  frozen_parameters: 0
+
+# Training metrics (time series)
+metrics:
+  # Per-epoch metrics
+  epochs: [0, 1, 2, 3, 4, 5]
+
+  # Loss metrics
+  loss:
+    train: [4.521, 3.842, 3.215, 2.987, 2.756, 2.543]
+    val: [4.312, 3.654, 3.187, 2.921, 2.712, 2.598]
+    test: null
+
+  # Accuracy/Performance metrics
+  accuracy:
+    train: [0.234, 0.412, 0.567, 0.678, 0.745, 0.798]
+    val: [0.256, 0.432, 0.581, 0.689, 0.752, 0.801]
+    test: null
+
+  # Perplexity (for language models)
+  perplexity:
+    train: [92.3, 46.8, 24.9, 19.7, 15.7, 12.7]
+    val: [74.6, 38.6, 24.1, 18.5, 15.1, 13.4]
+
+  # Learning rate over time
+  learning_rate: [0.001, 0.001, 0.00095, 0.00087, 0.00076, 0.00063]
+
+  # Gradient statistics
+  gradients:
+    norm: [1.24, 0.98, 0.87, 0.76, 0.69, 0.64]
+    max: [2.45, 1.87, 1.54, 1.32, 1.18, 1.09]
+    mean: [0.012, 0.009, 0.008, 0.007, 0.006, 0.005]
+    std: [0.234, 0.187, 0.154, 0.132, 0.118, 0.109]
+    nan_count: [0, 0, 0, 0, 0, 0]
+    inf_count: [0, 0, 0, 0, 0, 0]
+
+  # Time metrics
+  time:
+    epoch_duration_seconds: [3600, 3580, 3590, 3610, 3595, 3600]
+    samples_per_second: [512, 518, 515, 509, 513, 512]
+    steps_per_second: [16.0, 16.2, 16.1, 15.9, 16.0, 16.0]
+
+  # Resource utilization
+  resources:
+    gpu_utilization_pct: [87, 89, 88, 86, 88, 87]
+    gpu_memory_used_gb: [45.2, 45.5, 45.3, 45.1, 45.4, 45.2]
+    gpu_memory_allocated_gb: [48.0, 48.0, 48.0, 48.0, 48.0, 48.0]
+    cpu_utilization_pct: [24, 25, 24, 23, 24, 24]
+    memory_used_gb: [128, 132, 130, 129, 131, 128]
+
+# Custom metrics (task-specific)
+custom_metrics:
+  bleu:
+    epochs: [0, 1, 2, 3, 4, 5]
+    values: [null, 12.3, 18.7, 24.5, 28.9, 32.1]
+
+  f1_score:
+    epochs: [0, 1, 2, 3, 4, 5]
+    values: [0.234, 0.456, 0.612, 0.723, 0.789, 0.834]
+
+# Training events
+events:
+  - epoch: 0
+    step: 0
+    type: "info"
+    message: "Training started"
+    timestamp: "2025-01-02T12:34:56Z"
+
+  - epoch: 2
+    step: 2000
+    type: "checkpoint"
+    message: "Saved best model checkpoint"
+    timestamp: "2025-01-02T14:30:45Z"
+
+  - epoch: 7
+    step: 7000
+    type: "warning"
+    message: "Gradient norm spike detected (norm=3.45)"
+    timestamp: "2025-01-02T19:15:23Z"
+
+  - epoch: 15
+    step: 15000
+    type: "info"
+    message: "Early stopping triggered (no improvement for 10 epochs)"
+    timestamp: "2025-01-03T02:45:12Z"
+
+# Model checkpoints
+checkpoints:
+  - epoch: 2
+    step: 2000
+    path: "checkpoints/model_epoch_2.pt"
+    val_loss: 3.187
+    val_accuracy: 0.581
+    is_best: true
+    timestamp: "2025-01-02T14:30:45Z"
+
+  - epoch: 5
+    step: 5000
+    path: "checkpoints/model_epoch_5.pt"
+    val_loss: 2.598
+    val_accuracy: 0.801
+    is_best: false
+    timestamp: "2025-01-02T18:45:23Z"
+
+# Validation metrics (detailed)
+validation:
+  frequency: 1  # Every N epochs
+  metric: "val_loss"  # Metric to monitor
+  mode: "min"  # min or max
+
+  # Early stopping
+  early_stopping:
+    enabled: true
+    patience: 10
+    min_delta: 0.001
+    triggered: false
+    epochs_without_improvement: 0
+
+  # Best model tracking
+  best_model:
+    epoch: 2
+    step: 2000
+    val_loss: 3.187
+    val_accuracy: 0.581
+    path: "checkpoints/model_best.pt"
+
+# Data statistics
+data_stats:
+  train:
+    num_samples: 100000
+    num_batches: 3125
+    avg_sequence_length: 512.3
+    vocab_coverage: 0.987
+
+  val:
+    num_samples: 10000
+    num_batches: 313
+    avg_sequence_length: 498.7
+    vocab_coverage: 0.945
+
+  test:
+    num_samples: 10000
+    num_batches: 313
+    avg_sequence_length: 503.2
+    vocab_coverage: 0.952
+
+# Final summary
+final_metrics:
+  status: "completed"  # completed, failed, interrupted
+  total_epochs: 15
+  total_steps: 15000
+  training_time_seconds: 54000
+  best_epoch: 2
+  best_val_loss: 3.187
+  best_val_accuracy: 0.581
+  final_train_loss: 2.234
+  final_val_loss: 2.456
+
+  # Test set evaluation (if performed)
+  test_metrics:
+    loss: 2.498
+    accuracy: 0.794
+    perplexity: 12.2
+    bleu: 31.5
+
+  # Convergence analysis
+  convergence:
+    achieved: true
+    epoch: 12
+    criterion: "val_loss_plateau"
+    threshold: 0.001
+
+  # Resource usage summary
+  resource_summary:
+    avg_gpu_utilization: 87.5
+    peak_gpu_memory_gb: 45.8
+    avg_cpu_utilization: 24.2
+    total_gpu_hours: 15.0
+    cost_estimate_usd: null
+
+# Analysis and diagnostics
+diagnostics:
+  # Overfitting analysis
+  overfitting:
+    detected: true
+    onset_epoch: 3
+    train_val_gap: 0.089
+    severity: "moderate"
+
+  # Gradient health
+  gradient_health:
+    vanishing_gradients: false
+    exploding_gradients: false
+    avg_norm: 0.84
+    max_norm: 2.45
+    stability: "stable"
+
+  # Learning rate effectiveness
+  lr_effectiveness:
+    optimal_range: [0.0005, 0.001]
+    current: 0.00063
+    recommendation: "continue"
+
+  # Recommendations
+  recommendations:
+    - "Consider reducing model capacity or increasing regularization"
+    - "Training converged successfully"
+    - "Test set performance within expected range"

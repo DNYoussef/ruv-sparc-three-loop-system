@@ -1,0 +1,190 @@
+{
+  "benchmark": {
+    "name": "Performance Benchmark Suite",
+    "version": "1.0.0",
+    "description": "Comprehensive performance benchmarking template",
+    "author": "Performance Team",
+    "created": "2025-01-01T00:00:00Z"
+  },
+  "environment": {
+    "platform": "linux",
+    "node_version": "20.x",
+    "cpu_cores": 8,
+    "memory_gb": 16,
+    "disk_type": "ssd"
+  },
+  "configuration": {
+    "iterations": 10,
+    "warmup_iterations": 2,
+    "timeout_ms": 60000,
+    "parallel_runs": 1,
+    "randomize_order": false
+  },
+  "scenarios": [
+    {
+      "id": "baseline",
+      "name": "Baseline Performance",
+      "description": "Measure baseline performance without optimizations",
+      "enabled": true,
+      "setup": "npm run setup:baseline",
+      "teardown": "npm run cleanup",
+      "tests": [
+        {
+          "name": "throughput_test",
+          "type": "load",
+          "target": "http://localhost:3000/api/test",
+          "duration_seconds": 60,
+          "concurrent_users": 10,
+          "metrics": ["requests_per_second", "avg_response_time", "p95_response_time", "p99_response_time"]
+        },
+        {
+          "name": "cpu_intensive",
+          "type": "cpu",
+          "function": "computeHeavy",
+          "iterations": 1000,
+          "metrics": ["total_time", "avg_time_per_iteration", "cpu_usage"]
+        },
+        {
+          "name": "memory_intensive",
+          "type": "memory",
+          "function": "allocateLarge",
+          "iterations": 100,
+          "metrics": ["heap_used", "heap_total", "gc_time", "memory_growth"]
+        }
+      ]
+    },
+    {
+      "id": "optimized",
+      "name": "Optimized Performance",
+      "description": "Measure performance with optimizations applied",
+      "enabled": true,
+      "setup": "npm run setup:optimized",
+      "teardown": "npm run cleanup",
+      "tests": [
+        {
+          "name": "throughput_test_optimized",
+          "type": "load",
+          "target": "http://localhost:3000/api/test",
+          "duration_seconds": 60,
+          "concurrent_users": 10,
+          "metrics": ["requests_per_second", "avg_response_time", "p95_response_time", "p99_response_time"]
+        },
+        {
+          "name": "cpu_intensive_optimized",
+          "type": "cpu",
+          "function": "computeHeavyOptimized",
+          "iterations": 1000,
+          "metrics": ["total_time", "avg_time_per_iteration", "cpu_usage"]
+        }
+      ]
+    },
+    {
+      "id": "stress",
+      "name": "Stress Testing",
+      "description": "Test system under extreme load",
+      "enabled": false,
+      "tests": [
+        {
+          "name": "high_load",
+          "type": "load",
+          "target": "http://localhost:3000/api/test",
+          "duration_seconds": 300,
+          "concurrent_users": 100,
+          "ramp_up_seconds": 30,
+          "metrics": ["requests_per_second", "error_rate", "timeout_rate"]
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "throughput": {
+      "unit": "requests/second",
+      "higher_is_better": true,
+      "baseline": 100,
+      "target": 150
+    },
+    "latency": {
+      "unit": "milliseconds",
+      "higher_is_better": false,
+      "baseline": 200,
+      "target": 100
+    },
+    "p95_response_time": {
+      "unit": "milliseconds",
+      "higher_is_better": false,
+      "baseline": 500,
+      "target": 300
+    },
+    "p99_response_time": {
+      "unit": "milliseconds",
+      "higher_is_better": false,
+      "baseline": 1000,
+      "target": 500
+    },
+    "cpu_usage": {
+      "unit": "percent",
+      "higher_is_better": false,
+      "baseline": 70,
+      "target": 50
+    },
+    "memory_usage": {
+      "unit": "megabytes",
+      "higher_is_better": false,
+      "baseline": 512,
+      "target": 256
+    },
+    "error_rate": {
+      "unit": "percent",
+      "higher_is_better": false,
+      "baseline": 1.0,
+      "target": 0.1
+    }
+  },
+  "comparison": {
+    "baseline_scenario": "baseline",
+    "comparison_scenarios": ["optimized"],
+    "improvement_thresholds": {
+      "minimal": 5,
+      "moderate": 15,
+      "significant": 30
+    },
+    "regression_threshold": -5
+  },
+  "reporting": {
+    "output_dir": "./benchmark-reports",
+    "formats": ["json", "html", "csv"],
+    "include_charts": true,
+    "charts": [
+      {
+        "type": "line",
+        "title": "Response Time Over Time",
+        "x_axis": "time",
+        "y_axis": "response_time",
+        "series": ["baseline", "optimized"]
+      },
+      {
+        "type": "bar",
+        "title": "Throughput Comparison",
+        "x_axis": "scenario",
+        "y_axis": "requests_per_second"
+      },
+      {
+        "type": "histogram",
+        "title": "Response Time Distribution",
+        "x_axis": "response_time",
+        "y_axis": "frequency"
+      }
+    ],
+    "summary": {
+      "include_recommendations": true,
+      "include_regression_analysis": true,
+      "min_improvement_threshold": 10
+    }
+  },
+  "validation": {
+    "run_tests": true,
+    "test_command": "npm test",
+    "required_pass_rate": 100,
+    "functional_regression_allowed": false
+  }
+}

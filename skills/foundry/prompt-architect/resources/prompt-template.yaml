@@ -1,0 +1,440 @@
+# Prompt Template Library
+# Collection of proven prompt templates for various use cases
+
+templates:
+  # Analytical Tasks
+  analysis_template:
+    name: "Analytical Task Template"
+    category: "analysis"
+    description: "Template for analytical tasks requiring systematic investigation"
+    structure: |
+      # Objective
+      Analyze {{subject}} to {{goal}}.
+
+      ## Context
+      {{background_information}}
+
+      ## Scope
+      Focus on:
+      1. {{focus_area_1}}
+      2. {{focus_area_2}}
+      3. {{focus_area_3}}
+
+      ## Analysis Framework
+      Apply the following methodology:
+      - {{method_step_1}}
+      - {{method_step_2}}
+      - {{method_step_3}}
+
+      ## Constraints
+      - Must: {{required_constraint}}
+      - Should: {{preferred_approach}}
+      - Cannot: {{exclusion}}
+
+      ## Output Format
+      Provide analysis in the following structure:
+      1. Executive Summary (200 words)
+      2. Detailed Findings (organized by focus area)
+      3. Recommendations (prioritized list)
+
+      Think through this step by step, showing your reasoning at each stage.
+      After reaching conclusions, validate them by considering alternative interpretations.
+
+    variables:
+      - subject
+      - goal
+      - background_information
+      - focus_area_1
+      - focus_area_2
+      - focus_area_3
+      - method_step_1
+      - method_step_2
+      - method_step_3
+      - required_constraint
+      - preferred_approach
+      - exclusion
+
+  # Code Generation
+  code_generation_template:
+    name: "Code Generation Template"
+    category: "development"
+    description: "Template for generating production-quality code"
+    structure: |
+      # Task: Implement {{feature_name}}
+
+      ## Requirements
+      Create {{component_type}} that:
+      1. {{requirement_1}}
+      2. {{requirement_2}}
+      3. {{requirement_3}}
+
+      ## Technical Specifications
+      - Language: {{language}} (version {{version}})
+      - Framework: {{framework}}
+      - Dependencies: {{dependencies}}
+      - Style Guide: {{style_guide}}
+
+      ## Input/Output Specification
+      **Input:**
+      ```{{input_type}}
+      {{input_example}}
+      ```
+
+      **Expected Output:**
+      ```{{output_type}}
+      {{output_example}}
+      ```
+
+      ## Constraints
+      - Performance: {{performance_requirement}}
+      - Error Handling: {{error_handling_requirement}}
+      - Testing: Include unit tests with {{coverage_target}}% coverage
+
+      ## Edge Cases
+      Handle the following edge cases:
+      - {{edge_case_1}}
+      - {{edge_case_2}}
+      - {{edge_case_3}}
+
+      First, plan your implementation approach. Then, implement the solution with:
+      1. Clear, well-documented code
+      2. Comprehensive error handling
+      3. Unit tests covering all cases
+
+      Finally, verify your implementation meets all requirements.
+
+    variables:
+      - feature_name
+      - component_type
+      - requirement_1
+      - requirement_2
+      - requirement_3
+      - language
+      - version
+      - framework
+      - dependencies
+      - style_guide
+      - input_type
+      - input_example
+      - output_type
+      - output_example
+      - performance_requirement
+      - error_handling_requirement
+      - coverage_target
+      - edge_case_1
+      - edge_case_2
+      - edge_case_3
+
+  # Content Generation
+  content_writing_template:
+    name: "Content Writing Template"
+    category: "writing"
+    description: "Template for generating structured written content"
+    structure: |
+      # Content Task: Create {{content_type}}
+
+      ## Audience
+      Target audience: {{audience_description}}
+      Knowledge level: {{knowledge_level}}
+
+      ## Purpose
+      {{content_purpose}}
+
+      ## Tone and Style
+      - Tone: {{tone}} (e.g., professional, casual, technical)
+      - Voice: {{voice}} (e.g., active, authoritative, conversational)
+      - Style: {{style_preferences}}
+
+      ## Key Messages
+      Ensure the content communicates:
+      1. {{key_message_1}}
+      2. {{key_message_2}}
+      3. {{key_message_3}}
+
+      ## Structure Requirements
+      Organize as follows:
+      1. {{section_1}} ({{length_1}} words)
+      2. {{section_2}} ({{length_2}} words)
+      3. {{section_3}} ({{length_3}} words)
+
+      Total length: {{total_length}} words
+
+      ## Constraints
+      - Must include: {{required_elements}}
+      - Avoid: {{excluded_elements}}
+      - SEO keywords: {{keywords}}
+
+      ## Examples
+      Here are examples of the desired style:
+
+      **Example 1:**
+      {{example_1}}
+
+      **Example 2:**
+      {{example_2}}
+
+      Create content that matches this quality and style while addressing the specific requirements above.
+
+    variables:
+      - content_type
+      - audience_description
+      - knowledge_level
+      - content_purpose
+      - tone
+      - voice
+      - style_preferences
+      - key_message_1
+      - key_message_2
+      - key_message_3
+      - section_1
+      - length_1
+      - section_2
+      - length_2
+      - section_3
+      - length_3
+      - total_length
+      - required_elements
+      - excluded_elements
+      - keywords
+      - example_1
+      - example_2
+
+  # Problem Solving
+  problem_solving_template:
+    name: "Problem Solving Template"
+    category: "reasoning"
+    description: "Template for systematic problem solving"
+    structure: |
+      # Problem: {{problem_statement}}
+
+      ## Context
+      {{problem_context}}
+
+      ## Known Information
+      {{known_facts}}
+
+      ## Constraints
+      {{constraints}}
+
+      ## Success Criteria
+      A solution is successful if:
+      1. {{criterion_1}}
+      2. {{criterion_2}}
+      3. {{criterion_3}}
+
+      ## Approach
+      Solve this problem using the following methodology:
+
+      1. **Understand**: Restate the problem in your own words
+      2. **Plan**: Outline your solution approach
+      3. **Execute**: Implement your solution step by step
+      4. **Verify**: Check your solution against success criteria
+
+      For each step, show your work and explain your reasoning.
+      If you reach a dead end, backtrack and try an alternative approach.
+
+      ## Validation
+      After solving, verify by:
+      - Checking edge cases: {{edge_cases}}
+      - Testing with examples: {{test_cases}}
+      - Considering alternative solutions
+
+    variables:
+      - problem_statement
+      - problem_context
+      - known_facts
+      - constraints
+      - criterion_1
+      - criterion_2
+      - criterion_3
+      - edge_cases
+      - test_cases
+
+  # Review and Critique
+  review_template:
+    name: "Review and Critique Template"
+    category: "evaluation"
+    description: "Template for comprehensive review and critique"
+    structure: |
+      # Review Task: Evaluate {{subject}}
+
+      ## Review Scope
+      {{review_scope}}
+
+      ## Evaluation Criteria
+      Assess against the following dimensions:
+
+      1. **{{criterion_1_name}}** ({{criterion_1_weight}}%)
+         {{criterion_1_description}}
+
+      2. **{{criterion_2_name}}** ({{criterion_2_weight}}%)
+         {{criterion_2_description}}
+
+      3. **{{criterion_3_name}}** ({{criterion_3_weight}}%)
+         {{criterion_3_description}}
+
+      ## Standards
+      Reference standards: {{standards}}
+
+      ## Review Process
+      1. Analyze each criterion systematically
+      2. Provide specific examples and evidence
+      3. Assign scores (1-10) with justification
+      4. Identify strengths and weaknesses
+      5. Provide actionable recommendations
+
+      ## Output Format
+      Provide review in this structure:
+
+      ### Executive Summary
+      Brief overview (150 words)
+
+      ### Detailed Assessment
+      For each criterion:
+      - Score: X/10
+      - Evidence: [specific examples]
+      - Strengths: [bullet points]
+      - Weaknesses: [bullet points]
+
+      ### Overall Score
+      Weighted average with justification
+
+      ### Recommendations
+      Prioritized list of improvements
+
+      Ensure your review is:
+      - Objective and evidence-based
+      - Constructive and actionable
+      - Specific rather than vague
+
+    variables:
+      - subject
+      - review_scope
+      - criterion_1_name
+      - criterion_1_weight
+      - criterion_1_description
+      - criterion_2_name
+      - criterion_2_weight
+      - criterion_2_description
+      - criterion_3_name
+      - criterion_3_weight
+      - criterion_3_description
+      - standards
+
+  # Research and Investigation
+  research_template:
+    name: "Research Template"
+    category: "research"
+    description: "Template for systematic research tasks"
+    structure: |
+      # Research Question: {{research_question}}
+
+      ## Research Objectives
+      1. {{objective_1}}
+      2. {{objective_2}}
+      3. {{objective_3}}
+
+      ## Scope and Boundaries
+      **In Scope:**
+      - {{in_scope_1}}
+      - {{in_scope_2}}
+
+      **Out of Scope:**
+      - {{out_of_scope_1}}
+      - {{out_of_scope_2}}
+
+      ## Methodology
+      Apply the following research approach:
+      1. {{method_1}}
+      2. {{method_2}}
+      3. {{method_3}}
+
+      ## Information Sources
+      Consider:
+      - {{source_type_1}}
+      - {{source_type_2}}
+      - {{source_type_3}}
+
+      ## Analysis Framework
+      Organize findings by:
+      1. {{framework_dimension_1}}
+      2. {{framework_dimension_2}}
+      3. {{framework_dimension_3}}
+
+      ## Output Requirements
+      Provide a research report with:
+
+      1. **Executive Summary** (250 words)
+         - Key findings
+         - Main conclusions
+         - Recommendations
+
+      2. **Detailed Findings** (organized by framework)
+         - Evidence and data
+         - Analysis and interpretation
+         - Patterns and trends
+
+      3. **Conclusions**
+         - Answer to research question
+         - Implications
+         - Limitations
+
+      4. **Recommendations**
+         - Actionable next steps
+         - Further research needed
+
+      Ensure all claims are supported by evidence.
+      Acknowledge uncertainty where it exists.
+      Consider multiple perspectives and alternative interpretations.
+
+    variables:
+      - research_question
+      - objective_1
+      - objective_2
+      - objective_3
+      - in_scope_1
+      - in_scope_2
+      - out_of_scope_1
+      - out_of_scope_2
+      - method_1
+      - method_2
+      - method_3
+      - source_type_1
+      - source_type_2
+      - source_type_3
+      - framework_dimension_1
+      - framework_dimension_2
+      - framework_dimension_3
+
+# Usage instructions
+usage:
+  description: |
+    These templates provide starting points for common prompt patterns.
+    To use a template:
+
+    1. Select the appropriate template for your task category
+    2. Replace {{variables}} with your specific values
+    3. Customize sections as needed for your use case
+    4. Run through optimization engine for refinement
+    5. Test with prompt-tester.py before production use
+
+  example: |
+    # Example: Using the analysis template
+
+    1. Copy the analysis_template structure
+    2. Replace variables:
+       - subject: "quarterly sales data"
+       - goal: "identify growth opportunities"
+       - background_information: "Company sells SaaS products..."
+       etc.
+    3. Add or remove focus areas as needed
+    4. Customize analysis framework for your domain
+    5. Test the resulting prompt
+
+  best_practices:
+    - Start with the closest template match
+    - Preserve the structural elements (headers, sections)
+    - Keep evidence-based techniques (step by step, validation)
+    - Adapt variables to your specific context
+    - Test with edge cases before production use
+    - Document your customizations for reuse

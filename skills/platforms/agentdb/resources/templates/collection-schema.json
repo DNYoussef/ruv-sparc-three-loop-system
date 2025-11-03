@@ -1,0 +1,412 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentDB Collection Schema",
+  "description": "Schema definition for AgentDB vector collections with metadata",
+  "type": "object",
+  "required": ["collection", "embedding", "metadata_schema"],
+  "properties": {
+    "collection": {
+      "type": "object",
+      "description": "Collection configuration",
+      "required": ["name", "dimension"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique collection identifier",
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "minLength": 3,
+          "maxLength": 64,
+          "examples": ["agent_memory", "knowledge_base", "conversation_history"]
+        },
+        "dimension": {
+          "type": "integer",
+          "description": "Vector embedding dimension",
+          "enum": [128, 256, 384, 512, 768, 1024, 1536],
+          "default": 384
+        },
+        "distance_metric": {
+          "type": "string",
+          "description": "Vector similarity metric",
+          "enum": ["cosine", "l2", "ip"],
+          "default": "cosine"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable collection description",
+          "maxLength": 500
+        }
+      }
+    },
+    "embedding": {
+      "type": "object",
+      "description": "Embedding model configuration",
+      "required": ["model_name"],
+      "properties": {
+        "model_name": {
+          "type": "string",
+          "description": "HuggingFace model identifier",
+          "examples": [
+            "all-MiniLM-L6-v2",
+            "all-mpnet-base-v2",
+            "text-embedding-ada-002"
+          ]
+        },
+        "normalize": {
+          "type": "boolean",
+          "description": "Normalize embeddings to unit length",
+          "default": true
+        },
+        "batch_size": {
+          "type": "integer",
+          "description": "Batch size for encoding",
+          "minimum": 1,
+          "maximum": 512,
+          "default": 128
+        }
+      }
+    },
+    "hnsw": {
+      "type": "object",
+      "description": "HNSW index parameters",
+      "properties": {
+        "M": {
+          "type": "integer",
+          "description": "Number of connections per layer",
+          "minimum": 4,
+          "maximum": 64,
+          "default": 16
+        },
+        "ef_construction": {
+          "type": "integer",
+          "description": "Build quality parameter",
+          "minimum": 100,
+          "maximum": 1000,
+          "default": 200
+        },
+        "ef_search": {
+          "type": "integer",
+          "description": "Query quality parameter",
+          "minimum": 50,
+          "maximum": 1000,
+          "default": 100
+        },
+        "num_threads": {
+          "type": "integer",
+          "description": "Parallel threads for indexing",
+          "minimum": 1,
+          "maximum": 32,
+          "default": 4
+        }
+      }
+    },
+    "metadata_schema": {
+      "type": "object",
+      "description": "Schema for document metadata",
+      "required": ["fields"],
+      "properties": {
+        "fields": {
+          "type": "array",
+          "description": "Metadata field definitions",
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Field name",
+                "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+              },
+              "type": {
+                "type": "string",
+                "description": "Field data type",
+                "enum": [
+                  "string",
+                  "integer",
+                  "float",
+                  "boolean",
+                  "datetime",
+                  "array",
+                  "object"
+                ]
+              },
+              "required": {
+                "type": "boolean",
+                "description": "Whether field is required",
+                "default": false
+              },
+              "indexed": {
+                "type": "boolean",
+                "description": "Whether to create index for filtering",
+                "default": false
+              },
+              "description": {
+                "type": "string",
+                "description": "Field description"
+              },
+              "default": {
+                "description": "Default value if not provided"
+              },
+              "validation": {
+                "type": "object",
+                "description": "Field validation rules",
+                "properties": {
+                  "min": {
+                    "type": "number",
+                    "description": "Minimum value (for numbers)"
+                  },
+                  "max": {
+                    "type": "number",
+                    "description": "Maximum value (for numbers)"
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "description": "Regex pattern (for strings)"
+                  },
+                  "enum": {
+                    "type": "array",
+                    "description": "Allowed values"
+                  }
+                }
+              }
+            }
+          },
+          "examples": [
+            [
+              {
+                "name": "timestamp",
+                "type": "datetime",
+                "required": true,
+                "indexed": true,
+                "description": "Document creation time"
+              },
+              {
+                "name": "source",
+                "type": "string",
+                "required": true,
+                "indexed": true,
+                "description": "Document source identifier"
+              },
+              {
+                "name": "category",
+                "type": "string",
+                "required": false,
+                "indexed": true,
+                "description": "Document category",
+                "validation": {
+                  "enum": ["documentation", "code", "conversation", "knowledge"]
+                }
+              },
+              {
+                "name": "priority",
+                "type": "integer",
+                "required": false,
+                "indexed": true,
+                "description": "Document priority (1-5)",
+                "validation": {
+                  "min": 1,
+                  "max": 5
+                }
+              },
+              {
+                "name": "tags",
+                "type": "array",
+                "required": false,
+                "indexed": true,
+                "description": "Document tags"
+              },
+              {
+                "name": "agent_id",
+                "type": "string",
+                "required": false,
+                "indexed": true,
+                "description": "Agent identifier"
+              },
+              {
+                "name": "session_id",
+                "type": "string",
+                "required": false,
+                "indexed": true,
+                "description": "Session identifier"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "description": "Data retention policies",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable automatic cleanup",
+          "default": false
+        },
+        "ttl_days": {
+          "type": "integer",
+          "description": "Time-to-live in days",
+          "minimum": 1,
+          "maximum": 365,
+          "default": 30
+        },
+        "max_documents": {
+          "type": "integer",
+          "description": "Maximum documents (oldest deleted first)",
+          "minimum": 100,
+          "default": 100000
+        }
+      }
+    },
+    "search": {
+      "type": "object",
+      "description": "Search configuration",
+      "properties": {
+        "default_k": {
+          "type": "integer",
+          "description": "Default number of results",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 10
+        },
+        "max_k": {
+          "type": "integer",
+          "description": "Maximum allowed results",
+          "minimum": 1,
+          "maximum": 1000,
+          "default": 100
+        },
+        "min_similarity": {
+          "type": "number",
+          "description": "Minimum similarity threshold (0-1)",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.5
+        },
+        "enable_filtering": {
+          "type": "boolean",
+          "description": "Enable metadata filtering",
+          "default": true
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "description": "Performance optimization settings",
+      "properties": {
+        "cache_size_mb": {
+          "type": "integer",
+          "description": "Query result cache size (MB)",
+          "minimum": 0,
+          "maximum": 10240,
+          "default": 1024
+        },
+        "use_mmap": {
+          "type": "boolean",
+          "description": "Use memory mapping for large collections",
+          "default": true
+        },
+        "query_timeout_sec": {
+          "type": "integer",
+          "description": "Query timeout in seconds",
+          "minimum": 1,
+          "maximum": 300,
+          "default": 30
+        }
+      }
+    },
+    "monitoring": {
+      "type": "object",
+      "description": "Monitoring configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable metrics collection",
+          "default": true
+        },
+        "metrics": {
+          "type": "array",
+          "description": "Metrics to track",
+          "items": {
+            "type": "string",
+            "enum": [
+              "query_latency",
+              "query_throughput",
+              "index_size",
+              "memory_usage",
+              "cache_hit_rate",
+              "error_rate"
+            ]
+          },
+          "default": ["query_latency", "query_throughput", "memory_usage"]
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "collection": {
+        "name": "agent_memory",
+        "dimension": 384,
+        "distance_metric": "cosine",
+        "description": "Persistent agent memory with triple-layer retention"
+      },
+      "embedding": {
+        "model_name": "all-MiniLM-L6-v2",
+        "normalize": true,
+        "batch_size": 128
+      },
+      "hnsw": {
+        "M": 16,
+        "ef_construction": 200,
+        "ef_search": 100,
+        "num_threads": 4
+      },
+      "metadata_schema": {
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "datetime",
+            "required": true,
+            "indexed": true
+          },
+          {
+            "name": "agent_id",
+            "type": "string",
+            "required": true,
+            "indexed": true
+          },
+          {
+            "name": "layer",
+            "type": "string",
+            "required": true,
+            "indexed": true,
+            "validation": {
+              "enum": ["short_term", "mid_term", "long_term"]
+            }
+          },
+          {
+            "name": "priority",
+            "type": "integer",
+            "required": false,
+            "indexed": true,
+            "validation": {
+              "min": 1,
+              "max": 5
+            }
+          }
+        ]
+      },
+      "retention": {
+        "enabled": true,
+        "ttl_days": 30,
+        "max_documents": 50000
+      },
+      "search": {
+        "default_k": 10,
+        "max_k": 100,
+        "min_similarity": 0.5,
+        "enable_filtering": true
+      }
+    }
+  ]
+}

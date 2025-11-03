@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "name": "ComponentName",
+  "version": "1.0.0",
+  "description": "Detailed component description explaining purpose and usage",
+  "category": "ui-components",
+  "tags": ["component", "ui", "interactive"],
+
+  "metadata": {
+    "author": "Frontend Specialists Team",
+    "created": "2025-11-02",
+    "lastModified": "2025-11-02",
+    "framework": "react",
+    "typescript": true,
+    "accessibility": {
+      "wcagLevel": "AA",
+      "ariaSupport": true,
+      "keyboardNavigable": true
+    }
+  },
+
+  "variants": {
+    "primary": {
+      "description": "Primary action or emphasis",
+      "cssClass": "componentname--primary",
+      "defaultColors": {
+        "background": "#0066cc",
+        "foreground": "#ffffff",
+        "hover": "#0052a3",
+        "active": "#003d7a"
+      }
+    },
+    "secondary": {
+      "description": "Secondary actions or less emphasis",
+      "cssClass": "componentname--secondary",
+      "defaultColors": {
+        "background": "#6c757d",
+        "foreground": "#ffffff",
+        "hover": "#5a6268",
+        "active": "#545b62"
+      }
+    },
+    "tertiary": {
+      "description": "Tertiary actions or minimal emphasis",
+      "cssClass": "componentname--tertiary",
+      "defaultColors": {
+        "background": "#f8f9fa",
+        "foreground": "#212529",
+        "hover": "#e2e6ea",
+        "active": "#dae0e5"
+      }
+    }
+  },
+
+  "sizes": {
+    "small": {
+      "padding": "0.5rem 1rem",
+      "fontSize": "0.875rem",
+      "minHeight": "32px"
+    },
+    "medium": {
+      "padding": "0.75rem 1.5rem",
+      "fontSize": "1rem",
+      "minHeight": "40px"
+    },
+    "large": {
+      "padding": "1rem 2rem",
+      "fontSize": "1.25rem",
+      "minHeight": "48px"
+    }
+  },
+
+  "props": {
+    "variant": {
+      "type": "string",
+      "enum": ["primary", "secondary", "tertiary"],
+      "default": "primary",
+      "required": false,
+      "description": "Visual variant of the component"
+    },
+    "size": {
+      "type": "string",
+      "enum": ["small", "medium", "large"],
+      "default": "medium",
+      "required": false,
+      "description": "Size of the component"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Disabled state preventing interaction"
+    },
+    "aria-label": {
+      "type": "string",
+      "default": "",
+      "required": false,
+      "description": "Accessible label for screen readers"
+    }
+  },
+
+  "events": {
+    "onClick": {
+      "description": "Fired when component is clicked",
+      "payload": "void",
+      "bubbles": true
+    },
+    "onFocus": {
+      "description": "Fired when component receives focus",
+      "payload": "void",
+      "bubbles": true
+    },
+    "onBlur": {
+      "description": "Fired when component loses focus",
+      "payload": "void",
+      "bubbles": true
+    }
+  },
+
+  "theming": {
+    "cssVariables": {
+      "--primary-bg": "#0066cc",
+      "--primary-text": "#ffffff",
+      "--secondary-bg": "#6c757d",
+      "--secondary-text": "#ffffff",
+      "--tertiary-bg": "#f8f9fa",
+      "--tertiary-text": "#212529",
+      "--focus-color": "#0066cc",
+      "--transition-duration": "0.2s"
+    },
+    "customizationPoints": [
+      "Colors (background, foreground, hover, active)",
+      "Spacing (padding, margin)",
+      "Typography (font-size, font-weight, line-height)",
+      "Borders (width, radius, style)",
+      "Shadows (box-shadow)",
+      "Transitions (duration, timing-function)"
+    ]
+  },
+
+  "accessibility": {
+    "roles": ["region"],
+    "ariaAttributes": ["aria-label", "aria-describedby", "aria-disabled"],
+    "keyboardSupport": {
+      "Enter": "Activates the component",
+      "Space": "Activates the component",
+      "Tab": "Moves focus to next focusable element",
+      "Shift+Tab": "Moves focus to previous focusable element"
+    },
+    "focusManagement": {
+      "focusable": true,
+      "focusIndicator": "2px solid outline with 2px offset",
+      "tabIndex": 0
+    },
+    "screenReaderSupport": {
+      "announcements": ["State changes", "Disabled state"],
+      "liveRegions": false
+    }
+  },
+
+  "testing": {
+    "unit": {
+      "framework": "Jest + React Testing Library",
+      "coverage": "≥80%",
+      "testFiles": ["ComponentName.test.tsx"]
+    },
+    "integration": {
+      "framework": "React Testing Library",
+      "scenarios": ["User interactions", "State changes", "Event handling"]
+    },
+    "e2e": {
+      "framework": "Playwright",
+      "scenarios": ["Full user workflows"]
+    },
+    "visual": {
+      "framework": "Chromatic/Percy",
+      "variants": ["All variant combinations", "Responsive breakpoints"]
+    },
+    "accessibility": {
+      "framework": "axe-core",
+      "level": "WCAG 2.1 AA"
+    }
+  },
+
+  "performance": {
+    "bundleSize": {
+      "target": "<5KB (gzipped)",
+      "measurement": "webpack-bundle-analyzer"
+    },
+    "rendering": {
+      "memoization": true,
+      "lazyLoading": false,
+      "virtualScrolling": false
+    }
+  },
+
+  "documentation": {
+    "storybook": {
+      "enabled": true,
+      "stories": ["Default", "Variants", "Sizes", "States", "Accessibility"]
+    },
+    "examples": [
+      {
+        "title": "Basic Usage",
+        "code": "<ComponentName>Content</ComponentName>"
+      },
+      {
+        "title": "With Variant",
+        "code": "<ComponentName variant=\"secondary\">Content</ComponentName>"
+      },
+      {
+        "title": "Disabled State",
+        "code": "<ComponentName disabled>Content</ComponentName>"
+      }
+    ],
+    "links": {
+      "design": "https://figma.com/file/...",
+      "api": "https://docs.example.com/ComponentName",
+      "changelog": "CHANGELOG.md"
+    }
+  },
+
+  "dependencies": {
+    "peerDependencies": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    },
+    "devDependencies": {
+      "@types/react": "^18.0.0",
+      "@testing-library/react": "^14.0.0",
+      "@testing-library/jest-dom": "^6.0.0"
+    }
+  },
+
+  "browserSupport": {
+    "chrome": ">=90",
+    "firefox": ">=88",
+    "safari": ">=14",
+    "edge": ">=90",
+    "mobile": {
+      "ios": ">=14",
+      "android": ">=90"
+    }
+  }
+}

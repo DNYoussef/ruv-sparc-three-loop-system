@@ -1,0 +1,273 @@
+# Base Template Generator - Project Structure Configuration
+# Defines standard directory structures for different project types
+
+version: "1.0"
+
+templates:
+  node:
+    name: "Node.js with Express"
+    description: "Modern Node.js backend with Express framework"
+    structure:
+      - path: "src"
+        description: "Source code files"
+      - path: "src/routes"
+        description: "API route handlers"
+      - path: "src/middleware"
+        description: "Express middleware"
+      - path: "src/controllers"
+        description: "Business logic controllers"
+      - path: "src/models"
+        description: "Data models"
+      - path: "src/utils"
+        description: "Utility functions"
+      - path: "tests"
+        description: "Test files"
+      - path: "tests/unit"
+        description: "Unit tests"
+      - path: "tests/integration"
+        description: "Integration tests"
+      - path: "config"
+        description: "Configuration files"
+      - path: "docs"
+        description: "Documentation"
+
+    required_files:
+      - "package.json"
+      - ".gitignore"
+      - "README.md"
+      - ".env.example"
+      - ".eslintrc.json"
+      - ".prettierrc"
+
+    recommended_dependencies:
+      production:
+        - "express"
+        - "dotenv"
+      development:
+        - "eslint"
+        - "prettier"
+        - "nodemon"
+
+    best_practices:
+      - "Use ES modules (type: module)"
+      - "Separate routes from business logic"
+      - "Environment-based configuration"
+      - "Comprehensive error handling"
+      - "Security middleware (helmet, cors)"
+
+  python:
+    name: "Python with FastAPI"
+    description: "Modern Python backend with FastAPI framework"
+    structure:
+      - path: "app"
+        description: "Application source code"
+      - path: "app/api"
+        description: "API routes and endpoints"
+      - path: "app/core"
+        description: "Core application logic"
+      - path: "app/models"
+        description: "Pydantic models"
+      - path: "app/db"
+        description: "Database models and connections"
+      - path: "app/services"
+        description: "Business logic services"
+      - path: "tests"
+        description: "Test files"
+      - path: "tests/unit"
+        description: "Unit tests"
+      - path: "tests/integration"
+        description: "Integration tests"
+      - path: "config"
+        description: "Configuration files"
+      - path: "scripts"
+        description: "Utility scripts"
+
+    required_files:
+      - "pyproject.toml"
+      - ".gitignore"
+      - "README.md"
+      - ".env.example"
+
+    recommended_dependencies:
+      production:
+        - "fastapi"
+        - "uvicorn[standard]"
+        - "pydantic"
+        - "python-dotenv"
+      development:
+        - "pytest"
+        - "ruff"
+        - "black"
+        - "mypy"
+
+    best_practices:
+      - "Type hints everywhere"
+      - "Pydantic for validation"
+      - "Async endpoints when possible"
+      - "Dependency injection pattern"
+      - "Comprehensive testing"
+
+  go:
+    name: "Go Standard Library"
+    description: "Go backend with standard library and minimal dependencies"
+    structure:
+      - path: "cmd"
+        description: "Main applications"
+      - path: "internal"
+        description: "Private application code"
+      - path: "internal/handler"
+        description: "HTTP handlers"
+      - path: "internal/service"
+        description: "Business logic services"
+      - path: "internal/model"
+        description: "Data models"
+      - path: "pkg"
+        description: "Public libraries"
+      - path: "api"
+        description: "API definitions (OpenAPI, Protocol Buffers)"
+      - path: "test"
+        description: "Additional test files"
+      - path: "scripts"
+        description: "Build and deployment scripts"
+
+    required_files:
+      - "go.mod"
+      - ".gitignore"
+      - "README.md"
+      - ".env.example"
+      - "Makefile"
+
+    recommended_dependencies:
+      - "github.com/gorilla/mux"
+      - "github.com/joho/godotenv"
+
+    best_practices:
+      - "Follow standard Go project layout"
+      - "Use interfaces for dependency injection"
+      - "Table-driven tests"
+      - "Effective error handling"
+      - "Minimal external dependencies"
+
+  react:
+    name: "React 18 with Vite"
+    description: "Modern React frontend with Vite tooling"
+    structure:
+      - path: "src"
+        description: "Source code"
+      - path: "src/components"
+        description: "React components"
+      - path: "src/pages"
+        description: "Page components"
+      - path: "src/hooks"
+        description: "Custom React hooks"
+      - path: "src/utils"
+        description: "Utility functions"
+      - path: "src/services"
+        description: "API services"
+      - path: "src/styles"
+        description: "CSS/SCSS files"
+      - path: "public"
+        description: "Static assets"
+      - path: "tests"
+        description: "Test files"
+
+    required_files:
+      - "package.json"
+      - "vite.config.ts"
+      - "tsconfig.json"
+      - ".gitignore"
+      - "README.md"
+      - "index.html"
+
+    best_practices:
+      - "TypeScript for type safety"
+      - "Component composition"
+      - "Custom hooks for logic reuse"
+      - "Lazy loading for routes"
+      - "Modern state management (Zustand/Jotai)"
+
+  vue:
+    name: "Vue 3 Composition API"
+    description: "Modern Vue 3 frontend with Composition API"
+    structure:
+      - path: "src"
+        description: "Source code"
+      - path: "src/components"
+        description: "Vue components"
+      - path: "src/views"
+        description: "Page views"
+      - path: "src/composables"
+        description: "Composition API composables"
+      - path: "src/stores"
+        description: "Pinia stores"
+      - path: "src/router"
+        description: "Vue Router configuration"
+      - path: "src/assets"
+        description: "Static assets"
+      - path: "public"
+        description: "Public files"
+      - path: "tests"
+        description: "Test files"
+
+    required_files:
+      - "package.json"
+      - "vite.config.ts"
+      - "tsconfig.json"
+      - ".gitignore"
+      - "README.md"
+      - "index.html"
+
+    best_practices:
+      - "Composition API over Options API"
+      - "TypeScript support"
+      - "Pinia for state management"
+      - "Scoped CSS in components"
+      - "Composables for reusable logic"
+
+common:
+  security:
+    - "Never commit .env files"
+    - "Use environment variables for secrets"
+    - "Keep dependencies updated"
+    - "Validate all inputs"
+    - "Use HTTPS in production"
+    - "Implement proper authentication"
+    - "Set up CORS correctly"
+
+  testing:
+    - "Aim for 80%+ code coverage"
+    - "Write unit tests for business logic"
+    - "Include integration tests"
+    - "Use CI/CD for automated testing"
+    - "Test error scenarios"
+
+  documentation:
+    - "Comprehensive README"
+    - "API documentation"
+    - "Code comments for complex logic"
+    - "Architecture decisions (ADRs)"
+    - "Setup instructions"
+
+  ci_cd:
+    - "Automated testing on PR"
+    - "Linting and formatting checks"
+    - "Security scanning"
+    - "Automated deployments"
+    - "Version tagging"
+
+quality_standards:
+  file_size:
+    max_lines: 500
+    recommendation: "Keep files focused and modular"
+
+  complexity:
+    max_cyclomatic: 10
+    recommendation: "Break down complex functions"
+
+  dependencies:
+    max_production: 15
+    recommendation: "Minimize production dependencies"
+
+  documentation:
+    min_readme_lines: 20
+    recommendation: "Provide clear setup and usage instructions"

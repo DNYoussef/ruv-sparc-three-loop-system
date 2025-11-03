@@ -1,0 +1,325 @@
+{
+  "schema": {
+    "Resource": {
+      "type": "object",
+      "required": ["id", "name", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for the resource",
+          "readOnly": true,
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the resource",
+          "minLength": 1,
+          "maxLength": 255,
+          "example": "Sample Resource"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the resource",
+          "nullable": true,
+          "maxLength": 1000,
+          "example": "This is a detailed description of the resource"
+        },
+        "status": {
+          "type": "string",
+          "description": "Current status of the resource",
+          "enum": ["active", "inactive", "pending", "archived"],
+          "default": "pending",
+          "example": "active"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type classification of the resource",
+          "example": "standard"
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional metadata for the resource",
+          "additionalProperties": true,
+          "example": {
+            "category": "general",
+            "priority": "high",
+            "tags": ["important", "featured"]
+          }
+        },
+        "settings": {
+          "$ref": "#/components/schemas/ResourceSettings"
+        },
+        "owner": {
+          "$ref": "#/components/schemas/User"
+        },
+        "permissions": {
+          "type": "array",
+          "description": "List of permissions for this resource",
+          "items": {
+            "$ref": "#/components/schemas/Permission"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the resource was created",
+          "readOnly": true,
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the resource was last updated",
+          "readOnly": true,
+          "example": "2024-01-20T14:45:00Z"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Version number for optimistic locking",
+          "readOnly": true,
+          "example": 3
+        }
+      },
+      "example": {
+        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "name": "Sample Resource",
+        "description": "This is a sample resource",
+        "status": "active",
+        "type": "standard",
+        "metadata": {
+          "category": "general",
+          "priority": "high"
+        },
+        "createdAt": "2024-01-15T10:30:00Z",
+        "updatedAt": "2024-01-20T14:45:00Z",
+        "version": 3
+      }
+    },
+    "ResourceSettings": {
+      "type": "object",
+      "description": "Configuration settings for a resource",
+      "properties": {
+        "autoArchive": {
+          "type": "boolean",
+          "description": "Automatically archive resource after inactivity",
+          "default": false
+        },
+        "archiveAfterDays": {
+          "type": "integer",
+          "description": "Days of inactivity before auto-archiving",
+          "minimum": 1,
+          "maximum": 365,
+          "default": 90
+        },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "boolean",
+              "default": true
+            },
+            "push": {
+              "type": "boolean",
+              "default": false
+            },
+            "webhook": {
+              "type": "string",
+              "format": "uri",
+              "nullable": true
+            }
+          }
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "private", "restricted"],
+          "default": "private"
+        }
+      }
+    },
+    "Permission": {
+      "type": "object",
+      "required": ["action", "granted"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "The action this permission controls",
+          "enum": ["read", "write", "delete", "admin"],
+          "example": "read"
+        },
+        "granted": {
+          "type": "boolean",
+          "description": "Whether the permission is granted",
+          "example": true
+        },
+        "grantedBy": {
+          "type": "string",
+          "format": "uuid",
+          "description": "ID of the user who granted this permission",
+          "nullable": true
+        },
+        "grantedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the permission was granted"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "456e7890-f12c-34e5-b678-901234567890"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "example": "user@example.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "avatar": {
+          "type": "string",
+          "format": "uri",
+          "nullable": true,
+          "example": "https://example.com/avatars/user.jpg"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": ["success", "error", "message"],
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "Indicates if the request was successful",
+          "example": false
+        },
+        "error": {
+          "type": "string",
+          "description": "Error type/code",
+          "example": "ValidationError"
+        },
+        "message": {
+          "type": "string",
+          "description": "Human-readable error message",
+          "example": "Validation failed for one or more fields"
+        },
+        "details": {
+          "type": "array",
+          "description": "Detailed error information",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string",
+                "description": "Field that caused the error"
+              },
+              "message": {
+                "type": "string",
+                "description": "Error message for the field"
+              },
+              "code": {
+                "type": "string",
+                "description": "Error code for the field"
+              }
+            }
+          }
+        },
+        "requestId": {
+          "type": "string",
+          "description": "Unique request identifier for debugging",
+          "example": "req_abc123def456"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the error occurred",
+          "example": "2024-01-20T15:30:00Z"
+        }
+      }
+    },
+    "PaginatedResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Resource"
+          }
+        },
+        "pagination": {
+          "type": "object",
+          "properties": {
+            "page": {
+              "type": "integer",
+              "description": "Current page number",
+              "example": 1
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Items per page",
+              "example": 20
+            },
+            "total": {
+              "type": "integer",
+              "description": "Total number of items",
+              "example": 150
+            },
+            "totalPages": {
+              "type": "integer",
+              "description": "Total number of pages",
+              "example": 8
+            },
+            "hasNext": {
+              "type": "boolean",
+              "description": "Whether there is a next page",
+              "example": true
+            },
+            "hasPrev": {
+              "type": "boolean",
+              "description": "Whether there is a previous page",
+              "example": false
+            }
+          }
+        },
+        "links": {
+          "type": "object",
+          "description": "HATEOAS navigation links",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri"
+            },
+            "first": {
+              "type": "string",
+              "format": "uri"
+            },
+            "prev": {
+              "type": "string",
+              "format": "uri",
+              "nullable": true
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "nullable": true
+            },
+            "last": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      }
+    }
+  }
+}

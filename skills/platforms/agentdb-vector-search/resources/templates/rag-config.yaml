@@ -1,0 +1,244 @@
+# AgentDB RAG Configuration
+# Retrieval-Augmented Generation system settings
+# Performance target: <100µs search, 150x faster than traditional approaches
+
+# Vector Database Configuration
+database:
+  # Path to AgentDB SQLite database
+  path: .agentdb/vectors.db
+
+  # Database preset (small, medium, large)
+  preset: medium  # 10K-100K vectors
+
+  # Embedding dimensions
+  dimension: 384  # all-MiniLM-L6-v2
+
+  # Enable in-memory mode for testing
+  in_memory: false
+
+  # Auto-vacuum for database maintenance
+  auto_vacuum: true
+
+# Embedding Model Configuration
+embedding:
+  # Model name (sentence-transformers compatible)
+  model: all-MiniLM-L6-v2
+
+  # Alternative models:
+  # - all-MiniLM-L6-v2: 384 dim, fastest
+  # - all-mpnet-base-v2: 768 dim, best quality
+  # - multi-qa-MiniLM-L6-cos-v1: 384 dim, Q&A optimized
+
+  # Batch size for embedding generation
+  batch_size: 32
+
+  # Device (cpu, cuda, mps)
+  device: cpu
+
+  # Normalize embeddings
+  normalize: true
+
+  # Show progress bar
+  show_progress: true
+
+# Search Configuration
+search:
+  # Distance metric (cosine, euclidean, dot)
+  metric: cosine
+
+  # Top-k results to retrieve
+  top_k: 5
+
+  # Minimum similarity threshold (0-1)
+  threshold: 0.7
+
+  # Enable Maximal Marginal Relevance for diversity
+  use_mmr: true
+
+  # MMR lambda parameter (0=diverse, 1=relevant)
+  mmr_lambda: 0.7
+
+  # Enable HNSW indexing for sub-millisecond search
+  use_hnsw: true
+
+  # HNSW parameters
+  hnsw:
+    m: 16  # Max connections per node
+    ef_construction: 200  # Construction time quality
+    ef_search: 50  # Search time quality
+
+# Quantization Configuration
+quantization:
+  # Enable quantization (binary, scalar, product, none)
+  type: binary  # 32x memory reduction
+
+  # Binary quantization settings
+  binary:
+    threshold: 0.0  # Sign threshold
+
+  # Scalar quantization settings
+  scalar:
+    bits: 8  # 4x reduction with 8-bit
+
+  # Product quantization settings
+  product:
+    subvectors: 8  # Number of subvectors
+    bits: 8  # Bits per subvector
+
+# Caching Configuration
+cache:
+  # Enable pattern cache
+  enabled: true
+
+  # Cache size (number of patterns)
+  size: 1000
+
+  # Cache TTL in seconds
+  ttl: 3600  # 1 hour
+
+  # Cache invalidation strategy (lru, lfu, fifo)
+  strategy: lru
+
+# Document Ingestion Configuration
+ingestion:
+  # Chunk size for large documents
+  chunk_size: 512  # tokens
+
+  # Chunk overlap for context
+  chunk_overlap: 50  # tokens
+
+  # Text splitter (sentence, paragraph, token)
+  splitter: sentence
+
+  # Metadata extraction
+  extract_metadata: true
+
+  # Supported file types
+  file_types:
+    - txt
+    - md
+    - pdf
+    - docx
+    - html
+
+  # Batch size for ingestion
+  batch_size: 100
+
+# Retrieval Configuration
+retrieval:
+  # Context window size (tokens)
+  context_window: 4096
+
+  # Maximum context chunks
+  max_chunks: 5
+
+  # Reranking strategy (none, cross-encoder, mmr)
+  reranking: mmr
+
+  # Cross-encoder model for reranking
+  cross_encoder_model: cross-encoder/ms-marco-MiniLM-L-6-v2
+
+# Generation Configuration
+generation:
+  # LLM provider (anthropic, openai, local)
+  provider: anthropic
+
+  # Model name
+  model: claude-3-5-sonnet-20241022
+
+  # Max tokens for generation
+  max_tokens: 1024
+
+  # Temperature (0-1)
+  temperature: 0.7
+
+  # Include sources in response
+  include_sources: true
+
+  # Source citation format
+  citation_format: "[{index}] {file}:{line}"
+
+# Performance Monitoring
+monitoring:
+  # Enable performance metrics
+  enabled: true
+
+  # Log search times
+  log_search_time: true
+
+  # Log embedding times
+  log_embed_time: true
+
+  # Benchmark interval (searches)
+  benchmark_interval: 100
+
+  # Performance targets (ms)
+  targets:
+    search: 100  # Sub-100µs target
+    embedding: 50
+    retrieval: 200
+    generation: 2000
+
+# Export/Import Configuration
+export:
+  # Default export format (json, parquet, csv)
+  format: json
+
+  # Compress exports
+  compress: true
+
+  # Include metadata
+  include_metadata: true
+
+  # Backup location
+  backup_path: .agentdb/backups
+
+# Logging Configuration
+logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR)
+  level: INFO
+
+  # Log file path
+  file: .agentdb/logs/rag.log
+
+  # Rotate logs
+  rotate: true
+
+  # Max log size (MB)
+  max_size: 10
+
+  # Log retention (days)
+  retention: 7
+
+# API Configuration
+api:
+  # Enable REST API
+  enabled: false
+
+  # API host
+  host: 0.0.0.0
+
+  # API port
+  port: 8000
+
+  # Enable authentication
+  auth_enabled: true
+
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+
+# MCP Server Configuration
+mcp:
+  # Enable MCP server
+  enabled: true
+
+  # MCP tools to expose
+  tools:
+    - agentdb_query
+    - agentdb_store
+    - agentdb_stats
+
+  # MCP server port
+  port: 3000

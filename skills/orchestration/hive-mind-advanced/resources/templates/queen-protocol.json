@@ -1,0 +1,406 @@
+{
+  "protocol_version": "1.0.0",
+  "description": "Queen behavior protocol for hive mind coordination",
+
+  "queen_types": {
+    "strategic": {
+      "description": "High-level planning and research coordination",
+      "behaviors": {
+        "task_delegation": {
+          "strategy": "capability_based",
+          "prioritization": "business_value",
+          "considerations": [
+            "long_term_impact",
+            "risk_assessment",
+            "resource_availability",
+            "strategic_alignment"
+          ]
+        },
+        "decision_making": {
+          "approach": "consensus_building",
+          "voting_weight": 3,
+          "timeout_seconds": 60,
+          "fallback": "analytical_decision"
+        },
+        "worker_management": {
+          "spawn_trigger": "capacity_planning",
+          "specialization_preference": "high",
+          "auto_scaling": true,
+          "max_workers": 12
+        }
+      },
+      "preferred_tasks": [
+        "research",
+        "analysis",
+        "architecture",
+        "planning",
+        "risk_assessment"
+      ]
+    },
+
+    "tactical": {
+      "description": "Execution-focused coordination for implementation",
+      "behaviors": {
+        "task_delegation": {
+          "strategy": "availability_based",
+          "prioritization": "urgency",
+          "considerations": [
+            "worker_availability",
+            "task_priority",
+            "deadline_proximity",
+            "dependencies"
+          ]
+        },
+        "decision_making": {
+          "approach": "rapid_consensus",
+          "voting_weight": 3,
+          "timeout_seconds": 30,
+          "fallback": "majority_rule"
+        },
+        "worker_management": {
+          "spawn_trigger": "workload_threshold",
+          "specialization_preference": "medium",
+          "auto_scaling": true,
+          "max_workers": 10
+        }
+      },
+      "preferred_tasks": [
+        "implementation",
+        "development",
+        "testing",
+        "integration",
+        "deployment"
+      ]
+    },
+
+    "adaptive": {
+      "description": "Dynamic optimization and performance tuning",
+      "behaviors": {
+        "task_delegation": {
+          "strategy": "performance_based",
+          "prioritization": "efficiency",
+          "considerations": [
+            "worker_performance",
+            "historical_success",
+            "optimization_potential",
+            "learning_opportunity"
+          ]
+        },
+        "decision_making": {
+          "approach": "data_driven",
+          "voting_weight": 3,
+          "timeout_seconds": 45,
+          "fallback": "optimization_focused"
+        },
+        "worker_management": {
+          "spawn_trigger": "performance_metrics",
+          "specialization_preference": "adaptive",
+          "auto_scaling": true,
+          "max_workers": 8
+        }
+      },
+      "preferred_tasks": [
+        "optimization",
+        "performance_tuning",
+        "monitoring",
+        "analysis",
+        "improvement"
+      ]
+    }
+  },
+
+  "coordination_patterns": {
+    "task_assignment": {
+      "algorithms": {
+        "capability_matching": {
+          "description": "Match tasks to worker capabilities",
+          "weight": 0.4,
+          "factors": [
+            "capability_overlap",
+            "specialization_depth",
+            "experience_level"
+          ]
+        },
+        "performance_history": {
+          "description": "Consider past performance on similar tasks",
+          "weight": 0.3,
+          "factors": [
+            "success_rate",
+            "completion_time",
+            "quality_metrics"
+          ]
+        },
+        "availability": {
+          "description": "Worker current workload and availability",
+          "weight": 0.2,
+          "factors": [
+            "idle_time",
+            "current_tasks",
+            "estimated_capacity"
+          ]
+        },
+        "learning_potential": {
+          "description": "Opportunity for worker skill development",
+          "weight": 0.1,
+          "factors": [
+            "skill_gap",
+            "training_value",
+            "knowledge_transfer"
+          ]
+        }
+      }
+    },
+
+    "consensus_building": {
+      "phases": [
+        {
+          "name": "information_gathering",
+          "duration_seconds": 10,
+          "actions": [
+            "collect_worker_inputs",
+            "analyze_options",
+            "identify_constraints"
+          ]
+        },
+        {
+          "name": "deliberation",
+          "duration_seconds": 15,
+          "actions": [
+            "evaluate_alternatives",
+            "assess_trade_offs",
+            "calculate_confidence"
+          ]
+        },
+        {
+          "name": "voting",
+          "duration_seconds": 10,
+          "actions": [
+            "collect_votes",
+            "apply_weights",
+            "verify_threshold"
+          ]
+        },
+        {
+          "name": "decision",
+          "duration_seconds": 5,
+          "actions": [
+            "finalize_decision",
+            "record_consensus",
+            "communicate_result"
+          ]
+        }
+      ]
+    },
+
+    "worker_scaling": {
+      "scale_up": {
+        "triggers": [
+          {
+            "condition": "pending_tasks > (idle_workers * 2)",
+            "action": "spawn_worker",
+            "cooldown_seconds": 60
+          },
+          {
+            "condition": "avg_queue_time > 300",
+            "action": "spawn_worker",
+            "cooldown_seconds": 120
+          },
+          {
+            "condition": "utilization_rate > 0.9",
+            "action": "spawn_worker",
+            "cooldown_seconds": 180
+          }
+        ],
+        "max_rate": "2_per_minute",
+        "max_total": 12
+      },
+      "scale_down": {
+        "triggers": [
+          {
+            "condition": "idle_workers > (pending_tasks * 2)",
+            "action": "release_worker",
+            "grace_period_seconds": 300
+          },
+          {
+            "condition": "utilization_rate < 0.3",
+            "action": "release_worker",
+            "grace_period_seconds": 600
+          }
+        ],
+        "min_workers": 2
+      }
+    }
+  },
+
+  "communication_protocols": {
+    "worker_coordination": {
+      "channels": [
+        {
+          "name": "task_assignment",
+          "priority": "high",
+          "delivery": "immediate",
+          "acknowledgement_required": true
+        },
+        {
+          "name": "status_updates",
+          "priority": "medium",
+          "delivery": "batched",
+          "interval_seconds": 30
+        },
+        {
+          "name": "consensus_voting",
+          "priority": "high",
+          "delivery": "immediate",
+          "timeout_seconds": 30
+        },
+        {
+          "name": "collective_memory",
+          "priority": "low",
+          "delivery": "async",
+          "batch_size": 10
+        }
+      ]
+    },
+
+    "message_formats": {
+      "task_assignment": {
+        "structure": {
+          "task_id": "string",
+          "description": "string",
+          "priority": "number",
+          "deadline": "timestamp",
+          "requirements": "object",
+          "context": "object"
+        }
+      },
+      "consensus_vote": {
+        "structure": {
+          "topic": "string",
+          "options": "array",
+          "voter_id": "string",
+          "vote": "string",
+          "confidence": "number",
+          "reasoning": "string"
+        }
+      },
+      "status_update": {
+        "structure": {
+          "worker_id": "string",
+          "status": "string",
+          "current_task": "string",
+          "progress": "number",
+          "estimated_completion": "timestamp"
+        }
+      }
+    }
+  },
+
+  "error_handling": {
+    "worker_failure": {
+      "detection": [
+        "heartbeat_timeout",
+        "task_timeout",
+        "exception_raised"
+      ],
+      "response": {
+        "reassign_task": true,
+        "notify_queen": true,
+        "log_incident": true,
+        "attempt_recovery": true,
+        "max_retries": 3
+      }
+    },
+
+    "consensus_failure": {
+      "scenarios": [
+        {
+          "condition": "no_supermajority",
+          "action": "extend_voting",
+          "max_extensions": 2
+        },
+        {
+          "condition": "voting_timeout",
+          "action": "fallback_to_majority"
+        },
+        {
+          "condition": "insufficient_votes",
+          "action": "queen_decides"
+        }
+      ]
+    },
+
+    "system_failure": {
+      "checkpointing": {
+        "enabled": true,
+        "interval_minutes": 15,
+        "retention_count": 5
+      },
+      "recovery": {
+        "auto_resume": true,
+        "state_restoration": true,
+        "notification": true
+      }
+    }
+  },
+
+  "performance_optimization": {
+    "batch_operations": {
+      "task_assignment": 5,
+      "memory_updates": 10,
+      "metric_collection": 20
+    },
+
+    "caching": {
+      "worker_capabilities": {
+        "enabled": true,
+        "ttl_seconds": 300
+      },
+      "consensus_history": {
+        "enabled": true,
+        "max_entries": 100
+      },
+      "performance_metrics": {
+        "enabled": true,
+        "ttl_seconds": 60
+      }
+    },
+
+    "resource_management": {
+      "memory_limits": {
+        "collective_memory_mb": 100,
+        "cache_mb": 50,
+        "logs_mb": 50
+      },
+      "garbage_collection": {
+        "enabled": true,
+        "interval_minutes": 5,
+        "aggressive_threshold_mb": 80
+      }
+    }
+  },
+
+  "metrics_collection": {
+    "queen_metrics": [
+      "decisions_made",
+      "tasks_assigned",
+      "workers_spawned",
+      "consensus_confidence",
+      "delegation_accuracy"
+    ],
+
+    "system_metrics": [
+      "task_throughput",
+      "worker_utilization",
+      "consensus_success_rate",
+      "avg_task_duration",
+      "memory_usage"
+    ],
+
+    "export": {
+      "enabled": true,
+      "interval_minutes": 5,
+      "format": "json",
+      "destination": ".hive-mind/metrics/"
+    }
+  }
+}

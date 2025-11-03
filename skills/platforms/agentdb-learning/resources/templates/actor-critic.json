@@ -1,0 +1,144 @@
+{
+  "algorithm": "actor-critic",
+  "description": "Policy gradient method with value function baseline for variance reduction",
+
+  "hyperparameters": {
+    "actor_lr": 0.001,
+    "critic_lr": 0.002,
+    "gamma": 0.99,
+    "entropy_coef": 0.01,
+    "value_loss_coef": 0.5,
+    "max_grad_norm": 0.5
+  },
+
+  "environment": {
+    "state_dim": 8,
+    "action_dim": 4,
+    "continuous_actions": true,
+    "action_range": [-1.0, 1.0],
+    "max_steps": 200
+  },
+
+  "training": {
+    "num_episodes": 2000,
+    "batch_size": 64,
+    "update_frequency": 1,
+    "n_step_returns": 5,
+    "gae_lambda": 0.95
+  },
+
+  "actor_network": {
+    "architecture": "feedforward",
+    "hidden_layers": [128, 64],
+    "activation": "tanh",
+    "output_activation": "tanh",
+    "optimizer": "adam",
+    "gradient_clipping": true
+  },
+
+  "critic_network": {
+    "architecture": "feedforward",
+    "hidden_layers": [128, 64],
+    "activation": "relu",
+    "output_activation": "linear",
+    "optimizer": "adam",
+    "loss_function": "mse"
+  },
+
+  "advanced_features": {
+    "advantage_estimation": "gae",
+    "normalize_advantages": true,
+    "clip_advantages": false,
+    "baseline_update_method": "td_error"
+  },
+
+  "evaluation": {
+    "eval_frequency": 100,
+    "eval_episodes": 20,
+    "deterministic_policy": true,
+    "render": false
+  },
+
+  "logging": {
+    "log_frequency": 20,
+    "save_frequency": 200,
+    "metrics": [
+      "episode_reward",
+      "actor_loss",
+      "critic_loss",
+      "entropy",
+      "policy_gradient_norm"
+    ],
+    "log_dir": "./logs/actor-critic",
+    "checkpoint_dir": "./checkpoints/actor-critic"
+  },
+
+  "agentdb": {
+    "db_path": "./.agentdb/actor-critic.db",
+    "enable_learning": true,
+    "enable_reasoning": true,
+    "cache_size": 2000,
+    "pattern_domain": "actor-critic",
+    "store_trajectories": true,
+    "trajectory_min_reward": 0.0
+  },
+
+  "performance": {
+    "use_wasm": true,
+    "quantization": false,
+    "parallel_envs": 4,
+    "async_updates": true,
+    "gpu_acceleration": false
+  },
+
+  "use_cases": [
+    "Continuous control (robotics)",
+    "Autonomous driving",
+    "Game playing (continuous actions)",
+    "Portfolio optimization",
+    "Multi-agent coordination"
+  ],
+
+  "variants": {
+    "a2c": {
+      "description": "Advantage Actor-Critic (synchronous)",
+      "parallel_envs": 8,
+      "update_frequency": 5
+    },
+    "a3c": {
+      "description": "Asynchronous Advantage Actor-Critic",
+      "parallel_envs": 16,
+      "async_updates": true
+    },
+    "ppo": {
+      "description": "Proximal Policy Optimization",
+      "clip_ratio": 0.2,
+      "ppo_epochs": 10,
+      "mini_batch_size": 32
+    }
+  },
+
+  "best_practices": [
+    "Use GAE for advantage estimation to reduce variance",
+    "Normalize advantages for stable training",
+    "Tune entropy coefficient to balance exploration/exploitation",
+    "Monitor policy gradient norm to detect instabilities",
+    "Use separate learning rates for actor and critic",
+    "Consider PPO variant for more stable training"
+  ],
+
+  "troubleshooting": {
+    "high_variance": {
+      "solution": "Increase n_step_returns or gae_lambda",
+      "alternative": "Use larger batch sizes"
+    },
+    "policy_collapse": {
+      "solution": "Increase entropy_coef",
+      "alternative": "Reduce actor learning rate"
+    },
+    "slow_convergence": {
+      "solution": "Increase learning rates",
+      "alternative": "Use advantage normalization"
+    }
+  }
+}

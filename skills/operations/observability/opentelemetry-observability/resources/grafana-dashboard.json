@@ -1,0 +1,199 @@
+{
+  "dashboard": {
+    "title": "OpenTelemetry Observability Dashboard",
+    "tags": ["opentelemetry", "apm", "distributed-tracing"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate (requests/sec)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "targets": [
+          {
+            "expr": "rate(http_server_requests_total[5m])",
+            "legendFormat": "{{service_name}} - {{http_method}} {{http_route}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "reqps", "label": "Requests/sec"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Request Duration (p50, p95, p99)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(http_server_duration_bucket[5m]))",
+            "legendFormat": "p50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(http_server_duration_bucket[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(http_server_duration_bucket[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"format": "ms", "label": "Duration"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Error Rate (%)",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+        "targets": [
+          {
+            "expr": "rate(http_server_errors_total[5m]) / rate(http_server_requests_total[5m]) * 100",
+            "legendFormat": "{{service_name}} - {{http_route}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "percent", "label": "Error Rate %", "max": 100, "min": 0},
+          {"format": "short"}
+        ],
+        "alert": {
+          "name": "High Error Rate",
+          "conditions": [
+            {
+              "evaluator": {"type": "gt", "params": [5]},
+              "operator": {"type": "and"},
+              "query": {"params": ["A", "5m", "now"]},
+              "reducer": {"type": "avg"},
+              "type": "query"
+            }
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "title": "Active Connections",
+        "type": "graph",
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+        "targets": [
+          {
+            "expr": "http_server_active_connections",
+            "legendFormat": "{{service_name}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"format": "short", "label": "Connections"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Trace Sampling Rate",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 16},
+        "targets": [
+          {
+            "expr": "otelcol_processor_probabilistic_sampler_count_traces_sampled / otelcol_processor_probabilistic_sampler_count_traces * 100",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "graphMode": "none",
+          "colorMode": "value",
+          "unit": "percent"
+        }
+      },
+      {
+        "id": 6,
+        "title": "Spans Exported/sec",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 16},
+        "targets": [
+          {
+            "expr": "rate(otelcol_exporter_sent_spans[1m])",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "graphMode": "area",
+          "colorMode": "value",
+          "unit": "ops"
+        }
+      },
+      {
+        "id": 7,
+        "title": "Memory Usage",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 16},
+        "targets": [
+          {
+            "expr": "system_memory_usage{memory_type=\"heap\"}",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "graphMode": "area",
+          "colorMode": "value",
+          "unit": "bytes"
+        }
+      },
+      {
+        "id": 8,
+        "title": "CPU Usage (%)",
+        "type": "stat",
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 16},
+        "targets": [
+          {
+            "expr": "system_cpu_usage",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "graphMode": "area",
+          "colorMode": "value",
+          "unit": "percent",
+          "max": 100,
+          "min": 0
+        }
+      },
+      {
+        "id": 9,
+        "title": "Top 10 Slowest Endpoints",
+        "type": "table",
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 20},
+        "targets": [
+          {
+            "expr": "topk(10, histogram_quantile(0.99, rate(http_server_duration_bucket[5m])))",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {"Time": true},
+              "renameByName": {
+                "http_method": "Method",
+                "http_route": "Route",
+                "Value": "p99 Latency (ms)"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

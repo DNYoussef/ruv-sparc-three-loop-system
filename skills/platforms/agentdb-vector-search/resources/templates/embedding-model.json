@@ -1,0 +1,187 @@
+{
+  "name": "all-MiniLM-L6-v2",
+  "description": "Sentence-BERT embedding model optimized for semantic search",
+  "provider": "sentence-transformers",
+  "version": "2.2.0",
+
+  "specifications": {
+    "dimension": 384,
+    "max_seq_length": 256,
+    "normalization": "L2",
+    "pooling": "mean",
+    "language": "multilingual"
+  },
+
+  "performance": {
+    "encoding_speed": "~2500 sentences/sec (CPU)",
+    "encoding_speed_gpu": "~15000 sentences/sec (GPU)",
+    "memory_usage": "~90MB",
+    "latency_single": "<10ms",
+    "latency_batch": "<50ms (32 sentences)"
+  },
+
+  "use_cases": [
+    "semantic_search",
+    "document_retrieval",
+    "similarity_matching",
+    "clustering",
+    "duplicate_detection"
+  ],
+
+  "benchmarks": {
+    "sts_benchmark": {
+      "score": 0.82,
+      "description": "Semantic Textual Similarity"
+    },
+    "msmarco": {
+      "score": 0.35,
+      "description": "MS MARCO passage ranking"
+    },
+    "nq": {
+      "score": 0.42,
+      "description": "Natural Questions"
+    }
+  },
+
+  "alternatives": {
+    "higher_quality": [
+      {
+        "name": "all-mpnet-base-v2",
+        "dimension": 768,
+        "performance_tradeoff": "2x slower, better quality",
+        "sts_score": 0.86
+      },
+      {
+        "name": "all-distilroberta-v1",
+        "dimension": 768,
+        "performance_tradeoff": "1.5x slower, better quality",
+        "sts_score": 0.84
+      }
+    ],
+    "faster": [
+      {
+        "name": "paraphrase-MiniLM-L3-v2",
+        "dimension": 384,
+        "performance_tradeoff": "2x faster, slightly lower quality",
+        "sts_score": 0.79
+      }
+    ],
+    "specialized": [
+      {
+        "name": "multi-qa-MiniLM-L6-cos-v1",
+        "dimension": 384,
+        "use_case": "Question-Answer retrieval",
+        "sts_score": 0.83
+      },
+      {
+        "name": "msmarco-MiniLM-L6-v3",
+        "dimension": 384,
+        "use_case": "Passage ranking",
+        "msmarco_score": 0.39
+      }
+    ]
+  },
+
+  "configuration": {
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2",
+    "device": "cpu",
+    "batch_size": 32,
+    "normalize_embeddings": true,
+    "show_progress_bar": false,
+
+    "pytorch_config": {
+      "num_threads": 4,
+      "inference_mode": true,
+      "amp_enabled": false
+    }
+  },
+
+  "agentdb_integration": {
+    "dimension_config": 384,
+    "recommended_quantization": "binary",
+    "memory_reduction": "32x with binary quantization",
+    "search_performance": "<100µs with HNSW indexing",
+
+    "initialization": {
+      "cli": "npx agentdb@latest init ./vectors.db --dimension 384",
+      "api": {
+        "dbPath": ".agentdb/vectors.db",
+        "quantizationType": "binary",
+        "cacheSize": 1000
+      }
+    }
+  },
+
+  "embedding_examples": {
+    "text_classification": {
+      "input": "The quantum computer achieved 100 qubits",
+      "embedding_shape": [384],
+      "embedding_preview": [0.042, -0.123, 0.089, "..."],
+      "use_case": "Classify document by topic"
+    },
+    "semantic_search": {
+      "query": "quantum computing advances",
+      "embedding_shape": [384],
+      "top_results": [
+        {
+          "text": "Quantum computers use qubits for parallel computation",
+          "score": 0.89
+        },
+        {
+          "text": "The quantum computer achieved 100 qubits",
+          "score": 0.85
+        }
+      ]
+    },
+    "similarity_matching": {
+      "text1": "Machine learning models require training data",
+      "text2": "Neural networks need large datasets",
+      "cosine_similarity": 0.82,
+      "interpretation": "Highly similar (>0.8)"
+    }
+  },
+
+  "optimization_tips": [
+    "Use batch encoding for multiple documents (500x faster)",
+    "Enable binary quantization for 32x memory reduction",
+    "Normalize embeddings for cosine similarity",
+    "Use HNSW indexing for sub-millisecond search",
+    "Set batch_size=32 for optimal CPU performance",
+    "Use GPU for >10k documents (15x speedup)",
+    "Cache embeddings for frequently queried texts"
+  ],
+
+  "installation": {
+    "pip": "pip install sentence-transformers",
+    "conda": "conda install -c conda-forge sentence-transformers",
+    "docker": "docker pull sentence-transformers/all-MiniLM-L6-v2"
+  },
+
+  "code_examples": {
+    "basic_usage": {
+      "language": "python",
+      "code": "from sentence_transformers import SentenceTransformer\nmodel = SentenceTransformer('all-MiniLM-L6-v2')\nembeddings = model.encode(['Text 1', 'Text 2'])"
+    },
+    "batch_encoding": {
+      "language": "python",
+      "code": "embeddings = model.encode(\n    texts,\n    batch_size=32,\n    show_progress_bar=True,\n    convert_to_numpy=True\n)"
+    },
+    "similarity_search": {
+      "language": "python",
+      "code": "from sentence_transformers import util\nsimilarities = util.cos_sim(query_embedding, doc_embeddings)\ntop_k = similarities.topk(k=5)"
+    }
+  },
+
+  "limitations": [
+    "Max sequence length: 256 tokens (longer texts are truncated)",
+    "Not optimized for cross-lingual retrieval",
+    "Lower quality than 768-dim models (all-mpnet-base-v2)",
+    "Not fine-tuned for domain-specific tasks"
+  ],
+
+  "citations": {
+    "model_paper": "Reimers & Gurevych. 2019. Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+    "huggingface": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+    "documentation": "https://www.sbert.net/docs/pretrained_models.html"
+  }
+}

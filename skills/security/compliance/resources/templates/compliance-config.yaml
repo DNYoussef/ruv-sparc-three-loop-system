@@ -1,0 +1,366 @@
+# Compliance Configuration
+# Defines organizational compliance policies, rules, and settings
+
+# Organization Settings
+organization:
+  name: "Example Corporation"
+  compliance_officer: "compliance@example.com"
+  audit_schedule: "quarterly"
+  last_audit_date: "2024-12-01"
+  next_audit_date: "2025-03-01"
+
+# Framework Configuration
+frameworks:
+  gdpr:
+    enabled: true
+    scope: "EU data subjects"
+    data_protection_officer: "dpo@example.com"
+    lawful_basis: "consent"
+    data_retention_period: "12 months"
+    breach_notification_time: "72 hours"
+
+  hipaa:
+    enabled: true
+    covered_entity: true
+    business_associate: false
+    phi_handling: "encrypted"
+    audit_log_retention: "6 years"
+
+  soc2:
+    enabled: true
+    report_type: "Type II"
+    trust_services_categories:
+      - security
+      - availability
+      - confidentiality
+
+  pci_dss:
+    enabled: true
+    merchant_level: "Level 1"
+    cardholder_data_environment: "defined"
+    quarterly_scans: true
+
+  iso27001:
+    enabled: true
+    certification_status: "certified"
+    certification_date: "2024-01-15"
+    recertification_date: "2025-12-31"
+    isms_scope: "全社"
+
+# Policy Definitions
+policies:
+  # Data Security Policy
+  data_security:
+    description: "Protect sensitive data through encryption and access controls"
+    enabled: true
+    severity: "violation"
+    rules:
+      - id: "DS-001"
+        type: "pattern"
+        pattern: '(password|secret|api[_-]?key|token)\s*=\s*["\'][^"\']+["\']'
+        description: "Hardcoded credentials detected"
+        severity: "violation"
+        remediation: "Use environment variables or secret management service"
+
+      - id: "DS-002"
+        type: "pattern"
+        pattern: 'http://(?!localhost|127\.0\.0\.1)'
+        description: "Unencrypted HTTP connection"
+        severity: "violation"
+        remediation: "Use HTTPS for all network communications"
+
+      - id: "DS-003"
+        type: "pattern"
+        pattern: '(AES|DES|RC4|MD5)'
+        description: "Weak cryptographic algorithm"
+        severity: "warning"
+        remediation: "Use AES-256, RSA-2048+, or SHA-256+"
+
+      - id: "DS-004"
+        type: "file_size"
+        max_size_mb: 100
+        description: "File size exceeds limit"
+        severity: "info"
+        remediation: "Split large files or use compression"
+
+  # Personal Data Protection (GDPR)
+  personal_data:
+    description: "Protect personal data and ensure GDPR compliance"
+    enabled: true
+    severity: "violation"
+    rules:
+      - id: "PD-001"
+        type: "pattern"
+        pattern: '(email|phone|ssn|national[_-]?id).*=.*["\'][^"\']+["\']'
+        description: "Personal data detected in code"
+        severity: "warning"
+        remediation: "Ensure data is encrypted and properly handled"
+
+      - id: "PD-002"
+        type: "pattern"
+        pattern: '\.log\(.*\b(email|phone|ssn|user)\b'
+        description: "Personal data may be logged"
+        severity: "violation"
+        remediation: "Redact or hash personal data before logging"
+
+      - id: "PD-003"
+        type: "pattern"
+        pattern: 'consent\s*=\s*(true|false)'
+        description: "Hardcoded consent value"
+        severity: "warning"
+        remediation: "Implement consent management workflow"
+
+  # Protected Health Information (HIPAA)
+  phi_protection:
+    description: "Protect PHI and ensure HIPAA compliance"
+    enabled: true
+    severity: "violation"
+    rules:
+      - id: "PHI-001"
+        type: "pattern"
+        pattern: '(patient[_-]?id|mrn|health[_-]?record).*=.*["\'][^"\']+["\']'
+        description: "PHI detected in code"
+        severity: "violation"
+        remediation: "Encrypt PHI and use secure storage"
+
+      - id: "PHI-002"
+        type: "pattern"
+        pattern: '\.log\(.*\b(patient|diagnosis|treatment)\b'
+        description: "PHI may be logged"
+        severity: "violation"
+        remediation: "Implement secure audit logging with access controls"
+
+  # Access Control Policy
+  access_control:
+    description: "Enforce least privilege and proper authentication"
+    enabled: true
+    severity: "warning"
+    rules:
+      - id: "AC-001"
+        type: "pattern"
+        pattern: 'sudo\s+chmod\s+777'
+        description: "Overly permissive file permissions"
+        severity: "violation"
+        remediation: "Use least privilege (e.g., 640, 644)"
+
+      - id: "AC-002"
+        type: "pattern"
+        pattern: 'default[_-]?password'
+        description: "Default password detected"
+        severity: "violation"
+        remediation: "Change all default credentials"
+
+      - id: "AC-003"
+        type: "pattern"
+        pattern: '(admin|root).*user.*(?!audit)'
+        description: "Admin access without audit trail"
+        severity: "warning"
+        remediation: "Implement audit logging for privileged access"
+
+  # Code Quality Policy
+  code_quality:
+    description: "Maintain code quality and security standards"
+    enabled: true
+    severity: "info"
+    rules:
+      - id: "CQ-001"
+        type: "pattern"
+        pattern: 'try:.*except\s*:.*pass'
+        description: "Silent exception handling"
+        severity: "warning"
+        remediation: "Log exceptions for monitoring"
+
+      - id: "CQ-002"
+        type: "pattern"
+        pattern: '(eval|exec)\('
+        description: "Code injection vulnerability"
+        severity: "violation"
+        remediation: "Remove eval/exec or validate input rigorously"
+
+      - id: "CQ-003"
+        type: "file_extension"
+        forbidden_extensions: ['.exe', '.dll', '.so', '.dylib']
+        description: "Binary file detected"
+        severity: "warning"
+        remediation: "Review binary file necessity and security"
+
+  # Cardholder Data Protection (PCI-DSS)
+  cardholder_data:
+    description: "Protect cardholder data and ensure PCI-DSS compliance"
+    enabled: true
+    severity: "violation"
+    rules:
+      - id: "CD-001"
+        type: "pattern"
+        pattern: '(card[_-]?number|cvv|pan)\s*=\s*["\'][0-9]{13,19}["\']'
+        description: "Unencrypted cardholder data"
+        severity: "violation"
+        remediation: "Encrypt cardholder data using strong cryptography"
+
+      - id: "CD-002"
+        type: "pattern"
+        pattern: '\.log\(.*\b(cvv|track[_-]?data|pin)\b'
+        description: "Forbidden sensitive authentication data in logs"
+        severity: "violation"
+        remediation: "Never log CVV, PIN, or track data"
+
+      - id: "CD-003"
+        type: "pattern"
+        pattern: 'tls[_-]?version\s*=\s*["\']?(1\.0|1\.1)'
+        description: "Outdated TLS version"
+        severity: "violation"
+        remediation: "Update to TLS 1.2 or higher"
+
+# Scanning Rules
+scanning:
+  file_patterns:
+    include:
+      - "**/*.py"
+      - "**/*.js"
+      - "**/*.ts"
+      - "**/*.java"
+      - "**/*.go"
+      - "**/*.rb"
+      - "**/*.php"
+      - "**/*.cs"
+      - "**/*.cpp"
+      - "**/*.sql"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.json"
+      - "**/*.xml"
+      - "**/*.sh"
+      - "**/*.bash"
+      - "**/*.env"
+      - "**/*.tf"
+      - "**/*.dockerfile"
+
+  exclude_patterns:
+    - "**/node_modules/**"
+    - "**/vendor/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "**/.git/**"
+    - "**/__pycache__/**"
+    - "**/*.min.js"
+    - "**/*.min.css"
+    - "**/test/**"
+    - "**/tests/**"
+    - "**/*_test.py"
+    - "**/*_test.go"
+
+# Reporting Settings
+reporting:
+  output_formats:
+    - text
+    - json
+    - html
+
+  severity_levels:
+    violation:
+      color: "red"
+      exit_code: 1
+    warning:
+      color: "yellow"
+      exit_code: 0
+    info:
+      color: "blue"
+      exit_code: 0
+
+  distribution_lists:
+    violations:
+      - compliance@example.com
+      - security@example.com
+    warnings:
+      - dev-team@example.com
+    info:
+      - dev-team@example.com
+
+  retention_days: 365
+
+# Exception Management
+exceptions:
+  - id: "EXC-001"
+    policy: "data_security"
+    rule: "DS-001"
+    file_pattern: ".*test.*\\.py$"
+    reason: "Test files can contain mock credentials"
+    approved_by: "compliance-officer@example.com"
+    approved_date: "2024-11-01"
+    expires: "2025-11-01"
+
+  - id: "EXC-002"
+    policy: "data_security"
+    rule: "DS-002"
+    file_pattern: ".*localhost_config\\.yaml$"
+    reason: "Local development configuration"
+    approved_by: "security-team@example.com"
+    approved_date: "2024-10-15"
+    expires: "2025-10-15"
+
+  - id: "EXC-003"
+    policy: "code_quality"
+    rule: "CQ-003"
+    file_pattern: ".*vendor/.*\\.(dll|so)$"
+    reason: "Third-party vendor libraries"
+    approved_by: "security-team@example.com"
+    approved_date: "2024-09-01"
+    expires: "2025-09-01"
+
+  - id: "EXC-004"
+    policy: "personal_data"
+    rule: "PD-001"
+    file_pattern: ".*fixtures/.*\\.json$"
+    reason: "Test fixture data with synthetic information"
+    approved_by: "compliance-officer@example.com"
+    approved_date: "2024-11-15"
+    expires: "2025-11-15"
+
+# Integration Settings
+integrations:
+  ci_cd:
+    enabled: true
+    fail_on_violation: true
+    fail_on_warning: false
+
+  notifications:
+    slack:
+      enabled: true
+      webhook_url: "${SLACK_WEBHOOK_URL}"
+      channels:
+        violations: "#compliance-alerts"
+        warnings: "#dev-warnings"
+
+    email:
+      enabled: true
+      smtp_server: "smtp.example.com"
+      smtp_port: 587
+      from_address: "compliance@example.com"
+
+    jira:
+      enabled: false
+      url: "https://example.atlassian.net"
+      project: "COMPLIANCE"
+      issue_type: "Bug"
+
+  version_control:
+    pre_commit_check: true
+    block_commits_on_violation: true
+
+  monitoring:
+    enabled: true
+    metrics_endpoint: "https://metrics.example.com"
+    dashboard_url: "https://dashboard.example.com/compliance"
+
+# Audit Trail
+audit:
+  enabled: true
+  log_file: "/var/log/compliance/policy-checks.log"
+  retention_days: 365
+  fields:
+    - timestamp
+    - user
+    - policy
+    - result
+    - violations
+    - exceptions_applied

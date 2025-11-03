@@ -1,0 +1,111 @@
+{
+  "name": "feedforward-classifier",
+  "description": "Standard feedforward neural network for multi-class classification with dropout regularization",
+  "architecture": {
+    "type": "feedforward",
+    "layers": [
+      {
+        "type": "dense",
+        "units": 256,
+        "activation": "relu",
+        "kernel_initializer": "he_normal"
+      },
+      {
+        "type": "batch_normalization"
+      },
+      {
+        "type": "dropout",
+        "rate": 0.3
+      },
+      {
+        "type": "dense",
+        "units": 128,
+        "activation": "relu",
+        "kernel_initializer": "he_normal"
+      },
+      {
+        "type": "batch_normalization"
+      },
+      {
+        "type": "dropout",
+        "rate": 0.2
+      },
+      {
+        "type": "dense",
+        "units": 64,
+        "activation": "relu",
+        "kernel_initializer": "he_normal"
+      },
+      {
+        "type": "dropout",
+        "rate": 0.1
+      },
+      {
+        "type": "dense",
+        "units": 10,
+        "activation": "softmax",
+        "name": "output"
+      }
+    ]
+  },
+  "training": {
+    "epochs": 100,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "loss": "categorical_crossentropy",
+    "metrics": ["accuracy", "precision", "recall"]
+  },
+  "divergent": {
+    "enabled": false,
+    "pattern": "lateral",
+    "factor": 0.5
+  },
+  "regularization": {
+    "l2": 0.01,
+    "early_stopping": {
+      "enabled": true,
+      "patience": 10,
+      "monitor": "val_loss"
+    }
+  },
+  "data_augmentation": {
+    "enabled": false
+  },
+  "callbacks": [
+    {
+      "type": "model_checkpoint",
+      "filepath": "checkpoints/model-{epoch:02d}-{val_loss:.4f}.h5",
+      "monitor": "val_loss",
+      "save_best_only": true
+    },
+    {
+      "type": "reduce_lr_on_plateau",
+      "monitor": "val_loss",
+      "factor": 0.5,
+      "patience": 5,
+      "min_lr": 1e-7
+    },
+    {
+      "type": "tensorboard",
+      "log_dir": "logs"
+    }
+  ],
+  "use_cases": [
+    "Image classification (MNIST, CIFAR-10)",
+    "Tabular data classification",
+    "Feature vector classification",
+    "Multi-class prediction problems"
+  ],
+  "performance_targets": {
+    "accuracy": 0.90,
+    "inference_latency_ms": 10,
+    "memory_mb": 200
+  },
+  "metadata": {
+    "author": "Flow Nexus",
+    "version": "1.0.0",
+    "created": "2025-10-19",
+    "tags": ["classification", "feedforward", "multi-class", "dropout"]
+  }
+}

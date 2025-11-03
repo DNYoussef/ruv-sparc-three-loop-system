@@ -1,0 +1,237 @@
+{
+  "version": "1.0.0",
+  "description": "Session configuration for AgentDB memory management",
+
+  "session": {
+    "id_generation": {
+      "strategy": "uuid_v4",
+      "prefix": "session",
+      "include_timestamp": true
+    },
+
+    "lifecycle": {
+      "max_duration_hours": 24,
+      "idle_timeout_minutes": 30,
+      "auto_save_interval_seconds": 60,
+      "enable_persistence": true
+    },
+
+    "context": {
+      "max_messages": 100,
+      "max_context_length": 10000,
+      "compression": {
+        "enabled": true,
+        "algorithm": "gzip",
+        "level": 6
+      },
+      "summarization": {
+        "enabled": true,
+        "trigger_threshold": 50,
+        "target_length": 500
+      }
+    }
+  },
+
+  "memory": {
+    "allocation": {
+      "short_term_ratio": 0.3,
+      "mid_term_ratio": 0.5,
+      "long_term_ratio": 0.2
+    },
+
+    "storage": {
+      "database_path": ".agentdb/sessions.db",
+      "enable_wal": true,
+      "cache_size_mb": 100,
+      "page_size": 4096
+    },
+
+    "retrieval": {
+      "default_limit": 20,
+      "max_limit": 100,
+      "min_relevance_score": 0.5,
+      "use_semantic_search": true,
+      "fallback_to_keyword": true
+    }
+  },
+
+  "patterns": {
+    "learning": {
+      "enabled": true,
+      "min_frequency": 3,
+      "min_confidence": 0.6,
+      "auto_apply": false
+    },
+
+    "recognition": {
+      "enabled": true,
+      "match_threshold": 0.7,
+      "max_candidates": 5,
+      "context_aware": true
+    },
+
+    "optimization": {
+      "prune_low_confidence": true,
+      "confidence_threshold": 0.3,
+      "merge_similar": true,
+      "similarity_threshold": 0.9
+    }
+  },
+
+  "conversation": {
+    "tracking": {
+      "enabled": true,
+      "track_turns": true,
+      "track_topics": true,
+      "track_sentiment": false
+    },
+
+    "history": {
+      "max_turns": 50,
+      "sliding_window": true,
+      "importance_weighting": true,
+      "auto_prune": true
+    },
+
+    "context_injection": {
+      "enabled": true,
+      "max_tokens": 2000,
+      "strategy": "relevance_based",
+      "include_metadata": true
+    }
+  },
+
+  "user": {
+    "preferences": {
+      "language": "en",
+      "timezone": "UTC",
+      "response_style": "balanced",
+      "verbosity": "medium"
+    },
+
+    "profile": {
+      "track_topics": true,
+      "track_expertise": true,
+      "track_preferences": true,
+      "update_frequency": "session"
+    }
+  },
+
+  "performance": {
+    "optimization": {
+      "enable_caching": true,
+      "cache_ttl_seconds": 300,
+      "enable_batching": true,
+      "batch_size": 10
+    },
+
+    "limits": {
+      "max_concurrent_operations": 5,
+      "query_timeout_seconds": 10,
+      "max_retry_attempts": 3
+    },
+
+    "monitoring": {
+      "enabled": true,
+      "track_latency": true,
+      "track_throughput": true,
+      "log_slow_queries": true,
+      "slow_query_threshold_ms": 100
+    }
+  },
+
+  "security": {
+    "encryption": {
+      "enabled": false,
+      "algorithm": "AES-256-GCM",
+      "key_rotation_days": 30
+    },
+
+    "privacy": {
+      "anonymize_pii": false,
+      "redact_sensitive": false,
+      "data_retention_days": 30
+    },
+
+    "access_control": {
+      "require_authentication": false,
+      "session_validation": true,
+      "rate_limiting": {
+        "enabled": true,
+        "max_requests_per_minute": 60
+      }
+    }
+  },
+
+  "integration": {
+    "agentdb": {
+      "enabled": true,
+      "auto_init": true,
+      "dimension": 384,
+      "quantization": "scalar",
+      "enable_hnsw": true
+    },
+
+    "reasoningbank": {
+      "enabled": true,
+      "enable_learning": true,
+      "enable_reasoning": true,
+      "synthesis_strategy": "weighted"
+    },
+
+    "hooks": {
+      "pre_session_start": [],
+      "post_session_start": [],
+      "pre_message": [],
+      "post_message": [],
+      "pre_session_end": [],
+      "post_session_end": []
+    }
+  },
+
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "output": {
+      "console": true,
+      "file": true,
+      "path": ".agentdb/logs/session.log"
+    },
+
+    "rotation": {
+      "enabled": true,
+      "max_size_mb": 10,
+      "max_files": 5
+    },
+
+    "categories": {
+      "session": true,
+      "memory": true,
+      "patterns": true,
+      "performance": true,
+      "errors": true
+    }
+  },
+
+  "features": {
+    "experimental": {
+      "enable_multimodal": false,
+      "enable_streaming": false,
+      "enable_collaborative": false
+    },
+
+    "flags": {
+      "use_new_embeddings": false,
+      "use_hybrid_search": true,
+      "use_adaptive_limits": true
+    }
+  },
+
+  "defaults": {
+    "memory_layer": "short_term",
+    "priority": 0.5,
+    "retention_hours": 24,
+    "auto_consolidate": true,
+    "auto_cleanup": true
+  }
+}

@@ -1,0 +1,318 @@
+# Skill Metadata Schema
+# Comprehensive metadata structure for micro-skill discovery and management
+# Version: 2.0.0
+
+# ===========================
+# CORE METADATA
+# ===========================
+skill:
+  name: skill-name-kebab-case
+  display_name: Human Readable Name
+  description: >
+    Clear description of what this skill does and when to use it.
+    Should focus on trigger conditions and outcomes.
+  version: 1.0.0
+  created_at: 2024-11-01T00:00:00Z
+  updated_at: 2024-11-01T00:00:00Z
+
+# ===========================
+# AUTHORSHIP
+# ===========================
+authorship:
+  author: Author Name or Team
+  email: author@example.com
+  organization: Organization Name
+  license: MIT
+  repository: https://github.com/org/repo
+  documentation: https://docs.example.com/skills/skill-name
+
+# ===========================
+# CLASSIFICATION
+# ===========================
+classification:
+  # Primary domain
+  domain: extraction | validation | generation | analysis | transformation
+
+  # Task type
+  task_type: data-processing | code-analysis | api-testing | etc
+
+  # Complexity level
+  complexity: simple | moderate | complex
+
+  # Quality tier
+  quality_tier: bronze | silver | gold | platinum
+
+  # Tags for discovery
+  tags:
+    - primary-tag
+    - secondary-tag
+    - evidence-pattern-tag
+
+# ===========================
+# EVIDENCE-BASED DESIGN
+# ===========================
+evidence_based:
+  # Prompting pattern
+  pattern: self-consistency | program-of-thought | plan-and-solve
+
+  # Pattern justification
+  pattern_rationale: >
+    Why this pattern was chosen for this task type.
+
+  # Techniques applied
+  techniques:
+    - multi-perspective-analysis
+    - cross-validation
+    - confidence-scoring
+    - systematic-decomposition
+
+  # Research references
+  references:
+    - "Chain-of-Thought Prompting (Wei et al., 2022)"
+    - "Self-Consistency Improves Chain of Thought (Wang et al., 2023)"
+
+# ===========================
+# AGENT SPECIFICATION
+# ===========================
+agent:
+  # Agent role
+  role: domain specialist
+
+  # Core expertise
+  expertise:
+    - Core competency 1
+    - Core competency 2
+    - Edge case handling
+    - Quality standards
+
+  # Methodological approach
+  methodology: |
+    1. Step one of methodology
+    2. Step two of methodology
+    3. Step three of methodology
+    4. Step four of methodology
+    5. Step five of methodology
+
+  # System prompt template
+  system_prompt_template: |
+    I am a {role} using {pattern} for {use_case}.
+
+    Methodology:
+    {methodology}
+
+    Expertise:
+    {expertise}
+
+# ===========================
+# CONTRACTS
+# ===========================
+contracts:
+  # Input contract
+  input:
+    schema_type: json-schema | yaml | custom
+    schema:
+      type: object
+      required:
+        - field1
+        - field2
+      properties:
+        field1:
+          type: string
+          description: Field description
+
+  # Output contract
+  output:
+    format: json | markdown | code | text
+    schema:
+      type: object
+      required:
+        - result
+        - metadata
+      properties:
+        result:
+          type: object
+        metadata:
+          type: object
+          properties:
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+
+# ===========================
+# PERFORMANCE
+# ===========================
+performance:
+  # Token metrics
+  tokens:
+    skill_content: 1500  # Tokens in SKILL.md
+    average_execution: 800  # Average tokens per execution
+    max_execution: 2000  # Maximum tokens for execution
+
+  # Timing
+  timing:
+    average_duration_ms: 2000
+    max_duration_ms: 10000
+
+  # Quality metrics
+  quality:
+    accuracy_target: 0.95
+    precision_target: 0.90
+    recall_target: 0.90
+
+# ===========================
+# INTEGRATION
+# ===========================
+integration:
+  # Cascade compatibility
+  cascades:
+    compatible: true
+    patterns:
+      - sequential
+      - parallel
+      - conditional
+    examples:
+      - "upstream-skill → this-skill → downstream-skill"
+      - "input → [this-skill + sibling-skill] → merge"
+
+  # Command binding
+  commands:
+    slash_command: /skill-name
+    cli_command: skill-name
+    parameters:
+      - name: input
+        type: string
+        required: true
+      - name: output
+        type: string
+        required: false
+
+  # Dependencies
+  dependencies:
+    skills: []
+    resources: []
+    external_tools: []
+
+# ===========================
+# VALIDATION & TESTING
+# ===========================
+validation:
+  # Test coverage
+  test_coverage:
+    normal_operation: true
+    boundary_conditions: true
+    error_cases: true
+    edge_cases: true
+    performance_tests: true
+
+  # Validation rules
+  rules:
+    - Input must match schema
+    - Methodology must be followed
+    - Output must meet quality standards
+    - Error handling must be comprehensive
+
+  # Known failure modes
+  failure_modes:
+    - mode: ambiguous_input
+      detection: Input lacks required specificity
+      mitigation: Request clarification from user
+    - mode: insufficient_data
+      detection: Data doesn't meet minimum requirements
+      mitigation: Return partial results with warnings
+
+# ===========================
+# NEURAL TRAINING
+# ===========================
+neural_training:
+  enabled: true
+
+  # Cognitive pattern
+  pattern: convergent | divergent | lateral | systems
+
+  # Learning configuration
+  learning:
+    feedback_collection: true
+    improvement_iteration: true
+    success_tracking: true
+
+  # Metrics tracked
+  metrics:
+    - execution_success_rate
+    - output_quality_score
+    - user_satisfaction
+    - performance_time
+
+# ===========================
+# DOCUMENTATION
+# ===========================
+documentation:
+  # README location
+  readme: README.md
+
+  # Examples
+  examples:
+    - path: examples/example-1-normal-operation.md
+      description: Basic usage scenario
+    - path: examples/example-2-edge-cases.md
+      description: Handling edge cases
+
+  # Test documentation
+  tests:
+    - path: tests/test-1-validation.md
+      description: Validation test cases
+
+  # References
+  references:
+    - title: Related Skill 1
+      url: ../related-skill-1/
+    - title: Evidence-Based Prompting Guide
+      url: https://docs.example.com/evidence-based
+
+# ===========================
+# MAINTENANCE
+# ===========================
+maintenance:
+  # Stability status
+  status: experimental | stable | deprecated
+
+  # Maintenance level
+  support: active | limited | none
+
+  # Changelog location
+  changelog: CHANGELOG.md
+
+  # Known issues
+  known_issues:
+    - issue: Performance degradation with very large inputs
+      severity: medium
+      workaround: Split large inputs into batches
+
+  # Roadmap
+  planned_improvements:
+    - Improve performance for large datasets
+    - Add support for additional input formats
+    - Enhanced error reporting
+
+# ===========================
+# DISTRIBUTION
+# ===========================
+distribution:
+  # Packaging format
+  format: zip | tar.gz
+
+  # Installation method
+  installation: copy | npm | pip | custom
+
+  # Compatibility
+  compatibility:
+    min_claude_version: "3.0"
+    platforms:
+      - claude-code
+      - claude-desktop
+
+  # Distribution channels
+  channels:
+    - internal
+    - public
+    - marketplace

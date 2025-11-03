@@ -1,0 +1,243 @@
+# Network Security Policy Template
+# Defines security rules for sandbox network isolation
+
+apiVersion: v1
+kind: NetworkSecurityPolicy
+metadata:
+  name: sandbox-network-isolation
+  description: Network isolation policy for Claude Code sandboxes
+  version: "1.0.0"
+  created: "2025-11-02T00:00:00Z"
+
+spec:
+  # Network isolation mode
+  isolation:
+    mode: trusted  # Options: none, trusted, custom
+    enabled: true
+    default_action: deny  # deny or allow
+
+  # Trusted domains whitelist
+  trusted_domains:
+    # Package registries
+    - domain: "*.npmjs.org"
+      description: "npm package registry"
+      protocols: ["https"]
+      ports: [443]
+      category: "package-registry"
+
+    - domain: "registry.npmjs.org"
+      description: "npm registry API"
+      protocols: ["https"]
+      ports: [443]
+      category: "package-registry"
+
+    - domain: "*.yarnpkg.com"
+      description: "Yarn package registry"
+      protocols: ["https"]
+      ports: [443]
+      category: "package-registry"
+
+    - domain: "*.pypi.org"
+      description: "Python package index"
+      protocols: ["https"]
+      ports: [443]
+      category: "package-registry"
+
+    - domain: "pypi.python.org"
+      description: "Python package index"
+      protocols: ["https"]
+      ports: [443]
+      category: "package-registry"
+
+    # Container registries
+    - domain: "*.docker.io"
+      description: "Docker Hub"
+      protocols: ["https"]
+      ports: [443]
+      category: "container-registry"
+
+    - domain: "registry.hub.docker.com"
+      description: "Docker Hub registry"
+      protocols: ["https"]
+      ports: [443]
+      category: "container-registry"
+
+    - domain: "ghcr.io"
+      description: "GitHub Container Registry"
+      protocols: ["https"]
+      ports: [443]
+      category: "container-registry"
+
+    # Source control
+    - domain: "*.github.com"
+      description: "GitHub"
+      protocols: ["https", "git"]
+      ports: [443, 22]
+      category: "source-control"
+
+    - domain: "api.github.com"
+      description: "GitHub API"
+      protocols: ["https"]
+      ports: [443]
+      category: "source-control"
+
+    - domain: "raw.githubusercontent.com"
+      description: "GitHub raw content"
+      protocols: ["https"]
+      ports: [443]
+      category: "source-control"
+
+    # CDNs
+    - domain: "*.cloudfront.net"
+      description: "AWS CloudFront CDN"
+      protocols: ["https"]
+      ports: [443]
+      category: "cdn"
+
+    - domain: "cdn.jsdelivr.net"
+      description: "jsDelivr CDN"
+      protocols: ["https"]
+      ports: [443]
+      category: "cdn"
+
+  # Blocked domains (explicit deny list)
+  blocked_domains:
+    - domain: "*.onion"
+      reason: "Tor hidden services not allowed"
+
+    - domain: "*.i2p"
+      reason: "I2P network not allowed"
+
+    - domain: "torproject.org"
+      reason: "Tor infrastructure not allowed"
+
+  # Network rules
+  rules:
+    # Allow localhost
+    - name: "allow-loopback"
+      action: allow
+      source: "127.0.0.1/8"
+      destination: "127.0.0.1/8"
+      protocols: ["tcp", "udp"]
+      priority: 100
+
+    # Allow established connections
+    - name: "allow-established"
+      action: allow
+      state: ["ESTABLISHED", "RELATED"]
+      protocols: ["tcp", "udp"]
+      priority: 90
+
+    # Allow DNS
+    - name: "allow-dns"
+      action: allow
+      destination_ports: [53]
+      protocols: ["udp", "tcp"]
+      priority: 80
+
+    # Allow HTTPS to trusted domains
+    - name: "allow-https-trusted"
+      action: allow
+      destination_ports: [443]
+      protocols: ["tcp"]
+      match_trusted_domains: true
+      priority: 70
+
+    # Allow HTTP to trusted domains (with warning)
+    - name: "allow-http-trusted"
+      action: allow
+      destination_ports: [80]
+      protocols: ["tcp"]
+      match_trusted_domains: true
+      log_level: warning
+      priority: 60
+
+    # Deny all other outbound
+    - name: "deny-all-outbound"
+      action: deny
+      direction: outbound
+      log_level: info
+      priority: 10
+
+  # Proxy configuration (optional)
+  proxy:
+    enabled: false
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy:
+      - "localhost"
+      - "127.0.0.1"
+      - "*.local"
+
+  # Logging configuration
+  logging:
+    enabled: true
+    level: info  # debug, info, warning, error
+    log_file: "/var/log/network-security/firewall.log"
+    log_allowed: false  # Log allowed connections
+    log_denied: true    # Log denied connections
+    max_size_mb: 100
+    rotate_count: 5
+
+  # Monitoring and alerts
+  monitoring:
+    enabled: true
+    metrics:
+      - connection_attempts
+      - blocked_connections
+      - allowed_connections
+      - bandwidth_usage
+
+    alerts:
+      - name: "high-blocked-rate"
+        condition: "blocked_connections > 100 per minute"
+        severity: warning
+        action: log
+
+      - name: "suspicious-domain"
+        condition: "blocked_domain not in blocked_domains"
+        severity: high
+        action: ["log", "notify"]
+
+  # Compliance and audit
+  compliance:
+    standards:
+      - name: "CIS Benchmarks"
+        version: "1.0"
+        enabled: true
+
+      - name: "NIST Cybersecurity Framework"
+        version: "1.1"
+        enabled: true
+
+    audit:
+      enabled: true
+      audit_log: "/var/log/network-security/audit.log"
+      retention_days: 90
+
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    limits:
+      - name: "connection-rate"
+        type: connections
+        limit: 1000
+        per: "minute"
+
+      - name: "bandwidth-limit"
+        type: bandwidth
+        limit: 100
+        unit: "MB"
+        per: "minute"
+
+  # Emergency controls
+  emergency:
+    # Lockdown mode (block all network access)
+    lockdown:
+      enabled: false
+      allow_localhost: true
+
+    # Failsafe (fallback if firewall fails)
+    failsafe:
+      mode: deny  # deny or allow
+      log: true

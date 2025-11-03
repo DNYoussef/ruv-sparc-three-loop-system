@@ -1,0 +1,324 @@
+# Cascade Pipeline Template
+# Full-featured pipeline with multi-model routing, Codex iteration, and swarm coordination
+
+cascade:
+  name: complete-pipeline-template
+  description: Complete development pipeline with quality gates
+  version: 2.0.0
+
+  config:
+    multi_model: enabled
+    swarm_coordination: enabled
+    memory_persistence: enabled
+    github_integration: enabled
+    quality_gates: enabled
+
+inputs:
+  - name: project_path
+    type: string
+    description: Path to project directory
+    required: true
+
+  - name: requirements
+    type: string
+    description: Feature requirements
+    required: true
+
+  - name: quality_threshold
+    type: number
+    description: Minimum quality score (0-100)
+    default: 80
+
+stages:
+  # Stage 1: Research & Planning (Gemini Search)
+  - stage_id: research
+    name: Research Best Practices
+    type: sequential
+    model: gemini-search
+
+    skills:
+      - skill: gemini-search
+        inputs:
+          query: "${inputs.requirements} best practices and patterns"
+          max_results: 10
+
+    memory:
+      write_keys:
+        - research_results
+        - best_practices
+
+    error_handling:
+      strategy: retry
+      max_retries: 2
+
+  # Stage 2: Architecture Design (Claude)
+  - stage_id: architecture
+    name: Design System Architecture
+    type: sequential
+    model: claude
+    dependencies:
+      - research
+
+    skills:
+      - skill: system-architect
+        inputs:
+          requirements: "${inputs.requirements}"
+          context: "${memory.research_results}"
+
+    memory:
+      read_keys:
+        - research_results
+      write_keys:
+        - architecture_design
+        - component_breakdown
+
+    error_handling:
+      strategy: retry
+      max_retries: 1
+
+  # Stage 3: Parallel Implementation (Swarm)
+  - stage_id: implementation
+    name: Parallel Feature Implementation
+    type: swarm-parallel
+    model: auto-select
+    dependencies:
+      - architecture
+
+    skills:
+      - skill: implement-backend
+        inputs:
+          spec: "${memory.architecture_design.backend}"
+
+      - skill: implement-frontend
+        inputs:
+          spec: "${memory.architecture_design.frontend}"
+
+      - skill: implement-database
+        inputs:
+          spec: "${memory.architecture_design.database}"
+
+      - skill: implement-api
+        inputs:
+          spec: "${memory.architecture_design.api}"
+
+    swarm_config:
+      topology: mesh
+      max_agents: 4
+      strategy: balanced
+      memory_shared: true
+
+    memory:
+      read_keys:
+        - architecture_design
+      write_keys:
+        - implementation_results
+        - code_artifacts
+
+    error_handling:
+      strategy: swarm-recovery
+      max_retries: 2
+
+  # Stage 4: Quality Gate - Theater Detection
+  - stage_id: theater_detection
+    name: Verify Real Implementation
+    type: sequential
+    model: claude
+    dependencies:
+      - implementation
+
+    skills:
+      - skill: theater-detection-audit
+        inputs:
+          files: "${memory.code_artifacts}"
+          strict_mode: true
+
+    memory:
+      read_keys:
+        - code_artifacts
+      write_keys:
+        - theater_audit_results
+
+    error_handling:
+      strategy: fail
+      escalate: true
+
+  # Stage 5: Codex Sandbox Iteration
+  - stage_id: functionality_testing
+    name: Test with Auto-Fix
+    type: codex-sandbox
+    model: codex-auto
+    dependencies:
+      - theater_detection
+
+    codex_config:
+      mode: full-auto
+      sandbox: true
+      max_iterations: 5
+      network_disabled: true
+      regression_check: true
+
+    test_suite: comprehensive
+
+    memory:
+      read_keys:
+        - code_artifacts
+      write_keys:
+        - test_results
+        - applied_fixes
+
+    error_handling:
+      strategy: codex-auto-fix
+      escalate_after: 5
+
+  # Stage 6: Conditional Quality Check
+  - stage_id: quality_decision
+    name: Quality Gate Decision
+    type: conditional
+    condition: "${functionality_testing.pass_rate} >= ${inputs.quality_threshold}"
+    dependencies:
+      - functionality_testing
+
+    branches:
+      high_quality:
+        condition:
+          type: threshold
+          metric: "${functionality_testing.pass_rate}"
+          threshold: "${inputs.quality_threshold}"
+          comparison: ">="
+
+        stages:
+          - name: Quick Polish
+            model: codex-auto
+            skills:
+              - style-audit
+              - quick-documentation
+
+      low_quality:
+        condition:
+          type: threshold
+          metric: "${functionality_testing.pass_rate}"
+          threshold: "${inputs.quality_threshold}"
+          comparison: "<"
+
+        stages:
+          - name: Deep Quality Audit
+            model: multi-model
+            skills:
+              - comprehensive-audit
+              - security-scan
+              - performance-analysis
+              - refactor-suggestions
+
+      default: high_quality
+
+  # Stage 7: Documentation (Gemini Media)
+  - stage_id: documentation
+    name: Generate Documentation
+    type: sequential
+    model: gemini-media
+    dependencies:
+      - quality_decision
+
+    skills:
+      - skill: generate-architecture-diagrams
+        inputs:
+          architecture: "${memory.architecture_design}"
+
+      - skill: generate-api-docs
+        inputs:
+          api_spec: "${memory.code_artifacts.api}"
+
+      - skill: generate-user-guide
+        inputs:
+          features: "${memory.implementation_results}"
+
+    memory:
+      write_keys:
+        - documentation_artifacts
+        - diagrams
+
+  # Stage 8: GitHub Integration
+  - stage_id: github_pr
+    name: Create Pull Request
+    type: sequential
+    model: claude
+    dependencies:
+      - documentation
+
+    skills:
+      - skill: create-github-pr
+        inputs:
+          title: "Implement ${inputs.requirements}"
+          body: |
+            # Implementation Summary
+
+            ## Architecture
+            ${memory.architecture_design.summary}
+
+            ## Test Results
+            - Pass Rate: ${memory.test_results.pass_rate}%
+            - Iterations: ${memory.test_results.iterations}
+
+            ## Quality Checks
+            - Theater Detection: ✓
+            - Functionality: ✓
+            - Documentation: ✓
+
+            ## Artifacts
+            - Code: ${memory.code_artifacts}
+            - Docs: ${memory.documentation_artifacts}
+            - Diagrams: ${memory.diagrams}
+
+          labels:
+            - feature
+            - automated
+            - quality-checked
+
+    github_integration:
+      create_pr: true
+      auto_merge: false
+      require_review: true
+
+# Memory Configuration
+memory:
+  persistence: enabled
+  scope: cascade
+  storage: mcp__ruv-swarm__memory
+  retention: 7d
+
+# GitHub Integration
+github_integration:
+  enabled: true
+  create_pr: on_success
+  report_issues: on_failure
+  auto_label: true
+
+# Quality Gates
+quality_gates:
+  - gate: theater_detection
+    required: true
+    fail_on_error: true
+
+  - gate: functionality_testing
+    required: true
+    min_pass_rate: "${inputs.quality_threshold}"
+
+  - gate: documentation
+    required: true
+    fail_on_error: false
+
+# Notifications
+notifications:
+  on_success:
+    - type: slack
+      channel: "#builds"
+      message: "✓ Pipeline completed: ${cascade.name}"
+
+  on_failure:
+    - type: slack
+      channel: "#alerts"
+      message: "✗ Pipeline failed: ${cascade.name}"
+
+    - type: email
+      to: "team@example.com"
+      subject: "Pipeline Failure: ${cascade.name}"

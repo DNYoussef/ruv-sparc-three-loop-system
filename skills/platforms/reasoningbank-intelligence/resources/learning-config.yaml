@@ -1,0 +1,162 @@
+# ReasoningBank Intelligence Configuration
+# Configuration for adaptive learning and pattern recognition
+
+# Pattern Recognition Settings
+pattern_recognition:
+  min_support: 3              # Minimum occurrences to consider pattern
+  confidence_threshold: 0.7   # Minimum confidence for pattern validity
+  temporal_window_hours: 24   # Time window for temporal pattern detection
+  anomaly_contamination: 0.1  # Expected proportion of anomalies
+
+  # Statistical thresholds
+  statistical_significance: 0.05  # p-value threshold
+  min_data_points: 10            # Minimum data for analysis
+
+  # Pattern types to detect
+  enabled_patterns:
+    - sequence          # Approach sequences
+    - contextual        # Context-dependent strategies
+    - temporal          # Time-based patterns
+    - anomaly           # Outlier detection
+
+# Adaptive Learning Settings
+adaptive_learning:
+  # Learning algorithm: 'thompson', 'ucb', 'epsilon-greedy', 'greedy'
+  learning_mode: thompson
+
+  # Exploration vs exploitation
+  exploration_rate: 0.1       # For epsilon-greedy
+  ucb_constant: 2             # For UCB1 algorithm
+  decay_factor: 0.95          # Time-based decay
+
+  # Strategy selection
+  min_attempts: 5             # Minimum attempts before confident selection
+  context_aware: true         # Use context for strategy selection
+  recent_window_size: 100     # Size of recent outcomes window
+
+  # Performance thresholds
+  performance_threshold: 0.8  # Target success rate
+  good_performance: 0.6       # Acceptable performance
+  poor_performance: 0.4       # Needs improvement
+
+# Optimization Settings
+optimization:
+  # Optimization cycle frequency
+  auto_optimize_interval_hours: 24
+  min_experiences_for_optimization: 100
+
+  # Benchmarking
+  benchmark_enabled: true
+  benchmark_iterations: 100
+
+  # Performance targets
+  targets:
+    pattern_recognition_ms: 100
+    strategy_selection_ms: 50
+    memory_usage_mb: 512
+
+# Intelligence Analysis Settings
+intelligence_analysis:
+  # Learning curve analysis
+  learning_curve:
+    window_size: 100
+    min_data_points: 20
+    improvement_threshold: 0.001
+
+  # Strategy evolution tracking
+  strategy_evolution:
+    num_periods: 5
+    usage_change_threshold: 0.2
+    min_strategy_usage: 5
+
+  # Performance regression detection
+  regression_detection:
+    window_size: 20
+    drop_threshold: 0.8        # 20% drop
+    significance_level: 0.05
+
+  # Transfer learning
+  transfer_learning:
+    context_similarity_threshold: 0.5
+    min_success_rate: 0.7
+    min_source_data: 5
+
+# Storage Settings
+storage:
+  # AgentDB configuration
+  agentdb:
+    enabled: true
+    database_path: ./data/reasoningbank.db
+    enable_vector_search: true
+    vector_dimensions: 384
+
+  # Data retention
+  retention:
+    experiences_days: 90
+    patterns_days: 180
+    strategies_days: 365
+
+  # Export settings
+  export:
+    auto_export: true
+    export_interval_hours: 6
+    export_path: ./exports
+
+# Logging Settings
+logging:
+  level: INFO                 # DEBUG, INFO, WARNING, ERROR
+  file: ./logs/reasoningbank.log
+  max_size_mb: 100
+  backup_count: 5
+  console_output: true
+
+# Performance Settings
+performance:
+  # Parallel processing
+  parallel_processing: true
+  max_workers: 4
+
+  # Caching
+  cache_enabled: true
+  cache_size_mb: 256
+  cache_ttl_seconds: 3600
+
+  # Memory limits
+  max_memory_mb: 1024
+  gc_threshold: 0.8
+
+# Integration Settings
+integration:
+  # Memory MCP
+  memory_mcp:
+    enabled: true
+    auto_store_patterns: true
+    auto_store_insights: true
+    retention_layer: long-term  # short-term, mid-term, long-term
+
+  # Hooks automation
+  hooks:
+    pre_task_analysis: true
+    post_task_learning: true
+    session_summarization: true
+
+  # External systems
+  external_apis:
+    enabled: false
+    endpoints: []
+
+# Feature Flags
+features:
+  meta_learning: true
+  transfer_learning: true
+  contextual_bandits: true
+  anomaly_detection: true
+  strategy_clustering: true
+  neural_patterns: false      # Requires neural model
+
+# Experimental Settings
+experimental:
+  # Advanced features (use with caution)
+  quantum_patterns: false
+  graph_learning: false
+  federated_learning: false

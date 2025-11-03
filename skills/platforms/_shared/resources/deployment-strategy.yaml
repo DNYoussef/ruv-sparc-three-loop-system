@@ -1,0 +1,403 @@
+# Deployment Strategy Templates
+# Various deployment strategies for Flow Nexus Platform
+
+---
+# Direct Deployment Strategy
+# Simple, immediate deployment with optional backup
+
+strategy: direct
+name: "Direct Deployment"
+description: "Deploy directly to production without intermediate steps"
+
+configuration:
+  # Backup settings
+  backup_before_deploy: true
+  backup_retention_days: 7
+
+  # Validation
+  pre_deploy_validation: true
+  post_deploy_validation: true
+
+  # Rollback
+  auto_rollback_on_failure: true
+  rollback_threshold:
+    error_rate: 0.10 # 10%
+    timeout_rate: 0.05 # 5%
+
+steps:
+  - name: "validate"
+    description: "Validate deployment artifacts"
+    actions:
+      - "check_artifacts"
+      - "verify_checksums"
+      - "validate_configuration"
+
+  - name: "backup"
+    description: "Backup current deployment"
+    actions:
+      - "create_snapshot"
+      - "backup_database"
+      - "backup_configuration"
+
+  - name: "deploy"
+    description: "Deploy new version"
+    actions:
+      - "stop_services"
+      - "update_artifacts"
+      - "migrate_database"
+      - "update_configuration"
+      - "start_services"
+
+  - name: "verify"
+    description: "Verify deployment success"
+    actions:
+      - "health_check"
+      - "smoke_tests"
+      - "performance_check"
+
+  - name: "cleanup"
+    description: "Clean up old artifacts"
+    actions:
+      - "remove_old_backups"
+      - "clear_cache"
+
+---
+# Blue-Green Deployment Strategy
+# Zero-downtime deployment with instant rollback capability
+
+strategy: blue_green
+name: "Blue-Green Deployment"
+description: "Deploy to parallel environment, then switch traffic"
+
+configuration:
+  # Environment settings
+  blue_env: "production"
+  green_env: "production-green"
+
+  # Traffic switching
+  instant_switch: true
+  gradual_switch: false
+
+  # Validation
+  green_soak_time: 300 # 5 minutes
+  health_check_interval: 10 # seconds
+
+  # Cleanup
+  cleanup_old_env: true
+  cleanup_delay: 3600 # 1 hour
+
+steps:
+  - name: "prepare_green"
+    description: "Prepare green environment"
+    actions:
+      - "clone_blue_config"
+      - "provision_infrastructure"
+      - "setup_monitoring"
+
+  - name: "deploy_green"
+    description: "Deploy to green environment"
+    actions:
+      - "deploy_artifacts"
+      - "migrate_database_green"
+      - "configure_services"
+      - "start_services"
+
+  - name: "validate_green"
+    description: "Validate green environment"
+    actions:
+      - "health_check"
+      - "integration_tests"
+      - "load_tests"
+      - "soak_test"
+
+  - name: "switch_traffic"
+    description: "Switch traffic to green"
+    actions:
+      - "update_load_balancer"
+      - "update_dns"
+      - "verify_traffic_flow"
+
+  - name: "monitor_green"
+    description: "Monitor green environment"
+    duration: 600 # 10 minutes
+    actions:
+      - "monitor_errors"
+      - "monitor_latency"
+      - "monitor_throughput"
+
+  - name: "cleanup_blue"
+    description: "Clean up blue environment"
+    actions:
+      - "backup_blue"
+      - "stop_blue_services"
+      - "deprovision_blue"
+
+rollback:
+  enabled: true
+  triggers:
+    - error_rate > 0.05
+    - latency_p99 > 1000ms
+    - availability < 0.99
+  actions:
+    - "switch_to_blue"
+    - "stop_green"
+    - "alert_team"
+
+---
+# Canary Deployment Strategy
+# Gradual traffic shift with automated rollback
+
+strategy: canary
+name: "Canary Deployment"
+description: "Gradually shift traffic to new version with monitoring"
+
+configuration:
+  # Traffic shifting
+  initial_traffic: 0.05 # 5%
+  traffic_increments:
+    - 0.05 # 5%
+    - 0.10 # 10%
+    - 0.25 # 25%
+    - 0.50 # 50%
+    - 1.00 # 100%
+
+  # Timing
+  increment_interval: 300 # 5 minutes
+  soak_time_per_increment: 180 # 3 minutes
+
+  # Validation
+  error_threshold: 0.01 # 1%
+  latency_threshold: 1.5 # 1.5x baseline
+
+  # Rollback
+  auto_rollback: true
+  rollback_on_anomaly: true
+
+steps:
+  - name: "deploy_canary"
+    description: "Deploy canary version"
+    actions:
+      - "provision_canary"
+      - "deploy_artifacts"
+      - "configure_services"
+      - "start_services"
+
+  - name: "baseline_metrics"
+    description: "Collect baseline metrics"
+    duration: 60
+    metrics:
+      - "error_rate"
+      - "latency_p50"
+      - "latency_p95"
+      - "latency_p99"
+      - "throughput"
+
+  - name: "shift_traffic"
+    description: "Gradually shift traffic"
+    type: "iterative"
+    iterations:
+      - traffic_weight: 0.05
+        duration: 300
+        validation:
+          - "compare_error_rates"
+          - "compare_latency"
+          - "check_anomalies"
+
+      - traffic_weight: 0.10
+        duration: 300
+        validation:
+          - "compare_error_rates"
+          - "compare_latency"
+          - "check_anomalies"
+
+      - traffic_weight: 0.25
+        duration: 600
+        validation:
+          - "compare_error_rates"
+          - "compare_latency"
+          - "check_anomalies"
+          - "business_metrics"
+
+      - traffic_weight: 0.50
+        duration: 900
+        validation:
+          - "compare_error_rates"
+          - "compare_latency"
+          - "check_anomalies"
+          - "business_metrics"
+
+      - traffic_weight: 1.00
+        duration: 1800
+        validation:
+          - "full_validation"
+
+  - name: "promote_canary"
+    description: "Promote canary to production"
+    actions:
+      - "label_as_stable"
+      - "remove_old_version"
+      - "update_monitoring"
+
+  - name: "cleanup"
+    description: "Clean up old resources"
+    actions:
+      - "remove_old_deployments"
+      - "clear_cache"
+
+monitoring:
+  metrics:
+    - name: "error_rate"
+      comparison: "less_than"
+      threshold: 1.10 # 10% increase
+
+    - name: "latency_p99"
+      comparison: "less_than"
+      threshold: 1.50 # 50% increase
+
+    - name: "throughput"
+      comparison: "greater_than"
+      threshold: 0.90 # 10% decrease
+
+  anomaly_detection:
+    enabled: true
+    sensitivity: "high"
+    window: 300 # 5 minutes
+
+rollback:
+  enabled: true
+  automatic: true
+  triggers:
+    - metric_violation
+    - anomaly_detected
+    - health_check_failure
+  actions:
+    - "shift_traffic_to_stable"
+    - "stop_canary"
+    - "notify_team"
+    - "create_incident"
+
+---
+# Rolling Deployment Strategy
+# Instance-by-instance update with gradual rollout
+
+strategy: rolling
+name: "Rolling Deployment"
+description: "Update instances one at a time or in batches"
+
+configuration:
+  # Batch settings
+  batch_size: 1 # instances per batch
+  batch_percentage: 0.25 # 25% of instances
+
+  # Timing
+  batch_interval: 60 # seconds between batches
+  health_check_grace_period: 30 # seconds
+
+  # Health validation
+  min_healthy_instances: 0.75 # 75%
+  max_unavailable: 0.25 # 25%
+
+  # Rollback
+  stop_on_failure: true
+  rollback_on_failure: true
+
+steps:
+  - name: "prepare"
+    description: "Prepare for rolling deployment"
+    actions:
+      - "verify_cluster_health"
+      - "backup_configuration"
+      - "prepare_artifacts"
+
+  - name: "rolling_update"
+    description: "Update instances in batches"
+    type: "iterative"
+    batch_strategy: "percentage" # fixed, percentage
+    batches:
+      - instances: "25%"
+        actions:
+          - "drain_connections"
+          - "stop_instance"
+          - "update_artifacts"
+          - "start_instance"
+          - "health_check"
+          - "validate_instance"
+        wait_time: 60
+
+      - instances: "25%"
+        actions:
+          - "drain_connections"
+          - "stop_instance"
+          - "update_artifacts"
+          - "start_instance"
+          - "health_check"
+          - "validate_instance"
+        wait_time: 60
+
+      - instances: "25%"
+        actions:
+          - "drain_connections"
+          - "stop_instance"
+          - "update_artifacts"
+          - "start_instance"
+          - "health_check"
+          - "validate_instance"
+        wait_time: 60
+
+      - instances: "25%"
+        actions:
+          - "drain_connections"
+          - "stop_instance"
+          - "update_artifacts"
+          - "start_instance"
+          - "health_check"
+          - "validate_instance"
+        wait_time: 60
+
+  - name: "verify"
+    description: "Verify entire cluster"
+    actions:
+      - "cluster_health_check"
+      - "integration_tests"
+      - "performance_tests"
+
+  - name: "complete"
+    description: "Complete deployment"
+    actions:
+      - "update_version_label"
+      - "notify_success"
+      - "cleanup_old_artifacts"
+
+health_checks:
+  startup:
+    initial_delay: 10
+    period: 5
+    timeout: 3
+    success_threshold: 1
+    failure_threshold: 3
+
+  liveness:
+    period: 10
+    timeout: 5
+    success_threshold: 1
+    failure_threshold: 3
+
+  readiness:
+    period: 5
+    timeout: 3
+    success_threshold: 1
+    failure_threshold: 3
+
+rollback:
+  enabled: true
+  automatic: true
+  triggers:
+    - batch_failure
+    - health_check_failure
+    - cluster_unhealthy
+  strategy: "reverse_order"
+  actions:
+    - "stop_rollout"
+    - "rollback_updated_instances"
+    - "verify_cluster"
+    - "notify_team"

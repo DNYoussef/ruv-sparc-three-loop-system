@@ -1,0 +1,172 @@
+digraph FlowNexusPlatform {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end points
+    start [shape=ellipse, label="Start:\nUser Request", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nPlatform Operation", fillcolor=green, fontcolor=white];
+
+    // Authentication & User Management Phase
+    subgraph cluster_auth {
+        label="Authentication & User Management";
+        fillcolor=lightyellow;
+        style=filled;
+
+        auth_init [label="Initialize\nAuthentication"];
+        auth_decision [shape=diamond, label="Authenticated?", fillcolor=yellow];
+        auth_register [label="User\nRegistration"];
+        auth_login [label="User\nLogin"];
+        auth_profile [label="Profile\nManagement"];
+    }
+
+    // Sandbox Management Phase
+    subgraph cluster_sandbox {
+        label="Sandbox Management";
+        fillcolor=lightblue;
+        style=filled;
+
+        sandbox_create [label="Create\nSandbox"];
+        sandbox_configure [label="Configure\nEnvironment"];
+        sandbox_execute [label="Execute\nCode"];
+        sandbox_monitor [label="Monitor\nExecution"];
+        sandbox_cleanup [label="Cleanup\nResources"];
+    }
+
+    // Deployment & App Store Phase
+    subgraph cluster_deployment {
+        label="Deployment & App Store";
+        fillcolor=lightcyan;
+        style=filled;
+
+        deploy_browse [label="Browse\nTemplates"];
+        deploy_select [label="Select\nTemplate"];
+        deploy_configure [label="Configure\nDeployment"];
+        deploy_execute [label="Deploy\nApplication"];
+        deploy_verify [label="Verify\nDeployment"];
+    }
+
+    // Credit & Payment Management Phase
+    subgraph cluster_credits {
+        label="Credit & Payment Management";
+        fillcolor=lightgoldenrodyellow;
+        style=filled;
+
+        credits_check [label="Check\nBalance"];
+        credits_decision [shape=diamond, label="Low Credits?", fillcolor=yellow];
+        credits_purchase [label="Purchase\nCredits"];
+        credits_autorefill [label="Configure\nAuto-Refill"];
+    }
+
+    // Monitoring & Health Phase
+    subgraph cluster_monitoring {
+        label="Monitoring & Health";
+        fillcolor=lightgray;
+        style=filled;
+
+        monitor_health [label="Check\nSystem Health"];
+        monitor_metrics [label="Collect\nMetrics"];
+        monitor_alerts [label="Process\nAlerts"];
+        monitor_audit [label="Audit\nLog"];
+    }
+
+    // Decision Points
+    tier_decision [shape=diamond, label="Tier\nLimits OK?", fillcolor=yellow];
+    resource_decision [shape=diamond, label="Resources\nAvailable?", fillcolor=yellow];
+    health_decision [shape=diamond, label="System\nHealthy?", fillcolor=yellow];
+
+    // Warnings
+    quota_warning [shape=octagon, label="WARNING:\nQuota Exceeded", fillcolor=orange];
+    health_warning [shape=octagon, label="WARNING:\nSystem Issues", fillcolor=orange];
+
+    // External References
+    mcp_tools [shape=cylinder, label="Flow Nexus\nMCP Tools", fillcolor=lightcoral];
+    auth_script [shape=cylinder, label="auth-manager.js", fillcolor=lightcoral];
+    sandbox_script [shape=cylinder, label="sandbox-manager.js", fillcolor=lightcoral];
+    deploy_script [shape=cylinder, label="deployment-manager.js", fillcolor=lightcoral];
+    health_script [shape=cylinder, label="platform-health.js", fillcolor=lightcoral];
+
+    // Best Practices
+    best_practices [shape=folder, label="Best Practices:\n- Security First\n- Cost Optimization\n- Resource Management", fillcolor=lightsalmon];
+
+    // Main Flow
+    start -> auth_init;
+
+    // Authentication Flow
+    auth_init -> auth_decision;
+    auth_decision -> auth_register [label="no", color=red];
+    auth_decision -> auth_profile [label="yes", color=green];
+    auth_register -> auth_login;
+    auth_login -> auth_profile;
+
+    // Tier Check
+    auth_profile -> tier_decision;
+    tier_decision -> quota_warning [label="no", color=red];
+    tier_decision -> resource_decision [label="yes", color=green];
+    quota_warning -> credits_check [label="resolve", style=dashed];
+
+    // Resource Check
+    resource_decision -> sandbox_create [label="yes", color=green, lhead=cluster_sandbox];
+    resource_decision -> health_warning [label="no", color=red];
+    health_warning -> monitor_health [label="diagnose", style=dashed, lhead=cluster_monitoring];
+
+    // Sandbox Workflow
+    sandbox_create -> sandbox_configure;
+    sandbox_configure -> sandbox_execute;
+    sandbox_execute -> sandbox_monitor;
+    sandbox_monitor -> sandbox_cleanup;
+    sandbox_cleanup -> deploy_browse [lhead=cluster_deployment];
+
+    // Deployment Workflow
+    deploy_browse -> deploy_select;
+    deploy_select -> deploy_configure;
+    deploy_configure -> deploy_execute;
+    deploy_execute -> deploy_verify;
+    deploy_verify -> credits_check [lhead=cluster_credits];
+
+    // Credit Management
+    credits_check -> credits_decision;
+    credits_decision -> credits_purchase [label="yes", color=orange];
+    credits_decision -> monitor_health [label="no", color=green, lhead=cluster_monitoring];
+    credits_purchase -> credits_autorefill;
+    credits_autorefill -> monitor_health [lhead=cluster_monitoring];
+
+    // Monitoring Workflow
+    monitor_health -> health_decision;
+    health_decision -> monitor_metrics [label="healthy", color=green];
+    health_decision -> monitor_alerts [label="issues", color=red];
+    monitor_metrics -> monitor_audit;
+    monitor_alerts -> monitor_audit;
+    monitor_audit -> end;
+
+    // Script References (dashed lines)
+    auth_init -> auth_script [style=dashed, label="uses"];
+    auth_register -> auth_script [style=dashed, label="uses"];
+    auth_login -> auth_script [style=dashed, label="uses"];
+
+    sandbox_create -> sandbox_script [style=dashed, label="uses"];
+    sandbox_configure -> sandbox_script [style=dashed, label="uses"];
+    sandbox_execute -> sandbox_script [style=dashed, label="uses"];
+
+    deploy_browse -> deploy_script [style=dashed, label="uses"];
+    deploy_execute -> deploy_script [style=dashed, label="uses"];
+
+    monitor_health -> health_script [style=dashed, label="uses"];
+    credits_check -> health_script [style=dashed, label="uses"];
+
+    // MCP Tools Integration
+    auth_script -> mcp_tools [style=dashed, label="calls"];
+    sandbox_script -> mcp_tools [style=dashed, label="calls"];
+    deploy_script -> mcp_tools [style=dashed, label="calls"];
+    health_script -> mcp_tools [style=dashed, label="calls"];
+
+    // Best Practices Reference
+    start -> best_practices [style=dashed, label="follow", color=blue];
+
+    // Graph Metadata
+    labelloc="t";
+    label="Flow Nexus Platform Management Process\n\nComprehensive workflow for authentication, sandboxes, deployment, credits, and monitoring";
+    fontsize=16;
+    fontname="Arial Bold";
+}

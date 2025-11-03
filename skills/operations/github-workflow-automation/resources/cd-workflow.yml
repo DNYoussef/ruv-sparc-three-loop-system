@@ -1,0 +1,287 @@
+name: Intelligent CD Pipeline with Progressive Deployment
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      strategy:
+        description: 'Deployment strategy'
+        required: true
+        type: choice
+        options:
+          - blue-green
+          - canary
+          - rolling
+
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Risk assessment and strategy selection
+  assess-deployment:
+    runs-on: ubuntu-latest
+    outputs:
+      risk-level: ${{ steps.assess.outputs.risk-level }}
+      strategy: ${{ steps.strategy.outputs.deployment-strategy }}
+      environment: ${{ steps.env.outputs.target-environment }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Assess Deployment Risk
+        id: assess
+        run: |
+          RISK_LEVEL=$(npx ruv-swarm actions deploy-risk \
+            --changes ${{ github.sha }} \
+            --history 30d \
+            --output json | jq -r '.level')
+          echo "risk-level=${RISK_LEVEL}" >> $GITHUB_OUTPUT
+
+      - name: Determine Strategy
+        id: strategy
+        run: |
+          STRATEGY="${{ github.event.inputs.strategy }}"
+          if [[ -z "$STRATEGY" ]]; then
+            RISK="${{ steps.assess.outputs.risk-level }}"
+            case "$RISK" in
+              "low")
+                STRATEGY="rolling"
+                ;;
+              "medium")
+                STRATEGY="blue-green"
+                ;;
+              "high"|"critical")
+                STRATEGY="canary"
+                ;;
+            esac
+          fi
+          echo "deployment-strategy=${STRATEGY}" >> $GITHUB_OUTPUT
+
+      - name: Determine Environment
+        id: env
+        run: |
+          ENV="${{ github.event.inputs.environment }}"
+          if [[ -z "$ENV" ]]; then
+            if [[ "${{ github.ref }}" == "refs/tags/v"* ]]; then
+              ENV="production"
+            else
+              ENV="staging"
+            fi
+          fi
+          echo "target-environment=${ENV}" >> $GITHUB_OUTPUT
+
+  # Build and push container
+  build:
+    needs: assess-deployment
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Deploy with selected strategy
+  deploy:
+    needs: [assess-deployment, build]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.assess-deployment.outputs.environment }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Initialize Deployment Swarm
+        run: |
+          npx ruv-swarm init --topology hierarchical --max-agents 8
+
+      - name: Execute Deployment
+        env:
+          STRATEGY: ${{ needs.assess-deployment.outputs.strategy }}
+          ENVIRONMENT: ${{ needs.assess-deployment.outputs.environment }}
+          IMAGE: ${{ needs.build.outputs.image-tag }}
+        run: |
+          npx ruv-swarm actions deploy \
+            --strategy $STRATEGY \
+            --environment $ENVIRONMENT \
+            --image $IMAGE \
+            --health-check-interval 30s \
+            --rollback-on-failure
+
+      - name: Monitor Deployment
+        run: |
+          npx ruv-swarm actions deploy-monitor \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --duration 5m \
+            --alert-on-errors
+
+  # Canary deployment specific steps
+  canary-analysis:
+    needs: [assess-deployment, deploy]
+    if: needs.assess-deployment.outputs.strategy == 'canary'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Analyze Canary Metrics
+        run: |
+          npx ruv-swarm actions canary-analyze \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --baseline 30m \
+            --canary 10m \
+            --metrics "error_rate,latency_p99,cpu_usage"
+
+      - name: Progressive Rollout
+        run: |
+          for TRAFFIC in 10 25 50 75 100; do
+            echo "Routing ${TRAFFIC}% traffic to canary..."
+            npx ruv-swarm actions canary-traffic \
+              --percentage $TRAFFIC \
+              --wait 5m \
+              --verify-metrics
+          done
+
+  # Blue-Green deployment specific steps
+  blue-green-switch:
+    needs: [assess-deployment, deploy]
+    if: needs.assess-deployment.outputs.strategy == 'blue-green'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke Tests on Green
+        run: |
+          npx ruv-swarm actions test-suite \
+            --environment green \
+            --suite smoke
+
+      - name: Switch Traffic
+        run: |
+          npx ruv-swarm actions blue-green-switch \
+            --from blue \
+            --to green \
+            --verify-health
+
+      - name: Keep Blue for Rollback
+        run: |
+          echo "Blue environment kept for 1 hour for potential rollback"
+          npx ruv-swarm actions schedule-cleanup \
+            --environment blue \
+            --delay 1h
+
+  # Post-deployment validation
+  validate:
+    needs: [assess-deployment, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Integration Tests
+        run: |
+          npx ruv-swarm actions test-suite \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --suite integration
+
+      - name: Performance Baseline
+        run: |
+          npx ruv-swarm actions perf-test \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --duration 5m \
+            --save-baseline
+
+      - name: Security Scan
+        run: |
+          npx ruv-swarm actions security \
+            --runtime-scan \
+            --environment ${{ needs.assess-deployment.outputs.environment }}
+
+  # Rollback capability
+  rollback:
+    if: failure() && github.event_name != 'workflow_dispatch'
+    needs: [assess-deployment, deploy, validate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emergency Rollback
+        run: |
+          npx ruv-swarm actions rollback \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --strategy ${{ needs.assess-deployment.outputs.strategy }} \
+            --immediate
+
+      - name: Create Incident
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Deployment Rollback: ${{ github.sha }}',
+              body: 'Automatic rollback triggered due to deployment failure.\n\nSHA: ${{ github.sha }}\nEnvironment: ${{ needs.assess-deployment.outputs.environment }}',
+              labels: ['incident', 'deployment', 'rollback']
+            });
+
+  # Notification
+  notify:
+    if: always()
+    needs: [assess-deployment, deploy, validate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Deployment Report
+        run: |
+          npx ruv-swarm actions deploy-report \
+            --environment ${{ needs.assess-deployment.outputs.environment }} \
+            --strategy ${{ needs.assess-deployment.outputs.strategy }} \
+            --status ${{ job.status }}
+
+      - name: Notify Team
+        if: needs.assess-deployment.outputs.environment == 'production'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const status = '${{ job.status }}' === 'success' ? '✅' : '❌';
+            const report = require('fs').readFileSync('deployment-report.md', 'utf8');
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `${status} Production Deployment: ${{ github.sha }}`,
+              body: report,
+              labels: ['deployment', 'production']
+            });

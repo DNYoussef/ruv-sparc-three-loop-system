@@ -1,0 +1,443 @@
+# Flow Nexus Platform Configuration Template
+# Comprehensive platform configuration with all available options
+
+platform:
+  name: "Flow Nexus Platform"
+  version: "1.0.0"
+  environment: "development" # development, staging, production
+  region: "us-east-1"
+  timezone: "UTC"
+
+# Authentication and authorization
+authentication:
+  # Authentication method: email_password, oauth, saml
+  type: "email_password"
+
+  # Session configuration
+  session_timeout: 3600 # seconds
+  refresh_token_ttl: 2592000 # 30 days
+
+  # Security settings
+  require_verification: true
+  allow_registration: true
+  password_policy:
+    min_length: 12
+    require_uppercase: true
+    require_lowercase: true
+    require_numbers: true
+    require_special_chars: true
+    max_age_days: 90
+
+  # OAuth providers (if using oauth)
+  oauth_providers:
+    - name: "google"
+      client_id: "${GOOGLE_CLIENT_ID}"
+      enabled: false
+    - name: "github"
+      client_id: "${GITHUB_CLIENT_ID}"
+      enabled: false
+
+# Service configuration
+services:
+  # Sandbox execution environments
+  sandboxes:
+    enabled: true
+    provider: "e2b" # e2b, docker, kubernetes
+
+    # Resource limits
+    max_concurrent: 5
+    default_timeout: 3600 # seconds
+    max_timeout: 7200
+
+    # Available templates
+    templates:
+      - name: "node"
+        version: "18"
+        memory_mb: 512
+        cpu_cores: 1
+      - name: "python"
+        version: "3.11"
+        memory_mb: 512
+        cpu_cores: 1
+      - name: "react"
+        version: "18"
+        memory_mb: 1024
+        cpu_cores: 2
+      - name: "nextjs"
+        version: "14"
+        memory_mb: 1024
+        cpu_cores: 2
+
+    # Networking
+    network_isolation: true
+    allowed_domains:
+      - "api.flow-nexus.ruv.io"
+      - "*.anthropic.com"
+
+  # Storage configuration
+  storage:
+    enabled: true
+    provider: "supabase" # supabase, s3, gcs, azure
+
+    # Capacity limits
+    max_size_mb: 1000
+    max_file_size_mb: 100
+    retention_days: 30
+
+    # Buckets
+    buckets:
+      - name: "platform-assets"
+        public: true
+        cors_enabled: true
+      - name: "user-uploads"
+        public: false
+        encryption: true
+      - name: "backups"
+        public: false
+        versioning: true
+
+    # Content types
+    allowed_content_types:
+      - "image/*"
+      - "application/pdf"
+      - "text/*"
+      - "application/json"
+
+  # Database configuration
+  databases:
+    enabled: true
+    provider: "postgresql" # postgresql, mysql, mongodb
+
+    # Connection settings
+    host: "${DATABASE_HOST}"
+    port: 5432
+    database: "platform"
+    username: "${DATABASE_USER}"
+    password: "${DATABASE_PASSWORD}"
+
+    # Connection pool
+    max_connections: 10
+    pool_size: 20
+    connection_timeout: 5000
+    idle_timeout: 30000
+
+    # Features
+    ssl_enabled: true
+    prepared_statements: true
+    query_timeout: 30000
+
+  # Workflow and agent coordination
+  workflows:
+    enabled: true
+
+    # Agent limits
+    max_agents: 8
+    agent_timeout: 300000 # 5 minutes
+
+    # Queue configuration
+    queue_size: 100
+    retry_attempts: 3
+    retry_backoff: "exponential" # linear, exponential
+
+    # Message queue
+    message_queue:
+      provider: "redis" # redis, rabbitmq, kafka
+      host: "${REDIS_HOST}"
+      port: 6379
+
+  # Real-time features
+  real_time:
+    enabled: true
+    provider: "supabase" # supabase, socket.io, ably
+
+    # Subscription limits
+    max_subscriptions: 50
+    max_subscribers_per_subscription: 100
+
+    # Connection settings
+    heartbeat_interval: 30000
+    connection_timeout: 60000
+    reconnect_attempts: 5
+
+# Resource limits and quotas
+limits:
+  # API rate limiting
+  requests_per_minute: 60
+  requests_per_hour: 3600
+  requests_per_day: 50000
+
+  # Storage quotas
+  storage_mb: 1000
+  bandwidth_gb: 5
+
+  # Compute quotas
+  compute_hours: 10
+  sandbox_minutes: 600
+
+  # Workflow quotas
+  workflows_per_day: 1000
+  agents_per_workflow: 8
+
+# Monitoring and observability
+monitoring:
+  enabled: true
+
+  # Logging
+  logging:
+    level: "info" # debug, info, warn, error
+    format: "json" # json, text
+    output: "stdout" # stdout, file, syslog
+
+  # Metrics
+  metrics:
+    enabled: true
+    interval: 60000 # 1 minute
+    provider: "prometheus" # prometheus, datadog, newrelic
+    port: 9090
+
+    # Custom metrics
+    custom_metrics:
+      - name: "deployments_total"
+        type: "counter"
+      - name: "sandbox_duration_seconds"
+        type: "histogram"
+      - name: "active_users"
+        type: "gauge"
+
+  # Health checks
+  health_checks:
+    enabled: true
+    interval: 30000 # 30 seconds
+    timeout: 5000
+
+    endpoints:
+      - name: "api"
+        url: "http://localhost:3000/health"
+        critical: true
+      - name: "database"
+        url: "tcp://localhost:5432"
+        critical: true
+      - name: "redis"
+        url: "tcp://localhost:6379"
+        critical: false
+
+  # Tracing
+  tracing:
+    enabled: false
+    provider: "jaeger" # jaeger, zipkin, datadog
+    sample_rate: 0.1 # 10% sampling
+
+# Security configuration
+security:
+  # Rate limiting
+  rate_limiting:
+    enabled: true
+    window_ms: 60000
+    max_requests: 100
+
+  # CORS
+  cors:
+    enabled: true
+    allowed_origins:
+      - "http://localhost:3000"
+      - "https://app.flow-nexus.ruv.io"
+    allowed_methods:
+      - "GET"
+      - "POST"
+      - "PUT"
+      - "DELETE"
+      - "OPTIONS"
+    allowed_headers:
+      - "Content-Type"
+      - "Authorization"
+    credentials: true
+    max_age: 86400
+
+  # Encryption
+  encryption:
+    at_rest: true
+    in_transit: true
+    algorithm: "aes-256-gcm"
+    key_rotation_days: 90
+
+  # Audit logging
+  audit:
+    enabled: true
+    log_all_requests: false
+    log_authentication: true
+    log_authorization: true
+    log_data_access: true
+    retention_days: 90
+
+  # Content Security Policy
+  csp:
+    enabled: true
+    policy:
+      default_src: ["'self'"]
+      script_src: ["'self'", "'unsafe-inline'"]
+      style_src: ["'self'", "'unsafe-inline'"]
+      img_src: ["'self'", "data:", "https:"]
+      connect_src: ["'self'", "wss:", "https:"]
+
+# Billing and payments
+billing:
+  enabled: true
+  provider: "stripe" # stripe, paddle, braintree
+
+  # Currency
+  currency: "USD"
+
+  # Auto-refill
+  auto_refill:
+    enabled: false
+    threshold: 10 # dollars
+    amount: 50 # dollars
+
+  # Pricing
+  pricing:
+    sandboxes:
+      node: 0.01 # per minute
+      python: 0.01
+      react: 0.02
+      nextjs: 0.02
+
+    storage:
+      per_gb_month: 0.10
+
+    workflows:
+      per_execution: 0.001
+
+    neural_training:
+      nano: 0.05 # per hour
+      small: 0.15
+      medium: 0.50
+      large: 2.00
+
+  # Free tier
+  free_tier:
+    sandbox_minutes: 100
+    storage_gb: 1
+    workflows: 1000
+    bandwidth_gb: 1
+
+# Feature flags
+features:
+  # Neural network features
+  neural_training: false
+  neural_inference: false
+
+  # Advanced workflows
+  multi_agent_swarms: true
+  hierarchical_coordination: true
+
+  # Integrations
+  github_integration: true
+  slack_notifications: false
+  email_notifications: true
+
+  # Experimental features
+  quantum_simulation: false
+  distributed_training: false
+
+# Deployment configuration
+deployment:
+  strategy: "blue_green" # direct, blue_green, canary, rolling
+
+  # Health check configuration
+  health_check:
+    enabled: true
+    endpoint: "/health"
+    interval: 30
+    timeout: 10
+    healthy_threshold: 2
+    unhealthy_threshold: 3
+
+  # Rollback configuration
+  rollback:
+    enabled: true
+    auto_rollback: true
+    rollback_threshold: 0.05 # 5% error rate
+
+  # Scaling
+  scaling:
+    min_instances: 1
+    max_instances: 10
+    target_cpu_utilization: 70
+    scale_up_cooldown: 300 # seconds
+    scale_down_cooldown: 600
+
+# Backup and disaster recovery
+backup:
+  enabled: true
+
+  # Backup schedule
+  schedule:
+    database: "0 2 * * *" # Daily at 2 AM
+    storage: "0 3 * * 0" # Weekly on Sunday at 3 AM
+    configuration: "0 4 * * *" # Daily at 4 AM
+
+  # Retention
+  retention:
+    daily: 7
+    weekly: 4
+    monthly: 12
+
+  # Backup location
+  location: "s3://backups.flow-nexus.ruv.io"
+  encryption: true
+
+# Notification configuration
+notifications:
+  # Email notifications
+  email:
+    enabled: true
+    provider: "sendgrid" # sendgrid, ses, mailgun
+    from: "noreply@flow-nexus.ruv.io"
+
+    templates:
+      - name: "welcome"
+        subject: "Welcome to Flow Nexus"
+      - name: "deployment_success"
+        subject: "Deployment Successful"
+      - name: "deployment_failure"
+        subject: "Deployment Failed"
+      - name: "billing_alert"
+        subject: "Billing Alert"
+
+  # Slack notifications
+  slack:
+    enabled: false
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+
+    channels:
+      deployments: "#deployments"
+      alerts: "#alerts"
+      monitoring: "#monitoring"
+
+  # Webhook notifications
+  webhooks:
+    enabled: false
+    endpoints:
+      - url: "https://hooks.example.com/platform"
+        events:
+          - "deployment.success"
+          - "deployment.failure"
+          - "alert.critical"
+
+# Cache configuration
+cache:
+  enabled: true
+  provider: "redis" # redis, memcached, in-memory
+
+  # Connection settings
+  host: "${REDIS_HOST}"
+  port: 6379
+  password: "${REDIS_PASSWORD}"
+
+  # Cache policies
+  default_ttl: 3600 # 1 hour
+  max_size_mb: 100
+
+  # Cache keys
+  key_prefix: "platform:"
+  key_separator: ":"

@@ -1,0 +1,324 @@
+# Optimization Rules for ReasoningBank Intelligence
+# Defines when and how to optimize learning strategies
+
+# Rule Syntax:
+# condition: Boolean expression
+# action: Action to take
+# priority: Execution priority (high, medium, low)
+# enabled: Whether rule is active
+
+rules:
+  # Performance Optimization Rules
+  - name: poor_performing_strategy
+    condition: |
+      strategy.success_rate < 0.4 AND
+      strategy.attempts > 20
+    action:
+      type: deprecate_strategy
+      params:
+        grace_period_days: 7
+        replacement_strategy: best_alternative
+    priority: high
+    enabled: true
+    description: Deprecate strategies with consistently poor performance
+
+  - name: underexplored_strategy
+    condition: |
+      strategy.attempts < 5 AND
+      total_experiences > 50
+    action:
+      type: force_exploration
+      params:
+        min_attempts: 10
+        exploration_weight: 2.0
+    priority: medium
+    enabled: true
+    description: Ensure all strategies are adequately explored
+
+  - name: high_confidence_pattern
+    condition: |
+      pattern.confidence > 0.9 AND
+      pattern.support > 50 AND
+      pattern.stability > 0.8
+    action:
+      type: automate_recommendation
+      params:
+        automation_level: full
+        override_manual: false
+    priority: high
+    enabled: true
+    description: Automate recommendations for highly validated patterns
+
+  - name: performance_regression
+    condition: |
+      current_success_rate < historical_average * 0.8 AND
+      p_value < 0.05
+    action:
+      type: trigger_investigation
+      params:
+        alert_level: warning
+        notify: true
+        rollback_changes: false
+    priority: high
+    enabled: true
+    description: Alert on statistically significant performance drops
+
+  # Learning Optimization Rules
+  - name: convergence_detection
+    condition: |
+      improvement_rate < 0.001 AND
+      total_experiences > 100
+    action:
+      type: increase_exploration
+      params:
+        new_exploration_rate: 0.2
+        duration_experiences: 50
+    priority: medium
+    enabled: true
+    description: Increase exploration when learning plateaus
+
+  - name: rapid_improvement
+    condition: |
+      improvement_rate > 0.01 AND
+      recent_window_size > 20
+    action:
+      type: decrease_exploration
+      params:
+        new_exploration_rate: 0.05
+        exploit_best_strategies: true
+    priority: low
+    enabled: true
+    description: Exploit successful strategies during rapid improvement
+
+  - name: context_shift_detection
+    condition: |
+      context_distribution_change > 0.3 AND
+      time_since_last_analysis > 7_days
+    action:
+      type: reanalyze_patterns
+      params:
+        focus: contextual
+        min_support_override: 2
+    priority: high
+    enabled: true
+    description: Re-analyze when context distribution shifts significantly
+
+  # Transfer Learning Rules
+  - name: transfer_opportunity
+    condition: |
+      source_task.success_rate > 0.7 AND
+      target_task.data_count < 10 AND
+      context_similarity > 0.6
+    action:
+      type: transfer_knowledge
+      params:
+        transfer_strategy: best_from_source
+        confidence_discount: 0.8
+        validation_required: true
+    priority: medium
+    enabled: true
+    description: Transfer successful strategies to similar low-data tasks
+
+  - name: meta_learning_pattern
+    condition: |
+      cross_task_pattern_count > 3 AND
+      pattern.confidence > 0.75
+    action:
+      type: create_meta_pattern
+      params:
+        generalization_level: high
+        applicability_test: true
+    priority: low
+    enabled: true
+    description: Create meta-patterns from cross-task learnings
+
+  # Resource Optimization Rules
+  - name: memory_pressure
+    condition: |
+      memory_usage > max_memory * 0.9
+    action:
+      type: prune_old_data
+      params:
+        retention_days: 30
+        keep_validated_patterns: true
+        archive_before_delete: true
+    priority: high
+    enabled: true
+    description: Prune old data when approaching memory limits
+
+  - name: slow_pattern_detection
+    condition: |
+      pattern_detection_time_ms > 500
+    action:
+      type: optimize_indexing
+      params:
+        enable_vector_index: true
+        rebuild_index: true
+        use_approximation: true
+    priority: medium
+    enabled: true
+    description: Optimize when pattern detection becomes slow
+
+  # Data Quality Rules
+  - name: insufficient_data
+    condition: |
+      total_experiences < 20
+    action:
+      type: gather_more_data
+      params:
+        target_experiences: 50
+        prioritize_diversity: true
+    priority: high
+    enabled: true
+    description: Ensure sufficient data before optimization
+
+  - name: imbalanced_strategy_usage
+    condition: |
+      strategy.usage_percentage > 0.8
+    action:
+      type: encourage_diversity
+      params:
+        force_exploration: true
+        exploration_rate: 0.3
+        duration_experiences: 20
+    priority: medium
+    enabled: true
+    description: Prevent over-reliance on single strategy
+
+  - name: outdated_patterns
+    condition: |
+      pattern.last_seen < now() - 30_days AND
+      pattern.support < 10
+    action:
+      type: archive_pattern
+      params:
+        move_to: deprecated
+        keep_metadata: true
+    priority: low
+    enabled: true
+    description: Archive patterns not seen recently
+
+# Optimization Schedules
+schedules:
+  - name: daily_optimization
+    frequency: daily
+    time: "02:00"
+    timezone: UTC
+    rules:
+      - poor_performing_strategy
+      - underexplored_strategy
+      - performance_regression
+    enabled: true
+
+  - name: weekly_deep_analysis
+    frequency: weekly
+    day: Sunday
+    time: "03:00"
+    timezone: UTC
+    rules:
+      - context_shift_detection
+      - transfer_opportunity
+      - meta_learning_pattern
+      - outdated_patterns
+    enabled: true
+
+  - name: monthly_maintenance
+    frequency: monthly
+    day: 1
+    time: "04:00"
+    timezone: UTC
+    rules:
+      - memory_pressure
+      - slow_pattern_detection
+      - imbalanced_strategy_usage
+    enabled: true
+
+# Optimization Targets
+targets:
+  success_rate:
+    target: 0.85
+    acceptable: 0.75
+    critical: 0.6
+
+  learning_efficiency:
+    target: 0.8
+    acceptable: 0.6
+    critical: 0.4
+
+  pattern_confidence:
+    target: 0.85
+    acceptable: 0.7
+    critical: 0.5
+
+  strategy_diversity:
+    target: 0.6
+    acceptable: 0.4
+    critical: 0.2
+
+  response_time_ms:
+    pattern_detection: 100
+    strategy_selection: 50
+    recommendation_generation: 200
+
+  resource_usage:
+    memory_mb: 512
+    cpu_percent: 50
+    disk_io_mbps: 10
+
+# Action Definitions
+actions:
+  deprecate_strategy:
+    description: Mark strategy as deprecated and reduce usage
+    side_effects:
+      - logs_warning
+      - updates_strategy_metadata
+      - reduces_selection_probability
+
+  force_exploration:
+    description: Temporarily increase exploration for strategy
+    side_effects:
+      - increases_selection_probability
+      - logs_info
+      - tracks_exploration_results
+
+  automate_recommendation:
+    description: Automatically apply pattern recommendations
+    side_effects:
+      - enables_automation
+      - logs_info
+      - requires_validation
+
+  trigger_investigation:
+    description: Flag for manual investigation
+    side_effects:
+      - creates_alert
+      - logs_warning
+      - may_notify_admin
+
+  increase_exploration:
+    description: Increase exploration rate
+    side_effects:
+      - updates_learning_config
+      - logs_info
+      - tracks_impact
+
+  transfer_knowledge:
+    description: Transfer strategy from source to target task
+    side_effects:
+      - creates_new_pattern
+      - logs_info
+      - requires_validation
+
+  prune_old_data:
+    description: Remove old experiences and patterns
+    side_effects:
+      - archives_data
+      - frees_memory
+      - logs_warning
+
+  optimize_indexing:
+    description: Rebuild or optimize search indexes
+    side_effects:
+      - rebuilds_index
+      - may_cause_downtime
+      - improves_performance

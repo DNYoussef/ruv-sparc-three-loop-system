@@ -1,0 +1,346 @@
+{
+  "version": "1.0.0",
+  "description": "Retention policy rules for AgentDB triple-layer memory system",
+
+  "policies": {
+    "short_term": {
+      "layer": "short_term",
+      "retention": {
+        "default_hours": 24,
+        "min_hours": 1,
+        "max_hours": 72
+      },
+
+      "capacity": {
+        "max_entries": 1000,
+        "soft_limit": 900,
+        "hard_limit": 1000,
+        "overflow_strategy": "prune_lowest_priority"
+      },
+
+      "promotion": {
+        "enabled": true,
+        "target_layer": "mid_term",
+        "criteria": {
+          "min_access_count": 5,
+          "min_priority": 0.5,
+          "min_success_rate": 0.7,
+          "max_age_hours": 12
+        },
+        "promotion_boost": 0.1
+      },
+
+      "demotion": {
+        "enabled": false
+      },
+
+      "cleanup": {
+        "strategy": "priority_based",
+        "interval_hours": 1,
+        "rules": [
+          {
+            "name": "prune_very_low_priority",
+            "condition": "priority < 0.2",
+            "action": "delete",
+            "max_age_hours": 6
+          },
+          {
+            "name": "prune_unused",
+            "condition": "access_count == 0 AND age_hours > 12",
+            "action": "delete"
+          },
+          {
+            "name": "prune_old_low_priority",
+            "condition": "priority < 0.4 AND age_hours > 18",
+            "action": "delete"
+          }
+        ],
+        "preserve_percentage": 0.8
+      }
+    },
+
+    "mid_term": {
+      "layer": "mid_term",
+      "retention": {
+        "default_hours": 168,
+        "min_hours": 24,
+        "max_hours": 336
+      },
+
+      "capacity": {
+        "max_entries": 5000,
+        "soft_limit": 4500,
+        "hard_limit": 5000,
+        "overflow_strategy": "archive_then_prune"
+      },
+
+      "promotion": {
+        "enabled": true,
+        "target_layer": "long_term",
+        "criteria": {
+          "min_access_count": 10,
+          "min_priority": 0.7,
+          "min_success_rate": 0.8,
+          "min_age_hours": 24
+        },
+        "promotion_boost": 0.15
+      },
+
+      "demotion": {
+        "enabled": true,
+        "target_layer": "short_term",
+        "criteria": {
+          "max_access_count": 2,
+          "max_priority": 0.4,
+          "min_age_hours": 72
+        },
+        "demotion_penalty": 0.1
+      },
+
+      "cleanup": {
+        "strategy": "access_based",
+        "interval_hours": 6,
+        "rules": [
+          {
+            "name": "prune_never_accessed",
+            "condition": "access_count == 0 AND age_hours > 72",
+            "action": "delete"
+          },
+          {
+            "name": "prune_low_engagement",
+            "condition": "access_count < 3 AND priority < 0.5 AND age_hours > 120",
+            "action": "delete"
+          },
+          {
+            "name": "archive_old_valuable",
+            "condition": "priority >= 0.7 AND age_hours > 336",
+            "action": "archive"
+          }
+        ],
+        "preserve_percentage": 0.9
+      }
+    },
+
+    "long_term": {
+      "layer": "long_term",
+      "retention": {
+        "default_hours": 720,
+        "min_hours": 168,
+        "max_hours": 8760
+      },
+
+      "capacity": {
+        "max_entries": 50000,
+        "soft_limit": 45000,
+        "hard_limit": 50000,
+        "overflow_strategy": "archive_oldest"
+      },
+
+      "promotion": {
+        "enabled": false
+      },
+
+      "demotion": {
+        "enabled": true,
+        "target_layer": "mid_term",
+        "criteria": {
+          "max_priority": 0.6,
+          "max_access_count": 3,
+          "min_age_hours": 336,
+          "last_accessed_hours_ago": 336
+        },
+        "demotion_penalty": 0.2
+      },
+
+      "cleanup": {
+        "strategy": "hybrid",
+        "interval_hours": 24,
+        "rules": [
+          {
+            "name": "archive_very_old",
+            "condition": "age_hours > 4320",
+            "action": "archive"
+          },
+          {
+            "name": "prune_stale_low_priority",
+            "condition": "priority < 0.6 AND last_accessed_hours_ago > 720",
+            "action": "delete"
+          },
+          {
+            "name": "preserve_high_value",
+            "condition": "priority >= 0.8 AND access_count >= 10",
+            "action": "keep"
+          }
+        ],
+        "preserve_percentage": 0.95
+      }
+    }
+  },
+
+  "global_settings": {
+    "consolidation": {
+      "enabled": true,
+      "schedule": "daily",
+      "time_utc": "02:00",
+      "max_duration_minutes": 30,
+      "abort_on_error": false
+    },
+
+    "archival": {
+      "enabled": true,
+      "path": ".agentdb/archive",
+      "format": "json",
+      "compression": true,
+      "compression_algorithm": "gzip",
+      "retention_days": 365,
+      "index_enabled": true
+    },
+
+    "vacuum": {
+      "enabled": true,
+      "schedule": "weekly",
+      "auto_vacuum": true,
+      "incremental": true
+    },
+
+    "backup": {
+      "enabled": true,
+      "schedule": "daily",
+      "retention_days": 7,
+      "path": ".agentdb/backups",
+      "compression": true
+    }
+  },
+
+  "priority_decay": {
+    "enabled": true,
+    "decay_function": "exponential",
+    "decay_rate": 0.01,
+    "min_priority": 0.1,
+    "exceptions": [
+      {
+        "category": "user_preference",
+        "decay_rate": 0.0
+      },
+      {
+        "category": "fact",
+        "decay_rate": 0.005
+      }
+    ]
+  },
+
+  "access_boosting": {
+    "enabled": true,
+    "boost_per_access": 0.05,
+    "max_boost": 0.3,
+    "decay_boost_over_time": true,
+    "boost_decay_hours": 168
+  },
+
+  "category_overrides": {
+    "conversation": {
+      "default_layer": "short_term",
+      "retention_multiplier": 1.0,
+      "priority_boost": 0.0
+    },
+
+    "user_preference": {
+      "default_layer": "long_term",
+      "retention_multiplier": 3.0,
+      "priority_boost": 0.2,
+      "prevent_deletion": true
+    },
+
+    "learned_pattern": {
+      "default_layer": "mid_term",
+      "retention_multiplier": 1.5,
+      "priority_boost": 0.1,
+      "promote_on_success": true
+    },
+
+    "fact": {
+      "default_layer": "long_term",
+      "retention_multiplier": 2.0,
+      "priority_boost": 0.15,
+      "verify_before_delete": true
+    },
+
+    "task_context": {
+      "default_layer": "short_term",
+      "retention_multiplier": 0.5,
+      "priority_boost": 0.0,
+      "auto_delete_on_completion": true
+    }
+  },
+
+  "quality_metrics": {
+    "enabled": true,
+    "factors": [
+      {
+        "name": "recency",
+        "weight": 0.3,
+        "function": "exponential_decay",
+        "half_life_hours": 72
+      },
+      {
+        "name": "access_frequency",
+        "weight": 0.4,
+        "function": "logarithmic",
+        "saturation_point": 20
+      },
+      {
+        "name": "success_rate",
+        "weight": 0.3,
+        "function": "linear",
+        "min_samples": 3
+      }
+    ],
+
+    "thresholds": {
+      "high_quality": 0.7,
+      "medium_quality": 0.5,
+      "low_quality": 0.3
+    }
+  },
+
+  "monitoring": {
+    "enabled": true,
+    "metrics": [
+      "layer_sizes",
+      "promotion_rates",
+      "demotion_rates",
+      "deletion_rates",
+      "average_retention",
+      "access_patterns",
+      "priority_distribution"
+    ],
+
+    "alerts": [
+      {
+        "name": "layer_overflow",
+        "condition": "size > soft_limit",
+        "severity": "warning",
+        "action": "trigger_cleanup"
+      },
+      {
+        "name": "high_deletion_rate",
+        "condition": "deletion_rate > 0.1",
+        "severity": "info",
+        "action": "log"
+      },
+      {
+        "name": "low_promotion_rate",
+        "condition": "promotion_rate < 0.01",
+        "severity": "info",
+        "action": "review_criteria"
+      }
+    ],
+
+    "reporting": {
+      "enabled": true,
+      "interval": "daily",
+      "format": "json",
+      "path": ".agentdb/reports"
+    }
+  }
+}

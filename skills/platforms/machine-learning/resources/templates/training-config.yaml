@@ -1,0 +1,204 @@
+# Training Configuration Template
+# Comprehensive configuration for model training pipeline
+
+model:
+  # Model architecture
+  architecture: resnet50  # Options: resnet50, resnet101, efficientnet, vit, custom
+  pretrained: true
+  num_classes: 10
+
+  # Custom model configuration (if architecture: custom)
+  custom:
+    layers:
+      - type: conv2d
+        out_channels: 64
+        kernel_size: 3
+        stride: 1
+        padding: 1
+      - type: relu
+      - type: maxpool2d
+        kernel_size: 2
+      - type: linear
+        out_features: 512
+      - type: dropout
+        p: 0.5
+      - type: linear
+        out_features: 10
+
+training:
+  # Training hyperparameters
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  momentum: 0.9
+
+  # Optimizer configuration
+  optimizer: adam  # Options: adam, sgd, adamw, rmsprop
+  optimizer_params:
+    betas: [0.9, 0.999]
+    eps: 1.0e-8
+
+  # Learning rate scheduler
+  scheduler: cosine  # Options: cosine, step, reduce_on_plateau, exponential
+  scheduler_params:
+    step_size: 30
+    gamma: 0.1
+    scheduler_patience: 10
+    min_lr: 1.0e-6
+
+  # Mixed precision training
+  mixed_precision: true
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+
+  # Early stopping
+  early_stopping: true
+  patience: 15
+  min_delta: 0.001
+
+  # Regularization
+  dropout: 0.5
+  label_smoothing: 0.1
+
+# Data configuration
+data:
+  # Data paths
+  train_path: data/processed/train.csv
+  val_path: data/processed/val.csv
+  test_path: data/processed/test.csv
+
+  # Data loading
+  num_workers: 4
+  pin_memory: true
+  prefetch_factor: 2
+
+  # Data augmentation
+  augmentation:
+    enabled: true
+    transforms:
+      - type: random_flip
+        p: 0.5
+        horizontal: true
+        vertical: false
+
+      - type: random_crop
+        size: [224, 224]
+        padding: 4
+
+      - type: color_jitter
+        brightness: 0.2
+        contrast: 0.2
+        saturation: 0.2
+        hue: 0.1
+
+      - type: random_rotation
+        degrees: 15
+
+      - type: normalize
+        mean: [0.485, 0.456, 0.406]
+        std: [0.229, 0.224, 0.225]
+
+  # Validation transforms (no augmentation)
+  val_transforms:
+    - type: resize
+      size: [256, 256]
+    - type: center_crop
+      size: [224, 224]
+    - type: normalize
+      mean: [0.485, 0.456, 0.406]
+      std: [0.229, 0.224, 0.225]
+
+# Distributed training
+distributed:
+  enabled: false
+  backend: nccl  # Options: nccl, gloo, mpi
+  world_size: 1
+  rank: 0
+  init_method: env://
+
+# Logging and checkpointing
+logging:
+  # TensorBoard
+  tensorboard: true
+  tensorboard_dir: runs/
+
+  # Weights & Biases
+  wandb: false
+  wandb_project: ml-training
+  wandb_entity: null
+  wandb_run_name: null
+
+  # Logging frequency
+  log_interval: 10  # Log every N batches
+  checkpoint_every: 10  # Save checkpoint every N epochs
+
+  # Checkpoint directory
+  checkpoint_dir: checkpoints/
+  save_best_only: false
+  save_last_only: false
+
+# Evaluation
+evaluation:
+  # Metrics to track
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - roc_auc
+
+  # Fairness evaluation
+  fairness:
+    enabled: true
+    sensitive_attributes:
+      - gender
+      - age_group
+      - ethnicity
+
+  # Interpretability
+  interpretability:
+    enabled: true
+    methods:
+      - shap
+      - lime
+      - integrated_gradients
+
+# Hardware
+hardware:
+  # Device
+  device: cuda  # Options: cuda, cpu, mps
+  device_ids: [0]  # GPU IDs to use
+
+  # Performance optimizations
+  cudnn_benchmark: true
+  cudnn_deterministic: false
+  tf32: true  # Use TF32 on Ampere GPUs
+
+# Reproducibility
+seed: 42
+deterministic: false
+
+# Advanced options
+advanced:
+  # Gradient checkpointing (for memory efficiency)
+  gradient_checkpointing: false
+
+  # Automatic Mixed Precision (AMP)
+  amp_opt_level: O1  # O0, O1, O2, O3
+
+  # Model compilation (PyTorch 2.0+)
+  compile: false
+  compile_mode: default  # default, reduce-overhead, max-autotune
+
+  # Memory optimization
+  empty_cache_every_n_batches: 100
+
+  # Profiling
+  profile: false
+  profile_memory: false
+  profile_schedule:
+    wait: 1
+    warmup: 1
+    active: 3
+    repeat: 2

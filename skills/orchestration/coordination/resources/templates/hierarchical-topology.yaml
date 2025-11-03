@@ -1,0 +1,216 @@
+# Hierarchical Topology Configuration Template
+# Tree-like structure with coordinator and worker levels
+
+name: hierarchical-coordination
+version: 1.0.0
+topology: hierarchical
+
+# Agent Configuration
+agents:
+  maxAgents: 15
+  strategy: specialized
+
+  # Hierarchy levels
+  hierarchy:
+    # Level 0: Coordinator
+    coordinator:
+      type: coordinator
+      name: hierarchical-coordinator
+      capabilities:
+        - task_delegation
+        - progress_monitoring
+        - resource_allocation
+        - conflict_resolution
+
+    # Level 1: Team Leads
+    team_leads:
+      count: 3
+      type: coordinator
+      roles:
+        - backend_lead
+        - frontend_lead
+        - testing_lead
+      capabilities:
+        - subtask_management
+        - team_coordination
+        - reporting
+
+    # Level 2: Specialist Workers
+    workers:
+      count: 12
+      distribution:
+        backend: 5
+        frontend: 4
+        testing: 3
+      types:
+        - researcher
+        - coder
+        - analyst
+        - optimizer
+
+# Communication Configuration
+communication:
+  pattern: parent-child
+  protocol: hierarchical-messaging
+
+  # Message routing
+  routing:
+    type: tree-based
+    bidirectional: true
+
+  # Connection settings
+  connections:
+    parent_child_only: true
+    peer_connections: false
+    heartbeat_interval: 10  # seconds
+
+# Delegation Configuration
+delegation:
+  # Task breakdown strategy
+  strategy: recursive
+
+  # Delegation rules
+  rules:
+    - from: coordinator
+      to: team_leads
+      criteria: domain_expertise
+
+    - from: team_leads
+      to: workers
+      criteria: specialization
+
+  # Load balancing within levels
+  load_balancing:
+    enabled: true
+    strategy: capacity-based
+    rebalance_threshold: 0.8
+
+# Coordination Protocol
+coordination:
+  # Bottom-up reporting
+  reporting:
+    interval: 30  # seconds
+    aggregation: true
+    format: structured
+
+  # Top-down directives
+  directives:
+    acknowledgement_required: true
+    timeout: 15  # seconds
+
+# State Management
+state:
+  store_type: hierarchical
+  consistency: strong
+
+  # Level-specific state
+  levels:
+    coordinator:
+      visibility: global
+      authority: full
+
+    team_leads:
+      visibility: team-scoped
+      authority: limited
+
+    workers:
+      visibility: local
+      authority: minimal
+
+  # State synchronization
+  sync:
+    coordinator_interval: 5  # seconds
+    team_lead_interval: 10  # seconds
+    worker_interval: 15  # seconds
+
+# Performance Configuration
+performance:
+  # Delegation latency
+  delegation:
+    max_latency: 5  # seconds
+    timeout: 30  # seconds
+
+  # Reporting latency
+  reporting:
+    max_latency: 3  # seconds
+    aggregation_delay: 2  # seconds
+
+  # Resource allocation
+  resources:
+    coordinator_capacity: 100
+    team_lead_capacity: 10
+    worker_capacity: 3
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+
+  # Hierarchical metrics
+  metrics:
+    coordinator:
+      - delegation_rate
+      - coordination_overhead
+      - resource_utilization
+
+    team_leads:
+      - team_performance
+      - subtask_completion
+      - communication_efficiency
+
+    workers:
+      - task_completion_time
+      - quality_metrics
+      - workload
+
+  # Health checks
+  health_checks:
+    coordinator_interval: 5  # seconds
+    team_lead_interval: 10  # seconds
+    worker_interval: 15  # seconds
+
+# Fault Tolerance Configuration
+fault_tolerance:
+  # Coordinator failure (critical)
+  coordinator_failure:
+    detection_interval: 3  # seconds
+    failover_strategy: promote_team_lead
+    election_mechanism: raft
+
+  # Team lead failure
+  team_lead_failure:
+    detection_interval: 5  # seconds
+    recovery_strategy: redistribute_workers
+
+  # Worker failure
+  worker_failure:
+    detection_interval: 10  # seconds
+    recovery_strategy: spawn_replacement
+
+# Scalability Configuration
+scalability:
+  # Dynamic level adjustment
+  dynamic_levels:
+    enabled: true
+    min_levels: 2
+    max_levels: 5
+
+  # Agent scaling
+  auto_scaling:
+    enabled: true
+    trigger: workload_threshold
+    scale_up_threshold: 0.85
+    scale_down_threshold: 0.3
+
+# Hooks Integration
+hooks:
+  pre_task:
+    - validate_hierarchy
+    - check_coordinator_health
+
+  post_task:
+    - aggregate_results
+    - update_hierarchy_state
+
+  session_end:
+    - export_hierarchy_metrics
+    - archive_delegation_tree

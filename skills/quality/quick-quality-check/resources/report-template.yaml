@@ -1,0 +1,142 @@
+# Quality Check Report Template
+# Enhanced tier template for standardized reporting
+
+report_metadata:
+  title: "Quick Quality Check Report"
+  version: "1.0.0"
+  generated_by: "quick-quality-check"
+  timestamp: "{{ timestamp }}"
+
+executive_summary:
+  quality_score: "{{ quality_score }}/100"
+  status: "{{ status }}"
+  overall_passed: "{{ passed }}"
+
+  key_metrics:
+    total_issues: "{{ total_issues }}"
+    critical_issues: "{{ critical_count }}"
+    high_issues: "{{ high_count }}"
+    test_pass_rate: "{{ test_pass_rate }}%"
+    execution_time: "{{ execution_time }}s"
+
+detailed_results:
+  linting:
+    enabled: true
+    total_issues: "{{ lint_total }}"
+    breakdown:
+      eslint_errors: "{{ eslint_errors }}"
+      eslint_warnings: "{{ eslint_warnings }}"
+      prettier_violations: "{{ prettier_violations }}"
+      custom_issues: "{{ custom_issues }}"
+
+  security:
+    enabled: true
+    files_scanned: "{{ security_files_scanned }}"
+    total_issues: "{{ security_total }}"
+    breakdown:
+      critical: "{{ security_critical }}"
+      high: "{{ security_high }}"
+      medium: "{{ security_medium }}"
+      low: "{{ security_low }}"
+    categories:
+      hardcoded_secrets: "{{ hardcoded_secrets_count }}"
+      sql_injection: "{{ sql_injection_count }}"
+      xss_vulnerabilities: "{{ xss_count }}"
+      unsafe_functions: "{{ unsafe_functions_count }}"
+
+  testing:
+    enabled: true
+    framework: "{{ test_framework }}"
+    execution_time: "{{ test_execution_time }}s"
+    results:
+      total: "{{ tests_total }}"
+      passed: "{{ tests_passed }}"
+      failed: "{{ tests_failed }}"
+      skipped: "{{ tests_skipped }}"
+    coverage:
+      enabled: false  # Quick mode
+
+  theater_detection:
+    enabled: true
+    patterns_found: "{{ theater_patterns }}"
+    breakdown:
+      console_logs: "{{ console_log_count }}"
+      todo_comments: "{{ todo_count }}"
+      mock_implementations: "{{ mock_count }}"
+
+issues_by_severity:
+  critical:
+    count: "{{ critical_count }}"
+    examples: "{{ critical_examples }}"
+
+  high:
+    count: "{{ high_count }}"
+    examples: "{{ high_examples }}"
+
+  medium:
+    count: "{{ medium_count }}"
+    examples: "{{ medium_examples }}"
+
+  low:
+    count: "{{ low_count }}"
+    examples: "{{ low_examples }}"
+
+recommendations:
+  immediate_actions: "{{ immediate_actions }}"
+  short_term: "{{ short_term_actions }}"
+  long_term: "{{ long_term_actions }}"
+
+quality_gates:
+  gate_criteria:
+    min_quality_score: 75
+    max_critical_issues: 0
+    max_high_issues: 5
+    max_test_failures: 0
+
+  gate_status:
+    quality_score_met: "{{ score_gate_passed }}"
+    critical_issues_met: "{{ critical_gate_passed }}"
+    high_issues_met: "{{ high_gate_passed }}"
+    test_failures_met: "{{ test_gate_passed }}"
+
+  overall_gate_status: "{{ gate_passed }}"
+
+next_steps:
+  if_passed:
+    - "Code is ready for peer review"
+    - "Proceed with deployment pipeline"
+    - "Monitor production metrics"
+
+  if_failed:
+    - "Address all critical issues immediately"
+    - "Fix high-priority issues before next commit"
+    - "Re-run quality check after fixes"
+    - "Request code review for complex issues"
+
+compliance:
+  standards_checked:
+    - "ESLint rules"
+    - "OWASP Top 10"
+    - "Code style guidelines"
+
+  certifications:
+    security_scan: "{{ security_passed }}"
+    code_quality: "{{ quality_passed }}"
+    test_coverage: "{{ coverage_passed }}"
+
+appendix:
+  tools_used:
+    - name: "ESLint"
+      version: "{{ eslint_version }}"
+    - name: "Prettier"
+      version: "{{ prettier_version }}"
+    - name: "Security Scanner"
+      version: "1.0.0"
+    - name: "Test Runner"
+      version: "1.0.0"
+
+  configuration:
+    parallel_execution: true
+    max_workers: 4
+    timeout: 60
+    quick_mode: true

@@ -1,0 +1,221 @@
+# Memory Layers Configuration
+# Triple-layer retention policy for AgentDB
+
+version: "1.0"
+description: "AgentDB memory layer configuration with retention policies"
+
+layers:
+  # Short-term memory: Recent events and temporary context
+  short_term:
+    name: "Short-Term Memory"
+    retention_hours: 24
+    max_entries: 1000
+    priority_threshold: 0.3
+    description: "Recent interactions and temporary context"
+
+    auto_promotion:
+      enabled: true
+      conditions:
+        min_access_count: 5
+        min_priority: 0.5
+        target_layer: "mid_term"
+
+    cleanup:
+      strategy: "priority_based"
+      keep_percentage: 0.8
+      min_priority: 0.2
+
+  # Mid-term memory: Patterns and recent learnings
+  mid_term:
+    name: "Mid-Term Memory"
+    retention_hours: 168  # 7 days
+    max_entries: 5000
+    priority_threshold: 0.6
+    description: "Learned patterns and important context"
+
+    auto_promotion:
+      enabled: true
+      conditions:
+        min_access_count: 10
+        min_priority: 0.7
+        target_layer: "long_term"
+
+    cleanup:
+      strategy: "access_based"
+      keep_percentage: 0.9
+      min_access_count: 2
+
+  # Long-term memory: Core facts and knowledge
+  long_term:
+    name: "Long-Term Memory"
+    retention_hours: 720  # 30 days
+    max_entries: 50000
+    priority_threshold: 0.8
+    description: "Core knowledge and important facts"
+
+    auto_promotion:
+      enabled: false  # No promotion from long-term
+
+    cleanup:
+      strategy: "hybrid"
+      keep_percentage: 0.95
+      min_priority: 0.7
+      min_access_count: 5
+
+# Global settings
+settings:
+  # Consolidation schedule
+  consolidation:
+    enabled: true
+    interval_hours: 24
+    auto_cleanup: true
+
+  # Memory optimization
+  optimization:
+    quantization: "scalar"  # binary | scalar | product | none
+    compression: true
+    cache_size: 1000
+
+  # Priority calculation
+  priority_calculation:
+    factors:
+      - name: "recency"
+        weight: 0.3
+        decay_function: "exponential"
+      - name: "frequency"
+        weight: 0.4
+        threshold: 5
+      - name: "success_rate"
+        weight: 0.3
+        min_samples: 3
+
+  # Access tracking
+  access_tracking:
+    enabled: true
+    track_timestamps: true
+    update_priority: true
+
+# Memory categories
+categories:
+  conversation:
+    description: "Conversation history and dialogue context"
+    default_layer: "short_term"
+    default_priority: 0.4
+
+  user_preference:
+    description: "User preferences and settings"
+    default_layer: "long_term"
+    default_priority: 0.9
+
+  learned_pattern:
+    description: "Learned behavior patterns"
+    default_layer: "mid_term"
+    default_priority: 0.6
+
+  fact:
+    description: "Factual knowledge and information"
+    default_layer: "long_term"
+    default_priority: 0.8
+
+  task_context:
+    description: "Task-specific context"
+    default_layer: "short_term"
+    default_priority: 0.5
+
+# Retention policies
+retention_policies:
+  # Automatic expiration
+  expiration:
+    enabled: true
+    check_interval_hours: 1
+    grace_period_hours: 0
+
+  # Archival
+  archival:
+    enabled: false
+    archive_path: ".agentdb/archive"
+    archive_threshold_days: 90
+    compression: true
+
+  # Pruning rules
+  pruning:
+    - name: "low_priority_cleanup"
+      condition: "priority < 0.2 AND access_count < 2"
+      max_age_hours: 12
+      layer: "short_term"
+
+    - name: "unused_mid_term"
+      condition: "access_count == 0 AND age_hours > 72"
+      layer: "mid_term"
+
+    - name: "stale_long_term"
+      condition: "last_accessed_days > 60 AND access_count < 3"
+      layer: "long_term"
+
+# Performance tuning
+performance:
+  # Index optimization
+  indexes:
+    - name: "layer_session_idx"
+      columns: ["layer", "session_id"]
+      type: "btree"
+
+    - name: "priority_idx"
+      columns: ["priority"]
+      type: "btree"
+      order: "DESC"
+
+    - name: "expires_idx"
+      columns: ["expires_at"]
+      type: "btree"
+
+  # Query optimization
+  query:
+    default_limit: 20
+    max_limit: 1000
+    use_prepared_statements: true
+
+  # Caching
+  cache:
+    enabled: true
+    size: 1000
+    ttl_seconds: 300
+    strategy: "lru"
+
+# Monitoring
+monitoring:
+  metrics:
+    - layer_sizes
+    - average_priority
+    - access_patterns
+    - promotion_rates
+    - expiration_rates
+
+  alerts:
+    - name: "layer_overflow"
+      condition: "layer_size > max_entries * 0.9"
+      action: "trigger_consolidation"
+
+    - name: "low_hit_rate"
+      condition: "cache_hit_rate < 0.5"
+      action: "increase_cache_size"
+
+# Integration
+integration:
+  # AgentDB specific
+  agentdb:
+    enable_hnsw: true
+    enable_mmr: true
+    distance_metric: "cosine"
+
+  # ReasoningBank compatibility
+  reasoningbank:
+    enable_reasoning: true
+    enable_learning: true
+    synthesis: true
+
+  # Vector search
+  vector_search:
+    dimension: 384
+    k_default: 10
+    threshold: 0.7

@@ -1,0 +1,126 @@
+{
+  "name": "Research & Analysis Swarm",
+  "description": "Collaborative research swarm for information gathering, data analysis, and insight generation",
+  "category": "quickstart",
+  "topology": "mesh",
+  "strategy": "balanced",
+  "default_agents": 5,
+  "tags": ["research", "analysis", "data-science"],
+  "agents": [
+    {
+      "type": "researcher",
+      "name": "Primary Researcher",
+      "capabilities": [
+        "web_search",
+        "literature_review",
+        "source_validation",
+        "trend_analysis"
+      ],
+      "priority": 10
+    },
+    {
+      "type": "researcher",
+      "name": "Secondary Researcher",
+      "capabilities": [
+        "deep_dive_research",
+        "academic_sources",
+        "patent_search",
+        "competitive_analysis"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "analyst",
+      "name": "Data Analyst",
+      "capabilities": [
+        "data_processing",
+        "statistical_analysis",
+        "visualization",
+        "pattern_recognition"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "analyst",
+      "name": "Insights Specialist",
+      "capabilities": [
+        "synthesis",
+        "strategic_insights",
+        "recommendation_generation",
+        "report_writing"
+      ],
+      "priority": 8
+    },
+    {
+      "type": "coordinator",
+      "name": "Research Coordinator",
+      "capabilities": [
+        "task_delegation",
+        "progress_tracking",
+        "quality_assurance",
+        "final_synthesis"
+      ],
+      "priority": 7
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Comprehensive Research",
+      "description": "Multi-source research with analysis and synthesis",
+      "steps": [
+        {
+          "id": "scope_definition",
+          "action": "define_research_scope",
+          "agent": "Research Coordinator",
+          "parallel": false
+        },
+        {
+          "id": "primary_research",
+          "action": "gather_primary_sources",
+          "agent": "Primary Researcher",
+          "depends_on": ["scope_definition"],
+          "parallel": true
+        },
+        {
+          "id": "secondary_research",
+          "action": "gather_secondary_sources",
+          "agent": "Secondary Researcher",
+          "depends_on": ["scope_definition"],
+          "parallel": true
+        },
+        {
+          "id": "data_analysis",
+          "action": "analyze_data",
+          "agent": "Data Analyst",
+          "depends_on": ["primary_research", "secondary_research"]
+        },
+        {
+          "id": "insight_generation",
+          "action": "generate_insights",
+          "agent": "Insights Specialist",
+          "depends_on": ["data_analysis"]
+        },
+        {
+          "id": "synthesis",
+          "action": "synthesize_findings",
+          "agent": "Research Coordinator",
+          "depends_on": ["insight_generation"]
+        }
+      ]
+    }
+  ],
+  "recommended_use_cases": [
+    "Market research",
+    "Competitive analysis",
+    "Academic literature review",
+    "Trend forecasting",
+    "Strategic planning research",
+    "Due diligence investigations"
+  ],
+  "configuration": {
+    "max_parallel_tasks": 3,
+    "collaboration_mode": "peer_to_peer",
+    "knowledge_sharing": true,
+    "metrics_enabled": true
+  }
+}

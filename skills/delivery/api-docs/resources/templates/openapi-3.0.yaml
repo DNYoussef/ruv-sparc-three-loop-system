@@ -1,0 +1,537 @@
+openapi: 3.0.3
+info:
+  title: Sample API
+  version: 1.0.0
+  description: |
+    This is a sample API specification demonstrating OpenAPI 3.0 features.
+
+    ## Features
+    - RESTful endpoints
+    - JWT authentication
+    - Request/response validation
+    - Comprehensive error handling
+
+  contact:
+    name: API Support
+    email: support@example.com
+    url: https://support.example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: https://example.com/terms
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+  - url: https://staging-api.example.com
+    description: Staging environment
+  - url: https://api.example.com
+    description: Production environment
+
+tags:
+  - name: Users
+    description: User management operations
+  - name: Posts
+    description: Blog post operations
+  - name: Authentication
+    description: Authentication and authorization
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate a user and return a JWT token
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              validUser:
+                summary: Valid user credentials
+                value:
+                  email: user@example.com
+                  password: SecurePassword123
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                success:
+                  summary: Successful login
+                  value:
+                    success: true
+                    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                    user:
+                      id: 123
+                      email: user@example.com
+                      name: John Doe
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all users
+      description: Retrieve a paginated list of users
+      operationId: listUsers
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: sort
+          in: query
+          description: Sort field and order
+          schema:
+            type: string
+            enum: [name_asc, name_desc, created_asc, created_desc]
+            default: created_desc
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Register a new user account
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Retrieve detailed information about a specific user
+      operationId: getUserById
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags:
+        - Users
+      summary: Update user
+      description: Update user information
+      operationId: updateUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      description: Permanently delete a user account
+      operationId: deleteUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/UserIdParam'
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /posts:
+    get:
+      tags:
+        - Posts
+      summary: List all posts
+      description: Retrieve a paginated list of blog posts
+      operationId: listPosts
+      parameters:
+        - $ref: '#/components/parameters/PageParam'
+        - $ref: '#/components/parameters/LimitParam'
+        - name: authorId
+          in: query
+          description: Filter by author ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of posts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostListResponse'
+
+    post:
+      tags:
+        - Posts
+      summary: Create a new post
+      description: Create a new blog post
+      operationId: createPost
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+      responses:
+        '201':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: SecurePassword123
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        token:
+          type: string
+          description: JWT access token
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        name:
+          type: string
+          example: John Doe
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+          example: https://example.com/avatars/123.jpg
+        role:
+          type: string
+          enum: [user, admin, moderator]
+          example: user
+        createdAt:
+          type: string
+          format: date-time
+          example: '2024-01-15T10:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2024-01-20T14:45:00Z'
+
+    CreateUserRequest:
+      type: object
+      required:
+        - email
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        avatar:
+          type: string
+          format: uri
+
+    UserListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 456
+        title:
+          type: string
+          example: My First Blog Post
+        content:
+          type: string
+          example: This is the content of my blog post...
+        authorId:
+          type: integer
+          format: int64
+          example: 123
+        author:
+          $ref: '#/components/schemas/User'
+        tags:
+          type: array
+          items:
+            type: string
+          example: [technology, tutorial]
+        published:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreatePostRequest:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+          minLength: 5
+          maxLength: 200
+        content:
+          type: string
+          minLength: 10
+        tags:
+          type: array
+          items:
+            type: string
+        published:
+          type: boolean
+          default: false
+
+    PostListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 100
+        totalPages:
+          type: integer
+          example: 5
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: ValidationError
+        message:
+          type: string
+          example: Invalid input data
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+  parameters:
+    UserIdParam:
+      name: userId
+      in: path
+      required: true
+      description: The user ID
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+
+    PageParam:
+      name: page
+      in: query
+      description: Page number for pagination
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+
+    LimitParam:
+      name: limit
+      in: query
+      description: Number of items per page
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 100
+
+  responses:
+    BadRequest:
+      description: Bad request - Invalid input
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized - Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT token authentication. Include the token in the Authorization header:
+
+        `Authorization: Bearer <token>`
+
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for service-to-service authentication
+
+security:
+  - bearerAuth: []

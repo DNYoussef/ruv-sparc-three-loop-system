@@ -1,0 +1,321 @@
+{
+  "security_rules": {
+    "version": "1.0.0",
+    "last_updated": "2025-11-02",
+    "agent": "Security Reviewer",
+
+    "critical_vulnerabilities": {
+      "sql_injection": {
+        "severity": "critical",
+        "category": "injection",
+        "patterns": [
+          {
+            "pattern": "execute\\(.*\\+.*\\)",
+            "language": ["python", "javascript"],
+            "message": "Potential SQL injection via string concatenation",
+            "cwe": "CWE-89"
+          },
+          {
+            "pattern": "query\\(.*\\$\\{.*\\}\\)",
+            "language": ["javascript", "typescript"],
+            "message": "Template literal in SQL query",
+            "cwe": "CWE-89"
+          },
+          {
+            "pattern": "raw\\(.*\\+.*\\)",
+            "language": ["python"],
+            "message": "Raw SQL with concatenation",
+            "cwe": "CWE-89"
+          }
+        ],
+        "remediation": "Use parameterized queries, prepared statements, or ORM methods. Never concatenate user input into SQL strings."
+      },
+
+      "xss": {
+        "severity": "critical",
+        "category": "injection",
+        "patterns": [
+          {
+            "pattern": "dangerouslySetInnerHTML",
+            "language": ["javascript", "typescript", "jsx", "tsx"],
+            "message": "Potential XSS via dangerouslySetInnerHTML",
+            "cwe": "CWE-79"
+          },
+          {
+            "pattern": "innerHTML\\s*=",
+            "language": ["javascript", "typescript"],
+            "message": "Direct innerHTML assignment",
+            "cwe": "CWE-79"
+          },
+          {
+            "pattern": "document\\.write",
+            "language": ["javascript"],
+            "message": "document.write() can lead to XSS",
+            "cwe": "CWE-79"
+          }
+        ],
+        "remediation": "Use text nodes, React/Vue templates, or sanitization libraries (DOMPurify) for user-generated HTML."
+      },
+
+      "hardcoded_secrets": {
+        "severity": "critical",
+        "category": "secrets",
+        "patterns": [
+          {
+            "pattern": "(password|api_key|secret|token|private_key)\\s*=\\s*['\"][^'\"]+['\"]",
+            "language": ["*"],
+            "message": "Hardcoded credential detected",
+            "cwe": "CWE-798"
+          },
+          {
+            "pattern": "BEGIN (RSA |)PRIVATE KEY",
+            "language": ["*"],
+            "message": "Private key in source code",
+            "cwe": "CWE-798"
+          },
+          {
+            "pattern": "aws_access_key_id",
+            "language": ["*"],
+            "message": "AWS credentials in code",
+            "cwe": "CWE-798"
+          }
+        ],
+        "remediation": "Store secrets in environment variables, secret management services (AWS Secrets Manager, HashiCorp Vault), or encrypted config files."
+      },
+
+      "command_injection": {
+        "severity": "critical",
+        "category": "injection",
+        "patterns": [
+          {
+            "pattern": "exec\\(.*\\+",
+            "language": ["python", "javascript"],
+            "message": "Command injection via exec with user input",
+            "cwe": "CWE-78"
+          },
+          {
+            "pattern": "shell=True",
+            "language": ["python"],
+            "message": "Subprocess call with shell=True",
+            "cwe": "CWE-78"
+          },
+          {
+            "pattern": "eval\\(",
+            "language": ["javascript", "python"],
+            "message": "eval() allows arbitrary code execution",
+            "cwe": "CWE-95"
+          }
+        ],
+        "remediation": "Avoid shell=True, validate and sanitize inputs, use subprocess arrays instead of shell strings."
+      }
+    },
+
+    "high_priority": {
+      "weak_cryptography": {
+        "severity": "high",
+        "category": "crypto",
+        "patterns": [
+          {
+            "pattern": "\\b(MD5|SHA1|DES|RC4)\\b",
+            "language": ["*"],
+            "message": "Weak cryptographic algorithm",
+            "cwe": "CWE-327"
+          },
+          {
+            "pattern": "crypto\\.createCipher\\b",
+            "language": ["javascript"],
+            "message": "Deprecated Node.js crypto method",
+            "cwe": "CWE-327"
+          }
+        ],
+        "remediation": "Use SHA-256, SHA-3, AES-256, or stronger algorithms. Use createCipheriv() in Node.js."
+      },
+
+      "insecure_deserialization": {
+        "severity": "high",
+        "category": "deserialization",
+        "patterns": [
+          {
+            "pattern": "pickle\\.loads\\(",
+            "language": ["python"],
+            "message": "Insecure deserialization with pickle",
+            "cwe": "CWE-502"
+          },
+          {
+            "pattern": "yaml\\.load\\(",
+            "language": ["python"],
+            "message": "Unsafe YAML deserialization",
+            "cwe": "CWE-502"
+          },
+          {
+            "pattern": "JSON\\.parse\\(.*req\\.",
+            "language": ["javascript"],
+            "message": "Parsing untrusted JSON",
+            "cwe": "CWE-502"
+          }
+        ],
+        "remediation": "Use safe alternatives (yaml.safe_load), validate schemas, sanitize input before deserialization."
+      },
+
+      "insecure_random": {
+        "severity": "high",
+        "category": "random",
+        "patterns": [
+          {
+            "pattern": "random\\.random\\(",
+            "language": ["python"],
+            "message": "Non-cryptographic random for security",
+            "cwe": "CWE-338"
+          },
+          {
+            "pattern": "Math\\.random\\(",
+            "language": ["javascript"],
+            "message": "Math.random() not cryptographically secure",
+            "cwe": "CWE-338"
+          }
+        ],
+        "remediation": "Use secrets module (Python) or crypto.randomBytes (Node.js) for security-sensitive operations."
+      },
+
+      "missing_authentication": {
+        "severity": "high",
+        "category": "auth",
+        "patterns": [
+          {
+            "pattern": "@app\\.(get|post|put|delete)\\(",
+            "language": ["python"],
+            "message": "Endpoint without authentication decorator",
+            "cwe": "CWE-306"
+          },
+          {
+            "pattern": "router\\.(get|post|put|delete)\\(",
+            "language": ["javascript"],
+            "message": "Route without authentication middleware",
+            "cwe": "CWE-306"
+          }
+        ],
+        "remediation": "Add authentication decorators/middleware to protected endpoints. Use JWT, OAuth2, or session-based auth."
+      }
+    },
+
+    "medium_priority": {
+      "csrf_missing": {
+        "severity": "medium",
+        "category": "csrf",
+        "patterns": [
+          {
+            "pattern": "<form[^>]*method=['\"]post['\"]",
+            "language": ["html", "jsx", "tsx"],
+            "message": "POST form without CSRF protection",
+            "cwe": "CWE-352"
+          }
+        ],
+        "remediation": "Add CSRF tokens to all state-changing operations. Use framework CSRF protection (Django, Express-CSRF)."
+      },
+
+      "sensitive_data_exposure": {
+        "severity": "medium",
+        "category": "exposure",
+        "patterns": [
+          {
+            "pattern": "console\\.log\\(.*password",
+            "language": ["javascript"],
+            "message": "Logging sensitive data",
+            "cwe": "CWE-532"
+          },
+          {
+            "pattern": "print\\(.*password",
+            "language": ["python"],
+            "message": "Printing sensitive data",
+            "cwe": "CWE-532"
+          }
+        ],
+        "remediation": "Avoid logging passwords, tokens, or PII. Use structured logging with redaction."
+      },
+
+      "path_traversal": {
+        "severity": "medium",
+        "category": "path_traversal",
+        "patterns": [
+          {
+            "pattern": "open\\(.*\\+",
+            "language": ["python"],
+            "message": "File path from user input",
+            "cwe": "CWE-22"
+          },
+          {
+            "pattern": "readFile\\(.*req\\.",
+            "language": ["javascript"],
+            "message": "Reading file from request parameter",
+            "cwe": "CWE-22"
+          }
+        ],
+        "remediation": "Validate and sanitize file paths, use whitelists, resolve paths and check they're within allowed directories."
+      }
+    },
+
+    "best_practices": {
+      "security_headers": {
+        "severity": "low",
+        "checks": [
+          "Content-Security-Policy",
+          "X-Frame-Options",
+          "X-Content-Type-Options",
+          "Strict-Transport-Security"
+        ],
+        "remediation": "Configure security headers using Helmet.js (Node) or similar middleware."
+      },
+
+      "dependency_updates": {
+        "severity": "medium",
+        "checks": [
+          "outdated packages",
+          "known vulnerabilities"
+        ],
+        "tools": ["npm audit", "safety", "snyk"],
+        "remediation": "Regularly update dependencies, use automated tools for vulnerability scanning."
+      },
+
+      "error_handling": {
+        "severity": "low",
+        "patterns": [
+          {
+            "pattern": "except:\\s*$",
+            "language": ["python"],
+            "message": "Bare except clause",
+            "cwe": "CWE-755"
+          },
+          {
+            "pattern": "catch\\(e\\)\\s*\\{\\s*\\}",
+            "language": ["javascript"],
+            "message": "Empty catch block",
+            "cwe": "CWE-755"
+          }
+        ],
+        "remediation": "Handle specific exceptions, log errors appropriately, don't expose sensitive info in error messages."
+      }
+    }
+  },
+
+  "scanning_config": {
+    "file_extensions": {
+      "python": [".py"],
+      "javascript": [".js", ".jsx"],
+      "typescript": [".ts", ".tsx"],
+      "html": [".html", ".htm"]
+    },
+
+    "exclude_paths": [
+      "node_modules/",
+      ".git/",
+      "dist/",
+      "build/",
+      "__pycache__/",
+      "*.test.js",
+      "*.spec.ts"
+    ],
+
+    "deep_scan_threshold": 1000,
+    "max_file_size_mb": 10
+  }
+}

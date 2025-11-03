@@ -1,0 +1,220 @@
+# Swarm Configuration Template
+# Part of Loop 2: Parallel Swarm Implementation (Enhanced Tier)
+#
+# This template defines swarm topology, agent registry, and execution parameters
+# for parallel implementation workflows.
+
+swarm:
+  name: "loop2-parallel-swarm"
+  version: "2.0.0"
+  topology: "hierarchical"  # Options: mesh, hierarchical, ring, star
+
+  queen_coordinator:
+    enabled: true
+    agent: "hierarchical-coordinator"
+    responsibilities:
+      - "meta-analysis"
+      - "agent-selection"
+      - "skill-assignment"
+      - "group-validation"
+      - "failure-recovery"
+
+  execution:
+    max_parallel_agents: 11
+    theater_tolerance: 0  # Zero tolerance (0-5%)
+    sandbox_validation: true
+    integration_threshold: 100  # 100% test pass required
+
+agents:
+  registry:
+    type: "claude-flow-86"  # 86-agent registry from claude-flow
+
+  specializations:
+    backend:
+      - "backend-dev"
+      - "system-architect"
+      - "coder"
+
+    frontend:
+      - "react-developer"
+      - "frontend-dev"
+      - "coder"
+
+    database:
+      - "database-design-specialist"
+      - "code-analyzer"
+
+    testing:
+      - "tester"
+      - "tdd-london-swarm"
+
+    quality:
+      - "theater-detection-audit"
+      - "functionality-audit"
+      - "code-review-assistant"
+      - "reviewer"
+
+    documentation:
+      - "api-docs"
+      - "docs-writer"
+      - "technical-writing-agent"
+
+    infrastructure:
+      - "cicd-engineer"
+      - "system-architect"
+
+  workload_limits:
+    critical_priority: 1  # Max tasks per agent for critical
+    high_priority: 2
+    medium_priority: 3
+    low_priority: 4
+
+skills:
+  available:
+    testing:
+      - "tdd-london-swarm"
+      - "testing-quality"
+
+    quality:
+      - "theater-detection-audit"
+      - "functionality-audit"
+      - "code-review-assistant"
+
+    documentation:
+      - "api-docs"
+      - "documentation"
+
+    database:
+      - "database-schema-design"
+
+    api:
+      - "api-development"
+
+  preference: "skill-based"  # Prefer skills when available
+
+  fallback: "custom-instructions"  # Use detailed instructions if no skill
+
+coordination:
+  hooks:
+    enabled: true
+    pre_task: "npx claude-flow@alpha hooks pre-task"
+    post_edit: "npx claude-flow@alpha hooks post-edit"
+    post_task: "npx claude-flow@alpha hooks post-task"
+    session_restore: "npx claude-flow@alpha hooks session-restore"
+    session_end: "npx claude-flow@alpha hooks session-end"
+
+  memory:
+    namespaces:
+      input: "integration/loop1-to-loop2"
+      coordination: "swarm/coordination"
+      realtime: "swarm/realtime"
+      persistent: "swarm/persistent"
+      output: "integration/loop2-to-loop3"
+
+    store_command: "npx claude-flow@alpha memory store"
+    query_command: "npx claude-flow@alpha memory query"
+
+quality_gates:
+  theater_detection:
+    enabled: true
+    detectors:
+      - name: "code"
+        agent: "theater-detection-audit"
+        weight: 1.0
+
+      - name: "tests"
+        agent: "tester"
+        weight: 1.0
+
+      - name: "docs"
+        agent: "docs-writer"
+        weight: 0.8
+
+      - name: "sandbox"
+        agent: "functionality-audit"
+        weight: 1.2
+
+      - name: "integration"
+        agent: "production-validator"
+        weight: 1.0
+
+    consensus:
+      algorithm: "byzantine"
+      threshold: 0.8  # 80% agreement required
+      total_detectors: 5
+
+  integration_loop:
+    enabled: true
+    max_iterations: 10
+    success_threshold: 100  # 100% tests must pass
+
+  sandbox_validation:
+    enabled: true
+    timeout: 300  # seconds
+
+  code_review:
+    enabled: true
+    min_score: 75  # 0-100 scale
+
+parallel_groups:
+  optimization:
+    balance_workload: true
+    minimize_critical_path: true
+    respect_dependencies: true
+
+  dependencies:
+    validate: true
+    allow_circular: false
+
+  batching:
+    enabled: true
+    max_batch_size: 11  # Same as max_parallel_agents
+
+integration:
+  loop1:
+    source: "research-driven-planning"
+    package: ".claude/.artifacts/loop1-planning-package.json"
+    memory_namespace: "integration/loop1-to-loop2"
+
+  loop3:
+    target: "cicd-intelligent-recovery"
+    package: ".claude/.artifacts/loop2-delivery-package.json"
+    memory_namespace: "integration/loop2-to-loop3"
+
+artifacts:
+  directory: ".claude/.artifacts"
+
+  files:
+    matrix: "agent-skill-assignments.json"
+    execution_summary: "execution-summary.json"
+    theater_report: "theater-consensus-report.json"
+    delivery_package: "loop2-delivery-package.json"
+
+  retention:
+    keep_all: true  # Keep all artifacts for audit trail
+
+monitoring:
+  progress_tracking: true
+  real_time_updates: true
+  performance_metrics: true
+
+  metrics:
+    - "task_completion_rate"
+    - "agent_utilization"
+    - "theater_detection_rate"
+    - "test_coverage"
+    - "code_review_scores"
+
+error_handling:
+  retry:
+    enabled: true
+    max_attempts: 3
+    backoff: "exponential"
+
+  escalation:
+    to_queen: true
+    to_loop3: true  # For persistent failures
+
+  recovery:
+    auto_fix: true
+    manual_intervention_threshold: 3  # failures

@@ -1,0 +1,45 @@
+{
+  "name": "my-monorepo",
+  "version": "1.0.0",
+  "description": "Multi-repository monorepo configuration template",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "typecheck": "turbo run typecheck",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0",
+    "@types/node": "^20.0.0",
+    "prettier": "^3.0.0",
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "packageManager": "npm@9.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/monorepo.git"
+  },
+  "keywords": [
+    "monorepo",
+    "turborepo",
+    "workspaces"
+  ],
+  "author": "Your Organization",
+  "license": "MIT"
+}

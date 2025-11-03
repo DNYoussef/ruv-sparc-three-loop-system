@@ -1,0 +1,240 @@
+# Flow Nexus Deployment Manifest Template
+# Defines deployment configuration for applications
+
+apiVersion: flow-nexus/v1
+kind: Deployment
+metadata:
+  name: my-application
+  labels:
+    app: my-app
+    env: production
+    tier: backend
+  annotations:
+    description: "Production deployment for my application"
+    owner: "engineering-team"
+
+spec:
+  # Template Selection
+  template:
+    name: express-api-starter
+    version: "1.2.0"
+
+  # Deployment Configuration
+  deployment:
+    name: my-app-production
+    region: us-east-1
+    replicas: 3
+    strategy:
+      type: RollingUpdate
+      maxSurge: 1
+      maxUnavailable: 0
+
+  # Template Variables
+  variables:
+    api_key: "${API_KEY}"
+    database_url: "${DATABASE_URL}"
+    redis_url: "${REDIS_URL}"
+    jwt_secret: "${JWT_SECRET}"
+    cors_origins: "https://app.example.com,https://www.example.com"
+
+  # Environment Variables
+  env_vars:
+    NODE_ENV: production
+    PORT: 8080
+    LOG_LEVEL: info
+    RATE_LIMIT_MAX: 1000
+    RATE_LIMIT_WINDOW: 900000
+
+  # Resource Limits
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+
+  # Health Checks
+  health:
+    liveness_probe:
+      path: /health/live
+      initial_delay: 30
+      period: 10
+      timeout: 5
+      failure_threshold: 3
+
+    readiness_probe:
+      path: /health/ready
+      initial_delay: 10
+      period: 5
+      timeout: 3
+      failure_threshold: 3
+
+  # Scaling Configuration
+  autoscaling:
+    enabled: true
+    min_replicas: 2
+    max_replicas: 10
+    target_cpu_utilization: 70
+    target_memory_utilization: 80
+
+  # Networking
+  networking:
+    expose: true
+    domain: api.example.com
+    tls:
+      enabled: true
+      cert_manager: letsencrypt
+
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/rate-limit: "100"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+  # Persistent Storage
+  storage:
+    volumes:
+      - name: app-data
+        size: 10Gi
+        mount_path: /app/data
+        storage_class: fast-ssd
+
+      - name: logs
+        size: 5Gi
+        mount_path: /app/logs
+        storage_class: standard
+
+  # Database Configuration
+  database:
+    provider: postgresql
+    version: "15"
+    instance_type: db.t3.medium
+    storage: 100Gi
+    backup:
+      enabled: true
+      retention_days: 30
+      schedule: "0 2 * * *"  # 2 AM daily
+
+  # Cache Configuration
+  cache:
+    provider: redis
+    version: "7"
+    instance_type: cache.t3.micro
+    persistence: true
+
+  # Monitoring & Observability
+  monitoring:
+    enabled: true
+    metrics:
+      - prometheus
+      - datadog
+
+    logging:
+      level: info
+      format: json
+      destinations:
+        - cloudwatch
+        - elasticsearch
+
+    tracing:
+      enabled: true
+      provider: jaeger
+      sample_rate: 0.1
+
+    alerts:
+      - name: HighErrorRate
+        condition: error_rate > 5%
+        severity: critical
+        channels: [email, slack, pagerduty]
+
+      - name: HighLatency
+        condition: p95_latency > 500ms
+        severity: warning
+        channels: [email, slack]
+
+  # Security
+  security:
+    network_policy:
+      enabled: true
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  app: frontend
+
+    pod_security:
+      run_as_non_root: true
+      read_only_root_filesystem: true
+      drop_capabilities:
+        - ALL
+
+    secrets:
+      provider: vault
+      path: /secret/production/my-app
+
+  # CI/CD Integration
+  cicd:
+    auto_deploy: true
+    source:
+      repository: github.com/org/my-app
+      branch: main
+
+    build:
+      dockerfile: Dockerfile
+      build_args:
+        NODE_VERSION: "20"
+
+    tests:
+      run_before_deploy: true
+      commands:
+        - npm test
+        - npm run test:integration
+
+      quality_gates:
+        min_coverage: 80
+        max_vulnerabilities: 0
+        max_code_smells: 10
+
+    rollback:
+      auto_rollback_on_failure: true
+      canary:
+        enabled: true
+        steps: [10, 25, 50, 100]
+        interval: 300  # seconds
+
+  # Cost Management
+  cost:
+    budget:
+      monthly_limit: 500  # USD
+      alert_threshold: 0.8
+
+    optimization:
+      auto_scale_down: true
+      spot_instances: false
+
+# Post-Deployment Actions
+post_deploy:
+  notifications:
+    - type: slack
+      channel: "#deployments"
+      message: "Deployed ${APP_NAME} v${VERSION} to production"
+
+    - type: email
+      to: ["team@example.com"]
+      subject: "Production Deployment: ${APP_NAME}"
+
+  smoke_tests:
+    - name: API Health Check
+      endpoint: https://api.example.com/health
+      expected_status: 200
+
+    - name: Authentication Test
+      endpoint: https://api.example.com/auth/verify
+      method: POST
+      expected_status: 200
+
+  documentation:
+    auto_update: true
+    endpoints:
+      - https://docs.example.com
+      - https://api-docs.example.com

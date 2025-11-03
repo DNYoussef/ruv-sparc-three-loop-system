@@ -1,0 +1,62 @@
+# ML Skill - Quick Start Guide
+
+## Installation
+
+```bash
+# Install required dependencies
+pip install mlflow optuna scikit-learn tensorflow torch
+npm install -g optuna-dashboard
+```
+
+## Quick Usage
+
+### 1. Experiment Tracking
+```bash
+cd examples
+python experiment-tracking.py
+
+# View results
+mlflow ui
+# Navigate to: http://localhost:5000
+```
+
+### 2. Hyperparameter Optimization
+```bash
+cd examples
+node hyperparameter-optimization.js
+
+# View visualizations in generated HTML files
+```
+
+### 3. Full MLOps Pipeline
+```bash
+cd examples
+python mlops-pipeline.py
+```
+
+## Testing
+
+```bash
+# Python tests
+cd tests
+python -m pytest test-experiment-tracking.py -v
+python -m pytest test-mlops-pipeline.py -v
+
+# JavaScript tests
+node test-hyperparameter-tuning.js
+```
+
+## Configuration
+
+Edit templates in `resources/templates/`:
+- `experiment-config.yaml` - Experiment settings
+- `hyperparameter-space.json` - Search space
+- `model-card.md` - Model documentation
+
+## Scripts
+
+Run production scripts from `resources/scripts/`:
+- `python experiment-tracker.py --config <path>`
+- `node hyperparameter-tuner.js --space <path> --trials 100`
+- `bash model-registry.sh register <name> <version> <path>`
+- `python ml-ops.py --pipeline full --model-name <name>`

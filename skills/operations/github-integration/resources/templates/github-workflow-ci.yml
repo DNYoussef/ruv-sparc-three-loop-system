@@ -1,0 +1,279 @@
+# GitHub Actions CI/CD Workflow Template
+# Comprehensive CI pipeline with security, testing, and deployment
+# Supports Node.js, Python, Go, and multi-language projects
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+env:
+  # Global environment variables
+  NODE_VERSION: '18.x'
+  PYTHON_VERSION: '3.11'
+  GO_VERSION: '1.21'
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  # Security and code quality checks
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Detect secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+
+  # Linting and code style
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Run Prettier check
+        run: npm run format:check
+        continue-on-error: true
+
+  # Unit and integration tests
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test -- --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+
+  # Build and artifact generation
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: [security, lint, test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+          retention-days: 7
+
+  # E2E tests (optional)
+  e2e:
+    name: End-to-End Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: dist/
+
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  # Performance benchmarks
+  benchmark:
+    name: Performance Benchmarks
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run benchmarks
+        run: npm run benchmark
+
+      - name: Comment PR with results
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const results = fs.readFileSync('benchmark-results.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Performance Benchmarks\n\n\`\`\`\n${results}\n\`\`\``
+            });
+
+  # Docker image build and push
+  docker:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/app:latest
+            ${{ secrets.DOCKER_USERNAME }}/app:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/app:buildcache,mode=max
+
+  # Deploy to staging
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/develop'
+    environment:
+      name: staging
+      url: https://staging.example.com
+    steps:
+      - name: Deploy to staging
+        run: |
+          echo "Deploying to staging environment"
+          # Add deployment script here
+
+  # Deploy to production
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [docker]
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+      url: https://example.com
+    steps:
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production environment"
+          # Add deployment script here
+
+      - name: Create deployment notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: context.payload.deployment.id,
+              state: 'success',
+              environment_url: 'https://example.com'
+            });

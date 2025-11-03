@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReasoningBank Pattern Schema",
+  "description": "Schema for ReasoningBank patterns stored in AgentDB",
+  "type": "object",
+  "required": ["id", "type", "domain", "pattern", "embedding"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique pattern identifier",
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "type": {
+      "type": "string",
+      "description": "Pattern type classification",
+      "enum": [
+        "experience",
+        "trajectory",
+        "pattern",
+        "distilled-pattern",
+        "principle",
+        "concrete",
+        "anti-pattern",
+        "best-practice"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain or category of the pattern",
+      "examples": [
+        "code-generation",
+        "debugging",
+        "api-optimization",
+        "database-optimization",
+        "testing",
+        "refactoring"
+      ]
+    },
+    "pattern": {
+      "type": "object",
+      "description": "Pattern content and metadata",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Original query or problem"
+        },
+        "approach": {
+          "type": "string",
+          "description": "Approach or solution taken"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": ["success", "failure", "partial"],
+          "description": "Outcome of the pattern application"
+        },
+        "metrics": {
+          "type": "object",
+          "description": "Quantitative metrics",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "context": {
+          "type": "object",
+          "description": "Contextual information",
+          "properties": {
+            "agent": {
+              "type": "string",
+              "description": "Agent that created/executed the pattern"
+            },
+            "task_id": {
+              "type": "string",
+              "description": "Associated task identifier"
+            },
+            "environment": {
+              "type": "string",
+              "description": "Execution environment"
+            }
+          }
+        },
+        "steps": {
+          "type": "array",
+          "description": "Trajectory steps (for trajectory patterns)",
+          "items": {
+            "type": "object",
+            "required": ["action", "result"],
+            "properties": {
+              "action": {
+                "type": "string",
+                "description": "Action taken"
+              },
+              "result": {
+                "type": "string",
+                "description": "Result of the action"
+              },
+              "timestamp": {
+                "type": "integer",
+                "description": "Unix timestamp in milliseconds"
+              },
+              "metadata": {
+                "type": "object",
+                "description": "Additional step metadata"
+              }
+            }
+          }
+        },
+        "distillation": {
+          "type": "object",
+          "description": "Distillation metadata (for distilled patterns)",
+          "properties": {
+            "sample_size": {
+              "type": "integer",
+              "description": "Number of patterns distilled",
+              "minimum": 1
+            },
+            "source_patterns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "IDs of source patterns"
+            },
+            "distilled_at": {
+              "type": "integer",
+              "description": "Distillation timestamp"
+            }
+          }
+        }
+      }
+    },
+    "embedding": {
+      "type": "array",
+      "description": "Vector embedding (1536 dimensions for OpenAI)",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 384,
+      "maxItems": 3072
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confidence score [0, 1]",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.5
+    },
+    "usage_count": {
+      "type": "integer",
+      "description": "Number of times pattern has been used",
+      "minimum": 0,
+      "default": 0
+    },
+    "success_count": {
+      "type": "integer",
+      "description": "Number of successful applications",
+      "minimum": 0,
+      "default": 0
+    },
+    "created_at": {
+      "type": "integer",
+      "description": "Creation timestamp (Unix milliseconds)",
+      "minimum": 0
+    },
+    "last_used": {
+      "type": "integer",
+      "description": "Last usage timestamp (Unix milliseconds)",
+      "minimum": 0
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Searchable tags"
+        },
+        "source": {
+          "type": "string",
+          "description": "Pattern source (e.g., 'manual', 'auto-learned', 'migrated')"
+        },
+        "version": {
+          "type": "string",
+          "description": "Pattern schema version"
+        },
+        "quality_score": {
+          "type": "number",
+          "description": "Computed quality score [0, 1]",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "reliability": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "untested"],
+          "description": "Reliability classification"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": "pattern_api_auth_001",
+      "type": "experience",
+      "domain": "api-optimization",
+      "pattern": {
+        "query": "How to optimize API authentication?",
+        "approach": "Implement JWT with Redis caching",
+        "outcome": "success",
+        "metrics": {
+          "latency_reduction": 0.85,
+          "cache_hit_rate": 0.92
+        },
+        "context": {
+          "agent": "coder",
+          "task_id": "AUTH-123",
+          "environment": "production"
+        }
+      },
+      "embedding": [0.023, -0.045, 0.067],
+      "confidence": 0.95,
+      "usage_count": 12,
+      "success_count": 11,
+      "created_at": 1699488000000,
+      "last_used": 1699574400000,
+      "metadata": {
+        "tags": ["authentication", "jwt", "redis", "optimization"],
+        "source": "auto-learned",
+        "version": "1.0",
+        "quality_score": 0.89,
+        "reliability": "high"
+      }
+    }
+  ]
+}

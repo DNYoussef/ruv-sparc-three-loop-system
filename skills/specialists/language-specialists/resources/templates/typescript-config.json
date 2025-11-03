@@ -1,0 +1,75 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2021",
+    "lib": ["ES2021"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Modules */
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "noEmit": false,
+    "incremental": true,
+
+    /* Interop Constraints */
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+
+    /* Type Checking - STRICT MODE */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+
+    /* Completeness */
+    "skipLibCheck": true,
+
+    /* Path Mapping (customize as needed) */
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/types/*": ["src/types/*"]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

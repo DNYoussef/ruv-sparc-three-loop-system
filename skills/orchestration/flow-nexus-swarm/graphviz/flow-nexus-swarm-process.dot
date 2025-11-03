@@ -1,0 +1,180 @@
+digraph FlowNexusSwarm {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end nodes
+    start [shape=ellipse, label="Start:\nSwarm Request", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nOperational Swarm", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Planning & Configuration
+    subgraph cluster_planning {
+        label="Phase 1: Planning & Configuration";
+        fillcolor=lightyellow;
+        style=filled;
+
+        plan1 [label="Analyze\nRequirements"];
+        plan2 [label="Select\nTopology"];
+        plan3 [label="Choose\nStrategy"];
+        plan4 [label="Define\nAgent Roles"];
+
+        plan1 -> plan2;
+        plan2 -> plan3;
+        plan3 -> plan4;
+    }
+
+    // Topology decision
+    topology_decision [shape=diamond, label="Topology\nType?", fillcolor=yellow];
+
+    // Topology-specific configurations
+    subgraph cluster_topologies {
+        label="Topology Configurations";
+        fillcolor=lightblue;
+        style=filled;
+
+        hierarchical [label="Hierarchical\nTree Structure", fillcolor=lightcyan];
+        mesh [label="Mesh\nPeer-to-Peer", fillcolor=lightcyan];
+        ring [label="Ring\nCircular", fillcolor=lightcyan];
+        star [label="Star\nCentralized", fillcolor=lightcyan];
+    }
+
+    // Phase 2: Swarm Initialization
+    subgraph cluster_initialization {
+        label="Phase 2: Swarm Initialization";
+        fillcolor=lightyellow;
+        style=filled;
+
+        init1 [label="Initialize\nSwarm"];
+        init2 [label="Allocate\nResources"];
+        init3 [label="Configure\nCoordination"];
+
+        init1 -> init2;
+        init2 -> init3;
+    }
+
+    // Phase 3: Agent Deployment
+    subgraph cluster_agents {
+        label="Phase 3: Agent Deployment";
+        fillcolor=lightyellow;
+        style=filled;
+
+        agent1 [label="Spawn\nCoordinator"];
+        agent2 [label="Spawn\nResearchers"];
+        agent3 [label="Spawn\nCoders"];
+        agent4 [label="Spawn\nAnalysts"];
+        agent5 [label="Verify\nAgent Health"];
+
+        agent1 -> agent2;
+        agent2 -> agent3;
+        agent3 -> agent4;
+        agent4 -> agent5;
+    }
+
+    // Phase 4: Workflow Setup (optional)
+    subgraph cluster_workflow {
+        label="Phase 4: Workflow Setup (Optional)";
+        fillcolor=lightyellow;
+        style=filled;
+
+        wf1 [label="Define\nWorkflow Steps"];
+        wf2 [label="Configure\nTriggers"];
+        wf3 [label="Set Retry\nPolicy"];
+        wf4 [label="Deploy\nWorkflow"];
+
+        wf1 -> wf2;
+        wf2 -> wf3;
+        wf3 -> wf4;
+    }
+
+    // Workflow decision
+    workflow_decision [shape=diamond, label="Deploy\nWorkflow?", fillcolor=yellow];
+
+    // Phase 5: Monitoring & Validation
+    subgraph cluster_monitoring {
+        label="Phase 5: Monitoring & Validation";
+        fillcolor=lightyellow;
+        style=filled;
+
+        mon1 [label="Health\nCheck"];
+        mon2 [label="Verify\nConnections"];
+        mon3 [label="Test\nCommunication"];
+
+        mon1 -> mon2;
+        mon2 -> mon3;
+    }
+
+    // Quality gate
+    quality_gate [shape=diamond, label="All Systems\nOperational?", fillcolor=yellow];
+
+    // Error handling
+    error_handler [shape=octagon, label="ERROR:\nSystem Check Failed", fillcolor=orange];
+    rollback [label="Rollback\nChanges", fillcolor=lightcoral];
+
+    // External skill references
+    template_skill [shape=cylinder, label="Template Manager\n(Use pre-built configs)", fillcolor=lightcoral];
+    monitor_skill [shape=cylinder, label="Swarm Monitor\n(Real-time metrics)", fillcolor=lightcoral];
+    event_skill [shape=cylinder, label="Event-Driven\nWorkflows", fillcolor=lightcoral];
+
+    // Main flow
+    start -> plan1;
+    plan4 -> topology_decision;
+
+    // Topology branching
+    topology_decision -> hierarchical [label="hierarchical"];
+    topology_decision -> mesh [label="mesh"];
+    topology_decision -> ring [label="ring"];
+    topology_decision -> star [label="star"];
+
+    // Topology convergence
+    hierarchical -> init1 [lhead=cluster_initialization];
+    mesh -> init1 [lhead=cluster_initialization];
+    ring -> init1 [lhead=cluster_initialization];
+    star -> init1 [lhead=cluster_initialization];
+
+    // Agent deployment
+    init3 -> agent1 [lhead=cluster_agents];
+
+    // Workflow decision
+    agent5 -> workflow_decision;
+    workflow_decision -> wf1 [label="yes", lhead=cluster_workflow];
+    workflow_decision -> mon1 [label="no", lhead=cluster_monitoring];
+
+    // Workflow to monitoring
+    wf4 -> mon1 [lhead=cluster_monitoring];
+
+    // Quality gate
+    mon3 -> quality_gate;
+    quality_gate -> end [label="pass", color=green];
+    quality_gate -> error_handler [label="fail", color=red];
+
+    // Error recovery
+    error_handler -> rollback;
+    rollback -> plan1 [label="retry", style=dashed];
+
+    // External skill integration (dashed lines)
+    plan2 -> template_skill [style=dashed, label="uses"];
+    mon1 -> monitor_skill [style=dashed, label="uses"];
+    wf1 -> event_skill [style=dashed, label="uses"];
+
+    // Best practices guidelines
+    subgraph cluster_guidelines {
+        label="Best Practices";
+        fillcolor=lightsalmon;
+        style=filled;
+
+        bp1 [shape=folder, label="Choose topology\nbased on complexity", fillcolor=lightsalmon];
+        bp2 [shape=folder, label="Use templates\nfor common patterns", fillcolor=lightsalmon];
+        bp3 [shape=folder, label="Monitor health\ncontinuously", fillcolor=lightsalmon];
+    }
+
+    // Link guidelines to relevant phases
+    topology_decision -> bp1 [style=dashed, label="guidance"];
+    wf1 -> bp2 [style=dashed, label="guidance"];
+    mon1 -> bp3 [style=dashed, label="guidance"];
+
+    labelloc="t";
+    label="Flow Nexus Swarm: Cloud-Based AI Agent Deployment Process";
+    fontsize=16;
+    fontname="Arial Bold";
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://flow-nexus.ruv.io/schemas/platform-config.json",
+  "version": "1.0.0",
+  "description": "Flow Nexus platform configuration template",
+
+  "authentication": {
+    "provider": "flow-nexus",
+    "session_timeout": 3600,
+    "token_refresh_enabled": true,
+    "mfa_enabled": false,
+    "password_policy": {
+      "min_length": 12,
+      "require_uppercase": true,
+      "require_lowercase": true,
+      "require_numbers": true,
+      "require_special_chars": true
+    }
+  },
+
+  "sandboxes": {
+    "default_template": "node",
+    "max_concurrent": 10,
+    "default_timeout": 3600,
+    "auto_cleanup_hours": 24,
+    "allowed_templates": [
+      "node",
+      "python",
+      "react",
+      "nextjs",
+      "vanilla",
+      "base",
+      "claude-code"
+    ],
+    "resource_limits": {
+      "cpu": "2",
+      "memory": "4Gi",
+      "storage": "10Gi"
+    }
+  },
+
+  "deployment": {
+    "auto_deploy_enabled": false,
+    "deployment_region": "us-east-1",
+    "health_check_interval": 60,
+    "rollback_on_failure": true,
+    "max_deployments_per_day": 50,
+    "notification_channels": ["email", "webhook"]
+  },
+
+  "credits": {
+    "auto_refill": {
+      "enabled": false,
+      "threshold": 100,
+      "amount": 50
+    },
+    "spending_limits": {
+      "daily_limit": 1000,
+      "monthly_limit": 10000,
+      "alert_threshold": 0.8
+    }
+  },
+
+  "monitoring": {
+    "health_check_enabled": true,
+    "metrics_collection": true,
+    "audit_logging": true,
+    "retention_days": 90,
+    "alert_destinations": {
+      "email": "alerts@example.com",
+      "webhook": "https://example.com/webhooks/alerts"
+    }
+  },
+
+  "integrations": {
+    "github": {
+      "enabled": false,
+      "oauth_app_id": null
+    },
+    "slack": {
+      "enabled": false,
+      "webhook_url": null
+    },
+    "webhooks": {
+      "enabled": true,
+      "endpoints": []
+    }
+  },
+
+  "features": {
+    "neural_training": true,
+    "swarm_orchestration": true,
+    "real_time_subscriptions": true,
+    "app_store_access": true,
+    "challenge_system": true
+  }
+}

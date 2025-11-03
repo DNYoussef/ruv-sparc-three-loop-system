@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Network Security Rules",
+  "description": "Network firewall rules configuration for sandbox isolation",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Configuration version",
+      "const": "1.0.0"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "created": { "type": "string", "format": "date-time" },
+        "updated": { "type": "string", "format": "date-time" },
+        "author": { "type": "string" }
+      }
+    },
+    "default_policy": {
+      "type": "string",
+      "enum": ["allow", "deny"],
+      "default": "deny",
+      "description": "Default action for unmatched traffic"
+    },
+    "rules": {
+      "type": "array",
+      "description": "Ordered list of firewall rules",
+      "items": {
+        "type": "object",
+        "required": ["id", "action"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique rule identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable rule name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Rule description"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether rule is active"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "description": "Rule priority (higher = evaluated first)"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["allow", "deny", "reject", "log"],
+            "description": "Action to take when rule matches"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["inbound", "outbound", "both"],
+            "default": "both",
+            "description": "Traffic direction"
+          },
+          "protocol": {
+            "type": "string",
+            "enum": ["tcp", "udp", "icmp", "any"],
+            "default": "any",
+            "description": "Network protocol"
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "addresses": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Source IP addresses or CIDR ranges"
+              },
+              "ports": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "description": "Source ports"
+              },
+              "domains": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Source domains (wildcards supported)"
+              }
+            }
+          },
+          "destination": {
+            "type": "object",
+            "properties": {
+              "addresses": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Destination IP addresses or CIDR ranges"
+              },
+              "ports": {
+                "type": "array",
+                "items": { "type": "integer" },
+                "description": "Destination ports"
+              },
+              "domains": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Destination domains (wildcards supported)"
+              }
+            }
+          },
+          "state": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["NEW", "ESTABLISHED", "RELATED", "INVALID"]
+            },
+            "description": "Connection states"
+          },
+          "time_range": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "string", "format": "time" },
+              "end": { "type": "string", "format": "time" },
+              "days": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+                }
+              }
+            },
+            "description": "Time-based rule activation"
+          },
+          "rate_limit": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "limit": { "type": "integer" },
+              "per": {
+                "type": "string",
+                "enum": ["second", "minute", "hour", "day"]
+              }
+            },
+            "description": "Rate limiting for this rule"
+          },
+          "logging": {
+            "type": "object",
+            "properties": {
+              "enabled": { "type": "boolean" },
+              "level": {
+                "type": "string",
+                "enum": ["debug", "info", "warning", "error"]
+              },
+              "prefix": { "type": "string" }
+            },
+            "description": "Logging configuration"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Additional metadata"
+          }
+        }
+      }
+    },
+    "rule_groups": {
+      "type": "array",
+      "description": "Logical groupings of rules",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "enabled": { "type": "boolean", "default": true },
+          "rule_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "IDs of rules in this group"
+          }
+        }
+      }
+    },
+    "trusted_sources": {
+      "type": "array",
+      "description": "Trusted source IP ranges",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "cidr": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "service_definitions": {
+      "type": "object",
+      "description": "Predefined service port mappings",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "protocol": { "type": "string" },
+          "ports": {
+            "type": "array",
+            "items": { "type": "integer" }
+          },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["version", "default_policy", "rules"],
+  "examples": [
+    {
+      "version": "1.0.0",
+      "metadata": {
+        "name": "Production Network Rules",
+        "description": "Network security rules for production sandbox",
+        "created": "2025-11-02T00:00:00Z"
+      },
+      "default_policy": "deny",
+      "rules": [
+        {
+          "id": "rule-001",
+          "name": "Allow Loopback",
+          "description": "Allow all loopback traffic",
+          "enabled": true,
+          "priority": 100,
+          "action": "allow",
+          "direction": "both",
+          "protocol": "any",
+          "source": {
+            "addresses": ["127.0.0.0/8", "::1/128"]
+          },
+          "destination": {
+            "addresses": ["127.0.0.0/8", "::1/128"]
+          }
+        },
+        {
+          "id": "rule-002",
+          "name": "Allow Established Connections",
+          "description": "Allow established and related connections",
+          "enabled": true,
+          "priority": 90,
+          "action": "allow",
+          "direction": "both",
+          "protocol": "any",
+          "state": ["ESTABLISHED", "RELATED"]
+        },
+        {
+          "id": "rule-003",
+          "name": "Allow DNS",
+          "description": "Allow DNS queries",
+          "enabled": true,
+          "priority": 80,
+          "action": "allow",
+          "direction": "outbound",
+          "protocol": "udp",
+          "destination": {
+            "ports": [53]
+          }
+        },
+        {
+          "id": "rule-004",
+          "name": "Allow HTTPS to NPM",
+          "description": "Allow HTTPS to npm registry",
+          "enabled": true,
+          "priority": 70,
+          "action": "allow",
+          "direction": "outbound",
+          "protocol": "tcp",
+          "destination": {
+            "domains": ["*.npmjs.org", "registry.npmjs.org"],
+            "ports": [443]
+          },
+          "logging": {
+            "enabled": false
+          }
+        },
+        {
+          "id": "rule-005",
+          "name": "Allow HTTPS to GitHub",
+          "description": "Allow HTTPS to GitHub",
+          "enabled": true,
+          "priority": 70,
+          "action": "allow",
+          "direction": "outbound",
+          "protocol": "tcp",
+          "destination": {
+            "domains": ["*.github.com", "api.github.com", "raw.githubusercontent.com"],
+            "ports": [443]
+          }
+        },
+        {
+          "id": "rule-999",
+          "name": "Deny All Outbound",
+          "description": "Default deny for all other outbound traffic",
+          "enabled": true,
+          "priority": 1,
+          "action": "deny",
+          "direction": "outbound",
+          "logging": {
+            "enabled": true,
+            "level": "warning",
+            "prefix": "BLOCKED-OUTBOUND"
+          }
+        }
+      ],
+      "rule_groups": [
+        {
+          "id": "group-baseline",
+          "name": "Baseline Rules",
+          "description": "Essential baseline connectivity rules",
+          "enabled": true,
+          "rule_ids": ["rule-001", "rule-002", "rule-003"]
+        },
+        {
+          "id": "group-package-registries",
+          "name": "Package Registries",
+          "description": "Rules for package registry access",
+          "enabled": true,
+          "rule_ids": ["rule-004"]
+        }
+      ],
+      "service_definitions": {
+        "http": {
+          "protocol": "tcp",
+          "ports": [80],
+          "description": "HTTP service"
+        },
+        "https": {
+          "protocol": "tcp",
+          "ports": [443],
+          "description": "HTTPS service"
+        },
+        "ssh": {
+          "protocol": "tcp",
+          "ports": [22],
+          "description": "SSH service"
+        },
+        "dns": {
+          "protocol": "udp",
+          "ports": [53],
+          "description": "DNS service"
+        }
+      }
+    }
+  ]
+}

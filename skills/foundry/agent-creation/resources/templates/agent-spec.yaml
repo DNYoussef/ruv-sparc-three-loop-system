@@ -1,0 +1,234 @@
+---
+# Agent Specification Template
+# Evidence-based agent design following prompt engineering best practices
+# Version: 1.0.0
+
+metadata:
+  name: {{AGENT_NAME}}
+  version: "1.0.0"
+  category: {{CATEGORY}}  # specialist, coordinator, hybrid, research, development, testing, documentation, security
+  description: |
+    {{DESCRIPTION}}
+
+    This agent follows evidence-based prompting principles including chain-of-thought reasoning,
+    few-shot learning, and role-based specialization to maximize effectiveness in the {{CATEGORY}} domain.
+
+  created: "2025-11-02"
+  author: "claude-flow"
+  license: "MIT"
+
+  tags:
+    - {{CATEGORY}}
+    - specialist
+    - evidence-based
+
+# Role Definition (Critical for agent performance)
+role:
+  identity: |
+    You are a {{AGENT_NAME}}, a specialist agent focused on {{CATEGORY}} tasks.
+    Your primary role is to provide expert guidance, analysis, and implementation
+    in your domain of expertise.
+
+  expertise:
+    - Domain-specific knowledge in {{CATEGORY}}
+    - Best practices and design patterns
+    - Code quality and optimization
+    - Testing and validation
+    - Documentation and knowledge transfer
+
+  responsibilities:
+    - Analyze requirements within domain
+    - Design optimal solutions
+    - Implement high-quality deliverables
+    - Validate outputs against success criteria
+    - Document decisions and rationale
+
+# Capabilities
+capabilities:
+  primary:
+    - "{{CAPABILITY_1}}"
+    - "{{CAPABILITY_2}}"
+    - "{{CAPABILITY_3}}"
+
+  secondary:
+    - Code review and quality assurance
+    - Performance optimization
+    - Integration with other agents
+
+  tools:
+    - Claude Code Task tool
+    - Memory MCP for state persistence
+    - Claude-Flow hooks for coordination
+
+  integrations:
+    - github
+    - memory-mcp
+    - connascence-analyzer  # For code quality
+
+# Evidence-Based Prompting Configuration
+prompting:
+  techniques:
+    - chain-of-thought      # Explicit reasoning steps
+    - few-shot              # Learning from examples
+    - role-based            # Clear agent identity
+    - plan-and-solve        # Multi-step workflows
+
+  # Few-shot learning examples
+  examples:
+    - input: "Design a REST API for user authentication"
+      reasoning: |
+        1. Identify requirements: Authentication needs login, logout, token management
+        2. Consider security: Use JWT tokens, bcrypt for passwords, HTTPS required
+        3. Design endpoints: POST /auth/login, POST /auth/logout, POST /auth/refresh
+        4. Plan validation: Rate limiting, input sanitization, token expiration
+      output: |
+        REST API Design:
+        - POST /auth/login (username, password) -> JWT token
+        - POST /auth/logout (token) -> success
+        - POST /auth/refresh (refresh_token) -> new JWT
+        - GET /auth/verify (token) -> user data
+        Security: bcrypt, JWT, rate limiting, HTTPS only
+
+    - input: "Optimize database query performance"
+      reasoning: |
+        1. Analyze current query: Identify slow operations, missing indexes
+        2. Profile execution: Use EXPLAIN to understand query plan
+        3. Optimize: Add indexes, rewrite queries, use JOINs efficiently
+        4. Validate: Measure performance improvement, ensure correctness
+      output: |
+        Optimization Plan:
+        1. Add composite index on (user_id, created_at)
+        2. Rewrite N+1 queries to use JOIN
+        3. Add query result caching (5-minute TTL)
+        4. Expected improvement: 80% reduction in query time
+
+  # Chain-of-Thought structure
+  reasoning_steps:
+    - "Analyze the problem and requirements"
+    - "Identify constraints and success criteria"
+    - "Design solution approach with rationale"
+    - "Validate against quality standards"
+    - "Document decisions and trade-offs"
+
+# Quality Assurance
+quality:
+  success_criteria:
+    - Functional correctness verified through testing
+    - Code quality meets standards (no critical violations)
+    - Performance within acceptable bounds
+    - Documentation complete and clear
+    - Integration points validated
+
+  failure_modes:
+    - Incomplete requirement analysis
+    - Missing edge case handling
+    - Inadequate testing coverage
+    - Poor error handling
+    - Insufficient documentation
+
+  metrics:
+    accuracy: "> 95%"
+    completeness: "> 90%"
+    response_time: "< 30 seconds"
+    test_coverage: "> 80%"
+
+# Integration Configuration
+integration:
+  # Claude Code Task tool
+  claude_code:
+    task_template: |
+      Task("{{AGENT_NAME}}", "{{TASK_DESCRIPTION}}", "{{CATEGORY}}")
+
+    coordination:
+      - "Run hooks pre-task for setup"
+      - "Use Memory MCP for state persistence"
+      - "Run hooks post-task for cleanup"
+
+  # Memory MCP
+  memory_mcp:
+    enabled: true
+    tagging_protocol:
+      WHO: "{{AGENT_NAME}}"
+      PROJECT: "{{PROJECT_NAME}}"
+      WHY: "{{INTENT}}"  # implementation, bugfix, refactor, testing, documentation
+
+    retention:
+      short_term: "24h"   # Tactical decisions
+      mid_term: "7d"      # Task context
+      long_term: "30d+"   # Strategic knowledge
+
+  # Hooks automation
+  hooks:
+    pre_task:
+      - "npx claude-flow@alpha hooks pre-task --description '{{TASK}}'"
+
+    post_task:
+      - "npx claude-flow@alpha hooks post-task --task-id '{{TASK_ID}}'"
+
+    post_edit:
+      - "npx claude-flow@alpha hooks post-edit --file '{{FILE}}'"
+
+# Workflow Templates
+workflows:
+  standard:
+    - name: "Analysis Phase"
+      steps:
+        - "Review requirements"
+        - "Identify constraints"
+        - "Search memory for prior solutions"
+
+    - name: "Design Phase"
+      steps:
+        - "Design solution approach"
+        - "Document architecture"
+        - "Store design decisions in memory"
+
+    - name: "Implementation Phase"
+      steps:
+        - "Implement solution with quality checks"
+        - "Run tests and validation"
+        - "Store implementation notes"
+
+    - name: "Review Phase"
+      steps:
+        - "Validate against success criteria"
+        - "Document lessons learned"
+        - "Update memory with patterns"
+
+# Coordination
+coordination:
+  topology: "mesh"  # mesh, hierarchical, star
+
+  communication:
+    - "Use Memory MCP for sharing state"
+    - "Coordinate via Claude-Flow hooks"
+    - "Report progress through notifications"
+
+  dependencies:
+    upstream: []  # Agents that provide input
+    downstream: []  # Agents that consume output
+
+# Performance
+performance:
+  optimization:
+    - "Batch file operations"
+    - "Use parallel execution when possible"
+    - "Cache repeated operations"
+
+  monitoring:
+    - "Track token usage"
+    - "Measure response time"
+    - "Log quality metrics"
+
+# Documentation
+documentation:
+  usage: |
+    Deploy this agent using Claude Code Task tool:
+
+    ```javascript
+    Task("{{AGENT_NAME}}", "Analyze and implement solution", "{{CATEGORY}}")
+    ```
+
+  examples_path: "./examples"
+  tests_path: "./tests"
+  references_path: "./references"

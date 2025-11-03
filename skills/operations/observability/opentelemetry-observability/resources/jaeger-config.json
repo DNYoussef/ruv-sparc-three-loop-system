@@ -1,0 +1,41 @@
+{
+  "service_name": "jaeger",
+  "disabled": false,
+  "rpc_metrics": true,
+  "tags": [
+    {
+      "key": "environment",
+      "value": "production"
+    },
+    {
+      "key": "cluster",
+      "value": "us-east-1"
+    }
+  ],
+  "sampler": {
+    "type": "probabilistic",
+    "param": 0.1
+  },
+  "reporter": {
+    "queueSize": 10000,
+    "bufferFlushInterval": "1s",
+    "logSpans": false,
+    "localAgentHostPort": "jaeger-agent:6831"
+  },
+  "headers": {
+    "jaegerDebugHeader": "jaeger-debug-id",
+    "jaegerBaggageHeader": "jaeger-baggage",
+    "TraceContextHeaderName": "uber-trace-id",
+    "traceBaggageHeaderPrefix": "uberctx-"
+  },
+  "baggage_restrictions": {
+    "denyBaggageOnInitializationFailure": false,
+    "hostPort": "jaeger-agent:5778",
+    "refreshInterval": "60s"
+  },
+  "throttler": {
+    "hostPort": "jaeger-agent:5778",
+    "refreshInterval": "60s",
+    "synchronousInitialization": true
+  }
+}

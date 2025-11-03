@@ -1,0 +1,123 @@
+{
+  "description": "Hyperparameter search space configuration for Optuna/Ray Tune optimization",
+  "search_space": {
+    "learning_rate": {
+      "type": "float",
+      "low": 1e-5,
+      "high": 1e-1,
+      "log": true,
+      "description": "Learning rate for optimizer (log scale)"
+    },
+    "batch_size": {
+      "type": "categorical",
+      "choices": [16, 32, 64, 128, 256],
+      "description": "Training batch size"
+    },
+    "optimizer": {
+      "type": "categorical",
+      "choices": ["adam", "sgd", "rmsprop", "adagrad"],
+      "description": "Optimization algorithm"
+    },
+    "dropout": {
+      "type": "float",
+      "low": 0.1,
+      "high": 0.5,
+      "step": 0.05,
+      "description": "Dropout rate for regularization"
+    },
+    "num_layers": {
+      "type": "int",
+      "low": 2,
+      "high": 10,
+      "step": 1,
+      "description": "Number of hidden layers"
+    },
+    "hidden_units": {
+      "type": "categorical",
+      "choices": [64, 128, 256, 512, 1024],
+      "description": "Number of units per hidden layer"
+    },
+    "activation": {
+      "type": "categorical",
+      "choices": ["relu", "tanh", "sigmoid", "elu", "leaky_relu"],
+      "description": "Activation function"
+    },
+    "weight_decay": {
+      "type": "float",
+      "low": 1e-6,
+      "high": 1e-3,
+      "log": true,
+      "description": "L2 regularization coefficient (log scale)"
+    },
+    "momentum": {
+      "type": "float",
+      "low": 0.5,
+      "high": 0.99,
+      "description": "Momentum for SGD optimizer (only when optimizer=sgd)"
+    },
+    "beta_1": {
+      "type": "float",
+      "low": 0.8,
+      "high": 0.99,
+      "description": "Beta1 for Adam optimizer (only when optimizer=adam)"
+    },
+    "beta_2": {
+      "type": "float",
+      "low": 0.9,
+      "high": 0.9999,
+      "description": "Beta2 for Adam optimizer (only when optimizer=adam)"
+    },
+    "lr_scheduler": {
+      "type": "categorical",
+      "choices": ["none", "step", "exponential", "cosine", "plateau"],
+      "description": "Learning rate scheduler strategy"
+    },
+    "warmup_epochs": {
+      "type": "int",
+      "low": 0,
+      "high": 10,
+      "description": "Number of warmup epochs for learning rate"
+    }
+  },
+  "optimization": {
+    "direction": "maximize",
+    "metric": "val_accuracy",
+    "n_trials": 100,
+    "n_jobs": -1,
+    "timeout": 3600,
+    "sampler": "TPE",
+    "pruner": "MedianPruner",
+    "pruner_config": {
+      "n_startup_trials": 5,
+      "n_warmup_steps": 5,
+      "interval_steps": 1
+    }
+  },
+  "conditional_parameters": {
+    "optimizer_specific": {
+      "adam": ["beta_1", "beta_2"],
+      "sgd": ["momentum"],
+      "rmsprop": []
+    }
+  },
+  "constraints": {
+    "max_batch_size_memory": 256,
+    "max_layers_memory": 10,
+    "min_learning_rate": 1e-6,
+    "max_learning_rate": 0.1
+  },
+  "best_known_config": {
+    "learning_rate": 0.001,
+    "batch_size": 32,
+    "optimizer": "adam",
+    "dropout": 0.3,
+    "num_layers": 4,
+    "hidden_units": 256,
+    "activation": "relu",
+    "weight_decay": 1e-5,
+    "beta_1": 0.9,
+    "beta_2": 0.999,
+    "lr_scheduler": "cosine",
+    "warmup_epochs": 3
+  }
+}

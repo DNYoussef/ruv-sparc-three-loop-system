@@ -1,0 +1,118 @@
+# Prometheus Configuration for OpenTelemetry Metrics
+# Scrape OpenTelemetry metrics from OTLP endpoints
+
+global:
+  scrape_interval: 15s # Scrape metrics every 15 seconds
+  evaluation_interval: 15s # Evaluate rules every 15 seconds
+  external_labels:
+    cluster: 'production'
+    environment: 'prod'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - 'alertmanager:9093'
+
+# Rule files for alerting
+rule_files:
+  - 'alerts.yml'
+  - 'recording_rules.yml'
+
+# Scrape configurations
+scrape_configs:
+  # OpenTelemetry Collector - OTLP metrics
+  - job_name: 'otel-collector'
+    static_configs:
+      - targets:
+        - 'otel-collector:8888' # Prometheus metrics from collector
+        - 'otel-collector:8889' # Prometheus exporter endpoint
+    metric_relabel_configs:
+      # Drop high-cardinality labels
+      - source_labels: [__name__]
+        regex: 'otelcol_process_.*'
+        action: drop
+
+  # Application services instrumented with OpenTelemetry
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets:
+        - 'api-gateway:9090'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__]
+        regex: '([^:]+):.*'
+        target_label: __address__
+        replacement: '$1:9090'
+
+  - job_name: 'order-service'
+    static_configs:
+      - targets:
+        - 'order-service:9090'
+    metric_relabel_configs:
+      # Rename metrics to match OpenTelemetry conventions
+      - source_labels: [__name__]
+        regex: 'http_requests_total'
+        target_label: __name__
+        replacement: 'http_server_requests_total'
+
+  - job_name: 'payment-service'
+    static_configs:
+      - targets:
+        - 'payment-service:9090'
+
+  - job_name: 'inventory-service'
+    static_configs:
+      - targets:
+        - 'inventory-service:9090'
+
+  # Kubernetes service discovery (optional)
+  - job_name: 'kubernetes-pods'
+    kubernetes_sd_configs:
+      - role: pod
+    relabel_configs:
+      # Only scrape pods with annotation: prometheus.io/scrape=true
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+      # Read port from annotation: prometheus.io/port
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        target_label: __address__
+        regex: (.+)
+        replacement: $1:9090
+      # Add pod labels as metric labels
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        target_label: kubernetes_pod_name
+
+  # Node exporter for system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets:
+        - 'node-exporter:9100'
+
+  # PostgreSQL exporter
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets:
+        - 'postgres-exporter:9187'
+
+  # Redis exporter
+  - job_name: 'redis-exporter'
+    static_configs:
+      - targets:
+        - 'redis-exporter:9121'
+
+# Storage configuration
+storage:
+  tsdb:
+    path: /prometheus
+    retention:
+      time: 30d # Keep metrics for 30 days
+      size: 50GB # Maximum storage size

@@ -1,0 +1,207 @@
+{
+  "common": {
+    "buttons": {
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "update": "Update",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "confirm": "Confirm",
+      "yes": "Yes",
+      "no": "No",
+      "ok": "OK"
+    },
+    "labels": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "state": "State",
+      "country": "Country",
+      "zipcode": "Zip Code",
+      "search": "Search",
+      "filter": "Filter",
+      "sort": "Sort"
+    },
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "contact": "Contact",
+      "pricing": "Pricing",
+      "features": "Features",
+      "blog": "Blog",
+      "login": "Login",
+      "signup": "Sign Up",
+      "logout": "Logout",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "profile": "Profile"
+    },
+    "messages": {
+      "loading": "Loading...",
+      "saving": "Saving...",
+      "success": "Success!",
+      "error": "An error occurred",
+      "no_results": "No results found",
+      "empty_state": "Nothing here yet",
+      "coming_soon": "Coming soon"
+    },
+    "time": {
+      "seconds": "seconds",
+      "minutes": "minutes",
+      "hours": "hours",
+      "days": "days",
+      "weeks": "weeks",
+      "months": "months",
+      "years": "years",
+      "just_now": "Just now",
+      "ago": "{time} ago",
+      "in": "In {time}"
+    }
+  },
+  "errors": {
+    "validation": {
+      "required": "This field is required",
+      "invalid_email": "Invalid email address",
+      "invalid_phone": "Invalid phone number",
+      "min_length": "Must be at least {min} characters",
+      "max_length": "Must be no more than {max} characters",
+      "min_value": "Must be at least {min}",
+      "max_value": "Must be no more than {max}",
+      "pattern": "Invalid format",
+      "password_mismatch": "Passwords do not match",
+      "weak_password": "Password is too weak"
+    },
+    "auth": {
+      "invalid_credentials": "Invalid email or password",
+      "account_locked": "Account has been locked",
+      "session_expired": "Your session has expired",
+      "unauthorized": "You are not authorized to perform this action",
+      "already_logged_in": "You are already logged in"
+    },
+    "network": {
+      "connection_error": "Connection error. Please check your internet connection.",
+      "timeout": "Request timed out. Please try again.",
+      "server_error": "Server error. Please try again later.",
+      "not_found": "The requested resource was not found",
+      "rate_limit": "Too many requests. Please try again later."
+    },
+    "generic": {
+      "something_went_wrong": "Something went wrong",
+      "try_again": "Please try again",
+      "contact_support": "If the problem persists, please contact support"
+    }
+  },
+  "forms": {
+    "placeholders": {
+      "enter_name": "Enter your name",
+      "enter_email": "Enter your email",
+      "enter_password": "Enter your password",
+      "search_placeholder": "Search...",
+      "select_option": "Select an option"
+    },
+    "helpers": {
+      "password_requirements": "Must be at least 8 characters with a mix of letters, numbers, and symbols",
+      "optional_field": "Optional",
+      "required_field": "Required"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome back!",
+      "email_label": "Email",
+      "password_label": "Password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "submit": "Login",
+      "no_account": "Don't have an account?",
+      "signup_link": "Sign up"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "subtitle": "Create your account",
+      "name_label": "Full Name",
+      "email_label": "Email",
+      "password_label": "Password",
+      "confirm_password_label": "Confirm Password",
+      "agree_terms": "I agree to the {terms} and {privacy}",
+      "terms_link": "Terms of Service",
+      "privacy_link": "Privacy Policy",
+      "submit": "Create Account",
+      "have_account": "Already have an account?",
+      "login_link": "Login"
+    },
+    "forgot_password": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to reset your password",
+      "email_label": "Email",
+      "submit": "Send Reset Link",
+      "back_to_login": "Back to login",
+      "check_email": "Check your email for a password reset link"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Welcome to {product}",
+      "subtitle": "The best solution for your needs",
+      "cta": "Get Started",
+      "secondary_cta": "Learn More"
+    },
+    "features": {
+      "title": "Features",
+      "subtitle": "Everything you need",
+      "feature1_title": "Fast Performance",
+      "feature1_description": "Lightning-fast response times",
+      "feature2_title": "Secure",
+      "feature2_description": "Enterprise-grade security",
+      "feature3_title": "Scalable",
+      "feature3_description": "Grows with your business"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "subtitle": "Choose the plan that fits your needs",
+      "free_tier": "Free",
+      "pro_tier": "Pro",
+      "enterprise_tier": "Enterprise",
+      "per_month": "/month",
+      "per_year": "/year",
+      "choose_plan": "Choose Plan"
+    },
+    "testimonials": {
+      "title": "What our customers say",
+      "subtitle": "Trusted by thousands worldwide"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Find answers to common questions"
+    },
+    "cta": {
+      "title": "Ready to get started?",
+      "subtitle": "Join thousands of satisfied customers today",
+      "button": "Start Free Trial"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}!",
+    "overview": "Overview",
+    "analytics": "Analytics",
+    "recent_activity": "Recent Activity",
+    "quick_actions": "Quick Actions"
+  },
+  "metadata": {
+    "default_title": "Your App Name",
+    "default_description": "Your app description",
+    "home_title": "Home - Your App",
+    "home_description": "Welcome to your app",
+    "keywords": "keyword1, keyword2, keyword3"
+  }
+}

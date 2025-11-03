@@ -1,0 +1,129 @@
+name: "Corporate Professional Template"
+
+colorScheme:
+  primary: "#1E3A8A"      # Deep blue
+  secondary: "#3B82F6"    # Medium blue
+  accent: "#F59E0B"       # Amber
+  background: "#FFFFFF"   # White
+  text: "#1F2937"         # Dark gray
+  textLight: "#6B7280"    # Medium gray
+  success: "#10B981"      # Green
+  warning: "#F59E0B"      # Amber
+  error: "#EF4444"        # Red
+
+typography:
+  fontFamily:
+    primary: "Arial, sans-serif"
+    secondary: "Helvetica, sans-serif"
+    monospace: "Courier New, monospace"
+
+  fontSize:
+    h1: 36    # Title slides
+    h2: 28    # Section headers
+    h3: 24    # Slide titles
+    body: 18  # Content text
+    caption: 14  # Footnotes, sources
+
+  fontWeight:
+    light: 300
+    regular: 400
+    medium: 500
+    bold: 700
+
+  lineHeight:
+    tight: 1.2
+    normal: 1.5
+    relaxed: 1.8
+
+layouts:
+  margins:
+    top: 0.5
+    right: 0.5
+    bottom: 0.5
+    left: 0.5
+    unit: "in"
+
+  spacing:
+    section: 0.4    # Between title and content
+    element: 0.2    # Between list items
+    unit: "in"
+
+  grid:
+    columns: 12
+    gutter: 0.2
+    unit: "in"
+
+  accentBar:
+    width: 0.15
+    height: 1.0
+    position: "left"
+    unit: "in"
+
+slideTypes:
+  title:
+    layout: "centered"
+    background: "solid"
+    accentBar: false
+
+  content:
+    layout: "standard"
+    background: "solid"
+    accentBar: true
+    maxBullets: 3
+
+  twoColumn:
+    layout: "50-50"
+    background: "solid"
+    accentBar: false
+    columnGap: 0.5
+
+  sectionBreak:
+    layout: "centered"
+    background: "gradient"
+    accentBar: false
+
+  dataVisual:
+    layout: "standard"
+    background: "solid"
+    accentBar: false
+    chartPosition: "center"
+
+brandGuidelines:
+  logoPlacement: "bottom-right"
+  logoSize: 0.5  # inches
+  pageNumbers: true
+  pageNumberPosition: "bottom-center"
+
+accessibility:
+  minContrastRatio: 4.5
+  minFontSize: 18
+  maxBulletsPerSlide: 3
+  altTextRequired: true
+  colorBlindSafe: true
+
+validation:
+  prohibitedElements:
+    - "border boxes"
+    - "outline shapes"
+    - "rounded rectangles"
+    - "decorative frames"
+    - "text containers"
+
+  requiredPatterns:
+    - "high contrast text"
+    - "spacing-based separation"
+    - "solid color backgrounds"
+    - "clean typography hierarchy"
+
+notes: |
+  This template enforces constraint-based design principles:
+  - Visual separation through spacing, not borders
+  - Color blocks for emphasis, not outlined containers
+  - Clean backgrounds with high-contrast text
+  - Minimal decorative elements
+
+  Accessibility is non-negotiable:
+  - All text must pass WCAG AA (4.5:1 contrast)
+  - Minimum 18pt font size for body text
+  - Maximum 3 bullets per slide for readability
+  - Alt text required for all visual elements

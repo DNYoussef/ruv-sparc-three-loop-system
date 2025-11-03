@@ -1,0 +1,45 @@
+{
+  "name": "@workspace/package-name",
+  "version": "0.0.1",
+  "description": "Package description",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/",
+    "test": "jest",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "tsup": "^7.0.0",
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/monorepo.git",
+    "directory": "packages/package-name"
+  },
+  "keywords": [],
+  "author": "Your Organization",
+  "license": "MIT"
+}

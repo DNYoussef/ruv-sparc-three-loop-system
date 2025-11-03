@@ -1,0 +1,337 @@
+{
+  "_comment": "GCP Deployment Configuration Template",
+  "project": {
+    "id": "my-project-id",
+    "name": "My Project",
+    "region": "us-central1",
+    "zone": "us-central1-a"
+  },
+
+  "cloudRun": {
+    "service": {
+      "name": "my-service",
+      "region": "us-central1",
+      "containerImage": "gcr.io/my-project/my-image:latest",
+      "port": 8080,
+      "memory": "512Mi",
+      "cpu": "1",
+      "maxInstances": 10,
+      "minInstances": 0,
+      "concurrency": 80,
+      "timeout": 300,
+      "allowUnauthenticated": true,
+      "environmentVariables": {
+        "NODE_ENV": "production",
+        "API_URL": "https://api.example.com"
+      },
+      "secrets": {
+        "DATABASE_URL": "projects/PROJECT_ID/secrets/database-url/versions/latest",
+        "API_KEY": "projects/PROJECT_ID/secrets/api-key/versions/latest"
+      },
+      "vpc": {
+        "connector": "projects/PROJECT_ID/locations/REGION/connectors/my-connector",
+        "egress": "all-traffic"
+      },
+      "annotations": {
+        "autoscaling.knative.dev/maxScale": "10",
+        "run.googleapis.com/cpu-throttling": "false"
+      }
+    }
+  },
+
+  "cloudFunctions": {
+    "function": {
+      "name": "my-function",
+      "region": "us-central1",
+      "runtime": "python311",
+      "entryPoint": "main",
+      "sourceDir": "./functions/my-function",
+      "memory": "256MB",
+      "timeout": 60,
+      "maxInstances": 100,
+      "minInstances": 0,
+      "trigger": {
+        "type": "http",
+        "allowUnauthenticated": true
+      },
+      "environmentVariables": {
+        "ENV": "production"
+      },
+      "secrets": {
+        "API_SECRET": "projects/PROJECT_ID/secrets/api-secret/versions/latest"
+      },
+      "serviceAccount": "my-function-sa@PROJECT_ID.iam.gserviceaccount.com"
+    }
+  },
+
+  "gke": {
+    "cluster": {
+      "name": "my-cluster",
+      "zone": "us-central1-a",
+      "nodeLocations": [
+        "us-central1-a",
+        "us-central1-b",
+        "us-central1-c"
+      ],
+      "version": "1.27",
+      "releaseChannel": "REGULAR",
+      "network": "default",
+      "subnetwork": "default",
+      "enableAutoscaling": true,
+      "enableAutopilot": false,
+      "enableWorkloadIdentity": true,
+      "enableNodeAutoUpgrade": true,
+      "enableNodeAutoRepair": true,
+      "nodePools": [
+        {
+          "name": "default-pool",
+          "machineType": "e2-medium",
+          "diskSizeGb": 50,
+          "diskType": "pd-standard",
+          "initialNodeCount": 3,
+          "minNodeCount": 1,
+          "maxNodeCount": 10,
+          "preemptible": false,
+          "labels": {
+            "env": "production",
+            "pool": "default"
+          },
+          "taints": [],
+          "oauth_scopes": [
+            "https://www.googleapis.com/auth/devstorage.read_only",
+            "https://www.googleapis.com/auth/logging.write",
+            "https://www.googleapis.com/auth/monitoring",
+            "https://www.googleapis.com/auth/servicecontrol",
+            "https://www.googleapis.com/auth/service.management.readonly",
+            "https://www.googleapis.com/auth/trace.append"
+          ]
+        }
+      ],
+      "addons": {
+        "httpLoadBalancing": true,
+        "horizontalPodAutoscaling": true,
+        "networkPolicy": true,
+        "gcpFilestoreCsiDriver": false,
+        "gcePersistentDiskCsiDriver": true
+      },
+      "maintenanceWindow": {
+        "startTime": "03:00",
+        "duration": "4h",
+        "recurrence": "FREQ=WEEKLY;BYDAY=SU"
+      }
+    }
+  },
+
+  "computeEngine": {
+    "instance": {
+      "name": "my-instance",
+      "zone": "us-central1-a",
+      "machineType": "e2-medium",
+      "bootDiskSize": 10,
+      "bootDiskType": "pd-standard",
+      "imageFamily": "debian-11",
+      "imageProject": "debian-cloud",
+      "tags": [
+        "http-server",
+        "https-server"
+      ],
+      "metadata": {
+        "enable-oslogin": "TRUE",
+        "startup-script": "#!/bin/bash\napt-get update\napt-get install -y nginx\nsystemctl start nginx"
+      },
+      "serviceAccount": {
+        "email": "default",
+        "scopes": [
+          "https://www.googleapis.com/auth/devstorage.read_only",
+          "https://www.googleapis.com/auth/logging.write",
+          "https://www.googleapis.com/auth/monitoring.write"
+        ]
+      },
+      "networkInterfaces": [
+        {
+          "network": "default",
+          "subnetwork": "default",
+          "accessConfigs": [
+            {
+              "name": "External NAT",
+              "type": "ONE_TO_ONE_NAT"
+            }
+          ]
+        }
+      ]
+    }
+  },
+
+  "cloudSQL": {
+    "instance": {
+      "name": "my-db-instance",
+      "region": "us-central1",
+      "databaseVersion": "POSTGRES_15",
+      "tier": "db-f1-micro",
+      "diskSize": 10,
+      "diskType": "PD_SSD",
+      "diskAutoresize": true,
+      "diskAutoresizeLimit": 100,
+      "backupConfiguration": {
+        "enabled": true,
+        "startTime": "03:00",
+        "pointInTimeRecoveryEnabled": true,
+        "transactionLogRetentionDays": 7,
+        "backupRetentionSettings": {
+          "retainedBackups": 7,
+          "retentionUnit": "COUNT"
+        }
+      },
+      "maintenanceWindow": {
+        "day": 7,
+        "hour": 3,
+        "updateTrack": "stable"
+      },
+      "ipConfiguration": {
+        "ipv4Enabled": false,
+        "privateNetwork": "projects/PROJECT_ID/global/networks/default",
+        "requireSsl": true
+      },
+      "databases": [
+        {
+          "name": "myapp",
+          "charset": "UTF8"
+        }
+      ],
+      "users": [
+        {
+          "name": "appuser",
+          "password": "GENERATED_PASSWORD"
+        }
+      ]
+    }
+  },
+
+  "cloudStorage": {
+    "buckets": [
+      {
+        "name": "my-app-storage",
+        "location": "US",
+        "storageClass": "STANDARD",
+        "uniformBucketLevelAccess": true,
+        "publicAccessPrevention": "enforced",
+        "versioning": {
+          "enabled": true
+        },
+        "lifecycle": {
+          "rules": [
+            {
+              "action": {
+                "type": "Delete"
+              },
+              "condition": {
+                "age": 90,
+                "matchesPrefix": ["tmp/"]
+              }
+            },
+            {
+              "action": {
+                "type": "SetStorageClass",
+                "storageClass": "NEARLINE"
+              },
+              "condition": {
+                "age": 30
+              }
+            }
+          ]
+        },
+        "cors": [
+          {
+            "origin": ["https://example.com"],
+            "method": ["GET", "HEAD", "PUT", "POST", "DELETE"],
+            "responseHeader": ["Content-Type"],
+            "maxAgeSeconds": 3600
+          }
+        ]
+      }
+    ]
+  },
+
+  "cloudBuild": {
+    "triggers": [
+      {
+        "name": "main-branch-trigger",
+        "description": "Build and deploy on main branch push",
+        "github": {
+          "owner": "myorg",
+          "name": "myrepo",
+          "push": {
+            "branch": "^main$"
+          }
+        },
+        "filename": "cloudbuild.yaml",
+        "substitutions": {
+          "_DEPLOY_REGION": "us-central1",
+          "_SERVICE_NAME": "my-service"
+        }
+      }
+    ]
+  },
+
+  "monitoring": {
+    "uptime_checks": [
+      {
+        "display_name": "Cloud Run Health Check",
+        "monitored_resource": {
+          "type": "uptime_url",
+          "labels": {
+            "project_id": "PROJECT_ID",
+            "host": "my-service-abc123.run.app"
+          }
+        },
+        "http_check": {
+          "path": "/health",
+          "port": 443,
+          "use_ssl": true
+        },
+        "period": "60s",
+        "timeout": "10s"
+      }
+    ],
+    "alert_policies": [
+      {
+        "display_name": "High Error Rate",
+        "conditions": [
+          {
+            "display_name": "Error rate > 5%",
+            "condition_threshold": {
+              "filter": "resource.type=\"cloud_run_revision\" AND metric.type=\"run.googleapis.com/request_count\"",
+              "comparison": "COMPARISON_GT",
+              "threshold_value": 0.05,
+              "duration": "300s",
+              "aggregations": [
+                {
+                  "alignment_period": "60s",
+                  "per_series_aligner": "ALIGN_RATE"
+                }
+              ]
+            }
+          }
+        ],
+        "notification_channels": [],
+        "alert_strategy": {
+          "auto_close": "1800s"
+        }
+      }
+    ]
+  },
+
+  "iam": {
+    "serviceAccounts": [
+      {
+        "accountId": "my-service-sa",
+        "displayName": "Service Account for My Service",
+        "roles": [
+          "roles/cloudsql.client",
+          "roles/secretmanager.secretAccessor",
+          "roles/storage.objectViewer"
+        ]
+      }
+    ]
+  }
+}

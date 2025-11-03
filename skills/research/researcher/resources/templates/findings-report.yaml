@@ -1,0 +1,254 @@
+# Research Findings Report Template
+# Purpose: Comprehensive research deliverables with evidence-based recommendations
+
+metadata:
+  report_title: "Research Findings: [Topic]"
+  author: "Your Name"
+  date: "2024-11-02"
+  version: "1.0"
+  research_duration: "2 weeks"
+  total_sources: 25
+  average_credibility: 87.5
+
+# Executive summary (2-3 paragraphs)
+executive_summary:
+  overview: |
+    Brief overview of the research objectives and scope.
+    Key findings at a glance.
+
+  key_findings:
+    - "Main finding 1 with evidence"
+    - "Main finding 2 with evidence"
+    - "Main finding 3 with evidence"
+
+  recommendations:
+    - "Primary recommendation 1"
+    - "Primary recommendation 2"
+
+# Detailed findings organized by theme
+findings:
+  # Finding 1
+  - theme: "Current State-of-the-Art"
+    summary: "Overview of SOTA methods and performance"
+
+    evidence:
+      - source: "Paper Title 1 (Author et al., 2023)"
+        credibility: 92
+        finding: "Specific finding from this source"
+        citation: "https://arxiv.org/abs/xxxx.xxxxx"
+
+      - source: "Paper Title 2 (Author et al., 2024)"
+        credibility: 88
+        finding: "Specific finding from this source"
+        citation: "https://arxiv.org/abs/xxxx.xxxxx"
+
+    synthesis: |
+      Cross-source synthesis of findings.
+      Consensus statements and agreements.
+
+    contradictions:
+      - "Source A claims X, but Source B shows Y"
+
+    confidence_level: "high"  # high, medium, low
+    agreement_score: 85  # 0-100
+
+  # Finding 2
+  - theme: "Key Challenges"
+    summary: "Main obstacles and limitations identified"
+
+    evidence:
+      - source: "Industry Report (Company, 2024)"
+        credibility: 78
+        finding: "Challenge 1 description"
+        citation: "https://example.com/report"
+
+    synthesis: |
+      Multiple sources converge on similar challenges.
+      Common pain points across studies.
+
+    contradictions: []
+
+    confidence_level: "high"
+    agreement_score: 92
+
+  # Finding 3
+  - theme: "Future Directions"
+    summary: "Promising research directions and opportunities"
+
+    evidence:
+      - source: "Survey Paper (Authors, 2024)"
+        credibility: 95
+        finding: "Emerging trend 1"
+        citation: "https://arxiv.org/abs/xxxx.xxxxx"
+
+    synthesis: |
+      Emerging consensus on future priorities.
+      Multiple independent predictions align.
+
+    contradictions: []
+
+    confidence_level: "medium"
+    agreement_score: 75
+
+# Research gaps identified
+research_gaps:
+  - gap: "Limited research on X"
+    severity: "high"
+    evidence_count: 12
+    recommendation: "Conduct comprehensive study on X"
+
+  - gap: "No standardized benchmark for Y"
+    severity: "medium"
+    evidence_count: 8
+    recommendation: "Develop community-accepted benchmark"
+
+  - gap: "Lack of public datasets for Z"
+    severity: "high"
+    evidence_count: 15
+    recommendation: "Create and release open dataset"
+
+# Trends analysis
+trends:
+  technological:
+    - trend: "Shift from CNNs to Transformers"
+      direction: "increasing"
+      evidence_count: 18
+      strength: "strong"
+
+    - trend: "Focus on model efficiency"
+      direction: "increasing"
+      evidence_count: 22
+      strength: "strong"
+
+  methodological:
+    - trend: "Emphasis on reproducibility"
+      direction: "increasing"
+      evidence_count: 15
+      strength: "moderate"
+
+    - trend: "Multi-modal learning"
+      direction: "emerging"
+      evidence_count: 10
+      strength: "moderate"
+
+  industrial:
+    - trend: "Edge deployment requirements"
+      direction: "increasing"
+      evidence_count: 12
+      strength: "strong"
+
+# Evidence-based recommendations
+recommendations:
+  immediate_actions:
+    - priority: "high"
+      recommendation: "Adopt transformer-based architecture for next project"
+      rationale: "85% of SOTA papers use transformers (18/21 papers)"
+      evidence_sources:
+        - "Paper 1, Paper 2, Paper 3..."
+      expected_impact: "10-15% performance improvement"
+
+    - priority: "high"
+      recommendation: "Implement reproducibility best practices"
+      rationale: "Only 60% of papers provide code (12/20)"
+      evidence_sources:
+        - "Survey findings from 5 sources"
+      expected_impact: "Increased credibility and citations"
+
+  mid_term_goals:
+    - priority: "medium"
+      recommendation: "Explore few-shot learning approaches"
+      rationale: "Emerging trend with 40% year-over-year growth"
+      evidence_sources:
+        - "Trend analysis from Papers with Code"
+      timeline: "3-6 months"
+
+  long_term_strategy:
+    - priority: "low"
+      recommendation: "Invest in multimodal capabilities"
+      rationale: "Predicted to be dominant by 2025 (8 sources)"
+      evidence_sources:
+        - "Industry forecasts, academic surveys"
+      timeline: "12+ months"
+
+# Source summary
+sources:
+  by_tier:
+    tier1_academic: 15
+    tier2_industry: 7
+    tier3_community: 3
+
+  by_credibility:
+    high_90_plus: 12
+    medium_75_89: 10
+    acceptable_60_74: 3
+
+  by_year:
+    "2024": 10
+    "2023": 8
+    "2022": 5
+    "2021": 2
+
+  top_sources:
+    - title: "Paper Title 1"
+      authors: "Author et al."
+      year: 2024
+      credibility: 95
+      citations: 200
+      url: "https://arxiv.org/abs/xxxx.xxxxx"
+
+    - title: "Paper Title 2"
+      authors: "Author et al."
+      year: 2023
+      credibility: 92
+      citations: 350
+      url: "https://arxiv.org/abs/xxxx.xxxxx"
+
+# Methodology notes
+methodology:
+  research_level: "Level 3 (Deep Dive)"
+
+  tools_used:
+    - "research-orchestrator.py for multi-source aggregation"
+    - "sota-analyzer.js for SOTA analysis"
+    - "knowledge-synthesizer.py for claim clustering"
+
+  quality_controls:
+    - "Minimum 85% average credibility"
+    - "Cross-validation across 3+ sources"
+    - "Contradiction detection and resolution"
+
+  limitations:
+    - "Limited to English-language sources"
+    - "Focus on papers from 2020-2024"
+    - "Industry sources may have proprietary bias"
+
+# Bibliography (formatted citations)
+bibliography:
+  - citation: "Author, A., & Author, B. (2024). Paper Title. Journal Name, 1(1), 1-10."
+    url: "https://arxiv.org/abs/xxxx.xxxxx"
+    credibility: 95
+
+  - citation: "Author, C. (2023). Another Paper. Conference Name, 100-110."
+    url: "https://arxiv.org/abs/xxxx.xxxxx"
+    credibility: 88
+
+# Appendices
+appendices:
+  appendix_a_source_credibility_scores:
+    description: "Complete credibility scoring for all sources"
+    file: "credibility-scores.csv"
+
+  appendix_b_sota_comparison:
+    description: "Performance metrics comparison table"
+    file: "sota-comparison.xlsx"
+
+  appendix_c_claim_clusters:
+    description: "Clustered claims from knowledge synthesis"
+    file: "claim-clusters.json"
+
+# Next steps
+next_steps:
+  - "Share findings with team for feedback"
+  - "Incorporate recommendations into project roadmap"
+  - "Monitor emerging research for updates"
+  - "Plan follow-up deep dives on gaps identified"

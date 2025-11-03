@@ -1,0 +1,266 @@
+# Agent Role Definitions Template
+# Standardized role specifications for coordinated execution
+
+version: 1.0.0
+
+# Role Definitions
+roles:
+  # Research & Analysis
+  researcher:
+    type: researcher
+    category: analysis
+    capabilities:
+      - requirements_gathering
+      - pattern_research
+      - best_practices_analysis
+      - architectural_research
+      - literature_review
+    tools:
+      - web_search
+      - documentation_access
+      - code_search
+    coordination:
+      input_from: []
+      output_to: [coder, architect]
+      communication_priority: high
+
+  # Development & Implementation
+  coder:
+    type: coder
+    category: implementation
+    capabilities:
+      - feature_implementation
+      - bug_fixing
+      - refactoring
+      - code_generation
+      - integration
+    tools:
+      - code_editor
+      - debugger
+      - version_control
+    coordination:
+      input_from: [researcher, architect]
+      output_to: [analyst, tester]
+      communication_priority: high
+
+  # Testing & Quality Assurance
+  analyst:
+    type: analyst
+    category: validation
+    capabilities:
+      - code_review
+      - quality_analysis
+      - testing
+      - security_audit
+      - compliance_checking
+    tools:
+      - static_analysis
+      - test_frameworks
+      - security_scanners
+    coordination:
+      input_from: [coder]
+      output_to: [optimizer, reviewer]
+      communication_priority: medium
+
+  tester:
+    type: analyst
+    category: validation
+    capabilities:
+      - unit_testing
+      - integration_testing
+      - e2e_testing
+      - test_automation
+      - coverage_analysis
+    tools:
+      - test_frameworks
+      - coverage_tools
+      - ci_cd_integration
+    coordination:
+      input_from: [coder]
+      output_to: [reviewer]
+      communication_priority: medium
+
+  # Optimization & Performance
+  optimizer:
+    type: optimizer
+    category: optimization
+    capabilities:
+      - performance_tuning
+      - resource_optimization
+      - bottleneck_detection
+      - benchmarking
+      - profiling
+    tools:
+      - profilers
+      - benchmarking_tools
+      - monitoring_systems
+    coordination:
+      input_from: [coder, analyst]
+      output_to: [reviewer]
+      communication_priority: low
+
+  # Coordination & Management
+  coordinator:
+    type: coordinator
+    category: orchestration
+    capabilities:
+      - task_delegation
+      - progress_monitoring
+      - resource_allocation
+      - conflict_resolution
+      - workflow_orchestration
+    tools:
+      - swarm_management
+      - task_tracking
+      - communication_hub
+    coordination:
+      input_from: [all]
+      output_to: [all]
+      communication_priority: critical
+
+  # Architecture & Design
+  architect:
+    type: researcher
+    category: design
+    capabilities:
+      - system_design
+      - architecture_patterns
+      - component_design
+      - api_design
+      - database_design
+    tools:
+      - diagram_tools
+      - design_patterns
+      - documentation
+    coordination:
+      input_from: [researcher]
+      output_to: [coder]
+      communication_priority: high
+
+  # Review & Documentation
+  reviewer:
+    type: analyst
+    category: validation
+    capabilities:
+      - code_review
+      - documentation_review
+      - quality_gates
+      - approval_workflow
+      - feedback_generation
+    tools:
+      - review_tools
+      - documentation_systems
+      - quality_metrics
+    coordination:
+      input_from: [coder, analyst, optimizer]
+      output_to: [coordinator]
+      communication_priority: medium
+
+# Team Compositions
+teams:
+  # Full-stack development team
+  fullstack:
+    roles:
+      - researcher: 1
+      - architect: 1
+      - coder: 3
+      - tester: 2
+      - reviewer: 1
+    topology: hierarchical
+    coordinator: true
+
+  # Backend API team
+  backend_api:
+    roles:
+      - researcher: 1
+      - coder: 2
+      - tester: 1
+      - optimizer: 1
+    topology: mesh
+    coordinator: false
+
+  # Code review team
+  code_review:
+    roles:
+      - analyst: 2
+      - reviewer: 2
+      - optimizer: 1
+    topology: mesh
+    coordinator: false
+
+  # Research & analysis team
+  research:
+    roles:
+      - researcher: 3
+      - analyst: 1
+    topology: mesh
+    coordinator: false
+
+# Skill Requirements by Role
+skills:
+  researcher:
+    required:
+      - information_gathering
+      - pattern_recognition
+      - analytical_thinking
+    preferred:
+      - domain_expertise
+      - literature_review
+
+  coder:
+    required:
+      - programming_languages
+      - version_control
+      - debugging
+    preferred:
+      - design_patterns
+      - testing
+
+  analyst:
+    required:
+      - code_review
+      - testing_methodologies
+      - quality_metrics
+    preferred:
+      - security_analysis
+      - performance_analysis
+
+  optimizer:
+    required:
+      - performance_analysis
+      - profiling
+      - benchmarking
+    preferred:
+      - algorithm_optimization
+      - resource_management
+
+  coordinator:
+    required:
+      - task_management
+      - communication
+      - conflict_resolution
+    preferred:
+      - project_management
+      - risk_assessment
+
+# Communication Protocols by Role
+communication:
+  researcher:
+    frequency: as_needed
+    channels: [reports, documentation]
+
+  coder:
+    frequency: continuous
+    channels: [code_commits, pull_requests, messages]
+
+  analyst:
+    frequency: regular
+    channels: [reviews, test_reports, feedback]
+
+  optimizer:
+    frequency: periodic
+    channels: [performance_reports, recommendations]
+
+  coordinator:
+    frequency: continuous
+    channels: [all]

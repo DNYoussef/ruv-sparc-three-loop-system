@@ -1,0 +1,267 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "API Field Mappings",
+  "description": "Field mappings between different platforms",
+
+  "mappings": {
+    "salesforce_to_hubspot": {
+      "description": "Salesforce Contact to HubSpot Contact mapping",
+      "entity": "contact",
+      "fields": {
+        "Id": {
+          "target": "vid",
+          "transform": null,
+          "required": true
+        },
+        "Email": {
+          "target": "email",
+          "transform": "lowercase",
+          "required": true
+        },
+        "FirstName": {
+          "target": "firstname",
+          "transform": null,
+          "required": false
+        },
+        "LastName": {
+          "target": "lastname",
+          "transform": null,
+          "required": false
+        },
+        "Phone": {
+          "target": "phone",
+          "transform": "normalize_phone",
+          "required": false
+        },
+        "MobilePhone": {
+          "target": "mobilephone",
+          "transform": "normalize_phone",
+          "required": false
+        },
+        "Company": {
+          "target": "company",
+          "transform": null,
+          "required": false
+        },
+        "Title": {
+          "target": "jobtitle",
+          "transform": null,
+          "required": false
+        },
+        "MailingStreet": {
+          "target": "address",
+          "transform": null,
+          "required": false
+        },
+        "MailingCity": {
+          "target": "city",
+          "transform": null,
+          "required": false
+        },
+        "MailingState": {
+          "target": "state",
+          "transform": null,
+          "required": false
+        },
+        "MailingPostalCode": {
+          "target": "zip",
+          "transform": null,
+          "required": false
+        },
+        "MailingCountry": {
+          "target": "country",
+          "transform": null,
+          "required": false
+        },
+        "CreatedDate": {
+          "target": "createdate",
+          "transform": "timestamp_to_unix",
+          "required": false
+        },
+        "LastModifiedDate": {
+          "target": "lastmodifieddate",
+          "transform": "timestamp_to_unix",
+          "required": false
+        }
+      }
+    },
+
+    "hubspot_to_salesforce": {
+      "description": "HubSpot Contact to Salesforce Contact mapping",
+      "entity": "contact",
+      "fields": {
+        "vid": {
+          "target": "External_ID__c",
+          "transform": null,
+          "required": true
+        },
+        "email": {
+          "target": "Email",
+          "transform": "lowercase",
+          "required": true
+        },
+        "firstname": {
+          "target": "FirstName",
+          "transform": null,
+          "required": false
+        },
+        "lastname": {
+          "target": "LastName",
+          "transform": null,
+          "required": false
+        },
+        "phone": {
+          "target": "Phone",
+          "transform": "normalize_phone",
+          "required": false
+        },
+        "mobilephone": {
+          "target": "MobilePhone",
+          "transform": "normalize_phone",
+          "required": false
+        },
+        "company": {
+          "target": "Company",
+          "transform": null,
+          "required": false
+        },
+        "jobtitle": {
+          "target": "Title",
+          "transform": null,
+          "required": false
+        },
+        "address": {
+          "target": "MailingStreet",
+          "transform": null,
+          "required": false
+        },
+        "city": {
+          "target": "MailingCity",
+          "transform": null,
+          "required": false
+        },
+        "state": {
+          "target": "MailingState",
+          "transform": null,
+          "required": false
+        },
+        "zip": {
+          "target": "MailingPostalCode",
+          "transform": null,
+          "required": false
+        },
+        "country": {
+          "target": "MailingCountry",
+          "transform": null,
+          "required": false
+        }
+      }
+    },
+
+    "stripe_to_salesforce": {
+      "description": "Stripe Customer to Salesforce Account mapping",
+      "entity": "account",
+      "fields": {
+        "id": {
+          "target": "Stripe_Customer_ID__c",
+          "transform": null,
+          "required": true
+        },
+        "email": {
+          "target": "Website",
+          "transform": "email_to_domain",
+          "required": false
+        },
+        "name": {
+          "target": "Name",
+          "transform": null,
+          "required": true
+        },
+        "description": {
+          "target": "Description",
+          "transform": null,
+          "required": false
+        },
+        "created": {
+          "target": "Stripe_Created_Date__c",
+          "transform": "unix_to_datetime",
+          "required": false
+        },
+        "currency": {
+          "target": "CurrencyIsoCode",
+          "transform": "uppercase",
+          "required": false
+        },
+        "balance": {
+          "target": "Stripe_Balance__c",
+          "transform": "cents_to_dollars",
+          "required": false
+        }
+      }
+    }
+  },
+
+  "transformations": {
+    "lowercase": {
+      "description": "Convert string to lowercase",
+      "type": "string",
+      "function": "str.lower()"
+    },
+    "uppercase": {
+      "description": "Convert string to uppercase",
+      "type": "string",
+      "function": "str.upper()"
+    },
+    "normalize_phone": {
+      "description": "Normalize phone to E.164 format",
+      "type": "string",
+      "function": "phonenumbers.format_number(number, E164)"
+    },
+    "timestamp_to_unix": {
+      "description": "Convert ISO timestamp to Unix epoch",
+      "type": "datetime",
+      "function": "int(datetime.fromisoformat(value).timestamp())"
+    },
+    "unix_to_datetime": {
+      "description": "Convert Unix epoch to ISO datetime",
+      "type": "datetime",
+      "function": "datetime.fromtimestamp(value).isoformat()"
+    },
+    "email_to_domain": {
+      "description": "Extract domain from email address",
+      "type": "string",
+      "function": "email.split('@')[1] if '@' in email else None"
+    },
+    "cents_to_dollars": {
+      "description": "Convert cents to dollars",
+      "type": "number",
+      "function": "value / 100"
+    },
+    "dollars_to_cents": {
+      "description": "Convert dollars to cents",
+      "type": "number",
+      "function": "int(value * 100)"
+    }
+  },
+
+  "validation": {
+    "rules": {
+      "email": {
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+        "message": "Invalid email format"
+      },
+      "phone": {
+        "pattern": "^\\+?[1-9]\\d{1,14}$",
+        "message": "Invalid phone number (E.164)"
+      },
+      "url": {
+        "pattern": "^https?://.*",
+        "message": "Invalid URL format"
+      },
+      "zip_code": {
+        "pattern": "^\\d{5}(-\\d{4})?$",
+        "message": "Invalid US ZIP code"
+      }
+    }
+  }
+}

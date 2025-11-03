@@ -1,0 +1,244 @@
+{
+  "hooks": {
+    "post-edit": {
+      "enabled": true,
+      "priority": 20,
+      "description": "Auto-format code, train neural patterns, update memory after file edits",
+
+      "actions": [
+        "auto-format",
+        "memory-update",
+        "neural-training",
+        "git-stage",
+        "quality-check"
+      ],
+
+      "config": {
+        "auto-format": {
+          "enabled": true,
+          "formatters": {
+            ".js": "prettier --write",
+            ".jsx": "prettier --write",
+            ".ts": "prettier --write",
+            ".tsx": "prettier --write",
+            ".json": "prettier --write",
+            ".yaml": "prettier --write",
+            ".yml": "prettier --write",
+            ".md": "prettier --write",
+            ".py": "black",
+            ".go": "gofmt -w",
+            ".rs": "rustfmt"
+          },
+          "default_formatter": "prettier --write",
+          "ignore_patterns": [
+            "node_modules/**",
+            "dist/**",
+            "build/**",
+            ".git/**",
+            "*.min.js"
+          ],
+          "timeout": 10000
+        },
+
+        "memory-update": {
+          "enabled": true,
+          "mcp_integration": true,
+          "key_prefix": "hooks/post-edit",
+          "store_diffs": true,
+          "store_metadata": true,
+          "metadata_fields": [
+            "file_path",
+            "timestamp",
+            "agent_name",
+            "task_id",
+            "edit_type",
+            "lines_changed"
+          ],
+          "tagging_protocol": {
+            "enabled": true,
+            "auto_tags": {
+              "WHO": "{{agent_name}}",
+              "WHEN": "{{timestamp}}",
+              "PROJECT": "{{project_name}}",
+              "WHY": "{{intent}}"
+            }
+          },
+          "retention": {
+            "short_term": "24h",
+            "mid_term": "7d",
+            "long_term": "30d"
+          }
+        },
+
+        "neural-training": {
+          "enabled": true,
+          "agentdb_integration": true,
+          "patterns_to_learn": [
+            "code_style",
+            "naming_conventions",
+            "import_patterns",
+            "error_handling",
+            "testing_patterns"
+          ],
+          "training_frequency": "every_edit",
+          "min_confidence": 0.75,
+          "storage": {
+            "backend": "agentdb",
+            "quantization": true,
+            "hnsw_index": true
+          }
+        },
+
+        "git-stage": {
+          "enabled": false,
+          "auto_stage": true,
+          "include_untracked": false,
+          "exclude_patterns": [
+            "*.log",
+            "*.tmp",
+            ".env",
+            "node_modules/**"
+          ],
+          "require_confirmation": true
+        },
+
+        "quality-check": {
+          "enabled": true,
+          "checks": [
+            "syntax",
+            "linting",
+            "type-checking"
+          ],
+          "syntax": {
+            "enabled": true,
+            "parsers": {
+              ".js": "acorn",
+              ".ts": "typescript",
+              ".py": "ast",
+              ".json": "json5"
+            }
+          },
+          "linting": {
+            "enabled": true,
+            "linters": {
+              ".js": "eslint",
+              ".ts": "eslint",
+              ".py": "flake8",
+              ".go": "golint"
+            },
+            "fail_on_error": false,
+            "warn_threshold": 10
+          },
+          "type-checking": {
+            "enabled": false,
+            "checkers": {
+              ".ts": "tsc --noEmit",
+              ".tsx": "tsc --noEmit",
+              ".py": "mypy"
+            }
+          }
+        }
+      },
+
+      "execution": {
+        "timeout": 15000,
+        "retry": {
+          "enabled": true,
+          "max_attempts": 2,
+          "backoff": "linear"
+        },
+        "error_handling": {
+          "continue_on_error": true,
+          "log_errors": true,
+          "notify_on_failure": false,
+          "fallback_actions": []
+        }
+      },
+
+      "logging": {
+        "enabled": true,
+        "level": "info",
+        "destination": "file",
+        "file_path": "~/.claude-flow/logs/post-edit-hook.log",
+        "include_diffs": false,
+        "max_size": "10mb",
+        "rotation": "daily"
+      },
+
+      "metrics": {
+        "enabled": true,
+        "track": [
+          "files_formatted",
+          "memory_updates",
+          "patterns_learned",
+          "quality_issues",
+          "execution_time"
+        ],
+        "aggregation": "daily",
+        "export_format": "json",
+        "export_path": "~/.claude-flow/metrics/post-edit-hook.json"
+      },
+
+      "integrations": {
+        "claude_flow": {
+          "enabled": true,
+          "notify_completion": true
+        },
+        "memory_mcp": {
+          "enabled": true,
+          "auto_store": true,
+          "use_tagging_protocol": true
+        },
+        "agentdb": {
+          "enabled": true,
+          "auto_train": true,
+          "sync_patterns": true
+        },
+        "git": {
+          "enabled": true,
+          "check_status": true,
+          "track_changes": true
+        }
+      },
+
+      "performance": {
+        "parallel_execution": true,
+        "max_parallel_tasks": 4,
+        "debounce": {
+          "enabled": true,
+          "delay": 500
+        },
+        "cache": {
+          "enabled": true,
+          "ttl": 300,
+          "max_size": 100
+        }
+      },
+
+      "filters": {
+        "include_extensions": [
+          ".js", ".jsx", ".ts", ".tsx",
+          ".py", ".java", ".go", ".rs",
+          ".md", ".yaml", ".yml", ".json"
+        ],
+        "exclude_paths": [
+          "node_modules/**",
+          "dist/**",
+          "build/**",
+          ".git/**",
+          "*.min.js",
+          "*.bundle.js"
+        ],
+        "min_file_size": 0,
+        "max_file_size": 1048576
+      },
+
+      "notifications": {
+        "enabled": false,
+        "on_success": false,
+        "on_error": true,
+        "channels": []
+      }
+    }
+  }
+}

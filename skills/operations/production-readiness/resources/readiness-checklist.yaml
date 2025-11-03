@@ -1,0 +1,283 @@
+# Production Readiness Checklist Template
+# Customizable quality gates and deployment requirements
+
+version: "1.0.0"
+environment: production
+
+quality_gates:
+  tests:
+    name: "Tests Passing"
+    threshold: 100
+    unit: "percent"
+    blocking: true
+    description: "All unit, integration, and e2e tests must pass"
+    validation:
+      - command: "npm test"
+        expected_exit_code: 0
+
+  coverage:
+    name: "Test Coverage"
+    threshold: 80
+    unit: "percent"
+    blocking: true
+    description: "Code coverage must meet or exceed 80%"
+    validation:
+      - command: "npm test -- --coverage"
+        extract_coverage: true
+
+  code_quality:
+    name: "Code Quality"
+    threshold: 85
+    unit: "score"
+    blocking: true
+    description: "Code quality score based on linting and complexity"
+    validation:
+      - command: "npx eslint . --format json"
+        max_errors: 0
+        max_warnings: 10
+
+  security:
+    name: "Security Scan"
+    threshold: 0
+    unit: "critical_high_vulns"
+    blocking: true
+    description: "Zero critical or high-severity vulnerabilities"
+    validation:
+      - command: "npm audit --json"
+        max_critical: 0
+        max_high: 0
+
+  performance:
+    name: "Performance SLAs"
+    blocking: true
+    description: "Application must meet performance SLAs"
+    metrics:
+      avg_response_time:
+        threshold: 200
+        unit: "ms"
+      p95_response_time:
+        threshold: 500
+        unit: "ms"
+      p99_response_time:
+        threshold: 1000
+        unit: "ms"
+      throughput:
+        threshold: 100
+        unit: "rps"
+      error_rate:
+        threshold: 1
+        unit: "percent"
+
+  documentation:
+    name: "Documentation Complete"
+    blocking: false  # Warning only
+    description: "All required documentation must exist"
+    required_files:
+      - path: "README.md"
+        description: "Project overview and setup instructions"
+      - path: "docs/API.md"
+        description: "API documentation"
+      - path: "docs/deployment.md"
+        description: "Deployment guide"
+      - path: "docs/rollback.md"
+        description: "Rollback procedures"
+        required_for_production: true
+      - path: ".env.example"
+        description: "Environment variable template"
+
+pre_deployment_checklist:
+  code_quality:
+    - task: "All tests passing (100%)"
+      validation: "npm test"
+    - task: "Code quality ≥ 85/100"
+      validation: "npx eslint ."
+    - task: "Test coverage ≥ 80%"
+      validation: "npm test -- --coverage"
+    - task: "No linting errors"
+      validation: "npx eslint . --max-warnings 0"
+    - task: "No TypeScript errors"
+      validation: "npx tsc --noEmit"
+
+  security:
+    - task: "No critical or high-severity vulnerabilities"
+      validation: "npm audit"
+    - task: "Dependencies up to date"
+      validation: "npm outdated"
+    - task: "Secrets in environment variables (not hardcoded)"
+      validation: "grep -r 'api_key\\|password\\|secret' src/"
+    - task: "Security headers configured"
+      manual: true
+    - task: "Authentication/authorization tested"
+      manual: true
+
+  performance:
+    - task: "Response times within SLAs"
+      validation: "npm run performance-test"
+    - task: "No performance bottlenecks"
+      manual: true
+    - task: "Database queries optimized"
+      manual: true
+    - task: "Caching configured"
+      manual: true
+    - task: "Load tested"
+      manual: true
+
+  documentation:
+    - task: "README.md up to date"
+      validation: "test -f README.md"
+    - task: "API documentation complete"
+      validation: "test -f docs/API.md"
+    - task: "Deployment guide available"
+      validation: "test -f docs/deployment.md"
+    - task: "Rollback plan documented"
+      validation: "test -f docs/rollback.md"
+    - task: "Environment variables documented"
+      validation: "test -f .env.example"
+
+  monitoring:
+    - task: "Logging configured"
+      manual: true
+    - task: "Error tracking setup (Sentry, etc.)"
+      manual: true
+    - task: "Metrics collection enabled"
+      manual: true
+    - task: "Alerts configured"
+      manual: true
+    - task: "Dashboard created"
+      manual: true
+
+  infrastructure:
+    - task: "Environment variables configured"
+      manual: true
+    - task: "Database migrations ready"
+      validation: "npm run migrate:check"
+    - task: "Backup strategy verified"
+      manual: true
+    - task: "Scaling configuration reviewed"
+      manual: true
+    - task: "SSL certificates valid"
+      manual: true
+
+  rollback:
+    - task: "Rollback procedure documented"
+      validation: "test -f docs/rollback.md"
+    - task: "Previous version backed up"
+      manual: true
+    - task: "Rollback tested"
+      manual: true
+    - task: "Rollback SLA defined (< 5 minutes)"
+      manual: true
+
+deployment_steps:
+  pre_deployment:
+    - step: "Create deployment branch"
+      command: "git checkout -b deploy/$(date +%Y%m%d-%H%M%S)"
+    - step: "Final code review"
+      manual: true
+    - step: "Merge to main/master"
+      command: "git merge main"
+
+  staging_deployment:
+    - step: "Deploy to staging"
+      command: "npm run deploy:staging"
+    - step: "Run smoke tests"
+      command: "npm run test:smoke"
+    - step: "Verify functionality"
+      manual: true
+
+  production_deployment:
+    - step: "Create database backup"
+      command: "npm run db:backup"
+    - step: "Deploy to production"
+      command: "npm run deploy:production"
+    - step: "Run health checks"
+      command: "curl https://api.example.com/health"
+    - step: "Monitor for errors"
+      manual: true
+
+  post_deployment:
+    - step: "Verify functionality"
+      manual: true
+    - step: "Monitor metrics"
+      manual: true
+    - step: "Check error rates"
+      manual: true
+    - step: "Document any issues"
+      manual: true
+
+rollback_procedure:
+  triggers:
+    - "Critical error rate > 5%"
+    - "Response time > 2x SLA"
+    - "Database corruption detected"
+    - "Security vulnerability discovered"
+
+  steps:
+    - step: "Stop deployment immediately"
+      command: "kubectl rollout pause deployment/app"
+    - step: "Execute rollback"
+      command: "./scripts/rollback.sh"
+    - step: "Verify previous version restored"
+      command: "curl https://api.example.com/version"
+    - step: "Restore database if needed"
+      command: "npm run db:restore"
+    - step: "Monitor recovery"
+      manual: true
+    - step: "Investigate root cause"
+      manual: true
+    - step: "Fix issues before retry"
+      manual: true
+
+sign_offs:
+  - role: "Development Lead"
+    requirement: "Code review approved"
+    contact: "dev-lead@example.com"
+
+  - role: "QA Lead"
+    requirement: "Testing complete"
+    contact: "qa-lead@example.com"
+
+  - role: "Security Team"
+    requirement: "Security review approved"
+    contact: "security@example.com"
+
+  - role: "DevOps"
+    requirement: "Infrastructure ready"
+    contact: "devops@example.com"
+
+  - role: "Product Owner"
+    requirement: "Features approved"
+    contact: "product@example.com"
+
+notifications:
+  slack:
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+    channels:
+      - "#deployments"
+      - "#engineering"
+
+  email:
+    recipients:
+      - "engineering@example.com"
+      - "on-call@example.com"
+
+  pagerduty:
+    integration_key: "${PAGERDUTY_INTEGRATION_KEY}"
+    severity: "critical"
+
+metrics:
+  deployment_frequency:
+    target: "daily"
+    current: "weekly"
+
+  lead_time:
+    target: "< 1 hour"
+    current: "4 hours"
+
+  mttr:
+    target: "< 30 minutes"
+    current: "1 hour"
+
+  change_failure_rate:
+    target: "< 5%"
+    current: "8%"

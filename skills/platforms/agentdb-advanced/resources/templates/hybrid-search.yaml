@@ -1,0 +1,356 @@
+# Hybrid Search Configuration Template for AgentDB
+# Combines vector similarity with metadata filtering and custom scoring
+
+# Vector Search Configuration
+vector_search:
+  # Distance metric (cosine, euclidean, dot, manhattan, custom)
+  metric: "cosine"
+
+  # Number of results to retrieve
+  k: 20
+
+  # HNSW search parameters
+  hnsw:
+    ef_search: 100
+    max_candidates: 200
+
+  # Vector normalization
+  normalize_vectors: true
+
+  # Use MMR for diversity
+  mmr:
+    enabled: true
+    lambda: 0.5  # 0 = max relevance, 1 = max diversity
+
+# Metadata Filtering
+metadata_filters:
+  # Domain-specific filters
+  domain:
+    # Include only these domains
+    include:
+      - "research-papers"
+      - "technical-docs"
+    # Exclude these domains
+    exclude:
+      - "spam"
+      - "low-quality"
+
+  # Numeric filters
+  numeric:
+    # Year range
+    year:
+      gte: 2020
+      lte: 2025
+
+    # Citation count
+    citations:
+      gte: 10
+
+    # Quality score
+    quality_score:
+      gte: 0.7
+      lte: 1.0
+
+    # Recency score
+    recency:
+      gte: 0.5
+
+  # String filters
+  string:
+    # Category matching
+    category:
+      equals: "machine-learning"
+      # Alternative: in: ["ml", "ai", "deep-learning"]
+
+    # Author matching
+    author:
+      contains: "smith"
+      # Alternative: starts_with, ends_with, regex
+
+    # Tags
+    tags:
+      any_of: ["neural-networks", "transformers"]
+      # Alternative: all_of, none_of
+
+  # Boolean filters
+  boolean:
+    is_published: true
+    is_peer_reviewed: true
+    in_stock: true
+    is_verified: true
+
+  # Temporal filters
+  temporal:
+    created_at:
+      after: "2024-01-01T00:00:00Z"
+      before: "2025-12-31T23:59:59Z"
+
+    updated_at:
+      within_days: 30
+
+    accessed_at:
+      within_hours: 24
+
+  # Geographic filters (if applicable)
+  geographic:
+    region:
+      in: ["us-east", "us-west", "eu-west"]
+
+    country:
+      equals: "USA"
+
+  # Custom metadata filters
+  custom:
+    # Apply custom filter function
+    filter_fn: "custom_filter_function"
+    parameters:
+      threshold: 0.8
+      mode: "strict"
+
+# Hybrid Scoring
+hybrid_scoring:
+  # Enable hybrid scoring (combines vector and metadata scores)
+  enabled: true
+
+  # Scoring components and their weights
+  components:
+    # Vector similarity score (0-1)
+    vector_similarity:
+      weight: 0.6
+      normalization: "min_max"
+
+    # Metadata relevance score (0-1)
+    metadata_relevance:
+      weight: 0.2
+      fields:
+        - field: "citations"
+          weight: 0.5
+          normalization: "log_scale"
+        - field: "quality_score"
+          weight: 0.3
+          normalization: "identity"
+        - field: "recency"
+          weight: 0.2
+          normalization: "exponential_decay"
+
+    # Business logic score (0-1)
+    business_score:
+      weight: 0.1
+      function: "calculate_business_score"
+
+    # User preference score (0-1)
+    user_preference:
+      weight: 0.1
+      personalization: true
+
+  # Score aggregation method
+  aggregation: "weighted_sum"  # or: weighted_product, harmonic_mean, geometric_mean
+
+  # Apply score boosting
+  boosting:
+    # Boost recent items
+    recency_boost:
+      enabled: true
+      decay_function: "exponential"
+      half_life_days: 30
+      max_boost: 2.0
+
+    # Boost popular items
+    popularity_boost:
+      enabled: true
+      field: "citations"
+      log_scale: true
+      max_boost: 1.5
+
+    # Boost verified items
+    verification_boost:
+      enabled: true
+      boost_factor: 1.3
+
+# Re-ranking
+reranking:
+  # Enable re-ranking after initial retrieval
+  enabled: true
+
+  # Re-ranking model
+  model:
+    type: "cross_encoder"  # or: listwise, pairwise
+    name: "ms-marco-MiniLM-L-12-v2"
+
+  # Number of candidates to re-rank
+  top_k: 50
+
+  # Final number of results
+  final_k: 20
+
+  # Features for re-ranking
+  features:
+    - "vector_similarity"
+    - "metadata_relevance"
+    - "business_score"
+    - "user_interactions"
+
+# Query Expansion
+query_expansion:
+  # Enable query expansion
+  enabled: true
+
+  # Expansion methods
+  methods:
+    # Synonym expansion
+    synonyms:
+      enabled: true
+      source: "wordnet"
+      max_synonyms: 3
+
+    # Embedding-based expansion
+    embeddings:
+      enabled: true
+      similarity_threshold: 0.8
+      max_expansions: 5
+
+    # User history expansion
+    history:
+      enabled: true
+      weight: 0.3
+
+# Result Diversification
+diversification:
+  # Enable result diversification
+  enabled: true
+
+  # Diversification method
+  method: "mmr"  # or: cluster_based, category_based
+
+  # Diversity parameters
+  parameters:
+    lambda: 0.5
+    max_per_category: 3
+    min_similarity_threshold: 0.7
+
+# Performance Optimization
+performance:
+  # Enable caching
+  caching:
+    enabled: true
+    ttl_seconds: 300
+    cache_size: 10000
+
+  # Enable result pagination
+  pagination:
+    enabled: true
+    page_size: 20
+    max_pages: 100
+
+  # Enable early termination
+  early_termination:
+    enabled: true
+    min_results: 10
+    quality_threshold: 0.9
+
+  # Enable parallel processing
+  parallel:
+    enabled: true
+    num_workers: 4
+
+# Explain Results
+explain:
+  # Include explanation for each result
+  enabled: false
+
+  # Explanation components
+  components:
+    - "vector_similarity_score"
+    - "metadata_filter_matches"
+    - "hybrid_score_breakdown"
+    - "boosting_factors"
+    - "reranking_score"
+
+# Analytics and Logging
+analytics:
+  # Track search analytics
+  enabled: true
+
+  # Metrics to track
+  metrics:
+    - "query_latency"
+    - "result_count"
+    - "cache_hit_rate"
+    - "filter_selectivity"
+    - "avg_score"
+
+  # Log queries for analysis
+  query_logging:
+    enabled: true
+    sample_rate: 0.1
+    log_file: ".agentdb/logs/hybrid-search.log"
+
+# A/B Testing
+ab_testing:
+  # Enable A/B testing for search configurations
+  enabled: false
+
+  # Test variants
+  variants:
+    - name: "control"
+      weight: 0.5
+      config: "default"
+
+    - name: "variant_a"
+      weight: 0.25
+      config:
+        hybrid_scoring:
+          components:
+            vector_similarity:
+              weight: 0.7
+
+    - name: "variant_b"
+      weight: 0.25
+      config:
+        hybrid_scoring:
+          components:
+            metadata_relevance:
+              weight: 0.4
+
+# Example Use Cases
+examples:
+  # Research paper search
+  research_papers:
+    vector_search:
+      k: 30
+    metadata_filters:
+      year: { gte: 2020 }
+      citations: { gte: 50 }
+      is_peer_reviewed: true
+    hybrid_scoring:
+      components:
+        vector_similarity: { weight: 0.5 }
+        metadata_relevance: { weight: 0.3 }
+        recency_boost: { weight: 0.2 }
+
+  # E-commerce product search
+  products:
+    vector_search:
+      k: 50
+    metadata_filters:
+      in_stock: true
+      price: { gte: 10, lte: 1000 }
+      rating: { gte: 4.0 }
+    hybrid_scoring:
+      components:
+        vector_similarity: { weight: 0.4 }
+        popularity_boost: { weight: 0.3 }
+        user_preference: { weight: 0.3 }
+
+  # Code snippet search
+  code:
+    vector_search:
+      k: 20
+      metric: "cosine"
+    metadata_filters:
+      language: { in: ["python", "javascript", "typescript"] }
+      quality_score: { gte: 0.8 }
+    hybrid_scoring:
+      components:
+        vector_similarity: { weight: 0.7 }
+        metadata_relevance: { weight: 0.3 }

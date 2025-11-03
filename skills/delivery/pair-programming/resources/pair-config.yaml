@@ -1,0 +1,252 @@
+# Pair Programming Configuration Template
+# Copy to .pair-config.yaml in your project root
+
+# General Settings
+general:
+  enabled: true
+  defaultMode: switch  # driver, navigator, switch, tdd, review, mentor, debug
+  defaultAgent: senior-dev  # auto, senior-dev, tdd-specialist, debugger-expert, junior-dev
+  language: javascript  # javascript, python, ruby, go, etc.
+  timezone: UTC
+  theme: professional  # professional, friendly, minimal
+
+# Mode-Specific Settings
+modes:
+  driver:
+    enabled: true
+    suggestions: true
+    realTimeReview: true
+    autoComplete: false
+    navigationGuidance: verbose  # verbose, minimal, off
+
+  navigator:
+    enabled: true
+    codeGeneration: true
+    explanations: detailed  # detailed, brief, minimal
+    alternatives: true
+    patternSuggestions: true
+
+  switch:
+    enabled: true
+    interval: 10m  # 5m, 10m, 15m, 20m
+    warning: 30s  # 15s, 30s, 60s
+    autoSwitch: true
+    pauseOnIdle: true
+    idleThreshold: 5m
+    handoffSummary: true
+
+  tdd:
+    enabled: true
+    testFirst: true
+    redGreenRefactor: true
+    minCoverage: 80  # percentage
+    enforceCoverage: true
+    autoRunTests: true
+
+  review:
+    enabled: true
+    continuous: true
+    preCommit: true
+    reviewDepth: thorough  # quick, standard, thorough
+    focusAreas:
+      - security
+      - performance
+      - style
+      - complexity
+
+  mentor:
+    enabled: true
+    pace: moderate  # slow, moderate, fast
+    explanationLevel: detailed  # basic, detailed, expert
+    examples: true
+    questioningEnabled: true
+    encouragement: true
+
+  debug:
+    enabled: true
+    verbose: true
+    tracing: true
+    stepByStep: true
+    rootCauseAnalysis: true
+
+# Verification Settings
+verification:
+  enabled: true
+  threshold: 0.95  # 0.0 to 1.0
+  autoRollback: true
+  preCommitCheck: true
+  continuousMonitoring: true
+  blockOnFailure: false  # true = block commits, false = warn only
+  checks:
+    - linting
+    - testing
+    - security
+    - complexity
+
+# Testing Settings
+testing:
+  enabled: true
+  autoRun: true
+  framework: jest  # jest, pytest, rspec, go test, etc.
+  onSave: true
+  parallel: false
+  coverage:
+    enabled: true
+    minimum: 80  # percentage
+    enforce: true
+    reportFormat: html  # html, json, terminal, lcov
+  watchMode: true
+  verbose: false
+
+# Code Review Settings
+review:
+  enabled: true
+  continuous: true
+  preCommit: true
+  security: true
+  performance: true
+  style: true
+  bestPractices: true
+  complexity:
+    enabled: true
+    maxComplexity: 10
+    maxDepth: 4
+    maxLines: 100
+    maxParameters: 5
+  linters:
+    enabled: true
+    autoFix: false
+    config: .eslintrc.json  # or .pylintrc, .rubocop.yml, etc.
+
+# Git Integration
+git:
+  enabled: true
+  autoCommit: false
+  commitTemplate: "feat: {message}"  # conventional commits
+  signCommits: false
+  pushOnEnd: false
+  branchProtection: true
+  hooks:
+    preCommit: true
+    prePush: false
+    postCommit: false
+
+# Session Management
+session:
+  autoSave: true
+  saveInterval: 5m  # 1m, 5m, 10m
+  maxDuration: 4h  # 1h, 2h, 4h, 8h
+  idleTimeout: 15m  # 5m, 10m, 15m, 30m
+  breakReminder: 45m  # 30m, 45m, 60m
+  metricsInterval: 1m  # 30s, 1m, 5m
+  exportFormat: json  # json, markdown
+  exportDir: ~/.pair-sessions
+
+# AI Partner Settings
+ai:
+  model: advanced  # basic, advanced, expert
+  temperature: 0.7  # 0.0 to 1.0
+  maxTokens: 4000
+  personality: professional  # professional, friendly, concise, verbose
+  expertise:
+    - backend
+    - testing
+    - security
+  learningEnabled: true
+  contextWindow: 10  # number of recent interactions
+  adaptToStyle: true
+
+# Agent Profiles
+agents:
+  senior-dev:
+    expertise:
+      - architecture
+      - patterns
+      - optimization
+      - best-practices
+    style: thorough
+    reviewLevel: strict
+
+  tdd-specialist:
+    expertise:
+      - testing
+      - mocks
+      - coverage
+      - test-design
+    style: test-first
+    reviewLevel: comprehensive
+
+  debugger-expert:
+    expertise:
+      - debugging
+      - profiling
+      - tracing
+      - root-cause
+    style: analytical
+    reviewLevel: focused
+
+  junior-dev:
+    expertise:
+      - learning
+      - basics
+      - documentation
+    style: questioning
+    reviewLevel: educational
+
+# Keyboard Shortcuts
+shortcuts:
+  switch: ctrl+shift+s
+  suggest: ctrl+space
+  review: ctrl+r
+  test: ctrl+t
+  commit: ctrl+shift+c
+  help: ctrl+h
+
+# Notifications
+notifications:
+  enabled: true
+  roleSwitch: true
+  testFailure: true
+  lowTruthScore: true
+  breakReminder: true
+  sound: true
+  desktop: false
+
+# Performance Tuning
+performance:
+  cacheEnabled: true
+  cacheSize: 100  # MB
+  parallelChecks: true
+  throttleReviews: false
+  debounceInterval: 500  # ms
+
+# Advanced Features
+advanced:
+  recording:
+    enabled: false
+    format: json
+    includeKeystrokes: false
+  analytics:
+    enabled: true
+    anonymize: true
+    export: monthly
+  collaboration:
+    remoteSession: false
+    shareScreen: false
+  customCommands:
+    tdd: "/test-gen && /test --watch"
+    full-review: "/lint --fix && /test && /review --strict"
+    quick-fix: "/suggest --type fix && /implement && /test"
+
+# Project-Specific Overrides
+overrides:
+  # Override settings for specific file patterns
+  "*.test.js":
+    verification:
+      threshold: 1.0
+  "*.config.js":
+    review:
+      security: false
+  "docs/**":
+    testing:
+      enabled: false

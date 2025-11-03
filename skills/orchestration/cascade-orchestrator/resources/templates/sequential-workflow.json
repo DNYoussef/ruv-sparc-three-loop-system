@@ -1,0 +1,309 @@
+{
+  "cascade": {
+    "name": "sequential-data-pipeline",
+    "description": "Linear data processing pipeline with validation and transformation",
+    "version": "2.0.0",
+    "config": {
+      "multi_model": false,
+      "swarm_coordination": false,
+      "memory_persistence": true
+    }
+  },
+  "inputs": {
+    "data_source": {
+      "type": "string",
+      "description": "Path or URL to data source",
+      "required": true
+    },
+    "output_format": {
+      "type": "string",
+      "description": "Desired output format (json, csv, parquet)",
+      "default": "json"
+    },
+    "validation_strict": {
+      "type": "boolean",
+      "description": "Enable strict validation mode",
+      "default": true
+    }
+  },
+  "stages": [
+    {
+      "stage_id": "extract",
+      "name": "Data Extraction",
+      "type": "sequential",
+      "model": "claude",
+      "skills": [
+        {
+          "skill": "extract-data",
+          "inputs": {
+            "source": "${inputs.data_source}",
+            "format": "auto-detect"
+          },
+          "outputs": {
+            "raw_data": "extracted_data",
+            "metadata": "extraction_metadata"
+          }
+        }
+      ],
+      "memory": {
+        "write_keys": [
+          "raw_data",
+          "extraction_metadata"
+        ]
+      },
+      "error_handling": {
+        "strategy": "retry",
+        "max_retries": 3,
+        "backoff": "exponential"
+      }
+    },
+    {
+      "stage_id": "validate",
+      "name": "Data Validation",
+      "type": "sequential",
+      "model": "claude",
+      "dependencies": [
+        "extract"
+      ],
+      "skills": [
+        {
+          "skill": "validate-schema",
+          "inputs": {
+            "data": "${memory.raw_data}",
+            "strict": "${inputs.validation_strict}"
+          },
+          "outputs": {
+            "validation_report": "validation_results",
+            "valid_records": "validated_data",
+            "invalid_records": "validation_errors"
+          }
+        }
+      ],
+      "memory": {
+        "read_keys": [
+          "raw_data"
+        ],
+        "write_keys": [
+          "validation_results",
+          "validated_data",
+          "validation_errors"
+        ]
+      },
+      "error_handling": {
+        "strategy": "codex-auto-fix",
+        "max_iterations": 3
+      }
+    },
+    {
+      "stage_id": "transform",
+      "name": "Data Transformation",
+      "type": "sequential",
+      "model": "codex-auto",
+      "dependencies": [
+        "validate"
+      ],
+      "skills": [
+        {
+          "skill": "transform-data",
+          "inputs": {
+            "data": "${memory.validated_data}",
+            "transformations": [
+              {
+                "type": "normalize",
+                "fields": ["date", "timestamp"]
+              },
+              {
+                "type": "aggregate",
+                "by": "category",
+                "metrics": ["sum", "avg", "count"]
+              },
+              {
+                "type": "enrich",
+                "source": "external_api",
+                "fields": ["location", "timezone"]
+              }
+            ]
+          },
+          "outputs": {
+            "transformed_data": "final_data",
+            "transformation_log": "transform_metadata"
+          }
+        }
+      ],
+      "memory": {
+        "read_keys": [
+          "validated_data"
+        ],
+        "write_keys": [
+          "final_data",
+          "transform_metadata"
+        ]
+      },
+      "error_handling": {
+        "strategy": "retry",
+        "max_retries": 2
+      }
+    },
+    {
+      "stage_id": "quality_check",
+      "name": "Quality Assurance",
+      "type": "sequential",
+      "model": "claude",
+      "dependencies": [
+        "transform"
+      ],
+      "skills": [
+        {
+          "skill": "quality-metrics",
+          "inputs": {
+            "data": "${memory.final_data}",
+            "checks": [
+              "completeness",
+              "consistency",
+              "accuracy",
+              "timeliness"
+            ]
+          },
+          "outputs": {
+            "quality_score": "qa_score",
+            "quality_report": "qa_results"
+          }
+        }
+      ],
+      "memory": {
+        "read_keys": [
+          "final_data"
+        ],
+        "write_keys": [
+          "qa_score",
+          "qa_results"
+        ]
+      },
+      "error_handling": {
+        "strategy": "fail"
+      }
+    },
+    {
+      "stage_id": "export",
+      "name": "Data Export",
+      "type": "sequential",
+      "model": "claude",
+      "dependencies": [
+        "quality_check"
+      ],
+      "skills": [
+        {
+          "skill": "export-data",
+          "inputs": {
+            "data": "${memory.final_data}",
+            "format": "${inputs.output_format}",
+            "destination": "output/",
+            "metadata": {
+              "pipeline": "sequential-data-pipeline",
+              "version": "2.0.0",
+              "quality_score": "${memory.qa_score}",
+              "timestamp": "${timestamp}"
+            }
+          },
+          "outputs": {
+            "export_path": "output_location",
+            "export_metadata": "export_info"
+          }
+        }
+      ],
+      "memory": {
+        "read_keys": [
+          "final_data",
+          "qa_score"
+        ],
+        "write_keys": [
+          "output_location",
+          "export_info"
+        ]
+      },
+      "error_handling": {
+        "strategy": "retry",
+        "max_retries": 2
+      }
+    },
+    {
+      "stage_id": "report",
+      "name": "Generate Report",
+      "type": "sequential",
+      "model": "gemini-media",
+      "dependencies": [
+        "export"
+      ],
+      "skills": [
+        {
+          "skill": "generate-pipeline-report",
+          "inputs": {
+            "extraction": "${memory.extraction_metadata}",
+            "validation": "${memory.validation_results}",
+            "transformation": "${memory.transform_metadata}",
+            "quality": "${memory.qa_results}",
+            "export": "${memory.export_info}"
+          },
+          "outputs": {
+            "report_html": "pipeline_report",
+            "summary": "execution_summary"
+          }
+        }
+      ],
+      "memory": {
+        "read_keys": [
+          "extraction_metadata",
+          "validation_results",
+          "transform_metadata",
+          "qa_results",
+          "export_info"
+        ],
+        "write_keys": [
+          "pipeline_report",
+          "execution_summary"
+        ]
+      },
+      "error_handling": {
+        "strategy": "retry",
+        "max_retries": 1
+      }
+    }
+  ],
+  "memory": {
+    "persistence": "enabled",
+    "scope": "cascade",
+    "storage": "mcp__ruv-swarm__memory",
+    "retention": "7d"
+  },
+  "notifications": {
+    "on_success": [
+      {
+        "type": "slack",
+        "channel": "#data-pipelines",
+        "message": "Pipeline completed successfully: ${cascade.name}\nQuality Score: ${memory.qa_score}\nOutput: ${memory.output_location}"
+      }
+    ],
+    "on_failure": [
+      {
+        "type": "email",
+        "to": "data-team@example.com",
+        "subject": "Pipeline Failed: ${cascade.name}",
+        "body": "Stage: ${failed_stage}\nError: ${error_message}"
+      }
+    ]
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": [
+      "duration",
+      "records_processed",
+      "quality_score",
+      "error_rate"
+    ],
+    "alerts": {
+      "duration_threshold": 3600,
+      "quality_threshold": 0.8,
+      "error_threshold": 0.05
+    }
+  }
+}

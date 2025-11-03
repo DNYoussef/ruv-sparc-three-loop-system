@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "Agent Capabilities Configuration",
+  "description": "Structured capability definitions for specialist agents following evidence-based design",
+  "type": "object",
+  "required": ["agent", "capabilities", "prompting", "quality"],
+
+  "agent": {
+    "name": "agent-name",
+    "version": "1.0.0",
+    "category": "specialist",
+    "enabled": true
+  },
+
+  "capabilities": {
+    "primary": [
+      {
+        "name": "code_analysis",
+        "description": "Analyze code quality, patterns, and violations",
+        "enabled": true,
+        "priority": "high",
+        "tools": ["connascence-analyzer", "eslint", "pylint"]
+      },
+      {
+        "name": "implementation",
+        "description": "Implement solutions following best practices",
+        "enabled": true,
+        "priority": "high",
+        "tools": ["claude-code", "git"]
+      },
+      {
+        "name": "testing",
+        "description": "Create comprehensive test suites",
+        "enabled": true,
+        "priority": "medium",
+        "tools": ["jest", "pytest", "coverage"]
+      }
+    ],
+
+    "secondary": [
+      {
+        "name": "documentation",
+        "description": "Generate clear, comprehensive documentation",
+        "enabled": true,
+        "priority": "medium",
+        "tools": ["markdown", "jsdoc", "sphinx"]
+      },
+      {
+        "name": "optimization",
+        "description": "Optimize performance and resource usage",
+        "enabled": true,
+        "priority": "low",
+        "tools": ["profiler", "benchmark"]
+      }
+    ],
+
+    "integrations": [
+      {
+        "name": "memory_mcp",
+        "type": "memory",
+        "enabled": true,
+        "config": {
+          "retention_policy": "triple-layer",
+          "auto_tagging": true,
+          "vector_search": true
+        }
+      },
+      {
+        "name": "claude_flow",
+        "type": "coordination",
+        "enabled": true,
+        "config": {
+          "hooks_enabled": true,
+          "topology": "mesh",
+          "auto_spawning": false
+        }
+      },
+      {
+        "name": "connascence_analyzer",
+        "type": "code_quality",
+        "enabled": true,
+        "config": {
+          "thresholds": {
+            "cyclomatic_complexity": 10,
+            "max_params": 6,
+            "max_nesting": 4,
+            "max_lines": 50
+          }
+        }
+      }
+    ]
+  },
+
+  "prompting": {
+    "techniques": [
+      {
+        "name": "chain-of-thought",
+        "enabled": true,
+        "description": "Explicit step-by-step reasoning",
+        "use_cases": ["analysis", "design", "debugging"]
+      },
+      {
+        "name": "few-shot",
+        "enabled": true,
+        "description": "Learning from examples",
+        "example_count": 3,
+        "use_cases": ["code_generation", "pattern_matching"]
+      },
+      {
+        "name": "role-based",
+        "enabled": true,
+        "description": "Clear agent identity and expertise",
+        "use_cases": ["all"]
+      },
+      {
+        "name": "plan-and-solve",
+        "enabled": true,
+        "description": "Planning before execution",
+        "use_cases": ["complex_workflows", "multi-step_tasks"]
+      },
+      {
+        "name": "self-consistency",
+        "enabled": false,
+        "description": "Multiple reasoning paths for validation",
+        "use_cases": ["critical_decisions", "ambiguous_cases"]
+      }
+    ],
+
+    "examples": [
+      {
+        "id": "example_1",
+        "task": "Code review",
+        "input": "Review authentication module for security",
+        "reasoning": [
+          "Check password hashing implementation",
+          "Verify token validation logic",
+          "Review rate limiting",
+          "Check for SQL injection vulnerabilities"
+        ],
+        "output": {
+          "findings": 3,
+          "critical": 1,
+          "recommendations": ["Use bcrypt for passwords", "Add rate limiting", "Parameterize SQL queries"]
+        }
+      }
+    ],
+
+    "reasoning_template": [
+      "1. Analyze requirements and constraints",
+      "2. Identify potential approaches",
+      "3. Evaluate trade-offs",
+      "4. Select optimal solution",
+      "5. Validate against criteria"
+    ]
+  },
+
+  "quality": {
+    "success_criteria": {
+      "functional_correctness": {
+        "threshold": 0.95,
+        "validation": "automated_testing"
+      },
+      "code_quality": {
+        "threshold": 0.90,
+        "validation": "static_analysis"
+      },
+      "documentation": {
+        "threshold": 0.85,
+        "validation": "completeness_check"
+      },
+      "performance": {
+        "max_response_time": 30,
+        "unit": "seconds"
+      }
+    },
+
+    "failure_modes": [
+      {
+        "mode": "incomplete_analysis",
+        "probability": "medium",
+        "mitigation": "Use checklists and validation steps"
+      },
+      {
+        "mode": "missing_edge_cases",
+        "probability": "high",
+        "mitigation": "Comprehensive test coverage"
+      },
+      {
+        "mode": "poor_error_handling",
+        "probability": "medium",
+        "mitigation": "Defensive programming practices"
+      }
+    ],
+
+    "metrics": {
+      "accuracy": {
+        "target": "> 95%",
+        "measurement": "test_pass_rate"
+      },
+      "completeness": {
+        "target": "> 90%",
+        "measurement": "requirement_coverage"
+      },
+      "efficiency": {
+        "target": "< 30s",
+        "measurement": "average_response_time"
+      }
+    }
+  },
+
+  "coordination": {
+    "topology": "mesh",
+    "communication_protocol": {
+      "memory_sharing": true,
+      "hook_coordination": true,
+      "direct_messaging": false
+    },
+
+    "dependencies": {
+      "upstream_agents": [],
+      "downstream_agents": [],
+      "peer_agents": []
+    },
+
+    "workflow_integration": {
+      "pre_task_hooks": [
+        "npx claude-flow@alpha hooks pre-task --description '${task}'"
+      ],
+      "post_task_hooks": [
+        "npx claude-flow@alpha hooks post-task --task-id '${task_id}'"
+      ]
+    }
+  },
+
+  "performance": {
+    "optimization": {
+      "parallel_execution": true,
+      "batch_operations": true,
+      "caching_enabled": true,
+      "max_concurrent_tasks": 5
+    },
+
+    "resource_limits": {
+      "max_token_usage": 150000,
+      "max_memory_mb": 512,
+      "timeout_seconds": 300
+    },
+
+    "monitoring": {
+      "track_token_usage": true,
+      "track_response_time": true,
+      "track_success_rate": true,
+      "log_level": "info"
+    }
+  },
+
+  "configuration": {
+    "environment": {
+      "NODE_ENV": "production",
+      "LOG_LEVEL": "info"
+    },
+
+    "features": {
+      "auto_validation": true,
+      "continuous_learning": true,
+      "pattern_recognition": true
+    },
+
+    "thresholds": {
+      "cyclomatic_complexity": 10,
+      "max_function_params": 6,
+      "max_nesting_depth": 4,
+      "max_function_lines": 50,
+      "min_test_coverage": 80
+    }
+  }
+}

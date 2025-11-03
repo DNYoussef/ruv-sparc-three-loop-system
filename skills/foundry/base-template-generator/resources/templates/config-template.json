@@ -1,0 +1,322 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Base Template Configuration",
+  "description": "Configuration schema for base template generation",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "description": "Project name (alphanumeric, hyphens, underscores)"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["node", "python", "go", "react", "vue", "vanilla-ts"],
+          "description": "Project template type"
+        },
+        "description": {
+          "type": "string",
+          "description": "Project description"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "default": "1.0.0",
+          "description": "Project version (semver)"
+        },
+        "author": {
+          "type": "string",
+          "description": "Project author"
+        },
+        "license": {
+          "type": "string",
+          "enum": ["MIT", "Apache-2.0", "GPL-3.0", "BSD-3-Clause", "Unlicense"],
+          "default": "MIT",
+          "description": "Project license"
+        }
+      },
+      "required": ["name", "type"]
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "docker": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include Docker support (Dockerfile, docker-compose)"
+        },
+        "ci_cd": {
+          "type": "boolean",
+          "default": false,
+          "description": "Include CI/CD configuration (GitHub Actions)"
+        },
+        "testing": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include testing framework setup"
+        },
+        "linting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include linting and formatting tools"
+        },
+        "docs": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include documentation generation"
+        },
+        "security": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include security scanning and best practices"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "minimal": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use minimal dependencies (recommended)"
+        },
+        "additional": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional dependencies to include"
+        }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "properties": {
+        "use_standard": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use standard project structure for the type"
+        },
+        "custom_dirs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": ["path"]
+          },
+          "description": "Additional custom directories"
+        }
+      }
+    },
+    "tooling": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "type": "object",
+          "properties": {
+            "package_manager": {
+              "type": "string",
+              "enum": ["npm", "yarn", "pnpm"],
+              "default": "npm"
+            },
+            "node_version": {
+              "type": "string",
+              "default": "18",
+              "description": "Minimum Node.js version"
+            },
+            "linter": {
+              "type": "string",
+              "enum": ["eslint", "biome"],
+              "default": "eslint"
+            },
+            "formatter": {
+              "type": "string",
+              "enum": ["prettier", "biome"],
+              "default": "prettier"
+            }
+          }
+        },
+        "python": {
+          "type": "object",
+          "properties": {
+            "package_manager": {
+              "type": "string",
+              "enum": ["poetry", "pip", "pipenv"],
+              "default": "poetry"
+            },
+            "python_version": {
+              "type": "string",
+              "default": "3.11",
+              "description": "Minimum Python version"
+            },
+            "linter": {
+              "type": "string",
+              "enum": ["ruff", "flake8", "pylint"],
+              "default": "ruff"
+            },
+            "formatter": {
+              "type": "string",
+              "enum": ["black", "ruff"],
+              "default": "black"
+            },
+            "type_checker": {
+              "type": "string",
+              "enum": ["mypy", "pyright"],
+              "default": "mypy"
+            }
+          }
+        },
+        "go": {
+          "type": "object",
+          "properties": {
+            "go_version": {
+              "type": "string",
+              "default": "1.21",
+              "description": "Minimum Go version"
+            },
+            "linter": {
+              "type": "string",
+              "enum": ["golangci-lint", "staticcheck"],
+              "default": "golangci-lint"
+            }
+          }
+        }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "enum": ["docker", "vercel", "netlify", "heroku", "aws", "gcp", "azure", "none"],
+          "default": "none",
+          "description": "Target deployment platform"
+        },
+        "environment": {
+          "type": "object",
+          "properties": {
+            "development": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "production": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "properties": {
+        "code_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 80,
+          "description": "Target code coverage percentage"
+        },
+        "max_file_lines": {
+          "type": "number",
+          "default": 500,
+          "description": "Maximum lines per file"
+        },
+        "max_function_complexity": {
+          "type": "number",
+          "default": 10,
+          "description": "Maximum cyclomatic complexity"
+        }
+      }
+    }
+  },
+  "required": ["project"],
+  "examples": [
+    {
+      "project": {
+        "name": "my-api",
+        "type": "node",
+        "description": "REST API with Express",
+        "version": "1.0.0",
+        "author": "John Doe",
+        "license": "MIT"
+      },
+      "features": {
+        "docker": true,
+        "ci_cd": true,
+        "testing": true,
+        "linting": true,
+        "docs": true,
+        "security": true
+      },
+      "dependencies": {
+        "minimal": true,
+        "additional": ["helmet", "cors"]
+      },
+      "tooling": {
+        "node": {
+          "package_manager": "npm",
+          "node_version": "18",
+          "linter": "eslint",
+          "formatter": "prettier"
+        }
+      },
+      "deployment": {
+        "platform": "docker",
+        "environment": {
+          "development": {
+            "PORT": "3000",
+            "NODE_ENV": "development"
+          },
+          "production": {
+            "PORT": "8080",
+            "NODE_ENV": "production"
+          }
+        }
+      },
+      "quality": {
+        "code_coverage": 80,
+        "max_file_lines": 500,
+        "max_function_complexity": 10
+      }
+    },
+    {
+      "project": {
+        "name": "ml-service",
+        "type": "python",
+        "description": "Machine learning API",
+        "version": "0.1.0",
+        "license": "Apache-2.0"
+      },
+      "features": {
+        "docker": true,
+        "ci_cd": true,
+        "testing": true,
+        "linting": true
+      },
+      "tooling": {
+        "python": {
+          "package_manager": "poetry",
+          "python_version": "3.11",
+          "linter": "ruff",
+          "formatter": "black",
+          "type_checker": "mypy"
+        }
+      }
+    }
+  ]
+}

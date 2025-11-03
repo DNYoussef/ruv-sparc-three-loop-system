@@ -1,0 +1,214 @@
+# Hive Mind Configuration Template
+# Complete configuration options for hive mind system
+
+hive:
+  # Basic configuration
+  objective: "Build microservices architecture"
+  name: "microservices-hive"
+
+  # Queen configuration
+  queen:
+    type: strategic  # strategic | tactical | adaptive
+    voting_weight: 3  # Weight in weighted consensus (1-10)
+    auto_spawn: true  # Automatically spawn queen on init
+
+  # Worker configuration
+  workers:
+    max_workers: 8
+    auto_scale: true
+    scale_up_threshold: 2    # Pending tasks per idle worker
+    scale_down_threshold: 2  # Idle workers above pending tasks
+
+    # Worker types to spawn
+    types:
+      - researcher
+      - coder
+      - architect
+      - tester
+      - optimizer
+      - documenter
+
+    # Worker capabilities mapping
+    capabilities:
+      researcher:
+        - analysis
+        - investigation
+        - data-gathering
+        - research
+      coder:
+        - implementation
+        - development
+        - coding
+        - refactoring
+      architect:
+        - design
+        - planning
+        - architecture
+        - system-design
+      tester:
+        - testing
+        - validation
+        - qa
+        - debugging
+      optimizer:
+        - performance
+        - tuning
+        - benchmarking
+        - optimization
+      documenter:
+        - documentation
+        - writing
+        - API-docs
+        - guides
+
+  # Consensus configuration
+  consensus:
+    algorithm: byzantine  # majority | weighted | byzantine
+    byzantine_threshold: 0.67  # 2/3 supermajority
+    min_votes: 3
+    allow_abstain: false
+    timeout_seconds: 30
+
+  # Task configuration
+  tasks:
+    default_priority: 5
+    timeout_minutes: 60
+    retry_attempts: 3
+    auto_assign: true
+
+    # Priority levels
+    priorities:
+      critical: 10
+      high: 7-9
+      medium: 4-6
+      low: 1-3
+
+  # Memory configuration
+  memory:
+    enabled: true
+    max_size_mb: 100
+    compression_threshold_bytes: 1024
+    gc_interval_minutes: 5
+    cache_size: 1000
+    cache_memory_mb: 50
+    enable_pooling: true
+    enable_async: true
+
+    # TTL settings by type
+    ttl:
+      knowledge: null      # Permanent
+      context: 3600        # 1 hour
+      task: 1800           # 30 minutes
+      result: null         # Permanent
+      error: 86400         # 24 hours
+      metric: 3600         # 1 hour
+      consensus: null      # Permanent
+      system: null         # Permanent
+
+  # Session configuration
+  session:
+    auto_checkpoint: true
+    checkpoint_interval_minutes: 15
+    enable_export: true
+    export_format: json
+    persist_state: true
+
+  # Performance configuration
+  performance:
+    batch_spawn_size: 5
+    async_queue_concurrency: 20
+    parallel_task_limit: 10
+    enable_metrics: true
+    metrics_interval_seconds: 60
+
+  # Integration configuration
+  integrations:
+    claude_code: true
+    sparc_methodology: true
+    github: false
+    hooks: true
+
+    # Hook configuration
+    hooks:
+      pre_task: true
+      post_task: true
+      pre_edit: true
+      post_edit: true
+      session_management: true
+
+  # Logging configuration
+  logging:
+    level: info  # debug | info | warn | error
+    file: ".hive-mind/orchestration.log"
+    max_size_mb: 50
+    rotation: daily
+    format: json
+
+  # Security configuration
+  security:
+    encryption: false
+    encryption_key: null
+    validate_signatures: true
+    rate_limiting: false
+    max_requests_per_minute: 100
+
+# Advanced configuration
+advanced:
+  # Neural pattern training
+  neural:
+    enabled: false
+    training_interval_minutes: 30
+    pattern_storage: ".hive-mind/patterns/"
+    min_confidence: 0.8
+
+  # Multi-hive coordination
+  multi_hive:
+    enabled: false
+    shared_memory: true
+    cross_hive_messaging: false
+
+  # Fault tolerance
+  fault_tolerance:
+    enable_retry: true
+    max_retries: 3
+    retry_delay_seconds: 5
+    circuit_breaker: true
+    circuit_breaker_threshold: 5
+
+  # Monitoring
+  monitoring:
+    health_checks: true
+    health_check_interval_seconds: 60
+    performance_tracking: true
+    bottleneck_detection: true
+    export_metrics: true
+    metrics_export_path: ".hive-mind/metrics/"
+
+# Environment-specific overrides
+environments:
+  development:
+    hive:
+      workers:
+        max_workers: 4
+      logging:
+        level: debug
+
+  staging:
+    hive:
+      workers:
+        max_workers: 8
+      security:
+        encryption: true
+
+  production:
+    hive:
+      workers:
+        max_workers: 12
+      memory:
+        max_size_mb: 500
+      security:
+        encryption: true
+        rate_limiting: true
+      monitoring:
+        health_checks: true
+        performance_tracking: true

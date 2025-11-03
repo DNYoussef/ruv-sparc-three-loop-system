@@ -1,0 +1,118 @@
+# Hierarchical Topology Configuration
+#
+# Description: Tree structure with parent-child relationships and central coordinator
+# Best for: Command-and-control, complex multi-stage workflows, supervised delegation
+# Complexity: O(n) connections - scalable to 100+ agents
+# Fault Tolerance: Medium - coordinator is critical, but leaf failures isolated
+
+topology: hierarchical
+
+# Maximum number of agents in the swarm
+# Hierarchical can scale to large agent counts efficiently
+maxAgents: 20
+
+# Distribution strategy
+# - specialized: Recommended for hierarchical (agents have specific roles)
+# - balanced: Equal workload distribution within hierarchy levels
+strategy: specialized
+
+# Optional: Consensus mechanism
+# - raft: Recommended for hierarchical (leader-based consensus)
+# - byzantine: For high-security requirements
+consensus: raft
+
+# Hierarchical structure configuration
+hierarchy:
+  # Number of hierarchy levels (2 = coordinator + workers, 3 = coordinator + managers + workers)
+  levels: 3
+
+  # Branching factor (children per parent node)
+  # 3 means each manager supervises 3 workers
+  branchingFactor: 3
+
+  # Coordinator agent configuration
+  coordinator:
+    type: hierarchical-coordinator
+    capabilities:
+      - task-decomposition
+      - result-aggregation
+      - conflict-resolution
+      - performance-monitoring
+
+  # Manager layer (optional, for 3+ levels)
+  managers:
+    count: 3
+    type: mesh-coordinator
+    capabilities:
+      - sub-task-coordination
+      - local-consensus
+      - escalation
+
+  # Worker layer
+  workers:
+    types:
+      - researcher
+      - coder
+      - analyst
+      - optimizer
+      - tester
+
+# Task delegation rules
+delegation:
+  # Auto-assign tasks based on agent capabilities
+  autoAssignment: true
+
+  # Allow workers to request assistance from peers
+  peerAssistance: false
+
+  # Escalation policy
+  escalation:
+    enabled: true
+    # Escalate if task exceeds timeout
+    timeoutThreshold: 300  # 5 minutes
+    # Escalate if error rate exceeds threshold
+    errorRateThreshold: 0.2  # 20%
+
+# Performance tuning
+performance:
+  # Coordinator timeout for task completion
+  coordinatorTimeout: 600  # 10 minutes
+
+  # Manager timeout for sub-task completion
+  managerTimeout: 300  # 5 minutes
+
+  # Enable result caching at each hierarchy level
+  resultCaching: true
+
+  # Health check interval
+  healthCheckInterval: 15
+
+# Memory configuration
+memory:
+  enabled: true
+
+  # Hierarchical memory layers
+  layers:
+    # Coordinator memory (global context)
+    coordinator:
+      retention: 30d
+
+    # Manager memory (sub-task context)
+    managers:
+      retention: 7d
+
+    # Worker memory (task-specific context)
+    workers:
+      retention: 24h
+
+# Monitoring and metrics
+monitoring:
+  enabled: true
+
+  metrics:
+    - hierarchyHealth
+    - delegationEfficiency
+    - escalationRate
+    - coordinatorLoad
+    - taskCompletionTime
+    - levelUtilization

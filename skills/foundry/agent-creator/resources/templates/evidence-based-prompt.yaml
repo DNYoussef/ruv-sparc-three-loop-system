@@ -1,0 +1,208 @@
+# Evidence-Based Prompting Template for Agent Creation
+# Reference: Phase 3 Architecture Design
+
+agent_name: "{agent-name}"
+version: "1.0"
+phase: "architecture"
+
+# ============================================================================
+# CORE IDENTITY
+# ============================================================================
+core_identity:
+  role_title: "Specific, technical role title"
+  domain_areas:
+    - domain: "Primary domain"
+      capability: "Specific capability with examples"
+    - domain: "Secondary domain"
+      capability: "Specific capability with examples"
+    - domain: "Tertiary domain"
+      capability: "Specific capability with examples"
+
+  primary_objective: "Clear statement of agent's purpose"
+  unique_expertise: "What makes this agent special"
+
+# ============================================================================
+# UNIVERSAL COMMANDS
+# ============================================================================
+universal_commands:
+  file_operations:
+    commands: ["/file-read", "/file-write", "/glob-search", "/grep-search"]
+    when: "Specific situations from domain analysis"
+    how: "Exact patterns for usage"
+
+  git_operations:
+    commands: ["/git-status", "/git-commit", "/git-push"]
+    when: "Specific situations for version control"
+    how: "Exact patterns with commit message conventions"
+
+  communication:
+    commands: ["/memory-store", "/memory-retrieve", "/agent-delegate", "/agent-escalate"]
+    when: "Cross-agent coordination scenarios"
+    how: "Namespace pattern: {agent-name}/task-id/data-type"
+
+# ============================================================================
+# SPECIALIST COMMANDS
+# ============================================================================
+specialist_commands:
+  - name: "/specialist-command-1"
+    description: "What this command does"
+    when: "When to use it"
+    example: "Concrete usage example"
+
+  - name: "/specialist-command-2"
+    description: "What this command does"
+    when: "When to use it"
+    example: "Concrete usage example"
+
+# ============================================================================
+# MCP SERVER TOOLS
+# ============================================================================
+mcp_tools:
+  claude_flow:
+    - tool: "mcp__claude-flow__agent_spawn"
+      when: "Specific coordination scenarios"
+      how: "Exact function call patterns with parameters"
+
+    - tool: "mcp__claude-flow__memory_store"
+      when: "Cross-agent data sharing"
+      how: "Namespace: {agent-name}/task-id/data-type"
+
+  domain_specific:
+    - server: "Custom MCP server name"
+      tools:
+        - name: "tool-name"
+          when: "Usage scenario"
+          how: "Usage pattern"
+
+# ============================================================================
+# COGNITIVE FRAMEWORK (Evidence-Based Patterns)
+# ============================================================================
+cognitive_framework:
+  self_consistency:
+    description: "Validate from multiple angles before finalizing"
+    validations:
+      - "Domain-specific validation 1"
+      - "Domain-specific validation 2"
+      - "Cross-check with standards"
+
+  program_of_thought:
+    description: "Decompose complex tasks BEFORE execution"
+    decomposition:
+      - "Domain-specific decomposition pattern"
+      - "Dependency analysis"
+      - "Risk assessment"
+
+  plan_and_solve:
+    description: "Structured workflow execution"
+    workflow:
+      plan: "Domain-specific planning approach"
+      validate: "Domain-specific validation checks"
+      execute: "Domain-specific execution pattern"
+      verify: "Domain-specific verification methods"
+      document: "Memory storage patterns"
+
+# ============================================================================
+# GUARDRAILS
+# ============================================================================
+guardrails:
+  - category: "Failure Category 1"
+    never: "Dangerous pattern to avoid"
+    why: "Consequences from domain knowledge"
+    wrong_example: |
+      Bad code or approach example
+    correct_example: |
+      Good code or approach example
+
+  - category: "Failure Category 2"
+    never: "Dangerous pattern to avoid"
+    why: "Consequences from domain knowledge"
+    wrong_example: |
+      Bad code or approach example
+    correct_example: |
+      Good code or approach example
+
+# ============================================================================
+# SUCCESS CRITERIA
+# ============================================================================
+success_criteria:
+  - "Domain-specific criterion 1"
+  - "Domain-specific criterion 2"
+  - "Domain-specific criterion 3"
+  - "Results stored in memory"
+  - "Relevant agents notified"
+
+# ============================================================================
+# WORKFLOW EXAMPLES
+# ============================================================================
+workflows:
+  - name: "Common Task Name from Phase 1"
+    objective: "What this workflow achieves"
+    timeline: "Expected duration"
+    dependencies: "Prerequisites"
+    steps:
+      - step_num: 1
+        action: "First action"
+        commands:
+          - "/{command-1} --params"
+          - "/{command-2} --params"
+        expected_output: "What to expect"
+        validation: "How to verify success"
+
+      - step_num: 2
+        action: "Next action"
+        commands:
+          - "/{command-3} --params"
+        expected_output: "What to expect"
+        validation: "How to verify success"
+
+  - name: "Another Common Task"
+    objective: "What this workflow achieves"
+    timeline: "Expected duration"
+    dependencies: "Prerequisites"
+    steps:
+      - step_num: 1
+        action: "First action"
+        commands:
+          - "/{command-4} --params"
+        expected_output: "What to expect"
+        validation: "How to verify success"
+
+# ============================================================================
+# PERFORMANCE METRICS
+# ============================================================================
+metrics:
+  task_completion:
+    - metric: "tasks-completed"
+      storage_key: "metrics/{agent-name}/tasks-completed"
+      increment: true
+
+    - metric: "task-duration"
+      storage_key: "metrics/{agent-name}/task-{id}/duration"
+      value_type: "milliseconds"
+
+  quality:
+    - "validation-passes: count successful validations"
+    - "escalations: count when needed help"
+    - "error-rate: failures / attempts"
+
+  efficiency:
+    - "commands-per-task: average commands used"
+    - "mcp-calls: tool usage frequency"
+
+# ============================================================================
+# METADATA
+# ============================================================================
+metadata:
+  created: "{timestamp}"
+  phase: "3-architecture"
+  version: "1.0"
+  next_phase: "4-technical-enhancement"
+  evidence_based_techniques:
+    - "self-consistency"
+    - "program-of-thought"
+    - "plan-and-solve"
+  validation_status:
+    - "system_prompt_structure: complete"
+    - "cognitive_framework: integrated"
+    - "guardrails: defined"
+    - "workflow_examples: 2+"

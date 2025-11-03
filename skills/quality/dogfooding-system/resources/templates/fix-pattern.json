@@ -1,0 +1,298 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dogfooding Fix Pattern Schema",
+  "description": "Schema for fix patterns stored in Memory-MCP for retrieval and application",
+  "type": "object",
+  "required": [
+    "pattern_id",
+    "violation_type",
+    "transformation",
+    "metadata",
+    "success_metrics"
+  ],
+  "properties": {
+    "pattern_id": {
+      "type": "string",
+      "description": "Unique identifier for this fix pattern",
+      "pattern": "^fix-[a-z0-9-]+-[0-9]+$",
+      "example": "fix-god-object-delegation-001"
+    },
+    "violation_type": {
+      "type": "string",
+      "enum": [
+        "god-object",
+        "parameter-bomb",
+        "cyclomatic-complexity",
+        "deep-nesting",
+        "long-function",
+        "magic-literal",
+        "duplicate-code"
+      ],
+      "description": "Type of violation this pattern fixes"
+    },
+    "transformation": {
+      "type": "object",
+      "required": ["strategy", "ast_operations", "code_before", "code_after"],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "delegation-pattern",
+            "config-object-pattern",
+            "early-return-pattern",
+            "extract-method-pattern",
+            "named-constant-pattern",
+            "extract-function-pattern"
+          ],
+          "description": "Transformation strategy used"
+        },
+        "ast_operations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "extract-class",
+              "extract-method",
+              "introduce-parameter-object",
+              "replace-magic-number",
+              "extract-constant",
+              "inline-temp",
+              "decompose-conditional",
+              "replace-nested-conditional"
+            ]
+          },
+          "description": "AST-level operations performed",
+          "minItems": 1
+        },
+        "code_before": {
+          "type": "string",
+          "description": "Code snippet before transformation"
+        },
+        "code_after": {
+          "type": "string",
+          "description": "Code snippet after transformation"
+        },
+        "diff": {
+          "type": "string",
+          "description": "Unified diff of the transformation"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["who", "when", "project", "why"],
+      "properties": {
+        "who": {
+          "type": "object",
+          "properties": {
+            "agent_name": {
+              "type": "string",
+              "example": "coder"
+            },
+            "agent_category": {
+              "type": "string",
+              "enum": ["code-quality", "development", "testing", "review"]
+            },
+            "agent_capabilities": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+        "when": {
+          "type": "object",
+          "properties": {
+            "iso_timestamp": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "unix_timestamp": {
+              "type": "integer"
+            },
+            "readable": {
+              "type": "string"
+            }
+          }
+        },
+        "project": {
+          "type": "string",
+          "enum": ["memory-mcp", "connascence", "claude-flow", "other"]
+        },
+        "why": {
+          "type": "object",
+          "properties": {
+            "intent": {
+              "type": "string",
+              "enum": [
+                "implementation",
+                "bugfix",
+                "refactor",
+                "testing",
+                "documentation",
+                "analysis",
+                "planning",
+                "research"
+              ]
+            },
+            "purpose": {
+              "type": "string"
+            },
+            "phase": {
+              "type": "string",
+              "enum": [
+                "dogfooding-phase-1",
+                "dogfooding-phase-2",
+                "dogfooding-phase-3"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "success_metrics": {
+      "type": "object",
+      "required": ["application_count", "success_rate", "avg_improvement"],
+      "properties": {
+        "application_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times pattern has been applied"
+        },
+        "success_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Success rate (0-1) of pattern applications"
+        },
+        "avg_improvement": {
+          "type": "number",
+          "description": "Average improvement in violation metrics (%)"
+        },
+        "last_applied": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of last application"
+        },
+        "sandbox_pass_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Sandbox testing pass rate (0-1)"
+        },
+        "production_rollback_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of times rolled back in production"
+        }
+      }
+    },
+    "vector_embedding": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 384,
+      "maxItems": 384,
+      "description": "384-dimensional embedding from all-MiniLM-L6-v2"
+    },
+    "related_patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern_id": {"type": "string"},
+          "similarity": {"type": "number", "minimum": 0, "maximum": 1},
+          "relationship": {
+            "type": "string",
+            "enum": ["alternative", "prerequisite", "follow-up", "conflicting"]
+          }
+        }
+      },
+      "description": "Related fix patterns with similarity scores"
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "min_test_coverage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.70,
+          "description": "Minimum test coverage required (default: 70%)"
+        },
+        "requires_sandbox": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether sandbox testing is mandatory"
+        },
+        "max_complexity_increase": {
+          "type": "integer",
+          "default": 0,
+          "description": "Maximum allowed cyclomatic complexity increase"
+        },
+        "languages": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Programming languages this pattern applies to"
+        }
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "properties": {
+        "manual_review_required": {
+          "type": "boolean",
+          "description": "Whether this pattern requires manual review before application"
+        },
+        "known_issues": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Known issues or edge cases"
+        },
+        "improvement_suggestions": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Suggestions for improving this pattern"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "pattern_id": "fix-god-object-delegation-001",
+      "violation_type": "god-object",
+      "transformation": {
+        "strategy": "delegation-pattern",
+        "ast_operations": ["extract-class", "extract-method"],
+        "code_before": "class UserManager:\n    def create_user(self): ...\n    def send_email(self): ...\n    def log_activity(self): ...\n    # 26 methods total",
+        "code_after": "class UserManager:\n    def __init__(self):\n        self.email_service = EmailService()\n        self.logger = ActivityLogger()\n    def create_user(self): ...\n\nclass EmailService:\n    def send_email(self): ...\n\nclass ActivityLogger:\n    def log_activity(self): ..."
+      },
+      "metadata": {
+        "who": {
+          "agent_name": "coder",
+          "agent_category": "code-quality",
+          "agent_capabilities": ["refactoring", "ast-transformation"]
+        },
+        "when": {
+          "iso_timestamp": "2025-11-02T10:30:00Z",
+          "unix_timestamp": 1730545800,
+          "readable": "2025-11-02 10:30:00 UTC"
+        },
+        "project": "memory-mcp",
+        "why": {
+          "intent": "refactor",
+          "purpose": "Split God Object into focused classes using delegation",
+          "phase": "dogfooding-phase-2"
+        }
+      },
+      "success_metrics": {
+        "application_count": 12,
+        "success_rate": 0.92,
+        "avg_improvement": 65.5,
+        "last_applied": "2025-11-02T14:20:00Z",
+        "sandbox_pass_rate": 1.0,
+        "production_rollback_count": 1
+      }
+    }
+  ]
+}

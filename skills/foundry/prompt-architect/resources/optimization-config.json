@@ -1,0 +1,310 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Prompt Optimization Configuration",
+  "description": "Configuration options for the prompt optimization engine",
+
+  "optimization_presets": {
+    "minimal": {
+      "description": "Minimal optimization for simple prompts",
+      "target_length": "short",
+      "structure_level": "minimal",
+      "techniques": [],
+      "model_target": "generic",
+      "anti_pattern_removal": true,
+      "format_polishing": false
+    },
+
+    "balanced": {
+      "description": "Balanced optimization for general use",
+      "target_length": "optimal",
+      "structure_level": "medium",
+      "techniques": ["auto"],
+      "model_target": "generic",
+      "anti_pattern_removal": true,
+      "format_polishing": true
+    },
+
+    "comprehensive": {
+      "description": "Comprehensive optimization for complex tasks",
+      "target_length": "optimal",
+      "structure_level": "extensive",
+      "techniques": [
+        "chain_of_thought",
+        "self_consistency",
+        "plan_and_solve"
+      ],
+      "model_target": "claude",
+      "anti_pattern_removal": true,
+      "format_polishing": true,
+      "add_examples": true
+    },
+
+    "claude_optimized": {
+      "description": "Optimized specifically for Claude models",
+      "target_length": "optimal",
+      "structure_level": "extensive",
+      "techniques": [
+        "chain_of_thought",
+        "self_consistency",
+        "plan_and_solve"
+      ],
+      "model_target": "claude",
+      "anti_pattern_removal": true,
+      "format_polishing": true,
+      "use_xml_tags": true,
+      "preserve_structure": true
+    },
+
+    "chatgpt_optimized": {
+      "description": "Optimized specifically for ChatGPT models",
+      "target_length": "optimal",
+      "structure_level": "medium",
+      "techniques": [
+        "chain_of_thought",
+        "few_shot"
+      ],
+      "model_target": "chatgpt",
+      "anti_pattern_removal": true,
+      "format_polishing": true,
+      "add_role_framing": true
+    }
+  },
+
+  "technique_definitions": {
+    "chain_of_thought": {
+      "name": "Chain-of-Thought",
+      "category": "reasoning",
+      "description": "Request explicit step-by-step reasoning",
+      "when_to_apply": "Complex reasoning, multi-step problems",
+      "suffix": "\n\nThink through this step by step, explaining your reasoning at each stage.",
+      "effectiveness_score": 0.85
+    },
+
+    "self_consistency": {
+      "name": "Self-Consistency",
+      "category": "validation",
+      "description": "Request validation from multiple perspectives",
+      "when_to_apply": "Factual tasks, analytical problems",
+      "suffix": "\n\nAfter reaching your conclusion, validate it by considering alternative interpretations. Flag any areas of uncertainty.",
+      "effectiveness_score": 0.80
+    },
+
+    "program_of_thought": {
+      "name": "Program-of-Thought",
+      "category": "computational",
+      "description": "Structure computational problem solving",
+      "when_to_apply": "Mathematical, logical, or computational tasks",
+      "suffix": "\n\nSolve this step by step. For each step, explain your reasoning before moving to the next. Show all intermediate calculations.",
+      "effectiveness_score": 0.90
+    },
+
+    "plan_and_solve": {
+      "name": "Plan-and-Solve",
+      "category": "workflow",
+      "description": "Separate planning from execution",
+      "when_to_apply": "Complex multi-stage workflows",
+      "suffix": "\n\n1. First, create a detailed plan for how you'll approach this task\n2. Then execute the plan systematically\n3. Finally, verify your results against the original requirements",
+      "effectiveness_score": 0.82
+    },
+
+    "few_shot": {
+      "name": "Few-Shot Examples",
+      "category": "demonstration",
+      "description": "Provide concrete examples of desired output",
+      "when_to_apply": "Pattern-based tasks, format specification",
+      "requires_examples": true,
+      "effectiveness_score": 0.88
+    }
+  },
+
+  "anti_patterns": {
+    "vague_modifiers": {
+      "pattern": "\\b(quickly|fast|brief|simply)\\b",
+      "severity": "medium",
+      "description": "Vague qualifiers that lack specific criteria",
+      "fix_strategy": "remove"
+    },
+
+    "assumptions": {
+      "pattern": "\\b(obviously|clearly)\\b",
+      "severity": "medium",
+      "description": "Assumes shared understanding",
+      "fix_strategy": "remove"
+    },
+
+    "contradictions": {
+      "pattern": "(comprehensive|detailed).*(brief|concise|short)",
+      "severity": "high",
+      "description": "Contradictory requirements",
+      "fix_strategy": "clarify_priority"
+    },
+
+    "vague_directives": {
+      "pattern": "\\b(make it better|improve|enhance)\\b(?! (by|through|via))",
+      "severity": "high",
+      "description": "Vague improvement request without criteria",
+      "fix_strategy": "add_specificity"
+    }
+  },
+
+  "structure_patterns": {
+    "hierarchical": {
+      "description": "Use headers and nested organization",
+      "indicators": ["^#{1,6}\\s+", "\\d+\\.\\s+", "[-*]\\s+"],
+      "min_word_count": 200
+    },
+
+    "delimiters": {
+      "description": "Use clear delimiters for different content types",
+      "types": {
+        "code": "```",
+        "xml_tags": "<[^>]+>.*</[^>]+>",
+        "sections": "---+",
+        "emphasis": "\\*\\*\\*+"
+      }
+    },
+
+    "context_positioning": {
+      "description": "Position critical information strategically",
+      "rules": {
+        "beginning": "core_task_and_constraints",
+        "middle": "supporting_details_and_examples",
+        "end": "output_format_and_validation"
+      }
+    }
+  },
+
+  "quality_metrics": {
+    "clarity": {
+      "weight": 0.25,
+      "indicators": [
+        "starts_with_action_verb",
+        "has_success_criteria",
+        "minimal_ambiguous_pronouns"
+      ]
+    },
+
+    "structure": {
+      "weight": 0.20,
+      "indicators": [
+        "has_hierarchical_organization",
+        "uses_delimiters",
+        "logical_flow_indicators"
+      ]
+    },
+
+    "context": {
+      "weight": 0.20,
+      "indicators": [
+        "provides_background",
+        "defines_constraints",
+        "specifies_audience"
+      ]
+    },
+
+    "techniques": {
+      "weight": 0.15,
+      "indicators": [
+        "uses_chain_of_thought",
+        "has_validation_step",
+        "includes_examples"
+      ]
+    },
+
+    "completeness": {
+      "weight": 0.10,
+      "indicators": [
+        "specifies_input",
+        "specifies_output_format",
+        "addresses_edge_cases"
+      ]
+    },
+
+    "formatting": {
+      "weight": 0.10,
+      "indicators": [
+        "consistent_delimiter_usage",
+        "appropriate_whitespace",
+        "visual_hierarchy"
+      ]
+    }
+  },
+
+  "model_specific_adaptations": {
+    "claude": {
+      "preferences": [
+        "xml_style_tags",
+        "explicit_structure",
+        "detailed_context",
+        "step_by_step_reasoning"
+      ],
+      "optimizations": {
+        "use_xml_tags": true,
+        "max_context_length": 100000,
+        "prefer_hierarchical": true
+      }
+    },
+
+    "chatgpt": {
+      "preferences": [
+        "role_based_framing",
+        "conversational_tone",
+        "clear_examples",
+        "system_message_guidance"
+      ],
+      "optimizations": {
+        "add_role_prefix": "You are an expert...",
+        "max_context_length": 8000,
+        "prefer_examples": true
+      }
+    },
+
+    "generic": {
+      "preferences": [
+        "clear_structure",
+        "explicit_instructions",
+        "standard_formatting"
+      ],
+      "optimizations": {
+        "use_universal_patterns": true,
+        "avoid_model_specific_features": true
+      }
+    }
+  },
+
+  "validation_rules": {
+    "min_word_count": 10,
+    "max_word_count": 2000,
+    "min_clarity_score": 60,
+    "min_structure_score": 50,
+    "critical_issues_threshold": 0,
+    "high_issues_threshold": 2
+  },
+
+  "output_formats": {
+    "standard": {
+      "include_original": true,
+      "include_optimized": true,
+      "include_diff": false,
+      "include_metrics": true,
+      "include_recommendations": true
+    },
+
+    "minimal": {
+      "include_original": false,
+      "include_optimized": true,
+      "include_diff": false,
+      "include_metrics": false,
+      "include_recommendations": false
+    },
+
+    "comprehensive": {
+      "include_original": true,
+      "include_optimized": true,
+      "include_diff": true,
+      "include_metrics": true,
+      "include_recommendations": true,
+      "include_step_by_step": true
+    }
+  }
+}

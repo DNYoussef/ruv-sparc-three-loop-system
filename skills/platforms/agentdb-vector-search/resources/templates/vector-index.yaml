@@ -1,0 +1,283 @@
+# AgentDB Vector Index Configuration
+# HNSW (Hierarchical Navigable Small World) indexing for sub-millisecond search
+# Performance: <100µs search time, 150x faster than brute force
+
+# Index Type
+index_type: hnsw  # hnsw, flat, ivf
+
+# HNSW Configuration
+hnsw:
+  # M: Maximum number of connections per node
+  # Higher M = better recall, more memory, slower build
+  # Recommended: 16-32 for most use cases
+  M: 16
+
+  # ef_construction: Size of dynamic candidate list during construction
+  # Higher ef_construction = better quality index, slower build
+  # Recommended: 100-200
+  ef_construction: 200
+
+  # ef_search: Size of dynamic candidate list during search
+  # Higher ef_search = better recall, slower search
+  # Recommended: 50-100
+  ef_search: 50
+
+  # Random seed for reproducibility
+  random_seed: 42
+
+  # Enable multi-threading for index building
+  num_threads: 4
+
+# Flat Index Configuration (Brute Force)
+flat:
+  # No additional parameters needed
+  # Use for <10k vectors or when exact search required
+  description: "Exact search, no approximation"
+
+# IVF (Inverted File) Configuration
+ivf:
+  # Number of clusters (nlist)
+  # Recommended: sqrt(num_vectors) to 4*sqrt(num_vectors)
+  nlist: 100
+
+  # Number of clusters to search (nprobe)
+  # Higher nprobe = better recall, slower search
+  # Recommended: 1-10
+  nprobe: 5
+
+# Distance Metric
+metric: cosine  # cosine, euclidean, dot_product, manhattan
+
+# Quantization Settings
+quantization:
+  # Enable quantization for memory reduction
+  enabled: true
+
+  # Quantization type
+  type: binary  # binary (32x), scalar (4x), product (8-16x)
+
+  # Binary quantization
+  binary:
+    threshold: 0.0  # Sign threshold
+
+  # Scalar quantization
+  scalar:
+    bits: 8  # 4, 8, or 16 bits
+
+  # Product quantization
+  product:
+    n_subvectors: 8  # Number of subvectors
+    bits_per_subvector: 8  # 4 or 8 bits
+
+# Index Building
+build:
+  # Batch size for index construction
+  batch_size: 1000
+
+  # Show progress during build
+  verbose: true
+
+  # Validate index after build
+  validate: true
+
+  # Benchmark index performance
+  benchmark: true
+
+# Search Configuration
+search:
+  # Default top-k results
+  default_k: 10
+
+  # Maximum k allowed
+  max_k: 100
+
+  # Default similarity threshold
+  default_threshold: 0.7
+
+  # Enable approximate search
+  approximate: true
+
+  # Timeout for search (ms)
+  timeout: 1000
+
+# Memory Management
+memory:
+  # Maximum memory usage (MB)
+  max_memory: 4096
+
+  # Enable memory mapping for large indices
+  use_mmap: true
+
+  # Preload index into memory
+  preload: false
+
+# Persistence
+persistence:
+  # Auto-save index
+  auto_save: true
+
+  # Save interval (seconds)
+  save_interval: 300
+
+  # Index file path
+  index_path: .agentdb/index.bin
+
+  # Compress index file
+  compress: true
+
+# Performance Tuning
+performance:
+  # Target search time (µs)
+  target_search_time: 100
+
+  # Target recall (0-1)
+  target_recall: 0.95
+
+  # Enable SIMD optimizations
+  use_simd: true
+
+  # Enable multi-threading for search
+  parallel_search: true
+
+  # Thread pool size
+  thread_pool_size: 4
+
+# Monitoring
+monitoring:
+  # Enable performance monitoring
+  enabled: true
+
+  # Log search times
+  log_search_time: true
+
+  # Log recall metrics
+  log_recall: true
+
+  # Performance report interval (searches)
+  report_interval: 1000
+
+# Benchmarks
+benchmarks:
+  # Run benchmarks on index
+  enabled: true
+
+  # Number of test queries
+  num_queries: 100
+
+  # Report metrics
+  metrics:
+    - search_time
+    - recall
+    - throughput
+    - memory_usage
+
+# Index Maintenance
+maintenance:
+  # Auto-rebuild index
+  auto_rebuild: false
+
+  # Rebuild threshold (vector additions)
+  rebuild_threshold: 10000
+
+  # Optimize index periodically
+  optimize: true
+
+  # Optimization interval (seconds)
+  optimize_interval: 3600
+
+# Advanced Settings
+advanced:
+  # Use approximate nearest neighbor search
+  ann_enabled: true
+
+  # Prefetch distance computations
+  prefetch: true
+
+  # Cache recent searches
+  cache_searches: true
+
+  # Cache size (number of queries)
+  cache_size: 1000
+
+  # Enable query optimization
+  optimize_queries: true
+
+# Validation
+validation:
+  # Run validation tests
+  enabled: true
+
+  # Validation queries
+  num_validation_queries: 10
+
+  # Expected recall threshold
+  min_recall: 0.90
+
+  # Expected search time (µs)
+  max_search_time: 200
+
+# Dimension-Specific Presets
+presets:
+  miniLM_384:
+    dimension: 384
+    metric: cosine
+    hnsw:
+      M: 16
+      ef_construction: 200
+      ef_search: 50
+    quantization:
+      type: binary
+
+  mpnet_768:
+    dimension: 768
+    metric: cosine
+    hnsw:
+      M: 32
+      ef_construction: 200
+      ef_search: 100
+    quantization:
+      type: scalar
+
+  openai_1536:
+    dimension: 1536
+    metric: cosine
+    hnsw:
+      M: 48
+      ef_construction: 400
+      ef_search: 100
+    quantization:
+      type: product
+
+# Use Case Templates
+use_cases:
+  semantic_search:
+    description: "General semantic search with balanced quality/speed"
+    preset: miniLM_384
+    search:
+      default_k: 10
+      default_threshold: 0.7
+
+  document_retrieval:
+    description: "High-quality document retrieval (RAG)"
+    preset: mpnet_768
+    search:
+      default_k: 5
+      default_threshold: 0.75
+
+  similarity_matching:
+    description: "Fast similarity matching at scale"
+    preset: miniLM_384
+    quantization:
+      type: binary
+    hnsw:
+      ef_search: 30
+
+  high_precision:
+    description: "Maximum precision, slower search"
+    preset: mpnet_768
+    hnsw:
+      M: 64
+      ef_construction: 400
+      ef_search: 200
+    quantization:
+      enabled: false

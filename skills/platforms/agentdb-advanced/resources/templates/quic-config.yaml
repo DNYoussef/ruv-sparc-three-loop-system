@@ -1,0 +1,202 @@
+# QUIC Synchronization Configuration for AgentDB
+# Sub-millisecond latency synchronization between distributed nodes
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 4433
+
+  # TLS/SSL Configuration
+  tls:
+    cert_file: "./certs/server.crt"
+    key_file: "./certs/server.key"
+    # For development only - use proper CA-signed certs in production
+    verify_mode: false
+
+# Peer Configuration
+peers:
+  # List of peer nodes to synchronize with
+  - host: "192.168.1.10"
+    port: 4433
+    name: "node-1"
+    priority: 1  # Higher priority peers sync first
+
+  - host: "192.168.1.11"
+    port: 4433
+    name: "node-2"
+    priority: 1
+
+  - host: "192.168.1.12"
+    port: 4433
+    name: "node-3"
+    priority: 2  # Backup node
+
+# Synchronization Settings
+sync:
+  # Sync interval in milliseconds (1000 = 1 second)
+  interval: 1000
+
+  # Number of patterns to batch per sync
+  batch_size: 100
+
+  # Maximum retries for failed synchronization
+  max_retries: 3
+
+  # Retry backoff strategy (exponential, linear, constant)
+  retry_backoff: "exponential"
+
+  # Initial retry delay in milliseconds
+  retry_delay: 100
+
+  # Enable compression for sync data
+  compression: true
+
+  # Compression algorithm (gzip, lz4, zstd)
+  compression_algorithm: "lz4"
+
+# QUIC Protocol Settings
+quic:
+  # ALPN protocol identifier
+  alpn_protocol: "agentdb-sync-v1"
+
+  # Maximum number of concurrent streams
+  max_streams: 100
+
+  # Idle timeout in seconds
+  idle_timeout: 60
+
+  # Maximum datagram size
+  max_datagram_size: 1200
+
+  # Enable 0-RTT (reduces connection establishment time)
+  enable_0rtt: true
+
+  # Congestion control algorithm (cubic, bbr, reno)
+  congestion_control: "bbr"
+
+# Pattern Filtering
+filters:
+  # Only sync patterns matching these criteria
+  domains:
+    - "knowledge-*"
+    - "reasoning-*"
+
+  # Minimum confidence threshold for syncing
+  min_confidence: 0.5
+
+  # Exclude patterns older than N days
+  max_age_days: 30
+
+  # Sync only successful patterns
+  min_success_rate: 0.6
+
+# Conflict Resolution
+conflict_resolution:
+  # Strategy: last_write_wins, highest_confidence, manual
+  strategy: "highest_confidence"
+
+  # Enable vector clock for causality tracking
+  use_vector_clock: true
+
+  # Enable CRDTs for automatic conflict resolution
+  use_crdt: true
+
+# Performance Tuning
+performance:
+  # Connection pool size
+  pool_size: 10
+
+  # Enable multiplexing (multiple operations per connection)
+  multiplexing: true
+
+  # Prefetch patterns for predictive synchronization
+  prefetch_enabled: true
+
+  # Cache size for recently synced patterns (MB)
+  cache_size_mb: 100
+
+# Monitoring and Logging
+monitoring:
+  # Enable sync metrics collection
+  enabled: true
+
+  # Metrics export interval (seconds)
+  export_interval: 60
+
+  # Metrics format (prometheus, json, statsd)
+  format: "prometheus"
+
+  # Metrics endpoint
+  endpoint: "http://localhost:9090/metrics"
+
+logging:
+  # Log level (DEBUG, INFO, WARN, ERROR)
+  level: "INFO"
+
+  # Log file path
+  file: ".agentdb/logs/quic-sync.log"
+
+  # Enable rotation
+  rotation:
+    enabled: true
+    max_size_mb: 100
+    max_files: 10
+
+# Security
+security:
+  # Enable peer authentication
+  require_auth: true
+
+  # Shared secret for peer authentication
+  auth_secret: "${AGENTDB_SYNC_SECRET}"
+
+  # IP whitelist (empty = allow all)
+  ip_whitelist:
+    - "192.168.1.0/24"
+
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_second: 1000
+
+# High Availability
+ha:
+  # Enable automatic failover
+  auto_failover: true
+
+  # Health check interval (seconds)
+  health_check_interval: 10
+
+  # Number of failed health checks before marking peer as down
+  health_check_threshold: 3
+
+  # Enable split-brain detection
+  split_brain_detection: true
+
+# Data Integrity
+integrity:
+  # Enable checksums for pattern data
+  checksums: true
+
+  # Checksum algorithm (sha256, blake3)
+  checksum_algorithm: "blake3"
+
+  # Verify checksums on receive
+  verify_on_receive: true
+
+# Advanced Features
+advanced:
+  # Enable delta synchronization (only sync changes)
+  delta_sync: true
+
+  # Enable pattern deduplication
+  deduplication: true
+
+  # Enable pattern compression in transit
+  pattern_compression: true
+
+  # Enable bandwidth throttling (bytes per second, 0 = unlimited)
+  bandwidth_limit: 0
+
+  # Enable automatic topology discovery
+  auto_discovery: false

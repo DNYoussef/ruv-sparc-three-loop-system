@@ -1,0 +1,290 @@
+{
+  "meta_tools_version": "1.0.0",
+  "last_updated": "2024-01-15",
+
+  "generator": {
+    "default_template": "tool-template.yaml",
+    "output_format": "javascript",
+    "include_tests": true,
+    "include_docs": true,
+    "include_examples": false,
+    "auto_format": true,
+    "languages": {
+      "javascript": {
+        "enabled": true,
+        "extensions": [".js", ".mjs", ".cjs"],
+        "test_framework": "jest",
+        "linter": "eslint",
+        "formatter": "prettier"
+      },
+      "python": {
+        "enabled": true,
+        "extensions": [".py"],
+        "test_framework": "pytest",
+        "linter": "pylint",
+        "formatter": "black"
+      },
+      "typescript": {
+        "enabled": true,
+        "extensions": [".ts"],
+        "test_framework": "jest",
+        "linter": "eslint",
+        "formatter": "prettier"
+      }
+    }
+  },
+
+  "validator": {
+    "enabled": true,
+    "security_checks": true,
+    "performance_threshold": 1000,
+    "integration_tests": true,
+    "quality_metrics": {
+      "min_test_coverage": 80,
+      "max_complexity": 10,
+      "max_file_size_kb": 500,
+      "max_dependencies": 20
+    },
+    "security_rules": {
+      "no_hardcoded_secrets": true,
+      "no_sql_injection": true,
+      "no_xss_vulnerabilities": true,
+      "dependency_scan": true
+    },
+    "performance_rules": {
+      "max_execution_time_ms": 1000,
+      "max_memory_mb": 512,
+      "max_cpu_percent": 80
+    }
+  },
+
+  "optimizer": {
+    "enabled": true,
+    "strategies": ["memory", "speed", "size"],
+    "profile": "production",
+    "optimizations": {
+      "memory": {
+        "enable_memoization": true,
+        "enable_object_pooling": true,
+        "enable_gc_hints": true,
+        "max_cache_size_mb": 100
+      },
+      "speed": {
+        "enable_parallel_execution": true,
+        "enable_async_operations": true,
+        "optimize_loops": true,
+        "reduce_iterations": true
+      },
+      "size": {
+        "enable_minification": true,
+        "enable_tree_shaking": true,
+        "enable_compression": true,
+        "remove_unused_code": true
+      }
+    },
+    "targets": {
+      "development": {
+        "minify": false,
+        "source_maps": true,
+        "debug_info": true
+      },
+      "production": {
+        "minify": true,
+        "source_maps": false,
+        "debug_info": false,
+        "optimize_images": true,
+        "bundle_analyzer": true
+      }
+    }
+  },
+
+  "packager": {
+    "formats": ["npm", "docker"],
+    "include_dependencies": true,
+    "minify": true,
+    "include_source_maps": false,
+    "include_tests": false,
+    "include_examples": true,
+    "include_docs": true,
+    "npm": {
+      "registry": "https://registry.npmjs.org",
+      "scope": null,
+      "access": "public",
+      "publish_config": {
+        "tag": "latest"
+      }
+    },
+    "docker": {
+      "base_images": {
+        "node": "node:18-alpine",
+        "python": "python:3.11-slim",
+        "alpine": "alpine:latest"
+      },
+      "registry": "docker.io",
+      "multi_arch": ["amd64", "arm64"],
+      "optimize_layers": true
+    },
+    "standalone": {
+      "formats": ["zip", "tar.gz"],
+      "include_installer": true,
+      "bundle_runtime": false
+    }
+  },
+
+  "composition": {
+    "enabled": true,
+    "max_tools": 10,
+    "default_strategy": "sequential",
+    "strategies": ["sequential", "parallel", "adaptive"],
+    "error_handling": {
+      "mode": "fail-fast",
+      "retry_failed_tools": true,
+      "max_retries": 3,
+      "fallback_strategy": "continue"
+    },
+    "data_flow": {
+      "format": "json",
+      "validation": true,
+      "transformation": true
+    }
+  },
+
+  "orchestration": {
+    "enabled": true,
+    "max_concurrent_tools": 5,
+    "default_strategy": "adaptive",
+    "strategies": ["parallel", "sequential", "adaptive", "priority-based"],
+    "scheduling": {
+      "algorithm": "round-robin",
+      "priority_levels": 5,
+      "fairness": true
+    },
+    "monitoring": {
+      "enabled": true,
+      "metrics": ["execution_time", "memory_usage", "cpu_usage", "success_rate"],
+      "logging": {
+        "level": "info",
+        "format": "json",
+        "output": "stdout"
+      }
+    },
+    "resource_management": {
+      "max_memory_mb": 2048,
+      "max_cpu_percent": 90,
+      "timeout_ms": 300000,
+      "cleanup_interval_ms": 60000
+    }
+  },
+
+  "testing": {
+    "frameworks": {
+      "javascript": "jest",
+      "python": "pytest",
+      "typescript": "jest"
+    },
+    "coverage": {
+      "enabled": true,
+      "min_coverage": 80,
+      "report_format": ["html", "text", "lcov"]
+    },
+    "types": {
+      "unit": true,
+      "integration": true,
+      "e2e": false,
+      "performance": true
+    }
+  },
+
+  "documentation": {
+    "auto_generate": true,
+    "formats": ["markdown", "html"],
+    "include": {
+      "readme": true,
+      "api_docs": true,
+      "examples": true,
+      "changelog": true,
+      "contributing": false
+    },
+    "style": {
+      "code_blocks": true,
+      "diagrams": false,
+      "table_of_contents": true
+    }
+  },
+
+  "quality": {
+    "linting": {
+      "enabled": true,
+      "auto_fix": true,
+      "rules": "recommended"
+    },
+    "formatting": {
+      "enabled": true,
+      "auto_format": true,
+      "style": "standard"
+    },
+    "type_checking": {
+      "enabled": false,
+      "strict": false
+    },
+    "complexity": {
+      "max_cyclomatic": 10,
+      "max_nesting": 4,
+      "max_function_lines": 50
+    }
+  },
+
+  "versioning": {
+    "scheme": "semver",
+    "auto_increment": false,
+    "changelog": {
+      "enabled": true,
+      "format": "keepachangelog"
+    },
+    "git_tags": true
+  },
+
+  "ci_cd": {
+    "enabled": false,
+    "platform": "github-actions",
+    "workflows": {
+      "test": true,
+      "lint": true,
+      "build": true,
+      "deploy": false
+    }
+  },
+
+  "plugins": {
+    "enabled": true,
+    "auto_load": true,
+    "directories": ["plugins", "extensions"],
+    "api_version": "1.0.0"
+  },
+
+  "cache": {
+    "enabled": true,
+    "directory": ".meta-tools-cache",
+    "ttl_seconds": 3600,
+    "max_size_mb": 500
+  },
+
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "output": ["stdout", "file"],
+    "file": {
+      "path": "logs/meta-tools.log",
+      "max_size_mb": 100,
+      "max_files": 5,
+      "rotate": true
+    }
+  },
+
+  "telemetry": {
+    "enabled": false,
+    "anonymous": true,
+    "metrics": ["usage", "performance", "errors"],
+    "endpoint": null
+  }
+}

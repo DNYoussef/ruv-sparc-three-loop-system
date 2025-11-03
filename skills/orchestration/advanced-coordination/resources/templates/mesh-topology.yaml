@@ -1,0 +1,72 @@
+# Mesh Topology Configuration
+#
+# Description: Peer-to-peer topology where all agents connect to each other.
+# Best for: Collaborative tasks requiring consensus, distributed decision-making
+# Complexity: O(n²) connections - use for 3-15 agents
+# Fault Tolerance: High - no single point of failure
+
+topology: mesh
+
+# Maximum number of agents in the swarm
+# Note: Mesh topology creates n*(n-1)/2 edges
+# 5 agents = 10 connections
+# 10 agents = 45 connections
+maxAgents: 5
+
+# Distribution strategy for workload allocation
+# - balanced: Equal distribution across all agents
+# - specialized: Agents take on specific roles
+# - adaptive: Dynamic adjustment based on performance
+strategy: balanced
+
+# Optional: Consensus mechanism for collective decisions
+# - byzantine: Byzantine fault tolerance (requires 3f+1 agents for f faults)
+# - raft: Leader-based consensus (requires majority)
+# - gossip: Epidemic protocol for eventual consistency
+# - proof-of-learning: ML-based validation consensus
+consensus: byzantine
+
+# Optional: Agent capabilities (auto-assigned if not specified)
+agentCapabilities:
+  - research
+  - coding
+  - analysis
+  - optimization
+  - coordination
+
+# Optional: Performance tuning
+performance:
+  # Minimum consensus threshold (0.67 = 67% agreement)
+  consensusThreshold: 0.67
+
+  # Maximum wait time for consensus (seconds)
+  consensusTimeout: 30
+
+  # Enable parallel task execution
+  parallelExecution: true
+
+  # Health check interval (seconds)
+  healthCheckInterval: 10
+
+# Optional: Memory configuration
+memory:
+  # Enable persistent cross-agent memory
+  enabled: true
+
+  # Memory retention layers
+  retention:
+    shortTerm: 24h    # 24 hours
+    midTerm: 7d       # 7 days
+    longTerm: 30d     # 30 days
+
+# Optional: Monitoring and metrics
+monitoring:
+  enabled: true
+
+  # Metrics to track
+  metrics:
+    - taskCompletion
+    - consensusRate
+    - agentUtilization
+    - errorRate
+    - responseTime

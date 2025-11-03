@@ -1,0 +1,296 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Production Readiness Audit Configuration",
+  "description": "Configuration for automated production readiness audits",
+  "version": "1.0.0",
+
+  "audit_phases": {
+    "theater_detection": {
+      "enabled": true,
+      "timeout": 300,
+      "description": "Verify code actually works via sandbox execution",
+      "agents": ["functionality-audit", "theater-detection-audit"],
+      "validation": {
+        "execution_required": true,
+        "real_output_required": true,
+        "min_test_coverage": 70
+      }
+    },
+
+    "functionality_audit": {
+      "enabled": true,
+      "timeout": 600,
+      "description": "Comprehensive testing in isolated sandbox",
+      "test_types": ["unit", "integration", "e2e"],
+      "coverage_threshold": 80,
+      "validation": {
+        "all_tests_pass": true,
+        "no_skipped_tests": true,
+        "coverage_meets_threshold": true
+      }
+    },
+
+    "style_audit": {
+      "enabled": true,
+      "timeout": 120,
+      "description": "Code quality and consistency checks",
+      "checks": [
+        "eslint",
+        "prettier",
+        "tsc",
+        "complexity",
+        "duplication"
+      ],
+      "thresholds": {
+        "max_cyclomatic_complexity": 10,
+        "max_function_length": 50,
+        "max_file_length": 500,
+        "max_duplication_percent": 5
+      }
+    },
+
+    "security_audit": {
+      "enabled": true,
+      "timeout": 300,
+      "description": "Security vulnerability scanning",
+      "scanners": [
+        "npm_audit",
+        "snyk",
+        "secrets_detection",
+        "dependency_check"
+      ],
+      "severity_thresholds": {
+        "critical": 0,
+        "high": 0,
+        "medium": 5,
+        "low": 10
+      }
+    },
+
+    "performance_audit": {
+      "enabled": true,
+      "timeout": 600,
+      "skip_for_staging": false,
+      "description": "Performance benchmarking and SLA validation",
+      "metrics": {
+        "response_time": {
+          "avg_threshold_ms": 200,
+          "p95_threshold_ms": 500,
+          "p99_threshold_ms": 1000
+        },
+        "throughput": {
+          "min_rps": 100
+        },
+        "resource_usage": {
+          "max_cpu_percent": 70,
+          "max_memory_percent": 80
+        }
+      }
+    }
+  },
+
+  "quality_gates": {
+    "gate_1_tests": {
+      "name": "Tests Passing",
+      "blocking": true,
+      "requirements": {
+        "all_tests_pass": true,
+        "coverage_percent_min": 80,
+        "no_failing_tests": true
+      }
+    },
+
+    "gate_2_quality": {
+      "name": "Code Quality",
+      "blocking": true,
+      "requirements": {
+        "quality_score_min": 85,
+        "max_linting_errors": 0,
+        "max_linting_warnings": 10,
+        "max_complexity": 10
+      }
+    },
+
+    "gate_3_security": {
+      "name": "Security",
+      "blocking": true,
+      "requirements": {
+        "critical_vulnerabilities": 0,
+        "high_vulnerabilities": 0,
+        "no_hardcoded_secrets": true,
+        "dependencies_up_to_date": true
+      }
+    },
+
+    "gate_4_performance": {
+      "name": "Performance",
+      "blocking": true,
+      "skip_for_staging": false,
+      "requirements": {
+        "response_time_within_sla": true,
+        "throughput_meets_minimum": true,
+        "no_major_bottlenecks": true
+      }
+    },
+
+    "gate_5_documentation": {
+      "name": "Documentation",
+      "blocking": false,
+      "requirements": {
+        "readme_exists": true,
+        "api_docs_exist": true,
+        "deployment_guide_exists": true,
+        "rollback_plan_exists": true
+      }
+    },
+
+    "gate_6_monitoring": {
+      "name": "Monitoring",
+      "blocking": false,
+      "requirements": {
+        "logging_configured": true,
+        "error_tracking_configured": true,
+        "metrics_collection_enabled": true,
+        "health_endpoints_exist": true
+      }
+    }
+  },
+
+  "validation_rules": {
+    "required_files": [
+      {
+        "path": "package.json",
+        "description": "Node.js package configuration"
+      },
+      {
+        "path": "README.md",
+        "description": "Project documentation"
+      },
+      {
+        "path": ".env.example",
+        "description": "Environment variable template",
+        "required_for_production": true
+      },
+      {
+        "path": "docs/deployment.md",
+        "description": "Deployment instructions",
+        "required_for_production": true
+      },
+      {
+        "path": "docs/rollback.md",
+        "description": "Rollback procedures",
+        "required_for_production": true
+      }
+    ],
+
+    "required_scripts": {
+      "build": "Production build",
+      "start": "Production start",
+      "test": "Test suite execution",
+      "lint": "Code linting"
+    },
+
+    "forbidden_patterns": [
+      {
+        "pattern": "console\\.log",
+        "severity": "medium",
+        "message": "Use structured logging instead of console.log",
+        "exclude": ["test", "scripts"]
+      },
+      {
+        "pattern": "api[_-]?key.*=.*['\"][^'\"]+['\"]",
+        "severity": "critical",
+        "message": "Hardcoded API key detected"
+      },
+      {
+        "pattern": "password.*=.*['\"][^'\"]+['\"]",
+        "severity": "critical",
+        "message": "Hardcoded password detected"
+      },
+      {
+        "pattern": "TODO|FIXME|HACK",
+        "severity": "low",
+        "message": "Unresolved technical debt marker"
+      }
+    ],
+
+    "required_patterns": [
+      {
+        "pattern": "logger\\.(error|warn|info|debug)",
+        "description": "Structured logging usage",
+        "min_occurrences": 1
+      },
+      {
+        "pattern": "try.*catch",
+        "description": "Error handling",
+        "min_occurrences": 3
+      }
+    ]
+  },
+
+  "reporting": {
+    "output_formats": ["json", "markdown", "html"],
+    "default_format": "json",
+    "include_recommendations": true,
+    "include_code_snippets": true,
+    "max_snippet_length": 80,
+
+    "severity_colors": {
+      "critical": "#D32F2F",
+      "high": "#F57C00",
+      "medium": "#FBC02D",
+      "low": "#388E3C",
+      "info": "#1976D2"
+    }
+  },
+
+  "automation": {
+    "run_on_commit": false,
+    "run_on_pull_request": true,
+    "run_before_deploy": true,
+    "fail_build_on_blocking_issues": true,
+
+    "notifications": {
+      "slack": {
+        "enabled": false,
+        "webhook_url": "${SLACK_WEBHOOK_URL}",
+        "channels": ["#deployments"]
+      },
+      "email": {
+        "enabled": false,
+        "recipients": ["engineering@example.com"]
+      }
+    }
+  },
+
+  "caching": {
+    "enabled": true,
+    "cache_duration_minutes": 60,
+    "invalidate_on_file_change": true
+  },
+
+  "parallel_execution": {
+    "enabled": true,
+    "max_concurrent_audits": 4,
+    "timeout_per_audit_seconds": 600
+  },
+
+  "environments": {
+    "development": {
+      "strict_mode": false,
+      "skip_performance_audit": true,
+      "skip_security_audit": false
+    },
+    "staging": {
+      "strict_mode": true,
+      "skip_performance_audit": false,
+      "skip_security_audit": false
+    },
+    "production": {
+      "strict_mode": true,
+      "skip_performance_audit": false,
+      "skip_security_audit": false,
+      "require_all_gates": true
+    }
+  }
+}

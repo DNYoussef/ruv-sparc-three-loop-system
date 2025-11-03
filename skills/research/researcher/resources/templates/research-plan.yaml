@@ -1,0 +1,190 @@
+# Research Plan Template
+# Purpose: Systematic research workflow with quality checkpoints
+
+metadata:
+  project_name: "Research Project Title"
+  researcher: "Your Name"
+  created_date: "2024-11-02"
+  research_level: "Level 3"  # Level 1 (Basic), Level 2 (Multi-Source), Level 3 (Deep Dive)
+  estimated_duration: "1-2 weeks"
+
+# Research objectives
+objectives:
+  primary:
+    - "Main research goal or question"
+    - "Expected deliverables"
+
+  secondary:
+    - "Supporting questions to investigate"
+    - "Optional explorations"
+
+# Research scope
+scope:
+  included:
+    - "Topics or areas to cover"
+    - "Time period (e.g., 2020-2024)"
+    - "Geographic scope if applicable"
+
+  excluded:
+    - "Out of scope topics"
+    - "Limitations or constraints"
+
+# Source prioritization
+sources:
+  tier1_academic:
+    priority: "high"
+    target_count: 10
+    min_credibility: 90
+    databases:
+      - "ArXiv"
+      - "Semantic Scholar"
+      - "IEEE Xplore"
+      - "ACM Digital Library"
+
+  tier2_industry:
+    priority: "medium"
+    target_count: 5
+    min_credibility: 75
+    sources:
+      - "Industry reports (Gartner, Forrester)"
+      - "Company blogs (engineering.example.com)"
+      - "Technical documentation"
+
+  tier3_community:
+    priority: "low"
+    target_count: 3
+    min_credibility: 60
+    sources:
+      - "StackOverflow discussions"
+      - "Reddit r/MachineLearning"
+      - "Medium articles"
+
+# Research methodology
+methodology:
+  phase1_discovery:
+    description: "Initial exploration and source identification"
+    duration: "2-3 days"
+    activities:
+      - "Execute Gemini Search queries"
+      - "Run research-orchestrator.py for multi-source aggregation"
+      - "Review Papers with Code for SOTA methods"
+    deliverables:
+      - "Initial source list (20+ sources)"
+      - "Preliminary findings document"
+
+  phase2_deep_dive:
+    description: "Detailed analysis of top sources"
+    duration: "5-7 days"
+    activities:
+      - "Read top 10 papers in depth"
+      - "Run sota-analyzer.js for trend analysis"
+      - "Extract key findings using paper-summarizer.sh"
+    deliverables:
+      - "Annotated bibliography"
+      - "Literature review matrix"
+
+  phase3_synthesis:
+    description: "Cross-reference synthesis and consensus building"
+    duration: "2-3 days"
+    activities:
+      - "Run knowledge-synthesizer.py for claim clustering"
+      - "Identify contradictions and gaps"
+      - "Build consensus statements"
+    deliverables:
+      - "Synthesis report (findings-report.yaml)"
+      - "Recommendations document"
+
+# Timeline milestones
+timeline:
+  week1:
+    - "Complete Phase 1: Discovery"
+    - "Checkpoint 1: Source quality review (min 85% avg credibility)"
+
+  week2:
+    - "Complete Phase 2: Deep Dive"
+    - "Checkpoint 2: Literature review completion"
+
+  week3:
+    - "Complete Phase 3: Synthesis"
+    - "Checkpoint 3: Final deliverables review"
+
+# Quality checkpoints
+quality_checkpoints:
+  checkpoint1_source_quality:
+    criteria:
+      - "Average source credibility >= 85%"
+      - "At least 50% from Tier 1 sources"
+      - "Publication dates within 5 years"
+    pass_criteria: "All criteria met"
+
+  checkpoint2_coverage:
+    criteria:
+      - "All primary objectives addressed"
+      - "At least 3 sources per key topic"
+      - "Contradictions identified and documented"
+    pass_criteria: "All criteria met"
+
+  checkpoint3_synthesis:
+    criteria:
+      - "Consensus statements for top findings"
+      - "Gaps clearly identified"
+      - "Recommendations evidence-based"
+    pass_criteria: "All criteria met"
+
+# Research questions
+research_questions:
+  - question: "What is the current state-of-the-art?"
+    approach: "SOTA analysis with Papers with Code"
+    sources: 10
+
+  - question: "What are the main challenges?"
+    approach: "Multi-source synthesis"
+    sources: 15
+
+  - question: "What future directions are promising?"
+    approach: "Trend analysis + expert opinions"
+    sources: 8
+
+# Expected outcomes
+outcomes:
+  deliverables:
+    - name: "Research Report"
+      format: "Markdown + PDF"
+      length: "10-15 pages"
+
+    - name: "Annotated Bibliography"
+      format: "JSON + Markdown"
+      min_sources: 20
+
+    - name: "Executive Summary"
+      format: "Markdown"
+      length: "2 pages"
+
+  knowledge_artifacts:
+    - "SOTA comparison table"
+    - "Trend analysis charts"
+    - "Recommendation matrix"
+
+# Risk mitigation
+risks:
+  insufficient_sources:
+    likelihood: "medium"
+    impact: "high"
+    mitigation: "Expand search to Tier 2 sources, extend timeline by 1 week"
+
+  contradicting_evidence:
+    likelihood: "medium"
+    impact: "medium"
+    mitigation: "Run knowledge-synthesizer.py for conflict resolution"
+
+  scope_creep:
+    likelihood: "low"
+    impact: "high"
+    mitigation: "Strict adherence to included/excluded scope, weekly reviews"
+
+# Notes
+notes:
+  - "Use research-orchestrator.py for parallel API queries (faster)"
+  - "Run sota-analyzer.js for Papers with Code integration"
+  - "paper-summarizer.sh works best with properly formatted PDFs"
+  - "knowledge-synthesizer.py requires scikit-learn for claim clustering"

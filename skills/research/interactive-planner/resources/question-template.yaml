@@ -1,0 +1,112 @@
+# Interactive Planning Question Template
+# Use this template to create structured questions for AskUserQuestion tool
+
+# Question metadata
+metadata:
+  version: 1.0.0
+  category: technical_architecture  # core_functionality, technical_architecture, user_experience, quality_scale, constraints_context
+  priority: high  # critical, high, medium, low
+  batch_number: 1  # Which batch this question belongs to
+  depends_on: []  # List of question IDs this depends on
+
+# Question structure (AskUserQuestion format)
+question:
+  question: "What technology stack should we use?"
+  header: "Tech Stack"  # MAX 12 characters for UI
+  multiSelect: false  # true if user can select multiple options
+
+  # 2-4 options required (Other is automatically added)
+  options:
+    - label: "React/Next.js"
+      description: "React 18+ with Next.js framework for SSR and routing"
+
+    - label: "Vue/Nuxt"
+      description: "Vue 3 with Nuxt.js for modern composition API and SSR"
+
+    - label: "Node.js/Express"
+      description: "Backend API with Express.js and middleware ecosystem"
+
+    - label: "Python/FastAPI"
+      description: "Modern async Python framework with automatic OpenAPI docs"
+
+# Follow-up logic
+follow_up:
+  # If user selects "React/Next.js", ask these follow-up questions
+  - condition:
+      selected: "React/Next.js"
+    next_questions:
+      - "What state management? (Zustand, Redux Toolkit, Jotai, Context)"
+      - "What styling approach? (Tailwind, CSS Modules, Styled Components)"
+
+  # If user selects "Python/FastAPI", ask these follow-up questions
+  - condition:
+      selected: "Python/FastAPI"
+    next_questions:
+      - "What ORM? (SQLAlchemy, Tortoise, Prisma, Raw SQL)"
+      - "What async runtime? (uvicorn, hypercorn, daphne)"
+
+# Validation rules
+validation:
+  required: true  # Must be answered to proceed
+  min_selections: 1  # Minimum number of selections (for multiSelect)
+  max_selections: 1  # Maximum number of selections
+
+  # Custom validation logic
+  custom:
+    - rule: "If 'Other' selected, require text explanation"
+      error: "Please specify the technology stack you want to use"
+
+# Analysis hints
+analysis:
+  # How to interpret answers for requirements synthesis
+  interpretation:
+    "React/Next.js":
+      implications:
+        - "Frontend-focused development"
+        - "Server-side rendering needed"
+        - "Node.js backend likely"
+      tech_decisions:
+        - "Package manager: npm/pnpm/yarn"
+        - "Build tool: Next.js built-in"
+        - "Deployment: Vercel, Netlify, or self-hosted"
+
+    "Python/FastAPI":
+      implications:
+        - "Backend API development"
+        - "Async operations support"
+        - "Type hints and validation"
+      tech_decisions:
+        - "Package manager: pip/poetry/pdm"
+        - "ASGI server: uvicorn/hypercorn"
+        - "Deployment: Docker, Railway, or cloud providers"
+
+# Documentation
+documentation:
+  rationale: |
+    This question establishes the foundational technology stack, which affects
+    all subsequent architectural decisions including database choice, testing
+    framework, deployment strategy, and development workflow.
+
+  best_practices:
+    - "Ask before database/deployment questions (dependency)"
+    - "Consider project type when presenting options"
+    - "For web apps, focus on full-stack frameworks"
+    - "For APIs, emphasize backend frameworks"
+
+  common_mistakes:
+    - "Asking too late (after database/deployment questions)"
+    - "Not considering project complexity"
+    - "Mixing frontend and backend options confusingly"
+    - "Forgetting to ask about state management/ORM in follow-ups"
+
+# Examples of good vs bad question design
+examples:
+  good:
+    question: "What technology stack should we use?"
+    reason: "Clear, specific, focused on one decision"
+    options: ["React/Next.js", "Vue/Nuxt", "Node.js/Express", "Python/FastAPI"]
+
+  bad:
+    question: "What technologies and frameworks and databases do you want?"
+    reason: "Too broad, combines multiple decisions, confusing"
+    options: ["React", "PostgreSQL", "Docker", "AWS"]  # Mixed concerns

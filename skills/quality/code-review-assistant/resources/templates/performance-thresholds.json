@@ -1,0 +1,268 @@
+{
+  "performance_thresholds": {
+    "version": "1.0.0",
+    "last_updated": "2025-11-02",
+    "agent": "Performance Analyst",
+
+    "algorithmic_complexity": {
+      "nested_loops": {
+        "severity": "medium",
+        "max_nesting": 2,
+        "description": "Maximum acceptable loop nesting depth",
+        "impact": "O(n²) or worse complexity",
+        "remediation": "Use hash-based data structures (Map/Set), reduce to single loop with preprocessing"
+      },
+
+      "recursive_depth": {
+        "severity": "high",
+        "max_depth": 1000,
+        "description": "Maximum recursion depth before stack overflow risk",
+        "impact": "Stack overflow, poor performance",
+        "remediation": "Use iteration or tail recursion, implement memoization"
+      },
+
+      "list_comprehension_nesting": {
+        "severity": "low",
+        "max_nesting": 2,
+        "language": "python",
+        "description": "Maximum nesting in list comprehensions",
+        "impact": "Readability and performance degradation",
+        "remediation": "Break into multiple steps, use generator expressions"
+      }
+    },
+
+    "database_performance": {
+      "n_plus_one": {
+        "severity": "high",
+        "description": "N+1 query detection",
+        "patterns": [
+          "for.*in.*query",
+          "forEach.*database",
+          "map.*fetch"
+        ],
+        "impact": "Exponential query growth with data size",
+        "remediation": "Use eager loading, batch queries, database joins"
+      },
+
+      "missing_indexes": {
+        "severity": "medium",
+        "description": "Queries on non-indexed columns",
+        "threshold": 100,
+        "unit": "ms",
+        "impact": "Full table scans, slow queries",
+        "remediation": "Add indexes on frequently queried columns"
+      },
+
+      "large_result_sets": {
+        "severity": "medium",
+        "max_rows": 10000,
+        "description": "Fetching too many rows at once",
+        "impact": "Memory exhaustion, slow response",
+        "remediation": "Implement pagination, cursor-based loading"
+      },
+
+      "transaction_duration": {
+        "severity": "high",
+        "max_duration_ms": 1000,
+        "description": "Long-running transactions",
+        "impact": "Database locks, reduced throughput",
+        "remediation": "Minimize transaction scope, use optimistic locking"
+      }
+    },
+
+    "memory_management": {
+      "memory_leaks": {
+        "event_listeners": {
+          "severity": "medium",
+          "description": "Event listeners without cleanup",
+          "patterns": [
+            "addEventListener.*without.*removeEventListener",
+            "on\\(.*without.*off\\("
+          ],
+          "impact": "Memory growth over time",
+          "remediation": "Clean up listeners in component unmount/destroy"
+        },
+
+        "intervals_timeouts": {
+          "severity": "medium",
+          "description": "setInterval/setTimeout without clearing",
+          "patterns": [
+            "setInterval.*without.*clearInterval",
+            "setTimeout.*without.*clearTimeout"
+          ],
+          "impact": "Memory leaks, unexpected behavior",
+          "remediation": "Store IDs and clear in cleanup lifecycle"
+        },
+
+        "circular_references": {
+          "severity": "high",
+          "description": "Circular object references",
+          "impact": "Memory not garbage collected",
+          "remediation": "Use WeakMap/WeakSet, break references explicitly"
+        }
+      },
+
+      "large_allocations": {
+        "severity": "medium",
+        "max_array_size": 100000,
+        "max_object_keys": 10000,
+        "description": "Large data structures in memory",
+        "impact": "High memory usage, GC pressure",
+        "remediation": "Stream processing, pagination, lazy loading"
+      }
+    },
+
+    "frontend_performance": {
+      "dom_operations": {
+        "reflows": {
+          "severity": "medium",
+          "description": "DOM operations causing reflows",
+          "patterns": [
+            "for.*appendChild",
+            "forEach.*innerHTML.*\\+="
+          ],
+          "impact": "Layout thrashing, janky animations",
+          "remediation": "Use DocumentFragment, batch DOM updates, CSS animations"
+        },
+
+        "dom_query_frequency": {
+          "severity": "low",
+          "description": "Repeated DOM queries",
+          "threshold": 3,
+          "impact": "Unnecessary DOM traversal",
+          "remediation": "Cache DOM references in variables"
+        }
+      },
+
+      "bundle_size": {
+        "max_size_kb": 500,
+        "severity": "medium",
+        "description": "JavaScript bundle size",
+        "impact": "Slow initial load, high bandwidth usage",
+        "remediation": "Code splitting, tree shaking, lazy loading"
+      },
+
+      "render_performance": {
+        "max_render_time_ms": 16,
+        "severity": "high",
+        "description": "Component render time (60fps = 16ms)",
+        "impact": "Dropped frames, poor UX",
+        "remediation": "React.memo, useMemo, virtualization for long lists"
+      }
+    },
+
+    "backend_performance": {
+      "api_response_time": {
+        "p50_ms": 100,
+        "p95_ms": 500,
+        "p99_ms": 1000,
+        "severity": "high",
+        "description": "API endpoint latency percentiles",
+        "impact": "Poor user experience, timeouts",
+        "remediation": "Caching, database optimization, async processing"
+      },
+
+      "blocking_operations": {
+        "severity": "high",
+        "description": "Blocking I/O in async frameworks",
+        "patterns": [
+          "def.*async.*\\n.*open\\(",
+          "async function.*\\n.*fs\\.readFileSync"
+        ],
+        "impact": "Event loop blocking, reduced concurrency",
+        "remediation": "Use async I/O, worker threads for CPU-intensive tasks"
+      },
+
+      "connection_pooling": {
+        "min_pool_size": 5,
+        "max_pool_size": 20,
+        "severity": "medium",
+        "description": "Database connection pool configuration",
+        "impact": "Connection exhaustion or waste",
+        "remediation": "Tune pool size based on load testing"
+      }
+    },
+
+    "caching_strategy": {
+      "cache_hit_ratio": {
+        "min_ratio": 0.8,
+        "severity": "medium",
+        "description": "Minimum acceptable cache hit ratio",
+        "impact": "Increased latency, higher database load",
+        "remediation": "Adjust cache TTL, implement cache warming"
+      },
+
+      "cache_invalidation": {
+        "severity": "medium",
+        "description": "Proper cache invalidation strategy",
+        "patterns": [
+          "cache without TTL",
+          "no cache invalidation on update"
+        ],
+        "impact": "Stale data served to users",
+        "remediation": "Implement TTL, event-driven invalidation"
+      }
+    },
+
+    "code_complexity": {
+      "cyclomatic_complexity": {
+        "max_complexity": 10,
+        "severity": "medium",
+        "description": "McCabe cyclomatic complexity per function",
+        "impact": "Difficult to test, maintain, optimize",
+        "remediation": "Refactor into smaller functions, reduce branching"
+      },
+
+      "function_length": {
+        "max_lines": 50,
+        "severity": "low",
+        "description": "Maximum function length in lines",
+        "impact": "Poor readability, testing difficulty",
+        "remediation": "Extract helper functions, single responsibility"
+      }
+    }
+  },
+
+  "profiling_tools": {
+    "python": [
+      "cProfile",
+      "line_profiler",
+      "memory_profiler",
+      "py-spy"
+    ],
+    "javascript": [
+      "Chrome DevTools",
+      "Node.js --prof",
+      "clinic.js",
+      "0x"
+    ],
+    "database": [
+      "EXPLAIN ANALYZE",
+      "pg_stat_statements",
+      "slow query log"
+    ]
+  },
+
+  "scoring": {
+    "weights": {
+      "algorithmic_complexity": 0.25,
+      "database_performance": 0.30,
+      "memory_management": 0.20,
+      "frontend_performance": 0.15,
+      "backend_performance": 0.10
+    },
+
+    "severity_deductions": {
+      "high": 15,
+      "medium": 10,
+      "low": 5
+    },
+
+    "thresholds": {
+      "excellent": 95,
+      "good": 85,
+      "acceptable": 75,
+      "needs_work": 60
+    }
+  }
+}

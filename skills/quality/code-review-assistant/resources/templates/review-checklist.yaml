@@ -1,0 +1,271 @@
+# Comprehensive Code Review Checklist
+# Part of code-review-assistant Gold tier enhancement
+
+review_checklist:
+  metadata:
+    version: "1.0.0"
+    agent: "Code Review Coordinator"
+    last_updated: "2025-11-02"
+
+  security:
+    critical_checks:
+      - id: SEC-001
+        name: "No hardcoded secrets"
+        description: "Verify no API keys, passwords, or tokens in code"
+        severity: critical
+        automated: true
+        tools: ["git-secrets", "trufflehog"]
+
+      - id: SEC-002
+        name: "Input validation"
+        description: "All user input is validated and sanitized"
+        severity: critical
+        automated: false
+
+      - id: SEC-003
+        name: "SQL injection prevention"
+        description: "Parameterized queries or ORM used for database access"
+        severity: critical
+        automated: true
+        patterns: ["execute\\(.*\\+", "query\\(.*\\+"]
+
+      - id: SEC-004
+        name: "XSS prevention"
+        description: "Output encoding for user-generated content"
+        severity: critical
+        automated: true
+        patterns: ["dangerouslySetInnerHTML", "innerHTML"]
+
+      - id: SEC-005
+        name: "Authentication required"
+        description: "Protected endpoints have authentication"
+        severity: critical
+        automated: false
+
+    high_priority:
+      - id: SEC-101
+        name: "CSRF protection"
+        description: "CSRF tokens on state-changing operations"
+        severity: high
+        automated: true
+
+      - id: SEC-102
+        name: "Secure cryptography"
+        description: "No weak algorithms (MD5, SHA1, DES)"
+        severity: high
+        automated: true
+        patterns: ["MD5", "SHA1", "DES"]
+
+      - id: SEC-103
+        name: "Dependency vulnerabilities"
+        description: "No known vulnerable dependencies"
+        severity: high
+        automated: true
+        tools: ["npm audit", "safety"]
+
+  performance:
+    critical_checks:
+      - id: PERF-001
+        name: "No N+1 queries"
+        description: "Database queries optimized with eager loading"
+        severity: high
+        automated: true
+
+      - id: PERF-002
+        name: "Algorithmic complexity"
+        description: "No unnecessary O(n²) or worse algorithms"
+        severity: medium
+        automated: true
+
+      - id: PERF-003
+        name: "Memory leaks"
+        description: "Event listeners cleaned up, no circular references"
+        severity: high
+        automated: false
+
+    optimizations:
+      - id: PERF-101
+        name: "Caching strategy"
+        description: "Appropriate caching for expensive operations"
+        severity: medium
+        automated: false
+
+      - id: PERF-102
+        name: "Database indexing"
+        description: "Indexes on frequently queried columns"
+        severity: medium
+        automated: false
+
+      - id: PERF-103
+        name: "Lazy loading"
+        description: "Large resources loaded on demand"
+        severity: low
+        automated: false
+
+  style:
+    consistency:
+      - id: STYLE-001
+        name: "Naming conventions"
+        description: "Follow language-specific naming standards"
+        severity: medium
+        automated: true
+        tools: ["eslint", "pylint"]
+
+      - id: STYLE-002
+        name: "Code formatting"
+        description: "Consistent formatting throughout"
+        severity: low
+        automated: true
+        tools: ["prettier", "black"]
+
+      - id: STYLE-003
+        name: "Line length"
+        description: "Lines under 88-120 characters"
+        severity: low
+        automated: true
+
+    maintainability:
+      - id: STYLE-101
+        name: "Function complexity"
+        description: "Functions under 50 lines, low cyclomatic complexity"
+        severity: medium
+        automated: true
+
+      - id: STYLE-102
+        name: "Code duplication"
+        description: "DRY principle followed, no significant duplication"
+        severity: medium
+        automated: true
+        tools: ["jscpd", "radon"]
+
+      - id: STYLE-103
+        name: "Magic numbers"
+        description: "No unexplained magic numbers, use constants"
+        severity: low
+        automated: true
+
+  tests:
+    coverage:
+      - id: TEST-001
+        name: "Test existence"
+        description: "Tests present for new functionality"
+        severity: high
+        automated: true
+        threshold: 80
+
+      - id: TEST-002
+        name: "Test quality"
+        description: "Tests are meaningful and not trivial"
+        severity: high
+        automated: false
+
+      - id: TEST-003
+        name: "Edge cases"
+        description: "Tests cover edge cases and error conditions"
+        severity: medium
+        automated: false
+
+    test_patterns:
+      - id: TEST-101
+        name: "Test independence"
+        description: "Tests can run independently in any order"
+        severity: medium
+        automated: false
+
+      - id: TEST-102
+        name: "Mock usage"
+        description: "Appropriate mocking of external dependencies"
+        severity: medium
+        automated: false
+
+      - id: TEST-103
+        name: "Assertion quality"
+        description: "Clear, specific assertions with good error messages"
+        severity: low
+        automated: false
+
+  documentation:
+    code_documentation:
+      - id: DOC-001
+        name: "Public API documentation"
+        description: "All public functions/classes have docstrings"
+        severity: medium
+        automated: true
+
+      - id: DOC-002
+        name: "Complex logic comments"
+        description: "Non-obvious code has explanatory comments"
+        severity: low
+        automated: false
+
+      - id: DOC-003
+        name: "README updates"
+        description: "README updated for new features"
+        severity: medium
+        automated: false
+
+    external_documentation:
+      - id: DOC-101
+        name: "API documentation"
+        description: "API endpoints documented (OpenAPI/Swagger)"
+        severity: medium
+        automated: false
+
+      - id: DOC-102
+        name: "Changelog"
+        description: "CHANGELOG.md updated with changes"
+        severity: low
+        automated: false
+
+      - id: DOC-103
+        name: "Migration guide"
+        description: "Breaking changes documented with migration path"
+        severity: high
+        automated: false
+
+scoring:
+  weights:
+    security: 0.30
+    performance: 0.25
+    style: 0.15
+    tests: 0.20
+    documentation: 0.10
+
+  thresholds:
+    merge_ready: 80
+    approve: 90
+    critical_blocking: true  # Any critical issue blocks merge
+
+  severity_impact:
+    critical: -30
+    high: -15
+    medium: -5
+    low: -2
+    info: -1
+
+automation:
+  pre_commit_hooks:
+    - "git-secrets --scan"
+    - "eslint --fix"
+    - "black --check"
+    - "pytest --cov"
+
+  ci_pipeline:
+    - "security scan"
+    - "dependency audit"
+    - "linting"
+    - "tests"
+    - "coverage report"
+
+  quality_gates:
+    - name: "Security Gate"
+      condition: "no critical security issues"
+      blocking: true
+
+    - name: "Test Gate"
+      condition: "coverage >= 80%"
+      blocking: true
+
+    - name: "Quality Gate"
+      condition: "overall score >= 80"
+      blocking: false

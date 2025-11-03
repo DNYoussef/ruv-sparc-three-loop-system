@@ -1,0 +1,188 @@
+# Decision Criteria Template for Feature Prioritization
+# Use with decision-matrix.sh to evaluate options systematically
+
+criteria:
+  # Development Effort
+  - name: "Development Time"
+    weight: 0.25
+    scale: "1-5 (1=fastest/days, 2=fast/week, 3=moderate/2-3 weeks, 4=slow/1-2 months, 5=very slow/3+ months)"
+    description: |
+      Estimated time to implement this feature with a competent team.
+      Consider complexity, dependencies, and unknowns.
+    lower_is_better: true  # Lower scores are better (faster is better)
+
+  - name: "Technical Complexity"
+    weight: 0.15
+    scale: "1-5 (1=trivial, 2=simple, 3=moderate, 4=complex, 5=very complex)"
+    description: |
+      Technical difficulty and complexity of implementation.
+      Factors: new technologies, architectural changes, testing difficulty.
+    lower_is_better: true
+
+  # Business Value
+  - name: "User Impact"
+    weight: 0.30
+    scale: "1-5 (1=minimal, 2=low, 3=moderate, 4=high, 5=critical)"
+    description: |
+      How much this feature improves user experience or solves user problems.
+      Consider number of users affected and severity of pain point.
+    lower_is_better: false  # Higher scores are better (more impact is better)
+
+  - name: "Business Value"
+    weight: 0.20
+    scale: "1-5 (1=minimal, 2=low, 3=moderate, 4=high, 5=critical)"
+    description: |
+      Direct business impact: revenue, retention, competitive advantage.
+      Consider both short-term and long-term value.
+    lower_is_better: false
+
+  # Risk & Dependencies
+  - name: "Risk Level"
+    weight: 0.10
+    scale: "1-5 (1=minimal risk, 2=low, 3=moderate, 4=high, 5=very high risk)"
+    description: |
+      Implementation risk including technical risk, timeline risk, dependency risk.
+      Consider unknowns, third-party dependencies, breaking changes.
+    lower_is_better: true
+
+# Example evaluation for common features
+example_evaluations:
+  - feature: "Real-time Collaboration"
+    scores:
+      "Development Time": 4  # 1-2 months - complex WebSocket implementation
+      "Technical Complexity": 4  # Complex - conflict resolution, state sync
+      "User Impact": 5  # Critical - major UX improvement
+      "Business Value": 4  # High - competitive differentiator
+      "Risk Level": 4  # High - complex, many edge cases
+    notes: |
+      Real-time collaboration is high impact but also high complexity.
+      Consider starting with simpler async collaboration features first.
+
+  - feature: "File Upload/Download"
+    scores:
+      "Development Time": 2  # Fast - 1 week with existing libraries
+      "Technical Complexity": 2  # Simple - well-understood problem
+      "User Impact": 4  # High - essential for many workflows
+      "Business Value": 3  # Moderate - table stakes feature
+      "Risk Level": 2  # Low - proven solutions available
+    notes: |
+      File upload is straightforward to implement and provides good value.
+      Good candidate for early implementation.
+
+  - feature: "Advanced Analytics Dashboard"
+    scores:
+      "Development Time": 3  # Moderate - 2-3 weeks
+      "Technical Complexity": 3  # Moderate - data aggregation, visualization
+      "User Impact": 3  # Moderate - useful but not critical
+      "Business Value": 3  # Moderate - insights are valuable
+      "Risk Level": 2  # Low - known techniques
+    notes: |
+      Analytics provides value but not essential for MVP.
+      Could be deferred to post-MVP phase.
+
+  - feature: "Two-Factor Authentication"
+    scores:
+      "Development Time": 2  # Fast - libraries available
+      "Technical Complexity": 2  # Simple - standard implementation
+      "User Impact": 3  # Moderate - security-conscious users care
+      "Business Value": 4  # High - required for enterprise sales
+      "Risk Level": 2  # Low - well-established patterns
+    notes: |
+      2FA is relatively easy to implement and critical for enterprise customers.
+      High ROI for implementation effort.
+
+# Scoring interpretation guide
+scoring_guide:
+  development_time:
+    "1": "Less than 1 week (days)"
+    "2": "1-2 weeks"
+    "3": "2-4 weeks"
+    "4": "1-3 months"
+    "5": "3+ months"
+
+  technical_complexity:
+    "1": "Trivial - copy/paste from docs"
+    "2": "Simple - straightforward with clear path"
+    "3": "Moderate - requires design decisions"
+    "4": "Complex - architectural implications"
+    "5": "Very complex - research required, many unknowns"
+
+  user_impact:
+    "1": "Minimal - affects <5% of users, minor convenience"
+    "2": "Low - affects some users, nice-to-have"
+    "3": "Moderate - affects many users, noticeable improvement"
+    "4": "High - affects most users, significant improvement"
+    "5": "Critical - essential for product usability"
+
+  business_value:
+    "1": "Minimal - no clear business impact"
+    "2": "Low - indirect or long-term value"
+    "3": "Moderate - measurable positive impact"
+    "4": "High - significant revenue/retention/growth impact"
+    "5": "Critical - make-or-break for business"
+
+  risk_level:
+    "1": "Minimal - proven solution, low unknowns"
+    "2": "Low - some unknowns but manageable"
+    "3": "Moderate - several unknowns or dependencies"
+    "4": "High - many unknowns, complex dependencies"
+    "5": "Very high - unproven approach, many variables"
+
+# Recommended decision framework
+decision_framework:
+  high_priority:
+    description: "Features to implement first"
+    criteria:
+      - "User Impact >= 4 OR Business Value >= 4"
+      - "Development Time <= 3"
+      - "Risk Level <= 3"
+    rationale: "High value, reasonable effort, manageable risk"
+
+  medium_priority:
+    description: "Features to consider for MVP or Phase 2"
+    criteria:
+      - "User Impact >= 3 OR Business Value >= 3"
+      - "Development Time <= 4"
+      - "Risk Level <= 4"
+    rationale: "Good value, moderate effort/risk"
+
+  low_priority:
+    description: "Features to defer to later phases"
+    criteria:
+      - "User Impact < 3 AND Business Value < 3"
+      - "OR Development Time > 4"
+      - "OR Risk Level > 4"
+    rationale: "Lower value or too costly/risky for current phase"
+
+  research_needed:
+    description: "Features requiring more investigation before decision"
+    criteria:
+      - "Risk Level >= 4"
+      - "Technical Complexity >= 4"
+      - "Significant unknowns in estimation"
+    rationale: "Need spike/POC to reduce uncertainty"
+
+# How to use this template:
+usage_instructions: |
+  1. Customize criteria weights based on your project priorities
+     - Early startup? Emphasize speed and user impact
+     - Enterprise? Emphasize business value and low risk
+     - Technical product? Adjust technical complexity weight
+
+  2. Score each feature across all criteria
+     - Be honest and realistic
+     - Use the scoring guide for consistency
+     - Involve team in scoring for diverse perspectives
+
+  3. Calculate weighted scores using decision-matrix.sh:
+     ./decision-matrix.sh --criteria decision-criteria.yaml --options features.yaml --weights
+
+  4. Review results and make informed decisions
+     - High weighted score = good candidate for implementation
+     - Low weighted score = defer or reconsider
+     - Use decision framework for prioritization buckets
+
+  5. Document rationale for each decision
+     - Why was this prioritized or deprioritized?
+     - What assumptions were made?
+     - What would change the decision?

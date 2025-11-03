@@ -1,0 +1,245 @@
+# Adaptive Topology Configuration Template
+# Dynamic reconfiguration based on workload and performance
+
+name: adaptive-coordination
+version: 1.0.0
+topology: adaptive
+
+# Agent Configuration
+agents:
+  maxAgents: 20
+  strategy: adaptive
+
+  # Initial topology
+  initial_topology: mesh
+
+  # Agent pool
+  pool:
+    - type: researcher
+      min: 2
+      max: 5
+
+    - type: coder
+      min: 3
+      max: 8
+
+    - type: analyst
+      min: 2
+      max: 5
+
+    - type: optimizer
+      min: 1
+      max: 3
+
+    - type: coordinator
+      min: 1
+      max: 2
+
+# Adaptation Configuration
+adaptation:
+  # Reconfiguration triggers
+  triggers:
+    - type: performance_degradation
+      threshold: 0.7
+      action: switch_to_hierarchical
+
+    - type: high_consensus_latency
+      threshold: 15  # seconds
+      action: reduce_agent_count
+
+    - type: low_utilization
+      threshold: 0.3
+      action: scale_down
+
+    - type: high_workload
+      threshold: 0.85
+      action: scale_up
+
+  # Reconfiguration intervals
+  evaluation_interval: 30  # seconds
+  reconfiguration_cooldown: 60  # seconds
+
+  # Topology switching
+  topology_switch:
+    enabled: true
+    strategies:
+      - from: mesh
+        to: hierarchical
+        condition: agent_count > 8
+
+      - from: hierarchical
+        to: mesh
+        condition: agent_count <= 8
+
+      - from: any
+        to: ring
+        condition: pipeline_workload
+
+# Performance Monitoring
+performance:
+  # Metrics for adaptation decisions
+  metrics:
+    - name: task_throughput
+      weight: 0.3
+      target: 10  # tasks/minute
+
+    - name: consensus_latency
+      weight: 0.25
+      target: 5  # seconds
+
+    - name: agent_utilization
+      weight: 0.25
+      target: 0.75
+
+    - name: communication_overhead
+      weight: 0.2
+      target: 0.15  # 15% of total time
+
+  # Performance thresholds
+  thresholds:
+    excellent: 0.9
+    good: 0.7
+    acceptable: 0.5
+    poor: 0.3
+
+# Dynamic Scaling
+scaling:
+  # Auto-scaling configuration
+  auto_scaling:
+    enabled: true
+
+    # Scale-up rules
+    scale_up:
+      trigger: workload_high
+      threshold: 0.85
+      increment: 2  # agents
+      max_agents: 20
+      cooldown: 30  # seconds
+
+    # Scale-down rules
+    scale_down:
+      trigger: workload_low
+      threshold: 0.3
+      decrement: 1  # agent
+      min_agents: 5
+      cooldown: 60  # seconds
+
+  # Agent lifecycle
+  lifecycle:
+    spawn_timeout: 10  # seconds
+    terminate_grace_period: 30  # seconds
+    rebalance_after_change: true
+
+# State Management
+state:
+  store_type: distributed
+  consistency: eventual
+
+  # Migration during reconfiguration
+  migration:
+    enabled: true
+    strategy: gradual
+    preserve_state: true
+    timeout: 60  # seconds
+
+  # State synchronization
+  sync:
+    interval: 5  # seconds during stable
+    interval_reconfiguring: 2  # seconds during reconfiguration
+    conflict_resolution: vector-clock
+
+# Topology Profiles
+profiles:
+  # Pre-defined topology configurations
+  mesh_profile:
+    topology: mesh
+    max_agents: 8
+    consensus: byzantine
+    use_case: consensus-heavy
+
+  hierarchical_profile:
+    topology: hierarchical
+    max_agents: 20
+    levels: 3
+    use_case: delegation-heavy
+
+  ring_profile:
+    topology: ring
+    max_agents: 12
+    use_case: pipeline
+
+  star_profile:
+    topology: star
+    max_agents: 15
+    hub_type: coordinator
+    use_case: centralized-coordination
+
+# Learning & Optimization
+learning:
+  # Pattern recognition
+  pattern_recognition:
+    enabled: true
+    history_window: 100  # recent tasks
+
+  # Optimization strategies
+  optimization:
+    - type: topology_preference
+      learn_from: historical_performance
+
+    - type: agent_allocation
+      learn_from: task_types
+
+    - type: scaling_thresholds
+      learn_from: workload_patterns
+
+  # Feedback loop
+  feedback:
+    enabled: true
+    evaluation_interval: 100  # tasks
+    apply_learnings: true
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+
+  # Adaptation-specific metrics
+  metrics:
+    - topology_changes
+    - reconfiguration_latency
+    - adaptation_success_rate
+    - performance_improvement
+    - state_migration_time
+
+  # Visualization
+  visualization:
+    enabled: true
+    update_interval: 10  # seconds
+    include_predictions: true
+
+# Fault Tolerance
+fault_tolerance:
+  # During reconfiguration
+  reconfiguration:
+    rollback_on_failure: true
+    backup_topology: previous
+    validation_checks: true
+
+  # Agent failures
+  agent_failure:
+    detection_interval: 5  # seconds
+    recovery_strategy: adaptive
+    preserve_workload: true
+
+# Hooks Integration
+hooks:
+  pre_task:
+    - evaluate_topology
+    - check_adaptation_needed
+
+  post_task:
+    - update_performance_metrics
+    - trigger_adaptation_if_needed
+
+  session_end:
+    - export_adaptation_history
+    - save_learned_patterns

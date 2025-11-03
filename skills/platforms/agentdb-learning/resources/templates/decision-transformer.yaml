@@ -1,0 +1,218 @@
+# Decision Transformer Configuration Template
+# Offline reinforcement learning via sequence modeling
+
+algorithm: "decision-transformer"
+description: "Transformer-based offline RL using return-conditioned sequence modeling"
+
+# Model architecture
+model:
+  architecture: "transformer"
+  embed_dim: 128           # Embedding dimension
+  n_heads: 8               # Number of attention heads
+  n_layers: 6              # Number of transformer blocks
+  context_length: 20       # Maximum sequence length (timesteps)
+
+  # Token embeddings
+  state_embed_dim: 128
+  action_embed_dim: 128
+  return_embed_dim: 128
+  timestep_embed_dim: 128
+
+  # Architecture details
+  dropout: 0.1
+  attention_dropout: 0.1
+  activation: "gelu"
+  layer_norm_eps: 1.0e-5
+
+# Training configuration
+training:
+  learning_rate: 0.0001
+  batch_size: 64
+  num_epochs: 100
+  warmup_steps: 10000
+  max_grad_norm: 1.0
+
+  # Optimizer
+  optimizer: "adamw"
+  weight_decay: 0.01
+  beta1: 0.9
+  beta2: 0.999
+
+  # Learning rate schedule
+  lr_schedule: "cosine"
+  min_lr: 0.00001
+
+# Data configuration
+data:
+  dataset_path: "./data/offline_data.pkl"
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+
+  # Trajectory preprocessing
+  max_trajectory_length: 1000
+  reward_scale: 1.0        # Scale rewards by this factor
+  normalize_states: true
+  normalize_returns: true
+
+  # Return conditioning
+  target_return: 3600      # Target cumulative return
+  return_percentile: 100   # Use top N% returns (100 = max return)
+
+# Environment
+environment:
+  name: "custom"
+  state_dim: 17
+  action_dim: 6
+  continuous_actions: true
+  action_range: [-1.0, 1.0]
+  discrete_actions: false
+  num_actions: null
+
+# Evaluation
+evaluation:
+  eval_frequency: 5        # Evaluate every N epochs
+  eval_episodes: 10
+  target_returns: [3600, 3000, 2400]  # Test multiple target returns
+  deterministic: true
+  render: false
+
+  # Metrics
+  metrics:
+    - "episode_return"
+    - "episode_length"
+    - "normalized_score"
+    - "trajectory_diversity"
+
+# Offline RL specific
+offline:
+  dataset_type: "mixed"    # mixed, expert, medium, random
+  behavior_cloning_weight: 0.0  # BC regularization (0 = pure DT)
+
+  # Conservative training
+  conservative_weight: 0.0  # CQL-style conservatism
+  use_per: false           # Prioritized experience replay
+
+  # Data augmentation
+  augmentation:
+    enabled: false
+    methods: []
+
+# Inference
+inference:
+  temperature: 1.0         # Sampling temperature
+  top_k: null              # Top-k sampling
+  top_p: null              # Nucleus sampling
+  beam_search: false
+  beam_width: 5
+
+# Logging and checkpointing
+logging:
+  log_frequency: 100       # Log every N batches
+  save_frequency: 10       # Save every N epochs
+  log_dir: "./logs/decision-transformer"
+  checkpoint_dir: "./checkpoints/decision-transformer"
+
+  # Wandb integration
+  use_wandb: false
+  wandb_project: "agentdb-dt"
+  wandb_entity: null
+
+# AgentDB integration
+agentdb:
+  db_path: "./.agentdb/decision-transformer.db"
+  enable_learning: true
+  enable_reasoning: true
+  cache_size: 5000
+  pattern_domain: "decision-transformer"
+
+  # Store successful trajectories
+  store_trajectories: true
+  min_trajectory_return: 1000
+
+  # Retrieval for few-shot learning
+  retrieval:
+    enabled: true
+    k_neighbors: 5
+    similarity_threshold: 0.8
+
+# Performance optimization
+performance:
+  use_wasm: true
+  mixed_precision: false   # FP16 training
+  gradient_accumulation_steps: 1
+  num_workers: 4           # Data loading workers
+  pin_memory: true
+  compile_model: false     # torch.compile (PyTorch 2.0+)
+
+# Advanced features
+advanced:
+  # Trajectory stitching
+  stitch_trajectories: false
+  stitch_method: "returns"
+
+  # Multi-task learning
+  multi_task: false
+  task_conditioning: false
+
+  # Hierarchical decision making
+  hierarchical: false
+  num_levels: 2
+
+# Use cases
+use_cases:
+  - "Learning from logged data (no environment interaction)"
+  - "Imitation learning from expert demonstrations"
+  - "Offline policy optimization"
+  - "Safe RL (learn from safe demonstrations)"
+  - "Batch RL for expensive simulations"
+
+# Variants
+variants:
+  trajectory_transformer:
+    description: "Full trajectory modeling (state + action + return)"
+    model_returns: true
+    model_states: true
+
+  return_conditioned_bc:
+    description: "Behavior cloning with return conditioning"
+    behavior_cloning_weight: 1.0
+    conservative_weight: 0.0
+
+  conservative_dt:
+    description: "Decision Transformer with CQL regularization"
+    conservative_weight: 0.1
+    behavior_cloning_weight: 0.1
+
+# Best practices
+best_practices:
+  - "Normalize states and returns for stable training"
+  - "Use large context lengths (20+) for long-horizon tasks"
+  - "Start with high target returns and adjust based on data"
+  - "Monitor attention weights to understand decision-making"
+  - "Use mixed/expert datasets for best performance"
+  - "Consider behavior cloning warmstart for faster convergence"
+  - "Tune temperature for exploration vs exploitation"
+
+# Troubleshooting
+troubleshooting:
+  low_performance:
+    - "Increase context_length for longer horizons"
+    - "Add behavior_cloning_weight for stability"
+    - "Check target_return is achievable in dataset"
+
+  overfitting:
+    - "Increase dropout rate"
+    - "Reduce model size (n_layers, embed_dim)"
+    - "Add weight_decay regularization"
+
+  mode_collapse:
+    - "Increase temperature during inference"
+    - "Use top_k or top_p sampling"
+    - "Add diversity to training data"
+
+# References
+references:
+  - "Decision Transformer: Reinforcement Learning via Sequence Modeling (Chen et al., 2021)"
+  - "Offline Reinforcement Learning as One Big Sequence Modeling Problem (Janner et al., 2021)"
+  - "https://github.com/kzl/decision-transformer"

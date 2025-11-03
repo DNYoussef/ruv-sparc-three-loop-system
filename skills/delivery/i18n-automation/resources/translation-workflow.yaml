@@ -1,0 +1,261 @@
+# Translation Workflow for i18n Automation
+# Defines the complete translation process from extraction to deployment
+
+name: i18n-translation-workflow
+version: 1.0.0
+
+# Workflow stages
+stages:
+  - id: extraction
+    name: String Extraction
+    description: Extract translatable strings from codebase
+    tasks:
+      - name: Scan source files
+        script: translation-extractor.py
+        args:
+          input: ${SOURCE_DIR}
+          output: locales/extracted.json
+          framework: ${FRAMEWORK}
+      - name: Generate keys
+        script: key-generator.js
+        args:
+          input: locales/extracted.json
+          output: locales/structured-keys.json
+          strategy: hierarchical
+      - name: Merge with existing
+        action: merge
+        source: locales/structured-keys.json
+        target: locales/${BASE_LOCALE}.json
+        conflict_resolution: keep_existing
+
+  - id: translation
+    name: Translation Generation
+    description: Translate strings to target languages
+    depends_on: [extraction]
+    parallel: true
+    tasks:
+      - name: AI Translation
+        condition: ${TRANSLATION_METHOD} == 'ai'
+        foreach: ${TARGET_LOCALES}
+        action: ai_translate
+        source_locale: ${BASE_LOCALE}
+        target_locale: ${item}
+        provider: ${AI_PROVIDER}
+        config:
+          formality: ${FORMALITY_LEVEL}
+          preserve_placeholders: true
+          cultural_adaptation: ${CULTURAL_ADAPTATION}
+
+      - name: Professional Service
+        condition: ${TRANSLATION_METHOD} == 'professional'
+        action: export_for_service
+        service: ${PROFESSIONAL_SERVICE}
+        format: ${EXPORT_FORMAT}
+        locales: ${TARGET_LOCALES}
+
+      - name: Manual Translation
+        condition: ${TRANSLATION_METHOD} == 'manual'
+        action: create_translation_tasks
+        assignees: ${TRANSLATORS}
+        locales: ${TARGET_LOCALES}
+
+  - id: validation
+    name: Validation
+    description: Validate translation quality and completeness
+    depends_on: [translation]
+    tasks:
+      - name: Locale validation
+        script: locale-validator.sh
+        args:
+          locales: ./locales
+          base: ${BASE_LOCALE}
+          strict: ${STRICT_MODE}
+
+      - name: Placeholder check
+        action: validate_placeholders
+        base: locales/${BASE_LOCALE}.json
+        targets: locales/*.json
+
+      - name: Completeness check
+        action: check_completeness
+        threshold: ${MIN_COMPLETENESS}
+        report: validation-report.json
+
+      - name: RTL validation
+        condition: ${HAS_RTL_LOCALES}
+        action: validate_rtl
+        locales: ${RTL_LOCALES}
+
+  - id: integration
+    name: Integration
+    description: Integrate translations into application
+    depends_on: [validation]
+    tasks:
+      - name: Setup i18n library
+        script: i18n-setup.py
+        args:
+          framework: ${FRAMEWORK}
+          locales: ${ALL_LOCALES}
+          output: ${PROJECT_ROOT}
+          default: ${BASE_LOCALE}
+
+      - name: Replace hardcoded strings
+        action: replace_strings
+        source: ${SOURCE_DIR}
+        mapping: locales/structured-keys.json
+        framework: ${FRAMEWORK}
+
+      - name: Generate language switcher
+        action: generate_component
+        type: language_switcher
+        framework: ${FRAMEWORK}
+        output: ${COMPONENTS_DIR}/LanguageSwitcher.tsx
+
+      - name: Configure routing
+        action: setup_routing
+        strategy: ${ROUTING_STRATEGY}
+        prefix_default: ${PREFIX_DEFAULT}
+        framework: ${FRAMEWORK}
+
+  - id: seo
+    name: SEO Configuration
+    description: Configure SEO for multiple languages
+    depends_on: [integration]
+    condition: ${SEO_ENABLED}
+    tasks:
+      - name: Generate metadata
+        action: create_metadata
+        locales: ${ALL_LOCALES}
+        namespaces: ${SEO_NAMESPACES}
+
+      - name: Create sitemap
+        condition: ${GENERATE_SITEMAP}
+        action: generate_sitemap
+        locales: ${ALL_LOCALES}
+        output: public/sitemap.xml
+
+      - name: Add hreflang tags
+        condition: ${ADD_HREFLANG}
+        action: add_hreflang
+        locales: ${ALL_LOCALES}
+
+  - id: testing
+    name: Testing
+    description: Test translations in all locales
+    depends_on: [seo]
+    tasks:
+      - name: Build application
+        command: npm run build
+        working_dir: ${PROJECT_ROOT}
+
+      - name: Test each locale
+        foreach: ${ALL_LOCALES}
+        action: test_locale
+        locale: ${item}
+        checks:
+          - key_resolution
+          - placeholder_rendering
+          - rtl_layout
+          - metadata_presence
+
+      - name: Visual regression
+        condition: ${VISUAL_TESTING}
+        action: visual_test
+        locales: ${ALL_LOCALES}
+        tool: playwright
+
+  - id: deployment
+    name: Deployment
+    description: Deploy translations to production
+    depends_on: [testing]
+    manual_approval: true
+    tasks:
+      - name: Create backup
+        action: backup
+        source: locales/
+        destination: backups/${TIMESTAMP}/
+
+      - name: Deploy to CDN
+        condition: ${USE_CDN}
+        action: upload_to_cdn
+        source: locales/
+        cdn: ${CDN_PROVIDER}
+
+      - name: Deploy application
+        command: ${DEPLOY_COMMAND}
+        working_dir: ${PROJECT_ROOT}
+
+      - name: Smoke test
+        action: smoke_test
+        urls: ${SMOKE_TEST_URLS}
+        locales: ${ALL_LOCALES}
+
+# Rollback procedure
+rollback:
+  triggers:
+    - smoke_test_failure
+    - critical_error
+  actions:
+    - name: Restore from backup
+      action: restore
+      source: backups/${LAST_GOOD_BACKUP}/
+      destination: locales/
+    - name: Redeploy
+      command: ${DEPLOY_COMMAND}
+
+# Notifications
+notifications:
+  on_success:
+    - type: slack
+      channel: ${SLACK_CHANNEL}
+      message: "i18n deployment successful for locales: ${ALL_LOCALES}"
+  on_failure:
+    - type: slack
+      channel: ${SLACK_CHANNEL}
+      message: "i18n deployment failed at stage: ${FAILED_STAGE}"
+    - type: email
+      recipients: ${TEAM_EMAILS}
+  on_approval:
+    - type: email
+      recipients: ${APPROVERS}
+      message: "i18n deployment awaiting approval"
+
+# Metrics and reporting
+metrics:
+  - name: translation_coverage
+    formula: (translated_keys / total_keys) * 100
+    threshold: ${MIN_COMPLETENESS}
+  - name: time_to_translate
+    measure: time_between
+    start: extraction
+    end: validation
+  - name: error_rate
+    count: validation_errors
+    threshold: 0
+
+# Environment variables
+env:
+  SOURCE_DIR: ./src
+  PROJECT_ROOT: .
+  COMPONENTS_DIR: ./src/components
+  FRAMEWORK: nextjs
+  BASE_LOCALE: en
+  TARGET_LOCALES: [ja, es, fr]
+  ALL_LOCALES: [en, ja, es, fr]
+  RTL_LOCALES: []
+  HAS_RTL_LOCALES: false
+  TRANSLATION_METHOD: ai
+  AI_PROVIDER: claude
+  FORMALITY_LEVEL: polite
+  CULTURAL_ADAPTATION: false
+  STRICT_MODE: false
+  MIN_COMPLETENESS: 80
+  ROUTING_STRATEGY: subdirectory
+  PREFIX_DEFAULT: false
+  SEO_ENABLED: true
+  GENERATE_SITEMAP: true
+  ADD_HREFLANG: true
+  SEO_NAMESPACES: [metadata, seo]
+  VISUAL_TESTING: false
+  USE_CDN: false
+  DEPLOY_COMMAND: npm run deploy

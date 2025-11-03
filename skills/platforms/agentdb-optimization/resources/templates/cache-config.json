@@ -1,0 +1,320 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "title": "AgentDB Cache Configuration",
+  "description": "Optimize cache for sub-millisecond pattern retrieval",
+  "type": "object",
+
+  "cacheStrategies": {
+    "optimal": {
+      "description": "80% hit rate using Pareto principle",
+      "cacheSize": 1000,
+      "expectedHitRate": 0.80,
+      "memoryUsage": "~10MB",
+      "latency": {
+        "cacheHit": "< 1ms",
+        "cacheMiss": "~ 2ms"
+      },
+      "useCase": "Production applications, balanced performance"
+    },
+
+    "conservative": {
+      "description": "Lower memory usage, ~60-70% hit rate",
+      "cacheSize": 500,
+      "expectedHitRate": 0.65,
+      "memoryUsage": "~5MB",
+      "latency": {
+        "cacheHit": "< 1ms",
+        "cacheMiss": "~ 2ms"
+      },
+      "useCase": "Memory-constrained environments"
+    },
+
+    "aggressive": {
+      "description": "Maximum performance, >90% hit rate",
+      "cacheSize": 2000,
+      "expectedHitRate": 0.90,
+      "memoryUsage": "~20MB",
+      "latency": {
+        "cacheHit": "< 0.5ms",
+        "cacheMiss": "~ 2ms"
+      },
+      "useCase": "High-performance applications, ample memory"
+    },
+
+    "minimal": {
+      "description": "Minimal memory footprint",
+      "cacheSize": 100,
+      "expectedHitRate": 0.40,
+      "memoryUsage": "~1MB",
+      "latency": {
+        "cacheHit": "< 1ms",
+        "cacheMiss": "~ 2ms"
+      },
+      "useCase": "Mobile/edge devices, strict memory limits"
+    }
+  },
+
+  "configuration": {
+    "cacheSize": {
+      "description": "Number of patterns to cache in memory",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000,
+      "default": 1000,
+      "recommendations": {
+        "small": 100,
+        "medium": 500,
+        "large": 1000,
+        "xlarge": 2000,
+        "xxlarge": 5000
+      },
+      "notes": [
+        "Cache uses LRU (Least Recently Used) eviction policy",
+        "Larger cache = higher memory, better hit rate",
+        "Estimate ~10KB per cached pattern"
+      ]
+    },
+
+    "evictionPolicy": {
+      "description": "Cache eviction strategy",
+      "type": "string",
+      "enum": ["lru", "lfu", "fifo", "ttl"],
+      "default": "lru",
+      "options": {
+        "lru": {
+          "name": "Least Recently Used",
+          "description": "Evicts patterns not accessed recently",
+          "bestFor": "General purpose, temporal locality"
+        },
+        "lfu": {
+          "name": "Least Frequently Used",
+          "description": "Evicts patterns with lowest access count",
+          "bestFor": "Frequency-based access patterns"
+        },
+        "fifo": {
+          "name": "First In First Out",
+          "description": "Evicts oldest patterns first",
+          "bestFor": "Simple, predictable behavior"
+        },
+        "ttl": {
+          "name": "Time To Live",
+          "description": "Evicts patterns after timeout",
+          "bestFor": "Time-sensitive data"
+        }
+      }
+    },
+
+    "prefetchStrategy": {
+      "description": "Proactive pattern loading strategy",
+      "type": "string",
+      "enum": ["none", "domain", "type", "confidence", "hybrid"],
+      "default": "hybrid",
+      "options": {
+        "none": {
+          "description": "No prefetching, load on demand",
+          "overhead": "None",
+          "benefit": "Minimal"
+        },
+        "domain": {
+          "description": "Prefetch patterns from same domain",
+          "overhead": "Low",
+          "benefit": "Good for domain-clustered queries"
+        },
+        "type": {
+          "description": "Prefetch patterns of same type",
+          "overhead": "Low",
+          "benefit": "Good for type-clustered queries"
+        },
+        "confidence": {
+          "description": "Prefetch high-confidence patterns",
+          "overhead": "Medium",
+          "benefit": "Prioritizes quality patterns"
+        },
+        "hybrid": {
+          "description": "Combine domain, type, and confidence",
+          "overhead": "Medium",
+          "benefit": "Best overall performance"
+        }
+      }
+    },
+
+    "warmupStrategy": {
+      "description": "Cache initialization strategy",
+      "type": "string",
+      "enum": ["lazy", "eager", "scheduled"],
+      "default": "lazy",
+      "options": {
+        "lazy": {
+          "description": "Load patterns on first access",
+          "startupTime": "Fast",
+          "initialHitRate": "Low"
+        },
+        "eager": {
+          "description": "Preload hot patterns at startup",
+          "startupTime": "Slow",
+          "initialHitRate": "High"
+        },
+        "scheduled": {
+          "description": "Periodic background warmup",
+          "startupTime": "Medium",
+          "initialHitRate": "Medium"
+        }
+      }
+    }
+  },
+
+  "monitoring": {
+    "metrics": [
+      {
+        "name": "cacheHitRate",
+        "description": "Percentage of requests served from cache",
+        "target": "> 80%",
+        "formula": "hits / (hits + misses)"
+      },
+      {
+        "name": "avgLatency",
+        "description": "Average response time for cached queries",
+        "target": "< 1ms",
+        "unit": "milliseconds"
+      },
+      {
+        "name": "memoryUsage",
+        "description": "Memory consumed by cache",
+        "target": "< 50MB",
+        "unit": "megabytes"
+      },
+      {
+        "name": "evictionRate",
+        "description": "Number of evictions per second",
+        "target": "< 10/sec",
+        "unit": "evictions/second"
+      }
+    ],
+
+    "alerts": [
+      {
+        "condition": "cacheHitRate < 0.6",
+        "severity": "warning",
+        "action": "Consider increasing cache size"
+      },
+      {
+        "condition": "avgLatency > 2",
+        "severity": "warning",
+        "action": "Check database performance or increase cache"
+      },
+      {
+        "condition": "memoryUsage > 100",
+        "severity": "critical",
+        "action": "Reduce cache size or optimize memory"
+      },
+      {
+        "condition": "evictionRate > 50",
+        "severity": "warning",
+        "action": "Cache size too small for access pattern"
+      }
+    ]
+  },
+
+  "optimization": {
+    "recommendations": [
+      {
+        "scenario": "Low hit rate (< 60%)",
+        "solutions": [
+          "Increase cache size (e.g., 1000 → 2000)",
+          "Enable prefetching strategy",
+          "Analyze access patterns for hot domains",
+          "Use eager warmup strategy"
+        ]
+      },
+      {
+        "scenario": "High memory usage",
+        "solutions": [
+          "Reduce cache size",
+          "Enable pattern pruning",
+          "Use more aggressive eviction",
+          "Optimize pattern storage"
+        ]
+      },
+      {
+        "scenario": "High eviction rate",
+        "solutions": [
+          "Increase cache size",
+          "Adjust eviction policy",
+          "Analyze working set size",
+          "Consider LFU instead of LRU"
+        ]
+      },
+      {
+        "scenario": "Slow startup",
+        "solutions": [
+          "Switch to lazy warmup",
+          "Reduce eager preload size",
+          "Use scheduled background warmup",
+          "Optimize pattern loading"
+        ]
+      }
+    ],
+
+    "bestPractices": [
+      "Monitor hit rate continuously",
+      "Adjust cache size based on memory availability",
+      "Use hybrid prefetching for best results",
+      "Implement graceful degradation on cache overflow",
+      "Periodically analyze access patterns",
+      "Use eager warmup for predictable workloads",
+      "Combine with quantization for memory optimization"
+    ]
+  },
+
+  "examples": [
+    {
+      "name": "Production API Server",
+      "config": {
+        "cacheSize": 2000,
+        "evictionPolicy": "lru",
+        "prefetchStrategy": "hybrid",
+        "warmupStrategy": "eager"
+      },
+      "expectedResult": "85-90% hit rate, < 1ms latency"
+    },
+    {
+      "name": "Mobile Application",
+      "config": {
+        "cacheSize": 100,
+        "evictionPolicy": "lru",
+        "prefetchStrategy": "none",
+        "warmupStrategy": "lazy"
+      },
+      "expectedResult": "40-50% hit rate, < 2ms latency, < 1MB memory"
+    },
+    {
+      "name": "High-Performance Service",
+      "config": {
+        "cacheSize": 5000,
+        "evictionPolicy": "lfu",
+        "prefetchStrategy": "confidence",
+        "warmupStrategy": "scheduled"
+      },
+      "expectedResult": "95%+ hit rate, < 0.5ms latency"
+    },
+    {
+      "name": "Development Environment",
+      "config": {
+        "cacheSize": 500,
+        "evictionPolicy": "lru",
+        "prefetchStrategy": "domain",
+        "warmupStrategy": "lazy"
+      },
+      "expectedResult": "60-70% hit rate, minimal overhead"
+    }
+  ],
+
+  "integrationGuide": {
+    "typescript": {
+      "example": "import { createAgentDBAdapter } from 'agentic-flow/reasoningbank';\n\nconst adapter = await createAgentDBAdapter({\n  cacheSize: 2000,\n  // Other config...\n});\n\n// Monitor cache performance\nconst stats = await adapter.getStats();\nconsole.log('Hit Rate:', stats.cacheHitRate);"
+    },
+    "cli": {
+      "example": "# Analyze cache performance\nnpx agentdb@latest stats .agentdb/vectors.db\n\n# Expected output:\n# Cache Hit Rate: 84%\n# Avg Latency: 0.8ms"
+    }
+  }
+}

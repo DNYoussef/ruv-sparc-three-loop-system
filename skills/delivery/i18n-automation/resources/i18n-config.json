@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "i18n Configuration",
+  "description": "Configuration for i18n automation workflow",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Project name"
+        },
+        "framework": {
+          "type": "string",
+          "enum": ["nextjs", "react", "vue", "angular"],
+          "description": "Frontend framework"
+        },
+        "rootDir": {
+          "type": "string",
+          "description": "Project root directory"
+        },
+        "srcDir": {
+          "type": "string",
+          "description": "Source code directory",
+          "default": "./src"
+        }
+      },
+      "required": ["framework", "rootDir"]
+    },
+    "locales": {
+      "type": "object",
+      "properties": {
+        "supported": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+          },
+          "description": "List of supported locale codes (e.g., en, ja, es-MX)",
+          "minItems": 2
+        },
+        "default": {
+          "type": "string",
+          "description": "Default locale",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+        },
+        "fallback": {
+          "type": "string",
+          "description": "Fallback locale when translation missing",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+        },
+        "rtl": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Right-to-left languages",
+          "default": ["ar", "he", "fa"]
+        }
+      },
+      "required": ["supported", "default"]
+    },
+    "files": {
+      "type": "object",
+      "properties": {
+        "localesDir": {
+          "type": "string",
+          "description": "Directory for locale files",
+          "default": "./locales"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["json", "yaml", "po", "xliff"],
+          "description": "Translation file format",
+          "default": "json"
+        },
+        "structure": {
+          "type": "string",
+          "enum": ["flat", "nested", "namespace"],
+          "description": "File organization structure",
+          "default": "nested"
+        },
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Translation namespaces (if using namespace structure)",
+          "default": ["common", "errors", "navigation"]
+        }
+      }
+    },
+    "translation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["ai", "professional", "manual", "hybrid"],
+          "description": "Translation method",
+          "default": "ai"
+        },
+        "aiProvider": {
+          "type": "string",
+          "enum": ["claude", "gpt", "gemini"],
+          "description": "AI provider for translations"
+        },
+        "professionalService": {
+          "type": "string",
+          "enum": ["locize", "crowdin", "phrase", "weblate"],
+          "description": "Professional translation service"
+        },
+        "formality": {
+          "type": "string",
+          "enum": ["casual", "polite", "formal"],
+          "description": "Formality level for translations",
+          "default": "polite"
+        },
+        "preservePlaceholders": {
+          "type": "boolean",
+          "description": "Preserve placeholders like {variable}",
+          "default": true
+        },
+        "culturalAdaptation": {
+          "type": "boolean",
+          "description": "Adapt content for cultural context",
+          "default": false
+        }
+      }
+    },
+    "extraction": {
+      "type": "object",
+      "properties": {
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "File patterns to include for extraction",
+          "default": ["**/*.{js,jsx,ts,tsx,vue}"]
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "File patterns to exclude",
+          "default": ["**/node_modules/**", "**/dist/**", "**/build/**"]
+        },
+        "keyStrategy": {
+          "type": "string",
+          "enum": ["hierarchical", "flat", "smart"],
+          "description": "Translation key generation strategy",
+          "default": "hierarchical"
+        },
+        "autoDetect": {
+          "type": "boolean",
+          "description": "Auto-detect hardcoded strings",
+          "default": true
+        }
+      }
+    },
+    "routing": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["subdirectory", "subdomain", "query", "cookie"],
+          "description": "URL routing strategy",
+          "default": "subdirectory"
+        },
+        "prefixDefault": {
+          "type": "boolean",
+          "description": "Include locale prefix for default language",
+          "default": false
+        },
+        "languageDetection": {
+          "type": "boolean",
+          "description": "Automatic language detection",
+          "default": true
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["url", "cookie", "localStorage", "navigator", "header"]
+          },
+          "description": "Language detection sources in priority order",
+          "default": ["url", "cookie", "header"]
+        }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable SEO metadata localization",
+          "default": true
+        },
+        "generateSitemap": {
+          "type": "boolean",
+          "description": "Generate localized sitemap",
+          "default": true
+        },
+        "hreflang": {
+          "type": "boolean",
+          "description": "Add hreflang tags",
+          "default": true
+        },
+        "metadataNamespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Namespaces for SEO metadata",
+          "default": ["metadata", "seo"]
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "strict": {
+          "type": "boolean",
+          "description": "Enable strict validation",
+          "default": false
+        },
+        "checkMissingKeys": {
+          "type": "boolean",
+          "description": "Check for missing translation keys",
+          "default": true
+        },
+        "checkPlaceholders": {
+          "type": "boolean",
+          "description": "Validate placeholder consistency",
+          "default": true
+        },
+        "checkUntranslated": {
+          "type": "boolean",
+          "description": "Warn about untranslated strings",
+          "default": true
+        },
+        "minCompleteness": {
+          "type": "number",
+          "description": "Minimum translation completeness percentage",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 80
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "lazyLoading": {
+          "type": "boolean",
+          "description": "Enable lazy loading of translations",
+          "default": true
+        },
+        "caching": {
+          "type": "boolean",
+          "description": "Cache translations in production",
+          "default": true
+        },
+        "splitByNamespace": {
+          "type": "boolean",
+          "description": "Split large files by namespace",
+          "default": true
+        }
+      }
+    }
+  },
+  "required": ["project", "locales"]
+}

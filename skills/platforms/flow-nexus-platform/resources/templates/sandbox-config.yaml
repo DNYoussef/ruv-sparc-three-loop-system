@@ -1,0 +1,113 @@
+# Flow Nexus Sandbox Configuration Template
+# Use this template to define custom sandbox configurations
+
+name: custom-sandbox
+template: node  # node, python, react, nextjs, vanilla, base, claude-code
+
+# Environment Variables
+env_vars:
+  NODE_ENV: development
+  PORT: 3000
+  LOG_LEVEL: info
+  # API_KEY: ${SECRET_API_KEY}  # Reference secrets from secure storage
+  # DATABASE_URL: ${DATABASE_URL}
+
+# Packages to Install
+install_packages:
+  # Node.js packages
+  - express
+  - cors
+  - dotenv
+  - helmet
+  - morgan
+
+  # Or Python packages (when using python template)
+  # - numpy
+  # - pandas
+  # - flask
+
+# Startup Script
+startup_script: |
+  npm install
+  npm run build
+  npm run migrate
+  # npm run dev
+
+# Resource Configuration
+timeout: 3600  # seconds (1 hour)
+
+metadata:
+  project: my-project
+  environment: staging
+  owner: team-backend
+  purpose: API development sandbox
+  cost_center: engineering
+
+# Sandbox Lifecycle Hooks
+hooks:
+  on_create:
+    - echo "Sandbox created"
+    - git clone https://github.com/user/repo.git /app
+
+  on_start:
+    - echo "Sandbox starting"
+    - npm run setup
+
+  on_stop:
+    - echo "Sandbox stopping"
+    - npm run cleanup
+
+# Network Configuration (if supported)
+network:
+  expose_ports:
+    - 3000
+    - 8080
+
+  allowed_domains:
+    - api.example.com
+    - "*.googleapis.com"
+
+  blocked_domains:
+    - malicious-site.com
+
+# Storage Configuration
+storage:
+  persist_paths:
+    - /app/data
+    - /app/uploads
+
+  mount_volumes:
+    - name: shared-data
+      path: /mnt/shared
+
+# Advanced Features
+features:
+  gpu_enabled: false
+  websocket_support: true
+  file_upload_enabled: true
+  max_execution_time: 300  # seconds for individual executions
+
+# Security
+security:
+  read_only_filesystem: false
+  drop_capabilities:
+    - NET_ADMIN
+    - SYS_ADMIN
+
+  allowed_syscalls:
+    - read
+    - write
+    - open
+    - close
+
+# Monitoring
+monitoring:
+  collect_metrics: true
+  log_level: info
+  alert_on_errors: true
+
+  health_checks:
+    enabled: true
+    endpoint: /health
+    interval: 30  # seconds
+    timeout: 5

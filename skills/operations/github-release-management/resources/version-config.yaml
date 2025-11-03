@@ -1,0 +1,363 @@
+# Version Configuration for Multi-Package Releases
+# Centralized version management and release coordination
+
+version: 2.0.0
+release_date: 2024-01-15
+
+# Package versions (for monorepos)
+packages:
+  - name: core
+    version: 2.0.0
+    path: packages/core
+    changelog: packages/core/CHANGELOG.md
+
+  - name: cli
+    version: 1.5.0
+    path: packages/cli
+    changelog: packages/cli/CHANGELOG.md
+
+  - name: api
+    version: 2.1.0
+    path: packages/api
+    changelog: packages/api/CHANGELOG.md
+
+# Version files to update
+versionFiles:
+  - package.json
+  - packages/*/package.json
+  - VERSION
+  - docs/conf.py
+
+# Release configuration
+release:
+  versioning:
+    strategy: semantic
+    breakingKeywords:
+      - BREAKING
+      - BREAKING CHANGE
+      - '!'
+    featureKeywords:
+      - feat
+      - feature
+    fixKeywords:
+      - fix
+      - bugfix
+
+  # Changelog configuration
+  changelog:
+    sections:
+      - title: "💥 Breaking Changes"
+        labels: [breaking]
+        priority: 1
+        highlight: true
+
+      - title: "🔒 Security"
+        labels: [security]
+        priority: 2
+
+      - title: "🚀 Features"
+        labels: [feature, enhancement]
+        priority: 3
+        emoji: true
+
+      - title: "🐛 Bug Fixes"
+        labels: [bug, fix]
+        priority: 4
+
+      - title: "⚡ Performance"
+        labels: [performance, optimization]
+        priority: 5
+
+      - title: "♻️ Refactoring"
+        labels: [refactor]
+        priority: 6
+
+      - title: "📚 Documentation"
+        labels: [docs, documentation]
+        priority: 7
+
+      - title: "✅ Tests"
+        labels: [test, tests]
+        priority: 8
+
+      - title: "🔧 Build System"
+        labels: [build]
+        priority: 9
+
+      - title: "👷 CI/CD"
+        labels: [ci, cd]
+        priority: 10
+
+      - title: "🧹 Chores"
+        labels: [chore]
+        priority: 11
+
+    format: markdown
+    includeEmoji: true
+    includeContributors: true
+    includePRLinks: true
+    includeCommitLinks: true
+
+  # Validation steps
+  validation:
+    preRelease:
+      - name: lint
+        command: npm run lint
+        required: true
+
+      - name: typecheck
+        command: npm run typecheck
+        required: true
+
+      - name: unit-tests
+        command: npm run test:unit
+        required: true
+
+      - name: integration-tests
+        command: npm run test:integration
+        required: true
+
+      - name: e2e-tests
+        command: npm run test:e2e
+        required: false
+
+      - name: security-scan
+        command: npm audit --audit-level=moderate
+        required: true
+
+      - name: license-check
+        command: npm run license-check
+        required: true
+
+      - name: build
+        command: npm run build
+        required: true
+
+    postRelease:
+      - name: smoke-tests
+        command: npm run test:smoke
+        required: true
+
+      - name: deployment-validation
+        command: ./scripts/validate-deployment.sh
+        required: false
+
+      - name: performance-baseline
+        command: npm run benchmark
+        required: false
+
+  # Artifact configuration
+  artifacts:
+    npm:
+      enabled: true
+      registry: https://registry.npmjs.org
+      access: public
+      tag: latest
+
+    docker:
+      enabled: true
+      registry: docker.io
+      imageName: myapp
+      platforms:
+        - linux/amd64
+        - linux/arm64
+      tags:
+        - latest
+        - "{{VERSION}}"
+        - "{{MAJOR}}.{{MINOR}}"
+
+    github:
+      enabled: true
+      uploadAssets: true
+      assetPatterns:
+        - dist/*.tar.gz
+        - dist/*.zip
+        - dist/SHA256SUMS
+        - dist/SHA256SUMS.asc
+      draft: false
+      prerelease: false
+
+    binaries:
+      enabled: true
+      platforms:
+        - linux
+        - macos
+        - windows
+      architectures:
+        - x64
+        - arm64
+      sign: true
+      compression: true
+
+  # Deployment configuration
+  deployment:
+    environments:
+      - name: staging
+        autoDepl: true
+        url: https://staging.example.com
+        validation:
+          command: npm run test:e2e
+          timeout: 300
+        approval: false
+
+      - name: production
+        autoDeploy: false
+        url: https://example.com
+        validation:
+          command: npm run test:smoke
+          timeout: 180
+        approval:
+          required: true
+          approvers:
+            - release-manager
+            - tech-lead
+        healthChecks:
+          - endpoint: /health
+            expected: 200
+            timeout: 30
+
+        rollback:
+          enabled: true
+          autoRollback:
+            triggers:
+              errorRate: ">5%"
+              latencyP99: ">1000ms"
+              availability: "<99.9%"
+            gracePeriod: 300
+
+    strategy:
+      type: progressive
+      stages:
+        - name: canary
+          percentage: 5
+          duration: 3600
+          metrics:
+            errorRate: "<0.1%"
+            latencyP99: "<200ms"
+          autoAdvance: true
+
+        - name: partial
+          percentage: 25
+          duration: 14400
+          validation: automated-tests
+          approval: qa-team
+
+        - name: rollout
+          percentage: 50
+          duration: 28800
+          monitor: true
+
+        - name: full
+          percentage: 100
+          approval: release-manager
+          rollbackEnabled: true
+
+  # Monitoring configuration
+  monitoring:
+    enabled: true
+    duration: 3600 # 1 hour
+
+    metrics:
+      - name: error-rate
+        threshold: "<1%"
+        critical: true
+
+      - name: latency-p95
+        threshold: "<500ms"
+        critical: false
+
+      - name: latency-p99
+        threshold: "<1000ms"
+        critical: true
+
+      - name: availability
+        threshold: ">99.9%"
+        critical: true
+
+      - name: memory-usage
+        threshold: "<80%"
+        critical: false
+
+    alerts:
+      - type: slack
+        channel: releases
+        events: [deploy, rollback, error, critical]
+
+      - type: email
+        recipients:
+          - team@example.com
+          - ops@example.com
+        events: [critical-error, rollback]
+
+      - type: pagerduty
+        service: production-releases
+        events: [critical-error]
+
+  # Security configuration
+  security:
+    signArtifacts: true
+    generateSBOM: true
+    scanVulnerabilities: true
+    checkLicenses: true
+    auditDependencies: true
+
+# GitHub configuration
+github:
+  owner: myorg
+  repo: myapp
+  mainBranch: main
+  releaseBranch: release/*
+  hotfixBranch: hotfix/*
+
+# Notification configuration
+notifications:
+  enabled: true
+
+  channels:
+    - type: slack
+      webhook: https://hooks.slack.com/services/...
+      channel: releases
+
+    - type: discord
+      webhook: https://discord.com/api/webhooks/...
+
+    - type: github-discussion
+      category: announcements
+
+    - type: twitter
+      enabled: false
+
+  templates:
+    release:
+      title: "🎉 Released {{VERSION}}"
+      message: |
+        New version {{VERSION}} is now available!
+
+        {{HIGHLIGHTS}}
+
+        Full changelog: {{CHANGELOG_URL}}
+
+    hotfix:
+      title: "🚨 Hotfix {{VERSION}}"
+      message: |
+        Critical hotfix {{VERSION}} has been released.
+
+        {{DESCRIPTION}}
+
+        Please update immediately.
+
+# Documentation configuration
+documentation:
+  auto-generate: true
+  update-version: true
+
+  files:
+    - README.md
+    - docs/API.md
+    - docs/CHANGELOG.md
+    - docs/MIGRATION.md
+
+  links:
+    docs: https://docs.example.com
+    changelog: https://github.com/myorg/myapp/blob/main/CHANGELOG.md
+    migration: https://docs.example.com/migration

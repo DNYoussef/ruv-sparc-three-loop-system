@@ -1,0 +1,196 @@
+# Pre-Task Hook Configuration
+# Auto-assign agents, validate commands, prepare resources before task execution
+
+hooks:
+  pre-task:
+    # Enable/disable this hook
+    enabled: true
+
+    # Hook priority (lower = earlier execution)
+    priority: 10
+
+    # Actions to perform (executed in order)
+    actions:
+      - agent-assignment      # Automatically assign best agent for task
+      - resource-preparation  # Prepare required resources (memory, files, etc.)
+      - command-validation    # Validate command safety and permissions
+      - topology-optimization # Optimize swarm topology based on task complexity
+      - cache-warmup         # Pre-load frequently used searches and patterns
+
+    # Configuration for each action
+    config:
+      agent-assignment:
+        # Agent selection strategy
+        strategy: auto  # Options: auto, manual, weighted
+
+        # File type to agent mapping
+        file_type_mapping:
+          '.js': coder
+          '.ts': coder
+          '.jsx': react-specialist
+          '.tsx': react-specialist
+          '.py': python-specialist
+          '.java': coder
+          '.go': coder
+          '.rs': coder
+          '.md': technical-writing-agent
+          '.yaml': devops-engineer
+          '.json': coder
+
+        # Task pattern to agent mapping
+        task_patterns:
+          - pattern: "test|spec|jest"
+            agent: tester
+          - pattern: "review|audit|check"
+            agent: reviewer
+          - pattern: "api|rest|graphql"
+            agent: api-designer
+          - pattern: "database|sql|query"
+            agent: database-design-specialist
+          - pattern: "optimize|performance|benchmark"
+            agent: performance-optimizer
+          - pattern: "security|vulnerability|auth"
+            agent: security-testing-agent
+
+        # Default fallback agent
+        default_agent: coder
+
+      resource-preparation:
+        # Memory resources to load
+        memory:
+          enabled: true
+          load_recent: true
+          max_items: 10
+          key_prefix: "hooks/pre-task"
+
+        # File resources to prepare
+        files:
+          enabled: true
+          check_git_status: true
+          create_backup: false
+
+        # Environment variables to set
+        environment:
+          HOOK_CONTEXT: pre-task
+          TASK_START_TIME: "{{timestamp}}"
+
+      command-validation:
+        # Safety checks
+        safety:
+          enabled: true
+          block_dangerous_commands: true
+          require_confirmation: false
+
+        # Dangerous command patterns (blocked by default)
+        dangerous_patterns:
+          - "rm -rf /"
+          - ":(){ :|:& };:"  # Fork bomb
+          - "mkfs"
+          - "dd if=/dev/zero"
+          - "mv /* /dev/null"
+
+        # Allowed command prefixes
+        allowed_prefixes:
+          - npx
+          - npm
+          - node
+          - python
+          - git
+          - bash
+          - mkdir
+          - touch
+          - echo
+
+      topology-optimization:
+        # Auto-select topology based on task
+        enabled: true
+
+        # Complexity thresholds
+        thresholds:
+          simple: 1        # Single agent (mesh)
+          moderate: 3      # Star topology
+          complex: 5       # Hierarchical
+          distributed: 10  # Mesh with coordinators
+
+        # Default topology
+        default: mesh
+
+      cache-warmup:
+        # Pre-load frequently accessed data
+        enabled: true
+
+        # Items to cache
+        cache_items:
+          - recent_files
+          - git_status
+          - agent_metrics
+          - memory_patterns
+
+        # Cache TTL (seconds)
+        ttl: 300
+
+# Execution settings
+execution:
+  # Timeout for hook execution (milliseconds)
+  timeout: 5000
+
+  # Retry configuration
+  retry:
+    enabled: true
+    max_attempts: 3
+    backoff: exponential
+
+  # Error handling
+  error_handling:
+    continue_on_error: true
+    log_errors: true
+    notify_on_failure: false
+
+# Logging configuration
+logging:
+  enabled: true
+  level: info  # Options: debug, info, warn, error
+  destination: file
+  file_path: ~/.claude-flow/logs/pre-task-hook.log
+  max_size: 10mb
+  rotation: daily
+
+# Metrics collection
+metrics:
+  enabled: true
+  track:
+    - execution_time
+    - agent_assignments
+    - validation_failures
+    - cache_hits
+  export_format: json
+  export_path: ~/.claude-flow/metrics/pre-task-hook.json
+
+# Integration settings
+integrations:
+  # Claude Flow MCP
+  claude_flow:
+    enabled: true
+    auto_register: true
+
+  # Memory MCP
+  memory_mcp:
+    enabled: true
+    auto_restore: true
+
+  # Git integration
+  git:
+    enabled: true
+    auto_status: true
+    check_branch: true
+
+# Custom hook scripts (optional)
+custom_scripts:
+  # Pre-execution script
+  pre_hook: null
+
+  # Post-execution script
+  post_hook: null
+
+  # Custom validation script
+  validator: null

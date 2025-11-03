@@ -1,0 +1,301 @@
+{
+  "version": "1.0.0",
+  "description": "Structured library of intent patterns for probabilistic classification and signal detection",
+  "categories": {
+    "request_types": {
+      "creative": {
+        "description": "Writing, design, ideation, content generation tasks",
+        "verbs": [
+          "write", "create", "design", "generate", "compose", "draft",
+          "brainstorm", "ideate", "come up with", "invent", "develop",
+          "craft", "produce", "build", "make", "formulate"
+        ],
+        "nouns": [
+          "content", "story", "article", "design", "idea", "concept",
+          "creative", "narrative", "copy", "script", "draft", "piece",
+          "blog post", "email", "letter", "proposal", "document"
+        ],
+        "phrases": [
+          "come up with", "help me write", "generate ideas", "create content",
+          "write something", "need ideas for", "brainstorm some"
+        ],
+        "patterns": {
+          "output_focused": "\\b(produce|generate|create)\\s+(a|an|some)\\s+\\w+",
+          "ideation": "\\b(ideas?|concepts?|suggestions?)\\s+(for|about)",
+          "composition": "\\b(write|compose|draft)\\s+(a|an|the)\\s+\\w+"
+        }
+      },
+      "analytical": {
+        "description": "Evaluation, comparison, assessment, analysis tasks",
+        "verbs": [
+          "analyze", "evaluate", "assess", "compare", "review", "examine",
+          "investigate", "study", "critique", "judge", "measure", "test",
+          "inspect", "audit", "benchmark", "rate"
+        ],
+        "nouns": [
+          "analysis", "evaluation", "assessment", "comparison", "review",
+          "tradeoff", "pros and cons", "advantages", "disadvantages",
+          "strengths", "weaknesses", "metrics", "criteria"
+        ],
+        "phrases": [
+          "what are the pros and cons", "compare and contrast",
+          "evaluate whether", "analyze the", "assessment of",
+          "tradeoffs between", "advantages and disadvantages",
+          "strengths and weaknesses"
+        ],
+        "patterns": {
+          "comparison": "\\b(compare|contrast)\\s+(\\w+\\s+)?(and|vs|versus)",
+          "evaluation": "\\b(evaluate|assess|analyze)\\s+(the|this|whether)",
+          "tradeoff": "\\b(pros and cons|tradeoffs?|advantages|disadvantages)"
+        }
+      },
+      "technical": {
+        "description": "Coding, debugging, building, implementation tasks",
+        "verbs": [
+          "code", "implement", "build", "fix", "debug", "develop",
+          "program", "configure", "setup", "install", "deploy",
+          "refactor", "optimize", "migrate", "integrate", "automate"
+        ],
+        "nouns": [
+          "code", "function", "bug", "error", "implementation", "software",
+          "system", "application", "api", "database", "server", "script",
+          "algorithm", "data structure", "module", "component", "service"
+        ],
+        "phrases": [
+          "write code", "fix the bug", "implement this", "build a system",
+          "debug the", "develop a", "create a function", "setup the",
+          "configure the", "deploy to", "how to code", "programming"
+        ],
+        "patterns": {
+          "implementation": "\\b(implement|build|create)\\s+(a|an|the)\\s+\\w+",
+          "debugging": "\\b(fix|debug|troubleshoot|resolve)\\s+(the|this|a)\\s+\\w+",
+          "configuration": "\\b(setup|configure|install)\\s+(the|a)\\s+\\w+"
+        }
+      },
+      "learning": {
+        "description": "Explanation, teaching, understanding, clarification requests",
+        "verbs": [
+          "explain", "teach", "show", "clarify", "help understand",
+          "demonstrate", "illustrate", "describe", "define", "introduce",
+          "walk through", "guide", "tutor", "enlighten"
+        ],
+        "nouns": [
+          "explanation", "understanding", "concept", "tutorial", "lesson",
+          "example", "demonstration", "clarification", "definition",
+          "introduction", "guide", "walkthrough", "basics", "fundamentals"
+        ],
+        "phrases": [
+          "how does", "why does", "what is", "what are", "i don't understand",
+          "teach me", "explain to me", "help me understand", "can you explain",
+          "walk me through", "show me how", "what's the difference between"
+        ],
+        "patterns": {
+          "how_question": "\\bhow\\s+(does|do|is|can|to)\\b",
+          "why_question": "\\bwhy\\s+(does|do|is|are|would)\\b",
+          "what_question": "\\bwhat\\s+(is|are|does|do)\\b",
+          "confusion": "\\b(don't understand|confused|unclear|not sure)\\b"
+        }
+      },
+      "decision": {
+        "description": "Choosing options, recommendations, planning tasks",
+        "verbs": [
+          "recommend", "suggest", "choose", "decide", "should", "pick",
+          "select", "advise", "propose", "determine", "opt", "prefer"
+        ],
+        "nouns": [
+          "recommendation", "suggestion", "decision", "choice", "option",
+          "alternative", "preference", "selection", "advice", "proposal",
+          "plan", "strategy", "approach", "path", "route"
+        ],
+        "phrases": [
+          "should i", "which is better", "what do you recommend",
+          "help me choose", "which one", "best option", "what would you",
+          "advice on", "recommend for", "suggest for", "decision between"
+        ],
+        "patterns": {
+          "should_question": "\\bshould\\s+(i|we|they)\\b",
+          "recommendation": "\\b(recommend|suggest|advise)\\s+(a|an|the|for|on)\\b",
+          "choice": "\\b(choose|pick|select)\\s+(between|from|the)\\b",
+          "which_question": "\\bwhich\\s+(is|are|one|should)\\b"
+        }
+      },
+      "problem_solving": {
+        "description": "Debugging, optimization, fixing issues tasks",
+        "verbs": [
+          "solve", "troubleshoot", "diagnose", "resolve", "fix",
+          "optimize", "improve", "enhance", "repair", "correct",
+          "remedy", "address", "handle", "deal with"
+        ],
+        "nouns": [
+          "problem", "issue", "solution", "fix", "optimization",
+          "improvement", "enhancement", "bug", "error", "failure",
+          "bottleneck", "performance issue", "memory leak"
+        ],
+        "phrases": [
+          "not working", "having trouble", "keep getting error",
+          "make it better", "optimize the", "improve the", "solve the",
+          "fix the problem", "doesn't work", "isn't working", "broken"
+        ],
+        "patterns": {
+          "not_working": "\\b(not working|doesn't work|isn't working|broken|failing)\\b",
+          "error": "\\b(error|exception|failure|crash)\\b",
+          "improvement": "\\b(better|optimize|improve|enhance|faster|slower)\\b"
+        }
+      }
+    },
+    "temporal_signals": {
+      "high_urgency": {
+        "keywords": ["quick", "quickly", "fast", "asap", "urgent", "immediately", "right away", "now"],
+        "phrases": ["as soon as possible", "time-sensitive", "deadline", "rush", "hurry"],
+        "interpretation": "User values speed over completeness - prefer simple, direct solutions"
+      },
+      "specific_timeline": {
+        "patterns": [
+          "\\b(today|tonight|this morning|this afternoon)\\b",
+          "\\b(tomorrow|next week|by \\w+day)\\b",
+          "\\bin \\d+ (hour|day|week)s?\\b",
+          "\\bwithin \\d+\\b"
+        ],
+        "interpretation": "Explicit deadline mentioned - prioritize meeting timeline"
+      },
+      "quality_over_speed": {
+        "keywords": ["comprehensive", "thorough", "complete", "detailed", "in-depth"],
+        "phrases": ["everything", "all aspects", "full coverage", "leave no stone unturned"],
+        "interpretation": "User values thoroughness - invest time in comprehensive response"
+      }
+    },
+    "audience_indicators": {
+      "technical_expert": {
+        "terminology": [
+          "api", "algorithm", "architecture", "implementation", "optimization",
+          "performance", "scalability", "latency", "throughput", "async",
+          "concurrent", "distributed", "microservice", "rest", "graphql",
+          "database", "sql", "nosql", "cache", "queue", "container"
+        ],
+        "interpretation": "Technical audience - precision and accuracy critical, can skip basics"
+      },
+      "general_audience": {
+        "phrases": [
+          "simple terms", "layman", "non-technical", "explain like",
+          "for someone who", "beginner", "new to", "learning", "just starting"
+        ],
+        "interpretation": "General audience - prioritize clarity and accessibility over technical precision"
+      },
+      "formal_presentation": {
+        "keywords": ["presentation", "slides", "meeting", "stakeholder", "executive", "formal", "professional", "business", "client", "report"],
+        "interpretation": "Formal presentation context - polish and professionalism critical"
+      },
+      "personal_use": {
+        "phrases": ["for myself", "my own", "personal project", "just curious", "help me understand", "i want to learn"],
+        "interpretation": "Personal use - can tailor to user-specific needs and preferences"
+      }
+    },
+    "constraint_markers": {
+      "explicit_format": {
+        "keywords": ["format", "structure", "template", "layout"],
+        "phrases": ["in the form of", "formatted as", "structured like"],
+        "patterns": ["\\b(word|character) limits?\\b", "\\b\\d+ (words?|characters?)\\b"],
+        "interpretation": "Specific format requirements - adhere strictly to stated format"
+      },
+      "technology_stack": {
+        "patterns": [
+          "\\b(using|in|with) (python|javascript|react|node|java|c\\+\\+|rust|go)\\b",
+          "\\b(framework|library|tool|platform):\\s*\\w+"
+        ],
+        "interpretation": "Specific technology requirements - must use stated tech stack"
+      },
+      "resource_constraints": {
+        "keywords": ["budget", "cost", "free", "open-source", "no money"],
+        "phrases": ["limited resources", "limited access", "limited permissions", "can't use", "can't access", "can't install", "don't have access"],
+        "interpretation": "Resource limitations present - constrain solutions to available resources"
+      },
+      "quality_requirements": {
+        "keywords": ["production", "enterprise", "mission-critical", "high-availability", "reliable", "robust", "secure", "safe", "tested"],
+        "interpretation": "Implicit quality/reliability requirements - prioritize production-ready solutions"
+      }
+    },
+    "meta_patterns": {
+      "capability_query": {
+        "phrases": ["can you", "are you able", "do you support", "is it possible", "what can", "what are your capabilities"],
+        "interpretation": "User exploring capabilities - explain what is possible before proceeding"
+      },
+      "refinement_request": {
+        "keywords": ["different", "another", "alternative", "instead", "better"],
+        "phrases": ["try again", "redo", "revise", "improve", "enhance", "not what i", "that's not", "different approach"],
+        "interpretation": "User wants different approach - previous attempt did not meet needs"
+      },
+      "validation_request": {
+        "phrases": [
+          "is this right", "is this correct", "is this good", "am i understanding",
+          "does this make sense", "am i on the right track", "verify", "validate", "check", "confirm"
+        ],
+        "interpretation": "User seeking validation - confirm understanding before proceeding further"
+      },
+      "example_request": {
+        "keywords": ["example", "sample", "instance", "demonstration", "show me"],
+        "phrases": ["for instance", "such as", "like what", "what would", "give me an example"],
+        "interpretation": "User wants concrete examples - provide specific illustrations"
+      }
+    },
+    "expertise_signals": {
+      "expert_terminology": [
+        "refactor", "polymorphism", "dependency injection", "idempotent",
+        "memoization", "closure", "currying", "hoisting", "prototype",
+        "oauth", "jwt", "csrf", "xss", "sql injection", "cors",
+        "big o", "time complexity", "space complexity", "recursion"
+      ],
+      "tool_awareness": [
+        "git", "docker", "kubernetes", "terraform", "ansible",
+        "webpack", "babel", "jest", "pytest", "junit", "eslint",
+        "vs code", "intellij", "postman", "swagger", "jira"
+      ],
+      "high_specificity_markers": [
+        "specifically", "exactly", "precisely", "particularly"
+      ],
+      "low_specificity_markers": [
+        "generally", "overview", "introduction", "basics", "fundamentals"
+      ]
+    }
+  },
+  "composite_patterns": {
+    "urgent_technical_task": {
+      "description": "High-urgency technical implementation",
+      "required_signals": ["high_urgency", "technical"],
+      "interpretation": "Quick technical solution needed - prioritize working code over perfect design"
+    },
+    "learning_with_examples": {
+      "description": "Educational request with concrete examples",
+      "required_signals": ["learning", "example_request"],
+      "interpretation": "Teach through examples - provide clear illustrations with explanations"
+    },
+    "high_stakes_decision": {
+      "description": "Important decision with quality requirements",
+      "required_signals": ["decision", "quality_requirements"],
+      "interpretation": "Critical decision - provide thorough analysis with risk assessment"
+    },
+    "expert_optimization": {
+      "description": "Expert-level performance optimization",
+      "required_signals": ["expert_terminology", "problem_solving"],
+      "interpretation": "Technical optimization for expert - dive deep into performance details"
+    }
+  },
+  "anti_patterns": {
+    "conflicting_signals": {
+      "description": "Contradictory signals that indicate confusion",
+      "examples": [
+        {"signals": ["high_urgency", "quality_over_speed"], "interpretation": "Clarify priority: speed vs quality"},
+        {"signals": ["expert_terminology", "general_audience"], "interpretation": "Clarify audience: expert vs general"},
+        {"signals": ["learning", "production"], "interpretation": "Clarify purpose: learning vs production use"}
+      ]
+    },
+    "vague_requests": {
+      "description": "Requests lacking specificity",
+      "patterns": [
+        "\\bhelp( me)?\\b$",
+        "\\b(tell me|show me) (about|more)\\b$",
+        "\\b(what about|how about)\\s+\\w+\\??$"
+      ],
+      "interpretation": "Request lacks specificity - seek clarification about specific needs"
+    }
+  }
+}

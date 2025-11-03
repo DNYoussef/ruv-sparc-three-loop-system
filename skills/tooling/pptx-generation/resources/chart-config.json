@@ -1,0 +1,195 @@
+{
+  "chartDefaults": {
+    "colorPalette": [
+      "#1E3A8A",
+      "#3B82F6",
+      "#60A5FA",
+      "#93C5FD",
+      "#DBEAFE"
+    ],
+    "backgroundColor": "#FFFFFF",
+    "textColor": "#1F2937",
+    "gridColor": "#E5E7EB",
+
+    "typography": {
+      "titleFontSize": 20,
+      "labelFontSize": 14,
+      "tickFontSize": 12,
+      "fontFamily": "Arial"
+    },
+
+    "layout": {
+      "figureWidth": 10.0,
+      "figureHeight": 6.0,
+      "dpi": 150
+    },
+
+    "accessibility": {
+      "minContrastRatio": 4.5,
+      "includeDataLabels": true,
+      "altTextRequired": true
+    }
+  },
+
+  "chartTypes": {
+    "bar": {
+      "orientation": "vertical",
+      "dataLabels": true,
+      "gridLines": true,
+      "edgeColor": "#1F2937",
+      "edgeWidth": 1.5
+    },
+
+    "horizontalBar": {
+      "orientation": "horizontal",
+      "dataLabels": true,
+      "gridLines": true,
+      "edgeColor": "#1F2937",
+      "edgeWidth": 1.5
+    },
+
+    "line": {
+      "markers": true,
+      "markerSize": 8,
+      "lineWidth": 3,
+      "gridLines": true,
+      "legendPosition": "best"
+    },
+
+    "pie": {
+      "showPercentages": true,
+      "edgeColor": "#FFFFFF",
+      "edgeWidth": 3,
+      "startAngle": 90,
+      "explodeSlices": false
+    },
+
+    "scatter": {
+      "markerSize": 100,
+      "markerAlpha": 0.7,
+      "trendLine": true,
+      "trendLineStyle": "dashed",
+      "trendLineWidth": 2
+    },
+
+    "area": {
+      "alpha": 0.3,
+      "lineWidth": 2,
+      "fillBetween": true,
+      "gridLines": true
+    }
+  },
+
+  "templates": {
+    "financial": {
+      "colorPalette": [
+        "#059669",
+        "#10B981",
+        "#34D399",
+        "#6EE7B7"
+      ],
+      "description": "Green palette for financial growth/positive metrics"
+    },
+
+    "comparison": {
+      "colorPalette": [
+        "#1E3A8A",
+        "#F59E0B",
+        "#EF4444",
+        "#10B981"
+      ],
+      "description": "Distinct colors for comparing categories"
+    },
+
+    "heatmap": {
+      "colorPalette": [
+        "#DBEAFE",
+        "#93C5FD",
+        "#60A5FA",
+        "#3B82F6",
+        "#1E3A8A"
+      ],
+      "description": "Sequential blue scale for intensity mapping"
+    },
+
+    "alert": {
+      "colorPalette": [
+        "#EF4444",
+        "#F87171",
+        "#FCA5A5",
+        "#FECACA"
+      ],
+      "description": "Red palette for warnings/negative metrics"
+    }
+  },
+
+  "validationRules": {
+    "minFontSize": 12,
+    "maxDataPoints": 50,
+    "maxSeriesCount": 8,
+    "requireDataLabels": true,
+    "requireGridLines": true,
+    "prohibitedStyles": [
+      "3d_effects",
+      "shadows",
+      "gradients_on_bars",
+      "decorative_borders"
+    ]
+  },
+
+  "exportFormats": {
+    "png": {
+      "dpi": 150,
+      "transparent": false,
+      "compressionLevel": 6
+    },
+
+    "svg": {
+      "embedFonts": true,
+      "responsive": true
+    },
+
+    "pdf": {
+      "dpi": 300,
+      "embedFonts": true
+    }
+  },
+
+  "bestPractices": {
+    "bar": [
+      "Sort bars by value for easier comparison",
+      "Use horizontal bars for long category names",
+      "Include data labels for precise values",
+      "Limit to 8-10 bars maximum for readability"
+    ],
+
+    "line": [
+      "Use markers at data points for clarity",
+      "Limit to 5 series maximum",
+      "Ensure legend is clear and not overlapping",
+      "Consider logarithmic scale for wide value ranges"
+    ],
+
+    "pie": [
+      "Limit to 5-7 slices maximum",
+      "Order slices by size (largest first)",
+      "Consider donut chart for better readability",
+      "Avoid pie charts for precise comparisons"
+    ],
+
+    "scatter": [
+      "Include trend line to show relationships",
+      "Label outliers if significant",
+      "Use different markers for multiple series",
+      "Consider logarithmic scale for exponential relationships"
+    ]
+  },
+
+  "commonErrors": {
+    "lowContrast": "Text/background contrast below 4.5:1",
+    "smallFont": "Font size below 12pt",
+    "tooManyCategories": "More than 10 categories in single chart",
+    "noDataLabels": "Data labels missing from bar chart",
+    "cluttered": "Too many elements competing for attention"
+  }
+}

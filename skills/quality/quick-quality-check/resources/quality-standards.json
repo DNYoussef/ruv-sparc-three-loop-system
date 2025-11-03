@@ -1,0 +1,178 @@
+{
+  "version": "1.0.0",
+  "description": "Quality standards for quick-quality-check Enhanced tier",
+
+  "code_standards": {
+    "max_line_length": 120,
+    "max_function_length": 50,
+    "max_file_length": 500,
+    "max_complexity": 10,
+    "max_parameters": 6,
+    "max_nesting_depth": 4
+  },
+
+  "security_standards": {
+    "critical_issues_allowed": 0,
+    "high_issues_allowed": 0,
+    "medium_issues_allowed": 5,
+    "required_scanners": [
+      "pattern_matching",
+      "dependency_check"
+    ],
+    "patterns": {
+      "hardcoded_secrets": {
+        "severity": "critical",
+        "description": "No hardcoded passwords, API keys, or secrets"
+      },
+      "sql_injection": {
+        "severity": "critical",
+        "description": "All SQL queries must be parameterized"
+      },
+      "xss_vulnerabilities": {
+        "severity": "high",
+        "description": "Proper output encoding required"
+      },
+      "unsafe_functions": {
+        "severity": "high",
+        "description": "Avoid eval(), exec(), and similar dangerous functions"
+      }
+    }
+  },
+
+  "test_standards": {
+    "min_coverage": 80,
+    "max_test_time": 30,
+    "required_test_types": [
+      "unit",
+      "integration"
+    ],
+    "test_naming": "should_when_pattern",
+    "assertions_per_test": {
+      "min": 1,
+      "max": 10
+    }
+  },
+
+  "theater_standards": {
+    "max_todo_comments": 5,
+    "max_console_logs": 0,
+    "max_mock_percentage": 20,
+    "forbidden_patterns": [
+      "dummy",
+      "fake implementation",
+      "placeholder"
+    ],
+    "allowed_patterns": {
+      "TODO": {
+        "max_count": 5,
+        "require_ticket": true
+      },
+      "FIXME": {
+        "max_count": 2,
+        "require_explanation": true
+      }
+    }
+  },
+
+  "performance_standards": {
+    "max_execution_time": 60,
+    "max_memory_usage": "512MB",
+    "parallel_execution": true,
+    "cache_enabled": true
+  },
+
+  "quality_gates": {
+    "gate_1_quick": {
+      "description": "Fast preliminary check (<30s)",
+      "required_checks": [
+        "lint",
+        "security_patterns",
+        "basic_tests"
+      ],
+      "min_score": 60
+    },
+    "gate_2_standard": {
+      "description": "Standard quality check (<60s)",
+      "required_checks": [
+        "lint",
+        "security",
+        "tests",
+        "theater"
+      ],
+      "min_score": 75
+    },
+    "gate_3_comprehensive": {
+      "description": "Comprehensive quality check",
+      "required_checks": [
+        "lint",
+        "security",
+        "tests",
+        "theater",
+        "coverage",
+        "performance"
+      ],
+      "min_score": 90
+    }
+  },
+
+  "severity_levels": {
+    "critical": {
+      "score_penalty": 10,
+      "blocking": true,
+      "examples": [
+        "Hardcoded secrets",
+        "SQL injection",
+        "Authentication bypass"
+      ]
+    },
+    "high": {
+      "score_penalty": 5,
+      "blocking": false,
+      "examples": [
+        "XSS vulnerabilities",
+        "Unsafe function usage",
+        "Test failures"
+      ]
+    },
+    "medium": {
+      "score_penalty": 2,
+      "blocking": false,
+      "examples": [
+        "Code style violations",
+        "Theater patterns",
+        "Missing documentation"
+      ]
+    },
+    "low": {
+      "score_penalty": 1,
+      "blocking": false,
+      "examples": [
+        "TODO comments",
+        "Minor formatting issues"
+      ]
+    }
+  },
+
+  "remediation_guidelines": {
+    "critical": {
+      "timeframe": "immediate",
+      "requires_review": true,
+      "deployment_blocked": true
+    },
+    "high": {
+      "timeframe": "24 hours",
+      "requires_review": true,
+      "deployment_blocked": false
+    },
+    "medium": {
+      "timeframe": "1 week",
+      "requires_review": false,
+      "deployment_blocked": false
+    },
+    "low": {
+      "timeframe": "next sprint",
+      "requires_review": false,
+      "deployment_blocked": false
+    }
+  }
+}

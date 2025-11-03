@@ -1,0 +1,369 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Pair Programming Session Template",
+  "description": "Template for pair programming session configuration and tracking",
+  "properties": {
+    "session": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique session identifier",
+          "pattern": "^pair_[a-f0-9]{16}$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable session name"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "paused", "completed", "archived"]
+        }
+      },
+      "required": ["id", "created", "status"]
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["driver", "navigator", "switch", "tdd", "review", "mentor", "debug"]
+        },
+        "focus": {
+          "type": "string",
+          "enum": ["implementation", "refactoring", "debugging", "testing", "documentation", "architecture"]
+        },
+        "switchInterval": {
+          "type": "integer",
+          "description": "Role switch interval in seconds",
+          "minimum": 60,
+          "maximum": 3600,
+          "default": 600
+        },
+        "autoSwitch": {
+          "type": "boolean",
+          "default": true
+        },
+        "verification": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "threshold": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0,
+              "default": 0.95
+            },
+            "autoRollback": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "testing": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "autoRun": {
+              "type": "boolean",
+              "default": true
+            },
+            "framework": {
+              "type": "string",
+              "default": "jest"
+            },
+            "minCoverage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 80
+            }
+          }
+        }
+      },
+      "required": ["mode", "focus"]
+    },
+    "collaborators": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string",
+              "default": "developer"
+            },
+            "currentRole": {
+              "type": "string",
+              "enum": ["driver", "navigator"]
+            }
+          },
+          "required": ["name"]
+        },
+        "aiPartner": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "default": "AI Assistant"
+            },
+            "agentType": {
+              "type": "string",
+              "enum": ["senior-dev", "tdd-specialist", "debugger-expert", "junior-dev", "auto"]
+            },
+            "currentRole": {
+              "type": "string",
+              "enum": ["driver", "navigator"]
+            },
+            "capabilities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": ["agentType"]
+        }
+      },
+      "required": ["user", "aiPartner"]
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "description": "Session duration in seconds",
+          "minimum": 0
+        },
+        "code": {
+          "type": "object",
+          "properties": {
+            "linesAdded": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "linesRemoved": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "filesCreated": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "filesModified": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "filesDeleted": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "testing": {
+          "type": "object",
+          "properties": {
+            "testsWritten": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "testsPassing": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "testsFailing": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "coverage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        },
+        "quality": {
+          "type": "object",
+          "properties": {
+            "avgTruthScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "minTruthScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "maxTruthScore": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 1.0
+            },
+            "commits": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "rollbacks": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "collaboration": {
+          "type": "object",
+          "properties": {
+            "roleSwitches": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "breaksTaken": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "commandsExecuted": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filePath": {
+            "type": "string"
+          },
+          "linesAdded": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "linesRemoved": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "changeType": {
+            "type": "string",
+            "enum": ["add", "modify", "delete"]
+          },
+          "committed": {
+            "type": "boolean",
+            "default": false
+          },
+          "truthScore": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        },
+        "required": ["timestamp", "filePath", "changeType"]
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["general", "decision", "todo", "issue", "learning", "improvement"]
+          },
+          "note": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"],
+            "default": "medium"
+          }
+        },
+        "required": ["timestamp", "note"]
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "properties": {
+        "currentPhase": {
+          "type": "string",
+          "enum": ["planning", "implementation", "testing", "review", "refactoring", "documentation"]
+        },
+        "completedPhases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nextPhase": {
+          "type": "string"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "severity": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "critical"]
+              },
+              "status": {
+                "type": "string",
+                "enum": ["open", "in-progress", "resolved"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "export": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "default": "1.0.0"
+        },
+        "exportedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["json", "markdown"],
+          "default": "json"
+        }
+      }
+    }
+  },
+  "required": ["session", "configuration", "collaborators", "metrics"]
+}

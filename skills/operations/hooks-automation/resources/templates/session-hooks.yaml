@@ -1,0 +1,318 @@
+# Session Hooks Configuration
+# Manage session lifecycle: start, restore, end, and export
+
+hooks:
+  # Session start hook
+  session-start:
+    enabled: true
+    priority: 5
+    description: "Restore context and initialize agents at session start"
+
+    actions:
+      - restore-context
+      - load-memory
+      - initialize-agents
+      - load-preferences
+      - check-updates
+
+    config:
+      restore-context:
+        enabled: true
+        # Restore from previous session
+        auto_restore: true
+        session_id: "{{last_session_id}}"
+
+        # Context items to restore
+        restore_items:
+          - working_directory
+          - active_files
+          - agent_state
+          - todo_list
+          - recent_commands
+
+        # Fallback if restore fails
+        fallback: initialize_fresh
+
+      load-memory:
+        enabled: true
+        mcp_integration: true
+
+        # Memory layers to load
+        layers:
+          - short_term  # Last 24h
+          - mid_term    # Last 7d
+          - long_term   # 30d+
+
+        # Load patterns
+        patterns:
+          - recent_tasks
+          - agent_preferences
+          - code_patterns
+          - project_context
+
+        # Max items per layer
+        max_items: 20
+
+      initialize-agents:
+        enabled: true
+        # Auto-spawn commonly used agents
+        auto_spawn: true
+
+        # Default agent pool
+        default_agents:
+          - coder
+          - reviewer
+          - tester
+
+        # Topology for session
+        topology: mesh
+
+        # Max agents
+        max_agents: 5
+
+      load-preferences:
+        enabled: true
+        preferences_file: "~/.claude-flow/preferences.yaml"
+
+        # Default preferences
+        defaults:
+          editor: "vscode"
+          theme: "dark"
+          auto_format: true
+          git_auto_stage: false
+
+      check-updates:
+        enabled: true
+        check_claude_flow: true
+        check_mcp_servers: true
+        notify_available: true
+
+  # Session restore hook
+  session-restore:
+    enabled: true
+    priority: 10
+    description: "Restore session state from saved checkpoint"
+
+    actions:
+      - validate-session
+      - restore-state
+      - resume-tasks
+
+    config:
+      validate-session:
+        enabled: true
+        check_timestamp: true
+        max_age: 86400  # 24 hours
+        verify_integrity: true
+
+      restore-state:
+        enabled: true
+        state_file: "~/.claude-flow/sessions/{{session_id}}.json"
+
+        # State components
+        components:
+          - agent_state
+          - memory_context
+          - todo_list
+          - metrics
+          - workflow_position
+
+        # Restore strategy
+        strategy: incremental
+
+      resume-tasks:
+        enabled: true
+        auto_resume: false
+        show_summary: true
+        ask_confirmation: true
+
+  # Session end hook
+  session-end:
+    enabled: true
+    priority: 30
+    description: "Persist state, generate summary, export metrics"
+
+    actions:
+      - persist-state
+      - generate-summary
+      - export-metrics
+      - cleanup-temp
+      - backup-session
+
+    config:
+      persist-state:
+        enabled: true
+        output_file: "~/.claude-flow/sessions/{{session_id}}.json"
+
+        # State to persist
+        state_items:
+          - agent_metrics
+          - memory_updates
+          - completed_tasks
+          - active_files
+          - session_config
+
+        # Compression
+        compress: true
+        format: json
+
+      generate-summary:
+        enabled: true
+        output_file: "~/.claude-flow/summaries/{{session_id}}.md"
+
+        # Summary sections
+        sections:
+          - session_info
+          - tasks_completed
+          - agent_performance
+          - code_changes
+          - next_steps
+
+        # Format
+        format: markdown
+        include_metrics: true
+        include_recommendations: true
+
+      export-metrics:
+        enabled: true
+        output_file: "~/.claude-flow/metrics/{{session_id}}.json"
+
+        # Metrics to export
+        metrics:
+          - execution_time
+          - token_usage
+          - agent_usage
+          - hook_performance
+          - error_rate
+          - success_rate
+
+        # Export format
+        format: json
+        pretty_print: true
+
+      cleanup-temp:
+        enabled: true
+        # Directories to clean
+        temp_dirs:
+          - /tmp/claude-flow-*
+          - ~/.claude-flow/temp/*
+
+        # Keep recent files
+        keep_recent: true
+        keep_days: 1
+
+      backup-session:
+        enabled: false
+        backup_dir: "~/.claude-flow/backups"
+        compression: gzip
+        retention_days: 30
+
+# Global execution settings
+execution:
+  timeout: 30000  # 30 seconds
+  retry:
+    enabled: true
+    max_attempts: 2
+    backoff: exponential
+  error_handling:
+    continue_on_error: false
+    log_errors: true
+    notify_on_failure: true
+
+# Logging for all session hooks
+logging:
+  enabled: true
+  level: info
+  destination: file
+  file_path: ~/.claude-flow/logs/session-hooks.log
+  max_size: 20mb
+  rotation: weekly
+  include_context: true
+
+# Metrics tracking
+metrics:
+  enabled: true
+  track:
+    - session_duration
+    - context_restore_time
+    - state_persistence_time
+    - summary_generation_time
+    - memory_operations
+  aggregation: per_session
+  export_format: json
+
+# Integration settings
+integrations:
+  claude_flow:
+    enabled: true
+    auto_register: true
+    session_tracking: true
+
+  memory_mcp:
+    enabled: true
+    auto_persist: true
+    auto_restore: true
+    use_tagging: true
+
+  git:
+    enabled: true
+    track_changes: true
+    auto_commit: false
+
+  agentdb:
+    enabled: true
+    persist_patterns: true
+    restore_patterns: true
+
+# Session management
+session:
+  # Auto-save interval (seconds)
+  auto_save_interval: 300
+
+  # Session timeout (seconds)
+  timeout: 3600
+
+  # Max sessions to keep
+  max_sessions: 50
+
+  # Session naming
+  naming:
+    pattern: "session-{{timestamp}}-{{project}}"
+    include_git_branch: true
+
+# Performance optimization
+performance:
+  parallel_execution: true
+  lazy_loading: true
+  cache:
+    enabled: true
+    ttl: 600
+    max_size: 200
+
+# Notifications
+notifications:
+  enabled: false
+  on_start: false
+  on_end: true
+  on_error: true
+  channels: []
+
+# Advanced features
+advanced:
+  # Distributed sessions
+  distributed:
+    enabled: false
+    sync_interval: 60
+    conflict_resolution: latest_wins
+
+  # Session replay
+  replay:
+    enabled: false
+    record_actions: true
+    playback_speed: 1.0
+
+  # Analytics
+  analytics:
+    enabled: true
+    track_patterns: true
+    generate_insights: true

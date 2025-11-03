@@ -1,0 +1,155 @@
+# Ensemble Model Strategy Configuration
+#
+# Defines the strategy for building ensemble machine learning models
+# including base models, ensemble method, and optimization parameters.
+
+version: 1.0.0
+name: ProductionEnsemble
+description: High-performance ensemble for classification
+created: 2025-11-02
+
+# Ensemble configuration
+ensemble:
+  type: stacking  # Options: voting, stacking, bagging, boosting, adaboost
+  params:
+    cv: 5  # Cross-validation folds for stacking
+    n_jobs: -1  # Use all CPU cores
+
+  meta_classifier:
+    type: logistic_regression
+    params:
+      C: 1.0
+      max_iter: 1000
+
+# Base model definitions
+base_models:
+  - name: random_forest_1
+    type: random_forest
+    weight: 1.0  # For voting ensemble
+    params:
+      n_estimators: 100
+      max_depth: 10
+      min_samples_split: 5
+      min_samples_leaf: 2
+      max_features: sqrt
+      random_state: 42
+
+  - name: gradient_boosting_1
+    type: gradient_boosting
+    weight: 1.5  # Higher weight for better model
+    params:
+      n_estimators: 100
+      learning_rate: 0.1
+      max_depth: 5
+      min_samples_split: 5
+      subsample: 0.8
+      random_state: 42
+
+  - name: logistic_regression_1
+    type: logistic_regression
+    weight: 0.8
+    params:
+      C: 1.0
+      max_iter: 1000
+      solver: lbfgs
+      random_state: 42
+
+# Training configuration
+training:
+  validation_strategy: stratified_kfold
+  n_folds: 5
+  test_size: 0.2
+  random_state: 42
+
+  # Performance optimization
+  optimization:
+    enabled: true
+    method: grid_search  # Options: grid_search, random_search, bayesian
+    cv: 3
+    n_jobs: -1
+
+    # Hyperparameter search space
+    param_grid:
+      random_forest_1__n_estimators: [50, 100, 200]
+      random_forest_1__max_depth: [5, 10, 15]
+      gradient_boosting_1__learning_rate: [0.01, 0.1, 0.5]
+      gradient_boosting_1__n_estimators: [50, 100, 150]
+
+# Evaluation metrics
+evaluation:
+  primary_metric: accuracy
+  additional_metrics:
+    - f1_score
+    - precision
+    - recall
+    - roc_auc
+
+  # Thresholds for acceptance
+  thresholds:
+    min_accuracy: 0.85
+    min_f1: 0.80
+    max_variance: 0.05  # Cross-validation variance
+
+# Model persistence
+persistence:
+  save_base_models: true
+  save_meta_model: true
+  save_predictions: true
+  compression: true
+
+  paths:
+    models_dir: models/ensemble/
+    predictions_dir: predictions/
+    metrics_dir: metrics/
+
+# Advanced ensemble strategies
+advanced:
+  # Diversity promotion
+  diversity:
+    enabled: true
+    method: bagging_subsets
+    subset_ratio: 0.8
+
+  # Feature engineering per model
+  feature_engineering:
+    enabled: false
+    strategies:
+      random_forest_1:
+        - polynomial_features
+        - interaction_terms
+      gradient_boosting_1:
+        - standard_scaling
+        - pca
+
+  # Model weighting strategy
+  weighting:
+    method: performance_based  # Options: equal, performance_based, custom
+    metric: f1_score
+
+# Monitoring and logging
+monitoring:
+  log_level: INFO
+  track_metrics: true
+  save_training_curves: true
+  plot_feature_importance: true
+
+  mlflow:
+    enabled: false
+    experiment_name: ensemble_experiment
+    tracking_uri: http://localhost:5000
+
+# Production deployment
+deployment:
+  inference_batch_size: 32
+  enable_caching: true
+  max_memory_mb: 4096
+  prediction_threshold: 0.5
+
+  api:
+    enabled: false
+    host: 0.0.0.0
+    port: 8000
+    endpoint: /predict
+
+# Example usage:
+# ./ensemble-builder.sh --config ensemble-strategy.yaml --data train.csv --output models/

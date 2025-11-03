@@ -1,0 +1,278 @@
+# GitHub Code Review Configuration Template
+#
+# Place this file at .github/review-swarm.yml in your repository
+# to configure automated review swarm behavior.
+
+version: 1
+
+# Review trigger settings
+review:
+  # Auto-trigger review on PR events
+  auto-trigger: true
+
+  # Trigger only on specific labels
+  trigger-labels:
+    - ready-for-review
+    - needs-review
+
+  # Skip review for specific labels
+  skip-labels:
+    - work-in-progress
+    - wip
+    - draft
+
+# Required review agents (always run)
+required-agents:
+  - security
+  - style
+  - performance
+
+# Optional agents (run based on file changes)
+optional-agents:
+  - architecture
+  - accessibility
+  - i18n
+  - database
+  - docs
+
+# Review thresholds and actions
+thresholds:
+  security:
+    action: block       # Block merge on security issues
+    severity: critical  # Only block on critical severity
+
+  performance:
+    action: warn        # Warn on performance issues
+    threshold: 5%       # Warn if performance degrades >5%
+
+  style:
+    action: suggest     # Suggest style improvements
+    auto-fix: true      # Enable auto-fix for style issues
+
+  architecture:
+    action: comment     # Post comments for architecture issues
+    complexity-limit: 10
+
+# Agent-specific rules
+rules:
+  security:
+    # Security-specific checks
+    - no-eval
+    - no-hardcoded-secrets
+    - no-sql-injection
+    - proper-auth-checks
+    - validate-user-input
+    - secure-headers
+    - csrf-protection
+
+  performance:
+    # Performance-specific checks
+    - no-n-plus-one-queries
+    - efficient-database-queries
+    - proper-caching
+    - optimize-loops
+    - lazy-loading
+    - bundle-size-check
+
+  architecture:
+    # Architecture-specific rules
+    max-coupling: 5
+    min-cohesion: 0.7
+    follow-solid-principles: true
+    avoid-circular-dependencies: true
+    max-file-length: 500
+    max-function-length: 50
+
+  style:
+    # Code style rules
+    - consistent-naming
+    - proper-indentation
+    - no-trailing-whitespace
+    - import-organization
+    - comment-quality
+    - doc-strings
+
+# File path-based triggers
+path-triggers:
+  # High-risk files require comprehensive review
+  high-risk:
+    paths:
+      - "**/auth/**"
+      - "**/payment/**"
+      - "**/admin/**"
+      - "**/security/**"
+    agents:
+      - security
+      - architecture
+      - audit
+    depth: comprehensive
+    require-approval: true
+    min-reviewers: 2
+
+  # Performance-critical paths
+  performance-critical:
+    paths:
+      - "**/api/**"
+      - "**/database/**"
+      - "**/cache/**"
+      - "**/query/**"
+    agents:
+      - performance
+      - database
+    benchmarks: true
+    regression-threshold: 5%
+
+  # UI changes
+  ui-changes:
+    paths:
+      - "**/components/**"
+      - "**/pages/**"
+      - "**/styles/**"
+      - "**/ui/**"
+    agents:
+      - accessibility
+      - style
+      - i18n
+    visual-tests: true
+    responsive-check: true
+
+  # Infrastructure changes
+  infrastructure:
+    paths:
+      - "**/infrastructure/**"
+      - "**/terraform/**"
+      - "**/kubernetes/**"
+      - "**/.github/workflows/**"
+    agents:
+      - architecture
+      - security
+    require-approval: true
+
+  # Documentation
+  documentation:
+    paths:
+      - "**/*.md"
+      - "**/docs/**"
+      - "**/README*"
+    agents:
+      - docs
+    spell-check: true
+
+# Swarm topology configuration
+topology:
+  # Default topology based on PR size
+  auto-select: true
+
+  # Override rules
+  simple:         # < 100 lines changed
+    type: ring
+    max-agents: 3
+
+  moderate:       # 100-500 lines changed
+    type: mesh
+    max-agents: 5
+
+  complex:        # > 500 lines changed
+    type: hierarchical
+    max-agents: 8
+
+# Quality gates
+quality-gates:
+  # Minimum requirements for merge
+  merge-requirements:
+    security:
+      no-critical-issues: true
+      no-high-severity: true
+
+    performance:
+      max-regression: 5%
+
+    coverage:
+      minimum: 80%
+
+    architecture:
+      max-complexity: 10
+      max-coupling: 5
+
+    duplication:
+      maximum: 5%
+
+# Notification settings
+notifications:
+  # Post status updates to PR
+  status-updates: true
+  update-interval: 5m
+
+  # Mention reviewers
+  mention-reviewers: true
+
+  # Slack integration (optional)
+  slack:
+    enabled: false
+    webhook-url: ${SLACK_WEBHOOK_URL}
+
+  # Email notifications (optional)
+  email:
+    enabled: false
+    recipients:
+      - team@example.com
+
+# Auto-fix configuration
+auto-fix:
+  # Enable auto-fix for specific issue types
+  enabled: true
+
+  # What to auto-fix
+  fix-types:
+    - formatting
+    - import-sorting
+    - trailing-whitespace
+    - simple-style-issues
+
+  # Auto-commit fixes
+  auto-commit: true
+  commit-message: "🤖 Auto-fix: {issue-type}"
+
+  # Auto-push fixes
+  auto-push: false  # Require manual push
+
+# Learning and adaptation
+learning:
+  # Learn from review history
+  enabled: true
+
+  # Reduce false positives
+  train-on-feedback: true
+
+  # Adapt to codebase patterns
+  learn-project-patterns: true
+
+  # Minimum confidence for suggestions
+  min-confidence: 0.7
+
+# Rate limiting
+rate-limits:
+  # Max API calls per minute
+  api-calls: 60
+
+  # Max comments per PR
+  max-comments: 50
+
+  # Batch comment posting
+  batch-comments: true
+
+# Advanced options
+advanced:
+  # Enable experimental features
+  experimental: false
+
+  # Debug mode
+  debug: false
+
+  # Cache results
+  cache-enabled: true
+  cache-ttl: 3600  # seconds
+
+  # Parallel processing
+  parallel: true
+  max-workers: 4

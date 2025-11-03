@@ -1,0 +1,206 @@
+{
+  "name": "CI/CD Pipeline Swarm",
+  "description": "Automated continuous integration and deployment swarm with testing, security, and monitoring",
+  "category": "specialized",
+  "topology": "star",
+  "strategy": "adaptive",
+  "default_agents": 6,
+  "tags": ["devops", "ci-cd", "automation", "deployment"],
+  "agents": [
+    {
+      "type": "coordinator",
+      "name": "Pipeline Orchestrator",
+      "capabilities": [
+        "workflow_coordination",
+        "stage_management",
+        "rollback_decisions",
+        "notification_management"
+      ],
+      "priority": 10
+    },
+    {
+      "type": "analyst",
+      "name": "Code Quality Checker",
+      "capabilities": [
+        "linting",
+        "static_analysis",
+        "code_review",
+        "style_enforcement"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "analyst",
+      "name": "Test Runner",
+      "capabilities": [
+        "unit_testing",
+        "integration_testing",
+        "e2e_testing",
+        "test_reporting"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "coder",
+      "name": "Build Engineer",
+      "capabilities": [
+        "artifact_building",
+        "dependency_management",
+        "compilation",
+        "packaging"
+      ],
+      "priority": 8
+    },
+    {
+      "type": "analyst",
+      "name": "Security Scanner",
+      "capabilities": [
+        "vulnerability_scanning",
+        "dependency_audit",
+        "secrets_detection",
+        "compliance_checks"
+      ],
+      "priority": 9
+    },
+    {
+      "type": "coder",
+      "name": "Deployment Specialist",
+      "capabilities": [
+        "environment_management",
+        "deployment_automation",
+        "smoke_testing",
+        "rollback_execution"
+      ],
+      "priority": 8
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Full Pipeline",
+      "description": "Complete CI/CD pipeline from commit to production",
+      "steps": [
+        {
+          "id": "lint",
+          "action": "lint_code",
+          "agent": "Code Quality Checker",
+          "parallel": true
+        },
+        {
+          "id": "unit_test",
+          "action": "run_unit_tests",
+          "agent": "Test Runner",
+          "parallel": true
+        },
+        {
+          "id": "integration_test",
+          "action": "run_integration_tests",
+          "agent": "Test Runner",
+          "parallel": true
+        },
+        {
+          "id": "build",
+          "action": "build_artifacts",
+          "agent": "Build Engineer",
+          "depends_on": ["lint", "unit_test", "integration_test"]
+        },
+        {
+          "id": "security_scan",
+          "action": "security_audit",
+          "agent": "Security Scanner",
+          "depends_on": ["build"]
+        },
+        {
+          "id": "deploy_staging",
+          "action": "deploy_to_staging",
+          "agent": "Deployment Specialist",
+          "depends_on": ["security_scan"]
+        },
+        {
+          "id": "smoke_test",
+          "action": "run_smoke_tests",
+          "agent": "Test Runner",
+          "depends_on": ["deploy_staging"]
+        },
+        {
+          "id": "deploy_prod",
+          "action": "deploy_to_production",
+          "agent": "Deployment Specialist",
+          "depends_on": ["smoke_test"]
+        }
+      ],
+      "triggers": [
+        "github_push",
+        "github_pr_merged"
+      ],
+      "metadata": {
+        "priority": 10,
+        "auto_rollback": true,
+        "notification_channels": ["slack", "email"],
+        "retry_policy": "exponential_backoff",
+        "max_retries": 2
+      }
+    },
+    {
+      "name": "Hotfix Pipeline",
+      "description": "Expedited pipeline for critical hotfixes",
+      "steps": [
+        {
+          "id": "lint",
+          "action": "lint_code",
+          "agent": "Code Quality Checker"
+        },
+        {
+          "id": "unit_test",
+          "action": "run_unit_tests",
+          "agent": "Test Runner",
+          "depends_on": ["lint"]
+        },
+        {
+          "id": "build",
+          "action": "build_artifacts",
+          "agent": "Build Engineer",
+          "depends_on": ["unit_test"]
+        },
+        {
+          "id": "security_scan",
+          "action": "critical_security_scan",
+          "agent": "Security Scanner",
+          "depends_on": ["build"]
+        },
+        {
+          "id": "deploy_prod",
+          "action": "deploy_to_production",
+          "agent": "Deployment Specialist",
+          "depends_on": ["security_scan"]
+        }
+      ],
+      "triggers": [
+        "manual_trigger"
+      ],
+      "metadata": {
+        "priority": 100,
+        "auto_rollback": true,
+        "notification_channels": ["slack", "email", "pagerduty"],
+        "approval_required": true
+      }
+    }
+  ],
+  "recommended_use_cases": [
+    "Continuous deployment automation",
+    "Multi-environment testing",
+    "Security-first deployments",
+    "Microservices orchestration",
+    "Infrastructure as code deployments"
+  ],
+  "configuration": {
+    "max_parallel_tasks": 5,
+    "auto_scaling": false,
+    "health_monitoring": true,
+    "metrics_enabled": true,
+    "notification_webhooks": [],
+    "deployment_environments": [
+      "staging",
+      "production"
+    ]
+  }
+}

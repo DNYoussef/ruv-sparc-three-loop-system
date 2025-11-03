@@ -1,0 +1,208 @@
+# AgentDB Vector Database Configuration
+# Optimized for 150x faster vector search with HNSW indexing
+
+collection:
+  # Unique collection name
+  name: "agentdb_production"
+
+  # HNSW index parameters
+  metadata:
+    # Distance metric: "cosine", "l2", or "ip" (inner product)
+    hnsw:space: "cosine"
+
+    # Build quality (higher = better recall, slower build)
+    # Range: 100-500, Default: 200
+    hnsw:construction_ef: 200
+
+    # Query quality (higher = better recall, slower search)
+    # Range: 50-500, Default: 100
+    hnsw:search_ef: 100
+
+    # Connections per layer (higher = more memory, better recall)
+    # Range: 8-64, Default: 16
+    hnsw:M: 16
+
+    # Parallel threads for index building
+    hnsw:num_threads: 4
+
+    # Optional: Enable batch mode for bulk operations
+    hnsw:batch_mode: true
+
+# Embedding model configuration
+embedding:
+  # Sentence transformer model
+  # Options: all-MiniLM-L6-v2 (384d), all-mpnet-base-v2 (768d)
+  model: "all-MiniLM-L6-v2"
+
+  # Embedding dimension (auto-detected from model)
+  dimension: 384
+
+  # Batch size for encoding
+  batch_size: 128
+
+  # Normalize embeddings (recommended for cosine similarity)
+  normalize: true
+
+  # Device: "cpu", "cuda", "mps" (Apple Silicon)
+  device: "cpu"
+
+# Quantization settings (optional, for memory optimization)
+quantization:
+  enabled: false
+
+  # Method: "int8", "int16", "pq8", "pq16"
+  method: "int8"
+
+  # Product quantization settings (if method is pq8/pq16)
+  pq:
+    n_subvectors: 8
+    n_centroids: 256
+
+# Performance tuning
+performance:
+  # Cache size (MB) for frequently accessed vectors
+  cache_size_mb: 1024
+
+  # Enable memory mapping for large datasets
+  use_mmap: true
+
+  # Prefetch size for batch queries
+  prefetch_size: 100
+
+  # Enable query result caching
+  cache_queries: true
+
+  # Query timeout (seconds)
+  query_timeout: 30
+
+# Memory patterns for agent memory
+memory:
+  # Retention policies
+  retention:
+    short_term:
+      enabled: true
+      duration_hours: 24
+      max_items: 1000
+
+    mid_term:
+      enabled: true
+      duration_days: 7
+      max_items: 5000
+
+    long_term:
+      enabled: true
+      duration_days: 30
+      max_items: 50000
+
+  # Metadata schema
+  metadata_schema:
+    required_fields:
+      - timestamp
+      - source
+      - category
+
+    optional_fields:
+      - agent_id
+      - session_id
+      - priority
+      - tags
+
+# Search configuration
+search:
+  # Default number of results
+  default_k: 10
+
+  # Maximum number of results
+  max_k: 100
+
+  # Minimum similarity threshold (0.0-1.0)
+  min_similarity: 0.5
+
+  # Enable hybrid search (dense + sparse)
+  hybrid_search: false
+
+  # Reranking strategy: "none", "cross_encoder", "semantic"
+  reranking: "none"
+
+# Monitoring and logging
+monitoring:
+  # Enable metrics collection
+  enabled: true
+
+  # Metrics to track
+  track:
+    - query_latency
+    - query_throughput
+    - index_size
+    - memory_usage
+    - cache_hit_rate
+
+  # Export metrics format: "prometheus", "json", "csv"
+  export_format: "json"
+
+  # Metrics export interval (seconds)
+  export_interval: 60
+
+# Backup and persistence
+persistence:
+  # Enable automatic backups
+  auto_backup: true
+
+  # Backup interval (hours)
+  backup_interval: 24
+
+  # Backup location
+  backup_dir: "./backups"
+
+  # Max backup retention (days)
+  backup_retention_days: 7
+
+  # Enable write-ahead logging
+  wal_enabled: true
+
+# Integration settings
+integration:
+  # Memory-MCP triple system
+  memory_mcp:
+    enabled: true
+    endpoint: "http://localhost:3000"
+
+  # RAG pipeline
+  rag:
+    enabled: false
+    chunk_size: 512
+    chunk_overlap: 50
+
+  # API endpoint
+  api:
+    enabled: false
+    host: "0.0.0.0"
+    port: 8000
+    cors_enabled: true
+
+# Dataset size optimization presets
+# Uncomment the preset that matches your dataset size
+
+# Small dataset (< 1K documents)
+# presets:
+#   hnsw:M: 8
+#   hnsw:construction_ef: 100
+#   hnsw:search_ef: 50
+
+# Medium dataset (1K-10K documents) - DEFAULT
+# presets:
+#   hnsw:M: 16
+#   hnsw:construction_ef: 200
+#   hnsw:search_ef: 100
+
+# Large dataset (10K-100K documents)
+# presets:
+#   hnsw:M: 32
+#   hnsw:construction_ef: 400
+#   hnsw:search_ef: 200
+
+# X-Large dataset (> 100K documents)
+# presets:
+#   hnsw:M: 48
+#   hnsw:construction_ef: 500
+#   hnsw:search_ef: 300

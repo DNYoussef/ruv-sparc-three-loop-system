@@ -1,0 +1,228 @@
+{
+  "pattern_types": {
+    "sequence": {
+      "description": "Successful sequences of approaches or strategies",
+      "detection_algorithm": "sequential_pattern_mining",
+      "min_length": 2,
+      "max_length": 5,
+      "confidence_required": 0.7,
+      "examples": [
+        "static_analysis -> manual_review -> refactor",
+        "tdd -> implementation -> integration_test"
+      ]
+    },
+    "contextual": {
+      "description": "Context-dependent strategy effectiveness",
+      "detection_algorithm": "contextual_bandit",
+      "context_keys": [
+        "language",
+        "complexity",
+        "team_size",
+        "deadline_pressure",
+        "domain"
+      ],
+      "min_observations": 5,
+      "examples": [
+        "When language=python, use static_analysis_first",
+        "When complexity=high, use pair_programming"
+      ]
+    },
+    "temporal": {
+      "description": "Time-based performance patterns",
+      "detection_algorithm": "temporal_analysis",
+      "time_granularities": [
+        "hour_of_day",
+        "day_of_week",
+        "week_of_month"
+      ],
+      "significance_threshold": 0.05,
+      "examples": [
+        "Morning hours (8-10am) have 20% higher success rates",
+        "Friday deployments have higher failure rates"
+      ]
+    },
+    "anomaly": {
+      "description": "Unusual or outlier task executions",
+      "detection_algorithm": "isolation_forest",
+      "contamination": 0.1,
+      "features": [
+        "duration",
+        "resource_usage",
+        "error_rate",
+        "complexity"
+      ],
+      "examples": [
+        "Task took 10x longer than average",
+        "Unusually high error rate for routine task"
+      ]
+    },
+    "correlation": {
+      "description": "Correlations between metrics and outcomes",
+      "detection_algorithm": "pearson_correlation",
+      "min_correlation": 0.6,
+      "variables": [
+        "code_complexity",
+        "test_coverage",
+        "team_experience",
+        "technical_debt"
+      ],
+      "examples": [
+        "Test coverage >80% correlates with 90% success rate",
+        "High technical debt correlates with longer fix times"
+      ]
+    }
+  },
+
+  "pattern_attributes": {
+    "confidence": {
+      "type": "float",
+      "range": [0.0, 1.0],
+      "description": "Statistical confidence in pattern validity"
+    },
+    "support": {
+      "type": "integer",
+      "range": [1, null],
+      "description": "Number of times pattern observed"
+    },
+    "statistical_significance": {
+      "type": "float",
+      "range": [0.0, 1.0],
+      "description": "1 - p_value from statistical test"
+    },
+    "lift": {
+      "type": "float",
+      "range": [0.0, null],
+      "description": "How much better than baseline"
+    },
+    "first_seen": {
+      "type": "timestamp",
+      "description": "When pattern was first detected"
+    },
+    "last_seen": {
+      "type": "timestamp",
+      "description": "Most recent occurrence"
+    },
+    "stability": {
+      "type": "float",
+      "range": [0.0, 1.0],
+      "description": "How consistently pattern appears over time"
+    }
+  },
+
+  "pattern_lifecycle": {
+    "emerging": {
+      "criteria": "support < 10 AND confidence > 0.6",
+      "action": "Monitor closely, gather more data"
+    },
+    "established": {
+      "criteria": "support >= 10 AND confidence > 0.7",
+      "action": "Use for recommendations, continue validation"
+    },
+    "validated": {
+      "criteria": "support >= 50 AND confidence > 0.8 AND stability > 0.7",
+      "action": "High confidence usage, consider automation"
+    },
+    "declining": {
+      "criteria": "recent_confidence < historical_confidence * 0.8",
+      "action": "Re-evaluate, investigate context changes"
+    },
+    "deprecated": {
+      "criteria": "support_last_30_days < 3 OR confidence < 0.5",
+      "action": "Remove from active patterns, archive"
+    }
+  },
+
+  "pattern_actions": {
+    "recommend_strategy": {
+      "description": "Recommend this strategy for matching contexts",
+      "priority": "high",
+      "automation_candidate": true
+    },
+    "warn_about_approach": {
+      "description": "Warn when low-performing approach is selected",
+      "priority": "medium",
+      "automation_candidate": false
+    },
+    "schedule_task": {
+      "description": "Schedule tasks during high-performance time windows",
+      "priority": "low",
+      "automation_candidate": true
+    },
+    "investigate_anomaly": {
+      "description": "Flag for manual investigation",
+      "priority": "high",
+      "automation_candidate": false
+    },
+    "transfer_knowledge": {
+      "description": "Apply pattern to similar task types",
+      "priority": "medium",
+      "automation_candidate": true
+    }
+  },
+
+  "evaluation_metrics": {
+    "precision": {
+      "description": "True positives / (True positives + False positives)",
+      "target": 0.8
+    },
+    "recall": {
+      "description": "True positives / (True positives + False negatives)",
+      "target": 0.7
+    },
+    "f1_score": {
+      "description": "Harmonic mean of precision and recall",
+      "target": 0.75
+    },
+    "mcc": {
+      "description": "Matthews correlation coefficient",
+      "target": 0.6
+    },
+    "actionability": {
+      "description": "Percentage of patterns leading to measurable improvements",
+      "target": 0.6
+    }
+  },
+
+  "common_patterns": [
+    {
+      "id": "early_testing_success",
+      "type": "sequence",
+      "pattern": "Write tests -> Implement -> Refactor",
+      "confidence": 0.85,
+      "support": 127,
+      "context": "TDD approach for new features"
+    },
+    {
+      "id": "static_first_python",
+      "type": "contextual",
+      "pattern": "When language=python, use static_analysis_first",
+      "confidence": 0.82,
+      "support": 94,
+      "context": "Python code reviews"
+    },
+    {
+      "id": "morning_productivity",
+      "type": "temporal",
+      "pattern": "8-10am shows 25% higher success rate",
+      "confidence": 0.78,
+      "support": 203,
+      "context": "Complex problem-solving tasks"
+    },
+    {
+      "id": "pair_for_complex",
+      "type": "contextual",
+      "pattern": "When complexity=high, use pair_programming",
+      "confidence": 0.89,
+      "support": 67,
+      "context": "Complex feature development"
+    },
+    {
+      "id": "incremental_refactor",
+      "type": "sequence",
+      "pattern": "Small refactor -> Test -> Deploy -> Repeat",
+      "confidence": 0.91,
+      "support": 156,
+      "context": "Legacy code modernization"
+    }
+  ]
+}

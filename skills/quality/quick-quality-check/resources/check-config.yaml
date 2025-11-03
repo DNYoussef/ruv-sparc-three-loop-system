@@ -1,0 +1,129 @@
+# Quick Quality Check Configuration
+# Enhanced tier template for configuring quality checks
+
+# Linting configuration
+linting:
+  enabled: true
+  parallel: true
+  tools:
+    - eslint
+    - prettier
+
+  eslint:
+    max_warnings: 0
+    cache: true
+    extensions:
+      - .js
+      - .jsx
+      - .ts
+      - .tsx
+
+  prettier:
+    check_only: true
+    ignore_unknown: true
+
+  custom_checks:
+    console_log: true
+    todo_comments: true
+    long_lines: 120
+
+# Security scanning configuration
+security:
+  enabled: true
+  parallel: true
+
+  patterns:
+    hardcoded_secrets: high
+    unsafe_functions: high
+    sql_injection: critical
+    xss_vulnerabilities: high
+    insecure_dependencies: medium
+
+  external_scanners:
+    bandit: true
+    npm_audit: true
+    semgrep: false
+
+  exclude_paths:
+    - node_modules
+    - venv
+    - .git
+    - dist
+    - build
+
+# Test execution configuration
+testing:
+  enabled: true
+  quick_mode: true
+  timeout: 30000
+  parallel: 4
+
+  frameworks:
+    - jest
+    - mocha
+    - vitest
+    - ava
+
+  coverage:
+    enabled: false  # Disabled in quick mode
+    threshold: 80
+
+# Theater detection configuration
+theater:
+  enabled: true
+
+  patterns:
+    - console.log
+    - TODO
+    - FIXME
+    - XXX
+    - HACK
+    - mock
+    - stub
+    - dummy
+
+  severity:
+    TODO: low
+    FIXME: medium
+    XXX: high
+    mock: medium
+
+# Quality scoring
+scoring:
+  weights:
+    lint: 25
+    security: 30
+    tests: 25
+    theater: 20
+
+  thresholds:
+    excellent: 90
+    good: 75
+    fair: 60
+    poor: 40
+
+  pass_criteria:
+    min_score: 75
+    max_critical_issues: 0
+    max_high_issues: 5
+    max_test_failures: 0
+
+# Reporting configuration
+reporting:
+  format: json
+  verbosity: normal
+
+  include:
+    - summary
+    - issues
+    - recommendations
+    - pass_criteria
+
+  console_colors: true
+
+# Performance optimization
+performance:
+  max_workers: 4
+  timeout: 60
+  cache_enabled: true
+  incremental: true

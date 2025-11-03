@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "description": "Repair strategy templates for automated fix generation",
+    "basedOn": "connascence-aware context bundling"
+  },
+  "strategies": {
+    "isolated": {
+      "name": "Isolated Fix Strategy",
+      "applicability": {
+        "connascenceCoupling": "0 files",
+        "cascadeFailures": "0",
+        "complexity": "simple"
+      },
+      "approach": {
+        "fileCount": 1,
+        "atomicity": "single-file",
+        "testing": "unit tests only"
+      },
+      "template": {
+        "plan": {
+          "rootCause": "{description}",
+          "fixStrategy": "isolated",
+          "files": [
+            {
+              "path": "{primary_file}",
+              "reason": "primary failure location",
+              "changes": "Fix root cause with minimal changes"
+            }
+          ],
+          "minimalChanges": "Single file fix - isolated change with no cascading updates",
+          "predictedSideEffects": [],
+          "validationPlan": {
+            "mustPass": ["{failing_test}"],
+            "mightFail": [],
+            "newTests": []
+          }
+        },
+        "implementation": {
+          "steps": [
+            "Read primary file",
+            "Locate exact failure point",
+            "Apply minimal fix",
+            "Verify syntax and lint"
+          ],
+          "reasoning": [
+            "Isolated issue with no dependencies",
+            "Single file contains all necessary context",
+            "No connascence coupling detected"
+          ]
+        }
+      }
+    },
+    "bundled": {
+      "name": "Bundled Fix Strategy",
+      "applicability": {
+        "connascenceCoupling": "1-5 files",
+        "cascadeFailures": "1-3",
+        "complexity": "moderate"
+      },
+      "approach": {
+        "fileCount": "2-6",
+        "atomicity": "atomic-bundle",
+        "testing": "unit + integration tests"
+      },
+      "template": {
+        "plan": {
+          "rootCause": "{description}",
+          "fixStrategy": "bundled",
+          "files": [
+            {
+              "path": "{primary_file}",
+              "reason": "primary failure location",
+              "changes": "Fix root cause"
+            },
+            {
+              "path": "{connascence_name_file}",
+              "reason": "connascence of name (shared symbols)",
+              "changes": "Update symbol references to match fix"
+            },
+            {
+              "path": "{connascence_type_file}",
+              "reason": "connascence of type (type dependencies)",
+              "changes": "Update type definitions/usage"
+            }
+          ],
+          "minimalChanges": "Bundled fix across {file_count} files - atomic changes to preserve consistency",
+          "predictedSideEffects": [
+            "Auto-resolves {cascade_count} cascaded failures",
+            "Medium coupling detected ({coupling_count} files) - verify all references"
+          ],
+          "validationPlan": {
+            "mustPass": [
+              "{failing_test}",
+              "{cascaded_test_1}",
+              "{cascaded_test_2}"
+            ],
+            "mightFail": [],
+            "newTests": [
+              "Integration test for {primary_file} + {connected_files}"
+            ]
+          }
+        },
+        "implementation": {
+          "steps": [
+            "Read all affected files",
+            "Identify shared symbols/types/algorithms",
+            "Apply coordinated changes atomically",
+            "Verify consistency across files",
+            "Validate connascence preservation"
+          ],
+          "reasoning": [
+            "Multiple files coupled through connascence",
+            "Changes must be applied atomically to preserve consistency",
+            "Bundled approach prevents introducing new cascade failures"
+          ]
+        }
+      }
+    },
+    "architectural": {
+      "name": "Architectural Refactor Strategy",
+      "applicability": {
+        "connascenceCoupling": "6+ files",
+        "cascadeFailures": "4+",
+        "complexity": "complex"
+      },
+      "approach": {
+        "fileCount": "7+",
+        "atomicity": "phased-refactor",
+        "testing": "full test suite + new tests"
+      },
+      "template": {
+        "plan": {
+          "rootCause": "{description}",
+          "fixStrategy": "architectural",
+          "files": [
+            {
+              "path": "{primary_file}",
+              "reason": "primary failure location",
+              "changes": "Refactor to reduce coupling"
+            },
+            {
+              "path": "{new_interface_file}",
+              "reason": "new abstraction layer",
+              "changes": "Create interface to decouple components"
+            },
+            {
+              "path": "{affected_file_1}",
+              "reason": "high connascence coupling",
+              "changes": "Migrate to use new interface"
+            }
+          ],
+          "minimalChanges": "Architectural refactor required - reduces coupling and prevents future cascades",
+          "predictedSideEffects": [
+            "Auto-resolves {cascade_count} cascaded failures",
+            "High coupling detected ({coupling_count} files) - systematic refactor required",
+            "Introduces abstraction layer to prevent future coupling"
+          ],
+          "validationPlan": {
+            "mustPass": [
+              "All existing tests",
+              "{failing_test}",
+              "{cascaded_tests}"
+            ],
+            "mightFail": [
+              "Tests depending on old internal structure (expected)"
+            ],
+            "newTests": [
+              "Interface contract tests",
+              "Integration tests for refactored components",
+              "Backward compatibility tests"
+            ]
+          }
+        },
+        "implementation": {
+          "steps": [
+            "Analyze high-coupling architecture",
+            "Design abstraction/interface layer",
+            "Implement new architecture",
+            "Migrate existing code incrementally",
+            "Preserve backward compatibility where possible",
+            "Comprehensive testing"
+          ],
+          "reasoning": [
+            "High coupling (6+ files) indicates architectural issue",
+            "Quick fix would create technical debt",
+            "Refactoring prevents future cascade failures",
+            "Investment in architecture pays long-term dividends"
+          ],
+          "phasing": {
+            "phase1": "Create new abstraction layer",
+            "phase2": "Migrate critical paths",
+            "phase3": "Migrate remaining references",
+            "phase4": "Deprecate old patterns"
+          }
+        }
+      }
+    }
+  },
+  "programOfThought": {
+    "description": "Four-phase fix generation process",
+    "phases": {
+      "plan": {
+        "name": "Planning Phase",
+        "steps": [
+          {
+            "step": 1,
+            "name": "Understand Root Cause Deeply",
+            "questions": [
+              "What is the TRUE root cause (not symptom)?",
+              "Why did this occur (5-Whys result)?",
+              "What conditions led to this?"
+            ]
+          },
+          {
+            "step": 2,
+            "name": "Identify All Affected Files",
+            "actions": [
+              "Primary file (where failure occurred)",
+              "Connascence name files (shared symbols)",
+              "Connascence type files (type dependencies)",
+              "Connascence algorithm files (shared logic)"
+            ]
+          },
+          {
+            "step": 3,
+            "name": "Design Minimal Fix",
+            "questions": [
+              "What is the SMALLEST change that fixes root cause?",
+              "Can we fix in one file or need bundled changes?",
+              "Are there architectural issues requiring refactor?"
+            ]
+          },
+          {
+            "step": 4,
+            "name": "Predict Side Effects",
+            "considerations": [
+              "What else might break from this fix?",
+              "Are there cascaded failures that will auto-resolve?",
+              "Are there hidden dependencies not in connascence?"
+            ]
+          },
+          {
+            "step": 5,
+            "name": "Plan Validation Approach",
+            "requirements": [
+              "Which tests must pass?",
+              "Which tests might fail (expected)?",
+              "Need new tests for edge cases?"
+            ]
+          }
+        ]
+      },
+      "execute": {
+        "name": "Execution Phase",
+        "steps": [
+          {
+            "step": 1,
+            "name": "Load All Affected Files",
+            "actions": [
+              "Read each file from fix plan",
+              "Understand current implementation",
+              "Locate exact change points"
+            ]
+          },
+          {
+            "step": 2,
+            "name": "Apply Minimal Fix",
+            "principles": [
+              "Implement smallest change from plan",
+              "Follow fix strategy (isolated vs bundled)",
+              "For bundled: apply ALL related changes ATOMICALLY"
+            ]
+          },
+          {
+            "step": 3,
+            "name": "Show Your Work (Reasoning)",
+            "document": [
+              "What changed: 'Changed X from Y to Z'",
+              "Why changed: 'Because root cause was...'",
+              "Connascence impact: 'Also updated N, T, A files due to connascence'",
+              "Edge cases handled: 'Added validation for...'"
+            ]
+          },
+          {
+            "step": 4,
+            "name": "Generate Fix Patch",
+            "deliverables": [
+              "Create git diff patch",
+              "Include all files (atomic bundle)",
+              "Add descriptive commit message with reasoning"
+            ]
+          }
+        ]
+      },
+      "validate": {
+        "name": "Validation Phase",
+        "validators": [
+          {
+            "name": "Sandbox Validator",
+            "purpose": "Verify fix actually works",
+            "process": [
+              "Create isolated sandbox",
+              "Deploy fix to sandbox",
+              "Run test suite",
+              "Verify root cause resolved",
+              "Check predicted side effects"
+            ],
+            "verdict": "PASS if all tests pass and root cause resolved"
+          },
+          {
+            "name": "Theater Validator",
+            "purpose": "Ensure authentic improvement",
+            "process": [
+              "Scan for fix theater (commented tests, empty returns)",
+              "Check for mock escalation",
+              "Verify coverage not theater",
+              "Compare to Loop 2 baseline",
+              "Validate authentic improvement"
+            ],
+            "verdict": "PASS if no theater detected and authentic improvement"
+          }
+        ]
+      },
+      "approve": {
+        "name": "Approval Phase",
+        "criteria": [
+          "Sandbox validation: PASS",
+          "Theater validation: PASS",
+          "Implementation matches plan",
+          "Minimal fix applied",
+          "Connascence respected"
+        ],
+        "decisions": {
+          "approved": {
+            "condition": "Both validators PASS",
+            "action": "Apply fix to codebase"
+          },
+          "rejected_theater": {
+            "condition": "Sandbox PASS but theater FAIL",
+            "feedback": "Fix masks problem, not genuine",
+            "action": "Regenerate fix without theater"
+          },
+          "rejected_sandbox": {
+            "condition": "Sandbox FAIL",
+            "feedback": "Fix doesn't work or breaks other tests",
+            "action": "Revise fix plan, consider architectural fix"
+          }
+        }
+      }
+    }
+  },
+  "bestPractices": {
+    "connascence": {
+      "name": "Always check connascence before determining strategy",
+      "threshold": "5 coupled files triggers bundled approach"
+    },
+    "atomicity": {
+      "name": "Bundled fixes must be atomic",
+      "reason": "Prevents partial updates that create inconsistency"
+    },
+    "validation": {
+      "name": "Always dual-validate (sandbox + theater)",
+      "reason": "Catches both functional failures and false improvements"
+    },
+    "reasoning": {
+      "name": "Document reasoning in every change",
+      "reason": "Enables future developers to understand fix context"
+    },
+    "minimal": {
+      "name": "Always prefer minimal changes",
+      "reason": "Reduces risk of introducing new issues"
+    },
+    "architectural": {
+      "name": "Don't fear architectural refactors when needed",
+      "reason": "Technical debt from quick fixes costs more long-term"
+    }
+  }
+}

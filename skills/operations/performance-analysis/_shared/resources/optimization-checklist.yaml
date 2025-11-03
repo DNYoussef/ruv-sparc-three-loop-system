@@ -1,0 +1,358 @@
+# Performance Optimization Checklist
+# Comprehensive checklist for systematic performance optimization
+
+project_info:
+  name: "{{ project_name }}"
+  version: "{{ version }}"
+  optimization_date: "{{ date }}"
+
+phases:
+  - phase: "1. Baseline & Measurement"
+    status: pending
+    items:
+      - id: baseline_1
+        task: "Establish performance baseline"
+        completed: false
+        priority: critical
+        steps:
+          - "Run load tests to measure current performance"
+          - "Document baseline metrics (throughput, latency, resource usage)"
+          - "Save baseline data for comparison"
+        verification: "Baseline metrics documented in baseline-metrics.json"
+
+      - id: baseline_2
+        task: "Set up monitoring infrastructure"
+        completed: false
+        priority: high
+        steps:
+          - "Configure APM tools (DataDog, New Relic, etc.)"
+          - "Set up logging and metrics collection"
+          - "Create dashboards for key metrics"
+        verification: "Monitoring dashboard accessible and showing data"
+
+      - id: baseline_3
+        task: "Profile application in production-like environment"
+        completed: false
+        priority: high
+        steps:
+          - "Run CPU profiler"
+          - "Run memory profiler"
+          - "Capture I/O metrics"
+          - "Generate flame graphs"
+        verification: "Profiling reports generated and analyzed"
+
+  - phase: "2. Analysis & Bottleneck Identification"
+    status: pending
+    items:
+      - id: analysis_1
+        task: "Identify CPU bottlenecks"
+        completed: false
+        priority: high
+        analysis:
+          - "Review flame graphs for hot paths"
+          - "Identify functions consuming >10% CPU"
+          - "Check for inefficient algorithms"
+          - "Look for excessive function calls"
+        findings: []
+
+      - id: analysis_2
+        task: "Identify memory issues"
+        completed: false
+        priority: high
+        analysis:
+          - "Check for memory leaks"
+          - "Identify large object allocations"
+          - "Review garbage collection patterns"
+          - "Analyze heap snapshots"
+        findings: []
+
+      - id: analysis_3
+        task: "Identify I/O bottlenecks"
+        completed: false
+        priority: medium
+        analysis:
+          - "Profile database queries"
+          - "Check for N+1 query problems"
+          - "Review file I/O operations"
+          - "Analyze network requests"
+        findings: []
+
+      - id: analysis_4
+        task: "Review architectural issues"
+        completed: false
+        priority: medium
+        analysis:
+          - "Check for synchronous blocking operations"
+          - "Review error handling overhead"
+          - "Identify redundant computations"
+          - "Check caching opportunities"
+        findings: []
+
+  - phase: "3. Algorithmic Optimization"
+    status: pending
+    items:
+      - id: algo_1
+        task: "Optimize time complexity"
+        completed: false
+        priority: high
+        optimizations:
+          - "Replace O(n²) with O(n log n) where possible"
+          - "Use appropriate data structures (Set vs Array, Map vs Object)"
+          - "Implement binary search for sorted data"
+          - "Use hash tables for lookups"
+        impact: "High - Can provide 10-100x improvements"
+
+      - id: algo_2
+        task: "Reduce computational work"
+        completed: false
+        priority: high
+        optimizations:
+          - "Eliminate redundant calculations"
+          - "Cache expensive computations"
+          - "Use lazy evaluation where appropriate"
+          - "Implement early returns/exits"
+        impact: "Medium to High"
+
+      - id: algo_3
+        task: "Optimize loops and iterations"
+        completed: false
+        priority: medium
+        optimizations:
+          - "Hoist loop-invariant code"
+          - "Use Array methods efficiently (map, filter, reduce)"
+          - "Break large loops into smaller chunks"
+          - "Consider vectorization for numerical operations"
+        impact: "Medium"
+
+  - phase: "4. Memory Optimization"
+    status: pending
+    items:
+      - id: memory_1
+        task: "Reduce memory allocations"
+        completed: false
+        priority: high
+        optimizations:
+          - "Use object pooling for frequently created objects"
+          - "Implement copy-on-write where appropriate"
+          - "Use TypedArrays for numerical data"
+          - "Reduce string concatenation"
+        impact: "High - Reduces GC pressure"
+
+      - id: memory_2
+        task: "Fix memory leaks"
+        completed: false
+        priority: critical
+        optimizations:
+          - "Remove event listeners when components unmount"
+          - "Clear timers and intervals"
+          - "Null out large object references"
+          - "Use WeakMap/WeakSet for caches"
+        impact: "Critical - Prevents crashes"
+
+      - id: memory_3
+        task: "Optimize data structures"
+        completed: false
+        priority: medium
+        optimizations:
+          - "Use __slots__ in Python classes"
+          - "Use compact data representations"
+          - "Implement compression for large datasets"
+          - "Stream process large files"
+        impact: "Medium to High"
+
+  - phase: "5. Caching Strategies"
+    status: pending
+    items:
+      - id: cache_1
+        task: "Implement in-memory caching"
+        completed: false
+        priority: high
+        strategies:
+          - "Use LRU cache for function results"
+          - "Cache database query results"
+          - "Implement request-level caching"
+          - "Use Redis/Memcached for distributed caching"
+        impact: "High - Can eliminate redundant work"
+
+      - id: cache_2
+        task: "Add HTTP caching"
+        completed: false
+        priority: medium
+        strategies:
+          - "Set appropriate Cache-Control headers"
+          - "Implement ETags for conditional requests"
+          - "Use CDN for static assets"
+          - "Configure browser caching"
+        impact: "Medium to High for web apps"
+
+      - id: cache_3
+        task: "Optimize cache invalidation"
+        completed: false
+        priority: medium
+        strategies:
+          - "Implement smart cache invalidation"
+          - "Use cache tagging"
+          - "Set appropriate TTLs"
+          - "Monitor cache hit rates"
+        impact: "Medium"
+
+  - phase: "6. Database Optimization"
+    status: pending
+    items:
+      - id: db_1
+        task: "Optimize queries"
+        completed: false
+        priority: high
+        optimizations:
+          - "Add missing indexes"
+          - "Optimize JOIN operations"
+          - "Fix N+1 query problems"
+          - "Use EXPLAIN ANALYZE"
+        impact: "High - Queries can be 10-1000x faster"
+
+      - id: db_2
+        task: "Implement connection pooling"
+        completed: false
+        priority: high
+        optimizations:
+          - "Configure connection pool size"
+          - "Set appropriate timeouts"
+          - "Monitor pool utilization"
+          - "Use prepared statements"
+        impact: "High - Reduces connection overhead"
+
+      - id: db_3
+        task: "Optimize data model"
+        completed: false
+        priority: medium
+        optimizations:
+          - "Denormalize where appropriate"
+          - "Use materialized views"
+          - "Partition large tables"
+          - "Archive old data"
+        impact: "Medium to High"
+
+  - phase: "7. Parallelization & Concurrency"
+    status: pending
+    items:
+      - id: parallel_1
+        task: "Implement async I/O"
+        completed: false
+        priority: high
+        strategies:
+          - "Use async/await for I/O operations"
+          - "Implement concurrent requests"
+          - "Use worker threads for CPU-bound tasks"
+          - "Parallelize independent operations"
+        impact: "High - Can provide 2-10x improvements"
+
+      - id: parallel_2
+        task: "Optimize worker pool configuration"
+        completed: false
+        priority: medium
+        strategies:
+          - "Tune worker pool size"
+          - "Implement task queuing"
+          - "Use thread pools efficiently"
+          - "Avoid thread contention"
+        impact: "Medium"
+
+  - phase: "8. Network Optimization"
+    status: pending
+    items:
+      - id: network_1
+        task: "Reduce network requests"
+        completed: false
+        priority: high
+        optimizations:
+          - "Bundle API requests"
+          - "Use HTTP/2 or HTTP/3"
+          - "Implement request batching"
+          - "Reduce payload sizes"
+        impact: "High for network-heavy apps"
+
+      - id: network_2
+        task: "Optimize data transfer"
+        completed: false
+        priority: medium
+        optimizations:
+          - "Enable compression (gzip, brotli)"
+          - "Use binary formats (Protocol Buffers, MessagePack)"
+          - "Implement pagination for large datasets"
+          - "Use streaming for large responses"
+        impact: "Medium to High"
+
+  - phase: "9. Validation & Benchmarking"
+    status: pending
+    items:
+      - id: validate_1
+        task: "Run performance benchmarks"
+        completed: false
+        priority: critical
+        steps:
+          - "Run benchmark suite"
+          - "Compare with baseline metrics"
+          - "Calculate improvement percentages"
+          - "Generate performance report"
+        acceptance_criteria:
+          throughput_improvement: ">15%"
+          latency_reduction: ">20%"
+          no_regressions: true
+
+      - id: validate_2
+        task: "Verify functional correctness"
+        completed: false
+        priority: critical
+        steps:
+          - "Run full test suite"
+          - "Perform integration tests"
+          - "Validate edge cases"
+          - "Check for regressions"
+        acceptance_criteria:
+          test_pass_rate: "100%"
+
+      - id: validate_3
+        task: "Monitor production performance"
+        completed: false
+        priority: high
+        steps:
+          - "Deploy to staging"
+          - "Monitor metrics for 24-48 hours"
+          - "Compare with production baseline"
+          - "Check for unexpected issues"
+        acceptance_criteria:
+          no_errors: true
+          performance_maintained: true
+
+  - phase: "10. Documentation & Maintenance"
+    status: pending
+    items:
+      - id: doc_1
+        task: "Document optimizations"
+        completed: false
+        priority: medium
+        documentation:
+          - "Record all optimizations applied"
+          - "Document performance improvements"
+          - "Update architecture documentation"
+          - "Create optimization runbook"
+
+      - id: doc_2
+        task: "Set up continuous monitoring"
+        completed: false
+        priority: high
+        monitoring:
+          - "Configure performance alerts"
+          - "Set up regression detection"
+          - "Schedule regular benchmarks"
+          - "Track performance trends"
+
+summary:
+  total_items: 0
+  completed: 0
+  pending: 0
+  priority_critical: 0
+  priority_high: 0
+  priority_medium: 0
+  estimated_improvement: "TBD"
+  actual_improvement: "TBD"

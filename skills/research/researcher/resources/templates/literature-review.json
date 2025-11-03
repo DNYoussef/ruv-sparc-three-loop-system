@@ -1,0 +1,177 @@
+{
+  "metadata": {
+    "review_title": "Literature Review Title",
+    "reviewer": "Your Name",
+    "date_created": "2024-11-02",
+    "last_updated": "2024-11-02",
+    "research_topic": "Main research topic or question",
+    "total_papers": 0
+  },
+  "search_strategy": {
+    "databases": [
+      "ArXiv",
+      "Semantic Scholar",
+      "IEEE Xplore",
+      "ACM Digital Library",
+      "Google Scholar"
+    ],
+    "keywords": [
+      "primary keyword 1",
+      "primary keyword 2",
+      "secondary keyword 1"
+    ],
+    "date_range": {
+      "start": "2020-01-01",
+      "end": "2024-12-31"
+    },
+    "inclusion_criteria": [
+      "Peer-reviewed papers",
+      "Credibility score >= 85%",
+      "Publication date within 5 years"
+    ],
+    "exclusion_criteria": [
+      "Non-English papers",
+      "Preprints without citations",
+      "Blog posts without peer review"
+    ]
+  },
+  "papers": [
+    {
+      "id": "paper_001",
+      "title": "Example Paper Title",
+      "authors": ["Author A", "Author B", "Author C"],
+      "year": 2023,
+      "publication": "Journal or Conference Name",
+      "url": "https://arxiv.org/abs/xxxx.xxxxx",
+      "pdf_url": "https://arxiv.org/pdf/xxxx.xxxxx.pdf",
+      "doi": "10.xxxx/xxxxx",
+      "citations": 150,
+      "credibility_score": 92.5,
+      "source_type": "academic",
+      "abstract": "Paper abstract or summary...",
+      "key_findings": [
+        "Main finding 1",
+        "Main finding 2",
+        "Main finding 3"
+      ],
+      "methodology": {
+        "approach": "Experimental/Theoretical/Survey",
+        "dataset": "Dataset name if applicable",
+        "metrics": ["Metric 1", "Metric 2"],
+        "reproducibility": {
+          "code_available": true,
+          "code_url": "https://github.com/author/repo",
+          "data_available": true,
+          "reproducibility_score": 85
+        }
+      },
+      "relevance": {
+        "score": 9,
+        "notes": "Highly relevant because...",
+        "research_questions_addressed": [
+          "RQ1: What is the SOTA?",
+          "RQ3: What are future directions?"
+        ]
+      },
+      "notes": "Additional notes or observations",
+      "tags": ["deep-learning", "computer-vision", "object-detection"],
+      "related_papers": ["paper_002", "paper_005"]
+    }
+  ],
+  "synthesis": {
+    "themes": [
+      {
+        "name": "Theme 1: Current Approaches",
+        "description": "Overview of current methodologies",
+        "paper_count": 8,
+        "key_insights": [
+          "Insight 1",
+          "Insight 2"
+        ],
+        "consensus": "There is consensus that...",
+        "contradictions": []
+      },
+      {
+        "name": "Theme 2: Challenges",
+        "description": "Common challenges identified",
+        "paper_count": 12,
+        "key_insights": [
+          "Challenge 1",
+          "Challenge 2"
+        ],
+        "consensus": "Most papers agree that...",
+        "contradictions": [
+          "Paper_001 claims X, but Paper_007 shows Y"
+        ]
+      }
+    ],
+    "research_gaps": [
+      "Gap 1: Limited research on...",
+      "Gap 2: No comprehensive study of...",
+      "Gap 3: Lack of datasets for..."
+    ],
+    "trends": {
+      "increasing": [
+        "Use of transformer architectures",
+        "Focus on efficiency and deployment"
+      ],
+      "decreasing": [
+        "Traditional CNN-based methods",
+        "Manual feature engineering"
+      ],
+      "emerging": [
+        "Multimodal learning",
+        "Few-shot learning approaches"
+      ]
+    }
+  },
+  "statistics": {
+    "total_papers_reviewed": 0,
+    "papers_included": 0,
+    "papers_excluded": 0,
+    "average_credibility": 0,
+    "papers_with_code": 0,
+    "average_citations": 0,
+    "publication_year_distribution": {
+      "2020": 0,
+      "2021": 0,
+      "2022": 0,
+      "2023": 0,
+      "2024": 0
+    },
+    "source_type_distribution": {
+      "academic": 0,
+      "industry": 0,
+      "preprint": 0
+    }
+  },
+  "recommendations": {
+    "key_papers_to_read": [
+      {
+        "id": "paper_001",
+        "reason": "Seminal work in the field",
+        "priority": "high"
+      }
+    ],
+    "future_research_directions": [
+      "Direction 1: Investigate...",
+      "Direction 2: Develop...",
+      "Direction 3: Evaluate..."
+    ],
+    "methodological_improvements": [
+      "Improvement 1: Better benchmarks needed",
+      "Improvement 2: Standardized evaluation protocols"
+    ]
+  },
+  "citations": {
+    "bibtex": "@article{example2023,\n  title={Example Paper},\n  author={Author, A.},\n  journal={Journal},\n  year={2023}\n}",
+    "apa": "Author, A., & Author, B. (2023). Example Paper. Journal Name, 1(1), 1-10.",
+    "chicago": "Author, A., and B. Author. 2023. \"Example Paper.\" Journal Name 1 (1): 1-10."
+  },
+  "notes": [
+    "Use research-orchestrator.py to populate this template automatically",
+    "Run sota-analyzer.js for Papers with Code integration",
+    "Update statistics section as papers are added",
+    "synthesis section should be completed after reviewing all papers"
+  ]
+}

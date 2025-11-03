@@ -1,0 +1,412 @@
+# Kubernetes Production Deployment Manifests
+# Version: 2.0.0
+# Includes: Namespace, Deployments, Services, Ingress, ConfigMaps, Secrets, HPA, PDB
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    name: production
+    environment: production
+
+---
+# ==================== ConfigMap for Application ====================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: production
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  PORT: "3000"
+  DATABASE_HOST: "postgresql.production.svc.cluster.local"
+  REDIS_HOST: "redis.production.svc.cluster.local"
+  API_URL: "https://api.example.com"
+
+---
+# ==================== Secret for Sensitive Data ====================
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  namespace: production
+type: Opaque
+stringData:
+  JWT_SECRET: "change-me-in-production"
+  DATABASE_PASSWORD: "change-me-in-production"
+  REDIS_PASSWORD: "change-me-in-production"
+
+---
+# ==================== Frontend Deployment ====================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: production
+  labels:
+    app: frontend
+    tier: frontend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        tier: frontend
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - frontend
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: frontend
+          image: docker.io/myapp/frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: app-config
+          env:
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: API_URL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: config
+              mountPath: /etc/config
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: app-config
+
+---
+# ==================== API Deployment ====================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: production
+  labels:
+    app: api
+    tier: backend
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+        tier: backend
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - api
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: api
+          image: docker.io/myapp/api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://$(DATABASE_USER):$(DATABASE_PASSWORD)@$(DATABASE_HOST):5432/$(DATABASE_NAME)"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: api-uploads-pvc
+
+---
+# ==================== Frontend Service ====================
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: production
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP
+  sessionAffinity: ClientIP
+
+---
+# ==================== API Service ====================
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  namespace: production
+  labels:
+    app: api
+spec:
+  type: ClusterIP
+  selector:
+    app: api
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+      protocol: TCP
+  sessionAffinity: None
+
+---
+# ==================== Ingress ====================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  tls:
+    - hosts:
+        - example.com
+        - api.example.com
+      secretName: app-tls-cert
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    - host: api.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api
+                port:
+                  number: 3000
+
+---
+# ==================== Horizontal Pod Autoscaler (HPA) ====================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+  namespace: production
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Percent
+          value: 50
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 25
+          periodSeconds: 60
+
+---
+# ==================== Pod Disruption Budget ====================
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api-pdb
+  namespace: production
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: api
+
+---
+# ==================== Persistent Volume Claim ====================
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: api-uploads-pvc
+  namespace: production
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 100Gi
+
+---
+# ==================== Network Policy ====================
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-network-policy
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: frontend
+      ports:
+        - protocol: TCP
+          port: 3000
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app: postgresql
+      ports:
+        - protocol: TCP
+          port: 5432
+    - to:
+        - podSelector:
+            matchLabels:
+              app: redis
+      ports:
+        - protocol: TCP
+          port: 6379

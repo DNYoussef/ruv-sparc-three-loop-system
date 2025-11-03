@@ -1,0 +1,342 @@
+# Base Template Generator - .gitignore Templates
+
+# ===========================
+# COMMON (All Projects)
+# ===========================
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Temporary Files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# ===========================
+# NODE.JS
+# ===========================
+
+# Dependencies
+node_modules/
+jspm_packages/
+bower_components/
+
+# Build Output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+
+# Coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Testing
+.jest/
+
+# Package Managers
+package-lock.json  # Uncomment if using yarn/pnpm
+yarn.lock         # Uncomment if using npm/pnpm
+pnpm-lock.yaml    # Uncomment if using npm/yarn
+.pnp
+.pnp.js
+
+# Misc
+.eslintcache
+.stylelintcache
+
+# ===========================
+# PYTHON
+# ===========================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytestdebug.log
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env.*/
+env.bak/
+venv.bak/
+pyvenv.cfg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Poetry
+poetry.lock  # Uncomment if committing lock file
+
+# Pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath
+*.sage.py
+
+# Spyder
+.spyderproject
+.spyproject
+
+# Rope
+.ropeproject
+
+# mkdocs
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre
+.pyre/
+
+# pytype
+.pytype/
+
+# Cython
+cython_debug/
+
+# Ruff
+.ruff_cache/
+
+# ===========================
+# GO
+# ===========================
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output
+*.out
+
+# Go workspace
+go.work
+
+# Vendor
+vendor/
+
+# Binary output
+bin/
+dist/
+
+# ===========================
+# JAVA
+# ===========================
+
+# Compiled class files
+*.class
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# ===========================
+# RUST
+# ===========================
+
+# Debug/Release
+debug/
+target/
+
+# Cargo
+Cargo.lock  # Uncomment for applications
+**/*.rs.bk
+
+# ===========================
+# DOCKER
+# ===========================
+
+# Docker volumes
+.docker/
+docker-compose.override.yml
+
+# ===========================
+# DATABASES
+# ===========================
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# PostgreSQL
+*.pgsql
+
+# MongoDB
+*.mongodb
+
+# ===========================
+# SECURITY
+# ===========================
+
+# Secrets
+secrets/
+*.secret
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+*.jks
+id_rsa
+id_dsa
+credentials.json
+service-account.json
+
+# AWS
+.aws/
+
+# ===========================
+# BUILD TOOLS
+# ===========================
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Ansible
+*.retry
+
+# ===========================
+# DOCUMENTATION
+# ===========================
+
+# Sphinx
+_build/
+_static/
+_templates/
+
+# ===========================
+# PROJECT SPECIFIC
+# ===========================
+
+# Add project-specific ignores here

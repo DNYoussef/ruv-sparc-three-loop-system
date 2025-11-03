@@ -1,0 +1,226 @@
+# ML Training Debug Configuration Template
+#
+# This template provides a standard configuration for debugging ML training failures.
+# Copy and customize for your specific debugging session.
+
+version: "1.0"
+
+# Session metadata
+session:
+  id: "debug-session-${timestamp}"
+  description: "Debug loss divergence at epoch 7"
+  created: "${timestamp}"
+  author: "${user}"
+
+# Artifact paths
+artifacts:
+  # Training logs
+  logs:
+    training: "logs/train.log"
+    validation: "logs/val.log"
+    tensorboard: "runs/experiment_${id}"
+
+  # Model checkpoints
+  checkpoints:
+    latest: "checkpoints/model_latest.pt"
+    best: "checkpoints/model_best.pt"
+    divergence_point: "checkpoints/model_epoch_7.pt"
+
+  # Configuration files
+  configs:
+    model: "configs/model.yaml"
+    training: "configs/train.yaml"
+    data: "configs/data.yaml"
+
+  # Data samples
+  data:
+    train: "data/train.jsonl"
+    validation: "data/val.jsonl"
+    test: "data/test.jsonl"
+
+  # Analysis outputs
+  outputs:
+    loss_analysis: "debug/loss_analysis.png"
+    gradient_flow: "debug/gradient_flow.png"
+    overfitting_report: "debug/overfitting_report.json"
+
+# Analysis parameters
+analysis:
+  # Loss curve analysis
+  loss:
+    window_size: 5
+    divergence_threshold: 0.15  # 15% increase
+    smoothing_method: "savgol"  # savgol, moving_avg, exponential
+    anomaly_detection: true
+    z_score_threshold: 3.0
+
+  # Gradient analysis
+  gradients:
+    vanishing_threshold: 1.0e-6
+    exploding_threshold: 100.0
+    layer_wise: true
+    flow_visualization: true
+    histogram_bins: 50
+
+  # Overfitting detection
+  overfitting:
+    gap_threshold: 0.1  # 10% train/val gap
+    window_size: 5
+    early_stopping_patience: 10
+
+  # Resource monitoring
+  resources:
+    gpu_monitor: true
+    memory_monitor: true
+    check_interval: 10  # seconds
+
+# Alert thresholds
+alerts:
+  # Loss alerts
+  loss_spike:
+    enabled: true
+    threshold: 0.2  # 20% increase
+    action: "email"  # email, slack, log
+
+  # Gradient alerts
+  gradient_nan:
+    enabled: true
+    action: "critical"
+
+  # Resource alerts
+  gpu_memory:
+    enabled: true
+    threshold: 0.9  # 90% usage
+    action: "warning"
+
+# Output settings
+output:
+  # Report format
+  format: "markdown"  # markdown, json, html
+
+  # Visualization settings
+  visualization:
+    enabled: true
+    format: "png"  # png, svg, pdf
+    dpi: 150
+    style: "seaborn"  # matplotlib style
+
+  # Logging verbosity
+  verbosity: "info"  # debug, info, warning, error
+
+  # Save intermediate results
+  save_intermediate: true
+  intermediate_dir: "debug/intermediate"
+
+# Debugging workflow
+workflow:
+  steps:
+    - name: "Extract metrics"
+      enabled: true
+      script: "scripts/extract_metrics.py"
+
+    - name: "Analyze loss curve"
+      enabled: true
+      script: "scripts/loss-analyzer.py"
+      args:
+        - "--log-file"
+        - "${artifacts.logs.training}"
+        - "--output"
+        - "${artifacts.outputs.loss_analysis}"
+
+    - name: "Check gradients"
+      enabled: true
+      script: "scripts/gradient-debugger.py"
+      args:
+        - "--checkpoint"
+        - "${artifacts.checkpoints.divergence_point}"
+        - "--output"
+        - "${artifacts.outputs.gradient_flow}"
+
+    - name: "Detect overfitting"
+      enabled: true
+      script: "scripts/overfitting-detector.js"
+      args:
+        - "--train-log"
+        - "${artifacts.logs.training}"
+        - "--val-log"
+        - "${artifacts.logs.validation}"
+        - "--output"
+        - "${artifacts.outputs.overfitting_report}"
+
+    - name: "Generate report"
+      enabled: true
+      script: "scripts/generate_report.py"
+      args:
+        - "--config"
+        - "debug-config.yaml"
+        - "--output"
+        - "debug/final_report.md"
+
+# Recommended fixes (auto-generated based on analysis)
+fixes:
+  templates:
+    - name: "Reduce learning rate"
+      type: "hyperparameter"
+      priority: "high"
+      changes:
+        - param: "learning_rate"
+          from: 1.0e-2
+          to: 5.0e-3
+          reason: "Loss divergence suggests LR too high"
+
+    - name: "Add gradient clipping"
+      type: "training"
+      priority: "medium"
+      changes:
+        - param: "gradient_clip_norm"
+          from: null
+          to: 1.0
+          reason: "Prevent gradient explosion"
+
+    - name: "Increase dropout"
+      type: "architecture"
+      priority: "medium"
+      changes:
+        - param: "dropout_rate"
+          from: 0.1
+          to: 0.3
+          reason: "Overfitting detected"
+
+# Integration settings
+integration:
+  # Memory MCP tagging
+  memory_mcp:
+    enabled: true
+    tags:
+      who: "ml-debugger-agent"
+      project: "ml-training-debugger"
+      why: "debugging"
+
+  # Connascence analyzer
+  connascence:
+    enabled: false  # Not applicable for ML code
+
+  # External tools
+  external:
+    tensorboard:
+      enabled: true
+      port: 6006
+      logdir: "${artifacts.logs.tensorboard}"
+
+    wandb:
+      enabled: false
+      project: "ml-training-debug"
+      entity: "${user}"
+
+# Quality standards
+quality:
+  diagnosis:
+    min_confidence: 0.8
+    require_evidence: true
+    max_analysis_time: 300  # 5 minutes
+
+  recommendations:
+    max_count: 5
+    priority_order: ["critical", "high", "medium", "low"]
+    include_reasoning: true

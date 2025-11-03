@@ -1,0 +1,305 @@
+# Docker Compose Template for Multi-Cloud Development
+# Includes web app, database, cache, and monitoring
+
+version: '3.9'
+
+# Networks
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+  monitoring:
+    driver: bridge
+
+# Volumes
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+# Services
+services:
+  # Web Application
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: development
+    image: myapp:latest
+    container_name: myapp-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgresql://appuser:apppass@postgres:5432/appdb
+      REDIS_URL: redis://redis:6379
+      API_KEY: ${API_KEY:-development-key}
+      LOG_LEVEL: debug
+    env_file:
+      - .env
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`localhost`)"
+      - "traefik.http.services.web.loadbalancer.server.port=3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: myapp-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+      POSTGRES_DB: appdb
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=100"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "effective_cache_size=1GB"
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: myapp-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: myapp-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - frontend
+    depends_on:
+      - web
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Prometheus Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: myapp-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - monitoring
+      - backend
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  # Grafana Dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: myapp-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Node Exporter (System Metrics)
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: myapp-node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    networks:
+      - monitoring
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+  # cAdvisor (Container Metrics)
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: myapp-cadvisor
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - monitoring
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    privileged: true
+    devices:
+      - /dev/kmsg
+
+  # Adminer (Database UI)
+  adminer:
+    image: adminer:latest
+    container_name: myapp-adminer
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+  # Redis Commander (Redis UI)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: myapp-redis-commander
+    restart: unless-stopped
+    ports:
+      - "8082:8081"
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    networks:
+      - backend
+    depends_on:
+      - redis
+
+  # Mailhog (Email Testing)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: myapp-mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"  # SMTP
+      - "8025:8025"  # Web UI
+    networks:
+      - backend
+
+  # Worker (Background Jobs)
+  worker:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: myapp:latest
+    container_name: myapp-worker
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://appuser:apppass@postgres:5432/appdb
+      REDIS_URL: redis://redis:6379
+      WORKER_MODE: "true"
+    networks:
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: npm run worker
+
+  # Scheduler (Cron Jobs)
+  scheduler:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: myapp:latest
+    container_name: myapp-scheduler
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://appuser:apppass@postgres:5432/appdb
+      REDIS_URL: redis://redis:6379
+      SCHEDULER_MODE: "true"
+    networks:
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: npm run scheduler

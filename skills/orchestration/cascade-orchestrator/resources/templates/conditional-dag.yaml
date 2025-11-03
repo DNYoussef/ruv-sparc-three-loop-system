@@ -1,0 +1,400 @@
+# Conditional DAG Template
+# Complex directed acyclic graph with dynamic branching and quality gates
+
+cascade:
+  name: conditional-quality-workflow
+  description: Adaptive workflow with conditional branching based on quality metrics
+  version: 2.0.0
+
+  config:
+    multi_model: enabled
+    swarm_coordination: enabled
+    memory_persistence: enabled
+    dag_execution: true
+
+inputs:
+  - name: codebase_path
+    type: string
+    required: true
+
+  - name: quality_threshold_high
+    type: number
+    default: 90
+
+  - name: quality_threshold_medium
+    type: number
+    default: 70
+
+  - name: auto_fix_enabled
+    type: boolean
+    default: true
+
+stages:
+  # Initial Analysis
+  - stage_id: analyze
+    name: Codebase Analysis
+    type: sequential
+    model: gemini-megacontext
+
+    skills:
+      - skill: analyze-codebase
+        inputs:
+          path: "${inputs.codebase_path}"
+          deep_analysis: true
+
+    memory:
+      write_keys:
+        - analysis_results
+        - quality_score
+        - complexity_metrics
+        - debt_items
+
+  # Branch Point 1: Quality Score
+  - stage_id: quality_branch
+    name: Quality-Based Routing
+    type: conditional
+    dependencies:
+      - analyze
+
+    branches:
+      # HIGH QUALITY PATH
+      - name: high_quality
+        condition:
+          type: threshold
+          metric: "${memory.quality_score}"
+          threshold: "${inputs.quality_threshold_high}"
+          comparison: ">="
+
+        stages:
+          - stage_id: quick_polish
+            name: Quick Polish
+            type: parallel
+            model: codex-auto
+
+            skills:
+              - style-audit
+              - documentation-check
+              - dependency-update
+
+            memory:
+              write_keys:
+                - polish_results
+
+      # MEDIUM QUALITY PATH
+      - name: medium_quality
+        condition:
+          type: comparison
+          left: "${memory.quality_score}"
+          operator: ">="
+          right: "${inputs.quality_threshold_medium}"
+
+        stages:
+          - stage_id: moderate_improvements
+            name: Moderate Improvements
+            type: sequential
+
+            substages:
+              - name: identify_issues
+                model: claude
+                skills:
+                  - identify-code-smells
+                  - find-security-issues
+
+                memory:
+                  write_keys:
+                    - identified_issues
+
+              - name: auto_fix_check
+                type: conditional
+                condition: "${inputs.auto_fix_enabled}"
+
+                branches:
+                  - name: auto_fix
+                    condition:
+                      type: exists
+                      path: "${inputs.auto_fix_enabled}"
+
+                    stages:
+                      - name: codex_fixes
+                        type: codex-sandbox
+                        model: codex-auto
+
+                        codex_config:
+                          mode: full-auto
+                          max_iterations: 3
+                          sandbox: true
+
+                        memory:
+                          read_keys:
+                            - identified_issues
+                          write_keys:
+                            - applied_fixes
+
+                  - name: manual_report
+                    default: true
+
+                    stages:
+                      - name: generate_report
+                        model: claude
+                        skills:
+                          - generate-issue-report
+
+              - name: verification
+                type: sequential
+                model: claude
+                dependencies:
+                  - auto_fix_check
+
+                skills:
+                  - run-regression-tests
+                  - verify-fixes
+
+                memory:
+                  write_keys:
+                    - verification_results
+
+      # LOW QUALITY PATH
+      - name: low_quality
+        default: true
+
+        stages:
+          - stage_id: comprehensive_audit
+            name: Comprehensive Quality Audit
+            type: swarm-parallel
+
+            skills:
+              - deep-code-analysis
+              - security-audit
+              - performance-profiling
+              - architecture-review
+              - test-coverage-analysis
+
+            swarm_config:
+              topology: hierarchical
+              max_agents: 5
+              strategy: specialized
+
+            memory:
+              write_keys:
+                - audit_results
+
+          - stage_id: refactoring_plan
+            name: Create Refactoring Plan
+            type: sequential
+            model: claude
+            dependencies:
+              - comprehensive_audit
+
+            skills:
+              - prioritize-improvements
+              - create-refactor-roadmap
+
+            memory:
+              read_keys:
+                - audit_results
+              write_keys:
+                - refactor_plan
+
+          - stage_id: phased_refactoring
+            name: Phased Refactoring
+            type: conditional
+            dependencies:
+              - refactoring_plan
+
+            condition: "${memory.refactor_plan.item_count} > 0"
+
+            branches:
+              - name: execute_refactoring
+                condition:
+                  type: threshold
+                  metric: "${memory.refactor_plan.item_count}"
+                  threshold: 0
+                  comparison: ">"
+
+                stages:
+                  # Phase 1: Critical Issues
+                  - name: critical_fixes
+                    type: codex-sandbox
+                    model: codex-auto
+
+                    filter:
+                      field: priority
+                      value: critical
+
+                    codex_config:
+                      max_iterations: 5
+                      sandbox: true
+                      regression_check: true
+
+                    memory:
+                      write_keys:
+                        - critical_fixes_results
+
+                  # Phase 2: High Priority
+                  - name: high_priority_fixes
+                    type: codex-sandbox
+                    model: codex-auto
+                    dependencies:
+                      - critical_fixes
+
+                    filter:
+                      field: priority
+                      value: high
+
+                    codex_config:
+                      max_iterations: 3
+                      sandbox: true
+
+                    memory:
+                      write_keys:
+                        - high_priority_results
+
+                  # Phase 3: Verification
+                  - name: full_verification
+                    type: sequential
+                    model: claude
+                    dependencies:
+                      - critical_fixes
+                      - high_priority_fixes
+
+                    skills:
+                      - comprehensive-testing
+                      - integration-tests
+                      - performance-benchmarks
+
+                    memory:
+                      write_keys:
+                        - full_verification_results
+
+  # Convergence Point: Documentation
+  - stage_id: documentation
+    name: Update Documentation
+    type: sequential
+    model: gemini-media
+    dependencies:
+      - quality_branch
+
+    skills:
+      - update-readme
+      - generate-api-docs
+      - create-architecture-diagrams
+
+    memory:
+      read_keys:
+        - polish_results
+        - verification_results
+        - full_verification_results
+      write_keys:
+        - documentation_artifacts
+
+  # Final Quality Gate
+  - stage_id: final_quality_gate
+    name: Final Quality Assessment
+    type: sequential
+    model: claude
+    dependencies:
+      - documentation
+
+    skills:
+      - calculate-final-score
+      - generate-quality-report
+
+    memory:
+      read_keys:
+        - analysis_results
+        - quality_score
+        - polish_results
+        - verification_results
+        - full_verification_results
+      write_keys:
+        - final_quality_score
+        - quality_report
+
+  # Conditional: Create PR or Issue
+  - stage_id: github_action
+    name: GitHub Integration
+    type: conditional
+    dependencies:
+      - final_quality_gate
+
+    condition: "${memory.final_quality_score} >= ${inputs.quality_threshold_medium}"
+
+    branches:
+      - name: create_pr
+        condition:
+          type: threshold
+          metric: "${memory.final_quality_score}"
+          threshold: "${inputs.quality_threshold_medium}"
+          comparison: ">="
+
+        stages:
+          - name: pr_creation
+            model: claude
+            skills:
+              - create-github-pr
+
+            inputs:
+              title: "Quality Improvements: Score ${memory.final_quality_score}"
+              body: "${memory.quality_report}"
+              labels:
+                - quality-improvement
+                - automated
+
+      - name: create_issues
+        default: true
+
+        stages:
+          - name: issue_creation
+            model: claude
+            skills:
+              - create-github-issues
+
+            inputs:
+              issues: "${memory.refactor_plan}"
+              label: quality-debt
+
+# Memory Configuration
+memory:
+  persistence: enabled
+  scope: cascade
+  retention: 14d
+  checkpoints:
+    - analyze
+    - quality_branch
+    - final_quality_gate
+
+# Quality Gates
+quality_gates:
+  - gate: analyze
+    required: true
+    fail_on_error: true
+
+  - gate: final_quality_gate
+    required: true
+    min_score: "${inputs.quality_threshold_medium}"
+
+# Monitoring
+monitoring:
+  enabled: true
+  track_branches: true
+  metrics:
+    - quality_score
+    - fixes_applied
+    - tests_passed
+    - duration_per_stage
+
+# Notifications
+notifications:
+  on_branch_selection:
+    - type: log
+      message: "Selected branch: ${branch_name} (score: ${memory.quality_score})"
+
+  on_success:
+    - type: slack
+      channel: "#quality"
+      message: "Quality workflow completed: ${memory.final_quality_score}/100"
+
+  on_failure:
+    - type: email
+      to: "dev-team@example.com"
+      subject: "Quality workflow failed"

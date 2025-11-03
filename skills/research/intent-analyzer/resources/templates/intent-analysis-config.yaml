@@ -1,0 +1,201 @@
+# Intent Analysis Configuration
+#
+# Configuration parameters for intent analysis behavior including confidence
+# thresholds, pattern matching sensitivity, domain-specific rules, and
+# clarification strategies.
+
+# Confidence Thresholds
+# Determine when to proceed vs. seek clarification based on confidence scores
+confidence:
+  high_threshold: 0.80      # Proceed directly with dominant interpretation
+  moderate_threshold: 0.50  # Proceed but acknowledge assumption
+  low_threshold: 0.50       # Seek clarification before proceeding
+
+  # Multi-intent detection
+  multi_intent_threshold: 0.25  # Probability threshold for secondary intents
+
+  # Confidence calibration
+  calibration:
+    enable_bayesian_update: true  # Update confidence based on user feedback
+    initial_confidence_penalty: 0.05  # Reduce confidence for first interaction
+    expert_user_boost: 0.10  # Increase confidence for expert users
+
+# Pattern Matching Sensitivity
+pattern_matching:
+  # Linguistic pattern weights (relative importance)
+  verb_weight: 1.5
+  noun_weight: 1.0
+  phrase_weight: 2.0
+
+  # Signal detection thresholds
+  minimum_signal_count: 1  # Minimum signals to consider category
+  signal_decay_factor: 0.8  # Diminishing returns for multiple signals
+
+  # Temporal pattern sensitivity
+  temporal:
+    urgency_signals_required: 1  # How many urgency signals for "high urgency"
+    timeline_specificity_boost: 0.15  # Confidence boost for specific timelines
+
+  # Expertise detection
+  expertise:
+    expert_term_threshold: 3  # Expert terms needed to classify as expert
+    tool_mention_threshold: 2  # Tool mentions for "tool familiarity"
+
+# Domain-Specific Rules
+# Customize analysis for different domains
+domains:
+  technical:
+    # Boost technical intent for tech terminology
+    category_boost:
+      technical: 0.20
+      learning: 0.10  # Often want to learn while building
+
+    # Common implicit constraints
+    implicit_constraints:
+      - production_quality  # Assume production-ready unless stated otherwise
+      - best_practices  # Expect adherence to best practices
+
+    # Clarification priority
+    clarification_priorities:
+      - technology_stack
+      - experience_level
+      - use_case
+
+  creative:
+    # Boost creative intent for creative terminology
+    category_boost:
+      creative: 0.20
+      analytical: -0.10  # Creative and analytical often conflict
+
+    # Common implicit constraints
+    implicit_constraints:
+      - audience_type
+      - tone_style
+      - format_requirements
+
+    # Clarification priority
+    clarification_priorities:
+      - purpose
+      - audience
+      - tone
+
+  analytical:
+    # Boost analytical intent for analysis terminology
+    category_boost:
+      analytical: 0.20
+      decision: 0.10  # Often analyzing to make decision
+
+    # Common implicit constraints
+    implicit_constraints:
+      - decision_criteria
+      - objectivity_level
+
+    # Clarification priority
+    clarification_priorities:
+      - decision_context
+      - evaluation_criteria
+      - desired_depth
+
+# Clarification Strategy
+clarification:
+  # Maximum questions per turn
+  max_questions_per_turn: 3
+
+  # Question selection strategy
+  question_strategy: adaptive  # adaptive | prioritized | comprehensive
+
+  # Question type priorities (1-10, higher = more important)
+  question_type_priority:
+    disambiguation: 10  # Always prioritize disambiguating interpretations
+    constraint_revelation: 8  # High value for understanding requirements
+    assumption_validation: 6  # Important but can often proceed with assumptions
+    context_gathering: 5  # General context, lower priority
+
+  # When to escalate to clarification
+  escalation_triggers:
+    - multiple_high_probability_intents  # >2 intents with >30% probability
+    - low_overall_confidence  # Primary confidence <50%
+    - high_stakes_detected  # Keywords: production, critical, important
+    - conflicting_signals  # Contradictory signals detected
+
+  # Adaptive clarification
+  adaptive:
+    skip_for_simple_requests: true  # Don't over-clarify obvious requests
+    expert_user_reduction: true  # Ask fewer questions for expert users
+    progressive_refinement: true  # Allow multi-turn clarification
+
+# Meta-Request Handling
+meta_requests:
+  # Detect and handle conversation management requests
+  capability_queries:
+    provide_overview: true
+    suggest_alternatives: true
+
+  refinement_requests:
+    acknowledge_previous_attempt: true
+    identify_dissatisfaction_reason: true
+    propose_alternative_approach: true
+
+  validation_requests:
+    confirm_understanding: true
+    surface_assumptions: true
+    offer_examples: true
+
+# Quality Assurance
+quality:
+  # Validation checks before proceeding
+  required_validations:
+    - confidence_calibrated  # Confidence in valid range
+    - signals_detected  # At least one signal detected
+    - reasoning_provided  # Explanation for interpretation
+    - assumptions_surfaced  # Implicit assumptions made explicit
+
+  # Warning thresholds
+  warnings:
+    no_signals_detected: true
+    very_brief_reasoning: true  # <10 words
+    contradictory_signals: true
+    uniform_probabilities: true  # All categories ~equal probability
+
+# Learning and Adaptation
+learning:
+  # Track successful interpretations for pattern learning
+  track_interpretations: true
+
+  # Learn from user corrections
+  learn_from_corrections: true
+
+  # Store common patterns per user/domain
+  build_pattern_library: true
+
+  # Confidence calibration based on history
+  calibrate_from_history: true
+
+# Output Formatting
+output:
+  # Transparency settings
+  transparency:
+    surface_assumptions: true  # Make assumptions explicit
+    explain_confidence: false  # Don't always explain confidence calculation
+    show_alternatives: true  # Mention alternative interpretations
+
+  # Interpretation communication
+  interpretation:
+    acknowledge_interpretation: true  # "I'm interpreting this as..."
+    invite_correction: true  # "Let me know if that's not what you meant"
+    signal_approach: true  # "I'll focus on X because Y"
+
+# Advanced Features
+advanced:
+  # Probabilistic reasoning
+  bayesian_updates: true  # Update probabilities based on new information
+
+  # Context tracking
+  conversation_memory: true  # Remember previous interactions
+
+  # Multi-turn refinement
+  progressive_understanding: true  # Build understanding over turns
+
+  # Domain adaptation
+  domain_detection: true  # Auto-detect domain from signals
+  domain_switching: true  # Handle domain shifts in conversation

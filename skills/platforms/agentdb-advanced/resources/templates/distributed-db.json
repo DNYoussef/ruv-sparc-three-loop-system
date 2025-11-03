@@ -1,0 +1,266 @@
+{
+  "description": "Distributed AgentDB Configuration Template",
+  "version": "1.0.0",
+  "topology": {
+    "type": "mesh",
+    "nodes": [
+      {
+        "id": "node-1",
+        "host": "192.168.1.10",
+        "port": 4433,
+        "role": "primary",
+        "region": "us-east-1",
+        "datacenter": "dc-1",
+        "shards": ["shard-0", "shard-3", "shard-6"],
+        "replicas": ["node-2", "node-3"]
+      },
+      {
+        "id": "node-2",
+        "host": "192.168.1.11",
+        "port": 4433,
+        "role": "replica",
+        "region": "us-east-1",
+        "datacenter": "dc-2",
+        "shards": ["shard-1", "shard-4", "shard-7"],
+        "replicas": ["node-1", "node-3"]
+      },
+      {
+        "id": "node-3",
+        "host": "192.168.1.12",
+        "port": 4433,
+        "role": "replica",
+        "region": "us-west-1",
+        "datacenter": "dc-3",
+        "shards": ["shard-2", "shard-5", "shard-8"],
+        "replicas": ["node-1", "node-2"]
+      }
+    ]
+  },
+  "sharding": {
+    "strategy": "consistent_hashing",
+    "num_shards": 9,
+    "replication_factor": 2,
+    "hash_function": "murmur3",
+    "virtual_nodes": 150,
+    "auto_rebalance": true,
+    "rebalance_threshold": 0.15
+  },
+  "replication": {
+    "mode": "async",
+    "consistency_level": "quorum",
+    "read_repair": true,
+    "write_timeout_ms": 5000,
+    "read_timeout_ms": 1000,
+    "replication_lag_threshold_ms": 100
+  },
+  "databases": {
+    "knowledge_base": {
+      "path": ".agentdb/knowledge.db",
+      "sharding": true,
+      "replication": true,
+      "quantization": "scalar",
+      "cache_size": 2000,
+      "persistence": "disk",
+      "domains": ["general-knowledge", "documentation", "research"]
+    },
+    "conversation_memory": {
+      "path": ".agentdb/conversations.db",
+      "sharding": true,
+      "replication": true,
+      "quantization": "binary",
+      "cache_size": 5000,
+      "persistence": "memory",
+      "ttl_hours": 24,
+      "domains": ["chat-sessions", "user-context", "dialogue-history"]
+    },
+    "code_patterns": {
+      "path": ".agentdb/code.db",
+      "sharding": true,
+      "replication": false,
+      "quantization": "product",
+      "cache_size": 1000,
+      "persistence": "disk",
+      "domains": ["code-snippets", "algorithms", "best-practices"]
+    },
+    "reasoning_bank": {
+      "path": ".agentdb/reasoning.db",
+      "sharding": true,
+      "replication": true,
+      "quantization": "none",
+      "cache_size": 3000,
+      "persistence": "disk",
+      "learning_enabled": true,
+      "domains": ["problem-solving", "decision-making", "inference"]
+    }
+  },
+  "load_balancing": {
+    "strategy": "least_connections",
+    "health_check": {
+      "enabled": true,
+      "interval_seconds": 10,
+      "timeout_ms": 1000,
+      "unhealthy_threshold": 3,
+      "healthy_threshold": 2
+    },
+    "circuit_breaker": {
+      "enabled": true,
+      "failure_threshold": 5,
+      "timeout_seconds": 60,
+      "half_open_requests": 3
+    }
+  },
+  "caching": {
+    "distributed_cache": {
+      "enabled": true,
+      "type": "redis",
+      "nodes": [
+        "redis://192.168.1.20:6379",
+        "redis://192.168.1.21:6379",
+        "redis://192.168.1.22:6379"
+      ],
+      "ttl_seconds": 3600,
+      "max_memory": "2gb",
+      "eviction_policy": "lru"
+    },
+    "local_cache": {
+      "enabled": true,
+      "max_size_mb": 512,
+      "ttl_seconds": 300
+    }
+  },
+  "performance": {
+    "connection_pooling": {
+      "enabled": true,
+      "min_size": 5,
+      "max_size": 50,
+      "idle_timeout_seconds": 300
+    },
+    "batch_operations": {
+      "enabled": true,
+      "batch_size": 100,
+      "batch_timeout_ms": 50
+    },
+    "compression": {
+      "enabled": true,
+      "algorithm": "lz4",
+      "min_size_bytes": 1024
+    },
+    "hnsw_indexing": {
+      "enabled": true,
+      "m": 16,
+      "ef_construction": 200,
+      "ef_search": 100
+    }
+  },
+  "monitoring": {
+    "metrics": {
+      "enabled": true,
+      "export_interval_seconds": 60,
+      "exporters": [
+        {
+          "type": "prometheus",
+          "endpoint": "http://prometheus:9090/metrics"
+        },
+        {
+          "type": "statsd",
+          "host": "statsd",
+          "port": 8125
+        }
+      ]
+    },
+    "tracing": {
+      "enabled": true,
+      "sample_rate": 0.1,
+      "exporter": {
+        "type": "jaeger",
+        "endpoint": "http://jaeger:14268/api/traces"
+      }
+    },
+    "logging": {
+      "level": "INFO",
+      "format": "json",
+      "outputs": ["stdout", "file"],
+      "file_path": ".agentdb/logs/distributed.log",
+      "rotation": {
+        "max_size_mb": 100,
+        "max_files": 10
+      }
+    }
+  },
+  "security": {
+    "tls": {
+      "enabled": true,
+      "cert_file": "./certs/server.crt",
+      "key_file": "./certs/server.key",
+      "ca_file": "./certs/ca.crt",
+      "verify_peer": true
+    },
+    "authentication": {
+      "enabled": true,
+      "method": "token",
+      "token_secret": "${AGENTDB_TOKEN_SECRET}"
+    },
+    "authorization": {
+      "enabled": true,
+      "rbac_enabled": true,
+      "roles": {
+        "admin": ["read", "write", "delete", "admin"],
+        "writer": ["read", "write"],
+        "reader": ["read"]
+      }
+    },
+    "encryption": {
+      "at_rest": true,
+      "in_transit": true,
+      "algorithm": "AES-256-GCM"
+    }
+  },
+  "backup": {
+    "enabled": true,
+    "schedule": "0 2 * * *",
+    "retention_days": 30,
+    "storage": {
+      "type": "s3",
+      "bucket": "agentdb-backups",
+      "region": "us-east-1",
+      "encryption": true
+    },
+    "incremental": true,
+    "compression": true
+  },
+  "disaster_recovery": {
+    "enabled": true,
+    "rpo_minutes": 15,
+    "rto_minutes": 30,
+    "failover": {
+      "automatic": true,
+      "health_check_interval_seconds": 10,
+      "failover_threshold": 3
+    },
+    "backup_regions": ["us-west-1", "eu-west-1"]
+  },
+  "scaling": {
+    "auto_scaling": {
+      "enabled": true,
+      "min_nodes": 3,
+      "max_nodes": 10,
+      "scale_up_threshold": 0.8,
+      "scale_down_threshold": 0.3,
+      "cooldown_seconds": 300
+    },
+    "horizontal_scaling": true,
+    "vertical_scaling": false
+  },
+  "data_lifecycle": {
+    "archival": {
+      "enabled": true,
+      "age_threshold_days": 90,
+      "archive_storage": "s3-glacier"
+    },
+    "purging": {
+      "enabled": true,
+      "age_threshold_days": 365,
+      "min_confidence": 0.3
+    }
+  }
+}

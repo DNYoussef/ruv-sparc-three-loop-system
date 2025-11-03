@@ -1,0 +1,383 @@
+# Tool Template - Base Structure for Generated Tools
+# This template defines the standard structure and components for tool generation
+
+metadata:
+  template_version: "1.0.0"
+  generator: "tool-generator.py"
+  last_updated: "2024-01-15"
+
+# Tool structure definition
+structure:
+  root:
+    - name: "index.js|main.js|index.py"
+      description: "Main entry point"
+      required: true
+    - name: "README.md"
+      description: "Documentation"
+      required: true
+    - name: "tool-manifest.yaml"
+      description: "Tool metadata"
+      required: true
+    - name: "package.json|setup.py"
+      description: "Package definition"
+      required: false
+
+  directories:
+    tests:
+      description: "Test files"
+      required: true
+      files:
+        - "*.test.js|*.spec.js|*.test.py"
+
+    examples:
+      description: "Usage examples"
+      required: false
+      files:
+        - "basic-usage.*"
+        - "advanced-usage.*"
+
+    docs:
+      description: "Additional documentation"
+      required: false
+      files:
+        - "API.md"
+        - "CHANGELOG.md"
+
+# Code templates for different languages
+code_templates:
+  javascript:
+    class_template: |
+      class {ClassName} {
+          constructor(config = {}) {
+              this.config = {
+                  timeout: 30000,
+                  retries: 3,
+                  ...config
+              };
+              this.validateConfig();
+          }
+
+          validateConfig() {
+              if (typeof this.config.timeout !== 'number' || this.config.timeout <= 0) {
+                  throw new Error('Invalid timeout configuration');
+              }
+          }
+
+          async execute(inputs) {
+              try {
+                  this.validateInputs(inputs);
+                  const result = await this.run(inputs);
+                  this.validateOutputs(result);
+                  return result;
+              } catch (error) {
+                  throw this.handleError(error);
+              }
+          }
+
+          validateInputs(inputs) {
+              // Input validation logic
+          }
+
+          async run(inputs) {
+              // Main tool logic
+              return {};
+          }
+
+          validateOutputs(outputs) {
+              // Output validation logic
+          }
+
+          handleError(error) {
+              console.error('Tool error:', error);
+              return new Error(`Execution failed: ${error.message}`);
+          }
+      }
+
+      module.exports = { {ClassName} };
+
+    function_template: |
+      async function {functionName}({parameters}) {
+          try {
+              // Validate inputs
+              validateInputs({parameterObject});
+
+              // Execute logic
+              const result = await execute({parameterObject});
+
+              // Validate outputs
+              validateOutputs(result);
+
+              return result;
+          } catch (error) {
+              throw handleError(error);
+          }
+      }
+
+      function validateInputs(inputs) {
+          // Validation logic
+      }
+
+      async function execute(inputs) {
+          // Main logic
+          return {};
+      }
+
+      function validateOutputs(outputs) {
+          // Validation logic
+      }
+
+      function handleError(error) {
+          console.error('Error:', error);
+          throw new Error(`Execution failed: ${error.message}`);
+      }
+
+      module.exports = { {functionName} };
+
+  python:
+    class_template: |
+      """
+      {ToolName} - {Description}
+      """
+
+      from typing import Dict, Any, Optional
+      import logging
+
+
+      class {ClassName}:
+          """Tool implementation"""
+
+          def __init__(self, config: Optional[Dict[str, Any]] = None):
+              self.config = {
+                  'timeout': 30000,
+                  'retries': 3,
+                  **(config or {})
+              }
+              self.validate_config()
+              self.logger = logging.getLogger(__name__)
+
+          def validate_config(self):
+              """Validate configuration"""
+              if not isinstance(self.config['timeout'], int) or self.config['timeout'] <= 0:
+                  raise ValueError('Invalid timeout configuration')
+
+          def execute(self, **inputs) -> Dict[str, Any]:
+              """Execute the tool"""
+              try:
+                  self.validate_inputs(inputs)
+                  result = self.run(inputs)
+                  self.validate_outputs(result)
+                  return result
+              except Exception as e:
+                  return self.handle_error(e)
+
+          def validate_inputs(self, inputs: Dict[str, Any]):
+              """Validate input parameters"""
+              pass
+
+          def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
+              """Main tool logic"""
+              return {}
+
+          def validate_outputs(self, outputs: Dict[str, Any]):
+              """Validate output parameters"""
+              pass
+
+          def handle_error(self, error: Exception) -> Dict[str, Any]:
+              """Handle execution errors"""
+              self.logger.error(f'Error: {error}')
+              raise RuntimeError(f'Execution failed: {error}')
+
+# Validation templates
+validation:
+  input_types:
+    string:
+      js: "typeof {param} !== 'string'"
+      py: "not isinstance({param}, str)"
+
+    number:
+      js: "typeof {param} !== 'number'"
+      py: "not isinstance({param}, (int, float))"
+
+    boolean:
+      js: "typeof {param} !== 'boolean'"
+      py: "not isinstance({param}, bool)"
+
+    object:
+      js: "typeof {param} !== 'object' || {param} === null"
+      py: "not isinstance({param}, dict)"
+
+    array:
+      js: "!Array.isArray({param})"
+      py: "not isinstance({param}, list)"
+
+  required_check:
+    js: "if (!{param}) throw new Error('{param} is required');"
+    py: "if {param} is None: raise ValueError('{param} is required')"
+
+# Test templates
+test_templates:
+  jest:
+    suite: |
+      describe('{ToolName}', () => {
+          let tool;
+
+          beforeEach(() => {
+              tool = new {ClassName}();
+          });
+
+          describe('constructor', () => {
+              it('should create instance with default config', () => {
+                  expect(tool).toBeInstanceOf({ClassName});
+              });
+          });
+
+          describe('execute', () => {
+              it('should execute successfully', async () => {
+                  const result = await tool.execute({testInputs});
+                  expect(result).toBeDefined();
+              });
+
+              it('should handle errors', async () => {
+                  await expect(tool.execute()).rejects.toThrow();
+              });
+          });
+      });
+
+  pytest:
+    suite: |
+      import pytest
+      from {module_name} import {ClassName}
+
+
+      class Test{ClassName}:
+          def setup_method(self):
+              self.tool = {ClassName}()
+
+          def test_initialization(self):
+              assert self.tool is not None
+              assert self.tool.config['timeout'] == 30000
+
+          def test_execute_success(self):
+              result = self.tool.execute({testInputs})
+              assert result is not None
+
+          def test_execute_error(self):
+              with pytest.raises(RuntimeError):
+                  self.tool.execute()
+
+# Documentation templates
+documentation:
+  readme: |
+    # {ToolName}
+
+    {Description}
+
+    ## Installation
+
+    ```bash
+    npm install {tool-name}
+    ```
+
+    ## Usage
+
+    ```javascript
+    const {{ {ClassName} }} = require('{tool-name}');
+
+    const tool = new {ClassName}({{
+        timeout: 30000
+    }});
+
+    const result = await tool.execute({{
+        // inputs
+    }});
+    ```
+
+    ## API
+
+    ### Constructor
+
+    `new {ClassName}(config)`
+
+    - `config` (object): Configuration options
+
+    ### Methods
+
+    #### execute(inputs)
+
+    Execute the tool with given inputs.
+
+    **Parameters:**
+    - `inputs` (object): Input parameters
+
+    **Returns:**
+    - Promise<object>: Execution results
+
+    ## License
+
+    MIT
+
+  api_docs: |
+    # API Documentation - {ToolName}
+
+    ## Class: {ClassName}
+
+    ### Constructor
+
+    ```javascript
+    new {ClassName}(config: Object)
+    ```
+
+    **Parameters:**
+    - `config.timeout` (number): Execution timeout in ms
+    - `config.retries` (number): Number of retry attempts
+
+    ### Methods
+
+    #### execute(inputs: Object): Promise<Object>
+
+    Execute the tool.
+
+    **Parameters:**
+    {InputParameters}
+
+    **Returns:**
+    {OutputParameters}
+
+    **Throws:**
+    - Error: If validation fails or execution errors occur
+
+# Manifest template
+manifest:
+  tool-manifest.yaml: |
+    name: {tool-name}
+    version: 1.0.0
+    description: {description}
+    type: {tool-type}
+    author: {author}
+    license: MIT
+    generated: {timestamp}
+
+    inputs:
+      {InputDefinitions}
+
+    outputs:
+      {OutputDefinitions}
+
+    configuration:
+      timeout: 30000
+      retries: 3
+      cache: true
+
+    dependencies:
+      {Dependencies}
+
+# Configuration defaults
+defaults:
+  timeout: 30000
+  retries: 3
+  cache_enabled: true
+  include_tests: true
+  include_docs: true
+  include_examples: false
+  minify: false
+  source_maps: false

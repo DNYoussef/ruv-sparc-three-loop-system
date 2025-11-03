@@ -1,0 +1,200 @@
+digraph AgentCreatorGoldProcess {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial"];
+    edge [fontname="Arial"];
+
+    // Start and end
+    start [shape=ellipse, label="Start:\nAgent Creation\nRequest", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nProduction Agent", fillcolor=green, fontcolor=white];
+
+    // ========================================================================
+    // PHASE 1: INITIAL ANALYSIS & INTENT DECODING (30-60 min)
+    // ========================================================================
+    subgraph cluster_phase1 {
+        label="Phase 1: Initial Analysis & Intent Decoding (30-60 min)";
+        fillcolor=lightyellow;
+        style=filled;
+        fontsize=12;
+
+        p1_domain [label="Domain\nBreakdown", fillcolor=lightblue];
+        p1_tech [label="Technology\nStack Mapping", fillcolor=lightblue];
+        p1_integration [label="Integration\nPoints", fillcolor=lightblue];
+        p1_validation [shape=diamond, label="Validation\nGate 1", fillcolor=yellow];
+
+        p1_domain -> p1_tech;
+        p1_tech -> p1_integration;
+        p1_integration -> p1_validation;
+    }
+
+    // Phase 1 validation failure handling
+    p1_fail [shape=octagon, label="REVIEW:\n<5 challenges\nor\nincomplete tech", fillcolor=orange];
+
+    // ========================================================================
+    // PHASE 2: META-COGNITIVE EXTRACTION (30-45 min)
+    // ========================================================================
+    subgraph cluster_phase2 {
+        label="Phase 2: Meta-Cognitive Extraction (30-45 min)";
+        fillcolor=lightyellow;
+        style=filled;
+        fontsize=12;
+
+        p2_expertise [label="Expertise\nDomain ID", fillcolor=lightblue];
+        p2_frameworks [label="Decision\nFrameworks", fillcolor=lightblue];
+        p2_spec [label="Agent\nSpecification", fillcolor=lightblue];
+        p2_artifacts [label="Supporting\nArtifacts", fillcolor=lightblue];
+        p2_validation [shape=diamond, label="Validation\nGate 2", fillcolor=yellow];
+
+        p2_expertise -> p2_frameworks;
+        p2_frameworks -> p2_spec;
+        p2_spec -> p2_artifacts;
+        p2_artifacts -> p2_validation;
+    }
+
+    // Phase 2 validation failure handling
+    p2_fail [shape=octagon, label="REVIEW:\n<3 domains\nor\n<5 heuristics", fillcolor=orange];
+
+    // ========================================================================
+    // PHASE 3: AGENT ARCHITECTURE DESIGN (45-60 min)
+    // ========================================================================
+    subgraph cluster_phase3 {
+        label="Phase 3: Agent Architecture Design (45-60 min)";
+        fillcolor=lightyellow;
+        style=filled;
+        fontsize=12;
+
+        p3_identity [label="Core\nIdentity", fillcolor=lightblue];
+        p3_commands [label="Universal +\nSpecialist\nCommands", fillcolor=lightblue];
+        p3_mcp [label="MCP Server\nTools", fillcolor=lightblue];
+        p3_cognitive [label="Cognitive\nFramework", fillcolor=lightblue];
+        p3_guardrails [label="Guardrails", fillcolor=lightblue];
+        p3_workflows [label="Workflow\nExamples", fillcolor=lightblue];
+        p3_validation [shape=diamond, label="Validation\nGate 3", fillcolor=yellow];
+
+        p3_identity -> p3_commands;
+        p3_commands -> p3_mcp;
+        p3_mcp -> p3_cognitive;
+        p3_cognitive -> p3_guardrails;
+        p3_guardrails -> p3_workflows;
+        p3_workflows -> p3_validation;
+    }
+
+    // Phase 3 outputs
+    p3_base_prompt [label="Base System\nPrompt v1.0", fillcolor=lightcyan];
+
+    // Phase 3 validation failure handling
+    p3_fail [shape=octagon, label="REVIEW:\nMissing sections\nor\n<2 workflows", fillcolor=orange];
+
+    // ========================================================================
+    // VALIDATION & TESTING
+    // ========================================================================
+    subgraph cluster_validation {
+        label="Validation & Testing";
+        fillcolor=lightgray;
+        style=filled;
+        fontsize=12;
+
+        validate_script [shape=cylinder, label="validate_prompt.sh\n(Score check)", fillcolor=lightcoral];
+        test_script [shape=cylinder, label="test_agent.py\n(Test suite)", fillcolor=lightcoral];
+        quality_gate [shape=diamond, label="Quality\nAcceptable?", fillcolor=yellow];
+    }
+
+    // ========================================================================
+    // PHASE 4: DEEP TECHNICAL ENHANCEMENT (60-90 min) - Manual
+    // ========================================================================
+    subgraph cluster_phase4 {
+        label="Phase 4: Deep Technical Enhancement (60-90 min) - Manual";
+        fillcolor=lightyellow;
+        style=filled;
+        fontsize=12;
+
+        p4_code_patterns [label="Extract Code\nPatterns", fillcolor=lightblue];
+        p4_failure_modes [label="Document\nFailure Modes", fillcolor=lightblue];
+        p4_mcp_integration [label="MCP Integration\nPatterns", fillcolor=lightblue];
+        p4_metrics [label="Performance\nMetrics", fillcolor=lightblue];
+
+        p4_code_patterns -> p4_failure_modes;
+        p4_failure_modes -> p4_mcp_integration;
+        p4_mcp_integration -> p4_metrics;
+    }
+
+    // Phase 4 outputs
+    p4_enhanced_prompt [label="Enhanced\nPrompt v2.0\n(Production)", fillcolor=lightcyan];
+
+    // ========================================================================
+    // TIER CLASSIFICATION
+    // ========================================================================
+    subgraph cluster_tiers {
+        label="Quality Tier Classification";
+        fillcolor=lightgray;
+        style=filled;
+        fontsize=12;
+
+        tier_gold [label="Gold Tier\n90-100%\nProduction Ready", fillcolor=gold, fontcolor=black];
+        tier_silver [label="Silver Tier\n75-89%\nWell-Structured", fillcolor=silver, fontcolor=black];
+        tier_bronze [label="Bronze Tier\n70-74%\nFunctional", fillcolor="#CD7F32", fontcolor=white];
+    }
+
+    // ========================================================================
+    // EXTERNAL REFERENCES
+    // ========================================================================
+    skill_forge [shape=cylinder, label="skill-forge\n(Meta-skill)", fillcolor=lightcoral];
+    evidence_techniques [shape=folder, label="Evidence-Based\nPrompting", fillcolor=lightsalmon];
+    claude_sdk [shape=folder, label="Claude Agent\nSDK", fillcolor=lightsalmon];
+
+    // ========================================================================
+    // MAIN FLOW
+    // ========================================================================
+    start -> p1_domain [lhead=cluster_phase1];
+
+    // Phase 1 flow
+    p1_validation -> p2_expertise [label="pass", color=green, lhead=cluster_phase2];
+    p1_validation -> p1_fail [label="fail", color=red];
+    p1_fail -> p1_domain [label="revise", style=dashed];
+
+    // Phase 2 flow
+    p2_validation -> p3_identity [label="pass", color=green, lhead=cluster_phase3];
+    p2_validation -> p2_fail [label="fail", color=red];
+    p2_fail -> p2_expertise [label="revise", style=dashed];
+
+    // Phase 3 flow
+    p3_validation -> p3_base_prompt [label="pass", color=green];
+    p3_validation -> p3_fail [label="fail", color=red];
+    p3_fail -> p3_identity [label="revise", style=dashed];
+
+    // Validation & Testing
+    p3_base_prompt -> validate_script;
+    validate_script -> test_script;
+    test_script -> quality_gate;
+
+    // Quality gate decision
+    quality_gate -> p4_code_patterns [label="Basic/Silver\n(70-89%)", color=green, lhead=cluster_phase4];
+    quality_gate -> end [label="Skip Phase 4\n(sufficient)", color=blue, style=dashed];
+
+    // Phase 4 flow (manual enhancement)
+    p4_metrics -> p4_enhanced_prompt;
+    p4_enhanced_prompt -> validate_script [label="re-validate", style=dashed];
+
+    // Tier classification
+    p3_base_prompt -> tier_bronze [style=dashed, label="70-74%"];
+    p3_base_prompt -> tier_silver [style=dashed, label="75-89%"];
+    p4_enhanced_prompt -> tier_gold [label="90-100%", color=green];
+
+    // Final completion
+    tier_gold -> end [color=green];
+    tier_silver -> end [color=green];
+    tier_bronze -> end [color=blue];
+
+    // External skill references
+    p3_cognitive -> evidence_techniques [style=dashed, label="applies"];
+    p4_code_patterns -> skill_forge [style=dashed, label="uses patterns\nfrom"];
+    p4_enhanced_prompt -> claude_sdk [style=dashed, label="implements\nwith"];
+
+    // ========================================================================
+    // GRAPH METADATA
+    // ========================================================================
+    labelloc="t";
+    label="Agent Creator: 4-Phase SOP with Gold Tier Enhancement\n\nPhases 1-3: Automated (2.5-3 hours) | Phase 4: Manual Enhancement (60-90 min)\nValidation: 70%+ Bronze, 75%+ Silver, 90%+ Gold";
+    fontsize=16;
+    fontname="Arial Bold";
+}

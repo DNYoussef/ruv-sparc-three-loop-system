@@ -1,0 +1,126 @@
+digraph AgentCreation {
+    rankdir=TB;
+    compound=true;
+    node [shape=box, style=filled, fontname="Arial", fillcolor=lightblue];
+    edge [fontname="Arial"];
+
+    // Start and end with semantic ellipse
+    start [shape=ellipse, label="Start:\nAgent Creation Request", fillcolor=lightgreen];
+    end [shape=ellipse, label="Complete:\nProduction Agent", fillcolor=green, fontcolor=white];
+
+    // Phase 1: Specification
+    subgraph cluster_specification {
+        label="Phase 1: Specification";
+        fillcolor=lightyellow;
+        style=filled;
+
+        spec1 [label="Define Agent\nPurpose & Domain"];
+        spec2 [label="Identify Core\nCapabilities"];
+        spec3 [label="Determine I/O\nFormats"];
+        spec4 [label="Specify Quality\nCriteria"];
+
+        spec1 -> spec2 -> spec3 -> spec4;
+    }
+
+    // Phase 2: Prompt Engineering
+    subgraph cluster_prompting {
+        label="Phase 2: Prompt Engineering";
+        fillcolor=lightcyan;
+        style=filled;
+
+        prompt1 [label="Apply Evidence-Based\nPrinciples"];
+        prompt2 [label="Implement\nChain-of-Thought"];
+        prompt3 [label="Create Few-Shot\nExamples"];
+        prompt4 [label="Define Role\n& Persona"];
+
+        prompt1 -> prompt2 -> prompt3 -> prompt4;
+    }
+
+    // Phase 3: Testing & Validation
+    subgraph cluster_testing {
+        label="Phase 3: Testing & Validation";
+        fillcolor=mistyrose;
+        style=filled;
+
+        test1 [label="Test with\nDiverse Inputs"];
+        test2 [label="Validate Output\nQuality"];
+        test3 [label="Measure Performance\nMetrics"];
+        test4 [label="Iterate Based\non Results"];
+
+        test1 -> test2 -> test3 -> test4;
+    }
+
+    // Phase 4: Integration
+    subgraph cluster_integration {
+        label="Phase 4: Integration";
+        fillcolor=lightgreen;
+        style=filled;
+
+        integ1 [label="Configure\nCoordination"];
+        integ2 [label="Setup Memory MCP\nTagging"];
+        integ3 [label="Configure\nHooks"];
+        integ4 [label="Deploy with\nMonitoring"];
+
+        integ1 -> integ2 -> integ3 -> integ4;
+    }
+
+    // Decision points (diamond)
+    decision_spec [shape=diamond, label="Specification\nComplete?", fillcolor=yellow];
+    decision_prompt [shape=diamond, label="Prompting\nEffective?", fillcolor=yellow];
+    decision_quality [shape=diamond, label="Quality\nAcceptable?", fillcolor=yellow];
+    decision_final [shape=diamond, label="Production\nReady?", fillcolor=yellow];
+
+    // Warnings (octagon)
+    warning_scope [shape=octagon, label="WARNING:\nScope Unclear", fillcolor=orange];
+    warning_examples [shape=octagon, label="WARNING:\nInsufficient Examples", fillcolor=orange];
+    warning_validation [shape=octagon, label="WARNING:\nValidation Failed", fillcolor=orange];
+
+    // External resources (cylinder)
+    templates [shape=cylinder, label="Templates\n(agent-spec.yaml)", fillcolor=lightcoral];
+    validator [shape=cylinder, label="Validator\n(validate_agent.py)", fillcolor=lightcoral];
+    generator [shape=cylinder, label="Generator\n(generate_agent.sh)", fillcolor=lightcoral];
+    skill_forge [shape=cylinder, label="skill-forge\n(Advanced patterns)", fillcolor=lightcoral];
+
+    // Guidelines (folder)
+    principles [shape=folder, label="Evidence-Based\nPrompting Principles", fillcolor=lightsalmon];
+    best_practices [shape=folder, label="Agent Design\nBest Practices", fillcolor=lightsalmon];
+
+    // Main flow
+    start -> spec1;
+    spec4 -> decision_spec;
+    decision_spec -> prompt1 [label="yes", color=green];
+    decision_spec -> warning_scope [label="no", color=red];
+    warning_scope -> spec1 [label="clarify", style=dashed];
+
+    prompt4 -> decision_prompt;
+    decision_prompt -> test1 [label="yes", color=green];
+    decision_prompt -> warning_examples [label="no", color=red];
+    warning_examples -> prompt2 [label="revise", style=dashed];
+
+    test4 -> decision_quality;
+    decision_quality -> integ1 [label="yes", color=green];
+    decision_quality -> warning_validation [label="no", color=red];
+    warning_validation -> test1 [label="iterate", style=dashed];
+
+    integ4 -> decision_final;
+    decision_final -> end [label="yes", color=green];
+    decision_final -> integ1 [label="no", color=red, style=dashed];
+
+    // External resource connections
+    spec1 -> templates [style=dashed, label="uses"];
+    spec2 -> generator [style=dashed, label="uses"];
+    prompt1 -> principles [style=dashed, label="applies"];
+    prompt2 -> skill_forge [style=dashed, label="references"];
+    test2 -> validator [style=dashed, label="uses"];
+    integ1 -> best_practices [style=dashed, label="follows"];
+
+    // Cross-phase optimization
+    test3 -> prompt3 [label="refine examples", style=dashed, color=blue];
+    integ2 -> spec3 [label="adjust I/O", style=dashed, color=blue];
+
+    // Metadata
+    labelloc="t";
+    label="Agent Creation Process: 4-Phase SOP with Evidence-Based Prompting";
+    fontsize=16;
+    fontname="Arial Bold";
+}

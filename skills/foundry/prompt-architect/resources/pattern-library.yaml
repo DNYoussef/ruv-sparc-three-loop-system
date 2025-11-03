@@ -1,0 +1,392 @@
+# Prompt Pattern Library
+# Catalog of proven patterns for prompt engineering
+
+patterns:
+  # Evidence-Based Techniques
+
+  chain_of_thought:
+    name: "Chain-of-Thought (CoT)"
+    category: "reasoning"
+    description: "Request explicit step-by-step reasoning to improve complex problem solving"
+    research_basis: "Wei et al. (2022) - Improves performance on reasoning tasks by 2-3x"
+    when_to_use:
+      - Complex multi-step problems
+      - Mathematical reasoning
+      - Logical deduction
+      - Abstract reasoning
+    implementation:
+      basic: "Think through this step by step."
+      detailed: "Let's approach this step by step:\n1. [First step]\n2. [Second step]\n3. [Third step]\nExplain your reasoning at each stage."
+      with_validation: "Think through this step by step, showing your work. After reaching your conclusion, verify your reasoning."
+    examples:
+      - task: "Math word problem"
+        without_cot: "What is 15% of 80 plus 12?"
+        with_cot: "What is 15% of 80 plus 12? Let's solve this step by step:\n1. First calculate 15% of 80\n2. Then add 12 to that result\nShow your work for each step."
+      - task: "Logical reasoning"
+        without_cot: "If all roses are flowers and some flowers fade quickly, do some roses fade quickly?"
+        with_cot: "If all roses are flowers and some flowers fade quickly, do some roses fade quickly? Think through this step by step:\n1. What do we know about roses?\n2. What do we know about flowers?\n3. What can we conclude?\nExplain your reasoning."
+    effectiveness: 0.85
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  self_consistency:
+    name: "Self-Consistency"
+    category: "validation"
+    description: "Request validation from multiple perspectives to improve accuracy"
+    research_basis: "Wang et al. (2022) - Reduces errors by considering multiple reasoning paths"
+    when_to_use:
+      - Factual questions
+      - Analytical tasks
+      - Research and investigation
+      - Any task where accuracy is critical
+    implementation:
+      basic: "After reaching your conclusion, validate it by considering alternative perspectives."
+      detailed: "After completing your analysis:\n1. Validate against available evidence\n2. Consider alternative interpretations\n3. Identify any areas of uncertainty\n4. Cross-check your reasoning"
+      with_criteria: "Validate your conclusion by:\n- Checking consistency with known facts\n- Considering counterarguments\n- Identifying assumptions\n- Flagging uncertainty"
+    examples:
+      - task: "Historical analysis"
+        prompt: "Analyze the causes of the French Revolution. After reaching your conclusions, validate them by considering alternative historical interpretations and identifying any areas where historians disagree."
+      - task: "Technical diagnosis"
+        prompt: "Diagnose the cause of this error. After identifying the likely cause, validate by:\n1. Checking if it explains all symptoms\n2. Considering alternative explanations\n3. Identifying what information would confirm or refute your diagnosis"
+    effectiveness: 0.80
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  program_of_thought:
+    name: "Program-of-Thought (PoT)"
+    category: "computational"
+    description: "Structure computational problem solving with explicit intermediate steps"
+    research_basis: "Chen et al. (2022) - Improves accuracy on mathematical and logical tasks"
+    when_to_use:
+      - Mathematical problems
+      - Logical computation
+      - Algorithmic tasks
+      - Any task with clear steps
+    implementation:
+      basic: "Solve this step by step, showing all intermediate calculations."
+      detailed: "Solve this problem by:\n1. Breaking it into computational steps\n2. Showing intermediate results\n3. Explaining each calculation\n4. Verifying the final answer"
+      structured: "For each step:\n- State what you're calculating\n- Show the calculation\n- Verify the result\n- Explain how it contributes to the solution"
+    examples:
+      - task: "Multi-step calculation"
+        prompt: "Calculate the compound interest on $1000 at 5% annual rate for 3 years. Solve step by step:\n1. Calculate interest for year 1\n2. Calculate interest for year 2\n3. Calculate interest for year 3\nShow all intermediate values."
+      - task: "Algorithm implementation"
+        prompt: "Implement binary search. For each step:\n1. State the current search range\n2. Calculate the midpoint\n3. Explain the comparison\n4. Show the updated range\nContinue until found or range is empty."
+    effectiveness: 0.90
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  plan_and_solve:
+    name: "Plan-and-Solve"
+    category: "workflow"
+    description: "Separate planning from execution for complex multi-stage tasks"
+    research_basis: "Wang et al. (2023) - Improves performance on complex reasoning tasks"
+    when_to_use:
+      - Multi-stage workflows
+      - Complex projects
+      - Tasks requiring coordination
+      - Strategic planning
+    implementation:
+      basic: "First, create a plan. Then execute it. Finally, verify your results."
+      detailed: "Approach this task in three phases:\n1. Planning: Create a detailed plan\n2. Execution: Implement the plan step by step\n3. Verification: Check results against requirements"
+      comprehensive: "**Phase 1: Planning**\nCreate a detailed plan including:\n- Objectives\n- Steps required\n- Dependencies\n- Success criteria\n\n**Phase 2: Execution**\nExecute the plan systematically:\n- Complete each step\n- Document progress\n- Handle issues as they arise\n\n**Phase 3: Verification**\nVerify the results:\n- Check against requirements\n- Test edge cases\n- Validate quality"
+    examples:
+      - task: "Software refactoring"
+        prompt: "Refactor this codebase for better maintainability. Use plan-and-solve:\n\n1. **Plan**: Analyze the code and create a refactoring plan\n2. **Execute**: Implement the refactoring step by step\n3. **Verify**: Test that functionality is preserved"
+      - task: "Essay writing"
+        prompt: "Write an essay on climate change. Use plan-and-solve:\n\n1. **Plan**: Create an outline with thesis and key points\n2. **Execute**: Write each section following the outline\n3. **Verify**: Review for coherence and completeness"
+    effectiveness: 0.82
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  few_shot_learning:
+    name: "Few-Shot Examples"
+    category: "demonstration"
+    description: "Provide concrete examples of desired input-output patterns"
+    research_basis: "Brown et al. (2020) - Significantly improves task performance with examples"
+    when_to_use:
+      - Pattern-based tasks
+      - Format specification
+      - Style matching
+      - Consistent output structure
+    implementation:
+      basic: "Here are examples of the desired format:\n\nInput: [example 1 input]\nOutput: [example 1 output]\n\nInput: [example 2 input]\nOutput: [example 2 output]\n\nNow process: [actual input]"
+      detailed: "I'll provide examples showing the exact format I need:\n\n**Example 1:**\nInput: [input 1]\nOutput: [output 1]\nExplanation: [why this is correct]\n\n**Example 2:**\nInput: [input 2]\nOutput: [output 2]\nExplanation: [why this is correct]\n\nNow apply this pattern to: [actual task]"
+      with_edge_cases: "Examples (including edge cases):\n\n**Normal Case:**\nInput: [normal]\nOutput: [result]\n\n**Edge Case 1:**\nInput: [edge case]\nOutput: [special handling]\n\n**Edge Case 2:**\nInput: [another edge case]\nOutput: [different handling]\n\nNow process: [actual input]"
+    examples:
+      - task: "Data extraction"
+        prompt: "Extract structured data from text. Examples:\n\nInput: \"John Smith, age 30, lives in Seattle\"\nOutput: {\"name\": \"John Smith\", \"age\": 30, \"city\": \"Seattle\"}\n\nInput: \"Jane Doe, 25, from Portland\"\nOutput: {\"name\": \"Jane Doe\", \"age\": 25, \"city\": \"Portland\"}\n\nNow extract from: \"Bob Johnson, 35, NYC resident\""
+      - task: "Style transformation"
+        prompt: "Rewrite in formal style. Examples:\n\nCasual: \"This thing is totally broken and won't work at all.\"\nFormal: \"The component is experiencing a critical failure and is currently inoperative.\"\n\nCasual: \"We gotta fix this ASAP or we're toast.\"\nFormal: \"This issue requires immediate attention to prevent significant adverse consequences.\"\n\nNow rewrite: \"The app keeps crashing whenever I click that button.\""
+    effectiveness: 0.88
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  # Structural Patterns
+
+  context_positioning:
+    name: "Strategic Context Positioning"
+    category: "structure"
+    description: "Position critical information where attention is highest (beginning and end)"
+    research_basis: "Primacy and recency effects in attention and memory"
+    when_to_use:
+      - Long prompts (>200 words)
+      - Complex multi-part tasks
+      - When certain constraints are critical
+    implementation:
+      pattern: |
+        [BEGINNING - Critical Information]
+        - Core task objective
+        - Most important constraints
+        - Critical context
+
+        [MIDDLE - Supporting Details]
+        - Background information
+        - Examples
+        - Additional context
+        - Methodology details
+
+        [END - Reinforcement]
+        - Output format specification
+        - Final critical constraints
+        - Validation requirements
+    examples:
+      - description: "Long analytical task"
+        structure: |
+          # Objective: Analyze market trends for sustainable products
+
+          Critical constraints:
+          - Focus on 2020-2024 period
+          - Must include quantitative data
+          - Compare 3 specific market segments
+
+          ## Background
+          [Detailed background information...]
+          [Historical context...]
+          [Previous research...]
+
+          ## Methodology
+          [Detailed analysis approach...]
+
+          ## Output Format (CRITICAL)
+          Provide results in this exact structure:
+          1. Executive summary (200 words)
+          2. Quantitative analysis (tables and charts)
+          3. Segment comparison (side-by-side)
+
+          Remember: Must cover 2020-2024 period with quantitative data for all 3 segments.
+    effectiveness: 0.75
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  hierarchical_organization:
+    name: "Hierarchical Organization"
+    category: "structure"
+    description: "Use clear hierarchy with headers, sections, and nested structure"
+    when_to_use:
+      - Complex prompts with multiple components
+      - Tasks with distinct phases or sections
+      - When clarity and navigation are important
+    implementation:
+      pattern: |
+        # Top Level: Overall Task
+
+        ## Second Level: Major Components
+
+        ### Third Level: Specific Details
+
+        - Fourth Level: Individual items
+        - Bullet points for lists
+        - Numbered lists for sequences
+    examples:
+      - description: "Multi-phase project"
+        structure: |
+          # Project: Build E-commerce Platform
+
+          ## Phase 1: Requirements Analysis
+
+          ### Functional Requirements
+          - User authentication
+          - Product catalog
+          - Shopping cart
+
+          ### Non-Functional Requirements
+          - Performance: <200ms response time
+          - Security: OWASP compliance
+          - Scalability: 10K concurrent users
+
+          ## Phase 2: Implementation
+
+          ### Backend Development
+          1. Database schema design
+          2. API implementation
+          3. Testing
+
+          ### Frontend Development
+          1. UI component library
+          2. Page implementation
+          3. Integration testing
+
+          ## Phase 3: Deployment
+          [deployment details...]
+    effectiveness: 0.78
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  delimiter_strategy:
+    name: "Clear Delimiter Usage"
+    category: "structure"
+    description: "Use consistent delimiters to separate different types of content"
+    when_to_use:
+      - When mixing instructions with data
+      - Code or structured data in prompts
+      - Multiple distinct sections
+    implementation:
+      code_blocks: "```language\n[code here]\n```"
+      xml_tags: "<context>\n[context here]\n</context>"
+      section_breaks: "---"
+      emphasis: "***"
+    examples:
+      - description: "Code transformation task"
+        prompt: |
+          Transform this Python 2 code to Python 3:
+
+          ```python
+          print "Hello"
+          for i in xrange(10):
+              print i,
+          ```
+
+          Requirements:
+          - Maintain equivalent functionality
+          - Use Python 3 idioms
+          - Add type hints
+
+          Provide output in this format:
+
+          ```python
+          [transformed code]
+          ```
+      - description: "Data analysis with context"
+        prompt: |
+          Analyze this dataset:
+
+          <data>
+          [CSV data here]
+          </data>
+
+          <context>
+          This data represents quarterly sales from 2020-2024.
+          Focus on identifying seasonal patterns and growth trends.
+          </context>
+
+          <requirements>
+          - Statistical analysis
+          - Visual representations (describe charts)
+          - Actionable insights
+          </requirements>
+    effectiveness: 0.72
+    best_for_models: ["claude", "chatgpt", "generic"]
+
+  # Anti-Pattern Detection
+
+  avoid_vague_modifiers:
+    name: "Avoid Vague Modifiers"
+    category: "anti-pattern"
+    description: "Replace vague qualifiers with specific criteria"
+    why_avoid: "Words like 'quickly', 'simply', 'briefly' lack concrete meaning"
+    bad_examples:
+      - "Quickly analyze this data"
+      - "Simply explain the concept"
+      - "Briefly summarize the findings"
+    good_examples:
+      - "Analyze this data within 2 hours"
+      - "Explain the concept in terms a high school student would understand"
+      - "Summarize the findings in 200 words or less"
+    detection_pattern: "\\b(quickly|fast|brief|simply|easily)\\b"
+    fix_strategy: "Replace with quantifiable criteria or remove entirely"
+
+  avoid_contradictions:
+    name: "Avoid Contradictory Requirements"
+    category: "anti-pattern"
+    description: "Ensure requirements don't conflict with each other"
+    why_avoid: "Contradictions create confusion and poor results"
+    bad_examples:
+      - "Provide a comprehensive yet brief analysis"
+      - "Be detailed but concise"
+      - "Include everything important but keep it short"
+    good_examples:
+      - "Provide a brief executive summary (200 words) followed by detailed sections"
+      - "Be detailed in the analysis section (500-800 words), concise in the recommendations (5 bullets)"
+      - "Include all critical findings in a structured format with depth appropriate to each section"
+    detection_pattern: "(comprehensive|detailed).*(brief|concise|short)"
+    fix_strategy: "Clarify the priority or separate into distinct components with different requirements"
+
+  avoid_assumptions:
+    name: "Avoid Assumed Knowledge"
+    category: "anti-pattern"
+    description: "Don't assume shared understanding or 'obvious' context"
+    why_avoid: "What's obvious to you may not be to the AI or future readers"
+    bad_examples:
+      - "Obviously, we need to..."
+      - "Use the usual format"
+      - "Apply standard practices"
+      - "As everyone knows..."
+    good_examples:
+      - "Based on the requirements stated above, we need to..."
+      - "Use JSON format with fields: name (string), age (integer), city (string)"
+      - "Apply these specific practices: [list practices]"
+      - "Given that [context], we can proceed with..."
+    detection_pattern: "\\b(obviously|clearly|simply|everyone knows|usual|standard)\\b"
+    fix_strategy: "Make implicit assumptions explicit and define all terms"
+
+# Best Practices Summary
+best_practices:
+  clarity:
+    - Start with clear action verbs
+    - Define success criteria explicitly
+    - Avoid ambiguous pronouns
+    - Be specific rather than vague
+
+  structure:
+    - Use hierarchical organization for complex prompts
+    - Apply delimiters consistently
+    - Position critical information strategically
+    - Include clear sections and transitions
+
+  techniques:
+    - Apply chain-of-thought for complex reasoning
+    - Use self-consistency for accuracy-critical tasks
+    - Provide few-shot examples for pattern-based tasks
+    - Separate planning from execution in multi-stage workflows
+
+  completeness:
+    - Provide necessary context
+    - Define constraints explicitly
+    - Specify input and output formats
+    - Address likely edge cases
+
+  validation:
+    - Include verification steps
+    - Request uncertainty acknowledgment
+    - Build in quality checks
+    - Test with representative cases
+
+# Pattern Selection Guide
+selection_guide:
+  for_reasoning_tasks:
+    - Primary: chain_of_thought
+    - Secondary: self_consistency
+    - Structure: hierarchical_organization
+
+  for_computational_tasks:
+    - Primary: program_of_thought
+    - Secondary: few_shot_learning
+    - Structure: clear_delimiter_strategy
+
+  for_creative_tasks:
+    - Primary: few_shot_learning
+    - Secondary: plan_and_solve
+    - Structure: context_positioning
+
+  for_analytical_tasks:
+    - Primary: self_consistency
+    - Secondary: chain_of_thought
+    - Structure: hierarchical_organization
+
+  for_complex_workflows:
+    - Primary: plan_and_solve
+    - Secondary: chain_of_thought
+    - Structure: all structural patterns

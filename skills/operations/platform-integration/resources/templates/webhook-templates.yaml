@@ -1,0 +1,230 @@
+# Webhook Event Templates for Common Platforms
+
+# Stripe Webhooks
+stripe:
+  payment_intent.succeeded:
+    description: Payment successfully completed
+    payload:
+      id: evt_{{event_id}}
+      object: event
+      type: payment_intent.succeeded
+      created: {{unix_timestamp}}
+      data:
+        object:
+          id: pi_{{payment_intent_id}}
+          amount: {{amount}}
+          currency: {{currency}}
+          status: succeeded
+          customer: cus_{{customer_id}}
+          metadata: {}
+
+  charge.failed:
+    description: Charge attempt failed
+    payload:
+      id: evt_{{event_id}}
+      object: event
+      type: charge.failed
+      data:
+        object:
+          id: ch_{{charge_id}}
+          amount: {{amount}}
+          currency: {{currency}}
+          status: failed
+          failure_code: {{failure_code}}
+          failure_message: {{failure_message}}
+
+# Salesforce Webhooks
+salesforce:
+  contact.created:
+    description: New contact created
+    payload:
+      event:
+        type: ContactCreated
+        createdDate: {{iso_timestamp}}
+      sobject:
+        Id: {{contact_id}}
+        FirstName: {{first_name}}
+        LastName: {{last_name}}
+        Email: {{email}}
+        Phone: {{phone}}
+
+  contact.updated:
+    description: Contact updated
+    payload:
+      event:
+        type: ContactUpdated
+        createdDate: {{iso_timestamp}}
+      sobject:
+        Id: {{contact_id}}
+        LastModifiedDate: {{modified_date}}
+
+# HubSpot Webhooks
+hubspot:
+  contact.creation:
+    description: Contact created in HubSpot
+    payload:
+      - objectId: {{contact_id}}
+        propertyName: email
+        propertyValue: {{email}}
+        changeSource: CRM
+        eventId: {{event_id}}
+        subscriptionId: {{subscription_id}}
+        portalId: {{portal_id}}
+        occurredAt: {{unix_timestamp_ms}}
+
+  contact.propertyChange:
+    description: Contact property changed
+    payload:
+      - objectId: {{contact_id}}
+        propertyName: {{property_name}}
+        propertyValue: {{new_value}}
+        changeSource: CRM
+        eventId: {{event_id}}
+
+# GitHub Webhooks
+github:
+  push:
+    description: Code pushed to repository
+    payload:
+      ref: refs/heads/{{branch}}
+      before: {{before_sha}}
+      after: {{after_sha}}
+      repository:
+        id: {{repo_id}}
+        name: {{repo_name}}
+        full_name: {{org}}/{{repo_name}}
+      pusher:
+        name: {{pusher_name}}
+        email: {{pusher_email}}
+      commits:
+        - id: {{commit_sha}}
+          message: {{commit_message}}
+          timestamp: {{iso_timestamp}}
+
+  pull_request:
+    description: Pull request opened/updated
+    payload:
+      action: {{action}}
+      number: {{pr_number}}
+      pull_request:
+        id: {{pr_id}}
+        number: {{pr_number}}
+        state: {{state}}
+        title: {{title}}
+        user:
+          login: {{username}}
+        head:
+          ref: {{head_branch}}
+        base:
+          ref: {{base_branch}}
+
+# Slack Webhooks
+slack:
+  message:
+    description: Message posted in channel
+    payload:
+      type: event_callback
+      event:
+        type: message
+        channel: {{channel_id}}
+        user: {{user_id}}
+        text: {{message_text}}
+        ts: {{timestamp}}
+
+  app_mention:
+    description: App mentioned in message
+    payload:
+      type: event_callback
+      event:
+        type: app_mention
+        user: {{user_id}}
+        text: {{message_text}}
+        channel: {{channel_id}}
+
+# Shopify Webhooks
+shopify:
+  orders/create:
+    description: New order created
+    payload:
+      id: {{order_id}}
+      email: {{customer_email}}
+      created_at: {{created_at}}
+      total_price: {{total_price}}
+      currency: {{currency}}
+      line_items:
+        - id: {{line_item_id}}
+          title: {{product_title}}
+          quantity: {{quantity}}
+          price: {{price}}
+
+  orders/paid:
+    description: Order payment confirmed
+    payload:
+      id: {{order_id}}
+      financial_status: paid
+      paid_at: {{paid_at}}
+
+# Twilio Webhooks
+twilio:
+  message.received:
+    description: SMS message received
+    payload:
+      MessageSid: {{message_sid}}
+      From: {{from_number}}
+      To: {{to_number}}
+      Body: {{message_body}}
+      NumMedia: {{num_media}}
+
+  call.completed:
+    description: Call completed
+    payload:
+      CallSid: {{call_sid}}
+      From: {{from_number}}
+      To: {{to_number}}
+      CallStatus: completed
+      CallDuration: {{duration}}
+
+# Webhook Verification Examples
+verification:
+  stripe:
+    header: Stripe-Signature
+    algorithm: sha256
+    format: "t={{timestamp}},v1={{signature}}"
+    example: "t=1614556800,v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd"
+
+  github:
+    header: X-Hub-Signature-256
+    algorithm: sha256
+    format: "sha256={{signature}}"
+    example: "sha256=757107ea0eb2509fc211221cce984b8a37570b6d7586c22c46f4379c8b043e17"
+
+  hubspot:
+    header: X-HubSpot-Signature
+    algorithm: sha256
+    format: "{{signature}}"
+    method: "sha256(client_secret + request_body)"
+
+  salesforce:
+    header: X-Salesforce-Signature
+    algorithm: sha1
+    format: "{{signature}}"
+    method: "base64(sha1(url + request_body + secret))"
+
+# Retry Configuration Templates
+retry_strategies:
+  exponential_backoff:
+    max_attempts: 3
+    initial_delay: 1000  # ms
+    multiplier: 2
+    max_delay: 30000  # ms
+    example_delays: [1000, 2000, 4000]
+
+  linear_backoff:
+    max_attempts: 3
+    delay: 5000  # ms
+    example_delays: [5000, 5000, 5000]
+
+  fibonacci_backoff:
+    max_attempts: 5
+    base_delay: 1000  # ms
+    example_delays: [1000, 1000, 2000, 3000, 5000]

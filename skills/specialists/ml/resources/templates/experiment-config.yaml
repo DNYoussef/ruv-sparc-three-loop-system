@@ -1,0 +1,109 @@
+# ML Experiment Configuration Template
+# Configure experiment tracking, training, and evaluation parameters
+
+# Experiment metadata
+experiment:
+  name: "my-ml-experiment"
+  description: "Machine learning experiment with experiment tracking"
+  tags:
+    - "baseline"
+    - "image-classification"
+  tracking_uri: "http://localhost:5000"  # MLflow tracking server
+  artifact_location: "./mlruns"
+  wandb_entity: null  # Optional: W&B entity name
+  wandb_project: null  # Optional: W&B project name
+
+# Data configuration
+data:
+  dataset_name: "my-dataset"
+  dataset_version: "v1.0.0"
+  train_path: "./data/train"
+  val_path: "./data/val"
+  test_path: "./data/test"
+  validation_split: 0.2
+  preprocessing:
+    normalize: true
+    augmentation:
+      enabled: true
+      techniques:
+        - "horizontal_flip"
+        - "rotation"
+        - "zoom"
+
+# Model architecture
+model:
+  architecture: "resnet50"
+  pretrained: true
+  freeze_backbone: false
+  num_classes: 10
+  input_shape: [224, 224, 3]
+  dropout: 0.5
+
+# Training configuration
+training:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 0.001
+  optimizer: "adam"
+  optimizer_params:
+    beta_1: 0.9
+    beta_2: 0.999
+    epsilon: 1e-07
+  loss: "categorical_crossentropy"
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+  early_stopping:
+    enabled: true
+    monitor: "val_loss"
+    patience: 5
+    min_delta: 0.001
+  reduce_lr:
+    enabled: true
+    monitor: "val_loss"
+    factor: 0.5
+    patience: 3
+  checkpoint:
+    enabled: true
+    monitor: "val_accuracy"
+    save_best_only: true
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "auc_roc"
+  confusion_matrix: true
+  classification_report: true
+  thresholds:
+    accuracy: 0.85
+    precision: 0.80
+    recall: 0.80
+
+# Logging configuration
+logging:
+  log_models: true
+  log_params: true
+  log_metrics: true
+  log_artifacts: true
+  log_system_metrics: true
+  autolog: true  # Enable auto-logging for framework
+
+# Hyperparameter tuning (optional)
+hyperparameter_tuning:
+  enabled: false
+  n_trials: 50
+  sampler: "TPE"
+  pruner: "MedianPruner"
+
+# Deployment configuration (optional)
+deployment:
+  auto_register: false
+  auto_deploy: false
+  environment: "staging"
+  model_signature: true
+  input_example: true

@@ -1,0 +1,120 @@
+{
+  "name": "lstm-timeseries",
+  "description": "LSTM network optimized for time series forecasting with bidirectional layers and attention mechanism",
+  "architecture": {
+    "type": "lstm",
+    "layers": [
+      {
+        "type": "lstm",
+        "units": 128,
+        "return_sequences": true,
+        "bidirectional": true,
+        "kernel_regularizer": "l2_0.01"
+      },
+      {
+        "type": "attention",
+        "heads": 4
+      },
+      {
+        "type": "dropout",
+        "rate": 0.2
+      },
+      {
+        "type": "lstm",
+        "units": 64,
+        "return_sequences": true,
+        "bidirectional": false
+      },
+      {
+        "type": "dropout",
+        "rate": 0.2
+      },
+      {
+        "type": "lstm",
+        "units": 32,
+        "return_sequences": false
+      },
+      {
+        "type": "dense",
+        "units": 16,
+        "activation": "relu"
+      },
+      {
+        "type": "dense",
+        "units": 1,
+        "activation": "linear",
+        "name": "forecast_output"
+      }
+    ]
+  },
+  "training": {
+    "epochs": 150,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "loss": "mse",
+    "metrics": ["mae", "mse", "mape"]
+  },
+  "divergent": {
+    "enabled": true,
+    "pattern": "quantum",
+    "factor": 0.3
+  },
+  "sequence_config": {
+    "lookback_window": 60,
+    "forecast_horizon": 10,
+    "stride": 1,
+    "normalize": true,
+    "differencing": false
+  },
+  "regularization": {
+    "l2": 0.01,
+    "gradient_clipping": {
+      "enabled": true,
+      "max_norm": 1.0
+    },
+    "early_stopping": {
+      "enabled": true,
+      "patience": 15,
+      "monitor": "val_mae"
+    }
+  },
+  "callbacks": [
+    {
+      "type": "model_checkpoint",
+      "filepath": "checkpoints/lstm-{epoch:02d}-{val_mae:.4f}.h5",
+      "monitor": "val_mae",
+      "save_best_only": true
+    },
+    {
+      "type": "reduce_lr_on_plateau",
+      "monitor": "val_mae",
+      "factor": 0.2,
+      "patience": 7,
+      "min_lr": 1e-6
+    },
+    {
+      "type": "csv_logger",
+      "filename": "training_log.csv"
+    }
+  ],
+  "use_cases": [
+    "Stock price forecasting",
+    "Weather prediction",
+    "Energy consumption forecasting",
+    "Traffic flow prediction",
+    "Sensor data analysis"
+  ],
+  "performance_targets": {
+    "mae": 0.05,
+    "mse": 0.01,
+    "inference_latency_ms": 25,
+    "memory_mb": 350
+  },
+  "metadata": {
+    "author": "Flow Nexus",
+    "version": "1.0.0",
+    "created": "2025-10-19",
+    "tags": ["lstm", "timeseries", "forecasting", "attention", "bidirectional"]
+  }
+}
