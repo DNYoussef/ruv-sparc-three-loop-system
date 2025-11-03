@@ -121,7 +121,7 @@ triggers:
 ### 1. Coordination Agents
 
 #### Swarm Initializer Agent
-**Command**: `.claude/commands/coordination/init.md`
+**Command**: `.claude/commands/orchestration/coordination/init.md`
 ```yaml
 ---
 role: coordinator
@@ -153,7 +153,7 @@ triggers:
 ```
 
 #### Agent Spawner
-**Command**: `.claude/commands/coordination/spawn.md`
+**Command**: `.claude/commands/orchestration/coordination/spawn.md`
 ```yaml
 ---
 role: coordinator
@@ -185,7 +185,7 @@ triggers:
 ```
 
 #### Task Orchestrator
-**Command**: `.claude/commands/coordination/orchestrate.md`
+**Command**: `.claude/commands/orchestration/coordination/orchestrate.md`
 ```yaml
 ---
 role: orchestrator
@@ -223,7 +223,7 @@ triggers:
 ### 2. GitHub Integration Agents
 
 #### PR Manager Agent
-**Command**: `.claude/commands/github/pr-manager.md`
+**Command**: `.claude/commands/operations/github/pr-manager.md`
 ```yaml
 ---
 role: github-specialist
@@ -259,7 +259,7 @@ triggers:
 ```
 
 #### Code Review Swarm Agent
-**Command**: `.claude/commands/github/code-review-swarm.md`
+**Command**: `.claude/commands/operations/github/code-review-swarm.md`
 ```yaml
 ---
 role: reviewer
@@ -295,7 +295,7 @@ triggers:
 ```
 
 #### Release Manager Agent
-**Command**: `.claude/commands/github/release-manager.md`
+**Command**: `.claude/commands/operations/github/release-manager.md`
 ```yaml
 ---
 role: release-coordinator
@@ -332,7 +332,7 @@ triggers:
 ### 3. SPARC Methodology Agents
 
 #### SPARC Orchestrator Agent
-**Command**: `.claude/commands/sparc/orchestrator.md`
+**Command**: `.claude/commands/delivery/sparc/orchestrator.md`
 ```yaml
 ---
 role: sparc-coordinator
@@ -369,7 +369,7 @@ triggers:
 ```
 
 #### SPARC Coder Agent
-**Command**: `.claude/commands/sparc/coder.md`
+**Command**: `.claude/commands/delivery/sparc/coder.md`
 ```yaml
 ---
 role: implementer
@@ -404,7 +404,7 @@ triggers:
 ```
 
 #### SPARC Tester Agent
-**Command**: `.claude/commands/sparc/tester.md`
+**Command**: `.claude/commands/delivery/sparc/tester.md`
 ```yaml
 ---
 role: quality-assurance
@@ -441,7 +441,7 @@ triggers:
 ### 4. Analysis Agents
 
 #### Performance Analyzer Agent
-**Command**: `.claude/commands/analysis/performance-bottlenecks.md`
+**Command**: `.claude/commands/quality/analysis/performance-bottlenecks.md`
 ```yaml
 ---
 role: analyst
@@ -477,7 +477,7 @@ triggers:
 ```
 
 #### Token Efficiency Analyst Agent
-**Command**: `.claude/commands/analysis/token-efficiency.md`
+**Command**: `.claude/commands/quality/analysis/token-efficiency.md`
 ```yaml
 ---
 role: analyst
@@ -514,7 +514,7 @@ triggers:
 ### 5. Memory Management Agents
 
 #### Memory Coordinator Agent
-**Command**: `.claude/commands/memory/usage.md`
+**Command**: `.claude/commands/operations/memory/usage.md`
 ```yaml
 ---
 role: memory-manager
@@ -549,7 +549,7 @@ triggers:
 ```
 
 #### Neural Pattern Agent
-**Command**: `.claude/commands/memory/neural.md`
+**Command**: `.claude/commands/operations/memory/neural.md`
 ```yaml
 ---
 role: ai-specialist
@@ -586,7 +586,7 @@ triggers:
 ### 6. Automation Agents
 
 #### Smart Agent Coordinator
-**Command**: `.claude/commands/automation/smart-agents.md`
+**Command**: `.claude/commands/operations/automation/smart-agents.md`
 ```yaml
 ---
 role: automation-specialist
@@ -621,7 +621,7 @@ triggers:
 ```
 
 #### Self-Healing Coordinator Agent
-**Command**: `.claude/commands/automation/self-healing.md`
+**Command**: `.claude/commands/operations/automation/self-healing.md`
 ```yaml
 ---
 role: reliability-engineer
@@ -657,7 +657,7 @@ triggers:
 ### 7. Optimization Agents
 
 #### Parallel Execution Optimizer Agent
-**Command**: `.claude/commands/optimization/parallel-execution.md`
+**Command**: `.claude/commands/operations/optimization/parallel-execution.md`
 ```yaml
 ---
 role: optimizer
@@ -691,7 +691,7 @@ triggers:
 ```
 
 #### Auto-Topology Optimizer Agent
-**Command**: `.claude/commands/optimization/auto-topology.md`
+**Command**: `.claude/commands/operations/optimization/auto-topology.md`
 ```yaml
 ---
 role: optimizer
@@ -728,7 +728,7 @@ triggers:
 ### 8. Monitoring Agents
 
 #### Swarm Monitor Agent
-**Command**: `.claude/commands/monitoring/status.md`
+**Command**: `.claude/commands/operations/monitoring/status.md`
 ```yaml
 ---
 role: monitor

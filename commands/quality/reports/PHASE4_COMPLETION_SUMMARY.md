@@ -90,7 +90,7 @@ Successfully implemented all 14 remaining Phase 4 commands to complete the MECE 
 ## 🤖 Automation Hooks (9 Commands)
 
 ### 6. `/hook:on-error` ✅
-**Location**: `commands/hooks/automation/on-error.md`
+**Location**: `commands/operations/hooks/automation/on-error.md`
 **Purpose**: Error handling with retry logic
 **Features**:
 - Exponential backoff retry (configurable max attempts)
@@ -107,7 +107,7 @@ Successfully implemented all 14 remaining Phase 4 commands to complete the MECE 
 ```
 
 ### 7. `/hook:on-success` ✅
-**Location**: `commands/hooks/automation/on-success.md`
+**Location**: `commands/operations/hooks/automation/on-success.md`
 **Purpose**: Success callback with notifications
 **Features**:
 - Success callback script execution
@@ -124,7 +124,7 @@ Successfully implemented all 14 remaining Phase 4 commands to complete the MECE 
 ```
 
 ### 8. `/hook:on-commit` ✅
-**Location**: `commands/hooks/automation/on-commit.md`
+**Location**: `commands/operations/hooks/automation/on-commit.md`
 **Purpose**: Git pre-commit hook with linting
 **Features**:
 - Auto-linting (ESLint, Flake8, Pylint)
@@ -142,7 +142,7 @@ chmod +x .git/hooks/pre-commit
 ```
 
 ### 9. `/hook:on-push` ✅
-**Location**: `commands/hooks/automation/on-push.md`
+**Location**: `commands/operations/hooks/automation/on-push.md`
 **Purpose**: Git pre-push hook with CI trigger
 **Features**:
 - Full test suite execution before push
@@ -153,7 +153,7 @@ chmod +x .git/hooks/pre-commit
 **Lines of Code**: ~80
 
 ### 10. `/hook:on-pr` ✅
-**Location**: `commands/hooks/automation/on-pr.md`
+**Location**: `commands/operations/hooks/automation/on-pr.md`
 **Purpose**: Pull request automation
 **Features**:
 - Auto-populated PR templates
@@ -164,7 +164,7 @@ chmod +x .git/hooks/pre-commit
 **Lines of Code**: ~100
 
 ### 11. `/hook:on-deploy` ✅
-**Location**: `commands/hooks/automation/on-deploy.md`
+**Location**: `commands/operations/hooks/automation/on-deploy.md`
 **Purpose**: Deployment hook with monitoring
 **Features**:
 - Kubernetes/Docker deployment automation
@@ -176,7 +176,7 @@ chmod +x .git/hooks/pre-commit
 **Lines of Code**: ~90
 
 ### 12. `/automation:retry-failed` ✅
-**Location**: `commands/hooks/automation/retry-failed.md`
+**Location**: `commands/operations/hooks/automation/retry-failed.md`
 **Purpose**: Advanced retry with multiple strategies
 **Features**:
 - 4 backoff strategies (constant, linear, exponential, Fibonacci)
@@ -192,7 +192,7 @@ chmod +x .git/hooks/pre-commit
 - **Fibonacci**: delay = base × fib(attempt)
 
 ### 13. `/automation:schedule-task` ✅
-**Location**: `commands/hooks/automation/schedule-task.md`
+**Location**: `commands/operations/hooks/automation/schedule-task.md`
 **Purpose**: Task scheduling with cron syntax
 **Features**:
 - Cron expression parsing
@@ -207,7 +207,7 @@ chmod +x .git/hooks/pre-commit
 ```
 
 ### 14. `/automation:cron-job` ✅
-**Location**: `commands/hooks/automation/cron-job.md`
+**Location**: `commands/operations/hooks/automation/cron-job.md`
 **Purpose**: System cron job management
 **Features**:
 - Add/remove/list cron jobs programmatically

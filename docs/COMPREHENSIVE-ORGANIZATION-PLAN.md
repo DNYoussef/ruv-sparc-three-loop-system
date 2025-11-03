@@ -349,7 +349,7 @@ Select 2-3 skills from Batch 2, run full enhancement workflow:
 ### Organization Health (Post-Phase 5)
 - ✅ **0 loose files** in agents/ and skills/ root folders
 - ✅ **131 agents categorized** across 5 domains
-- ✅ **agents/registry/** with consolidated index
+- ✅ **agents/foundry/registry/** with consolidated index
 - ✅ **All scripts functional** with new folder structure
 - ✅ **100% documentation coverage** (all folders have READMEs)
 

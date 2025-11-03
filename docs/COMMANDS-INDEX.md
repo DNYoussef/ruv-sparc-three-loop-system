@@ -80,7 +80,7 @@
 
 ## 🗂️ By Directory
 
-### commands/memory/ (11 files)
+### commands/operations/memory/ (11 files)
 ```
 memory-store.md          (Phase 1, 497 bytes)
 memory-retrieve.md       (Phase 1, 467 bytes)
@@ -96,7 +96,7 @@ memory-stats.md          ✅ Phase 2, 15.3 KB
 memory-gc.md             ✅ Phase 2, 13.3 KB
 ```
 
-### commands/agent-commands/ (5 files)
+### commands/foundry/agent-commands/ (5 files)
 ```
 agent-health-check.md    (Phase 1, 10.8 KB)
 agent-rca.md             (Phase 1, 2,124 bytes)
@@ -105,7 +105,7 @@ agent-clone.md           ✅ Phase 2, 2.6 KB
 agent-benchmark.md       ✅ Phase 2, 5.9 KB
 ```
 
-### commands/monitoring/ (13 files)
+### commands/operations/monitoring/ (13 files)
 ```
 monitoring-configure.md  (Phase 1, 15.0 KB)
 trace-request.md         (Phase 1, 12.0 KB)

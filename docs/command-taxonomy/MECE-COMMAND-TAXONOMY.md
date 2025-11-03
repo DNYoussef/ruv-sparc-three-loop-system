@@ -1,5 +1,7 @@
 # MECE Command Taxonomy & Gap Analysis
 
+> **Reorganisation Note (2025-11-02):** Slash commands are now organised into ten functional categories under `commands/`. For the current category-sorted listing see [`docs/command-taxonomy/INDEX.md`](./INDEX.md). The analysis below captures the pre-reorganisation taxonomy for historical reference.
+
 **Date**: 2025-11-01
 **Total Commands**: 149
 **Categories**: 23

@@ -52,63 +52,63 @@ Total Lines: ~2,890
 🤖 AUTOMATION HOOKS (9/9) ✅
 
 6. ✅ /hook:on-error
-   Location: commands/hooks/automation/on-error.md
+   Location: commands/operations/hooks/automation/on-error.md
    Size: 8.8K
    Lines: ~250
    Features: Exponential backoff, retry logic,
              transient error detection, failure callbacks
 
 7. ✅ /hook:on-success
-   Location: commands/hooks/automation/on-success.md
+   Location: commands/operations/hooks/automation/on-success.md
    Size: 5.4K
    Lines: ~180
    Features: Success callbacks, notifications,
              metrics tracking, command chaining
 
 8. ✅ /hook:on-commit
-   Location: commands/hooks/automation/on-commit.md
+   Location: commands/operations/hooks/automation/on-commit.md
    Size: 3.0K
    Lines: ~120
    Features: Pre-commit linting, formatting,
              commit message validation, auto-fix
 
 9. ✅ /hook:on-push
-   Location: commands/hooks/automation/on-push.md
+   Location: commands/operations/hooks/automation/on-push.md
    Size: 910 bytes
    Lines: ~80
    Features: Pre-push tests, secret scanning,
              CI trigger, team notifications
 
 10. ✅ /hook:on-pr
-    Location: commands/hooks/automation/on-pr.md
+    Location: commands/operations/hooks/automation/on-pr.md
     Size: 1.5K
     Lines: ~100
     Features: PR automation, reviewer assignment,
               label management, template population
 
 11. ✅ /hook:on-deploy
-    Location: commands/hooks/automation/on-deploy.md
+    Location: commands/operations/hooks/automation/on-deploy.md
     Size: 1.5K
     Lines: ~90
     Features: Deployment automation, health checks,
               rollback on failure, Slack notifications
 
 12. ✅ /automation:retry-failed
-    Location: commands/hooks/automation/retry-failed.md
+    Location: commands/operations/hooks/automation/retry-failed.md
     Size: 3.2K
     Lines: ~150
     Features: 4 backoff strategies, jitter,
               transient error handling
 
 13. ✅ /automation:schedule-task
-    Location: commands/hooks/automation/schedule-task.md
+    Location: commands/operations/hooks/automation/schedule-task.md
     Size: 2.5K
     Lines: ~140
     Features: Cron syntax, job queue, task logging,
               schedule library integration
 
 14. ✅ /automation:cron-job
-    Location: commands/hooks/automation/cron-job.md
+    Location: commands/operations/hooks/automation/cron-job.md
     Size: 4.5K
     Lines: ~180
     Features: Add/remove/list cron jobs,
@@ -176,7 +176,7 @@ All commands created in:
   C:/Users/17175/claude-code-plugins/ruv-sparc-three-loop-system/commands/
 
 Research: commands/research/
-Hooks: commands/hooks/automation/
+Hooks: commands/operations/hooks/automation/
 Summary: commands/PHASE4_COMPLETION_SUMMARY.md
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -15,7 +15,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 ### 1. SPARC Specialists (5 commands)
 
 #### `/sparc:api-designer`
-- **Location**: `commands/sparc/api-designer.md`
+- **Location**: `commands/delivery/sparc/api-designer.md`
 - **Purpose**: RESTful API design with OpenAPI generation
 - **Features**:
   - OpenAPI 3.0+ specification generation
@@ -26,7 +26,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Target SLA**: < 200ms response time (p95)
 
 #### `/sparc:database-architect`
-- **Location**: `commands/sparc/database-architect.md`
+- **Location**: `commands/delivery/sparc/database-architect.md`
 - **Purpose**: Database schema design and optimization
 - **Features**:
   - Entity-relationship design with 3NF normalization
@@ -37,7 +37,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Target Metrics**: < 50ms query time (p95), > 95% index hit ratio
 
 #### `/sparc:frontend-specialist`
-- **Location**: `commands/sparc/frontend-specialist.md`
+- **Location**: `commands/delivery/sparc/frontend-specialist.md`
 - **Purpose**: Modern frontend development (React/Vue/Svelte)
 - **Features**:
   - Atomic design component architecture
@@ -48,7 +48,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Target Metrics**: LCP < 2.5s, FID < 100ms, CLS < 0.1
 
 #### `/sparc:backend-specialist`
-- **Location**: `commands/sparc/backend-specialist.md`
+- **Location**: `commands/delivery/sparc/backend-specialist.md`
 - **Purpose**: Server-side development (Node.js/Python)
 - **Features**:
   - Layered architecture (controllers, services, repositories)
@@ -59,7 +59,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Target SLA**: < 100ms response time (p95), > 1000 req/s throughput
 
 #### `/sparc:mobile-specialist`
-- **Location**: `commands/sparc/mobile-specialist.md`
+- **Location**: `commands/delivery/sparc/mobile-specialist.md`
 - **Purpose**: Cross-platform mobile development (React Native/Flutter)
 - **Features**:
   - React Native architecture with navigation
@@ -74,7 +74,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 ### 2. Workflows (3 commands)
 
 #### `/workflow:testing`
-- **Location**: `commands/workflows/testing.md`
+- **Location**: `commands/delivery/workflows/testing.md`
 - **Purpose**: Comprehensive testing workflow
 - **Coverage**:
   - Unit tests (Jest, 80%+ coverage)
@@ -86,7 +86,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Success Criteria**: All tests passing, > 80% coverage, zero a11y violations
 
 #### `/workflow:hotfix`
-- **Location**: `commands/workflows/hotfix.md`
+- **Location**: `commands/delivery/workflows/hotfix.md`
 - **Purpose**: Emergency production fix pipeline
 - **Features**:
   - Rapid hotfix branch creation from production
@@ -98,7 +98,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Time Target**: < 30 minutes from issue to deployment
 
 #### `/workflow:deployment`
-- **Location**: `commands/workflows/deployment.md`
+- **Location**: `commands/delivery/workflows/deployment.md`
 - **Purpose**: Production deployment with multiple strategies
 - **Strategies**:
   - Blue-green deployment (zero-downtime)
@@ -117,7 +117,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 ### 3. Quality Audits (3 commands)
 
 #### `/license-audit`
-- **Location**: `commands/audit-commands/license-audit.md`
+- **Location**: `commands/quality/audit-commands/license-audit.md`
 - **Purpose**: License compliance checking
 - **Features**:
   - npm dependency license scanning
@@ -128,7 +128,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 - **Approved Licenses**: MIT, Apache-2.0, BSD, ISC
 
 #### `/accessibility-audit`
-- **Location**: `commands/audit-commands/accessibility-audit.md`
+- **Location**: `commands/quality/audit-commands/accessibility-audit.md`
 - **Purpose**: WCAG 2.1 AA compliance audit
 - **Tools**:
   - axe-core (automated violations)
@@ -141,7 +141,7 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
   - Robust (valid HTML, ARIA)
 
 #### `/performance-benchmark`
-- **Location**: `commands/audit-commands/performance-benchmark.md`
+- **Location**: `commands/quality/audit-commands/performance-benchmark.md`
 - **Purpose**: Comprehensive performance analysis
 - **Benchmarks**:
   - API performance (Autocannon)
@@ -155,37 +155,37 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 ### 4. Performance Optimization (7 commands)
 
 #### `/resource-optimize`
-- **Location**: `commands/optimization/resource-optimize.md`
+- **Location**: `commands/operations/optimization/resource-optimize.md`
 - **Purpose**: Overall resource allocation optimization
 - **Targets**: CPU, memory, network efficiency
 
 #### `/memory-optimize`
-- **Location**: `commands/optimization/memory-optimize.md`
+- **Location**: `commands/operations/optimization/memory-optimize.md`
 - **Purpose**: Memory usage optimization
 - **Techniques**: Garbage collection tuning, leak detection, object pooling
 
 #### `/cpu-optimize`
-- **Location**: `commands/optimization/cpu-optimize.md`
+- **Location**: `commands/operations/optimization/cpu-optimize.md`
 - **Purpose**: CPU usage optimization
 - **Techniques**: Worker threads, clustering, process management
 
 #### `/network-optimize`
-- **Location**: `commands/optimization/network-optimize.md`
+- **Location**: `commands/operations/optimization/network-optimize.md`
 - **Purpose**: Network latency reduction
 - **Techniques**: HTTP/2, compression (gzip/brotli), CDN caching
 
 #### `/bundle-optimize`
-- **Location**: `commands/optimization/bundle-optimize.md`
+- **Location**: `commands/operations/optimization/bundle-optimize.md`
 - **Purpose**: JavaScript bundle size reduction
 - **Techniques**: Tree-shaking, code splitting, minification, webpack analysis
 
 #### `/query-optimize`
-- **Location**: `commands/optimization/query-optimize.md`
+- **Location**: `commands/operations/optimization/query-optimize.md`
 - **Purpose**: Database query performance
 - **Techniques**: Indexing, query analysis, EXPLAIN ANALYZE
 
 #### `/render-optimize`
-- **Location**: `commands/optimization/render-optimize.md`
+- **Location**: `commands/operations/optimization/render-optimize.md`
 - **Purpose**: Frontend rendering performance
 - **Techniques**: React.memo, virtualization, CSS transforms
 
@@ -194,12 +194,12 @@ Successfully implemented all 19 Phase 3 commands for the ruv-SPARC Three-Loop Sy
 ### 5. Deployment (2 commands)
 
 #### `/cloudflare-deploy`
-- **Location**: `commands/deployment/cloudflare-deploy.md`
+- **Location**: `commands/operations/deployment/cloudflare-deploy.md`
 - **Purpose**: Cloudflare Workers edge deployment
 - **Features**: Serverless functions at edge locations
 
 #### `/vercel-deploy`
-- **Location**: `commands/deployment/vercel-deploy.md`
+- **Location**: `commands/operations/deployment/vercel-deploy.md`
 - **Purpose**: Vercel deployment with previews
 - **Features**: Automatic preview deployments, production builds
 

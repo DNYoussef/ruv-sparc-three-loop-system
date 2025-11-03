@@ -1,5 +1,7 @@
 # Master Command Index - RUV SPARC Three-Loop System
 
+> **Reorganisation Note (2025-11-02):** Commands now live under ten functional categories inside `commands/`. For the current category-sorted listing see [`docs/command-taxonomy/INDEX.md`](command-taxonomy/INDEX.md). The metrics and breakdowns below reflect the pre-reorganisation MECE domains and are retained for historical reference.
+
 **Total Commands**: 224 (149 original + 75 new)
 **MECE Categories**: 10 domains
 **GraphViz Diagrams**: 25 workflows

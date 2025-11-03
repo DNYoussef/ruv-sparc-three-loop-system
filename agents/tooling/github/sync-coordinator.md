@@ -188,11 +188,11 @@ mcp__github__push_files {
   branch: "feature/github-commands",
   files: [
     {
-      path: "claude-code-flow/claude-code-flow/.claude/commands/github/github-modes.md",
+      path: "claude-code-flow/claude-code-flow/.claude/commands/operations/github/github-modes.md",
       content: "[GitHub modes documentation]"
     },
     {
-      path: "claude-code-flow/claude-code-flow/.claude/commands/github/pr-manager.md", 
+      path: "claude-code-flow/claude-code-flow/.claude/commands/operations/github/pr-manager.md", 
       content: "[PR manager documentation]"
     },
     {
@@ -218,7 +218,7 @@ Bash(`gh pr create \
 - ✅ Cross-package synchronization
 
 ### Integration Points
-- Claude-code-flow: GitHub command modes in .claude/commands/github/
+- Claude-code-flow: GitHub command modes in .claude/commands/operations/github/
 - ruv-swarm: GitHub coordination hooks and utilities
 - Documentation: Synchronized CLAUDE.md instructions
 
@@ -265,7 +265,7 @@ This integration uses ruv-swarm agents for:
     files: [
       { path: "claude-code-flow/claude-code-flow/package.json", content: "[aligned package.json]" },
       { path: "claude-code-flow/claude-code-flow/CLAUDE.md", content: "[synchronized CLAUDE.md]" },
-      { path: "claude-code-flow/claude-code-flow/.claude/commands/github/github-modes.md", content: "[GitHub modes]" }
+      { path: "claude-code-flow/claude-code-flow/.claude/commands/operations/github/github-modes.md", content: "[GitHub modes]" }
     ],
     message: "feat: Complete package synchronization with GitHub integration"
   }

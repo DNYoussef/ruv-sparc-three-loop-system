@@ -160,11 +160,11 @@ mcp__github__push_files {
   branch: "main",
   files: [
     {
-      path: ".claude/commands/github/github-modes.md",
+      path: ".claude/commands/operations/github/github-modes.md",
       content: "[GitHub modes template]"
     },
     {
-      path: ".claude/commands/sparc/sparc-modes.md", 
+      path: ".claude/commands/delivery/sparc/sparc-modes.md", 
       content: "[SPARC modes template]"
     },
     {
