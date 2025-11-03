@@ -1,61 +1,96 @@
-# Agents Directory - Organization Guide
+# Agents Directory
 
-**Status**: 24 domain-organized directories + 131 total agents
-**Last Updated**: 2025-11-02
+**Status:** 203 agents organised into ten functional categories  
+**Last reorganised:** 2025-11-02  
+**Common format:** Every agent uses Markdown with YAML front matter (name, type, phase, category, capabilities, tools, MCP servers, hooks, quality gates, artifact contracts).
 
 ---
 
-## Directory Structure
+## Quick Category Overview
 
-The agents directory is organized into **24 specialized domains** for efficient agent discovery and categorization:
+| Category | Description | Agent count | Example agents |
+|----------|-------------|-------------|----------------|
+| delivery | Feature and product implementation specialists covering architecture, backend, frontend, and SPARC execution | 18 | `delivery/development/backend/dev-backend-api.md`, `delivery/architecture/system-design/arch-system-design.md` |
+| foundry | Agent creation, templates, registries, and base specialists that support building new automations | 19 | `foundry/core/base-template-generator.md`, `foundry/templates/skill-boilerplate-generator.md` |
+| operations | DevOps, infrastructure, performance, and monitoring agents that keep systems healthy | 28 | `operations/devops/ci-cd/ops-cicd-github.md`, `operations/infrastructure/terraform/terraform-provisioner.md` |
+| orchestration | Goal planners, swarm coordinators, and consensus agents for multi-agent workflows | 21 | `orchestration/consensus/byzantine-coordinator.md`, `orchestration/swarm/hierarchical-coordinator.md` |
+| platforms | Data, ML, neural, Flow Nexus, and platform service agents | 44 | `platforms/ai-ml/automl/automl-optimizer.md`, `platforms/flow-nexus/multi-model-orchestrator.md` |
+| quality | Analysis, audit, testing, and verification agents | 18 | `quality/analysis/code-analyzer.md`, `quality/testing/test-orchestrator.md` |
+| research | Research, reasoning, emerging tech, and discovery agents | 11 | `research/archivist.md`, `research/emerging/arvr/ar-vr-developer.md` |
+| security | Compliance, pentest, container, and cloud security specialists | 5 | `security/compliance/soc-compliance-auditor.md`, `security/pentest/penetration-testing-agent.md` |
+| specialists | Domain specialists for business, industry, and vertical workflows | 15 | `specialists/business/business-analyst.md`, `specialists/supply-chain/logistics-optimizer.md` |
+| tooling | Documentation, GitHub, and knowledge tooling agents | 24 | `tooling/documentation/api-docs/docs-api-openapi.md`, `tooling/github/pr-manager.md` |
 
-\`\`\`
+Totals include nested directories; for example `platforms/ai-ml/*` contributes to the platforms count.
+
+---
+
+## Directory Layout
+
+```
 agents/
-├── analysis/          # Analytical & audit agents (root-cause-analyzer, audit-pipeline-orchestrator)
-├── architecture/      # System architecture & design agents
-├── business/          # Business logic & domain agents
-├── consensus/         # Consensus protocol agents (byzantine, raft, gossip)
-├── core/              # Core fundamental agents (coder, reviewer, base-template-generator)
-├── data/              # Data processing & transformation agents
-├── database/          # Database specialists (design, optimization, migration)
-├── development/       # General development agents (backend-dev, mobile-dev, ml-developer)
-├── devops/            # DevOps & infrastructure agents (cicd-engineer)
-├── documentation/     # Documentation generation & management agents
-├── flow-nexus/        # Multi-model integration (Gemini, Codex, multi-model-orchestrator)
-├── frontend/          # Frontend development specialists (React, Vue, UI components)
-├── github/            # GitHub integration agents (pr-manager, issue-tracker, workflow-automation)
-├── goal/              # Goal-oriented & planning agents
-├── hive-mind/         # Collective intelligence & queen-led coordination
-├── neural/            # Neural network & ML model agents
-├── optimization/      # Performance optimization specialists
-├── reasoning/         # Reasoning & decision-making agents
-├── research/          # Research & analysis agents (researcher, data-steward, ethics-agent)
-├── sparc/             # SPARC methodology agents (specification, architecture, refinement)
-├── registry/          # Agent registry management (registry.json, MCP scripts)
-└── README.md          # This file
-\`\`\`
+  delivery/                 # Architecture, development, SPARC execution
+  foundry/                  # Core, templates, registries, agent builders
+  operations/               # DevOps, infrastructure, monitoring, optimization
+  orchestration/            # Coordinators, consensus, goal planners, swarm agents
+  platforms/                # Flow Nexus, AI/ML, database, neural services
+  quality/                  # Analysis, audits, testing specialists
+  research/                 # Research cores, reasoning, emerging technology scouts
+  security/                 # Compliance, security, penetration testing
+  specialists/              # Business, industry, and other domain experts
+  tooling/                  # Documentation, GitHub, productivity tooling
+  registry/                 # (moved to foundry/registry)
+```
+
+Each category folder preserves the prior domain structure (for example `delivery/development/backend/*`).
 
 ---
 
-## Quick Reference: Specialist Agent Types
+## Agent File Structure
 
-When using Claude Code's Task tool, ALWAYS specify one of 5 specialist types:
+Every agent Markdown file starts with YAML metadata followed by usage documentation. Typical sections include:
 
-| Type | Use For | Agents |
-|------|---------|--------|
-| \`researcher\` | Analysis, investigation, requirements | researcher, data-steward, ethics-agent |
-| \`coder\` | Implementation, feature development | coder, backend-dev, mobile-dev, ml-developer |
-| \`analyst\` | Testing, review, quality assurance | reviewer, tester, code-analyzer |
-| \`optimizer\` | Performance tuning, optimization | perf-analyzer, performance-benchmarker |
-| \`coordinator\` | Multi-agent orchestration | hierarchical-coordinator, mesh-coordinator |
+```
+---
+name: agent-name
+type: coordinator | coder | analyst | optimizer | researcher | specialist
+phase: planning | development | testing | deployment | maintenance
+category: delivery
+description: Short mission statement
+capabilities: [...]
+tools_required: [...]
+mcp_servers: [...]
+hooks:
+  pre: |
+    # commands...
+  post: |
+    # commands...
+quality_gates: [...]
+artifact_contracts: [...]
+---
 
-See **CLAUDE.md** for complete specialist agent selection guide.
+# Agent Title
+
+## When to use
+...
+```
 
 ---
 
-## Resources
+## Finding the Right Agent
 
-- **Agent Registry**: \`agents/registry/registry.json\` (131 agents)
-- **Complete Guide**: See CLAUDE.md for specialist agent selection
-- **Examples**: See \`skills/\` directory for skill-agent integration
+1. **Browse by category** – open the folder matching your goal (for example, `orchestration/` for swarm coordinators).  
+2. **Use the registry** – `foundry/registry/registry.json` lists canonical agent metadata for automation.  
+3. **Search by capability** – `rg "capabilities:.*<keyword>" agents` to locate agents with specific skills.  
+4. **Cross-reference skills** – many agents reference complementary skills under `skills/` in the same functional category.
 
+---
+
+## Updating or Adding Agents
+
+1. Place new agents inside the category that matches their primary function.  
+2. Follow the YAML + documentation structure above; keep hooks and quality gates up to date.  
+3. Update this README and any relevant taxonomy docs (see `docs/agent-taxonomy/`) with counts and locations.  
+4. Regenerate `foundry/registry/registry.json` if the agent should appear in the programmatic registry.
+
+This organisation mirrors the skills directory, making it easier to align agents, skills, and SOPs by functional area.

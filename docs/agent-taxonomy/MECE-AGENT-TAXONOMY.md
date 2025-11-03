@@ -2,6 +2,8 @@
 
 **Comprehensive Classification of All Agent Definitions**
 
+> **Reorganisation Note (2025-11-02):** The agents directory has been restructured into ten functional categories. For the up-to-date index grouped by those categories, see [`docs/agent-taxonomy/INDEX.md`](./INDEX.md). The analysis below is retained for historical reference of the pre-reorganisation domains.
+
 **Document Version**: 2.0.0
 **Analysis Date**: 2025-11-02
 **Total Agents Analyzed**: 130
@@ -54,7 +56,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## NEW Domain 13: Frontend Development (6 agents, 4.6%)
 
 **Purpose**: Modern web frontend development across frameworks and technologies
-**Location**: `agents/frontend/`
+**Location**: `agents/delivery/frontend/`
 **Status**: ✅ **NEW DOMAIN** (Added in Batch 4)
 
 ### React & Vue Specialists (2 agents)
@@ -95,7 +97,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## EXPANDED Domain 14: Database & Data Layer (7 agents, 5.4%)
 
 **Purpose**: Database design, optimization, ETL, and data management
-**Location**: `agents/database/`, `agents/data/`
+**Location**: `agents/platforms/database/`, `agents/platforms/data/`
 **Status**: ✅ **EXPANDED** (1→7 agents, +600%)
 
 ### Database Design & Optimization (2 agents)
@@ -143,7 +145,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## EXPANDED Domain 15: Documentation & Knowledge (6 agents, 4.6%)
 
 **Purpose**: Documentation generation, technical writing, knowledge management
-**Location**: `agents/documentation/`
+**Location**: `agents/tooling/documentation/`
 **Status**: ✅ **EXPANDED** (1→6 agents, +500%)
 
 ### API & Developer Documentation (2 agents)
@@ -184,7 +186,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## EXPANDED Domain 6: Testing & Validation (9 agents, 6.9%)
 
 **Purpose**: Comprehensive testing, validation, and production readiness
-**Location**: `agents/testing/`
+**Location**: `agents/quality/testing/`
 **Status**: ✅ **EXPANDED** (3→9 agents, +200%)
 
 ### Existing Agents (3 agents)
@@ -225,7 +227,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## EXPANDED Domain 1: Core Development (8 agents, 6.2%)
 
 **Purpose**: Essential software development lifecycle agents
-**Location**: `agents/core/`
+**Location**: `agents/foundry/core/`
 **Status**: ✅ **EXPANDED** (6→8 agents, +33%)
 
 ### Existing Core Agents (6 agents)
@@ -261,7 +263,7 @@ This document provides a **Mutually Exclusive, Collectively Exhaustive (MECE)** 
 ## EXPANDED Domain 2: Swarm Coordination (15 agents, 11.5%)
 
 **Purpose**: Multi-agent orchestration and coordination patterns
-**Locations**: `agents/swarm/`, `agents/consensus/`, `agents/hive-mind/`
+**Locations**: `agents/orchestration/swarm/`, `agents/orchestration/consensus/`, `agents/orchestration/hive-mind/`
 **Status**: ✅ **EXPANDED** (13→15 agents, +15%)
 
 ### Existing Swarm Agents (13 agents)
