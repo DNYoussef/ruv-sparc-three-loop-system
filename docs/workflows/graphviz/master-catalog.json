@@ -1,0 +1,19 @@
+{
+  "version": "2025.11.02",
+  "coverage": {
+    "skills": 8,
+    "agent_mappings": 5,
+    "commands": 0
+  },
+  "directories": {
+    "skills": "skills",
+    "agent_mappings": "agent-mappings",
+    "rendered_output": "rendered"
+  },
+  "notes": [
+    "Graphviz assets migrated from docs/12fa/graphviz to docs/workflows/graphviz.",
+    "Validation scripts render DOT files to SVG under docs/workflows/graphviz/rendered.",
+    "Command diagrams will be reintroduced in a future batch."
+  ],
+  "generated": "2025-11-03T14:58:43Z"
+}

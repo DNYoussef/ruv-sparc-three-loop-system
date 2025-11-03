@@ -89,12 +89,12 @@
 
   "skills": {
     "network-security-setup": {
-      "path": "../../.claude/skills/network-security-setup",
+      "path": "../../skills/security/network-security-setup",
       "description": "Configure Claude Code sandbox network isolation with trusted domains",
       "category": "security"
     },
     "sandbox-configurator": {
-      "path": "../../.claude/skills/sandbox-configurator",
+      "path": "../../skills/security/sandbox-configurator",
       "description": "Configure file system and network isolation boundaries",
       "category": "security"
     }
@@ -107,11 +107,11 @@
 
   "commands": {
     "/sparc:security-review": {
-      "path": "../../.claude/commands/sparc/security-review.md",
+      "path": "../../commands/delivery/sparc/security-review.md",
       "description": "Comprehensive security audit with static and dynamic analysis"
     },
     "/setup": {
-      "path": "../../.claude/commands/setup.md",
+      "path": "../../commands/operations/hooks/setup.md",
       "description": "Security infrastructure setup and configuration"
     }
   },

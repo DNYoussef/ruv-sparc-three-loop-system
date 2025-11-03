@@ -11,37 +11,37 @@
 
   "skills": {
     "swarm-advanced": {
-      "path": "../../.claude/skills/swarm-advanced",
+      "path": "../../skills/orchestration/swarm-advanced",
       "description": "Advanced swarm patterns with dynamic topology switching",
       "category": "coordination"
     },
     "swarm-orchestration": {
-      "path": "../../.claude/skills/swarm-orchestration",
+      "path": "../../skills/orchestration/swarm-orchestration",
       "description": "Multi-agent swarm orchestration and task distribution",
       "category": "coordination"
     },
     "hive-mind-advanced": {
-      "path": "../../.claude/skills/hive-mind-advanced",
+      "path": "../../skills/orchestration/hive-mind-advanced",
       "description": "Collective intelligence with queen-led hierarchical coordination",
       "category": "coordination"
     },
     "github-multi-repo": {
-      "path": "../../.claude/skills/github-multi-repo",
+      "path": "../../skills/operations/github-multi-repo",
       "description": "Cross-repository swarm orchestration for organization-wide automation",
       "category": "github"
     },
     "github-project-management": {
-      "path": "../../.claude/skills/github-project-management",
+      "path": "../../skills/operations/github-project-management",
       "description": "Swarm-coordinated issue tracking and project board automation",
       "category": "github"
     },
     "github-release-management": {
-      "path": "../../.claude/skills/github-release-management",
+      "path": "../../skills/operations/github-release-management",
       "description": "Automated release orchestration with swarm coordination",
       "category": "github"
     },
     "github-workflow-automation": {
-      "path": "../../.claude/skills/github-workflow-automation",
+      "path": "../../skills/operations/github-workflow-automation",
       "description": "GitHub Actions workflow automation with adaptive multi-agent coordination",
       "category": "github"
     }
@@ -67,35 +67,35 @@
 
   "commands": {
     "/claude-flow-swarm": {
-      "path": "../../.claude/commands/claude-flow-swarm.md",
+      "path": "../../commands/tooling/claude-flow/claude-flow-swarm.md",
       "description": "Coordinate multi-agent swarms for complex tasks"
     },
     "/swarm-init": {
-      "path": "../../.claude/commands/swarm-commands/swarm-init.md",
+      "path": "../../commands/orchestration/coordination/swarm-init.md",
       "description": "Initialize swarm with specified topology"
     },
     "/agent-spawn": {
-      "path": "../../.claude/commands/swarm-commands/agent-spawn.md",
+      "path": "../../commands/orchestration/coordination/agent-spawn.md",
       "description": "Spawn specialized agent in swarm"
     },
     "/task-orchestrate": {
-      "path": "../../.claude/commands/swarm-commands/task-orchestrate.md",
+      "path": "../../commands/orchestration/coordination/task-orchestrate.md",
       "description": "Orchestrate task across swarm agents"
     },
     "/orchestrate": {
-      "path": "../../.claude/commands/orchestrate.md",
+      "path": "../../commands/orchestration/coordination/orchestrate.md",
       "description": "High-level swarm task orchestration"
     },
     "/github-swarm": {
-      "path": "../../.claude/commands/github-swarm.md",
+      "path": "../../commands/operations/github/github-swarm.md",
       "description": "GitHub-specific swarm coordination"
     },
     "/swarm-monitor": {
-      "path": "../../.claude/commands/swarm-commands/swarm-monitor.md",
+      "path": "../../commands/operations/monitoring/swarm-monitor.md",
       "description": "Real-time swarm activity monitoring"
     },
     "/auto-topology": {
-      "path": "../../.claude/commands/swarm-commands/auto-topology.md",
+      "path": "../../commands/operations/optimization/auto-topology.md",
       "description": "Automatic topology selection based on task complexity"
     }
   },

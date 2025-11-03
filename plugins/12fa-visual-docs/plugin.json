@@ -12,19 +12,19 @@
   "diagrams": {
     "skills": {
       "count": 73,
-      "path": "../../docs/12fa/graphviz/skills",
+      "path": "../../docs/workflows/graphviz/skills",
       "purpose": "Visual process flows for all skills showing input → processing → output workflows",
       "why": "AI comprehension - Claude understands rules better when written as DOT graphs (fsck.com article methodology)"
     },
     "agents": {
       "count": 104,
-      "path": "../../docs/12fa/graphviz/agents",
+      "path": "../../docs/workflows/graphviz/agent-mappings",
       "purpose": "Agent decision-making processes with conditional logic and state transitions",
       "why": "Enable AI agents to understand their own workflows and improve self-awareness"
     },
     "commands": {
       "count": 94,
-      "path": "../../docs/12fa/graphviz/commands",
+      "path": "../../docs/workflows/graphviz",
       "purpose": "Command execution flows with error handling and recovery paths",
       "why": "Provide visual documentation for complex multi-step command workflows"
     },
@@ -35,7 +35,7 @@
 
   "validation_tools": {
     "bash_script": {
-      "path": "../../docs/12fa/graphviz/validate-all-diagrams.sh",
+      "path": "../../docs/workflows/graphviz/validate-all-diagrams.sh",
       "description": "Bash validation script for Linux/macOS",
       "features": [
         "Syntax validation for all .dot files",
@@ -46,7 +46,7 @@
       ]
     },
     "powershell_script": {
-      "path": "../../docs/12fa/graphviz/validate-all-diagrams.ps1",
+      "path": "../../docs/workflows/graphviz/validate-all-diagrams.ps1",
       "description": "PowerShell validation script for Windows",
       "features": [
         "Syntax validation for all .dot files",
@@ -57,7 +57,7 @@
       ]
     },
     "master_catalog": {
-      "path": "../../docs/12fa/graphviz/master-catalog.json",
+      "path": "../../docs/workflows/graphviz/master-catalog.json",
       "description": "Complete metadata catalog of all diagrams",
       "contents": [
         "Version and coverage statistics",
@@ -69,7 +69,7 @@
       ]
     },
     "html_viewer": {
-      "path": "../../docs/12fa/graphviz/index.html",
+      "path": "../../docs/workflows/graphviz/index.html",
       "description": "Interactive HTML viewer with search and filtering",
       "features": [
         "Modern UI with gradient background",
@@ -84,17 +84,17 @@
 
   "templates": {
     "skill_process": {
-      "path": "../../docs/12fa/graphviz/templates/skill-process.dot.template",
+      "path": "../../docs/workflows/graphviz/templates/skill-process.dot.template",
       "description": "Template for skill process diagrams",
       "structure": "Input → Validation → Processing → Output → Error Handling"
     },
     "agent_process": {
-      "path": "../../docs/12fa/graphviz/templates/agent-process.dot.template",
+      "path": "../../docs/workflows/graphviz/templates/agent-process.dot.template",
       "description": "Template for agent decision diagrams",
       "structure": "Receive Task → Analyze → Execute → Report → Cleanup"
     },
     "command_process": {
-      "path": "../../docs/12fa/graphviz/templates/command-process.dot.template",
+      "path": "../../docs/workflows/graphviz/templates/command-process.dot.template",
       "description": "Template for command workflow diagrams",
       "structure": "Parse Args → Validate → Execute → Handle Errors → Return Results"
     }
@@ -102,20 +102,20 @@
 
   "documentation": {
     "readme": {
-      "path": "../../docs/12fa/graphviz/README.md",
+      "path": "../../docs/workflows/graphviz/README.md",
       "description": "Comprehensive guide (450 lines) with usage, quality assurance, and integration instructions"
     },
     "phase_reports": {
       "phase_1": {
-        "path": "../../docs/12fa/PHASE-1-GRAPHVIZ-DEPLOYMENT-COMPLETE.md",
+        "path": "../../docs/workflows/graphviz/skills/GENERATION-SUMMARY.md",
         "description": "30 custom diagrams with 6 parallel agents (3,042 nodes)"
       },
       "phase_2": {
-        "path": "../../docs/12fa/PHASE-2-GRAPHVIZ-DEPLOYMENT-COMPLETE.md",
+        "path": "../../docs/workflows/graphviz/skills/FINAL-REPORT.md",
         "description": "241 template-based diagrams deployed via 10 parallel agents (26,286 lines)"
       },
       "phase_3": {
-        "path": "../../docs/12fa/PHASE-3-GRAPHVIZ-VALIDATION-COMPLETE.md",
+        "path": "../../docs/workflows/graphviz/skills/README.md",
         "description": "Validation infrastructure (scripts, catalog, HTML viewer, comprehensive README)"
       }
     }
@@ -143,21 +143,21 @@
 
   "usage": {
     "validation": {
-      "windows": "cd docs/12fa/graphviz && .\\validate-all-diagrams.ps1",
-      "linux_macos": "cd docs/12fa/graphviz && bash validate-all-diagrams.sh"
+      "windows": "cd docs/workflows/graphviz && .\\validate-all-diagrams.ps1",
+      "linux_macos": "cd docs/workflows/graphviz && bash validate-all-diagrams.sh"
     },
     "viewer": {
-      "windows": "cd docs/12fa/graphviz && start index.html",
-      "macos": "cd docs/12fa/graphviz && open index.html",
-      "linux": "cd docs/12fa/graphviz && xdg-open index.html"
+      "windows": "cd docs/workflows/graphviz && start index.html",
+      "macos": "cd docs/workflows/graphviz && open index.html",
+      "linux": "cd docs/workflows/graphviz && xdg-open index.html"
     },
     "render_single": {
       "svg": "dot -Tsvg diagram.dot -o diagram.svg",
       "png": "dot -Tpng diagram.dot -o diagram.png"
     },
     "batch_render": {
-      "all_skills": "cd docs/12fa/graphviz/skills && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done",
-      "all_diagrams": "for dir in skills agents commands; do cd $dir && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done && cd ..; done"
+      "all_skills": "cd docs/workflows/graphviz/skills && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done",
+      "all_diagrams": "cd docs/workflows/graphviz && for dir in skills agent-mappings; do (cd $dir && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done); done"
     }
   },
 
