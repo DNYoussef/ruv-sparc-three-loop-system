@@ -3,12 +3,22 @@
   "name": "12-Factor Agents - Security Hardening",
   "version": "3.0.0",
   "description": "Enterprise security infrastructure with 6 production-ready components: Agent Spec Generator CLI, Policy DSL Engine, Guardrail Enforcement, Agent Registry, Secrets Management, OpenTelemetry",
-  "author": "DNYoussef",
+  "author": {
+    "name": "DNYoussef",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
-  "keywords": ["security", "vault", "guardrails", "policy", "compliance", "telemetry"],
-
+  "keywords": [
+    "security",
+    "vault",
+    "guardrails",
+    "policy",
+    "compliance",
+    "telemetry"
+  ],
   "tools": {
     "agent-spec-gen": {
       "path": "../../security/agent-spec-gen",
@@ -86,7 +96,6 @@
       ]
     }
   },
-
   "skills": {
     "network-security-setup": {
       "path": "../../skills/security/network-security-setup",
@@ -99,12 +108,10 @@
       "category": "security"
     }
   },
-
   "agents": [
     "security-manager",
     "security-manager-enhanced"
   ],
-
   "commands": {
     "/sparc:security-review": {
       "path": "../../commands/delivery/sparc/security-review.md",
@@ -115,9 +122,10 @@
       "description": "Security infrastructure setup and configuration"
     }
   },
-
   "dependencies": {
-    "plugins": ["12fa-core"],
+    "plugins": [
+      "12fa-core"
+    ],
     "mcp_servers": {
       "claude-flow": {
         "version": ">=1.0.0-alpha",
@@ -161,13 +169,22 @@
       }
     },
     "tools": {
-      "git": {"required": true},
-      "npm": {"required": true},
-      "node": {"version": ">=18.0.0", "required": true},
-      "docker": {"required": false, "description": "For containerized deployments"}
+      "git": {
+        "required": true
+      },
+      "npm": {
+        "required": true
+      },
+      "node": {
+        "version": ">=18.0.0",
+        "required": true
+      },
+      "docker": {
+        "required": false,
+        "description": "For containerized deployments"
+      }
     }
   },
-
   "configuration": {
     "security_score_target": "100%",
     "vulnerability_tolerance": 0,
@@ -175,7 +192,6 @@
     "secrets_rotation_interval": "30d",
     "audit_retention": "90d"
   },
-
   "metrics": {
     "security_score": "100%",
     "vulnerabilities": "0",
@@ -184,7 +200,6 @@
     "secrets_detection_rate": "93.5%",
     "false_positive_rate": "0%"
   },
-
   "security_components": {
     "agent_spec_gen": {
       "purpose": "Standardize agent specifications with security constraints",

@@ -3,12 +3,22 @@
   "name": "12-Factor Agents - Advanced Swarm Coordination",
   "version": "3.0.0",
   "description": "Multi-agent swarm systems with 4 topologies (Hierarchical, Mesh, Adaptive, Ring), 3 consensus protocols (Byzantine, Raft, Gossip), Hive Mind coordination, and Queen Seraphina meta-orchestrator",
-  "author": "DNYoussef",
+  "author": {
+    "name": "DNYoussef",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
-  "keywords": ["swarm", "coordination", "consensus", "hive-mind", "distributed", "byzantine"],
-
+  "keywords": [
+    "swarm",
+    "coordination",
+    "consensus",
+    "hive-mind",
+    "distributed",
+    "byzantine"
+  ],
   "skills": {
     "swarm-advanced": {
       "path": "../../skills/orchestration/swarm-advanced",
@@ -46,7 +56,6 @@
       "category": "github"
     }
   },
-
   "agents": [
     "hierarchical-coordinator",
     "mesh-coordinator",
@@ -64,7 +73,6 @@
     "code-review-swarm",
     "multi-repo-swarm"
   ],
-
   "commands": {
     "/claude-flow-swarm": {
       "path": "../../commands/tooling/claude-flow/claude-flow-swarm.md",
@@ -99,9 +107,10 @@
       "description": "Automatic topology selection based on task complexity"
     }
   },
-
   "dependencies": {
-    "plugins": ["12fa-core"],
+    "plugins": [
+      "12fa-core"
+    ],
     "mcp_servers": {
       "claude-flow": {
         "version": ">=1.0.0-alpha",
@@ -127,12 +136,18 @@
       }
     },
     "tools": {
-      "git": {"required": true},
-      "npm": {"required": true},
-      "node": {"version": ">=18.0.0", "required": true}
+      "git": {
+        "required": true
+      },
+      "npm": {
+        "required": true
+      },
+      "node": {
+        "version": ">=18.0.0",
+        "required": true
+      }
     }
   },
-
   "topologies": {
     "hierarchical": {
       "description": "Queen-led tree structure with specialized worker delegation",
@@ -141,7 +156,11 @@
       "speedup": "6.3x",
       "overhead": "Low",
       "fault_tolerance": "Medium",
-      "best_for": ["Large projects", "Multi-phase workflows", "Clear task hierarchy"]
+      "best_for": [
+        "Large projects",
+        "Multi-phase workflows",
+        "Clear task hierarchy"
+      ]
     },
     "mesh": {
       "description": "Peer-to-peer network with distributed decision making",
@@ -150,7 +169,11 @@
       "speedup": "8.3x",
       "overhead": "Medium",
       "fault_tolerance": "High",
-      "best_for": ["Distributed systems", "Redundancy requirements", "Byzantine environments"]
+      "best_for": [
+        "Distributed systems",
+        "Redundancy requirements",
+        "Byzantine environments"
+      ]
     },
     "adaptive": {
       "description": "Dynamic topology switching based on task complexity and constraints",
@@ -159,7 +182,11 @@
       "speedup": "7.2x (average)",
       "overhead": "Medium-High",
       "fault_tolerance": "Medium-High",
-      "best_for": ["Variable workloads", "Mixed task types", "Exploratory projects"]
+      "best_for": [
+        "Variable workloads",
+        "Mixed task types",
+        "Exploratory projects"
+      ]
     },
     "ring": {
       "description": "Circular topology with sequential message passing",
@@ -168,77 +195,134 @@
       "speedup": "4.5x",
       "overhead": "Low",
       "fault_tolerance": "Low-Medium",
-      "best_for": ["Sequential tasks", "Round-robin scheduling", "Simple coordination"]
+      "best_for": [
+        "Sequential tasks",
+        "Round-robin scheduling",
+        "Simple coordination"
+      ]
     }
   },
-
   "consensus_protocols": {
     "byzantine": {
       "description": "Byzantine Fault Tolerant consensus with malicious actor detection",
       "agent": "byzantine-coordinator",
       "fault_tolerance": "Tolerates up to (n-1)/3 malicious agents",
       "latency": "High (3+ rounds)",
-      "best_for": ["Untrusted environments", "Critical decisions", "Security-first scenarios"],
-      "use_cases": ["Theater detection", "Code review consensus", "Security audits"]
+      "best_for": [
+        "Untrusted environments",
+        "Critical decisions",
+        "Security-first scenarios"
+      ],
+      "use_cases": [
+        "Theater detection",
+        "Code review consensus",
+        "Security audits"
+      ]
     },
     "raft": {
       "description": "Leader election and log replication for strong consistency",
       "agent": "raft-manager",
       "fault_tolerance": "Tolerates (n-1)/2 crash failures",
       "latency": "Medium (1-2 rounds)",
-      "best_for": ["State machine replication", "Distributed databases", "Configuration management"],
-      "use_cases": ["Swarm state management", "Distributed task queues", "Coordination logs"]
+      "best_for": [
+        "State machine replication",
+        "Distributed databases",
+        "Configuration management"
+      ],
+      "use_cases": [
+        "Swarm state management",
+        "Distributed task queues",
+        "Coordination logs"
+      ]
     },
     "gossip": {
       "description": "Eventually consistent gossip protocol for scalable systems",
       "agent": "gossip-coordinator",
       "fault_tolerance": "High (epidemic protocols)",
       "latency": "Low (probabilistic)",
-      "best_for": ["Large swarms", "Eventual consistency acceptable", "High throughput"],
-      "use_cases": ["Metric aggregation", "Service discovery", "Event propagation"]
+      "best_for": [
+        "Large swarms",
+        "Eventual consistency acceptable",
+        "High throughput"
+      ],
+      "use_cases": [
+        "Metric aggregation",
+        "Service discovery",
+        "Event propagation"
+      ]
     }
   },
-
   "hive_mind": {
     "description": "Collective intelligence system with queen-led coordination",
     "components": {
       "queen": {
         "agent": "queen-coordinator",
         "role": "Strategic decision-making and swarm-wide coordination",
-        "capabilities": ["Task decomposition", "Resource allocation", "Priority management", "Consensus orchestration"]
+        "capabilities": [
+          "Task decomposition",
+          "Resource allocation",
+          "Priority management",
+          "Consensus orchestration"
+        ]
       },
       "workers": {
         "agent": "worker-specialist",
         "role": "Specialized task execution with continuous progress reporting",
-        "capabilities": ["Task execution", "Progress tracking", "Result reporting", "Failure handling"]
+        "capabilities": [
+          "Task execution",
+          "Progress tracking",
+          "Result reporting",
+          "Failure handling"
+        ]
       },
       "scouts": {
         "agent": "scout-explorer",
         "role": "Information reconnaissance and intelligence gathering",
-        "capabilities": ["Exploration", "Pattern discovery", "Risk assessment", "Opportunity identification"]
+        "capabilities": [
+          "Exploration",
+          "Pattern discovery",
+          "Risk assessment",
+          "Opportunity identification"
+        ]
       },
       "memory": {
         "agent": "swarm-memory-manager",
         "role": "Distributed memory synchronization and persistence",
-        "capabilities": ["Data consistency", "Caching", "Cross-agent memory sharing", "Session persistence"]
+        "capabilities": [
+          "Data consistency",
+          "Caching",
+          "Cross-agent memory sharing",
+          "Session persistence"
+        ]
       }
     },
     "coordination_patterns": {
       "centralized_decentralized_hybrid": {
         "description": "Queen handles strategy, workers execute autonomously",
-        "benefits": ["Clear authority", "Autonomous execution", "Scalable coordination"]
+        "benefits": [
+          "Clear authority",
+          "Autonomous execution",
+          "Scalable coordination"
+        ]
       },
       "collective_decision_making": {
         "description": "Multi-agent consensus for critical decisions",
-        "benefits": ["Reduced bias", "Higher quality decisions", "Byzantine fault tolerance"]
+        "benefits": [
+          "Reduced bias",
+          "Higher quality decisions",
+          "Byzantine fault tolerance"
+        ]
       },
       "memory_synchronization": {
         "description": "Distributed memory with eventual consistency",
-        "benefits": ["Cross-agent context", "Session persistence", "Knowledge sharing"]
+        "benefits": [
+          "Cross-agent context",
+          "Session persistence",
+          "Knowledge sharing"
+        ]
       }
     }
   },
-
   "github_integration": {
     "multi_repo_coordination": {
       "skill": "github-multi-repo",
@@ -257,13 +341,25 @@
     },
     "code_review_swarm": {
       "agent": "code-review-swarm",
-      "reviewers": ["security", "performance", "style", "tests", "documentation"],
+      "reviewers": [
+        "security",
+        "performance",
+        "style",
+        "tests",
+        "documentation"
+      ],
       "speedup": "5x vs sequential reviews",
       "consensus": "Byzantine (requires 4/5 approval)"
     },
     "release_orchestration": {
       "skill": "github-release-management",
-      "phases": ["Version bump", "Changelog generation", "Testing", "Deployment", "Monitoring"],
+      "phases": [
+        "Version bump",
+        "Changelog generation",
+        "Testing",
+        "Deployment",
+        "Monitoring"
+      ],
       "automation": "100% (zero-touch releases)"
     },
     "workflow_automation": {
@@ -276,7 +372,6 @@
       ]
     }
   },
-
   "configuration": {
     "max_agents_per_swarm": 100,
     "default_topology": "adaptive",
@@ -285,7 +380,6 @@
     "memory_persistence": true,
     "telemetry_enabled": true
   },
-
   "metrics": {
     "topologies_supported": 4,
     "consensus_protocols": 3,
@@ -295,7 +389,6 @@
     "skills_count": 7,
     "commands_count": 8
   },
-
   "performance": {
     "mesh_topology": {
       "speedup": "8.3x",

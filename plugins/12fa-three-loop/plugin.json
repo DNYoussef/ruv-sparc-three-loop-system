@@ -3,12 +3,22 @@
   "name": "12-Factor Agents - Three-Loop System",
   "version": "3.0.0",
   "description": "Advanced Three-Loop Architecture: Loop 1 (Research-Driven Planning with 5x pre-mortem), Loop 2 (Parallel Swarm Implementation), Loop 3 (CI/CD Intelligent Recovery)",
-  "author": "DNYoussef",
+  "author": {
+    "name": "DNYoussef",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
-  "keywords": ["three-loop", "research", "swarm", "cicd", "recovery", "architecture"],
-
+  "keywords": [
+    "three-loop",
+    "research",
+    "swarm",
+    "cicd",
+    "recovery",
+    "architecture"
+  ],
   "skills": {
     "research-driven-planning": {
       "path": "../../skills/research/research-driven-planning",
@@ -41,7 +51,6 @@
       "category": "development"
     }
   },
-
   "commands": {
     "/sparc:integration": {
       "path": "../../commands/delivery/sparc/integration.md",
@@ -68,7 +77,6 @@
       "description": "Codex-powered auto-implementation with sandbox testing"
     }
   },
-
   "agents": [
     "task-orchestrator",
     "migration-planner",
@@ -77,9 +85,10 @@
     "gemini-search-agent",
     "codex-auto-agent"
   ],
-
   "dependencies": {
-    "plugins": ["12fa-core"],
+    "plugins": [
+      "12fa-core"
+    ],
     "mcp_servers": {
       "claude-flow": {
         "version": ">=1.0.0-alpha",
@@ -98,12 +107,18 @@
       }
     },
     "tools": {
-      "git": {"required": true},
-      "npm": {"required": true},
-      "node": {"version": ">=18.0.0", "required": true}
+      "git": {
+        "required": true
+      },
+      "npm": {
+        "required": true
+      },
+      "node": {
+        "version": ">=18.0.0",
+        "required": true
+      }
     }
   },
-
   "configuration": {
     "loop_1_pre_mortem_cycles": 5,
     "loop_2_max_parallel_agents": 10,
@@ -112,34 +127,45 @@
     "parallel_speedup_target": "6.75x",
     "recovery_rate_target": "100%"
   },
-
   "metrics": {
     "planning_accuracy": ">97%",
     "parallel_speedup": "6.75x",
     "recovery_rate": "100%",
     "failure_confidence": "<3%"
   },
-
   "three_loop_architecture": {
     "loop_1": {
       "name": "Research-Driven Planning",
       "description": "Iterative risk mitigation through 5x pre-mortem cycles with multi-agent consensus",
       "output": "Validated, risk-mitigated plans with evidence-based technology selection",
-      "agents": ["researcher", "planner", "risk-analyzer"],
+      "agents": [
+        "researcher",
+        "planner",
+        "risk-analyzer"
+      ],
       "confidence_target": "<3% failure"
     },
     "loop_2": {
       "name": "Parallel Swarm Implementation",
       "description": "Dynamic compilation of plans into agent+skill execution graphs",
       "output": "Implemented features with theater detection and reality validation",
-      "agents": ["coder", "tester", "reviewer", "worker-specialist"],
+      "agents": [
+        "coder",
+        "tester",
+        "reviewer",
+        "worker-specialist"
+      ],
       "speedup_target": "6.75x"
     },
     "loop_3": {
       "name": "CI/CD Intelligent Recovery",
       "description": "Automated failure recovery with root cause analysis and comprehensive validation",
       "output": "100% test success through automated repair",
-      "agents": ["cicd-engineer", "debugger", "performance-benchmarker"],
+      "agents": [
+        "cicd-engineer",
+        "debugger",
+        "performance-benchmarker"
+      ],
       "recovery_target": "100%"
     }
   }

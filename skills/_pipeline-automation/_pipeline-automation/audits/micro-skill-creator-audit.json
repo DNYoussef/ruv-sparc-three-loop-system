@@ -1,0 +1,123 @@
+{
+  "skill_name": "micro-skill-creator",
+  "audit_timestamp": "2025-11-02T20:04:34.715303",
+  "overall_score": 0.486,
+  "quality_tier": "Incomplete",
+  "decision": "NO-GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": true,
+          "message": "skill.md found"
+        },
+        {
+          "name": "README.md exists",
+          "passed": false,
+          "message": "README.md missing (required)"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": true,
+          "message": "examples/ directory found"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": true,
+          "message": "3 example(s) found"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": true,
+          "message": "No orphaned root files"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": true,
+          "message": "Directory naming conventions followed"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": false,
+          "message": "Orphaned files: resources\\scripts\\skill-generator.py \u2192 should be in resources/scripts/; resources\\scripts\\skill-packager.py \u2192 should be in resources/scripts/; resources\\scripts\\skill-validator.sh \u2192 should be in resources/scripts/; resources\\templates\\atomic-skill-template.yaml \u2192 should be in resources/templates/; resources\\templates\\micro-skill-frontmatter.json \u2192 should be in resources/templates/; resources\\templates\\skill-metadata.yaml \u2192 should be in resources/templates/"
+        }
+      ],
+      "score": 0.7142857142857143
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": true,
+          "message": "Valid YAML frontmatter found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": true,
+          "message": "Imperative voice detected (7 verbs)"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": false,
+          "message": "README.md not found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": false,
+          "message": "README.md not found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": true,
+          "message": "Examples appear concrete (5 indicators)"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": true,
+          "message": "File naming conventions followed"
+        }
+      ],
+      "score": 0.6666666666666666
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Incomplete",
+      "file_count": 15,
+      "components": {
+        "skill.md": true,
+        "README.md": false,
+        "examples/": true,
+        "references/": true,
+        "resources/": true,
+        "graphviz/": false,
+        "tests/": true
+      },
+      "score": 0.0
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 9,
+    "failed": 4,
+    "violations": [
+      "[STRUCTURE] README.md exists: README.md missing (required)",
+      "[STRUCTURE] No orphaned files: Orphaned files: resources\\scripts\\skill-generator.py \u2192 should be in resources/scripts/; resources\\scripts\\skill-packager.py \u2192 should be in resources/scripts/; resources\\scripts\\skill-validator.sh \u2192 should be in resources/scripts/; resources\\templates\\atomic-skill-template.yaml \u2192 should be in resources/templates/; resources\\templates\\micro-skill-frontmatter.json \u2192 should be in resources/templates/; resources\\templates\\skill-metadata.yaml \u2192 should be in resources/templates/",
+      "[CONTENT] README.md has overview: README.md not found",
+      "[CONTENT] README.md has quick start: README.md not found"
+    ],
+    "passes": [
+      "[STRUCTURE] skill.md exists",
+      "[STRUCTURE] examples/ directory exists",
+      "[STRUCTURE] At least 1 example present",
+      "[STRUCTURE] No files in root (except required)",
+      "[STRUCTURE] Proper directory naming (lowercase)",
+      "[CONTENT] skill.md has YAML frontmatter",
+      "[CONTENT] skill.md uses imperative voice",
+      "[CONTENT] Examples are concrete (not abstract)",
+      "[CONTENT] File naming conventions followed"
+    ]
+  }
+}

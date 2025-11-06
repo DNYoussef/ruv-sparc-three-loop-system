@@ -1,0 +1,123 @@
+{
+  "skill_name": "hooks-automation",
+  "audit_timestamp": "2025-11-02T20:34:44.198148",
+  "overall_score": 0.766,
+  "quality_tier": "Bronze",
+  "decision": "NO-GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": true,
+          "message": "skill.md found"
+        },
+        {
+          "name": "README.md exists",
+          "passed": true,
+          "message": "README.md found"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": true,
+          "message": "examples/ directory found"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": true,
+          "message": "3 example(s) found"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": false,
+          "message": "Files should be categorized: readme.md"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": true,
+          "message": "Directory naming conventions followed"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": false,
+          "message": "Orphaned files: resources\\scripts\\hook-installer.sh \u2192 should be in resources/scripts/; resources\\scripts\\hook-tester.sh \u2192 should be in resources/scripts/; resources\\scripts\\hook-validator.py \u2192 should be in resources/scripts/; resources\\templates\\post-edit-hook.json \u2192 should be in resources/templates/; resources\\templates\\pre-task-hook.yaml \u2192 should be in resources/templates/; resources\\templates\\session-hooks.yaml \u2192 should be in resources/templates/"
+        }
+      ],
+      "score": 0.7142857142857143
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": true,
+          "message": "Valid YAML frontmatter found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": true,
+          "message": "Imperative voice detected (10 verbs)"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": true,
+          "message": "Overview section found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": true,
+          "message": "Quick start section found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": true,
+          "message": "Examples appear concrete (5 indicators)"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": true,
+          "message": "File naming conventions followed"
+        }
+      ],
+      "score": 1.0
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Bronze",
+      "file_count": 16,
+      "components": {
+        "skill.md": true,
+        "README.md": true,
+        "examples/": true,
+        "references/": false,
+        "resources/": true,
+        "graphviz/": false,
+        "tests/": true
+      },
+      "score": 0.6
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 11,
+    "failed": 2,
+    "violations": [
+      "[STRUCTURE] No files in root (except required): Files should be categorized: readme.md",
+      "[STRUCTURE] No orphaned files: Orphaned files: resources\\scripts\\hook-installer.sh \u2192 should be in resources/scripts/; resources\\scripts\\hook-tester.sh \u2192 should be in resources/scripts/; resources\\scripts\\hook-validator.py \u2192 should be in resources/scripts/; resources\\templates\\post-edit-hook.json \u2192 should be in resources/templates/; resources\\templates\\pre-task-hook.yaml \u2192 should be in resources/templates/; resources\\templates\\session-hooks.yaml \u2192 should be in resources/templates/"
+    ],
+    "passes": [
+      "[STRUCTURE] skill.md exists",
+      "[STRUCTURE] README.md exists",
+      "[STRUCTURE] examples/ directory exists",
+      "[STRUCTURE] At least 1 example present",
+      "[STRUCTURE] Proper directory naming (lowercase)",
+      "[CONTENT] skill.md has YAML frontmatter",
+      "[CONTENT] skill.md uses imperative voice",
+      "[CONTENT] README.md has overview",
+      "[CONTENT] README.md has quick start",
+      "[CONTENT] Examples are concrete (not abstract)",
+      "[CONTENT] File naming conventions followed"
+    ]
+  }
+}

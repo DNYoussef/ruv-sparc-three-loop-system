@@ -1,0 +1,123 @@
+{
+  "skill_name": "github-integration",
+  "audit_timestamp": "2025-11-02T19:39:24.167154",
+  "overall_score": 0.379,
+  "quality_tier": "Incomplete",
+  "decision": "NO-GO",
+  "categories": {
+    "structure": {
+      "category": "structure",
+      "checks": [
+        {
+          "name": "skill.md exists",
+          "passed": false,
+          "message": "skill.md missing (required)"
+        },
+        {
+          "name": "README.md exists",
+          "passed": true,
+          "message": "README.md found"
+        },
+        {
+          "name": "examples/ directory exists",
+          "passed": true,
+          "message": "examples/ directory found"
+        },
+        {
+          "name": "At least 1 example present",
+          "passed": true,
+          "message": "3 example(s) found"
+        },
+        {
+          "name": "No files in root (except required)",
+          "passed": true,
+          "message": "No orphaned root files"
+        },
+        {
+          "name": "Proper directory naming (lowercase)",
+          "passed": false,
+          "message": "Invalid directory names: shared-scripts"
+        },
+        {
+          "name": "No orphaned files",
+          "passed": false,
+          "message": "Orphaned files: shared-scripts\\github-api.sh \u2192 should be in resources/scripts/; shared-scripts\\multi-repo.sh \u2192 should be in resources/scripts/; tests\\test-pr-automation.sh \u2192 should be in resources/scripts/; tests\\test-repo-analyzer.sh \u2192 should be in resources/scripts/; resources\\scripts\\pr-automation.sh \u2192 should be in resources/scripts/; resources\\scripts\\release-orchestrator.py \u2192 should be in resources/scripts/"
+        }
+      ],
+      "score": 0.5714285714285714
+    },
+    "content": {
+      "category": "content",
+      "checks": [
+        {
+          "name": "skill.md has YAML frontmatter",
+          "passed": false,
+          "message": "skill.md not found"
+        },
+        {
+          "name": "skill.md uses imperative voice",
+          "passed": false,
+          "message": "skill.md not found"
+        },
+        {
+          "name": "README.md has overview",
+          "passed": true,
+          "message": "Overview section found"
+        },
+        {
+          "name": "README.md has quick start",
+          "passed": true,
+          "message": "Quick start section found"
+        },
+        {
+          "name": "Examples are concrete (not abstract)",
+          "passed": true,
+          "message": "Examples appear concrete (5 indicators)"
+        },
+        {
+          "name": "File naming conventions followed",
+          "passed": false,
+          "message": "Naming issues: references\\MCP-INTEGRATION-GUIDE.md: should be lowercase"
+        }
+      ],
+      "score": 0.5
+    },
+    "quality_tier": {
+      "category": "quality_tier",
+      "tier": "Incomplete",
+      "file_count": 17,
+      "components": {
+        "skill.md": false,
+        "README.md": true,
+        "examples/": true,
+        "references/": true,
+        "resources/": true,
+        "graphviz/": false,
+        "tests/": true
+      },
+      "score": 0.0
+    }
+  },
+  "summary": {
+    "total_checks": 13,
+    "passed": 7,
+    "failed": 6,
+    "violations": [
+      "[STRUCTURE] skill.md exists: skill.md missing (required)",
+      "[STRUCTURE] Proper directory naming (lowercase): Invalid directory names: shared-scripts",
+      "[STRUCTURE] No orphaned files: Orphaned files: shared-scripts\\github-api.sh \u2192 should be in resources/scripts/; shared-scripts\\multi-repo.sh \u2192 should be in resources/scripts/; tests\\test-pr-automation.sh \u2192 should be in resources/scripts/; tests\\test-repo-analyzer.sh \u2192 should be in resources/scripts/; resources\\scripts\\pr-automation.sh \u2192 should be in resources/scripts/; resources\\scripts\\release-orchestrator.py \u2192 should be in resources/scripts/",
+      "[CONTENT] skill.md has YAML frontmatter: skill.md not found",
+      "[CONTENT] skill.md uses imperative voice: skill.md not found",
+      "[CONTENT] File naming conventions followed: Naming issues: references\\MCP-INTEGRATION-GUIDE.md: should be lowercase"
+    ],
+    "passes": [
+      "[STRUCTURE] README.md exists",
+      "[STRUCTURE] examples/ directory exists",
+      "[STRUCTURE] At least 1 example present",
+      "[STRUCTURE] No files in root (except required)",
+      "[CONTENT] README.md has overview",
+      "[CONTENT] README.md has quick start",
+      "[CONTENT] Examples are concrete (not abstract)"
+    ]
+  }
+}

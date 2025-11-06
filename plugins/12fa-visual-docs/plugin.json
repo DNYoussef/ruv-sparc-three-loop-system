@@ -3,12 +3,21 @@
   "name": "12-Factor Agents - Visual Documentation",
   "version": "3.0.0",
   "description": "Complete Graphviz workflow diagrams: 271 AI-comprehensible visualizations (73 skills, 104 agents, 94 commands) with validation tools and interactive HTML viewer",
-  "author": "DNYoussef",
+  "author": {
+    "name": "DNYoussef",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
-  "keywords": ["graphviz", "visualization", "documentation", "workflows", "diagrams"],
-
+  "keywords": [
+    "graphviz",
+    "visualization",
+    "documentation",
+    "workflows",
+    "diagrams"
+  ],
   "diagrams": {
     "skills": {
       "count": 73,
@@ -32,7 +41,6 @@
     "coverage": "101% (271 diagrams / 269 catalog components)",
     "lines_of_code": 26286
   },
-
   "validation_tools": {
     "bash_script": {
       "path": "../../docs/workflows/graphviz/validate-all-diagrams.sh",
@@ -81,7 +89,6 @@
       ]
     }
   },
-
   "templates": {
     "skill_process": {
       "path": "../../docs/workflows/graphviz/templates/skill-process.dot.template",
@@ -99,7 +106,6 @@
       "structure": "Parse Args → Validate → Execute → Handle Errors → Return Results"
     }
   },
-
   "documentation": {
     "readme": {
       "path": "../../docs/workflows/graphviz/README.md",
@@ -120,9 +126,10 @@
       }
     }
   },
-
   "dependencies": {
-    "plugins": ["12fa-core"],
+    "plugins": [
+      "12fa-core"
+    ],
     "required_tools": {
       "graphviz": {
         "version": ">=2.44.0",
@@ -140,7 +147,6 @@
       }
     }
   },
-
   "usage": {
     "validation": {
       "windows": "cd docs/workflows/graphviz && .\\validate-all-diagrams.ps1",
@@ -160,7 +166,6 @@
       "all_diagrams": "cd docs/workflows/graphviz && for dir in skills agent-mappings; do (cd $dir && for f in *.dot; do dot -Tsvg \"$f\" -o \"${f%.dot}.svg\"; done); done"
     }
   },
-
   "metrics": {
     "coverage": "101%",
     "diagram_count": 271,
@@ -168,7 +173,6 @@
     "validation_success_rate": "100%",
     "ai_comprehension_improvement": "Significant (based on fsck.com article findings)"
   },
-
   "methodology": {
     "phase_1_approach": {
       "method": "Custom diagram creation",
@@ -200,7 +204,6 @@
     "total_time": "11 hours",
     "average_speedup": "17.8x"
   },
-
   "integration_guidelines": {
     "agent_yaml": {
       "example": "diagram_path: docs/12fa/graphviz/agents/coder-process.dot",
@@ -230,7 +233,6 @@
       ]
     }
   },
-
   "quality_standards": {
     "diagram_structure": {
       "required_elements": [

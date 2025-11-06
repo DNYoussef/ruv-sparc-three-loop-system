@@ -3,12 +3,21 @@
   "name": "12-Factor Agents - Core",
   "version": "3.0.0",
   "description": "Essential 12-Factor Agent tools with SPARC methodology, core agents, audit pipeline, and quality gates",
-  "author": "DNYoussef",
+  "author": {
+    "name": "DNYoussef",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
-  "keywords": ["12-factor", "sparc", "tdd", "quality", "core"],
-
+  "keywords": [
+    "12-factor",
+    "sparc",
+    "tdd",
+    "quality",
+    "core"
+  ],
   "skills": {
     "agent-creator": {
       "path": "../../skills/foundry/agent-creator",
@@ -61,7 +70,6 @@
       "category": "core"
     }
   },
-
   "commands": {
     "/sparc": {
       "path": "../../commands/delivery/sparc/sparc.md",
@@ -108,14 +116,12 @@
       "description": "Production readiness validation"
     }
   },
-
   "hooks": {
     "configuration": {
       "path": "../../hooks/hooks.json",
       "description": "Unified hook lifecycle configuration for claude-flow automation"
     }
   },
-
   "agents": [
     "coder",
     "reviewer",
@@ -130,7 +136,6 @@
     "refinement",
     "production-validator"
   ],
-
   "dependencies": {
     "mcp_servers": {
       "claude-flow": {
@@ -141,18 +146,23 @@
       }
     },
     "tools": {
-      "git": {"required": true},
-      "npm": {"required": true},
-      "node": {"version": ">=18.0.0", "required": true}
+      "git": {
+        "required": true
+      },
+      "npm": {
+        "required": true
+      },
+      "node": {
+        "version": ">=18.0.0",
+        "required": true
+      }
     }
   },
-
   "configuration": {
     "12fa_compliance": "100%",
     "test_coverage_target": ">85%",
     "security_score_target": "100%"
   },
-
   "metrics": {
     "speed_improvement": "2.5-4x",
     "failure_rate": "<3%",

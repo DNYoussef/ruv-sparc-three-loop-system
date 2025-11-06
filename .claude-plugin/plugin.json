@@ -2,7 +2,11 @@
   "name": "ruv-sparc-three-loop-system",
   "version": "2.0.0",
   "description": "Complete SPARC + Three-Loop Integrated Development System with 86+ AI agents, evidence-based prompting, Byzantine consensus, and META-SKILL orchestration. Includes research-driven planning, parallel swarm implementation, CI/CD intelligent recovery, and comprehensive agent registry.",
-  "author": "ruv",
+  "author": {
+    "name": "ruv",
+    "email": "youssef@example.com",
+    "url": "https://github.com/DNYoussef"
+  },
   "license": "MIT",
   "repository": "https://github.com/DNYoussef/ruv-sparc-three-loop-system",
   "homepage": "https://github.com/DNYoussef/ruv-sparc-three-loop-system#readme",
@@ -37,7 +41,10 @@
     },
     "commands": {
       "count": 30,
-      "prefixes": ["/sparc", "/claude-flow"]
+      "prefixes": [
+        "/sparc",
+        "/claude-flow"
+      ]
     },
     "agents": {
       "count": 86,
@@ -54,8 +61,13 @@
     },
     "mcpServers": {
       "count": 3,
-      "required": ["claude-flow"],
-      "optional": ["ruv-swarm", "flow-nexus"]
+      "required": [
+        "claude-flow"
+      ],
+      "optional": [
+        "ruv-swarm",
+        "flow-nexus"
+      ]
     }
   },
   "features": [
