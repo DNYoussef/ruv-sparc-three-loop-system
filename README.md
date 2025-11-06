@@ -6,8 +6,98 @@ Production-grade AI development system achieving **100% 12-Factor compliance**, 
 
 **Built on [Claude Flow](https://github.com/ruvnet/claude-flow)** - Enterprise-grade agent orchestration platform with memory, hooks, and swarm intelligence. See [CLAUDE-FLOW-INTEGRATION.md](CLAUDE-FLOW-INTEGRATION.md) for details on our enhancements.
 
+---
+
+## 🧠 How It Works: Intelligent Auto-Routing
+
+**The system automatically selects the right skills and agents based on your intent. No manual selection required.**
+
+### Phase 0: Intent Analysis → Auto-Skill Selection
+
+Every request flows through this intelligent routing system:
+
+```
+User Request
+    ↓
+🔍 intent-analyzer (Auto-triggered on ambiguous/complex requests)
+    ├─ Analyzes explicit and implicit goals
+    ├─ Detects constraints and context
+    ├─ Maps to probabilistic intent (>80% confidence = proceed)
+    └─ Socratic clarification if needed (<80% confidence)
+    ↓
+🎯 orchestration-router (Auto-triggered for orchestration needs)
+    ├─ Keyword extraction (agent count, complexity, patterns)
+    ├─ Decision tree routing (Priority 1-4 logic)
+    ├─ Skill selection with rationale
+    └─ Automatic skill invocation
+    ↓
+⚡ Selected Skill Executes (e.g., parallel-swarm-implementation)
+    ├─ Spawns specialized agents in parallel
+    ├─ Coordinates via memory namespaces
+    ├─ Theater detection via Byzantine consensus
+    └─ Produces validated output
+```
+
+**Example Flow**:
+```
+User: "Build user authentication with JWT tokens"
+
+🔍 intent-analyzer: High confidence (95%) - Feature implementation
+🎯 orchestration-router: Routes to parallel-swarm-implementation (Loop 2)
+⚡ Loop 2 spawns 6 agents in parallel:
+   - researcher: Auth best practices
+   - coder: JWT implementation
+   - reviewer: Security audit
+   - tester: Comprehensive tests
+   - documenter: API docs
+   - theater-detector: Byzantine validation
+✅ Result: Production-ready auth system in 2 hours
+```
+
+### The Playbook Decision Tree
+
+After intent analysis and routing, execution follows this workflow:
+
+```mermaid
+flowchart TD
+    A[🔍 Phase 0: Intent Analyzer] --> B[📋 Phase 1: Prompt Architect]
+    B --> C{🎯 Workstream Signal}
+    C -->|Feature/Build| D[🚀 Delivery Stack]
+    C -->|Infrastructure/Release| E[⚙️ Operations Stack]
+    C -->|Research/Discovery| F[🔬 Research Stack]
+    C -->|Security/Compliance| G[🔒 Security Stack]
+    C -->|Specialist Domain| H[🎨 Specialist Stack]
+    D --> I[✅ Quality Gate]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J{📊 Ready to Close?}
+    J -->|No| C
+    J -->|Yes| K[🎉 Finalize & Report]
+```
+
+**Stack Auto-Selection**:
+- **Delivery Stack** → `feature-dev-complete` (end-to-end feature shipping)
+- **Operations Stack** → `production-readiness` (deployment gates, security, performance)
+- **Research Stack** → `deep-research-orchestrator` (3-phase research SOP with quality gates)
+- **Security Stack** → `network-security-setup` (lock down environments, layer security SOPs)
+- **Specialist Stack** → Language/platform specialists (Python, TypeScript, React, etc.)
+
+**Key Principles**:
+1. **Zero Decision Paralysis**: Router auto-selects optimal skill from 115+ options
+2. **Context-Aware**: Detects intent from keywords, agent count, complexity signals
+3. **Transparent**: Provides selection rationale and alternatives
+4. **Adaptive**: Learns from corrections and adjusts future routing
+
+[See complete playbook](docs/skills/SKILL-PLAYBOOK.md)
+
+---
+
 ## 🎉 What's New in v3.0.0
 
+- ✅ **Intelligent Auto-Routing** - orchestration-router + intent-analyzer eliminate decision paralysis
+- ✅ **Playbook Decision Tree** - Systematic Phase 0-6 workflow with quality gates
 - ✅ **Official Claude Code Plugin Support** (October 2025)
 - ✅ **Modular Marketplace** - 5 installable plugins
 - ✅ **Built on Claude Flow** - Enterprise orchestration with memory & hooks
@@ -348,52 +438,87 @@ claude mcp add memory-mcp /path/to/memory-mcp/venv/Scripts/python.exe -u -m src.
 
 ---
 
-## 🎯 Use Cases
+## 🎯 Use Cases: Auto-Triggered Workflows
 
 ### For Individual Developers
 **Start with**: `12fa-core`
-- Get SPARC methodology for systematic development
-- Use theater detection to catch fake implementations
-- Apply TDD workflow with automatic test generation
-- Run quality audits before commits
 
-**Commands to try**:
+**Just describe what you want - the system handles the rest:**
+
 ```bash
-/sparc "Build a REST API for user management"
-/quick-check
-/fix-bug "Authentication fails for OAuth users"
+# ❌ Old way: Manual skill selection
+"Use parallel-swarm-implementation skill to build REST API"
+
+# ✅ New way: Natural language → automatic routing
+"Build a REST API for user management"
+
+# What happens automatically:
+# 1. intent-analyzer detects feature implementation intent
+# 2. orchestration-router selects parallel-swarm-implementation
+# 3. 6 agents spawn in parallel (researcher, coder, reviewer, tester, documenter, theater-detector)
+# 4. Result: Production-ready API in 2 hours
+```
+
+**More examples**:
+```bash
+# Auto-triggers quick-quality-check skill
+"Quick validation before I commit"
+
+# Auto-triggers smart-bug-fix skill
+"Authentication randomly fails for OAuth users"
+
+# Auto-triggers functionality-audit skill
+"Does this code actually work?"
 ```
 
 ---
 
 ### For Teams
 **Recommended**: `12fa-core` + `12fa-three-loop` + `12fa-security`
-- Enforce consistent development standards across team
-- Share proven workflows and avoid reinventing the wheel
-- Automate security compliance and vulnerability scanning
-- Track quality metrics and improvement over time
 
-**Commands to try**:
+**Context-aware team workflows:**
+
 ```bash
-/development "Add payment processing feature"
-/review-pr 123
-/sparc:security-review
+# Auto-triggers research-driven-planning (Loop 1) → parallel-swarm-implementation (Loop 2)
+"Add payment processing with Stripe"
+
+# What happens:
+# Loop 1: Research best practices, 5x pre-mortem, validated plan
+# Loop 2: 8 agents parallel (researcher, backend, frontend, security, tester, reviewer, documenter, ops)
+# Loop 3: CI/CD with auto-fix if tests fail
+# Result: Payment feature deployed in 4 hours
+
+# Auto-triggers code-review-assistant skill
+"Review PR #123"
+
+# Auto-triggers production-readiness skill
+"Security review before deployment"
 ```
 
 ---
 
 ### For Enterprises
 **Full Stack**: All 5 plugins
-- Complete production infrastructure with enterprise security
-- Visual process documentation for compliance and training
-- Advanced swarm coordination for large-scale projects
-- 100% security compliance and 0 vulnerabilities
 
-**Commands to try**:
+**Large-scale orchestration with automatic swarm coordination:**
+
 ```bash
-/development "Migrate to microservices architecture"
-/swarm-init hierarchical
-/setup  # Security infrastructure
+# Auto-triggers deep-research-orchestrator for complex architecture decisions
+"Migrate monolith to microservices architecture"
+
+# What happens:
+# Phase 0: Intent analysis - Architecture migration detected
+# Phase 1: Prompt blueprint with constraints and success criteria
+# Phase 2: Hierarchical swarm coordination (1 queen + 15 workers)
+# Phase 3: Agent assignment (architecture-specialist, backend-dev, ops-engineer, etc.)
+# Phase 4-6: Execution → Quality gates → Deployment
+# Result: Migration plan + implementation roadmap in 1 week
+
+# Auto-triggers hive-mind-advanced with queen-led coordination
+"Complex distributed system with 20+ microservices"
+
+# Auto-triggers network-security-setup + security stack
+"Lock down production environment"
 ```
 
 ---
@@ -549,7 +674,9 @@ MIT - See [LICENSE](LICENSE)
 
 ---
 
-## 🎉 Quick Example Workflow
+## 🎉 Quick Example: Natural Language → Auto-Execution
+
+**No manual skill selection. Just describe what you want.**
 
 ```bash
 # 1. Add marketplace
@@ -558,43 +685,49 @@ MIT - See [LICENSE](LICENSE)
 # 2. Install core
 /plugin install 12fa-core
 
-# 3. Build a feature with SPARC
-/sparc "Build a REST API for user management with JWT authentication"
+# 3. Natural language request - automatic routing
+"Build a REST API for user management with JWT authentication"
 
-# SPARC executes:
-# - Specification: Analyzes requirements
-# - Pseudocode: Designs algorithm
-# - Architecture: Plans system structure
-# - Refinement: TDD implementation
-# - Code: Integration and tests
+# 🔍 intent-analyzer: Detects feature implementation (95% confidence)
+# 🎯 orchestration-router: Routes to parallel-swarm-implementation
+# ⚡ AUTO-EXECUTES:
+#   - Specification: Requirements analysis
+#   - Pseudocode: Algorithm design
+#   - Architecture: System structure
+#   - Refinement: TDD implementation (6 agents in parallel)
+#   - Code: Integration and comprehensive tests
+# ✅ Result: Production-ready API
 
-# 4. Run quality check
-/quick-check
+# 4. Quick validation (auto-triggers quick-quality-check)
+"Quick check before I commit"
 
-# Runs in parallel:
-# - Theater detection
-# - Linting
-# - Security scan
-# - Basic tests
+# AUTO-RUNS in parallel:
+#   - Theater detection (Byzantine consensus)
+#   - Linting (ESLint/Prettier)
+#   - Security scan (OWASP Top 10)
+#   - Basic tests (unit + integration)
 
-# 5. Review PR before merge
-/review-pr 123
+# 5. PR review (auto-triggers code-review-assistant)
+"Review PR #123"
 
-# 5-agent swarm reviews:
-# - Security vulnerabilities
-# - Performance bottlenecks
-# - Code style
-# - Test coverage
-# - Documentation
+# 5-agent swarm AUTO-REVIEWS:
+#   - Security: Vulnerability scan
+#   - Performance: Bottleneck detection
+#   - Style: Code quality audit
+#   - Tests: Coverage analysis
+#   - Docs: Documentation completeness
 
-# 6. Deploy with confidence
-/deploy-check
+# 6. Deploy check (auto-triggers production-readiness)
+"Ready to deploy to production?"
 
-# Validates:
-# - All tests pass (100%)
-# - No security vulnerabilities
-# - Production-ready checklist complete
+# AUTO-VALIDATES:
+#   - All tests pass (100%)
+#   - No security vulnerabilities
+#   - Production-ready checklist complete
+#   - Performance benchmarks met
 ```
+
+**Key Insight**: You never manually select skills. The system detects intent and auto-routes to optimal workflows.
 
 ---
 
