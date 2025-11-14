@@ -8,27 +8,31 @@
 
 ## 1. FIRST-MESSAGE WORKFLOW (AUTO-EXECUTE ON EVERY REQUEST)
 
-**On EVERY first user message, execute these steps in SINGLE MESSAGE:**
+**On EVERY first user message, execute these steps SEQUENTIALLY:**
 
 ### Step 1: Analyze Intent
-- **ALWAYS run**: `Skill("intent-analyzer")`
+- **ALWAYS run FIRST**: `Skill("intent-analyzer")`
 - Extract underlying goals using first principles decomposition
 - Identify constraints (explicit + implicit)
 - Determine if intent is clear & actionable
 - Clarify ambiguous requests with Socratic questions if needed
+- **Output**: Analyzed intent for Step 2
 
 ### Step 2: Optimize Prompt
-- **ALWAYS run**: `Skill("prompt-architect")`
+- **ALWAYS run SECOND** (after Step 1): `Skill("prompt-architect")`
 - Apply evidence-based prompting techniques
 - Structure request for clarity and completeness
 - Generate optimized prompt for downstream workflow
+- **Input**: Analyzed intent from Step 1
+- **Output**: Optimized prompt for Step 3
 
 ### Step 3: Route to Playbook/Skill
+- **ALWAYS run THIRD** (after Step 2)
 - Match keywords to playbook category (see Section 3)
 - Select specific playbook or skill based on intent
 - Execute with optimized prompt from Step 2
 
-**CRITICAL**: All 3 steps must execute in ONE message (concurrent execution)
+**CRITICAL**: Execute steps SEQUENTIALLY (1→2→3), not concurrently. Each step depends on the previous step's output.
 
 **Escape Hatch**: Explicit skill invocation bypasses Steps 1-2:
 - `Skill("micro-skill-creator")` → Direct execution
