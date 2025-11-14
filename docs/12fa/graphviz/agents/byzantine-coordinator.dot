@@ -1,0 +1,495 @@
+digraph BYZANTINE_COORDINATOR {
+  // Layout configuration for Byzantine fault-tolerant consensus
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+  compound=true;
+
+  // =============================================================================
+  // COORDINATOR INITIALIZATION
+  // =============================================================================
+  subgraph cluster_init {
+    label="Byzantine Coordinator Initialization";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    spawn_byzantine [label="Spawn Byzantine\nCoordinator", shape=ellipse, fillcolor=pink];
+    load_config [label="Load BFT\nConfiguration", fillcolor=pink];
+    validate_12fa [shape=diamond, label="12-FA\nCompliant?"];
+    init_bft [label="Initialize BFT\nConsensus", fillcolor=pink];
+    setup_validators [label="Setup Validator\nAgents", fillcolor=pink];
+
+    spawn_byzantine -> load_config;
+    load_config -> validate_12fa;
+    validate_12fa -> init_bft [label="Pass"];
+    validate_12fa -> spawn_blocked [label="Fail"];
+    init_bft -> setup_validators;
+  }
+
+  spawn_blocked [shape=octagon, fillcolor=crimson, label="BLOCKED\nSpawn Denied"];
+
+  // =============================================================================
+  // VALIDATOR NETWORK SETUP
+  // =============================================================================
+  subgraph cluster_validator_setup {
+    label="Validator Network Establishment";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    calc_validator_count [label="Calculate Required\nValidators (3f+1)", fillcolor=lightblue];
+    fault_tolerance_param [shape=diamond, label="Fault Tolerance\nf=?"];
+    spawn_validators [label="Spawn Validator\nAgents", fillcolor=lightblue];
+    assign_validator_ids [label="Assign Unique\nValidator IDs", fillcolor=lightblue];
+    establish_validator_network [label="Establish Validator\nNetwork", fillcolor=lightblue];
+    verify_connectivity [shape=diamond, label="All Validators\nConnected?"];
+  }
+
+  setup_validators -> calc_validator_count;
+  calc_validator_count -> fault_tolerance_param;
+  fault_tolerance_param -> spawn_validators [label="f determined"];
+  spawn_validators -> assign_validator_ids;
+  assign_validator_ids -> establish_validator_network;
+  establish_validator_network -> verify_connectivity;
+  verify_connectivity -> proposal_phase [label="Yes"];
+  verify_connectivity -> spawn_validators [label="No (Retry)", style=dashed];
+
+  // =============================================================================
+  // VALIDATOR AGENT NETWORK
+  // =============================================================================
+  subgraph cluster_validators {
+    label="Byzantine Fault-Tolerant Validator Network (2f+1 required for consensus)";
+    style="filled,rounded,bold";
+    color="green";
+    bgcolor="#E0F8E0";
+
+    validator_1 [label="Validator 1\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_2 [label="Validator 2\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_3 [label="Validator 3\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_4 [label="Validator 4\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_5 [label="Validator 5\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_6 [label="Validator 6\n(Honest)",
+                 fillcolor=lightgreen,
+                 style="filled,bold",
+                 penwidth=2];
+    validator_7 [label="Validator 7\n(Potential Malicious)",
+                 fillcolor=yellow,
+                 style="filled,bold",
+                 penwidth=2];
+
+    // Validator connections (Byzantine network)
+    validator_1 -> validator_2 [dir=both, label="Verify"];
+    validator_1 -> validator_3 [dir=both, label="Verify"];
+    validator_1 -> validator_4 [dir=both, label="Verify"];
+    validator_2 -> validator_3 [dir=both, label="Verify"];
+    validator_2 -> validator_5 [dir=both, label="Verify"];
+    validator_3 -> validator_6 [dir=both, label="Verify"];
+    validator_4 -> validator_5 [dir=both, label="Verify"];
+    validator_5 -> validator_6 [dir=both, label="Verify"];
+    validator_6 -> validator_7 [dir=both, label="Verify", style=dashed];
+    validator_7 -> validator_1 [dir=both, label="Verify", style=dashed];
+  }
+
+  // =============================================================================
+  // PROPOSAL PHASE
+  // =============================================================================
+  subgraph cluster_proposal {
+    label="Byzantine Consensus Proposal Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    proposal_phase [label="Proposal Phase\nStarts", fillcolor=purple];
+    select_proposer [label="Select Proposer\nAgent", fillcolor=purple];
+    proposer_creates [label="Proposer Creates\nProposal", fillcolor=purple];
+    sign_proposal [label="Cryptographically\nSign Proposal", fillcolor=purple];
+    broadcast_proposal [label="Broadcast Proposal\nto Validators", fillcolor=purple];
+  }
+
+  proposal_phase -> select_proposer;
+  select_proposer -> proposer_creates;
+  proposer_creates -> sign_proposal;
+  sign_proposal -> broadcast_proposal;
+  broadcast_proposal -> validator_1 [lhead=cluster_validators];
+
+  // =============================================================================
+  // VALIDATION PHASE
+  // =============================================================================
+  subgraph cluster_validation_phase {
+    label="Multi-Agent Validation Phase";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    validators_receive [label="All Validators\nReceive Proposal", fillcolor=orange];
+    verify_signature [label="Verify Proposal\nSignature", fillcolor=orange];
+    signature_valid [shape=diamond, label="Signature\nValid?"];
+    validate_content [label="Validate Proposal\nContent", fillcolor=orange];
+    content_valid [shape=diamond, label="Content\nValid?"];
+
+    validator_vote_accept [label="Validator Votes\nACCEPT", fillcolor=lightgreen];
+    validator_vote_reject [label="Validator Votes\nREJECT", fillcolor=orange];
+
+    sign_vote [label="Sign Vote", fillcolor=orange];
+    broadcast_vote [label="Broadcast Vote", fillcolor=orange];
+  }
+
+  validator_1 -> validators_receive [ltail=cluster_validators];
+  validators_receive -> verify_signature;
+  verify_signature -> signature_valid;
+  signature_valid -> validate_content [label="Yes"];
+  signature_valid -> validator_vote_reject [label="No"];
+  validate_content -> content_valid;
+  content_valid -> validator_vote_accept [label="Yes"];
+  content_valid -> validator_vote_reject [label="No"];
+
+  validator_vote_accept -> sign_vote;
+  validator_vote_reject -> sign_vote;
+  sign_vote -> broadcast_vote;
+
+  // =============================================================================
+  // VOTE COLLECTION & COUNTING
+  // =============================================================================
+  subgraph cluster_vote_collection {
+    label="Vote Collection & Byzantine Counting";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    collect_votes [label="Collect Validator\nVotes", fillcolor=cyan];
+    verify_vote_signatures [label="Verify Vote\nSignatures", fillcolor=cyan];
+    count_accept [label="Count ACCEPT\nVotes", fillcolor=cyan];
+    count_reject [label="Count REJECT\nVotes", fillcolor=cyan];
+    detect_conflicts [label="Detect Conflicting\nVotes", fillcolor=cyan];
+    identify_malicious [label="Identify Potential\nMalicious Agents", fillcolor=yellow];
+  }
+
+  broadcast_vote -> collect_votes;
+  collect_votes -> verify_vote_signatures;
+  verify_vote_signatures -> count_accept;
+  verify_vote_signatures -> count_reject;
+  count_accept -> detect_conflicts;
+  count_reject -> detect_conflicts;
+  detect_conflicts -> identify_malicious;
+
+  // =============================================================================
+  // BYZANTINE CONSENSUS DECISION
+  // =============================================================================
+  subgraph cluster_consensus_decision {
+    label="Byzantine Consensus Decision (2f+1 majority required)";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    consensus_threshold [shape=diamond, label="Accept Votes\n≥ 2f+1?"];
+    consensus_reached [label="CONSENSUS\nREACHED", fillcolor=lightgreen, style="filled,bold"];
+    consensus_failed [label="CONSENSUS\nFAILED", fillcolor=orange];
+
+    quorum_check [shape=diamond, label="Quorum\nMet?"];
+    retry_consensus [label="Retry Consensus\nRound", fillcolor=yellow];
+    max_retries_check [shape=diamond, label="Max Retries\nReached?"];
+  }
+
+  identify_malicious -> consensus_threshold;
+  consensus_threshold -> consensus_reached [label="Yes (≥ 2f+1)"];
+  consensus_threshold -> quorum_check [label="No"];
+  quorum_check -> consensus_failed [label="No"];
+  quorum_check -> retry_consensus [label="Yes"];
+  retry_consensus -> max_retries_check;
+  max_retries_check -> proposal_phase [label="No", style=dashed];
+  max_retries_check -> consensus_failed [label="Yes"];
+
+  // =============================================================================
+  // MALICIOUS AGENT DETECTION
+  // =============================================================================
+  subgraph cluster_malicious_detection {
+    label="Malicious Agent Detection & Isolation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    analyze_voting_patterns [label="Analyze Voting\nPatterns", fillcolor=pink];
+    detect_anomalies [label="Detect Byzantine\nAnomalies", fillcolor=pink];
+    anomaly_check [shape=diamond, label="Malicious\nAgent Found?"];
+    flag_malicious [label="Flag Malicious\nAgent", fillcolor=orange];
+    isolate_agent [label="Isolate Malicious\nAgent", fillcolor=orange];
+    remove_from_consensus [label="Remove from\nConsensus", fillcolor=orange];
+    log_incident [label="Log Security\nIncident", fillcolor=orange];
+  }
+
+  identify_malicious -> analyze_voting_patterns;
+  analyze_voting_patterns -> detect_anomalies;
+  detect_anomalies -> anomaly_check;
+  anomaly_check -> flag_malicious [label="Yes"];
+  anomaly_check -> commit_phase [label="No"];
+  flag_malicious -> isolate_agent;
+  isolate_agent -> remove_from_consensus;
+  remove_from_consensus -> log_incident;
+  log_incident -> commit_phase;
+
+  // =============================================================================
+  // THEATER PREVENTION WORKFLOW
+  // =============================================================================
+  subgraph cluster_theater_prevention {
+    label="Theater Prevention & Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    validate_work [label="Validate Actual\nWork Done", fillcolor=lightblue];
+    check_outputs [label="Check Tangible\nOutputs", fillcolor=lightblue];
+    verify_side_effects [label="Verify File Changes\n& Side Effects", fillcolor=lightblue];
+    theater_check [shape=diamond, label="Theater\nDetected?"];
+    flag_theater [label="Flag Theater\nBehavior", fillcolor=yellow];
+    reject_proposal [label="Reject Proposal\n(No Work Done)", fillcolor=orange];
+  }
+
+  consensus_reached -> validate_work;
+  validate_work -> check_outputs;
+  check_outputs -> verify_side_effects;
+  verify_side_effects -> theater_check;
+  theater_check -> flag_theater [label="Yes"];
+  theater_check -> commit_phase [label="No"];
+  flag_theater -> reject_proposal;
+  reject_proposal -> proposal_phase [style=dashed];
+
+  // =============================================================================
+  // COMMIT PHASE
+  // =============================================================================
+  subgraph cluster_commit {
+    label="Byzantine Commit Phase";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    commit_phase [label="Commit Phase\nStarts", fillcolor=lightgreen];
+    broadcast_commit [label="Broadcast Commit\nMessage", fillcolor=lightgreen];
+    validators_commit [label="Validators Apply\nCommit", fillcolor=lightgreen];
+    verify_commit [label="Verify Commit\nConsistency", fillcolor=lightgreen];
+    commit_check [shape=diamond, label="All Validators\nCommitted?"];
+    finalize_state [label="Finalize State", fillcolor=lightgreen];
+  }
+
+  commit_phase -> broadcast_commit;
+  broadcast_commit -> validators_commit;
+  validators_commit -> verify_commit;
+  verify_commit -> commit_check;
+  commit_check -> finalize_state [label="Yes"];
+  commit_check -> handle_commit_failure [label="No"];
+
+  // =============================================================================
+  // DISTRIBUTED DECISION MAKING
+  // =============================================================================
+  subgraph cluster_distributed_decision {
+    label="Distributed Decision-Making Process";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8E8F8";
+
+    aggregate_decisions [label="Aggregate Validator\nDecisions", fillcolor=purple];
+    weight_votes [label="Weight Votes\nEqually", fillcolor=purple];
+    calculate_majority [label="Calculate 2f+1\nMajority", fillcolor=purple];
+    distributed_consensus [label="Distributed\nConsensus", fillcolor=purple];
+    no_single_authority [label="No Single Point\nof Authority", fillcolor=purple, style="filled,bold"];
+  }
+
+  finalize_state -> aggregate_decisions;
+  aggregate_decisions -> weight_votes;
+  weight_votes -> calculate_majority;
+  calculate_majority -> distributed_consensus;
+  distributed_consensus -> no_single_authority;
+
+  // =============================================================================
+  // MEMORY SYNCHRONIZATION
+  // =============================================================================
+  subgraph cluster_memory {
+    label="Byzantine-Tolerant Memory Sync";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    memory_sync [label="Synchronize\nMemory", fillcolor=cyan];
+    verify_memory_consistency [label="Verify Memory\nConsistency", fillcolor=cyan];
+    memory_check [shape=diamond, label="Memory\nConsistent?"];
+    resolve_memory_conflicts [label="Resolve Memory\nConflicts", fillcolor=yellow];
+    memory_consensus [label="Memory\nConsensus", fillcolor=cyan];
+  }
+
+  no_single_authority -> memory_sync;
+  memory_sync -> verify_memory_consistency;
+  verify_memory_consistency -> memory_check;
+  memory_check -> memory_consensus [label="Yes"];
+  memory_check -> resolve_memory_conflicts [label="No"];
+  resolve_memory_conflicts -> memory_sync [style=dashed];
+
+  // =============================================================================
+  // MCP COORDINATION TOOLS
+  // =============================================================================
+  subgraph cluster_mcp {
+    label="MCP Byzantine Coordination";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    mcp_swarm_init [label="mcp__ruv-swarm\nswarm_init\n(mesh for BFT)", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_spawn [label="mcp__ruv-swarm\nagent_spawn\n(validators)", fillcolor=lightyellow, shape=box3d];
+    mcp_daa_init [label="mcp__ruv-swarm\ndaa_init\n(Byzantine mode)", fillcolor=lightyellow, shape=box3d];
+    mcp_knowledge_share [label="mcp__ruv-swarm\ndaa_knowledge_share", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_metrics [label="mcp__ruv-swarm\nagent_metrics", fillcolor=lightyellow, shape=box3d];
+  }
+
+  init_bft -> mcp_swarm_init;
+  spawn_validators -> mcp_agent_spawn;
+  establish_validator_network -> mcp_daa_init;
+  memory_sync -> mcp_knowledge_share;
+  detect_anomalies -> mcp_agent_metrics;
+
+  // =============================================================================
+  // RESULT VALIDATION
+  // =============================================================================
+  subgraph cluster_result_validation {
+    label="Byzantine Result Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    validate_final_result [label="Validate Final\nResult", fillcolor=lightblue];
+    cross_validate_validators [label="Cross-Validate\nAcross Validators", fillcolor=lightblue];
+    result_check [shape=diamond, label="Result\nValid?"];
+    accept_result [label="Accept Result", fillcolor=lightgreen];
+    reject_result [label="Reject Result", fillcolor=orange];
+  }
+
+  memory_consensus -> validate_final_result;
+  validate_final_result -> cross_validate_validators;
+  cross_validate_validators -> result_check;
+  result_check -> accept_result [label="Yes"];
+  result_check -> reject_result [label="No"];
+  reject_result -> proposal_phase [style=dashed, label="New Round"];
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_aggregation {
+    label="Byzantine-Tolerant Result Aggregation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    aggregate_results [label="Aggregate\nConsensus Results", fillcolor=lightgreen];
+    generate_report [label="Generate Byzantine\nConsensus Report", fillcolor=lightgreen];
+    log_consensus_metrics [label="Log Consensus\nMetrics", fillcolor=lightgreen];
+    document_malicious [label="Document Malicious\nAgent Incidents", fillcolor=lightgreen];
+  }
+
+  accept_result -> aggregate_results;
+  aggregate_results -> generate_report;
+  generate_report -> log_consensus_metrics;
+  log_consensus_metrics -> document_malicious;
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Cleanup";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_validators [label="Cleanup Validator\nNetwork", fillcolor=lightgreen];
+    store_bft_state [label="Store BFT State", fillcolor=lightgreen];
+    update_security_log [label="Update Security\nLog", fillcolor=lightgreen];
+    success [label="Byzantine\nCoordination\nComplete",
+             shape=doublecircle,
+             fillcolor=green,
+             style="filled,bold"];
+  }
+
+  document_malicious -> cleanup_validators;
+  cleanup_validators -> store_bft_state;
+  store_bft_state -> update_security_log;
+  update_security_log -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Byzantine Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    handle_commit_failure [label="Handle Commit\nFailure", fillcolor=orange];
+    analyze_failure [label="Analyze Failure\nCause", fillcolor=orange];
+    failure_type [shape=diamond, label="Failure\nType?"];
+    network_partition [label="Network\nPartition", fillcolor=orange];
+    validator_failure [label="Validator\nFailure", fillcolor=orange];
+    consensus_timeout [label="Consensus\nTimeout", fillcolor=orange];
+
+    attempt_recovery [label="Attempt\nRecovery", fillcolor=yellow];
+    recovery_success [shape=diamond, label="Recovery\nSuccessful?"];
+    manual_intervention [shape=hexagon, fillcolor=yellow, label="Manual\nIntervention"];
+    failure [label="Coordination\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  handle_commit_failure -> analyze_failure;
+  consensus_failed -> analyze_failure;
+
+  analyze_failure -> failure_type;
+  failure_type -> network_partition [label="Partition"];
+  failure_type -> validator_failure [label="Validator"];
+  failure_type -> consensus_timeout [label="Timeout"];
+
+  network_partition -> attempt_recovery;
+  validator_failure -> attempt_recovery;
+  consensus_timeout -> attempt_recovery;
+
+  attempt_recovery -> recovery_success;
+  recovery_success -> proposal_phase [label="Yes", style=dashed];
+  recovery_success -> manual_intervention [label="No"];
+  manual_intervention -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_validator [shape=box, fillcolor=lightgreen, style="filled,bold", label="Honest Validator"];
+    legend_malicious [shape=box, fillcolor=yellow, style="filled,bold", label="Potential Malicious"];
+    legend_process [shape=box, fillcolor=lightblue, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_mcp [shape=box3d, fillcolor=lightyellow, label="MCP Tool"];
+    legend_warning [shape=box, fillcolor=yellow, label="Warning"];
+    legend_error [shape=box, fillcolor=orange, label="Error"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+
+    legend_validator -> legend_malicious [style=invis];
+    legend_malicious -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_mcp [style=invis];
+    legend_mcp -> legend_warning [style=invis];
+    legend_warning -> legend_error [style=invis];
+    legend_error -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+  }
+}

@@ -1,3 +1,8 @@
+---
+name: specialists-business-market-researcher
+description: Specialized agent for task execution
+---
+
 # Market Researcher Agent
 
 **Agent Name**: `market-researcher`

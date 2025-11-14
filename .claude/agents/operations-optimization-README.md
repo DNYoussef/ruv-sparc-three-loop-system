@@ -1,3 +1,8 @@
+---
+name: operations-optimization-readme
+description: This directory contains a comprehensive suite of performance optimization agents designed to maximize swarm efficiency, scalability, and reliability.
+---
+
 # Performance Optimization Agents
 
 This directory contains a comprehensive suite of performance optimization agents designed to maximize swarm efficiency, scalability, and reliability.

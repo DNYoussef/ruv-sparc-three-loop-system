@@ -1,0 +1,93 @@
+// SPARC Documenter Command Workflow
+// Comprehensive documentation generation
+digraph sparc_documenter_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:documenter\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        scope_analyzer [label="Scope\nAnalyzer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collection {
+        label="Content Collection";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_analyzer [label="Code\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        comment_extractor [label="Comment\nExtractor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        api_scanner [label="API\nScanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        example_collector [label="Example\nCollector", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_generation {
+        label="Documentation Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        api_doc_generator [label="API Doc\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        user_guide_writer [label="User Guide\nWriter", fillcolor="#10b981", fontcolor="#ffffff"];
+        readme_generator [label="README\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        changelog_builder [label="Changelog\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_enhancement {
+        label="Enhancement";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        diagram_creator [label="Diagram\nCreator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        example_formatter [label="Example\nFormatter", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        cross_referencer [label="Cross\nReferencer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        link_checker [label="Link\nChecker", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        completeness_checker [label="Completeness\nChecker", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        documentation_site [label="Documentation\nSite", fillcolor="#059669", fontcolor="#ffffff"];
+        api_reference [label="API\nReference", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> scope_analyzer;
+    scope_analyzer -> code_analyzer -> comment_extractor -> api_scanner -> example_collector;
+    example_collector -> api_doc_generator -> user_guide_writer -> readme_generator -> changelog_builder;
+    changelog_builder -> diagram_creator -> example_formatter -> cross_referencer;
+    cross_referencer -> link_checker -> completeness_checker;
+    completeness_checker -> documentation_site -> api_reference;
+    api_reference -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    completeness_checker -> user_guide_writer [label="Add More", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Collection", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Generation", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

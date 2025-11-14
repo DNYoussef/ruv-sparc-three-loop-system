@@ -1,3 +1,8 @@
+---
+name: quality-audit-technical-debt-technical-debt-auditor
+description: TECHNICAL DEBT AUDITOR - SYSTEM PROMPT v2.0
+---
+
 # TECHNICAL DEBT AUDITOR - SYSTEM PROMPT v2.0
 
 **Agent ID**: 145

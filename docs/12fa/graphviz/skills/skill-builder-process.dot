@@ -1,0 +1,239 @@
+digraph SKILL_BUILDER_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Builder Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Builder Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Skill Name & Type"];
+    check_deps [label="Check Claude Skills SDK"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    validate_yaml [shape=diamond, label="YAML Frontmatter\nRequired?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+    yaml_missing [shape=octagon, fillcolor=orange,
+                  label="WARN\nYAML Frontmatter Missing"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> validate_yaml [label="Pass"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+  validate_yaml -> yaml_missing [label="Missing"];
+
+  // =============================================================================
+  // EXECUTION PHASE - SKILL STRUCTURE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Skill Structure Creation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    create_yaml_frontmatter [label="Create YAML Frontmatter\n(name, description, tags)", fillcolor=purple];
+    frontmatter_check [shape=diamond, label="Frontmatter\nValid?"];
+
+    create_directory [label="Create Skill Directory\n~/.claude/skills/", fillcolor=purple];
+    dir_check [shape=diamond, label="Directory\nCreated?"];
+
+    generate_content [label="Generate Skill Content\n(Progressive Disclosure)", fillcolor=purple];
+    add_instructions [label="Add Usage Instructions", fillcolor=purple];
+    content_check [shape=diamond, label="Content\nComplete?"];
+
+    // Error handling within execution
+    yaml_error [shape=octagon, fillcolor=orange,
+                label="YAML Generation Error"];
+    dir_error [shape=octagon, fillcolor=orange,
+               label="Directory Creation Failed"];
+    retry_logic [label="Retry Creation", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  validate_yaml -> create_yaml_frontmatter [label="Valid"];
+
+  // Execution flow
+  create_yaml_frontmatter -> frontmatter_check;
+  frontmatter_check -> create_directory [label="Yes"];
+  frontmatter_check -> yaml_error [label="No"];
+
+  create_directory -> dir_check;
+  dir_check -> generate_content [label="Yes"];
+  dir_check -> dir_error [label="No"];
+
+  generate_content -> add_instructions;
+  add_instructions -> content_check;
+  content_check -> yaml_error [label="No"];
+
+  // Error recovery
+  yaml_error -> retry_logic;
+  dir_error -> retry_logic;
+  retry_logic -> create_yaml_frontmatter [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Skill Registration";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    register_skill [label="Register Skill\nin Claude Skills", fillcolor=lightblue];
+    update_index [label="Update Skills Index", fillcolor=lightblue];
+    memory_store [label="Store Skill Metadata\nin Memory", fillcolor=lightblue];
+    notify_coordinator [label="Notify System", fillcolor=lightblue];
+    check_conflicts [shape=diamond, label="Name\nConflicts?"];
+  }
+
+  // Connect execution to coordination
+  content_check -> register_skill [label="Yes"];
+  register_skill -> check_conflicts;
+  check_conflicts -> update_index [label="No Conflicts"];
+  check_conflicts -> escalate [label="Conflicts Detected"];
+  update_index -> memory_store;
+  memory_store -> notify_coordinator;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_structure [shape=diamond, label="Directory Structure\nValid?"];
+    test_loading [label="Test Skill Loading", fillcolor=lightgreen];
+    loading_check [shape=diamond, label="Loads\nCorrectly?"];
+
+    validate_frontmatter [label="Validate YAML Frontmatter", fillcolor=lightgreen];
+    frontmatter_valid [shape=diamond, label="Frontmatter\nComplete?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  notify_coordinator -> validate_structure;
+
+  // Quality flow
+  validate_structure -> test_loading [label="Yes"];
+  validate_structure -> quality_gate_fail [label="No"];
+
+  test_loading -> loading_check;
+  loading_check -> validate_frontmatter [label="Yes"];
+  loading_check -> quality_gate_fail [label="No"];
+
+  validate_frontmatter -> frontmatter_valid;
+  frontmatter_valid -> quality_gate_fail [label="No"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_examples [label="Generate Usage Examples", fillcolor=lightgreen];
+    add_readme [label="Add README Documentation", fillcolor=lightgreen];
+    cleanup [label="Cleanup Temp Files", fillcolor=lightgreen];
+    log_completion [label="Log Creation Metrics"];
+    success [label="Skill Built Successfully", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  frontmatter_valid -> generate_examples [label="Yes"];
+  generate_examples -> add_readme;
+  add_readme -> cleanup;
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Skill Build Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  yaml_missing -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    // Hide from main layout
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "timestamp": "2025-11-13T22:22:51.538946",
+  "overall_coverage": {
+    "line_coverage": 73.71,
+    "branch_coverage": 71.88,
+    "statements": {
+      "total": 343,
+      "covered": 254,
+      "missing": 89
+    },
+    "branches": {
+      "total": 64,
+      "covered": 46,
+      "missing": 18
+    },
+    "tests_passing": {
+      "total": 25,
+      "passed": 25,
+      "failed": 0
+    },
+    "status": "Below 80% target by 6.29%"
+  },
+  "component_coverage": {
+    "CacheManager": {
+      "line_coverage": 60.27,
+      "branch_coverage": 65,
+      "statements": {
+        "covered": 44,
+        "total": 73
+      },
+      "branches": {
+        "covered": 13,
+        "total": 20
+      },
+      "methods_tested": 10,
+      "low_coverage_methods": [
+        {
+          "name": "_compute_file_hash",
+          "coverage": 60
+        },
+        {
+          "name": "warm_cache",
+          "coverage": 0
+        },
+        {
+          "name": "get_hit_rate",
+          "coverage": 0
+        },
+        {
+          "name": "log_performance",
+          "coverage": 0
+        },
+        {
+          "name": "_get_prioritized_python_files",
+          "coverage": 0
+        }
+      ]
+    },
+    "StreamProcessor": {
+      "line_coverage": 70.83,
+      "branch_coverage": 100,
+      "statements": {
+        "covered": 17,
+        "total": 24
+      },
+      "branches": {
+        "covered": 4,
+        "total": 4
+      },
+      "methods_tested": 7,
+      "low_coverage_methods": [
+        {
+          "name": "initialize",
+          "coverage": 0
+        },
+        {
+          "name": "start_streaming",
+          "coverage": 0
+        },
+        {
+          "name": "stop_streaming",
+          "coverage": 0
+        },
+        {
+          "name": "watch_directory",
+          "coverage": 0
+        },
+        {
+          "name": "get_stats",
+          "coverage": 0
+        }
+      ]
+    },
+    "MetricsCollector": {
+      "line_coverage": 61.36,
+      "branch_coverage": 57.14,
+      "statements": {
+        "covered": 27,
+        "total": 44
+      },
+      "branches": {
+        "covered": 8,
+        "total": 14
+      },
+      "methods_tested": 5,
+      "low_coverage_methods": [
+        {
+          "name": "collect_violation_metrics",
+          "coverage": 60.47
+        },
+        {
+          "name": "create_snapshot",
+          "coverage": 0
+        },
+        {
+          "name": "_normalize_severity",
+          "coverage": 0
+        }
+      ]
+    },
+    "ReportGenerator": {
+      "line_coverage": 61.11,
+      "branch_coverage": 75,
+      "statements": {
+        "covered": 33,
+        "total": 54
+      },
+      "branches": {
+        "covered": 9,
+        "total": 12
+      },
+      "methods_tested": 7,
+      "low_coverage_methods": [
+        {
+          "name": "generate_all_formats",
+          "coverage": 0
+        },
+        {
+          "name": "format_summary",
+          "coverage": 0
+        }
+      ]
+    },
+    "UnifiedCoordinator": {
+      "line_coverage": 78.79,
+      "branch_coverage": 85.71,
+      "statements": {
+        "covered": 52,
+        "total": 66
+      },
+      "branches": {
+        "covered": 12,
+        "total": 14
+      },
+      "methods_tested": 17,
+      "low_coverage_methods": [
+        {
+          "name": "get_dashboard_summary",
+          "coverage": 0
+        },
+        {
+          "name": "export_reports",
+          "coverage": 0
+        },
+        {
+          "name": "_warm_cache_intelligently",
+          "coverage": 0
+        },
+        {
+          "name": "_get_cache_hit_rate",
+          "coverage": 0
+        },
+        {
+          "name": "_log_cache_performance",
+          "coverage": 0
+        },
+        {
+          "name": "_calculate_metrics_with_enhanced_calculator",
+          "coverage": 0
+        },
+        {
+          "name": "_severity_to_weight",
+          "coverage": 0
+        },
+        {
+          "name": "start_streaming_analysis",
+          "coverage": 0
+        },
+        {
+          "name": "stop_streaming_analysis",
+          "coverage": 0
+        },
+        {
+          "name": "get_streaming_stats",
+          "coverage": 0
+        }
+      ]
+    }
+  },
+  "comparison_to_claimed": {
+    "week4_claim": 90.2,
+    "actual_measured": 73.71,
+    "discrepancy": -16.49
+  },
+  "recommendations": {
+    "quick_wins": [
+      "Add tests for ReportGenerator.generate_all_formats() (+10 statements)",
+      "Add tests for CacheManager.warm_cache() (+8 statements)",
+      "Add tests for MetricsCollector.create_snapshot() (+4 statements)"
+    ],
+    "medium_effort": [
+      "Test StreamProcessor lifecycle (initialize/start/stop/watch) (+7 statements)",
+      "Test CacheManager hit rate and performance logging (+4 statements)",
+      "Test UnifiedCoordinator dashboard methods (+4 statements)"
+    ],
+    "estimated_impact": "Adding above tests would bring coverage to ~80-82%",
+    "estimated_effort": "4-6 hours of test writing, 15-20 additional test cases"
+  },
+  "reports": {
+    "html": "C:/Users/17175/htmlcov/index.html",
+    "json": "C:/Users/17175/docs/coverage_report.json",
+    "markdown": "C:/Users/17175/docs/ACTUAL_CODE_COVERAGE_REPORT.md"
+  }
+}

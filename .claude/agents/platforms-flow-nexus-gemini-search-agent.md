@@ -1,3 +1,8 @@
+---
+name: platforms-flow-nexus-gemini-search-agent
+description: Specialized agent for task execution
+---
+
 # Gemini Search Agent
 
 

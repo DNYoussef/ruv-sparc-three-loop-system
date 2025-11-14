@@ -1,3 +1,8 @@
+---
+name: specialists-business-customer-support-specialist
+description: Specialized agent for task execution
+---
+
 # Customer Support Specialist Agent
 
 **Agent Name**: `customer-support-specialist`

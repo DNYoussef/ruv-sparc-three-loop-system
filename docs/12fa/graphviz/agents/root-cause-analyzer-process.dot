@@ -1,0 +1,140 @@
+digraph root_cause_analyzer_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Root Cause Analyzer - 7-Agent Byzantine Consensus";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Failure Report\n(Error/Bug)", fillcolor="#f85149", fontcolor="white"];
+
+    // Data Collection Phase
+    subgraph cluster_collection {
+        label="Data Collection Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        collect [label="Evidence Collection\n(Logs, traces)"];
+        aggregate [label="Data Aggregation\n(All sources)"];
+        timeline [label="Timeline Construction\n(Event sequence)"];
+    }
+
+    // Analysis Swarm (7 agents)
+    subgraph cluster_swarm {
+        label="7-Agent Analysis Swarm (Byzantine Consensus)";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        agent1 [label="Agent 1\n(Code analysis)", shape=ellipse, fillcolor="#9b59b6"];
+        agent2 [label="Agent 2\n(Log analysis)", shape=ellipse, fillcolor="#9b59b6"];
+        agent3 [label="Agent 3\n(System analysis)", shape=ellipse, fillcolor="#9b59b6"];
+        agent4 [label="Agent 4\n(Performance)", shape=ellipse, fillcolor="#9b59b6"];
+        agent5 [label="Agent 5\n(Security)", shape=ellipse, fillcolor="#9b59b6"];
+        agent6 [label="Agent 6\n(Dependencies)", shape=ellipse, fillcolor="#9b59b6"];
+        agent7 [label="Agent 7\n(Integration)", shape=ellipse, fillcolor="#9b59b6"];
+
+        consensus [label="Byzantine Consensus\n(2/3 majority)", fillcolor="#238636", fontcolor="white"];
+    }
+
+    // Root Cause Determination
+    subgraph cluster_determination {
+        label="Root Cause Determination";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        identify [label="Root Cause Identification\n(Agreed cause)"];
+        verify [label="Verification\n(Proof)"];
+        document [label="Documentation\n(Evidence trail)"];
+    }
+
+    // Solution Phase
+    subgraph cluster_solution {
+        label="Solution Recommendation";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        solutions [label="Solution Generation\n(Multiple options)"];
+        evaluate [label="Solution Evaluation\n(Trade-offs)"];
+        recommend [label="Recommendation\n(Best solution)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="7-agent Consensus", fillcolor="#238636"];
+        feature2 [label="Root Cause Analysis", fillcolor="#238636"];
+        feature3 [label="Failure Investigation", fillcolor="#238636"];
+        feature4 [label="Solution Recommendation", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Root Cause Report\n+ Solutions", fillcolor="#238636", fontcolor="white"];
+
+    // Main workflow
+    input -> collect;
+    collect -> aggregate;
+    aggregate -> timeline;
+
+    timeline -> agent1;
+    timeline -> agent2;
+    timeline -> agent3;
+    timeline -> agent4;
+    timeline -> agent5;
+    timeline -> agent6;
+    timeline -> agent7;
+
+    agent1 -> consensus;
+    agent2 -> consensus;
+    agent3 -> consensus;
+    agent4 -> consensus;
+    agent5 -> consensus;
+    agent6 -> consensus;
+    agent7 -> consensus;
+
+    consensus -> identify;
+    identify -> verify;
+    verify -> document;
+
+    document -> solutions;
+    solutions -> evaluate;
+    evaluate -> recommend;
+
+    recommend -> output;
+
+    // Feature connections
+    consensus -> feature1 [style=dotted, color="#8b949e"];
+    identify -> feature2 [style=dotted, color="#8b949e"];
+    verify -> feature3 [style=dotted, color="#8b949e"];
+    recommend -> feature4 [style=dotted, color="#8b949e"];
+}

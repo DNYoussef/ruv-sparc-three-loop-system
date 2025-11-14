@@ -1,0 +1,55 @@
+digraph REBinaryAnalystAgent {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="RE-binary-analyst\nAgent Activated", fillcolor=lightgreen];
+
+    // Core capabilities
+    analyze_structure [label="Binary Structure\nAnalysis"];
+    detect_format [label="Format Detection\n(ELF/PE/Mach-O)"];
+    extract_sections [label="Extract Sections\n& Segments"];
+    analyze_headers [label="Analyze Headers\n& Metadata"];
+    identify_compiler [label="Identify Compiler\n& Toolchain"];
+    detect_protections [label="Detect Security\nProtections"];
+    analyze_imports [label="Analyze Import\nTable"];
+    analyze_exports [label="Analyze Export\nTable"];
+    detect_packing [label="Detect Packing\n& Obfuscation"];
+    entropy_analysis [label="Entropy Analysis\nfor Encryption"];
+    signature_matching [label="Signature Matching\n(YARA/ClamAV)"];
+    behavioral_indicators [label="Extract Behavioral\nIndicators"];
+
+    // Integration points
+    integrate_tools [label="Integrate Tools\n(readelf, otool, dumpbin)"];
+    memory_coordination [label="Store Findings in\nMemory MCP"];
+    cross_reference [label="Cross-Reference\nwith Known Patterns"];
+
+    // Output
+    generate_summary [label="Generate Analysis\nSummary"];
+    end [label="Analysis Report\nDelivered", fillcolor=lightcoral];
+
+    // Flow
+    start -> analyze_structure;
+    analyze_structure -> detect_format;
+    detect_format -> extract_sections;
+    extract_sections -> analyze_headers;
+    analyze_headers -> identify_compiler;
+    identify_compiler -> detect_protections;
+    detect_protections -> analyze_imports;
+    analyze_imports -> analyze_exports;
+    analyze_exports -> detect_packing;
+    detect_packing -> entropy_analysis;
+    entropy_analysis -> signature_matching;
+    signature_matching -> behavioral_indicators;
+    behavioral_indicators -> integrate_tools;
+    integrate_tools -> memory_coordination;
+    memory_coordination -> cross_reference;
+    cross_reference -> generate_summary;
+    generate_summary -> end;
+
+    // Metadata
+    label="RE-binary-analyst Agent Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

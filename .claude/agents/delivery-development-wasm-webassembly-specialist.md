@@ -1,3 +1,8 @@
+---
+name: delivery-development-wasm-webassembly-specialist
+description: WEBASSEMBLY SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # WEBASSEMBLY SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 183

@@ -1,0 +1,459 @@
+{
+  "metadata": {
+    "project": "Obsidian Memory + Connascence Analyzer Integration",
+    "version": "1.0.0",
+    "created": "2025-11-01",
+    "complexity": "high",
+    "estimated_duration_weeks": 10,
+    "phases": 4
+  },
+  "researchFindings": {
+    "memoryMCP": {
+      "status": "90% complete, production-ready",
+      "location": "C:\\Users\\17175\\Desktop\\memory-mcp-triple-system",
+      "keyFeatures": [
+        "3-layer memory (short 24h, mid 7d, long 30d+)",
+        "Obsidian vault integration",
+        "Mode-aware context (Execution/Planning/Brainstorming)",
+        "ChromaDB vector search",
+        "MCP server (FastAPI + stdio)"
+      ],
+      "metrics": {
+        "testCoverage": "100%",
+        "nasaCompliance": "100%",
+        "theaterCode": "0%",
+        "performance": "All targets exceeded by 50-75%"
+      }
+    },
+    "connascence": {
+      "status": "100% complete, production-ready",
+      "location": "C:\\Users\\17175\\Desktop\\connascence",
+      "keyFeatures": [
+        "All 9 connascence types (CoN, CoT, CoM, CoP, CoA, CoE, CoV, CoI, CoId)",
+        "MCP server functional",
+        "5,743+ violations detected (enterprise validation)",
+        "0% false positives",
+        "SARIF output for CI/CD"
+      ],
+      "metrics": {
+        "accuracy": "100%",
+        "performance": "0.1-0.5s (cached), 5-15s (workspace)",
+        "selfImprovement": "97% magic literal reduction, +23.6% connascence index"
+      }
+    },
+    "synergy": {
+      "value": "Memory + Analysis = Learning Loop",
+      "uniqueness": [
+        "claude-flow = hot working memory (real-time)",
+        "Obsidian = cold knowledge base (long-term)",
+        "Connascence = systematic coupling taxonomy (not just 'is coupled')",
+        "Theater detection first, connascence second (sequential pipeline)"
+      ],
+      "expectedOutcomes": {
+        "couplingReduction": "40-60% within 6 months",
+        "onboardingSpeed": "30-50% faster",
+        "recurringIssues": "50-70% reduction",
+        "maintainabilityGain": "20-30% index improvement"
+      }
+    }
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "name": "Memory MCP Foundation",
+      "duration_weeks": 2,
+      "objectives": [
+        "Deploy Memory MCP server",
+        "Configure claude-desktop MCP integration",
+        "Test 3-layer retention",
+        "Validate Obsidian sync (read-only first)"
+      ],
+      "tasks": [
+        {
+          "id": "P1-T1",
+          "name": "Install Memory MCP dependencies",
+          "description": "Install Python 3.12+, ChromaDB, FastAPI, hnswlib-node (with Windows compatibility fix)",
+          "complexity": "medium",
+          "estimated_hours": 4,
+          "dependencies": [],
+          "risks": ["Windows compatibility (hnswlib-node native bindings)"],
+          "mitigation": "Use pre-compiled binaries or WSL2 Docker fallback",
+          "evidenceSources": [
+            "Memory MCP INSTALLATION.md",
+            "hnswlib-node Windows build guide"
+          ]
+        },
+        {
+          "id": "P1-T2",
+          "name": "Start Memory MCP server",
+          "description": "Run 'python -m src.mcp.server' and verify health endpoint",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": ["P1-T1"],
+          "risks": ["Port conflicts", "Permission issues"],
+          "mitigation": "Use configurable port, run with admin if needed"
+        },
+        {
+          "id": "P1-T3",
+          "name": "Configure claude-desktop MCP",
+          "description": "Add Memory MCP to ~/.config/claude/mcp_servers.json with stdio transport",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": ["P1-T2"],
+          "risks": ["Claude Desktop config syntax errors"],
+          "mitigation": "Use template from Memory MCP docs, validate JSON"
+        },
+        {
+          "id": "P1-T4",
+          "name": "Test 3-layer memory retention",
+          "description": "Store test data, wait 24h/7d, verify promotion (short→mid→long)",
+          "complexity": "low",
+          "estimated_hours": 8,
+          "dependencies": ["P1-T3"],
+          "risks": ["Clock skew", "Retention policy bugs"],
+          "mitigation": "Use manual time advancement for testing"
+        },
+        {
+          "id": "P1-T5",
+          "name": "Create Obsidian vault",
+          "description": "Initialize vault at C:\\Users\\17175\\Obsidian\\12FA-Memory, configure graph view",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": [],
+          "risks": ["Vault location conflicts"],
+          "mitigation": "Use dedicated directory, no shared vaults"
+        },
+        {
+          "id": "P1-T6",
+          "name": "Enable Obsidian sync (read-only)",
+          "description": "Configure Memory MCP ObsidianClient for read-only vault sync, test file watcher",
+          "complexity": "medium",
+          "estimated_hours": 6,
+          "dependencies": ["P1-T4", "P1-T5"],
+          "risks": ["File permission issues", "Sync loop"],
+          "mitigation": "Read-only mode first, explicit conflict resolution"
+        },
+        {
+          "id": "P1-T7",
+          "name": "Validate mode detection",
+          "description": "Test Execution/Planning/Brainstorming mode detection with 29 patterns",
+          "complexity": "low",
+          "estimated_hours": 4,
+          "dependencies": ["P1-T6"],
+          "risks": ["Incorrect mode classification"],
+          "mitigation": "Use benchmark queries from Memory MCP test suite"
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Connascence Integration",
+      "duration_weeks": 2,
+      "objectives": [
+        "Deploy Connascence MCP server",
+        "Integrate with theater-detection pipeline",
+        "Configure workspace analysis",
+        "Test all 9 connascence types"
+      ],
+      "tasks": [
+        {
+          "id": "P2-T1",
+          "name": "Install Connascence dependencies",
+          "description": "Install Python 3.12+, AST parsing libraries, pytest for testing",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": [],
+          "risks": ["Dependency conflicts with Memory MCP"],
+          "mitigation": "Use separate virtual environment"
+        },
+        {
+          "id": "P2-T2",
+          "name": "Start Connascence MCP server",
+          "description": "Run MCP server, verify health-check command",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": ["P2-T1"],
+          "risks": ["Port conflicts with Memory MCP"],
+          "mitigation": "Use different port (configurable)"
+        },
+        {
+          "id": "P2-T3",
+          "name": "Configure claude-desktop MCP for Connascence",
+          "description": "Add Connascence MCP to mcp_servers.json",
+          "complexity": "low",
+          "estimated_hours": 1,
+          "dependencies": ["P2-T2"],
+          "risks": ["JSON syntax errors"],
+          "mitigation": "Validate with JSON linter"
+        },
+        {
+          "id": "P2-T3.5",
+          "name": "Configure agent-specific MCP tool access",
+          "description": "Create access control matrix: code quality agents (coder, reviewer, tester, etc.) get connascence tools, all agents get memory tools",
+          "complexity": "medium",
+          "estimated_hours": 6,
+          "dependencies": ["P2-T3"],
+          "risks": ["Tool access errors", "Agent permission conflicts"],
+          "mitigation": "Create agent-mcp-access-control.js with AGENT_TOOL_ACCESS matrix",
+          "recommendedApproach": {
+            "solution": "Hook-based access control with agent type detection and tool filtering",
+            "confidence": 90,
+            "evidence": ["Existing hook-integration.js patterns", "Claude Code agent metadata"]
+          },
+          "agentAccessMatrix": {
+            "codeQualityAgents": ["coder", "reviewer", "tester", "code-analyzer", "functionality-audit", "theater-detection-audit", "production-validator", "sparc-coder"],
+            "mcpToolsGranted": {
+              "all_agents": ["memory-mcp.*", "claude-flow.*"],
+              "code_quality_only": ["connascence-analyzer.*"]
+            }
+          }
+        },
+        {
+          "id": "P2-T4",
+          "name": "Create theater→connascence pipeline hook",
+          "description": "Add post-edit hook: theater-detection first, if real→connascence analysis second",
+          "complexity": "medium",
+          "estimated_hours": 8,
+          "dependencies": ["P2-T3"],
+          "risks": ["Hook performance overhead"],
+          "mitigation": "Async analysis, user-configurable thresholds",
+          "evidenceSources": [
+            "hooks/12fa/hook-integration.js pattern",
+            "Existing post-edit hook examples"
+          ]
+        },
+        {
+          "id": "P2-T5",
+          "name": "Configure workspace analysis",
+          "description": "Set up analyze-workspace command for C:\\Users\\17175 with incremental caching",
+          "complexity": "medium",
+          "estimated_hours": 4,
+          "dependencies": ["P2-T4"],
+          "risks": ["Large codebase performance"],
+          "mitigation": "Exclude node_modules, use .connascenceignore"
+        },
+        {
+          "id": "P2-T6",
+          "name": "Test all 9 connascence types",
+          "description": "Run analysis on test-env/cps-v1.0, verify CoN/CoT/CoM/CoP/CoA/CoE/CoV/CoI/CoId detection",
+          "complexity": "low",
+          "estimated_hours": 6,
+          "dependencies": ["P2-T5"],
+          "risks": ["False positives"],
+          "mitigation": "Use validated test suite from Connascence repo"
+        },
+        {
+          "id": "P2-T7",
+          "name": "Configure NASA compliance profile",
+          "description": "Use nasa-compliance profile for strict quality standards",
+          "complexity": "low",
+          "estimated_hours": 2,
+          "dependencies": ["P2-T6"],
+          "risks": ["Too strict, blocks productivity"],
+          "mitigation": "Start with standard profile, gradually increase strictness"
+        }
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Learning Loop Activation",
+      "duration_weeks": 3,
+      "objectives": [
+        "Store analysis results in Memory MCP",
+        "Build pattern recognition module",
+        "Enable agent pattern loading",
+        "Test proactive suggestions"
+      ],
+      "tasks": [
+        {
+          "id": "P3-T1",
+          "name": "Create analysis→memory pipeline",
+          "description": "Hook: Connascence results → Memory MCP store (short-term, namespace: analysis/connascence)",
+          "complexity": "medium",
+          "estimated_hours": 8,
+          "dependencies": ["P1-T7", "P2-T7"],
+          "risks": ["Memory bloat from verbose results"],
+          "mitigation": "Store only violations, not entire AST",
+          "recommendedApproach": {
+            "solution": "Use Memory MCP API: memory.store(key, value, namespace, retention_policy)",
+            "confidence": 85,
+            "evidence": ["Memory MCP server.py API reference"]
+          }
+        },
+        {
+          "id": "P3-T2",
+          "name": "Implement pattern recognition module",
+          "description": "Analyze stored violations, extract recurring patterns (e.g., 'Always use parameter objects for >3 params')",
+          "complexity": "high",
+          "estimated_hours": 16,
+          "dependencies": ["P3-T1"],
+          "risks": ["False pattern extraction", "Noise from one-off code"],
+          "mitigation": "Require ≥3 occurrences, ≥80% confidence threshold",
+          "recommendedApproach": {
+            "solution": "Use clustering (DBSCAN) on violation embeddings, extract centroids as patterns",
+            "confidence": 75,
+            "evidence": ["AgentDB clustering patterns", "ReasoningBank trajectory analysis"]
+          }
+        },
+        {
+          "id": "P3-T3",
+          "name": "Enable agent pattern loading",
+          "description": "On agent startup, load patterns from Obsidian vault (long-term memory), inject into agent context",
+          "complexity": "medium",
+          "estimated_hours": 12,
+          "dependencies": ["P3-T2"],
+          "risks": ["Context window bloat", "Stale patterns"],
+          "mitigation": "Load only top 10 patterns by relevance, refresh monthly"
+        },
+        {
+          "id": "P3-T4",
+          "name": "Implement proactive suggestions",
+          "description": "When agent writes code, check patterns, suggest better coupling if applicable",
+          "complexity": "high",
+          "estimated_hours": 16,
+          "dependencies": ["P3-T3"],
+          "risks": ["Annoying false suggestions", "User ignores suggestions"],
+          "mitigation": "Only suggest if confidence ≥80%, allow user to disable per-pattern"
+        },
+        {
+          "id": "P3-T5",
+          "name": "Test learning loop with 3+ examples",
+          "description": "Create intentional coupling issues, verify pattern recognition, verify proactive suggestions on next iteration",
+          "complexity": "medium",
+          "estimated_hours": 12,
+          "dependencies": ["P3-T4"],
+          "risks": ["Learning loop doesn't converge"],
+          "mitigation": "Use synthetic test cases first, then real code"
+        },
+        {
+          "id": "P3-T6",
+          "name": "Implement cross-session continuity",
+          "description": "Test agent restart, verify historical context loads from Obsidian, verify task resumption",
+          "complexity": "low",
+          "estimated_hours": 4,
+          "dependencies": ["P3-T5"],
+          "risks": ["Context mismatch after restart"],
+          "mitigation": "Store session metadata in memory, validate on load"
+        }
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Optimization & Refinement",
+      "duration_weeks": 3,
+      "objectives": [
+        "Performance tuning (caching, batching)",
+        "Dashboard creation in Obsidian",
+        "User feedback integration",
+        "Documentation finalization"
+      ],
+      "tasks": [
+        {
+          "id": "P4-T1",
+          "name": "Optimize memory retrieval",
+          "description": "Implement LRU cache for frequent queries, target <200ms (P1 NFR)",
+          "complexity": "medium",
+          "estimated_hours": 8,
+          "dependencies": ["P3-T6"],
+          "risks": ["Cache invalidation bugs"],
+          "mitigation": "Use TTL-based invalidation, max 1000 entries"
+        },
+        {
+          "id": "P4-T2",
+          "name": "Optimize connascence analysis",
+          "description": "Enable incremental caching, only re-analyze changed files",
+          "complexity": "medium",
+          "estimated_hours": 6,
+          "dependencies": ["P3-T6"],
+          "risks": ["Cache stale on dependency changes"],
+          "mitigation": "Track file dependencies, invalidate cascade"
+        },
+        {
+          "id": "P4-T3",
+          "name": "Implement batched Obsidian sync",
+          "description": "Sync every 1-5 minutes instead of real-time, target <5min (P3 NFR)",
+          "complexity": "low",
+          "estimated_hours": 4,
+          "dependencies": ["P3-T6"],
+          "risks": ["Data loss if crash between syncs"],
+          "mitigation": "Use WAL logging, sync on critical events (shutdown)"
+        },
+        {
+          "id": "P4-T4",
+          "name": "Create Obsidian dashboard",
+          "description": "Generate dashboard.md in vault with: coupling trends, top violations, pattern evolution",
+          "complexity": "medium",
+          "estimated_hours": 12,
+          "dependencies": ["P4-T3"],
+          "risks": ["Dashboard becomes stale"],
+          "mitigation": "Auto-regenerate on sync, use Dataview plugin"
+        },
+        {
+          "id": "P4-T5",
+          "name": "Collect user feedback",
+          "description": "2-week trial period, gather feedback on: productivity, annoyance, suggestions quality",
+          "complexity": "low",
+          "estimated_hours": 16,
+          "dependencies": ["P4-T4"],
+          "risks": ["Negative feedback, user wants rollback"],
+          "mitigation": "Easy disable mechanism, iterate based on feedback"
+        },
+        {
+          "id": "P4-T6",
+          "name": "Performance validation",
+          "description": "Verify all NFRs met: P1 (<200ms), P2 (<5s cached, <15s workspace), P3 (<5min), P4 (<10% overhead)",
+          "complexity": "low",
+          "estimated_hours": 8,
+          "dependencies": ["P4-T3"],
+          "risks": ["Performance regression"],
+          "mitigation": "Benchmark suite, CI/CD performance gates"
+        },
+        {
+          "id": "P4-T7",
+          "name": "Finalize documentation",
+          "description": "Create: SETUP.md, USAGE.md, TROUBLESHOOTING.md, ARCHITECTURE.md",
+          "complexity": "medium",
+          "estimated_hours": 16,
+          "dependencies": ["P4-T6"],
+          "risks": ["Documentation becomes stale"],
+          "mitigation": "Version-lock docs, auto-generate from code comments"
+        },
+        {
+          "id": "P4-T8",
+          "name": "Stabilization period",
+          "description": "2-week bug-free operation, zero critical bugs",
+          "complexity": "low",
+          "estimated_hours": 80,
+          "dependencies": ["P4-T7"],
+          "risks": ["Critical bugs discovered"],
+          "mitigation": "Hotfix process, rollback plan"
+        }
+      ]
+    }
+  ],
+  "riskSummary": {
+    "high": [
+      "Performance degradation from analysis overhead",
+      "Memory inconsistency between SQLite and Obsidian",
+      "Learning loop noise (false patterns)"
+    ],
+    "medium": [
+      "Windows compatibility (hnswlib-node)",
+      "Hook performance overhead",
+      "Context window bloat from pattern loading"
+    ],
+    "low": [
+      "Obsidian sync conflicts",
+      "Dashboard becomes stale",
+      "Port conflicts between MCP servers"
+    ]
+  },
+  "totalTasks": 37,
+  "totalEstimatedHours": 268,
+  "criticalPath": [
+    "P1-T1", "P1-T2", "P1-T3", "P1-T4", "P1-T6", "P1-T7",
+    "P2-T3.5", "P2-T4", "P2-T5", "P2-T6", "P2-T7",
+    "P3-T1", "P3-T2", "P3-T3", "P3-T4", "P3-T5", "P3-T6",
+    "P4-T1", "P4-T3", "P4-T4", "P4-T5", "P4-T6", "P4-T7", "P4-T8"
+  ]
+}

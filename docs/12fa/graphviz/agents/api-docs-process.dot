@@ -1,0 +1,81 @@
+// API Docs Agent - API Documentation Specialist
+// OpenAPI/Swagger, automated docs, API reference, examples
+digraph api_docs_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        docs_init [label="API Docs Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        openapi_generator [label="OpenAPI\nGenerator", fillcolor="#2d3748", fontcolor="#ffffff"];
+        doc_templates [label="Documentation\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_spec {
+        label="Specification Generation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        endpoint_analyzer [label="Endpoint\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        schema_extractor [label="Schema\nExtractor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        response_documenter [label="Response\nDocumenter", fillcolor="#2563eb", fontcolor="#ffffff"];
+        auth_documenter [label="Auth\nDocumenter", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_examples {
+        label="Example Generation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        request_example_gen [label="Request Example\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+        response_example_gen [label="Response Example\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+        code_snippet_gen [label="Code Snippet\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_interactive {
+        label="Interactive Docs"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        swagger_ui [label="Swagger UI\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        try_it_builder [label="Try It Out\nBuilder", fillcolor="#0891b2", fontcolor="#ffffff"];
+        postman_collection [label="Postman Collection\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        completeness_checker [label="Completeness\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        accuracy_validator [label="Accuracy\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        link_checker [label="Link\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_publish {
+        label="Publishing"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        static_site_gen [label="Static Site\nGenerator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        versioning_manager [label="Version\nManager", fillcolor="#8b4789", fontcolor="#ffffff"];
+        cdn_uploader [label="CDN\nUploader", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    docs_init -> openapi_generator [label="Generate"];
+    docs_init -> doc_templates [label="Load"];
+    openapi_generator -> endpoint_analyzer [label="Analyze"];
+    endpoint_analyzer -> schema_extractor [label="Extract Schemas"];
+    schema_extractor -> response_documenter [label="Document Responses"];
+    response_documenter -> auth_documenter [label="Document Auth"];
+    auth_documenter -> request_example_gen [label="Generate Examples"];
+    request_example_gen -> response_example_gen [label="Response Examples"];
+    response_example_gen -> code_snippet_gen [label="Code Snippets"];
+    code_snippet_gen -> swagger_ui [label="Generate Swagger UI"];
+    swagger_ui -> try_it_builder [label="Build Try It"];
+    try_it_builder -> postman_collection [label="Postman Collection"];
+    postman_collection -> completeness_checker [label="Check"];
+    completeness_checker -> accuracy_validator [label="Validate"];
+    accuracy_validator -> link_checker [label="Check Links"];
+    link_checker -> static_site_gen [label="Generate Site"];
+    static_site_gen -> versioning_manager [label="Version"];
+    versioning_manager -> cdn_uploader [label="Upload"];
+    endpoint_analyzer -> backend_coord [label="Coordinate"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="API Docs", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Specification", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

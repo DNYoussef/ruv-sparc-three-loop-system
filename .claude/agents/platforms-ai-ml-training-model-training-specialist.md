@@ -1,3 +1,8 @@
+---
+name: platforms-ai-ml-training-model-training-specialist
+description: MODEL TRAINING SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # MODEL TRAINING SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 147

@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-cost-cloud-cost-optimizer
+description: Specialized agent for task execution
+---
+
 # Cloud Cost Optimizer Agent
 
 **Agent ID**: `cloud-cost-optimizer` (Agent #139)

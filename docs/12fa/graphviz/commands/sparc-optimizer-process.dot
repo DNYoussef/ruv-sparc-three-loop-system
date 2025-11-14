@@ -1,0 +1,93 @@
+// SPARC Optimizer Command Workflow
+// Performance optimization and refactoring
+digraph sparc_optimizer_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:optimizer\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        target_selector [label="Target\nSelector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_profiling {
+        label="Performance Profiling";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        performance_profiler [label="Performance\nProfiler", fillcolor="#2563eb", fontcolor="#ffffff"];
+        bottleneck_detector [label="Bottleneck\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        memory_analyzer [label="Memory\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_analyzer [label="Complexity\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_optimization {
+        label="Optimization Strategies";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        algorithm_optimizer [label="Algorithm\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        cache_optimizer [label="Cache\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        query_optimizer [label="Query\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        bundle_optimizer [label="Bundle\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_refactoring {
+        label="Code Refactoring";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_refactorer [label="Code\nRefactorer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        pattern_applier [label="Pattern\nApplier", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        duplication_remover [label="Duplication\nRemover", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        benchmark_runner [label="Benchmark\nRunner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        improvement_validator [label="Improvement\nValidator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        optimized_code [label="Optimized\nCode", fillcolor="#059669", fontcolor="#ffffff"];
+        performance_report [label="Performance\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> target_selector;
+    target_selector -> performance_profiler -> bottleneck_detector -> memory_analyzer -> complexity_analyzer;
+    complexity_analyzer -> algorithm_optimizer -> cache_optimizer -> query_optimizer -> bundle_optimizer;
+    bundle_optimizer -> code_refactorer -> pattern_applier -> duplication_remover;
+    duplication_remover -> benchmark_runner -> improvement_validator;
+    improvement_validator -> optimized_code -> performance_report;
+    performance_report -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    improvement_validator -> algorithm_optimizer [label="Try More", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Profiling", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Optimization", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

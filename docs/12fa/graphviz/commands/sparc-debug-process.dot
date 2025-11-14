@@ -1,0 +1,56 @@
+digraph sparc_debug_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Debug Command Workflow\nSystematic Debugging & Troubleshooting";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:debug", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  identify_issue [label="Identify Issue\n- Error messages\n- Symptoms\n- Reproduction steps", fillcolor="#FFF9C4"];
+
+  reproduce [label="Reproduce Bug\n- Minimal test case\n- Consistent repro\n- Isolate variables", fillcolor="#FFE0B2"];
+
+  trace_execution [label="Trace Execution\n- Stack traces\n- Logs\n- Breakpoints\n- State inspection", fillcolor="#BBDEFB"];
+
+  root_cause [label="Root Cause Analysis\n- 5 Whys method\n- Dependency check\n- State analysis", fillcolor="#C5CAE9"];
+
+  hypothesis [label="Form Hypothesis\nWhat's causing the bug?", fillcolor="#B2DFDB"];
+
+  test_hypothesis [label="Test Hypothesis\n- Add logging\n- Modify inputs\n- Validate assumptions", fillcolor="#D1C4E9"];
+
+  confirmed [label="Hypothesis Confirmed?", fillcolor="#F0F4C3", shape=diamond];
+
+  design_fix [label="Design Fix\n- Minimal change\n- No breaking changes\n- Consider side effects", fillcolor="#FFE0B2"];
+
+  implement_fix [label="Implement Fix\n- Write test first\n- Fix code\n- Verify fix", fillcolor="#BBDEFB"];
+
+  regression_test [label="Regression Testing\n- Existing tests pass\n- New test passes\n- No new bugs", fillcolor="#B2DFDB"];
+
+  document [label="Document Fix\n- Root cause\n- Solution\n- Prevention", fillcolor="#F0F4C3"];
+
+  success [label="Bug Fixed\nTests passing", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  retry [label="Try Different Hypothesis", fillcolor="#FFE0B2"];
+
+  // Main flow
+  start -> identify_issue;
+  identify_issue -> reproduce;
+  reproduce -> trace_execution;
+  trace_execution -> root_cause;
+  root_cause -> hypothesis;
+  hypothesis -> test_hypothesis;
+  test_hypothesis -> confirmed;
+  confirmed -> design_fix [label="Yes"];
+  confirmed -> retry [label="No"];
+  retry -> hypothesis;
+  design_fix -> implement_fix;
+  implement_fix -> regression_test;
+  regression_test -> document [label="Passed"];
+  regression_test -> implement_fix [label="Failed", style=dashed, color=red];
+  document -> success;
+}

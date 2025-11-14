@@ -1,3 +1,8 @@
+---
+name: quality-audit-batch-5-audit-validation-agents-summary
+description: Specialized agent for task execution
+---
+
 # BATCH 5: AUDIT & VALIDATION AGENTS - CREATION SUMMARY
 
 **Date**: 2025-11-02

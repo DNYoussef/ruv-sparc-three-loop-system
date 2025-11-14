@@ -1,0 +1,99 @@
+// SPARC TDD Command Workflow
+// Test-driven development with red-green-refactor
+digraph sparc_tdd_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:tdd\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        feature_parser [label="Feature\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_red {
+        label="RED Phase - Write Failing Test";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        requirement_analyzer [label="Requirement\nAnalyzer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_case_designer [label="Test Case\nDesigner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_writer [label="Test\nWriter", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_runner_red [label="Test Runner\n(Expect Fail)", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_green {
+        label="GREEN Phase - Make It Pass";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        minimal_implementer [label="Minimal\nImplementer", fillcolor="#16a34a", fontcolor="#ffffff"];
+        interface_builder [label="Interface\nBuilder", fillcolor="#16a34a", fontcolor="#ffffff"];
+        logic_implementer [label="Logic\nImplementer", fillcolor="#16a34a", fontcolor="#ffffff"];
+        test_runner_green [label="Test Runner\n(Expect Pass)", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_refactor {
+        label="REFACTOR Phase - Clean Up";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_refactorer [label="Code\nRefactorer", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        duplication_remover [label="Duplication\nRemover", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        pattern_applier [label="Pattern\nApplier", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        test_runner_refactor [label="Test Runner\n(Stay Green)", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coverage_checker [label="Coverage\nChecker (>90%)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        quality_validator [label="Quality\nValidator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        integration_tester [label="Integration\nTester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        tested_feature [label="Tested\nFeature", fillcolor="#059669", fontcolor="#ffffff"];
+        test_suite [label="Comprehensive\nTest Suite", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> feature_parser;
+    feature_parser -> requirement_analyzer -> test_case_designer -> test_writer -> test_runner_red;
+    test_runner_red -> minimal_implementer -> interface_builder -> logic_implementer -> test_runner_green;
+    test_runner_green -> code_refactorer -> duplication_remover -> pattern_applier -> test_runner_refactor;
+    test_runner_refactor -> coverage_checker -> quality_validator -> integration_tester;
+    integration_tester -> tested_feature -> test_suite;
+    test_suite -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    test_runner_red -> test_writer [label="Already Passes", style=dashed, color="#ef4444"];
+    test_runner_green -> logic_implementer [label="Still Fails", style=dashed, color="#ef4444"];
+    test_runner_refactor -> code_refactorer [label="Broke Tests", style=dashed, color="#ef4444"];
+    coverage_checker -> test_case_designer [label="<90%", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC TDD", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="RED (Fail)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend3 [label="GREEN (Pass)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        legend4 [label="REFACTOR", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+}

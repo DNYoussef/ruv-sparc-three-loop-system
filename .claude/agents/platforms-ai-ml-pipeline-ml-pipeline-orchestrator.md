@@ -1,3 +1,8 @@
+---
+name: platforms-ai-ml-pipeline-ml-pipeline-orchestrator
+description: ML PIPELINE ORCHESTRATOR - SYSTEM PROMPT v2.0
+---
+
 # ML PIPELINE ORCHESTRATOR - SYSTEM PROMPT v2.0
 
 **Agent ID**: 146

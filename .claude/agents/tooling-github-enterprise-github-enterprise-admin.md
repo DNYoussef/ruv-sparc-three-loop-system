@@ -1,3 +1,8 @@
+---
+name: tooling-github-enterprise-github-enterprise-admin
+description: GITHUB ENTERPRISE ADMIN - SYSTEM PROMPT v2.0
+---
+
 # GITHUB ENTERPRISE ADMIN - SYSTEM PROMPT v2.0
 
 **Agent ID**: 161

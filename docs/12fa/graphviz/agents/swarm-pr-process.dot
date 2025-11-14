@@ -1,0 +1,134 @@
+digraph swarm_pr_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Swarm PR - Multi-Agent Pull Request Review";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Pull Request\n(New PR created)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Initialization Phase
+    subgraph cluster_init {
+        label="Initialization Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        parse [label="PR Parsing\n(Files, changes)"];
+        analyze [label="Change Analysis\n(Scope)"];
+        spawn [label="Swarm Spawning\n(Review agents)"];
+    }
+
+    // Review Swarm (Parallel)
+    subgraph cluster_swarm {
+        label="Multi-Agent Review Swarm (Parallel)";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        security [label="Security Reviewer\n(Vulnerabilities)", shape=ellipse, fillcolor="#9b59b6"];
+        performance [label="Performance Reviewer\n(Efficiency)", shape=ellipse, fillcolor="#3498db"];
+        style [label="Style Reviewer\n(Standards)", shape=ellipse, fillcolor="#e74c3c"];
+        tests [label="Test Reviewer\n(Coverage)", shape=ellipse, fillcolor="#f39c12"];
+        docs [label="Docs Reviewer\n(Documentation)", shape=ellipse, fillcolor="#1abc9c"];
+
+        aggregate [label="Feedback Aggregation\n(Combine reviews)"];
+    }
+
+    // Auto-fix Phase
+    subgraph cluster_autofix {
+        label="Auto-fix Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        identify [label="Fix Identification\n(Auto-fixable issues)"];
+        generate [label="Fix Generation\n(Code patches)"];
+        validate [label="Fix Validation\n(Test fixes)"];
+    }
+
+    // Finalization Phase
+    subgraph cluster_finalization {
+        label="Finalization Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        report [label="Report Generation\n(Comprehensive)"];
+        suggest [label="Suggestions\n(Improvements)"];
+        approve [label="Approval Decision\n(Consensus)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Multi-agent PR Review", fillcolor="#238636"];
+        feature2 [label="Parallel Analysis", fillcolor="#238636"];
+        feature3 [label="Comprehensive Feedback", fillcolor="#238636"];
+        feature4 [label="Auto-fixes", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="PR Review Complete\n+ Fixes Applied", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> parse;
+    parse -> analyze;
+    analyze -> spawn;
+
+    spawn -> security;
+    spawn -> performance;
+    spawn -> style;
+    spawn -> tests;
+    spawn -> docs;
+
+    security -> aggregate;
+    performance -> aggregate;
+    style -> aggregate;
+    tests -> aggregate;
+    docs -> aggregate;
+
+    aggregate -> identify;
+    identify -> generate;
+    generate -> validate;
+
+    validate -> report;
+    report -> suggest;
+    suggest -> approve;
+
+    approve -> output;
+
+    // Feature connections
+    spawn -> feature1 [style=dotted, color="#8b949e"];
+    security -> feature2 [style=dotted, color="#8b949e"];
+    aggregate -> feature3 [style=dotted, color="#8b949e"];
+    generate -> feature4 [style=dotted, color="#8b949e"];
+}

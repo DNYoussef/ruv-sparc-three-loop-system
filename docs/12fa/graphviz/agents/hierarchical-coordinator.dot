@@ -1,0 +1,444 @@
+digraph HIERARCHICAL_COORDINATOR {
+  // Layout configuration for hierarchical tree
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+  splines=ortho;
+  compound=true;
+
+  // =============================================================================
+  // COORDINATOR INITIALIZATION
+  // =============================================================================
+  subgraph cluster_init {
+    label="Hierarchical Coordinator Initialization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    spawn_coord [label="Spawn Hierarchical\nCoordinator", shape=ellipse, fillcolor=purple];
+    load_config [label="Load Coordinator\nConfiguration", fillcolor=purple];
+    validate_12fa [shape=diamond, label="12-FA\nCompliant?"];
+    init_topology [label="Initialize Tree\nTopology", fillcolor=purple];
+    setup_hierarchy [label="Setup Hierarchy\nLevels", fillcolor=purple];
+
+    spawn_coord -> load_config;
+    load_config -> validate_12fa;
+    validate_12fa -> init_topology [label="Pass"];
+    validate_12fa -> spawn_blocked [label="Fail"];
+    init_topology -> setup_hierarchy;
+  }
+
+  spawn_blocked [shape=octagon, fillcolor=crimson, label="BLOCKED\nSpawn Denied"];
+
+  // =============================================================================
+  // HIERARCHY STRUCTURE DEFINITION
+  // =============================================================================
+  subgraph cluster_structure {
+    label="Hierarchical Structure Design";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    define_levels [label="Define Hierarchy\nLevels", fillcolor=lightblue];
+    calc_span [label="Calculate Span\nof Control", fillcolor=lightblue];
+    assign_roles [label="Assign Role\nResponsibilities", fillcolor=lightblue];
+    create_tree [label="Create Command\nTree", fillcolor=lightblue];
+    validate_structure [shape=diamond, label="Structure\nValid?"];
+    optimize_depth [label="Optimize Tree\nDepth", fillcolor=yellow];
+  }
+
+  setup_hierarchy -> define_levels;
+  define_levels -> calc_span;
+  calc_span -> assign_roles;
+  assign_roles -> create_tree;
+  create_tree -> validate_structure;
+  validate_structure -> optimize_depth [label="Suboptimal"];
+  validate_structure -> root_coord [label="Valid"];
+  optimize_depth -> define_levels [style=dashed];
+
+  // =============================================================================
+  // ROOT COORDINATOR LEVEL
+  // =============================================================================
+  subgraph cluster_root {
+    label="Level 0: Root Coordinator";
+    style="filled,rounded,bold";
+    color="darkgreen";
+    bgcolor="#D0F0D0";
+
+    root_coord [label="Root Coordinator\n(Strategic)",
+                fillcolor=darkgreen,
+                fontcolor=white,
+                style="filled,bold",
+                penwidth=3];
+    root_strategy [label="Define Strategy\nand Goals", fillcolor=lightgreen];
+    root_delegate [label="Delegate to\nManagers", fillcolor=lightgreen];
+    root_monitor [label="Monitor Overall\nProgress", fillcolor=lightgreen];
+    root_decisions [label="Strategic\nDecisions", fillcolor=lightgreen];
+  }
+
+  root_coord -> root_strategy;
+  root_strategy -> root_delegate;
+  root_delegate -> root_monitor;
+  root_monitor -> root_decisions;
+
+  // =============================================================================
+  // MIDDLE MANAGER LEVEL
+  // =============================================================================
+  subgraph cluster_managers {
+    label="Level 1: Middle Managers";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E0F8E0";
+
+    manager_1 [label="Manager 1\n(Technical Lead)",
+               fillcolor=green,
+               fontcolor=white,
+               style="filled,bold",
+               penwidth=2];
+    manager_2 [label="Manager 2\n(Quality Lead)",
+               fillcolor=green,
+               fontcolor=white,
+               style="filled,bold",
+               penwidth=2];
+    manager_3 [label="Manager 3\n(Operations Lead)",
+               fillcolor=green,
+               fontcolor=white,
+               style="filled,bold",
+               penwidth=2];
+
+    mgr1_plan [label="Technical\nPlanning", fillcolor=lightgreen];
+    mgr2_plan [label="Quality\nPlanning", fillcolor=lightgreen];
+    mgr3_plan [label="Operations\nPlanning", fillcolor=lightgreen];
+
+    mgr1_assign [label="Assign Technical\nTasks", fillcolor=lightgreen];
+    mgr2_assign [label="Assign Quality\nTasks", fillcolor=lightgreen];
+    mgr3_assign [label="Assign Ops\nTasks", fillcolor=lightgreen];
+  }
+
+  root_delegate -> manager_1;
+  root_delegate -> manager_2;
+  root_delegate -> manager_3;
+
+  manager_1 -> mgr1_plan;
+  manager_2 -> mgr2_plan;
+  manager_3 -> mgr3_plan;
+
+  mgr1_plan -> mgr1_assign;
+  mgr2_plan -> mgr2_assign;
+  mgr3_plan -> mgr3_assign;
+
+  // =============================================================================
+  // WORKER LEVEL - TECHNICAL TEAM
+  // =============================================================================
+  subgraph cluster_tech_workers {
+    label="Level 2: Technical Workers";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    tech_worker_1 [label="Backend\nDeveloper", fillcolor=lightblue];
+    tech_worker_2 [label="Frontend\nDeveloper", fillcolor=lightblue];
+    tech_worker_3 [label="Database\nEngineer", fillcolor=lightblue];
+    tech_worker_4 [label="API\nArchitect", fillcolor=lightblue];
+  }
+
+  mgr1_assign -> tech_worker_1;
+  mgr1_assign -> tech_worker_2;
+  mgr1_assign -> tech_worker_3;
+  mgr1_assign -> tech_worker_4;
+
+  // =============================================================================
+  // WORKER LEVEL - QUALITY TEAM
+  // =============================================================================
+  subgraph cluster_quality_workers {
+    label="Level 2: Quality Workers";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    qa_worker_1 [label="Unit Test\nEngineer", fillcolor=cyan];
+    qa_worker_2 [label="Integration Test\nEngineer", fillcolor=cyan];
+    qa_worker_3 [label="Security\nAuditor", fillcolor=cyan];
+    qa_worker_4 [label="Performance\nAnalyzer", fillcolor=cyan];
+  }
+
+  mgr2_assign -> qa_worker_1;
+  mgr2_assign -> qa_worker_2;
+  mgr2_assign -> qa_worker_3;
+  mgr2_assign -> qa_worker_4;
+
+  // =============================================================================
+  // WORKER LEVEL - OPERATIONS TEAM
+  // =============================================================================
+  subgraph cluster_ops_workers {
+    label="Level 2: Operations Workers";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    ops_worker_1 [label="DevOps\nEngineer", fillcolor=orange];
+    ops_worker_2 [label="Monitoring\nSpecialist", fillcolor=orange];
+    ops_worker_3 [label="Documentation\nWriter", fillcolor=orange];
+    ops_worker_4 [label="Release\nManager", fillcolor=orange];
+  }
+
+  mgr3_assign -> ops_worker_1;
+  mgr3_assign -> ops_worker_2;
+  mgr3_assign -> ops_worker_3;
+  mgr3_assign -> ops_worker_4;
+
+  // =============================================================================
+  // VERTICAL REPORTING CHAIN
+  // =============================================================================
+  subgraph cluster_reporting {
+    label="Vertical Reporting Chain";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8E8F8";
+
+    collect_worker_reports [label="Collect Worker\nReports", fillcolor=purple];
+    manager_rollup [label="Manager Rollup\nReports", fillcolor=purple];
+    root_aggregate [label="Root Aggregate\nStatus", fillcolor=purple];
+    hierarchy_status [shape=diamond, label="All Levels\nReporting?"];
+  }
+
+  // Workers report to managers
+  tech_worker_1 -> collect_worker_reports;
+  tech_worker_2 -> collect_worker_reports;
+  tech_worker_3 -> collect_worker_reports;
+  tech_worker_4 -> collect_worker_reports;
+  qa_worker_1 -> collect_worker_reports;
+  qa_worker_2 -> collect_worker_reports;
+  qa_worker_3 -> collect_worker_reports;
+  qa_worker_4 -> collect_worker_reports;
+  ops_worker_1 -> collect_worker_reports;
+  ops_worker_2 -> collect_worker_reports;
+  ops_worker_3 -> collect_worker_reports;
+  ops_worker_4 -> collect_worker_reports;
+
+  // Managers report to root
+  collect_worker_reports -> manager_rollup;
+  manager_rollup -> root_aggregate;
+  root_aggregate -> hierarchy_status;
+
+  // =============================================================================
+  // CENTRALIZED DECISION MAKING
+  // =============================================================================
+  subgraph cluster_decisions {
+    label="Centralized Decision Making";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    escalation [label="Escalation to\nRoot", fillcolor=pink];
+    root_review [label="Root Reviews\nIssue", fillcolor=pink];
+    decision_type [shape=diamond, label="Decision\nType?"];
+    strategic_decision [label="Strategic\nDecision", fillcolor=lightcoral];
+    tactical_decision [label="Tactical\nDecision", fillcolor=lightcoral];
+    operational_decision [label="Operational\nDecision", fillcolor=lightcoral];
+    broadcast_decision [label="Broadcast\nDecision", fillcolor=pink];
+  }
+
+  hierarchy_status -> escalation [label="Needs Decision"];
+  escalation -> root_review;
+  root_review -> decision_type;
+  decision_type -> strategic_decision [label="Strategic"];
+  decision_type -> tactical_decision [label="Tactical"];
+  decision_type -> operational_decision [label="Operational"];
+  strategic_decision -> broadcast_decision;
+  tactical_decision -> broadcast_decision;
+  operational_decision -> broadcast_decision;
+
+  // =============================================================================
+  // COMMAND PROPAGATION
+  // =============================================================================
+  subgraph cluster_propagation {
+    label="Command Propagation Down Tree";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    root_command [label="Root Issues\nCommand", fillcolor=lightblue];
+    propagate_managers [label="Propagate to\nManagers", fillcolor=lightblue];
+    manager_interpret [label="Managers\nInterpret", fillcolor=lightblue];
+    propagate_workers [label="Propagate to\nWorkers", fillcolor=lightblue];
+    workers_execute [label="Workers\nExecute", fillcolor=lightblue];
+    execution_check [shape=diamond, label="Execution\nComplete?"];
+  }
+
+  broadcast_decision -> root_command;
+  root_command -> propagate_managers;
+  propagate_managers -> manager_interpret;
+  manager_interpret -> propagate_workers;
+  propagate_workers -> workers_execute;
+  workers_execute -> execution_check;
+
+  // =============================================================================
+  // MEMORY SYNCHRONIZATION
+  // =============================================================================
+  subgraph cluster_memory {
+    label="Hierarchical Memory Sync";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    worker_memory [label="Worker-Level\nMemory", fillcolor=lightgreen];
+    manager_memory [label="Manager-Level\nMemory", fillcolor=lightgreen];
+    root_memory [label="Root-Level\nMemory", fillcolor=lightgreen];
+    memory_consolidate [label="Consolidate\nMemory Layers", fillcolor=lightgreen];
+    memory_distribute [label="Distribute\nShared Context", fillcolor=lightgreen];
+  }
+
+  execution_check -> worker_memory [label="Complete"];
+  worker_memory -> manager_memory;
+  manager_memory -> root_memory;
+  root_memory -> memory_consolidate;
+  memory_consolidate -> memory_distribute;
+
+  // =============================================================================
+  // CLEAR COMMAND CHAIN
+  // =============================================================================
+  subgraph cluster_command_chain {
+    label="Clear Command Chain Visualization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    chain_root [label="Root\nAuthority", fillcolor=purple, fontcolor=white, style="filled,bold"];
+    chain_mgr1 [label="Manager 1", fillcolor=mediumpurple];
+    chain_mgr2 [label="Manager 2", fillcolor=mediumpurple];
+    chain_mgr3 [label="Manager 3", fillcolor=mediumpurple];
+    chain_worker1 [label="Workers 1-4", fillcolor=plum];
+    chain_worker2 [label="Workers 5-8", fillcolor=plum];
+    chain_worker3 [label="Workers 9-12", fillcolor=plum];
+
+    chain_root -> chain_mgr1 [label="Delegates", penwidth=2];
+    chain_root -> chain_mgr2 [label="Delegates", penwidth=2];
+    chain_root -> chain_mgr3 [label="Delegates", penwidth=2];
+    chain_mgr1 -> chain_worker1 [label="Assigns"];
+    chain_mgr2 -> chain_worker2 [label="Assigns"];
+    chain_mgr3 -> chain_worker3 [label="Assigns"];
+  }
+
+  memory_distribute -> chain_root;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Hierarchical Validation";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    worker_validation [label="Worker-Level\nValidation", fillcolor=cyan];
+    manager_review [label="Manager-Level\nReview", fillcolor=cyan];
+    root_approval [label="Root-Level\nApproval", fillcolor=cyan];
+    approval_check [shape=diamond, label="Approved?"];
+    rework [label="Send for\nRework", fillcolor=yellow];
+  }
+
+  execution_check -> worker_validation [label="Yes"];
+  worker_validation -> manager_review;
+  manager_review -> root_approval;
+  root_approval -> approval_check;
+  approval_check -> rework [label="No"];
+  rework -> propagate_workers [style=dashed];
+
+  // =============================================================================
+  // MCP COORDINATION TOOLS
+  // =============================================================================
+  subgraph cluster_mcp {
+    label="MCP Hierarchical Coordination";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    mcp_swarm_init [label="mcp__ruv-swarm\nswarm_init\n(hierarchical)", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_spawn [label="mcp__ruv-swarm\nagent_spawn\n(coordinator)", fillcolor=lightyellow, shape=box3d];
+    mcp_task_orchestrate [label="mcp__ruv-swarm\ntask_orchestrate", fillcolor=lightyellow, shape=box3d];
+    mcp_swarm_status [label="mcp__ruv-swarm\nswarm_status", fillcolor=lightyellow, shape=box3d];
+  }
+
+  init_topology -> mcp_swarm_init;
+  manager_1 -> mcp_agent_spawn;
+  propagate_managers -> mcp_task_orchestrate;
+  hierarchy_status -> mcp_swarm_status;
+
+  // =============================================================================
+  // COMPLETION & SUCCESS
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Cleanup";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    final_report [label="Generate\nHierarchical Report", fillcolor=lightgreen];
+    cleanup_hierarchy [label="Cleanup\nHierarchy", fillcolor=lightgreen];
+    log_metrics [label="Log Coordination\nMetrics", fillcolor=lightgreen];
+    success [label="Hierarchical\nCoordination\nComplete",
+             shape=doublecircle,
+             fillcolor=green,
+             style="filled,bold"];
+  }
+
+  approval_check -> final_report [label="Yes"];
+  final_report -> cleanup_hierarchy;
+  cleanup_hierarchy -> log_metrics;
+  log_metrics -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Escalation Chain";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    worker_error [label="Worker Error", fillcolor=orange];
+    escalate_manager [label="Escalate to\nManager", fillcolor=orange];
+    manager_handle [shape=diamond, label="Manager\nCan Handle?"];
+    escalate_root [label="Escalate to\nRoot", fillcolor=orange];
+    root_handle [shape=diamond, label="Root Can\nHandle?"];
+    manual_intervention [shape=hexagon, fillcolor=yellow, label="Manual\nIntervention"];
+    failure [label="Coordination\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  execution_check -> worker_error [label="Error"];
+  worker_error -> escalate_manager;
+  escalate_manager -> manager_handle;
+  manager_handle -> propagate_workers [label="Yes", style=dashed];
+  manager_handle -> escalate_root [label="No"];
+  escalate_root -> root_handle;
+  root_handle -> root_command [label="Yes", style=dashed];
+  root_handle -> manual_intervention [label="No"];
+  manual_intervention -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_root [shape=box, fillcolor=darkgreen, fontcolor=white, style="filled,bold", label="Root"];
+    legend_manager [shape=box, fillcolor=green, fontcolor=white, style="filled,bold", label="Manager"];
+    legend_worker [shape=box, fillcolor=lightblue, label="Worker"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_mcp [shape=box3d, fillcolor=lightyellow, label="MCP Tool"];
+    legend_error [shape=box, fillcolor=orange, label="Error"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+
+    legend_root -> legend_manager [style=invis];
+    legend_manager -> legend_worker [style=invis];
+    legend_worker -> legend_decision [style=invis];
+    legend_decision -> legend_mcp [style=invis];
+    legend_mcp -> legend_error [style=invis];
+    legend_error -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+  }
+}

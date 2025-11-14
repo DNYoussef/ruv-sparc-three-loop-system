@@ -1,0 +1,191 @@
+digraph CICDWorkflow {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Complete CI/CD Pipeline Workflow</b><br/>Continuous Integration → Testing → Deployment → Monitoring>;
+    fontsize=16;
+
+    // Start
+    start [label="Code Commit\nPush/PR", shape=oval, fillcolor="#d4edda"];
+
+    // CI Phase - Build & Test
+    subgraph cluster_ci {
+        label="Continuous Integration (CI)";
+        style=filled;
+        color="#cfe2ff";
+
+        trigger_pipeline [label="Trigger Pipeline\nGitHub Actions", shape=box, fillcolor="#b6d7ff"];
+        checkout_code [label="Checkout Code\ngit clone", shape=box, fillcolor="#b6d7ff"];
+        install_deps [label="Install Dependencies\nnpm/pip install", shape=box, fillcolor="#b6d7ff"];
+        lint_code [label="Lint Code\nESLint/Pylint", shape=box, fillcolor="#b6d7ff"];
+        run_unit_tests [label="Unit Tests\nJest/Pytest", shape=box, fillcolor="#b6d7ff"];
+        run_integration [label="Integration Tests\nAPI/DB Tests", shape=box, fillcolor="#b6d7ff"];
+        coverage_report [label="Coverage Report\n>80% Required", shape=box, fillcolor="#b6d7ff"];
+        sonar_analysis [label="SonarQube\nCode Quality", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Quality Gates
+    tests_passed [label="All Tests\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+    coverage_ok [label="Coverage\n>80%?", shape=diamond, fillcolor="#fff3cd"];
+    quality_gate [label="Quality Gate\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Security Scanning
+    subgraph cluster_security {
+        label="Security Scanning";
+        style=filled;
+        color="#f8d7da";
+
+        sast_scan [label="SAST Scan\nCodeQL/Semgrep", shape=box, fillcolor="#f5c6cb"];
+        dependency_scan [label="Dependency Scan\nSnyk/OWASP", shape=box, fillcolor="#f5c6cb"];
+        secret_scan [label="Secret Scan\nGitleaks/TruffleHog", shape=box, fillcolor="#f5c6cb"];
+        container_scan [label="Container Scan\nTrivy/Aqua", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    security_passed [label="Security\nIssues?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Build & Package
+    subgraph cluster_build {
+        label="Build & Package";
+        style=filled;
+        color="#d1e7dd";
+
+        build_artifacts [label="Build Artifacts\nCompile/Bundle", shape=box, fillcolor="#a3cfbb"];
+        create_docker [label="Create Docker\nImage", shape=box, fillcolor="#a3cfbb"];
+        tag_version [label="Tag Version\nSemVer", shape=box, fillcolor="#a3cfbb"];
+        push_registry [label="Push to Registry\nDocker Hub/ECR", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Deployment Strategy
+    deployment_env [label="Deployment\nEnvironment?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Dev Environment
+    subgraph cluster_dev {
+        label="Dev Environment";
+        style=filled;
+        color="#d1e7dd";
+
+        deploy_dev [label="Deploy to Dev\nAuto Deploy", shape=box, fillcolor="#a3cfbb"];
+        smoke_test_dev [label="Smoke Tests\nDev", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Staging Environment
+    subgraph cluster_staging {
+        label="Staging Environment";
+        style=filled;
+        color="#d1e7dd";
+
+        deploy_staging [label="Deploy to Staging\nManual Approval", shape=box, fillcolor="#a3cfbb"];
+        e2e_tests [label="E2E Tests\nCypress/Selenium", shape=box, fillcolor="#a3cfbb"];
+        load_tests [label="Load Tests\nk6/JMeter", shape=box, fillcolor="#a3cfbb"];
+        perf_tests [label="Performance Tests\nLatency/Throughput", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    staging_approval [label="Staging\nApproved?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Production Environment
+    subgraph cluster_prod {
+        label="Production Environment";
+        style=filled;
+        color="#fff3cd";
+
+        prod_approval [label="Production\nApproval", shape=box, fillcolor="#ffeeba"];
+        deploy_prod [label="Deploy to Prod\nBlue-Green", shape=box, fillcolor="#ffeeba"];
+        canary_release [label="Canary Release\n10% → 50% → 100%", shape=box, fillcolor="#ffeeba"];
+        health_checks [label="Health Checks\nReadiness Probes", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Post-Deployment
+    subgraph cluster_monitoring {
+        label="Post-Deployment Monitoring";
+        style=filled;
+        color="#e7d1e7";
+
+        metrics_monitor [label="Metrics Monitoring\nPrometheus/Grafana", shape=box, fillcolor="#d4b5d4"];
+        log_aggregation [label="Log Aggregation\nELK/Splunk", shape=box, fillcolor="#d4b5d4"];
+        apm_monitoring [label="APM Monitoring\nDatadog/New Relic", shape=box, fillcolor="#d4b5d4"];
+        alert_setup [label="Alert Setup\nPagerDuty/Slack", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Rollback
+    health_ok [label="Health\nOK?", shape=diamond, fillcolor="#fff3cd"];
+    rollback [label="Rollback\nPrevious Version", shape=box, fillcolor="#f8d7da"];
+
+    // End States
+    success [label="Deployment\nSuccessful", shape=oval, fillcolor="#d4edda"];
+    failed [label="Pipeline\nFailed", shape=oval, fillcolor="#f8d7da"];
+
+    // Artifacts
+    docker_artifact [label="Docker Image\nv{version}", shape=cylinder, fillcolor="#f8d7da"];
+    test_reports [label="Test Reports\nJUnit XML", shape=cylinder, fillcolor="#f8d7da"];
+
+    // Workflow Connections
+    start -> trigger_pipeline;
+    trigger_pipeline -> checkout_code;
+    checkout_code -> install_deps;
+    install_deps -> lint_code;
+    lint_code -> run_unit_tests;
+    run_unit_tests -> run_integration;
+    run_integration -> coverage_report;
+    coverage_report -> tests_passed;
+
+    tests_passed -> coverage_ok [label="Pass", color="green"];
+    tests_passed -> failed [label="Fail", color="red"];
+
+    coverage_ok -> sonar_analysis [label="Yes", color="green"];
+    coverage_ok -> failed [label="No", color="red"];
+
+    sonar_analysis -> quality_gate;
+    quality_gate -> sast_scan [label="Pass", color="green"];
+    quality_gate -> failed [label="Fail", color="red"];
+
+    sast_scan -> dependency_scan;
+    dependency_scan -> secret_scan;
+    secret_scan -> container_scan;
+    container_scan -> security_passed;
+
+    security_passed -> build_artifacts [label="No Issues", color="green"];
+    security_passed -> failed [label="Critical Issues", color="red"];
+
+    build_artifacts -> create_docker;
+    create_docker -> tag_version;
+    tag_version -> push_registry;
+    push_registry -> docker_artifact;
+    docker_artifact -> deployment_env;
+
+    // Environment paths
+    deployment_env -> deploy_dev [label="Dev", color="blue"];
+    deploy_dev -> smoke_test_dev;
+    smoke_test_dev -> test_reports;
+
+    deployment_env -> deploy_staging [label="Staging", color="orange"];
+    deploy_staging -> e2e_tests;
+    e2e_tests -> load_tests;
+    load_tests -> perf_tests;
+    perf_tests -> staging_approval;
+
+    staging_approval -> prod_approval [label="Approved", color="green"];
+    staging_approval -> failed [label="Rejected", color="red"];
+
+    deployment_env -> prod_approval [label="Production", color="red"];
+    prod_approval -> deploy_prod;
+    deploy_prod -> canary_release;
+    canary_release -> health_checks;
+    health_checks -> health_ok;
+
+    health_ok -> metrics_monitor [label="Healthy", color="green"];
+    health_ok -> rollback [label="Unhealthy", color="red"];
+
+    metrics_monitor -> log_aggregation;
+    log_aggregation -> apm_monitoring;
+    apm_monitoring -> alert_setup;
+    alert_setup -> success;
+
+    rollback -> failed;
+}

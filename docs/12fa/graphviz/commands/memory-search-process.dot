@@ -1,0 +1,25 @@
+digraph MEMORY_SEARCH {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/memory-search", shape=ellipse, fillcolor=lightblue];
+  parse_query [label="Parse Search\nQuery", fillcolor=lightblue];
+  parse_pattern [label="Parse\nPattern", fillcolor=lightblue];
+  select_search_type [shape=diamond, label="Search\nType?"];
+  pattern_match [label="Pattern\nMatching", fillcolor=lightpurple, style="filled,bold"];
+  fuzzy_search [label="Fuzzy\nSearch", fillcolor=lightpurple];
+  semantic_search [label="Semantic\nSearch", fillcolor=purple];
+  filter_results [label="Filter\nResults", fillcolor=lightgreen];
+  rank_results [label="Rank by\nRelevance", fillcolor=lightgreen];
+  format_output [label="Format\nOutput", fillcolor=lightblue];
+  success [label="Search Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> parse_query -> parse_pattern -> select_search_type;
+  select_search_type -> pattern_match [label="pattern"];
+  select_search_type -> fuzzy_search [label="fuzzy"];
+  select_search_type -> semantic_search [label="semantic"];
+  pattern_match -> filter_results;
+  fuzzy_search -> filter_results;
+  semantic_search -> filter_results;
+  filter_results -> rank_results -> format_output -> success;
+}

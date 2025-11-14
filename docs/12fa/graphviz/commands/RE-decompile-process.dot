@@ -1,0 +1,44 @@
+digraph REDecompileProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-decompile\nCommand Start", fillcolor=lightgreen];
+    load_binary [label="Load Binary File"];
+    select_decompiler [label="Select Decompiler\n(Ghidra/IDA/Binary Ninja)"];
+    parse_binary [label="Parse Binary\nStructure"];
+    lift_to_ir [label="Lift to Intermediate\nRepresentation"];
+    analyze_dataflow [label="Analyze Data Flow"];
+    recover_types [label="Recover Type\nInformation"];
+    reconstruct_functions [label="Reconstruct\nFunctions"];
+    optimize_code [label="Optimize Decompiled\nCode"];
+    generate_pseudocode [label="Generate\nPseudocode"];
+    annotate_code [label="Annotate with\nComments"];
+    export_source [label="Export Source Code\n(C/C++)"];
+    end [label="Decompilation Complete", fillcolor=lightcoral];
+
+    // Error handling
+    error [label="Error Handler\n(Decompilation Failed)", fillcolor=pink];
+
+    // Flow
+    start -> load_binary;
+    load_binary -> select_decompiler;
+    select_decompiler -> parse_binary;
+    parse_binary -> lift_to_ir;
+    lift_to_ir -> analyze_dataflow;
+    analyze_dataflow -> recover_types;
+    recover_types -> reconstruct_functions;
+    reconstruct_functions -> optimize_code;
+    optimize_code -> generate_pseudocode;
+    generate_pseudocode -> annotate_code;
+    annotate_code -> export_source;
+    export_source -> end;
+
+    lift_to_ir -> error [label="Parse Error", style=dashed];
+
+    // Metadata
+    label="RE-decompile Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

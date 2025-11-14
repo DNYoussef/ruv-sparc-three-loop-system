@@ -1,0 +1,128 @@
+digraph resource_allocator_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Resource Allocator - Intelligent Resource Management";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Resource Request", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Assessment Phase
+    subgraph cluster_assessment {
+        label="Resource Assessment";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        inventory [label="Resource Inventory\n(Available resources)"];
+        demand [label="Demand Analysis\n(Requirements)"];
+        capacity [label="Capacity Planning\n(Future needs)"];
+    }
+
+    // Allocation Phase
+    subgraph cluster_allocation {
+        label="Allocation Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        prioritize [label="Priority Assignment\n(Critical first)"];
+        optimize [label="Allocation Optimization\n(Best fit)"];
+        reserve [label="Resource Reservation\n(Lock resources)"];
+        distribute [label="Distribution\n(Assign to agents)"];
+    }
+
+    // Monitoring Phase
+    subgraph cluster_monitoring {
+        label="Utilization Monitoring";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        track [label="Utilization Tracking\n(Real-time)"];
+        analyze [label="Usage Analysis\n(Efficiency)"];
+        predict [label="Predictive Analytics\n(Trends)"];
+    }
+
+    // Optimization Phase
+    subgraph cluster_optimization {
+        label="Continuous Optimization";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        identify [label="Inefficiency Identification\n(Waste detection)"];
+        rebalance [label="Resource Rebalancing\n(Redistribution)"];
+        scale [label="Auto-scaling\n(Dynamic adjustment)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Resource Allocation", fillcolor="#238636"];
+        feature2 [label="Capacity Planning", fillcolor="#238636"];
+        feature3 [label="Utilization Tracking", fillcolor="#238636"];
+        feature4 [label="Optimization", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Allocated Resources\n+ Utilization Report", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> inventory;
+    inventory -> demand;
+    demand -> capacity;
+
+    capacity -> prioritize;
+    prioritize -> optimize;
+    optimize -> reserve;
+    reserve -> distribute;
+
+    distribute -> track;
+    track -> analyze;
+    analyze -> predict;
+
+    predict -> identify;
+    identify -> rebalance;
+    rebalance -> scale;
+
+    scale -> output;
+
+    // Feedback loops
+    analyze -> optimize [label="Re-optimize", style=dashed, color="#f85149"];
+    scale -> inventory [label="Update inventory", style=dashed, color="#f85149"];
+
+    // Feature connections
+    optimize -> feature1 [style=dotted, color="#8b949e"];
+    capacity -> feature2 [style=dotted, color="#8b949e"];
+    track -> feature3 [style=dotted, color="#8b949e"];
+    rebalance -> feature4 [style=dotted, color="#8b949e"];
+}

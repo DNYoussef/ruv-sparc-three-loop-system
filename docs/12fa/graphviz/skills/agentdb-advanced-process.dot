@@ -1,0 +1,124 @@
+digraph AGENTDB_ADVANCED_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="AgentDB Advanced Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="AgentDB Advanced Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load AgentDB Config"];
+    validate_input [label="Validate Database Setup"];
+    check_deps [label="Check AgentDB SDK"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Advanced Features Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    setup_quic [label="Setup QUIC Synchronization", fillcolor=purple];
+    configure_multi_db [label="Configure Multi-Database", fillcolor=purple];
+    setup_custom_metrics [label="Setup Custom Distance Metrics", fillcolor=purple];
+    enable_hybrid_search [label="Enable Hybrid Search", fillcolor=purple];
+    setup_check [shape=diamond, label="Setup\nComplete?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Setup Error"];
+    retry_logic [label="Retry Configuration", fillcolor=yellow];
+  }
+
+  check_secrets -> setup_quic [label="Pass"];
+  setup_quic -> configure_multi_db -> setup_custom_metrics -> enable_hybrid_search;
+  enable_hybrid_search -> setup_check;
+  setup_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> setup_quic [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Database Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store DB Configuration", fillcolor=lightblue];
+    sync_databases [label="Synchronize Databases", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  setup_check -> memory_store [label="Yes"];
+  memory_store -> sync_databases -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="All Features\nWorking?"];
+    run_benchmarks [label="Run Performance Benchmarks", fillcolor=lightgreen];
+    benchmark_check [shape=diamond, label="150x Speedup\nAchieved?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> run_benchmarks [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  run_benchmarks -> benchmark_check;
+  benchmark_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_docs [label="Generate Documentation", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="AgentDB Advanced Ready", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  benchmark_check -> generate_docs [label="Yes"];
+  generate_docs -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Setup Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

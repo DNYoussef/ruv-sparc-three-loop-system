@@ -1,0 +1,126 @@
+digraph PrismaInitCommand {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Command definition
+    start [label="/prisma-init\\nCommand Activated", fillcolor=lightgreen];
+
+    // Phase 1: Protocol Design
+    protocol_phase [label="PHASE 1: PRISMA Protocol Design", fillcolor=lightyellow, shape=box3d];
+    define_research_question [label="Define Research Question\\n(PICO Format)"];
+    set_eligibility_criteria [label="Set Eligibility Criteria\\n(Inclusion/Exclusion)"];
+    register_protocol [label="Register Protocol\\n(PROSPERO)"];
+
+    // Phase 2: Search Strategy Generation
+    search_phase [label="PHASE 2: Search Strategy Generation", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_databases {
+        label="Multi-Database Search Strategies";
+        style=filled;
+        fillcolor=lightgrey;
+
+        arxiv_strategy [label="arXiv:\\nBoolean + Categories"];
+        scholar_strategy [label="Google Scholar:\\nAdvanced Search"];
+        pubmed_strategy [label="PubMed:\\nMeSH Terms"];
+        ieee_strategy [label="IEEE Xplore:\\nMetadata Search"];
+        acm_strategy [label="ACM Digital Lib:\\nAdvanced Syntax"];
+    }
+
+    combine_strategies [label="Combine Strategies\\nwith De-duplication"];
+
+    // Phase 3: Screening Workflow
+    screening_phase [label="PHASE 3: Screening Workflow Design", fillcolor=lightyellow, shape=box3d];
+    create_title_screen [label="Stage 1: Title\\nScreening Form"];
+    create_abstract_screen [label="Stage 2: Abstract\\nScreening Form"];
+    create_fulltext_screen [label="Stage 3: Full-Text\\nReview Form"];
+    dual_screening_protocol [label="Dual Screening\\nProtocol + Conflict Resolution"];
+
+    // Phase 4: Data Extraction Forms
+    extraction_phase [label="PHASE 4: Data Extraction Forms", fillcolor=lightyellow, shape=box3d];
+    metadata_form [label="Metadata Form:\\nAuthor, Year, Venue, DOI"];
+    methods_form [label="Methods Form:\\nDataset, Model, Metrics"];
+    results_form [label="Results Form:\\nPerformance, Baselines"];
+    quality_form [label="Quality Assessment:\\nRisk of Bias"];
+
+    // Phase 5: PRISMA Flow Diagram
+    flowdiagram_phase [label="PHASE 5: PRISMA Flow Diagram", fillcolor=lightyellow, shape=box3d];
+    create_flow_template [label="Create Flow Diagram\\nTemplate (Graphviz)"];
+    define_flow_stages [label="Define Stages:\\nIdentification, Screening,\\nEligibility, Included"];
+
+    // Phase 6: Auto-Search Execution (Optional)
+    autosearch_phase [label="PHASE 6: Auto-Search Execution", fillcolor=lightyellow, shape=box3d];
+    execute_queries [label="Execute Database\\nQueries"];
+    deduplicate_results [label="De-duplicate\\nAcross Databases"];
+    export_references [label="Export References\\n(BibTeX, RIS)"];
+    create_screening_queue [label="Create Initial\\nScreening Queue"];
+
+    // Phase 7: Memory Integration
+    memory_phase [label="PHASE 7: Memory Integration", fillcolor=lightyellow, shape=box3d];
+    store_protocol [label="Store Protocol\\nin Memory MCP"];
+    tag_metadata [label="Tag: SOP, Pipeline-A,\\nPRISMA, literature"];
+
+    // Output & Completion
+    deliverables [label="Deliverables:\\n- {topic}-protocol.md (PRISMA 2020)\\n- {topic}-search-strategies.yaml\\n- {topic}-screening-form.md\\n- {topic}-extraction-form.md\\n- {topic}-flow-diagram.dot"];
+    end [label="/prisma-init\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Protocol Design
+    start -> protocol_phase;
+    protocol_phase -> define_research_question;
+    define_research_question -> set_eligibility_criteria;
+    set_eligibility_criteria -> register_protocol;
+
+    // Flow - Search Strategy
+    register_protocol -> search_phase;
+    search_phase -> arxiv_strategy;
+    search_phase -> scholar_strategy;
+    search_phase -> pubmed_strategy;
+    search_phase -> ieee_strategy;
+    search_phase -> acm_strategy;
+    arxiv_strategy -> combine_strategies;
+    scholar_strategy -> combine_strategies;
+    pubmed_strategy -> combine_strategies;
+    ieee_strategy -> combine_strategies;
+    acm_strategy -> combine_strategies;
+
+    // Flow - Screening Workflow
+    combine_strategies -> screening_phase;
+    screening_phase -> create_title_screen;
+    create_title_screen -> create_abstract_screen;
+    create_abstract_screen -> create_fulltext_screen;
+    create_fulltext_screen -> dual_screening_protocol;
+
+    // Flow - Data Extraction
+    dual_screening_protocol -> extraction_phase;
+    extraction_phase -> metadata_form;
+    metadata_form -> methods_form;
+    methods_form -> results_form;
+    results_form -> quality_form;
+
+    // Flow - PRISMA Flow Diagram
+    quality_form -> flowdiagram_phase;
+    flowdiagram_phase -> create_flow_template;
+    create_flow_template -> define_flow_stages;
+
+    // Flow - Auto-Search (Optional)
+    define_flow_stages -> autosearch_phase [label="--auto-search"];
+    define_flow_stages -> memory_phase [label="Skip Auto-Search"];
+    autosearch_phase -> execute_queries;
+    execute_queries -> deduplicate_results;
+    deduplicate_results -> export_references;
+    export_references -> create_screening_queue;
+    create_screening_queue -> memory_phase;
+
+    // Flow - Memory Integration
+    memory_phase -> store_protocol;
+    store_protocol -> tag_metadata;
+    tag_metadata -> deliverables;
+
+    // Flow - Output
+    deliverables -> end;
+
+    // Metadata
+    label="/prisma-init Command - Complete Workflow\\nPRISMA 2020 Systematic Literature Review\\nPipeline A: Literature & Gap-Finding";
+    fontsize=16;
+    fontname="Arial Bold";
+}

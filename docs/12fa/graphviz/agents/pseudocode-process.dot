@@ -1,0 +1,95 @@
+// Pseudocode Agent - SPARC Pseudocode Phase
+// Algorithm design, pseudocode, logic flow, data structures
+digraph pseudocode_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        pseudo_init [label="Pseudocode Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        sparc_phase [label="SPARC Phase 2\nPseudocode", fillcolor="#2d3748", fontcolor="#ffffff"];
+        algorithm_patterns [label="Algorithm\nPattern Library", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_algorithm {
+        label="Algorithm Design";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        problem_decomposer [label="Problem\nDecomposer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        algorithm_designer [label="Algorithm\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_analyzer [label="Complexity\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        optimization_suggester [label="Optimization\nSuggester", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_logic {
+        label="Logic Flow Design";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        flow_designer [label="Flow\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        condition_handler [label="Condition\nHandler", fillcolor="#059669", fontcolor="#ffffff"];
+        loop_designer [label="Loop\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        recursion_planner [label="Recursion\nPlanner", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_data {
+        label="Data Structure Design";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        structure_selector [label="Structure\nSelector", fillcolor="#0891b2", fontcolor="#ffffff"];
+        access_pattern_analyzer [label="Access Pattern\nAnalyzer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        memory_optimizer [label="Memory\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_pseudocode {
+        label="Pseudocode Generation";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        pseudocode_writer [label="Pseudocode\nWriter", fillcolor="#dc2626", fontcolor="#ffffff"];
+        comment_generator [label="Comment\nGenerator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        example_creator [label="Example\nCreator", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        logic_validator [label="Logic\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        edge_case_checker [label="Edge Case\nChecker", fillcolor="#8b4789", fontcolor="#ffffff"];
+        walkthrough_simulator [label="Walkthrough\nSimulator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        spec_coord [label="Specification\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        architecture_coord [label="Architecture\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        coder_coord [label="Coder\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    pseudo_init -> sparc_phase [label="Enter Phase 2"];
+    pseudo_init -> algorithm_patterns [label="Load"];
+    sparc_phase -> spec_coord [label="Receive Spec"];
+    spec_coord -> problem_decomposer [label="Decompose"];
+    problem_decomposer -> algorithm_designer [label="Design"];
+    algorithm_designer -> complexity_analyzer [label="Analyze"];
+    complexity_analyzer -> optimization_suggester [label="Optimize"];
+    optimization_suggester -> flow_designer [label="Design Flow"];
+    flow_designer -> condition_handler [label="Handle Conditions"];
+    condition_handler -> loop_designer [label="Design Loops"];
+    loop_designer -> recursion_planner [label="Plan Recursion"];
+    recursion_planner -> structure_selector [label="Select Structures"];
+    structure_selector -> access_pattern_analyzer [label="Analyze Patterns"];
+    access_pattern_analyzer -> memory_optimizer [label="Optimize Memory"];
+    memory_optimizer -> pseudocode_writer [label="Write Pseudocode"];
+    pseudocode_writer -> comment_generator [label="Add Comments"];
+    comment_generator -> example_creator [label="Create Examples"];
+    example_creator -> logic_validator [label="Validate"];
+    logic_validator -> edge_case_checker [label="Check Edge Cases"];
+    edge_case_checker -> walkthrough_simulator [label="Simulate"];
+    walkthrough_simulator -> architecture_coord [label="Handoff"];
+    pseudocode_writer -> coder_coord [label="Share Pseudocode"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Pseudocode Agent", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Algorithm Design", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Logic Flow", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+}

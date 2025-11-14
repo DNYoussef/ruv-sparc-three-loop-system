@@ -1,0 +1,370 @@
+/**
+ * External Service Integration Map
+ * Command: /integrate-jira, /integrate-slack, /integrate-aws, /integrate-*
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph external_integrations {
+    rankdir=LR;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    splines=ortho;
+
+    node [fontname="Arial", fontsize=11, style="rounded,filled", margin=0.15];
+    edge [fontname="Arial", fontsize=9];
+
+    label=<<B>External Service Integration Map</B><BR/>Communication • Project Management • Cloud • DevOps • Analytics>;
+    labelloc=t;
+    fontsize=16;
+
+    // Central Hub
+    subgraph cluster_hub {
+        label="Integration Hub";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        hub [label="Claude Flow\nIntegration Hub", shape=hexagon, fillcolor="#2196f3", penwidth=3, fontsize=14];
+        auth_manager [label="Auth\nManager", shape=box, fillcolor="#90caf9"];
+        webhook_handler [label="Webhook\nHandler", shape=box, fillcolor="#64b5f6"];
+        api_gateway [label="API\nGateway", shape=box, fillcolor="#42a5f5"];
+    }
+
+    // Communication & Collaboration
+    subgraph cluster_communication {
+        label="Communication & Collaboration";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        slack [label="Slack", shape=box, fillcolor="#e1bee7"];
+        slack_features [label=<
+            • Channel notifications<BR/>
+            • Direct messages<BR/>
+            • Slash commands<BR/>
+            • Interactive messages<BR/>
+            • File sharing
+        >, shape=note, fillcolor="#ce93d8"];
+
+        discord [label="Discord", shape=box, fillcolor="#ba68c8"];
+        discord_features [label=<
+            • Bot integration<BR/>
+            • Voice channels<BR/>
+            • Rich embeds<BR/>
+            • Webhooks
+        >, shape=note, fillcolor="#ab47bc"];
+
+        teams [label="Microsoft\nTeams", shape=box, fillcolor="#9c27b0"];
+        teams_features [label=<
+            • Channel notifications<BR/>
+            • Adaptive cards<BR/>
+            • Meeting integration<BR/>
+            • Task integration
+        >, shape=note, fillcolor="#8e24aa"];
+
+        email [label="Email\n(SMTP)", shape=box, fillcolor="#7b1fa2"];
+        email_features [label=<
+            • Automated reports<BR/>
+            • Alert notifications<BR/>
+            • Digest emails
+        >, shape=note, fillcolor="#6a1b9a"];
+    }
+
+    // Project Management
+    subgraph cluster_pm {
+        label="Project Management";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        jira [label="Jira", shape=box, fillcolor="#ffe0b2"];
+        jira_features [label=<
+            • Create/update issues<BR/>
+            • Sprint management<BR/>
+            • Custom fields<BR/>
+            • JQL queries<BR/>
+            • Workflow automation
+        >, shape=note, fillcolor="#ffcc80"];
+
+        linear [label="Linear", shape=box, fillcolor="#ffb74d"];
+        linear_features [label=<
+            • Issue sync<BR/>
+            • Project updates<BR/>
+            • Team collaboration<BR/>
+            • API access
+        >, shape=note, fillcolor="#ffa726"];
+
+        asana [label="Asana", shape=box, fillcolor="#ff9800"];
+        asana_features [label=<
+            • Task creation<BR/>
+            • Project tracking<BR/>
+            • Custom fields<BR/>
+            • Webhooks
+        >, shape=note, fillcolor="#fb8c00"];
+
+        trello [label="Trello", shape=box, fillcolor="#f57c00"];
+        trello_features [label=<
+            • Card management<BR/>
+            • Board automation<BR/>
+            • Labels/checklists<BR/>
+            • Power-Ups
+        >, shape=note, fillcolor="#ef6c00"];
+    }
+
+    // Cloud Platforms
+    subgraph cluster_cloud {
+        label="Cloud Platforms";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        aws [label="AWS", shape=box, fillcolor="#c8e6c9"];
+        aws_features [label=<
+            • EC2/ECS/Lambda<BR/>
+            • S3/RDS/DynamoDB<BR/>
+            • CloudWatch<BR/>
+            • CloudFormation<BR/>
+            • IAM
+        >, shape=note, fillcolor="#a5d6a7"];
+
+        gcp [label="Google Cloud\nPlatform", shape=box, fillcolor="#81c784"];
+        gcp_features [label=<
+            • Compute Engine<BR/>
+            • Cloud Functions<BR/>
+            • BigQuery<BR/>
+            • Cloud Storage<BR/>
+            • Kubernetes Engine
+        >, shape=note, fillcolor="#66bb6a"];
+
+        azure [label="Microsoft\nAzure", shape=box, fillcolor="#4caf50"];
+        azure_features [label=<
+            • Azure Functions<BR/>
+            • Cosmos DB<BR/>
+            • App Service<BR/>
+            • Azure DevOps<BR/>
+            • Monitoring
+        >, shape=note, fillcolor="#43a047"];
+
+        vercel [label="Vercel", shape=box, fillcolor="#388e3c"];
+        vercel_features [label=<
+            • Auto deployments<BR/>
+            • Preview URLs<BR/>
+            • Edge Functions<BR/>
+            • Analytics
+        >, shape=note, fillcolor="#2e7d32"];
+    }
+
+    // DevOps & CI/CD
+    subgraph cluster_devops {
+        label="DevOps & CI/CD";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        github [label="GitHub", shape=box, fillcolor="#fff59d"];
+        github_features [label=<
+            • Repository mgmt<BR/>
+            • PR automation<BR/>
+            • Actions integration<BR/>
+            • Issue tracking<BR/>
+            • Code scanning
+        >, shape=note, fillcolor="#fff176"];
+
+        gitlab [label="GitLab", shape=box, fillcolor="#ffee58"];
+        gitlab_features [label=<
+            • CI/CD pipelines<BR/>
+            • Container registry<BR/>
+            • Issue boards<BR/>
+            • Wiki integration
+        >, shape=note, fillcolor="#ffeb3b"];
+
+        jenkins [label="Jenkins", shape=box, fillcolor="#fdd835"];
+        jenkins_features [label=<
+            • Pipeline triggers<BR/>
+            • Build status<BR/>
+            • Artifact publishing<BR/>
+            • Plugin integration
+        >, shape=note, fillcolor="#f9a825"];
+
+        docker [label="Docker Hub", shape=box, fillcolor="#f57f17"];
+        docker_features [label=<
+            • Image push/pull<BR/>
+            • Automated builds<BR/>
+            • Webhook triggers<BR/>
+            • Registry mgmt
+        >, shape=note, fillcolor="#ff6f00"];
+    }
+
+    // Monitoring & Analytics
+    subgraph cluster_monitoring {
+        label="Monitoring & Analytics";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        datadog [label="Datadog", shape=box, fillcolor="#ffcdd2"];
+        datadog_features [label=<
+            • Metrics collection<BR/>
+            • Log aggregation<BR/>
+            • APM tracing<BR/>
+            • Custom dashboards<BR/>
+            • Alerting
+        >, shape=note, fillcolor="#ef9a9a"];
+
+        newrelic [label="New Relic", shape=box, fillcolor="#e57373"];
+        newrelic_features [label=<
+            • Application monitoring<BR/>
+            • Infrastructure monitoring<BR/>
+            • Log management<BR/>
+            • Distributed tracing
+        >, shape=note, fillcolor="#ef5350"];
+
+        sentry [label="Sentry", shape=box, fillcolor="#f44336"];
+        sentry_features [label=<
+            • Error tracking<BR/>
+            • Performance monitoring<BR/>
+            • Release tracking<BR/>
+            • Issue assignment
+        >, shape=note, fillcolor="#e53935"];
+
+        prometheus [label="Prometheus +\nGrafana", shape=box, fillcolor="#c62828"];
+        prometheus_features [label=<
+            • Metrics scraping<BR/>
+            • Alerting rules<BR/>
+            • Custom dashboards<BR/>
+            • Query language
+        >, shape=note, fillcolor="#b71c1c"];
+    }
+
+    // Databases & Storage
+    subgraph cluster_databases {
+        label="Databases & Storage";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        supabase [label="Supabase", shape=box, fillcolor="#b3e5fc"];
+        supabase_features [label=<
+            • PostgreSQL<BR/>
+            • Real-time subscriptions<BR/>
+            • Auth integration<BR/>
+            • Storage API<BR/>
+            • Edge Functions
+        >, shape=note, fillcolor="#81d4fa"];
+
+        firebase [label="Firebase", shape=box, fillcolor="#4fc3f7"];
+        firebase_features [label=<
+            • Firestore<BR/>
+            • Authentication<BR/>
+            • Cloud Functions<BR/>
+            • Hosting<BR/>
+            • Analytics
+        >, shape=note, fillcolor="#29b6f6"];
+
+        mongodb [label="MongoDB\nAtlas", shape=box, fillcolor="#03a9f4"];
+        mongodb_features [label=<
+            • Cloud database<BR/>
+            • Atlas Search<BR/>
+            • Change streams<BR/>
+            • Triggers
+        >, shape=note, fillcolor="#039be5"];
+
+        redis [label="Redis Cloud", shape=box, fillcolor="#0288d1"];
+        redis_features [label=<
+            • Caching layer<BR/>
+            • Pub/Sub<BR/>
+            • Session storage<BR/>
+            • Rate limiting
+        >, shape=note, fillcolor="#0277bd"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Hub", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Communication", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Project Mgmt", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Cloud", shape=box, fillcolor="#4caf50"];
+        leg5 [label="DevOps", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Monitoring", shape=box, fillcolor="#f44336"];
+        leg7 [label="Databases", shape=box, fillcolor="#03a9f4"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7;}
+    }
+
+    // Hub connections
+    hub -> auth_manager;
+    hub -> webhook_handler;
+    hub -> api_gateway;
+
+    // Communication
+    api_gateway -> slack [label="OAuth2"];
+    api_gateway -> discord [label="Bot Token"];
+    api_gateway -> teams [label="App ID"];
+    api_gateway -> email [label="SMTP"];
+
+    slack -> slack_features [style=dashed];
+    discord -> discord_features [style=dashed];
+    teams -> teams_features [style=dashed];
+    email -> email_features [style=dashed];
+
+    // Project Management
+    api_gateway -> jira [label="API Token"];
+    api_gateway -> linear [label="API Key"];
+    api_gateway -> asana [label="OAuth2"];
+    api_gateway -> trello [label="API Key"];
+
+    jira -> jira_features [style=dashed];
+    linear -> linear_features [style=dashed];
+    asana -> asana_features [style=dashed];
+    trello -> trello_features [style=dashed];
+
+    // Cloud
+    auth_manager -> aws [label="IAM"];
+    auth_manager -> gcp [label="Service Account"];
+    auth_manager -> azure [label="Service Principal"];
+    api_gateway -> vercel [label="API Token"];
+
+    aws -> aws_features [style=dashed];
+    gcp -> gcp_features [style=dashed];
+    azure -> azure_features [style=dashed];
+    vercel -> vercel_features [style=dashed];
+
+    // DevOps
+    webhook_handler -> github [label="Webhooks"];
+    webhook_handler -> gitlab [label="Webhooks"];
+    api_gateway -> jenkins [label="API Token"];
+    api_gateway -> docker [label="Registry Token"];
+
+    github -> github_features [style=dashed];
+    gitlab -> gitlab_features [style=dashed];
+    jenkins -> jenkins_features [style=dashed];
+    docker -> docker_features [style=dashed];
+
+    // Monitoring
+    api_gateway -> datadog [label="API Key"];
+    api_gateway -> newrelic [label="License Key"];
+    webhook_handler -> sentry [label="DSN"];
+    api_gateway -> prometheus [label="Remote Write"];
+
+    datadog -> datadog_features [style=dashed];
+    newrelic -> newrelic_features [style=dashed];
+    sentry -> sentry_features [style=dashed];
+    prometheus -> prometheus_features [style=dashed];
+
+    // Databases
+    auth_manager -> supabase [label="Service Key"];
+    auth_manager -> firebase [label="Service Account"];
+    api_gateway -> mongodb [label="Connection String"];
+    api_gateway -> redis [label="Auth Token"];
+
+    supabase -> supabase_features [style=dashed];
+    firebase -> firebase_features [style=dashed];
+    mongodb -> mongodb_features [style=dashed];
+    redis -> redis_features [style=dashed];
+}

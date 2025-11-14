@@ -1,0 +1,52 @@
+digraph sparc_devops_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:DevOps Command Workflow\nDeployment & Infrastructure Automation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:devops", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  infrastructure_code [label="Infrastructure as Code\n- Terraform/CloudFormation\n- Declarative config\n- Version control", fillcolor="#FFF9C4"];
+
+  container_setup [label="Containerization\n- Dockerfile\n- Docker Compose\n- Image optimization", fillcolor="#FFE0B2"];
+
+  ci_pipeline [label="CI Pipeline Setup\n- Build automation\n- Test automation\n- Linting & formatting", fillcolor="#BBDEFB"];
+
+  cd_pipeline [label="CD Pipeline Setup\n- Deployment automation\n- Environment config\n- Rollback strategy", fillcolor="#C5CAE9"];
+
+  kubernetes [label="Kubernetes Setup\n- Deployment manifests\n- Services & Ingress\n- ConfigMaps & Secrets", fillcolor="#B2DFDB"];
+
+  monitoring_setup [label="Monitoring Setup\n- Metrics collection\n- Log aggregation\n- Alerting", fillcolor="#D1C4E9"];
+
+  test_deploy [label="Test Deployment\n- Staging environment\n- Smoke tests\n- Health checks", fillcolor="#F0F4C3"];
+
+  production_deploy [label="Production Deployment\n- Blue-green deployment\n- Canary release\n- Health validation", fillcolor="#FFE0B2"];
+
+  verify_deployment [label="Verify Deployment\n- Health endpoints\n- Functional tests\n- Performance check", fillcolor="#BBDEFB"];
+
+  enable_monitoring [label="Enable Monitoring\n- Start metrics\n- Alert rules\n- Dashboard", fillcolor="#B2DFDB"];
+
+  success [label="Deployment Complete\nSystem live", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  rollback [label="Rollback\nRevert to previous version", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> infrastructure_code;
+  infrastructure_code -> container_setup;
+  container_setup -> ci_pipeline;
+  ci_pipeline -> cd_pipeline;
+  cd_pipeline -> kubernetes;
+  kubernetes -> monitoring_setup;
+  monitoring_setup -> test_deploy;
+  test_deploy -> production_deploy [label="Passed"];
+  test_deploy -> rollback [label="Failed"];
+  production_deploy -> verify_deployment;
+  verify_deployment -> enable_monitoring [label="Healthy"];
+  verify_deployment -> rollback [label="Unhealthy"];
+  enable_monitoring -> success;
+}

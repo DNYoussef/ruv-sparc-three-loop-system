@@ -1,3 +1,8 @@
+---
+name: research-emerging-arvr-ar-vr-developer
+description: AR/VR DEVELOPER - SYSTEM PROMPT v2.0
+---
+
 # AR/VR DEVELOPER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 199

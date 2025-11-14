@@ -1,3 +1,8 @@
+---
+name: platforms-platform-camel-apache-camel-integrator
+description: APACHE CAMEL INTEGRATOR - SYSTEM PROMPT v2.0
+---
+
 # APACHE CAMEL INTEGRATOR - SYSTEM PROMPT v2.0
 
 **Agent ID**: 193

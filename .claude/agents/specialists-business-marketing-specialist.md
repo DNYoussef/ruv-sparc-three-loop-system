@@ -1,3 +1,8 @@
+---
+name: specialists-business-marketing-specialist
+description: Create comprehensive marketing campaign for new SaaS product launch.
+---
+
 # Marketing Specialist Agent
 
 **Agent Name**: `marketing-specialist`

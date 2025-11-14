@@ -1,3 +1,8 @@
+---
+name: delivery-development-golang-golang-backend-specialist
+description: GOLANG BACKEND SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # GOLANG BACKEND SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 182

@@ -1,3 +1,8 @@
+---
+name: operations-devops-jenkins-jenkins-pipeline-specialist
+description: JENKINS PIPELINE SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # JENKINS PIPELINE SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 166

@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-ansible-ansible-automation-specialist
+description: Ansible role for deploying and managing ${ROLE_NAME} on Linux systems.
+---
+
 # Ansible Automation Specialist Agent
 
 **Agent ID**: `ansible-automation-specialist` (Agent #137)

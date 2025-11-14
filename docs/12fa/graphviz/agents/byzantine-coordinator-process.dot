@@ -1,0 +1,109 @@
+digraph BYZANTINE_COORDINATOR_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Byzantine Coordinator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\nBFT Consensus System"];
+    validate_caps [label="Validate Capabilities\nbyzantine_consensus, fault_tolerance\nmalicious_agent_detection"];
+    
+    start -> load_config -> validate_caps;
+  }
+  
+  subgraph cluster_bft_setup {
+    label="BFT Consensus Setup";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+    
+    identify_validators [label="Identify Validators\nConsensus participants", fillcolor=orange];
+    calculate_quorum [label="Calculate Quorum\n2f+1 (2/3 majority)"];
+    setup_signatures [label="Setup Digital Signatures\nEd25519 verification"];
+    initialize_rounds [label="Initialize Consensus Rounds"];
+    
+    validate_caps -> identify_validators;
+    identify_validators -> calculate_quorum -> setup_signatures -> initialize_rounds;
+  }
+  
+  subgraph cluster_consensus_protocol {
+    label="Byzantine Consensus Protocol";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+    
+    propose_value [label="Propose Value\nBy primary agent", fillcolor=purple];
+    broadcast_proposal [label="Broadcast Proposal\nTo all validators"];
+    collect_votes [label="Collect Votes\nFrom validators"];
+    verify_signatures [label="Verify Signatures\nAuthenticity check"];
+    check_quorum [shape=diamond, label="Quorum\nReached?"];
+    
+    initialize_rounds -> propose_value;
+    propose_value -> broadcast_proposal -> collect_votes -> verify_signatures -> check_quorum;
+    check_quorum -> propose_value [label="No", style=dashed];
+  }
+  
+  subgraph cluster_malicious_detection {
+    label="Malicious Agent Detection";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+    
+    analyze_responses [label="Analyze Responses\nConsistency check", fillcolor=orange];
+    detect_theater [label="Detect Theater\nFake execution"];
+    detect_conflicting_votes [label="Detect Conflicting Votes\nDouble-voting"];
+    isolate_malicious [label="Isolate Malicious Agents\nQuarantine"];
+    
+    verify_signatures -> analyze_responses;
+    analyze_responses -> detect_theater -> detect_conflicting_votes -> isolate_malicious;
+  }
+  
+  subgraph cluster_finalization {
+    label="Consensus Finalization";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    finalize_consensus [label="Finalize Consensus\nCommit decision", fillcolor=lightgreen];
+    broadcast_result [label="Broadcast Result\nTo all agents"];
+    update_state [label="Update Distributed State"];
+    
+    check_quorum -> finalize_consensus [label="Yes"];
+    finalize_consensus -> broadcast_result -> update_state;
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_consensus [label="Store Consensus Result\nmemory_store", fillcolor=lightblue];
+    log_bft_metrics [label="Log BFT Metrics\nRounds, malicious agents"];
+    success [label="Byzantine Consensus Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    update_state -> store_consensus -> log_bft_metrics -> success;
+  }
+  
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+    
+    consensus_timeout [label="Consensus Timeout", fillcolor=red, fontcolor=white];
+    too_many_malicious [label="Too Many Malicious Agents\n>1/3 threshold", fillcolor=red, fontcolor=white];
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    failure [label="Consensus Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+    
+    check_quorum -> consensus_timeout [label="Timeout"];
+    isolate_malicious -> too_many_malicious [style=dashed];
+    consensus_timeout -> escalate;
+    too_many_malicious -> escalate;
+    escalate -> failure;
+  }
+}

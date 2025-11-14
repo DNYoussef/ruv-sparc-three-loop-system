@@ -1,0 +1,156 @@
+/**
+ * Memory Management Lifecycle Workflow
+ * Command: /memory-store, /memory-retrieve, /memory-search, /memory-persist
+ * Phase: 2 (Memory & State)
+ */
+
+digraph memory_lifecycle {
+    // Graph settings
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+
+    // Node styling
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    // Title
+    label=<<B>Memory Management Lifecycle</B><BR/>Store → Search → Persist → Export → GC>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Storage Operations
+    subgraph cluster_storage {
+        label="Storage Operations";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        store_input [label="Memory Input\n(key-value pair)", shape=box, fillcolor="#bbdefb"];
+        validate_key [label="Validate Key\nFormat", shape=diamond, fillcolor="#90caf9"];
+        layer_assign [label="Assign Layer\n(24h/7d/30d+)", shape=box, fillcolor="#64b5f6"];
+        auto_tag [label="Auto-Tag\nMetadata", shape=box, fillcolor="#42a5f5"];
+        vector_embed [label="Generate\nVector Embedding", shape=box, fillcolor="#2196f3"];
+        chromadb_store [label="Store in\nChromaDB", shape=cylinder, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: Retrieval Operations
+    subgraph cluster_retrieval {
+        label="Retrieval Operations";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        retrieve_query [label="Retrieve Query", shape=box, fillcolor="#e1bee7"];
+        key_lookup [label="Key Lookup", shape=box, fillcolor="#ce93d8"];
+        found [label="Found?", shape=diamond, fillcolor="#ba68c8"];
+        return_value [label="Return Value", shape=box, fillcolor="#ab47bc"];
+        not_found [label="Return Null", shape=box, fillcolor="#9c27b0"];
+    }
+
+    // Subgraph: Search Operations
+    subgraph cluster_search {
+        label="Search Operations";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        search_query [label="Search Query\n(semantic)", shape=box, fillcolor="#ffe0b2"];
+        mode_detect [label="Detect Mode\n(Execution/Planning/\nBrainstorming)", shape=box, fillcolor="#ffcc80"];
+        vector_search [label="Vector Search\n(HNSW index)", shape=box, fillcolor="#ffb74d"];
+        rank_results [label="Rank Results\n(5-20 items)", shape=box, fillcolor="#ffa726"];
+        context_adapt [label="Mode-Aware\nContext Adaptation", shape=box, fillcolor="#ff9800"];
+        return_results [label="Return Results", shape=box, fillcolor="#fb8c00"];
+    }
+
+    // Subgraph: Persistence Operations
+    subgraph cluster_persistence {
+        label="Persistence Operations";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        persist_trigger [label="Persist Trigger\n(manual/auto)", shape=box, fillcolor="#c8e6c9"];
+        layer_check [label="Check Retention\nLayers", shape=diamond, fillcolor="#a5d6a7"];
+        short_term [label="Short-term\n(24h)", shape=box, fillcolor="#81c784"];
+        mid_term [label="Mid-term\n(7d)", shape=box, fillcolor="#66bb6a"];
+        long_term [label="Long-term\n(30d+)", shape=box, fillcolor="#4caf50"];
+        export_json [label="Export to JSON", shape=box, fillcolor="#43a047"];
+    }
+
+    // Subgraph: Garbage Collection
+    subgraph cluster_gc {
+        label="Garbage Collection";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        gc_trigger [label="GC Trigger\n(scheduled)", shape=box, fillcolor="#ffcdd2"];
+        scan_layers [label="Scan All\nLayers", shape=box, fillcolor="#ef9a9a"];
+        check_expiry [label="Check\nExpiry", shape=diamond, fillcolor="#e57373"];
+        delete_expired [label="Delete\nExpired", shape=box, fillcolor="#ef5350"];
+        compact_db [label="Compact\nDatabase", shape=box, fillcolor="#f44336"];
+        gc_complete [label="GC Complete", shape=box, fillcolor="#e53935"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Storage", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Retrieval", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Search", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Persistence", shape=box, fillcolor="#4caf50"];
+        leg5 [label="GC", shape=box, fillcolor="#f44336"];
+
+        leg1 -> leg2 -> leg3 -> leg4 -> leg5 [style=invis];
+    }
+
+    // Storage flow
+    store_input -> validate_key;
+    validate_key -> layer_assign [label="valid"];
+    validate_key -> store_input [label="invalid", color=red];
+    layer_assign -> auto_tag;
+    auto_tag -> vector_embed;
+    vector_embed -> chromadb_store;
+
+    // Retrieval flow
+    retrieve_query -> key_lookup;
+    key_lookup -> found;
+    found -> return_value [label="yes"];
+    found -> not_found [label="no"];
+
+    // Search flow
+    search_query -> mode_detect;
+    mode_detect -> vector_search;
+    vector_search -> rank_results;
+    rank_results -> context_adapt;
+    context_adapt -> return_results;
+
+    // Persistence flow
+    persist_trigger -> layer_check;
+    layer_check -> short_term [label="24h"];
+    layer_check -> mid_term [label="7d"];
+    layer_check -> long_term [label="30d+"];
+    short_term -> export_json;
+    mid_term -> export_json;
+    long_term -> export_json;
+
+    // GC flow
+    gc_trigger -> scan_layers;
+    scan_layers -> check_expiry;
+    check_expiry -> delete_expired [label="expired"];
+    check_expiry -> gc_complete [label="valid"];
+    delete_expired -> compact_db;
+    compact_db -> gc_complete;
+
+    // Cross-flow connections
+    chromadb_store -> retrieve_query [style=dashed, label="read"];
+    chromadb_store -> search_query [style=dashed, label="search"];
+    chromadb_store -> persist_trigger [style=dashed, label="persist"];
+    chromadb_store -> gc_trigger [style=dashed, label="clean"];
+}

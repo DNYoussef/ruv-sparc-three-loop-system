@@ -1,3 +1,8 @@
+---
+name: specialists-business-business-analyst
+description: Specialized agent for task execution
+---
+
 # Business Analyst Agent
 
 **Agent Name**: `business-analyst`

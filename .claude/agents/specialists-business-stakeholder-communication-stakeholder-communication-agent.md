@@ -1,3 +1,8 @@
+---
+name: specialists-business-stakeholder-communication-stakeholder-communication-agent
+description: Body: The project is going well. More updates soon.
+---
+
 # STAKEHOLDER COMMUNICATION AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 158

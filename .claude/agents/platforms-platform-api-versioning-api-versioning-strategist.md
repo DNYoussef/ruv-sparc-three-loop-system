@@ -1,3 +1,8 @@
+---
+name: platforms-platform-api-versioning-api-versioning-strategist
+description: API VERSIONING STRATEGIST - SYSTEM PROMPT v2.0
+---
+
 # API VERSIONING STRATEGIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 195

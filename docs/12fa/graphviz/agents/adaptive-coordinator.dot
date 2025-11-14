@@ -1,0 +1,486 @@
+digraph ADAPTIVE_COORDINATOR {
+  // Layout configuration for adaptive topology
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+  compound=true;
+
+  // =============================================================================
+  // COORDINATOR INITIALIZATION
+  // =============================================================================
+  subgraph cluster_init {
+    label="Adaptive Coordinator Initialization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    spawn_adaptive [label="Spawn Adaptive\nCoordinator", shape=ellipse, fillcolor=purple];
+    load_config [label="Load Adaptive\nConfiguration", fillcolor=purple];
+    validate_12fa [shape=diamond, label="12-FA\nCompliant?"];
+    init_neural [label="Initialize Neural\nPattern Engine", fillcolor=purple];
+    load_topologies [label="Load Available\nTopologies", fillcolor=purple];
+
+    spawn_adaptive -> load_config;
+    load_config -> validate_12fa;
+    validate_12fa -> init_neural [label="Pass"];
+    validate_12fa -> spawn_blocked [label="Fail"];
+    init_neural -> load_topologies;
+  }
+
+  spawn_blocked [shape=octagon, fillcolor=crimson, label="BLOCKED\nSpawn Denied"];
+
+  // =============================================================================
+  // WORKLOAD ANALYSIS
+  // =============================================================================
+  subgraph cluster_analysis {
+    label="Workload Analysis Engine";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    receive_task [label="Receive Task\nRequest", fillcolor=lightblue];
+    analyze_workload [label="Analyze Workload\nCharacteristics", fillcolor=lightblue];
+    measure_complexity [label="Measure Task\nComplexity", fillcolor=lightblue];
+    assess_resources [label="Assess Available\nResources", fillcolor=lightblue];
+    predict_requirements [label="Predict Resource\nRequirements", fillcolor=lightblue];
+    workload_profile [label="Generate Workload\nProfile", fillcolor=lightblue];
+  }
+
+  load_topologies -> receive_task;
+  receive_task -> analyze_workload;
+  analyze_workload -> measure_complexity;
+  measure_complexity -> assess_resources;
+  assess_resources -> predict_requirements;
+  predict_requirements -> workload_profile;
+
+  // =============================================================================
+  // TOPOLOGY SELECTION DECISION
+  // =============================================================================
+  subgraph cluster_topology_selection {
+    label="Dynamic Topology Selection";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    topology_decision [shape=diamond, label="Optimal\nTopology?"];
+    eval_mesh [label="Evaluate Mesh\nTopology", fillcolor=orange];
+    eval_hierarchical [label="Evaluate\nHierarchical", fillcolor=orange];
+    eval_ring [label="Evaluate Ring\nTopology", fillcolor=orange];
+    eval_star [label="Evaluate Star\nTopology", fillcolor=orange];
+
+    calc_mesh_score [label="Mesh Score:\nHigh Fault Tolerance", fillcolor=lightyellow];
+    calc_hier_score [label="Hierarchical Score:\nClear Command Chain", fillcolor=lightyellow];
+    calc_ring_score [label="Ring Score:\nOrdered Processing", fillcolor=lightyellow];
+    calc_star_score [label="Star Score:\nCentralized Control", fillcolor=lightyellow];
+
+    select_topology [label="Select Optimal\nTopology", fillcolor=orange];
+  }
+
+  workload_profile -> topology_decision;
+  topology_decision -> eval_mesh [label="Evaluate"];
+  topology_decision -> eval_hierarchical [label="Evaluate"];
+  topology_decision -> eval_ring [label="Evaluate"];
+  topology_decision -> eval_star [label="Evaluate"];
+
+  eval_mesh -> calc_mesh_score;
+  eval_hierarchical -> calc_hier_score;
+  eval_ring -> calc_ring_score;
+  eval_star -> calc_star_score;
+
+  calc_mesh_score -> select_topology;
+  calc_hier_score -> select_topology;
+  calc_ring_score -> select_topology;
+  calc_star_score -> select_topology;
+
+  // =============================================================================
+  // NEURAL PATTERN RECOGNITION
+  // =============================================================================
+  subgraph cluster_neural {
+    label="Neural Pattern Recognition";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8FFE8";
+
+    neural_analyze [label="Analyze Historical\nPatterns", fillcolor=lightgreen];
+    load_patterns [label="Load Neural\nPatterns", fillcolor=lightgreen];
+    match_patterns [label="Match Current\nWorkload", fillcolor=lightgreen];
+    pattern_confidence [shape=diamond, label="High\nConfidence?"];
+    use_pattern [label="Use Pattern\nRecommendation", fillcolor=lightgreen];
+    train_new_pattern [label="Train New\nPattern", fillcolor=yellow];
+  }
+
+  select_topology -> neural_analyze;
+  neural_analyze -> load_patterns;
+  load_patterns -> match_patterns;
+  match_patterns -> pattern_confidence;
+  pattern_confidence -> use_pattern [label="Yes (>80%)"];
+  pattern_confidence -> train_new_pattern [label="No"];
+  train_new_pattern -> use_pattern;
+
+  // =============================================================================
+  // TOPOLOGY INSTANTIATION
+  // =============================================================================
+  subgraph cluster_instantiation {
+    label="Topology Instantiation";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    instantiate_topology [label="Instantiate\nSelected Topology", fillcolor=cyan];
+    spawn_agents [label="Spawn Required\nAgents", fillcolor=cyan];
+    establish_connections [label="Establish\nConnections", fillcolor=cyan];
+    configure_routing [label="Configure\nRouting Rules", fillcolor=cyan];
+    verify_topology [shape=diamond, label="Topology\nHealthy?"];
+    repair_topology [label="Repair\nTopology", fillcolor=yellow];
+  }
+
+  use_pattern -> instantiate_topology;
+  instantiate_topology -> spawn_agents;
+  spawn_agents -> establish_connections;
+  establish_connections -> configure_routing;
+  configure_routing -> verify_topology;
+  verify_topology -> repair_topology [label="No"];
+  repair_topology -> establish_connections [style=dashed];
+
+  // =============================================================================
+  // INTELLIGENT ROUTING
+  // =============================================================================
+  subgraph cluster_routing {
+    label="Intelligent Routing Decisions";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8E8F8";
+
+    route_tasks [label="Route Tasks to\nAgents", fillcolor=purple];
+    monitor_performance [label="Monitor Agent\nPerformance", fillcolor=purple];
+    detect_bottleneck [shape=diamond, label="Bottleneck\nDetected?"];
+    analyze_bottleneck [label="Analyze\nBottleneck", fillcolor=purple];
+    reroute_tasks [label="Reroute Tasks", fillcolor=yellow];
+    balance_load [label="Balance Load\nAcross Agents", fillcolor=purple];
+  }
+
+  verify_topology -> route_tasks [label="Yes"];
+  route_tasks -> monitor_performance;
+  monitor_performance -> detect_bottleneck;
+  detect_bottleneck -> analyze_bottleneck [label="Yes"];
+  detect_bottleneck -> task_execution [label="No"];
+  analyze_bottleneck -> reroute_tasks;
+  reroute_tasks -> balance_load;
+  balance_load -> route_tasks [style=dashed];
+
+  // =============================================================================
+  // PARALLEL TASK EXECUTION
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Adaptive Task Execution";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    task_execution [label="Execute Tasks in\nParallel", fillcolor=lightblue];
+    agent_1 [label="Agent 1\nExecuting", fillcolor=lightyellow];
+    agent_2 [label="Agent 2\nExecuting", fillcolor=lightyellow];
+    agent_3 [label="Agent 3\nExecuting", fillcolor=lightyellow];
+    agent_4 [label="Agent 4\nExecuting", fillcolor=lightyellow];
+    agent_5 [label="Agent 5\nExecuting", fillcolor=lightyellow];
+
+    collect_results [label="Collect Agent\nResults", fillcolor=lightblue];
+  }
+
+  task_execution -> agent_1;
+  task_execution -> agent_2;
+  task_execution -> agent_3;
+  task_execution -> agent_4;
+  task_execution -> agent_5;
+
+  agent_1 -> collect_results;
+  agent_2 -> collect_results;
+  agent_3 -> collect_results;
+  agent_4 -> collect_results;
+  agent_5 -> collect_results;
+
+  // =============================================================================
+  // PERFORMANCE MONITORING
+  // =============================================================================
+  subgraph cluster_performance {
+    label="Real-Time Performance Monitoring";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    measure_throughput [label="Measure\nThroughput", fillcolor=orange];
+    measure_latency [label="Measure\nLatency", fillcolor=orange];
+    measure_efficiency [label="Measure Resource\nEfficiency", fillcolor=orange];
+    calculate_metrics [label="Calculate\nPerformance Metrics", fillcolor=orange];
+    performance_check [shape=diamond, label="Performance\nAcceptable?"];
+    trigger_optimization [label="Trigger\nOptimization", fillcolor=yellow];
+  }
+
+  collect_results -> measure_throughput;
+  measure_throughput -> measure_latency;
+  measure_latency -> measure_efficiency;
+  measure_efficiency -> calculate_metrics;
+  calculate_metrics -> performance_check;
+  performance_check -> trigger_optimization [label="No"];
+
+  // =============================================================================
+  // TOPOLOGY SWITCHING
+  // =============================================================================
+  subgraph cluster_switching {
+    label="Dynamic Topology Switching";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    switching_needed [shape=diamond, label="Switch\nTopology?"];
+    analyze_switch_cost [label="Analyze Switch\nCost", fillcolor=pink];
+    cost_benefit [shape=diamond, label="Benefit >\nCost?"];
+    prepare_migration [label="Prepare\nMigration", fillcolor=pink];
+    migrate_agents [label="Migrate Agents to\nNew Topology", fillcolor=pink];
+    validate_migration [label="Validate\nMigration", fillcolor=pink];
+    rollback [label="Rollback to\nPrevious", fillcolor=yellow];
+  }
+
+  trigger_optimization -> switching_needed;
+  performance_check -> switching_needed [label="Yes"];
+  switching_needed -> analyze_switch_cost [label="Yes"];
+  switching_needed -> memory_sync [label="No"];
+  analyze_switch_cost -> cost_benefit;
+  cost_benefit -> prepare_migration [label="Yes"];
+  cost_benefit -> memory_sync [label="No"];
+  prepare_migration -> migrate_agents;
+  migrate_agents -> validate_migration;
+  validate_migration -> rollback [label="Fail"];
+  rollback -> memory_sync;
+
+  // =============================================================================
+  // WORKLOAD OPTIMIZATION
+  // =============================================================================
+  subgraph cluster_optimization {
+    label="Workload Optimization Engine";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    optimize_allocation [label="Optimize Agent\nAllocation", fillcolor=lightgreen];
+    tune_parameters [label="Tune Performance\nParameters", fillcolor=lightgreen];
+    adjust_routing [label="Adjust Routing\nAlgorithm", fillcolor=lightgreen];
+    predict_scaling [label="Predict Scaling\nNeeds", fillcolor=lightgreen];
+    scaling_decision [shape=diamond, label="Scale\nUp/Down?"];
+    scale_up [label="Add Agents", fillcolor=lightgreen];
+    scale_down [label="Remove Agents", fillcolor=yellow];
+  }
+
+  validate_migration -> optimize_allocation [label="Success"];
+  optimize_allocation -> tune_parameters;
+  tune_parameters -> adjust_routing;
+  adjust_routing -> predict_scaling;
+  predict_scaling -> scaling_decision;
+  scaling_decision -> scale_up [label="Scale Up"];
+  scaling_decision -> scale_down [label="Scale Down"];
+  scaling_decision -> memory_sync [label="No Change"];
+  scale_up -> memory_sync;
+  scale_down -> memory_sync;
+
+  // =============================================================================
+  // MEMORY SYNCHRONIZATION
+  // =============================================================================
+  subgraph cluster_memory {
+    label="Adaptive Memory Synchronization";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    memory_sync [label="Synchronize\nMemory", fillcolor=cyan];
+    adapt_sync_strategy [label="Adapt Sync\nStrategy", fillcolor=cyan];
+    merge_states [label="Merge Agent\nStates", fillcolor=cyan];
+    resolve_conflicts [label="Resolve\nConflicts", fillcolor=cyan];
+    optimize_memory [label="Optimize Memory\nUsage", fillcolor=cyan];
+  }
+
+  memory_sync -> adapt_sync_strategy;
+  adapt_sync_strategy -> merge_states;
+  merge_states -> resolve_conflicts;
+  resolve_conflicts -> optimize_memory;
+
+  // =============================================================================
+  // MCP COORDINATION TOOLS
+  // =============================================================================
+  subgraph cluster_mcp {
+    label="MCP Adaptive Coordination";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    mcp_swarm_init [label="mcp__ruv-swarm\nswarm_init\n(adaptive)", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_spawn [label="mcp__ruv-swarm\nagent_spawn", fillcolor=lightyellow, shape=box3d];
+    mcp_task_orchestrate [label="mcp__ruv-swarm\ntask_orchestrate\n(adaptive)", fillcolor=lightyellow, shape=box3d];
+    mcp_neural_status [label="mcp__ruv-swarm\nneural_status", fillcolor=lightyellow, shape=box3d];
+    mcp_neural_train [label="mcp__ruv-swarm\nneural_train", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_metrics [label="mcp__ruv-swarm\nagent_metrics", fillcolor=lightyellow, shape=box3d];
+  }
+
+  init_neural -> mcp_swarm_init;
+  spawn_agents -> mcp_agent_spawn;
+  route_tasks -> mcp_task_orchestrate;
+  load_patterns -> mcp_neural_status;
+  train_new_pattern -> mcp_neural_train;
+  calculate_metrics -> mcp_agent_metrics;
+
+  // =============================================================================
+  // LEARNING & IMPROVEMENT
+  // =============================================================================
+  subgraph cluster_learning {
+    label="Continuous Learning & Improvement";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    learn_from_execution [label="Learn from\nExecution", fillcolor=purple];
+    update_patterns [label="Update Neural\nPatterns", fillcolor=purple];
+    refine_models [label="Refine Prediction\nModels", fillcolor=purple];
+    store_knowledge [label="Store Knowledge", fillcolor=purple];
+    improve_decisions [label="Improve Future\nDecisions", fillcolor=purple];
+  }
+
+  optimize_memory -> learn_from_execution;
+  learn_from_execution -> update_patterns;
+  update_patterns -> refine_models;
+  refine_models -> store_knowledge;
+  store_knowledge -> improve_decisions;
+
+  // =============================================================================
+  // VALIDATION & QUALITY
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Adaptive Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    validate_results [label="Validate Agent\nResults", fillcolor=lightblue];
+    cross_validate [label="Cross-Validate", fillcolor=lightblue];
+    quality_check [shape=diamond, label="Quality\nThreshold?"];
+    accept_results [label="Accept Results", fillcolor=lightgreen];
+    adaptive_retry [label="Adaptive Retry\nStrategy", fillcolor=yellow];
+  }
+
+  improve_decisions -> validate_results;
+  validate_results -> cross_validate;
+  cross_validate -> quality_check;
+  quality_check -> accept_results [label="Pass"];
+  quality_check -> adaptive_retry [label="Fail"];
+  adaptive_retry -> route_tasks [style=dashed];
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_aggregation {
+    label="Result Aggregation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    aggregate_results [label="Aggregate\nResults", fillcolor=lightgreen];
+    synthesize [label="Synthesize Final\nOutput", fillcolor=lightgreen];
+    generate_report [label="Generate Adaptive\nReport", fillcolor=lightgreen];
+    log_performance [label="Log Performance\nMetrics", fillcolor=lightgreen];
+  }
+
+  accept_results -> aggregate_results;
+  aggregate_results -> synthesize;
+  synthesize -> generate_report;
+  generate_report -> log_performance;
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Cleanup";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup\nResources", fillcolor=lightgreen];
+    store_metrics [label="Store Coordination\nMetrics", fillcolor=lightgreen];
+    update_neural_db [label="Update Neural\nDatabase", fillcolor=lightgreen];
+    success [label="Adaptive\nCoordination\nComplete",
+             shape=doublecircle,
+             fillcolor=green,
+             style="filled,bold"];
+  }
+
+  log_performance -> cleanup;
+  cleanup -> store_metrics;
+  store_metrics -> update_neural_db;
+  update_neural_db -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Adaptive Error Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    detect_error [label="Detect Error", fillcolor=orange];
+    error_severity [shape=diamond, label="Error\nSeverity?"];
+    minor_error [label="Minor Error", fillcolor=yellow];
+    major_error [label="Major Error", fillcolor=orange];
+    critical_error [label="Critical Error", fillcolor=red];
+
+    adaptive_recovery [label="Adaptive\nRecovery", fillcolor=yellow];
+    recovery_strategy [label="Select Recovery\nStrategy", fillcolor=yellow];
+    execute_recovery [label="Execute\nRecovery", fillcolor=yellow];
+    recovery_check [shape=diamond, label="Recovered?"];
+
+    manual_intervention [shape=hexagon, fillcolor=yellow, label="Manual\nIntervention"];
+    failure [label="Coordination\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  verify_topology -> detect_error [label="Error"];
+  performance_check -> detect_error [label="Critical"];
+
+  detect_error -> error_severity;
+  error_severity -> minor_error [label="Minor"];
+  error_severity -> major_error [label="Major"];
+  error_severity -> critical_error [label="Critical"];
+
+  minor_error -> adaptive_recovery;
+  major_error -> adaptive_recovery;
+  critical_error -> manual_intervention;
+
+  adaptive_recovery -> recovery_strategy;
+  recovery_strategy -> execute_recovery;
+  execute_recovery -> recovery_check;
+  recovery_check -> route_tasks [label="Yes", style=dashed];
+  recovery_check -> manual_intervention [label="No"];
+  manual_intervention -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_process [shape=box, fillcolor=lightblue, label="Process"];
+    legend_agent [shape=box, fillcolor=lightyellow, label="Agent"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_mcp [shape=box3d, fillcolor=lightyellow, label="MCP Tool"];
+    legend_warning [shape=box, fillcolor=yellow, label="Warning"];
+    legend_error [shape=box, fillcolor=orange, label="Error"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+
+    legend_process -> legend_agent [style=invis];
+    legend_agent -> legend_decision [style=invis];
+    legend_decision -> legend_mcp [style=invis];
+    legend_mcp -> legend_warning [style=invis];
+    legend_warning -> legend_error [style=invis];
+    legend_error -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+  }
+}

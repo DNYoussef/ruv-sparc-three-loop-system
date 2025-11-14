@@ -1,0 +1,307 @@
+// Command Distribution Heat Map
+// Commands organized by MECE domain with node sizes indicating agent usage
+// Color-coded by domain
+
+digraph CommandDistribution {
+    // Graph settings
+    graph [
+        rankdir=TB,
+        splines=true,
+        overlap=false,
+        nodesep=1.2,
+        ranksep=1.8,
+        fontname="Arial",
+        fontsize=14,
+        label="Command Distribution Heat Map\nCommand Usage Across Agent Domains (Node Size = # of Agents)",
+        labelloc=t,
+        bgcolor="#F5F5F5"
+    ];
+
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=8];
+
+    // Domain 1: File Operations
+    subgraph cluster_file_ops {
+        label="File Operations\n(8 commands)";
+        style=filled;
+        color="#E3F2FD";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#2196F3", fontcolor=white];
+
+        // Size based on agent usage
+        file_read [width=3.0, height=3.0, label="/file-read\n15 agents", fontsize=12];
+        grep_search [width=2.4, height=2.4, label="/grep-search\n9 agents", fontsize=11];
+        file_write [width=2.2, height=2.2, label="/file-write\n8 agents", fontsize=11];
+        file_edit [width=2.0, height=2.0, label="/file-edit\n7 agents", fontsize=10];
+        glob_search [width=1.6, height=1.6, label="/glob-search\n5 agents"];
+        file_list [width=1.4, height=1.4, label="/file-list\n4 agents"];
+        file_delete [width=1.0, height=1.0, label="/file-delete\n2 agents"];
+        file_move [width=0.8, height=0.8, label="/file-move\n1 agent"];
+    }
+
+    // Domain 2: Git Operations
+    subgraph cluster_git_ops {
+        label="Git Operations\n(10 commands)";
+        style=filled;
+        color="#FFF3E0";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#FF9800", fontcolor=white];
+
+        git_status [width=2.2, height=2.2, label="/git-status\n8 agents", fontsize=11];
+        git_commit [width=2.2, height=2.2, label="/git-commit\n8 agents", fontsize=11];
+        git_diff [width=2.0, height=2.0, label="/git-diff\n7 agents", fontsize=10];
+        git_push [width=1.8, height=1.8, label="/git-push\n6 agents", fontsize=10];
+        git_pull [width=1.6, height=1.6, label="/git-pull\n5 agents"];
+        git_branch [width=1.4, height=1.4, label="/git-branch\n4 agents"];
+        git_add [width=1.4, height=1.4, label="/git-add\n4 agents"];
+        git_log [width=1.2, height=1.2, label="/git-log\n3 agents"];
+        git_checkout [width=1.0, height=1.0, label="/git-checkout\n2 agents"];
+        git_merge [width=1.0, height=1.0, label="/git-merge\n2 agents"];
+    }
+
+    // Domain 3: Communication & Coordination
+    subgraph cluster_communication {
+        label="Communication & Coordination\n(8 commands)";
+        style=filled;
+        color="#F3E5F5";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#9C27B0", fontcolor=white];
+
+        comm_notify [width=2.4, height=2.4, label="/communicate-notify\n9 agents", fontsize=11];
+        agent_delegate [width=2.2, height=2.2, label="/agent-delegate\n8 agents", fontsize=11];
+        comm_report [width=2.0, height=2.0, label="/communicate-report\n7 agents", fontsize=10];
+        agent_coord [width=1.8, height=1.8, label="/agent-coordinate\n6 agents", fontsize=10];
+        comm_log [width=1.4, height=1.4, label="/communicate-log\n4 agents"];
+        agent_handoff [width=1.2, height=1.2, label="/agent-handoff\n3 agents"];
+        comm_alert [width=1.2, height=1.2, label="/communicate-alert\n3 agents"];
+        comm_slack [width=0.8, height=0.8, label="/communicate-slack\n1 agent"];
+    }
+
+    // Domain 4: Memory & State Management
+    subgraph cluster_memory {
+        label="Memory & State Management\n(6 commands)";
+        style=filled;
+        color="#E8F5E9";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#4CAF50", fontcolor=white];
+
+        mem_store [width=2.8, height=2.8, label="/memory-store\n12 agents", fontsize=12];
+        mem_retrieve [width=2.6, height=2.6, label="/memory-retrieve\n11 agents", fontsize=11];
+        mem_search [width=2.2, height=2.2, label="/memory-search\n8 agents", fontsize=11];
+        mem_persist [width=1.4, height=1.4, label="/memory-persist\n4 agents"];
+        mem_list [width=1.0, height=1.0, label="/memory-list\n2 agents"];
+        mem_clear [width=1.0, height=1.0, label="/memory-clear\n2 agents"];
+    }
+
+    // Domain 5: Testing & Validation
+    subgraph cluster_testing {
+        label="Testing & Validation\n(6 commands)";
+        style=filled;
+        color="#FFF9C4";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#FBC02D", fontcolor=black];
+
+        test_run [width=2.4, height=2.4, label="/test-run\n9 agents", fontsize=11];
+        test_validate [width=1.6, height=1.6, label="/test-validate\n5 agents"];
+        test_coverage [width=1.4, height=1.4, label="/test-coverage\n4 agents"];
+        test_unit [width=1.4, height=1.4, label="/test-unit\n4 agents"];
+        test_integration [width=1.2, height=1.2, label="/test-integration\n3 agents"];
+        test_e2e [width=1.0, height=1.0, label="/test-e2e\n2 agents"];
+    }
+
+    // Domain 6: Code Quality & Formatting
+    subgraph cluster_quality {
+        label="Code Quality & Formatting\n(4 commands)";
+        style=filled;
+        color="#FCE4EC";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#E91E63", fontcolor=white];
+
+        lint [width=2.0, height=2.0, label="/lint\n7 agents", fontsize=10];
+        code_format [width=1.8, height=1.8, label="/code-format\n6 agents", fontsize=10];
+        json_format [width=1.2, height=1.2, label="/json-format\n3 agents"];
+        yaml_format [width=1.0, height=1.0, label="/yaml-format\n2 agents"];
+    }
+
+    // Domain 7: Documentation Generation
+    subgraph cluster_docs {
+        label="Documentation Generation\n(1 command)";
+        style=filled;
+        color="#E0F2F1";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#00897B", fontcolor=white];
+
+        markdown_gen [width=1.8, height=1.8, label="/markdown-gen\n6 agents", fontsize=10];
+    }
+
+    // Domain 8: Utilities
+    subgraph cluster_utilities {
+        label="Utilities\n(2 commands)";
+        style=filled;
+        color="#FBE9E7";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#D84315", fontcolor=white];
+
+        timestamp [width=0.8, height=0.8, label="/timestamp\n1 agent"];
+        uuid_gen [width=0.6, height=0.6, label="/uuid-gen\n0 agents"];
+    }
+
+    // Domain 9: GitHub Specialized
+    subgraph cluster_github_special {
+        label="GitHub Specialized\n(1 command)";
+        style=filled;
+        color="#E8EAF6";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#3F51B5", fontcolor=white];
+
+        git_tag [width=1.2, height=1.2, label="/git-tag\n3 agents"];
+    }
+
+    // Domain 10: Swarm Management
+    subgraph cluster_swarm {
+        label="Swarm Management\n(1 command)";
+        style=filled;
+        color="#F1F8E9";
+        fontsize=13;
+
+        node [shape=circle, fillcolor="#689F38", fontcolor=white];
+
+        agent_spawn [width=1.0, height=1.0, label="/agent-spawn\n2 agents"];
+    }
+
+    // Cross-domain relationships (showing command affinities)
+    // File + Git workflow
+    file_read -> git_diff [label="code review", color="#1976D2", style=dashed];
+    file_write -> git_commit [label="save & commit", color="#1976D2", style=dashed];
+    file_edit -> git_status [label="check changes", color="#1976D2", style=dashed];
+
+    // Memory + Testing workflow
+    mem_store -> test_run [label="cache results", color="#4CAF50", style=dashed];
+    mem_retrieve -> test_validate [label="load config", color="#4CAF50", style=dashed];
+
+    // Communication + Coordination workflow
+    agent_delegate -> comm_notify [label="task assigned", color="#9C27B0", style=dashed];
+    agent_coord -> mem_store [label="sync state", color="#9C27B0", style=dashed];
+
+    // Code Quality workflow
+    code_format -> lint [label="format then lint", color="#E91E63", style=dashed];
+    lint -> test_run [label="verify quality", color="#E91E63", style=dashed];
+
+    // Documentation workflow
+    grep_search -> markdown_gen [label="extract docs", color="#00897B", style=dashed];
+
+    // Statistics and heat map legend
+    subgraph cluster_statistics {
+        label="Usage Statistics by Domain";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=12;
+
+        node [shape=box, fontsize=10];
+
+        stats_table [
+            shape=plaintext,
+            label=<
+                <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+                    <TR>
+                        <TD BGCOLOR="#333333"><FONT COLOR="white"><B>Domain</B></FONT></TD>
+                        <TD BGCOLOR="#333333"><FONT COLOR="white"><B>Commands</B></FONT></TD>
+                        <TD BGCOLOR="#333333"><FONT COLOR="white"><B>Avg Agents/Cmd</B></FONT></TD>
+                        <TD BGCOLOR="#333333"><FONT COLOR="white"><B>Heat</B></FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Memory & State</TD>
+                        <TD>6</TD>
+                        <TD>6.5</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">File Operations</TD>
+                        <TD>8</TD>
+                        <TD>6.1</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Communication</TD>
+                        <TD>8</TD>
+                        <TD>5.4</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Git Operations</TD>
+                        <TD>10</TD>
+                        <TD>4.3</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Testing</TD>
+                        <TD>6</TD>
+                        <TD>4.5</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Code Quality</TD>
+                        <TD>4</TD>
+                        <TD>4.5</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Documentation</TD>
+                        <TD>1</TD>
+                        <TD>6.0</TD>
+                        <TD BGCOLOR="#00897B"><FONT COLOR="white">FOCUSED</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">GitHub Special</TD>
+                        <TD>1</TD>
+                        <TD>3.0</TD>
+                        <TD BGCOLOR="#E0E0E0">LOW</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Swarm Mgmt</TD>
+                        <TD>1</TD>
+                        <TD>2.0</TD>
+                        <TD BGCOLOR="#E0E0E0">LOW</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Utilities</TD>
+                        <TD>2</TD>
+                        <TD>0.5</TD>
+                        <TD BGCOLOR="#D84315"><FONT COLOR="white">MINIMAL</FONT></TD>
+                    </TR>
+                </TABLE>
+            >
+        ];
+    }
+
+    // Heat map legend
+    subgraph cluster_legend {
+        label="Heat Map Legend";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        node [shape=note, fontsize=10];
+
+        legend [
+            label="Node Size Scale:\n\n● 3.0 = 15+ agents (Critical)\n● 2.4-2.8 = 9-12 agents (Very High)\n● 2.0-2.2 = 7-8 agents (High)\n● 1.4-1.8 = 4-6 agents (Moderate)\n● 1.0-1.2 = 2-3 agents (Low)\n● 0.6-0.8 = 0-1 agents (Minimal)\n\nDashed Lines = Cross-domain workflows",
+            fillcolor="#E3F2FD",
+            fontcolor=black
+        ];
+
+        insights [
+            label="Key Insights:\n\n• Memory commands have highest avg usage (6.5 agents/cmd)\n• File operations are most distributed (8 commands)\n• file-read is single most used command (15 agents)\n• Utilities are underutilized (0.5 agents/cmd avg)\n• 70% of commands used by 3+ agents (good reuse)",
+            fillcolor="#FFF9C4",
+            fontcolor=black
+        ];
+    }
+}

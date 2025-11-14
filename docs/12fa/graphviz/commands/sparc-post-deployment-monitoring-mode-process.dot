@@ -1,0 +1,60 @@
+digraph sparc_post_deployment_monitoring_mode_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Post-Deployment-Monitoring-Mode Workflow\nProduction Monitoring & Observability";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:post-deployment-monitoring", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  setup_monitoring [label="Setup Monitoring\n- Metrics collection\n- Log aggregation\n- Tracing", fillcolor="#FFF9C4"];
+
+  define_metrics [label="Define Key Metrics\n- Response time\n- Error rate\n- Throughput\n- Resource usage", fillcolor="#FFE0B2"];
+
+  setup_alerts [label="Setup Alert Rules\n- Thresholds\n- Escalation\n- Notifications", fillcolor="#BBDEFB"];
+
+  collect_logs [label="Collect Logs\n- Application logs\n- System logs\n- Access logs", fillcolor="#C5CAE9"];
+
+  analyze_performance [label="Analyze Performance\n- Response times\n- Latency\n- Bottlenecks", fillcolor="#B2DFDB"];
+
+  monitor_errors [label="Monitor Errors\n- Error rates\n- Exception types\n- Stack traces", fillcolor="#D1C4E9"];
+
+  track_usage [label="Track Usage Patterns\n- User behavior\n- API calls\n- Resource consumption", fillcolor="#F0F4C3"];
+
+  health_checks [label="Health Checks\n- Endpoint status\n- Service availability\n- Dependency health", fillcolor="#FFE0B2"];
+
+  detect_anomalies [label="Detect Anomalies\n- Unusual patterns\n- Performance degradation\n- Security threats", fillcolor="#F44336", fontcolor=white];
+
+  alert_triggered [label="Alert Triggered?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  investigate_issue [label="Investigate Issue\n- Root cause analysis\n- Impact assessment\n- Solution planning", fillcolor="#BBDEFB"];
+
+  generate_dashboard [label="Generate Dashboard\n- Real-time metrics\n- Trends\n- Alerts", fillcolor="#B2DFDB"];
+
+  periodic_report [label="Generate Periodic Report\n- Performance summary\n- Error analysis\n- Recommendations", fillcolor="#D1C4E9"];
+
+  continuous [label="Continue Monitoring", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> setup_monitoring;
+  setup_monitoring -> define_metrics;
+  define_metrics -> setup_alerts;
+  setup_alerts -> collect_logs;
+  collect_logs -> analyze_performance;
+  analyze_performance -> monitor_errors;
+  monitor_errors -> track_usage;
+  track_usage -> health_checks;
+  health_checks -> detect_anomalies;
+  detect_anomalies -> alert_triggered;
+  alert_triggered -> investigate_issue [label="Yes"];
+  alert_triggered -> generate_dashboard [label="No"];
+  investigate_issue -> generate_dashboard;
+  generate_dashboard -> periodic_report;
+  periodic_report -> continuous;
+  continuous -> collect_logs [label="Loop", style=dashed];
+}

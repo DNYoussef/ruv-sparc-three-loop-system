@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-infrastructure-agents-summary
+description: Specialized agent for task execution
+---
+
 # Infrastructure Tooling Agents Summary
 
 **Created**: 2025-11-02

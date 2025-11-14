@@ -1,0 +1,561 @@
+digraph SPARC_CODE {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /sparc:code (Auto-Coder)";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:code", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--spec <file>\n--tdd\n--language <lang>", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--spec <specification>\n--tdd (enable TDD)\n--language <js|py|ts|etc>"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // AUTHENTICATION & AUTHORIZATION
+  // =============================================================================
+  subgraph cluster_auth {
+    label="Authentication & Authorization";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_auth [shape=diamond, label="User\nAuthenticated?"];
+    check_coder [shape=diamond, label="Auto-Coder\nAvailable?"];
+    check_permissions [shape=diamond, label="Has Code\nPermissions?"];
+
+    auth_failed [shape=octagon, fillcolor=crimson,
+                 label="Authentication\nFailed"];
+    coder_failed [shape=octagon, fillcolor=crimson,
+                  label="Auto-Coder\nNot Available"];
+    permission_denied [shape=octagon, fillcolor=crimson,
+                       label="Permission\nDenied"];
+  }
+
+  validate_syntax -> check_auth [label="Yes"];
+
+  check_auth -> auth_failed [label="No"];
+  check_auth -> check_coder [label="Yes"];
+
+  check_coder -> coder_failed [label="No"];
+  check_coder -> check_permissions [label="Yes"];
+
+  check_permissions -> permission_denied [label="No"];
+
+  // =============================================================================
+  // PRE-EXECUTION VALIDATION
+  // =============================================================================
+  subgraph cluster_pre_execution {
+    label="Pre-Execution Validation";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    validate_spec [shape=diamond, label="Specification\nProvided?"];
+    validate_language [shape=diamond, label="Language\nSupported?"];
+    validate_project [shape=diamond, label="Project\nStructure Exists?"];
+    validate_dependencies [shape=diamond, label="Dependencies\nInstalled?"];
+
+    spec_error [shape=octagon, fillcolor=orange,
+                label="Specification\nMissing or Invalid"];
+    language_error [shape=octagon, fillcolor=orange,
+                    label="Unsupported\nLanguage"];
+    project_error [shape=octagon, fillcolor=orange,
+                   label="Project Structure\nMissing"];
+    dependency_error [shape=octagon, fillcolor=orange,
+                      label="Dependencies\nNot Installed"];
+  }
+
+  check_permissions -> validate_spec [label="Yes"];
+
+  validate_spec -> spec_error [label="No"];
+  validate_spec -> validate_language [label="Yes"];
+
+  validate_language -> language_error [label="No"];
+  validate_language -> validate_project [label="Yes"];
+
+  validate_project -> project_error [label="No"];
+  validate_project -> validate_dependencies [label="Yes"];
+
+  validate_dependencies -> dependency_error [label="No"];
+
+  // =============================================================================
+  // SPECIFICATION ANALYSIS
+  // =============================================================================
+  subgraph cluster_spec_analysis {
+    label="Specification Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    load_spec [label="Load\nSpecification", fillcolor=purple];
+    parse_spec [label="Parse Specification\n(Pseudocode)", fillcolor=purple];
+
+    extract_requirements [label="Extract Functional\nRequirements", fillcolor=purple];
+    identify_components [label="Identify\nComponents", fillcolor=purple];
+    map_interfaces [label="Map\nInterfaces", fillcolor=purple];
+
+    determine_patterns [label="Determine Design\nPatterns", fillcolor=purple, style="filled,bold"];
+
+    create_plan [label="Create Implementation\nPlan", fillcolor=purple];
+  }
+
+  validate_dependencies -> load_spec [label="Yes"];
+
+  load_spec -> parse_spec;
+  parse_spec -> extract_requirements;
+  extract_requirements -> identify_components;
+  identify_components -> map_interfaces;
+  map_interfaces -> determine_patterns;
+  determine_patterns -> create_plan;
+
+  // =============================================================================
+  // TDD: TEST WRITING
+  // =============================================================================
+  subgraph cluster_test_writing {
+    label="TDD Phase 1: Test Writing";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    tdd_enabled [shape=diamond, label="TDD\nEnabled?"];
+
+    analyze_test_cases [label="Analyze Required\nTest Cases", fillcolor=yellow];
+
+    write_unit_tests [label="Write Unit\nTests", fillcolor=yellow, style="filled,bold"];
+    write_integration_tests [label="Write Integration\nTests", fillcolor=yellow];
+    write_edge_cases [label="Write Edge Case\nTests", fillcolor=yellow];
+
+    setup_test_framework [label="Setup Test\nFramework", fillcolor=yellow];
+
+    verify_tests_fail [label="Verify Tests\nFail (Red Phase)", fillcolor=yellow];
+
+    tests_fail_check [shape=diamond, label="Tests\nFail?"];
+
+    tests_invalid [shape=octagon, fillcolor=orange,
+                   label="Tests Don't Fail\n(Need Fixing)"];
+  }
+
+  create_plan -> tdd_enabled;
+
+  tdd_enabled -> analyze_test_cases [label="Yes"];
+  tdd_enabled -> setup_test_framework [label="No"];
+
+  analyze_test_cases -> write_unit_tests;
+  write_unit_tests -> write_integration_tests;
+  write_integration_tests -> write_edge_cases;
+  write_edge_cases -> setup_test_framework;
+
+  setup_test_framework -> verify_tests_fail;
+  verify_tests_fail -> tests_fail_check;
+
+  tests_fail_check -> tests_invalid [label="No"];
+  tests_invalid -> write_unit_tests [style=dashed];
+
+  // =============================================================================
+  // CODE GENERATION
+  // =============================================================================
+  subgraph cluster_code_generation {
+    label="Code Generation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    generate_structure [label="Generate Project\nStructure", fillcolor=lightblue];
+
+    generate_interfaces [label="Generate\nInterfaces", fillcolor=lightblue];
+    generate_types [label="Generate\nTypes/Classes", fillcolor=lightblue];
+
+    implement_logic [label="Implement Core\nLogic", fillcolor=lightblue, style="filled,bold"];
+
+    add_error_handling [label="Add Error\nHandling", fillcolor=lightblue];
+    add_logging [label="Add\nLogging", fillcolor=lightblue];
+    add_validation [label="Add Input\nValidation", fillcolor=lightblue];
+
+    apply_patterns [label="Apply Design\nPatterns", fillcolor=lightblue];
+
+    optimize_code [label="Optimize\nCode", fillcolor=lightblue];
+  }
+
+  tests_fail_check -> generate_structure [label="Yes (TDD)"];
+  tdd_enabled -> generate_structure [label="No (Direct)"];
+
+  generate_structure -> generate_interfaces;
+  generate_interfaces -> generate_types;
+  generate_types -> implement_logic;
+
+  implement_logic -> add_error_handling;
+  add_error_handling -> add_logging;
+  add_logging -> add_validation;
+  add_validation -> apply_patterns;
+  apply_patterns -> optimize_code;
+
+  // =============================================================================
+  // TDD: TEST EXECUTION
+  // =============================================================================
+  subgraph cluster_test_execution {
+    label="TDD Phase 2: Test Execution";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    run_tests [label="Run All\nTests", fillcolor=lightgreen, style="filled,bold"];
+
+    analyze_results [label="Analyze Test\nResults", fillcolor=lightgreen];
+
+    tests_pass [shape=diamond, label="All Tests\nPass?"];
+
+    identify_failures [label="Identify\nFailures", fillcolor=yellow];
+    analyze_errors [label="Analyze Error\nMessages", fillcolor=yellow];
+
+    debug_code [label="Debug\nCode", fillcolor=yellow];
+    fix_bugs [label="Fix\nBugs", fillcolor=yellow];
+
+    rerun_tests [label="Rerun\nTests", fillcolor=lightgreen];
+  }
+
+  optimize_code -> run_tests;
+
+  run_tests -> analyze_results;
+  analyze_results -> tests_pass;
+
+  tests_pass -> identify_failures [label="No"];
+  identify_failures -> analyze_errors;
+  analyze_errors -> debug_code;
+  debug_code -> fix_bugs;
+  fix_bugs -> rerun_tests;
+  rerun_tests -> analyze_results [style=dashed];
+
+  // =============================================================================
+  // REFACTORING
+  // =============================================================================
+  subgraph cluster_refactoring {
+    label="TDD Phase 3: Refactoring (Green Phase)";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    analyze_code_quality [label="Analyze Code\nQuality", fillcolor=lightpurple];
+
+    identify_smells [label="Identify Code\nSmells", fillcolor=lightpurple];
+    identify_duplication [label="Identify\nDuplication", fillcolor=lightpurple];
+
+    refactor_needed [shape=diamond, label="Refactoring\nNeeded?"];
+
+    extract_methods [label="Extract\nMethods", fillcolor=lightpurple];
+    extract_classes [label="Extract\nClasses", fillcolor=lightpurple];
+    simplify_logic [label="Simplify\nLogic", fillcolor=lightpurple];
+
+    improve_naming [label="Improve\nNaming", fillcolor=lightpurple];
+    reduce_complexity [label="Reduce\nComplexity", fillcolor=lightpurple];
+
+    rerun_after_refactor [label="Rerun Tests\nAfter Refactoring", fillcolor=lightpurple];
+
+    refactor_success [shape=diamond, label="Tests Still\nPass?"];
+
+    refactor_broke_tests [shape=octagon, fillcolor=orange,
+                          label="Refactoring Broke\nTests"];
+  }
+
+  tests_pass -> analyze_code_quality [label="Yes"];
+
+  analyze_code_quality -> identify_smells;
+  identify_smells -> identify_duplication;
+  identify_duplication -> refactor_needed;
+
+  refactor_needed -> extract_methods [label="Yes"];
+
+  extract_methods -> extract_classes;
+  extract_classes -> simplify_logic;
+  simplify_logic -> improve_naming;
+  improve_naming -> reduce_complexity;
+
+  reduce_complexity -> rerun_after_refactor;
+  rerun_after_refactor -> refactor_success;
+
+  refactor_success -> refactor_broke_tests [label="No"];
+  refactor_broke_tests -> extract_methods [style=dashed];
+
+  // =============================================================================
+  // CODE FORMATTING & LINTING
+  // =============================================================================
+  subgraph cluster_formatting {
+    label="Code Formatting & Linting";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    format_code [label="Format Code\n(Prettier/Black)", fillcolor=lightblue];
+    run_linter [label="Run Linter\n(ESLint/Pylint)", fillcolor=lightblue];
+
+    linting_issues [shape=diamond, label="Linting\nIssues?"];
+
+    fix_linting [label="Fix Linting\nIssues", fillcolor=lightblue];
+
+    type_check [label="Type Check\n(TypeScript/mypy)", fillcolor=lightblue];
+
+    type_errors [shape=diamond, label="Type\nErrors?"];
+
+    fix_types [label="Fix Type\nErrors", fillcolor=lightblue];
+  }
+
+  refactor_success -> format_code [label="Yes"];
+  refactor_needed -> format_code [label="No"];
+
+  format_code -> run_linter;
+  run_linter -> linting_issues;
+
+  linting_issues -> fix_linting [label="Yes"];
+  fix_linting -> run_linter [style=dashed];
+
+  linting_issues -> type_check [label="No"];
+  type_check -> type_errors;
+
+  type_errors -> fix_types [label="Yes"];
+  fix_types -> type_check [style=dashed];
+
+  // =============================================================================
+  // DOCUMENTATION GENERATION
+  // =============================================================================
+  subgraph cluster_documentation {
+    label="Documentation Generation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_docstrings [label="Generate\nDocstrings", fillcolor=lightgreen];
+    generate_comments [label="Generate Inline\nComments", fillcolor=lightgreen];
+
+    generate_api_docs [label="Generate API\nDocumentation", fillcolor=lightgreen];
+    generate_usage_examples [label="Generate Usage\nExamples", fillcolor=lightgreen];
+
+    create_readme [label="Create/Update\nREADME", fillcolor=lightgreen];
+  }
+
+  type_errors -> generate_docstrings [label="No"];
+
+  generate_docstrings -> generate_comments;
+  generate_comments -> generate_api_docs;
+  generate_api_docs -> generate_usage_examples;
+  generate_usage_examples -> create_readme;
+
+  // =============================================================================
+  // OUTPUT & FILE WRITING
+  // =============================================================================
+  subgraph cluster_output {
+    label="Output & File Writing";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    organize_files [label="Organize Files\nby Structure", fillcolor=lightpurple];
+
+    write_source [label="Write Source\nFiles", fillcolor=lightpurple, style="filled,bold"];
+    write_tests [label="Write Test\nFiles", fillcolor=lightpurple];
+    write_config [label="Write Config\nFiles", fillcolor=lightpurple];
+    write_docs [label="Write Documentation\nFiles", fillcolor=lightpurple];
+
+    verify_writes [shape=diamond, label="All Files\nWritten?"];
+
+    write_failed [shape=octagon, fillcolor=orange,
+                  label="File Write\nFailed"];
+  }
+
+  create_readme -> organize_files;
+
+  organize_files -> write_source;
+  write_source -> write_tests;
+  write_tests -> write_config;
+  write_config -> write_docs;
+  write_docs -> verify_writes;
+
+  verify_writes -> write_failed [label="No"];
+  write_failed -> organize_files [style=dashed];
+
+  // =============================================================================
+  // FINAL VALIDATION
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Final Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    final_test_run [label="Final Test\nRun", fillcolor=lightgreen, style="filled,bold"];
+
+    coverage_check [label="Check Test\nCoverage", fillcolor=lightgreen];
+
+    coverage_sufficient [shape=diamond, label="Coverage\n>= 80%?"];
+
+    low_coverage [shape=octagon, fillcolor=orange,
+                  label="Low Test\nCoverage"];
+
+    build_check [label="Build\nCheck", fillcolor=lightgreen];
+
+    build_success [shape=diamond, label="Build\nSucceeds?"];
+
+    build_failed [shape=octagon, fillcolor=orange,
+                  label="Build\nFailed"];
+
+    validation_complete [label="Validation\nComplete", fillcolor=lightgreen];
+  }
+
+  verify_writes -> final_test_run [label="Yes"];
+
+  final_test_run -> coverage_check;
+  coverage_check -> coverage_sufficient;
+
+  coverage_sufficient -> low_coverage [label="No"];
+  low_coverage -> write_tests [label="Add More Tests", style=dashed];
+
+  coverage_sufficient -> build_check [label="Yes"];
+  build_check -> build_success;
+
+  build_success -> build_failed [label="No"];
+  build_failed -> debug_code [style=dashed];
+
+  build_success -> validation_complete [label="Yes"];
+
+  // =============================================================================
+  // LOGGING & METRICS
+  // =============================================================================
+  subgraph cluster_logging {
+    label="Logging & Metrics";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    log_generation [label="Log Code\nGeneration", fillcolor=yellow];
+    record_metrics [label="Record Code\nMetrics", fillcolor=yellow];
+
+    track_lines [label="Track Lines\nof Code", fillcolor=yellow];
+    track_complexity [label="Track\nComplexity", fillcolor=yellow];
+    track_coverage [label="Track Test\nCoverage", fillcolor=yellow];
+
+    check_telemetry [shape=diamond, label="Telemetry\nEnabled?"];
+
+    send_telemetry [label="Send Telemetry\nData", fillcolor=yellow];
+  }
+
+  validation_complete -> log_generation;
+
+  log_generation -> record_metrics;
+  record_metrics -> track_lines;
+  track_lines -> track_complexity;
+  track_complexity -> track_coverage;
+  track_coverage -> check_telemetry;
+
+  check_telemetry -> send_telemetry [label="Yes"];
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_temp [label="Cleanup Temp\nFiles", fillcolor=lightgreen];
+    commit_changes [label="Commit Changes\nto Git", fillcolor=lightgreen];
+    return_status [label="Return Exit\nCode", fillcolor=lightgreen];
+    success [label="Auto-Coder\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  check_telemetry -> cleanup_temp [label="No"];
+  send_telemetry -> cleanup_temp;
+
+  cleanup_temp -> commit_changes;
+  commit_changes -> return_status;
+  return_status -> success;
+
+  // =============================================================================
+  // ERROR HANDLING & RECOVERY
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+
+    retry_generation [label="Retry Code\nGeneration", fillcolor=yellow];
+    simplify_spec [label="Simplify\nSpecification", fillcolor=yellow];
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    cleanup_after_error [label="Cleanup After\nError", fillcolor=orange];
+    failure [label="Command\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Route all errors to classification
+  syntax_error -> log_error;
+  auth_failed -> log_error;
+  coder_failed -> log_error;
+  permission_denied -> log_error;
+  spec_error -> classify_error;
+  language_error -> classify_error;
+  project_error -> classify_error;
+  dependency_error -> classify_error;
+  tests_invalid -> classify_error;
+  write_failed -> classify_error;
+  low_coverage -> classify_error;
+  build_failed -> classify_error;
+
+  // Error classification and recovery
+  classify_error -> retry_generation [label="Transient"];
+  classify_error -> simplify_spec [label="Complex"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_generation -> implement_logic [label="Retry", style=dashed];
+  simplify_spec -> parse_spec [label="Simplify", style=dashed];
+
+  log_error -> cleanup_after_error;
+  cleanup_after_error -> escalate;
+  escalate -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

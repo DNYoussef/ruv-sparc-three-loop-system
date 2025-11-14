@@ -1,0 +1,61 @@
+digraph REDecompilerAgent {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="RE-decompiler\nAgent Activated", fillcolor=lightgreen];
+
+    // Tool selection
+    select_tool [label="Select Decompiler\n(Ghidra/IDA/RetDec)"];
+    configure_tool [label="Configure Tool\nSettings"];
+
+    // Core capabilities
+    disassemble [label="Disassemble Binary\nCode"];
+    lift_to_ir [label="Lift to IR\n(Intermediate Rep)"];
+    analyze_control_flow [label="Analyze Control\nFlow"];
+    analyze_data_flow [label="Analyze Data\nFlow"];
+    recover_types [label="Type Recovery\nAnalysis"];
+    infer_structures [label="Infer Data\nStructures"];
+    reconstruct_functions [label="Reconstruct\nFunctions"];
+    optimize_code [label="Optimize Decompiled\nCode"];
+    generate_pseudocode [label="Generate High-Level\nPseudocode"];
+    add_annotations [label="Add Semantic\nAnnotations"];
+    rename_variables [label="Auto-Rename\nVariables"];
+    identify_libraries [label="Identify Library\nCalls"];
+
+    // Integration
+    integrate_debug_info [label="Integrate Debug\nInfo (if available)"];
+    cross_reference_strings [label="Cross-Reference\nStrings"];
+    memory_coordination [label="Store Code in\nMemory MCP"];
+
+    // Output
+    export_source [label="Export Source\nCode (C/C++)"];
+    end [label="Decompilation\nComplete", fillcolor=lightcoral];
+
+    // Flow
+    start -> select_tool;
+    select_tool -> configure_tool;
+    configure_tool -> disassemble;
+    disassemble -> lift_to_ir;
+    lift_to_ir -> analyze_control_flow;
+    analyze_control_flow -> analyze_data_flow;
+    analyze_data_flow -> recover_types;
+    recover_types -> infer_structures;
+    infer_structures -> reconstruct_functions;
+    reconstruct_functions -> optimize_code;
+    optimize_code -> generate_pseudocode;
+    generate_pseudocode -> add_annotations;
+    add_annotations -> rename_variables;
+    rename_variables -> identify_libraries;
+    identify_libraries -> integrate_debug_info;
+    integrate_debug_info -> cross_reference_strings;
+    cross_reference_strings -> memory_coordination;
+    memory_coordination -> export_source;
+    export_source -> end;
+
+    // Metadata
+    label="RE-decompiler Agent Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

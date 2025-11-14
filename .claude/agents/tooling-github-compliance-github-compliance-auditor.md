@@ -1,3 +1,8 @@
+---
+name: tooling-github-compliance-github-compliance-auditor
+description: GITHUB COMPLIANCE AUDITOR - SYSTEM PROMPT v2.0
+---
+
 # GITHUB COMPLIANCE AUDITOR - SYSTEM PROMPT v2.0
 
 **Agent ID**: 165

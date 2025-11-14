@@ -1,0 +1,94 @@
+digraph MESH_COORDINATOR_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Mesh Coordinator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\nPeer-to-Peer Topology"];
+    validate_caps [label="Validate Capabilities\npeer_coordination, distributed_consensus\nhorizontal_delegation, fault_tolerance"];
+    
+    start -> load_config -> validate_caps;
+  }
+  
+  subgraph cluster_mesh_topology {
+    label="Mesh Topology Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+    
+    discover_peers [label="Discover Peers\nPeer identification", fillcolor=purple];
+    establish_connections [label="Establish Connections\nFull mesh N-to-N"];
+    setup_gossip [label="Setup Gossip Protocol\nPeer communication"];
+    setup_consensus [label="Setup Consensus\nByzantine fault tolerance"];
+    
+    validate_caps -> discover_peers;
+    discover_peers -> establish_connections -> setup_gossip -> setup_consensus;
+  }
+  
+  subgraph cluster_distributed_execution {
+    label="Distributed Execution";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    receive_tasks [label="Receive Tasks\nAt any peer", fillcolor=lightgreen];
+    broadcast_tasks [label="Broadcast Tasks\nGossip dissemination"];
+    peer_claim_tasks [label="Peers Claim Tasks\nDecentralized allocation"];
+    execute_parallel [label="Execute in Parallel\nNo coordination bottleneck"];
+    share_status [label="Share Status\nGossip protocol"];
+    
+    setup_consensus -> receive_tasks;
+    receive_tasks -> broadcast_tasks -> peer_claim_tasks;
+    peer_claim_tasks -> execute_parallel -> share_status;
+  }
+  
+  subgraph cluster_consensus {
+    label="Consensus & Aggregation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+    
+    collect_results [label="Collect Results\nFrom all peers", fillcolor=lightblue];
+    verify_consensus [label="Verify Consensus\n2/3 majority"];
+    aggregate_results [label="Aggregate Results\nMerge peer outputs"];
+    check_completeness [shape=diamond, label="Complete?"];
+    
+    share_status -> collect_results;
+    collect_results -> verify_consensus -> aggregate_results -> check_completeness;
+    check_completeness -> collect_results [label="No", style=dashed];
+  }
+  
+  subgraph cluster_fault_tolerance {
+    label="Fault Tolerance";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+    
+    detect_peer_failure [label="Detect Peer Failure", fillcolor=orange];
+    reroute_tasks [label="Reroute Tasks\nTo surviving peers"];
+    heal_mesh [label="Heal Mesh\nReestablish connections"];
+    
+    share_status -> detect_peer_failure [style=dashed];
+    detect_peer_failure -> reroute_tasks -> heal_mesh;
+    heal_mesh -> execute_parallel [style=dashed];
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_results [label="Store Results\nmemory_store", fillcolor=lightblue];
+    log_metrics [label="Log Mesh Metrics"];
+    success [label="Mesh Coordination Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    check_completeness -> store_results [label="Yes"];
+    store_results -> log_metrics -> success;
+  }
+}

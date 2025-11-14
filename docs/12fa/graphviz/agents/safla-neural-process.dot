@@ -1,0 +1,126 @@
+digraph safla_neural_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="SAFLA Neural Agent - Adaptive Learning System";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Task Input\n+ Context", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Pattern Recognition Phase
+    subgraph cluster_recognition {
+        label="Pattern Recognition";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        perceive [label="Perception\n(Input analysis)"];
+        recognize [label="Pattern Recognition\n(Match known patterns)"];
+        classify [label="Classification\n(Task type)"];
+    }
+
+    // Neural Learning Phase
+    subgraph cluster_learning {
+        label="Neural Learning Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        retrieve [label="Memory Retrieval\n(Past experiences)"];
+        learn [label="Neural Learning\n(Update weights)"];
+        adapt [label="Adaptive Behavior\n(Strategy adjustment)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Execution Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        plan [label="Action Planning\n(Best strategy)"];
+        execute [label="Execution\n(Apply learned)"];
+        monitor [label="Monitoring\n(Track results)"];
+    }
+
+    // Improvement Phase
+    subgraph cluster_improvement {
+        label="Continuous Improvement";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        evaluate [label="Evaluation\n(Success/failure)"];
+        feedback [label="Feedback Integration\n(Update model)"];
+        optimize [label="Optimization\n(Improve strategy)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Neural Learning", fillcolor="#238636"];
+        feature2 [label="Pattern Recognition", fillcolor="#238636"];
+        feature3 [label="Adaptive Behavior", fillcolor="#238636"];
+        feature4 [label="Continuous Improvement", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Learned Response\n+ Updated Model", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> perceive;
+    perceive -> recognize;
+    recognize -> classify;
+
+    classify -> retrieve;
+    retrieve -> learn;
+    learn -> adapt;
+
+    adapt -> plan;
+    plan -> execute;
+    execute -> monitor;
+
+    monitor -> evaluate;
+    evaluate -> feedback;
+    feedback -> optimize;
+
+    optimize -> output;
+
+    // Learning loop
+    feedback -> learn [label="Update neural network", style=dashed, color="#f85149"];
+    optimize -> retrieve [label="Store experience", style=dashed, color="#238636"];
+
+    // Feature connections
+    learn -> feature1 [style=dotted, color="#8b949e"];
+    recognize -> feature2 [style=dotted, color="#8b949e"];
+    adapt -> feature3 [style=dotted, color="#8b949e"];
+    optimize -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,0 +1,261 @@
+digraph RollbackWorkflow {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Emergency Rollback Procedure</b><br/>Detect → Decide → Rollback → Verify → Post-Mortem>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Rollback Severity Levels";
+        style=filled;
+        color="#e9ecef";
+
+        legend_critical [label="P0: Critical - Auto Rollback", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        legend_high [label="P1: High - Manual Approval", shape=box, fillcolor="#fd7e14"];
+        legend_medium [label="P2: Medium - Investigation", shape=box, fillcolor="#ffc107"];
+
+        legend_critical -> legend_high -> legend_medium [style=invis];
+    }
+
+    // Start - Incident Detection
+    start [label="Incident\nDetected", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+
+    // Detection Phase
+    subgraph cluster_detection {
+        label="Phase 1: Incident Detection";
+        style=filled;
+        color="#f8d7da";
+
+        detect_alerts [label="Alert Triggered\nMonitoring System", shape=box, fillcolor="#f5c6cb"];
+        detect_classify [label="Classify Severity\nP0/P1/P2", shape=box, fillcolor="#f5c6cb"];
+        detect_impact [label="Assess Impact\nAffected Users", shape=box, fillcolor="#f5c6cb"];
+        detect_timeline [label="Build Timeline\nDeployment Events", shape=box, fillcolor="#f5c6cb"];
+        detect_correlation [label="Correlate Changes\nRecent Deploys", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    severity_level [label="Severity?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Decision Phase
+    subgraph cluster_decision {
+        label="Phase 2: Rollback Decision";
+        style=filled;
+        color="#fff3cd";
+
+        decision_gather [label="Gather Data\nMetrics/Logs/Traces", shape=box, fillcolor="#ffeeba"];
+        decision_analyze [label="Root Cause Analysis\nQuick Investigation", shape=box, fillcolor="#ffeeba"];
+        decision_options [label="Evaluate Options\nRollback vs Fix Forward", shape=box, fillcolor="#ffeeba"];
+        decision_stakeholders [label="Notify Stakeholders\nIncident Commander", shape=box, fillcolor="#ffeeba"];
+    }
+
+    rollback_decision [label="Rollback?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Auto Rollback (P0)
+    subgraph cluster_auto_rollback {
+        label="P0: Automated Rollback";
+        style=filled;
+        color="#dc3545";
+
+        auto_trigger [label="Auto-Trigger\nCircuit Breaker", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        auto_notify [label="Notify Teams\nImmediate Alert", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        auto_rollback [label="Execute Rollback\nPrevious Version", shape=box, fillcolor="#dc3545", fontcolor="white"];
+    }
+
+    // Manual Rollback (P1)
+    subgraph cluster_manual_rollback {
+        label="P1: Manual Rollback";
+        style=filled;
+        color="#fd7e14";
+
+        manual_approval [label="Get Approval\nIncident Commander", shape=box, fillcolor="#fd7e14"];
+        manual_prepare [label="Prepare Rollback\nBackup Current State", shape=box, fillcolor="#fd7e14"];
+        manual_execute [label="Execute Rollback\nManual Trigger", shape=box, fillcolor="#fd7e14"];
+    }
+
+    // Rollback Execution
+    subgraph cluster_execution {
+        label="Phase 3: Rollback Execution";
+        style=filled;
+        color="#cfe2ff";
+
+        exec_version_check [label="Version Check\nIdentify Previous", shape=box, fillcolor="#b6d7ff"];
+        exec_db_rollback [label="Database Rollback\nMigrations Down", shape=box, fillcolor="#b6d7ff"];
+        exec_config_revert [label="Config Revert\nPrevious Settings", shape=box, fillcolor="#b6d7ff"];
+        exec_deploy_previous [label="Deploy Previous\nK8s/Docker", shape=box, fillcolor="#b6d7ff"];
+        exec_cache_clear [label="Clear Cache\nInvalidate", shape=box, fillcolor="#b6d7ff"];
+        exec_dns_update [label="DNS Update\nTraffic Shift", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Canary Rollback Strategy
+    subgraph cluster_canary {
+        label="Canary Rollback Strategy";
+        style=filled;
+        color="#d1e7dd";
+
+        canary_10 [label="Rollback 10%\nTest Impact", shape=box, fillcolor="#a3cfbb"];
+        canary_check [label="Check Metrics\nError Rate", shape=box, fillcolor="#a3cfbb"];
+        canary_50 [label="Rollback 50%\nGradual Shift", shape=box, fillcolor="#a3cfbb"];
+        canary_100 [label="Rollback 100%\nFull Rollback", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    canary_success [label="Metrics\nImproved?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Verification Phase
+    subgraph cluster_verification {
+        label="Phase 4: Post-Rollback Verification";
+        style=filled;
+        color="#d1e7dd";
+
+        verify_health [label="Health Checks\nAll Services", shape=box, fillcolor="#a3cfbb"];
+        verify_smoke [label="Smoke Tests\nCritical Paths", shape=box, fillcolor="#a3cfbb"];
+        verify_metrics [label="Metrics Check\nError/Latency", shape=box, fillcolor="#a3cfbb"];
+        verify_logs [label="Log Analysis\nError Patterns", shape=box, fillcolor="#a3cfbb"];
+        verify_user_impact [label="User Impact\nCustomer Reports", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    verification_passed [label="Verification\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Monitoring Phase
+    subgraph cluster_monitoring {
+        label="Phase 5: Enhanced Monitoring";
+        style=filled;
+        color="#e7d1e7";
+
+        monitor_continuous [label="Continuous Monitor\n15-30 mins", shape=box, fillcolor="#d4b5d4"];
+        monitor_alerts [label="Alert Thresholds\nLower Sensitivity", shape=box, fillcolor="#d4b5d4"];
+        monitor_dashboards [label="Live Dashboards\nReal-Time View", shape=box, fillcolor="#d4b5d4"];
+        monitor_users [label="User Feedback\nSupport Tickets", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    stability_check [label="System\nStable?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Communication Phase
+    subgraph cluster_communication {
+        label="Phase 6: Incident Communication";
+        style=filled;
+        color="#fff3cd";
+
+        comm_internal [label="Internal Update\nTeams/Slack", shape=box, fillcolor="#ffeeba"];
+        comm_status_page [label="Status Page\nCustomer Update", shape=box, fillcolor="#ffeeba"];
+        comm_support [label="Support Teams\nTicket Handling", shape=box, fillcolor="#ffeeba"];
+        comm_leadership [label="Leadership Brief\nExecutive Summary", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Post-Mortem Phase
+    subgraph cluster_postmortem {
+        label="Phase 7: Post-Mortem Analysis";
+        style=filled;
+        color="#e9ecef";
+
+        pm_timeline [label="Document Timeline\nIncident Flow", shape=box, fillcolor="#dee2e6"];
+        pm_root_cause [label="Root Cause\nDeep Analysis", shape=box, fillcolor="#dee2e6"];
+        pm_impact [label="Impact Assessment\nDowntime/Revenue", shape=box, fillcolor="#dee2e6"];
+        pm_action_items [label="Action Items\nPreventive Measures", shape=box, fillcolor="#dee2e6"];
+        pm_review [label="Team Review\nLessons Learned", shape=box, fillcolor="#dee2e6"];
+        pm_publish [label="Publish Report\nBlameless Post-Mortem", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Artifacts
+    rollback_log [label="Rollback Log\nAudit Trail", shape=cylinder, fillcolor="#f8d7da"];
+    metrics_data [label="Metrics Data\nBefore/After", shape=cylinder, fillcolor="#f8d7da"];
+    postmortem_doc [label="Post-Mortem\nDocument", shape=cylinder, fillcolor="#f8d7da"];
+
+    // End States
+    success [label="System\nRecovered", shape=oval, fillcolor="#d4edda"];
+    failed_rollback [label="Rollback\nFailed", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+    escalate [label="Escalate\nMajor Incident", shape=oval, fillcolor="#fd7e14"];
+
+    // Workflow Connections
+    start -> detect_alerts;
+
+    // Detection
+    detect_alerts -> detect_classify;
+    detect_classify -> detect_impact;
+    detect_impact -> detect_timeline;
+    detect_timeline -> detect_correlation;
+    detect_correlation -> severity_level;
+
+    // Severity branching
+    severity_level -> auto_trigger [label="P0: Critical", color="red"];
+    severity_level -> decision_gather [label="P1: High", color="orange"];
+    severity_level -> decision_gather [label="P2: Medium", color="yellow"];
+
+    // Auto rollback (P0)
+    auto_trigger -> auto_notify;
+    auto_notify -> auto_rollback;
+    auto_rollback -> exec_version_check;
+
+    // Manual decision (P1/P2)
+    decision_gather -> decision_analyze;
+    decision_analyze -> decision_options;
+    decision_options -> decision_stakeholders;
+    decision_stakeholders -> rollback_decision;
+
+    rollback_decision -> manual_approval [label="Yes - Rollback", color="red"];
+    rollback_decision -> comm_internal [label="No - Fix Forward", color="green"];
+
+    manual_approval -> manual_prepare;
+    manual_prepare -> manual_execute;
+    manual_execute -> exec_version_check;
+
+    // Execution
+    exec_version_check -> exec_db_rollback;
+    exec_db_rollback -> exec_config_revert;
+    exec_config_revert -> exec_deploy_previous;
+    exec_deploy_previous -> exec_cache_clear;
+    exec_cache_clear -> exec_dns_update;
+    exec_dns_update -> canary_10;
+
+    // Canary rollback
+    canary_10 -> canary_check;
+    canary_check -> canary_success;
+
+    canary_success -> canary_50 [label="Improved", color="green"];
+    canary_success -> failed_rollback [label="Worse", color="red"];
+
+    canary_50 -> canary_100;
+    canary_100 -> rollback_log;
+    rollback_log -> verify_health;
+
+    // Verification
+    verify_health -> verify_smoke;
+    verify_smoke -> verify_metrics;
+    verify_metrics -> verify_logs;
+    verify_logs -> verify_user_impact;
+    verify_user_impact -> metrics_data;
+    metrics_data -> verification_passed;
+
+    verification_passed -> monitor_continuous [label="Pass", color="green"];
+    verification_passed -> escalate [label="Fail", color="red"];
+
+    // Monitoring
+    monitor_continuous -> monitor_alerts;
+    monitor_alerts -> monitor_dashboards;
+    monitor_dashboards -> monitor_users;
+    monitor_users -> stability_check;
+
+    stability_check -> comm_internal [label="Stable", color="green"];
+    stability_check -> monitor_continuous [label="Unstable - Continue", color="orange"];
+
+    // Communication
+    comm_internal -> comm_status_page;
+    comm_status_page -> comm_support;
+    comm_support -> comm_leadership;
+    comm_leadership -> pm_timeline;
+
+    // Post-Mortem
+    pm_timeline -> pm_root_cause;
+    pm_root_cause -> pm_impact;
+    pm_impact -> pm_action_items;
+    pm_action_items -> pm_review;
+    pm_review -> pm_publish;
+    pm_publish -> postmortem_doc;
+    postmortem_doc -> success;
+}

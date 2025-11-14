@@ -1,0 +1,347 @@
+/**
+ * Task Scheduling and Retry Logic Workflow
+ * Command: /schedule-task, /retry-config, /cron-setup
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph automation_scheduling {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Task Scheduling &amp; Retry Logic</B><BR/>Scheduling • Retry Strategies • Error Recovery>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Task Creation
+    subgraph cluster_creation {
+        label="Task Creation & Configuration";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        task_input [label="Task\nInput", shape=box, fillcolor="#bbdefb", penwidth=2];
+        task_type [label="Task\nType?", shape=diamond, fillcolor="#90caf9"];
+        immediate [label="Immediate", shape=box, fillcolor="#64b5f6"];
+        scheduled [label="Scheduled", shape=box, fillcolor="#42a5f5"];
+        recurring [label="Recurring", shape=box, fillcolor="#2196f3"];
+        event_driven [label="Event-Driven", shape=box, fillcolor="#1e88e5"];
+
+        task_config [label="Task\nConfiguration", shape=box, fillcolor="#1976d2"];
+        priority_set [label="Set\nPriority", shape=box, fillcolor="#1565c0"];
+        timeout_set [label="Set\nTimeout", shape=box, fillcolor="#0d47a1"];
+    }
+
+    // Subgraph: Scheduling Mechanisms
+    subgraph cluster_scheduling {
+        label="Scheduling Mechanisms";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        schedule_type [label="Schedule\nType?", shape=diamond, fillcolor="#e1bee7"];
+
+        // Cron scheduling
+        cron_schedule [label="Cron\nSchedule", shape=box, fillcolor="#ce93d8"];
+        cron_expression [label="Cron\nExpression", shape=box, fillcolor="#ba68c8"];
+        cron_examples [label=<
+            <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+                <TR><TD><B>Pattern</B></TD><TD><B>Description</B></TD></TR>
+                <TR><TD>0 * * * *</TD><TD>Every hour</TD></TR>
+                <TR><TD>0 0 * * *</TD><TD>Daily at midnight</TD></TR>
+                <TR><TD>0 0 * * 0</TD><TD>Weekly on Sunday</TD></TR>
+                <TR><TD>0 0 1 * *</TD><TD>Monthly</TD></TR>
+            </TABLE>
+        >, shape=note, fillcolor="#ab47bc"];
+
+        // Interval scheduling
+        interval_schedule [label="Interval\nSchedule", shape=box, fillcolor="#9c27b0"];
+        interval_config [label="Interval\nConfiguration", shape=box, fillcolor="#8e24aa"];
+        interval_types [label=<
+            • Every N seconds<BR/>
+            • Every N minutes<BR/>
+            • Every N hours<BR/>
+            • Every N days
+        >, shape=note, fillcolor="#7b1fa2"];
+
+        // Delay scheduling
+        delay_schedule [label="Delay\nSchedule", shape=box, fillcolor="#6a1b9a"];
+        delay_config [label="Execute\nAfter Delay", shape=box, fillcolor="#4a148c"];
+
+        // Calendar scheduling
+        calendar_schedule [label="Calendar\nSchedule", shape=box, fillcolor="#311b92"];
+        calendar_config [label="Specific\nDate/Time", shape=box, fillcolor="#1a237e"];
+    }
+
+    // Subgraph: Queue Management
+    subgraph cluster_queue {
+        label="Queue Management";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        queue_manager [label="Queue\nManager", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        priority_queue [label="Priority\nQueue", shape=box, fillcolor="#ffcc80"];
+        fifo_queue [label="FIFO\nQueue", shape=box, fillcolor="#ffb74d"];
+        lifo_queue [label="LIFO\nQueue", shape=box, fillcolor="#ffa726"];
+
+        queue_full [label="Queue\nFull?", shape=diamond, fillcolor="#ff9800"];
+        drop_task [label="Drop\nTask", shape=box, fillcolor="#fb8c00", style="rounded,filled,dashed"];
+        wait_slot [label="Wait for\nSlot", shape=box, fillcolor="#f57c00"];
+        overflow_queue [label="Overflow\nQueue", shape=box, fillcolor="#ef6c00"];
+    }
+
+    // Subgraph: Task Execution
+    subgraph cluster_execution {
+        label="Task Execution";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        executor [label="Task\nExecutor", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        worker_pool [label="Worker\nPool", shape=box, fillcolor="#a5d6a7"];
+        acquire_worker [label="Acquire\nWorker", shape=box, fillcolor="#81c784"];
+        execute_task [label="Execute\nTask", shape=box, fillcolor="#66bb6a"];
+        monitor_execution [label="Monitor\nExecution", shape=box, fillcolor="#4caf50"];
+
+        execution_result [label="Execution\nResult?", shape=diamond, fillcolor="#43a047"];
+        success [label="Success", shape=box, fillcolor="#388e3c"];
+        failure [label="Failure", shape=box, fillcolor="#2e7d32"];
+        timeout [label="Timeout", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Retry Logic
+    subgraph cluster_retry {
+        label="Retry Logic";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        retry_decision [label="Retry?", shape=diamond, fillcolor="#fff59d"];
+        retry_strategy [label="Retry\nStrategy?", shape=diamond, fillcolor="#fff176"];
+
+        // Exponential backoff
+        exponential [label="Exponential\nBackoff", shape=box, fillcolor="#ffee58"];
+        exp_delay [label="Delay = 2^n\n× base_delay", shape=box, fillcolor="#ffeb3b"];
+
+        // Linear backoff
+        linear [label="Linear\nBackoff", shape=box, fillcolor="#fdd835"];
+        lin_delay [label="Delay += \nincrement", shape=box, fillcolor="#f9a825"];
+
+        // Fixed retry
+        fixed [label="Fixed\nDelay", shape=box, fillcolor="#f57f17"];
+        fixed_delay [label="Constant\nDelay", shape=box, fillcolor="#ff6f00"];
+
+        // Retry with jitter
+        jitter [label="Add\nJitter", shape=box, fillcolor="#e65100"];
+
+        retry_count [label="Retry Count\n< Max?", shape=diamond, fillcolor="#bf360c"];
+        schedule_retry [label="Schedule\nRetry", shape=box, fillcolor="#8e0000"];
+        max_retries [label="Max Retries\nExceeded", shape=box, fillcolor="#6d0000", style="rounded,filled,dashed"];
+    }
+
+    // Subgraph: Error Handling
+    subgraph cluster_error {
+        label="Error Handling & Recovery";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        error_handler [label="Error\nHandler", shape=box, fillcolor="#ffcdd2", penwidth=2];
+        error_classify [label="Classify\nError", shape=diamond, fillcolor="#ef9a9a"];
+
+        transient_error [label="Transient\nError", shape=box, fillcolor="#e57373"];
+        permanent_error [label="Permanent\nError", shape=box, fillcolor="#ef5350"];
+        rate_limit_error [label="Rate Limit\nError", shape=box, fillcolor="#f44336"];
+
+        circuit_breaker [label="Circuit\nBreaker", shape=box, fillcolor="#e53935"];
+        fallback_strategy [label="Fallback\nStrategy", shape=box, fillcolor="#c62828"];
+        dead_letter_queue [label="Dead Letter\nQueue", shape=box, fillcolor="#b71c1c"];
+
+        error_notification [label="Error\nNotification", shape=box, fillcolor="#8b0000"];
+    }
+
+    // Subgraph: Monitoring & Metrics
+    subgraph cluster_monitoring {
+        label="Monitoring & Metrics";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        metrics_collector [label="Metrics\nCollector", shape=box, fillcolor="#b3e5fc", penwidth=2];
+        task_metrics [label="Task\nMetrics", shape=box, fillcolor="#81d4fa"];
+        metrics_types [label=<
+            • Execution time<BR/>
+            • Success rate<BR/>
+            • Retry count<BR/>
+            • Queue depth<BR/>
+            • Worker utilization
+        >, shape=note, fillcolor="#4fc3f7"];
+
+        alerting [label="Alerting", shape=box, fillcolor="#29b6f6"];
+        alert_rules [label=<
+            • High failure rate<BR/>
+            • Queue overflow<BR/>
+            • Slow execution<BR/>
+            • Worker starvation
+        >, shape=note, fillcolor="#03a9f4"];
+
+        dashboard [label="Monitoring\nDashboard", shape=box, fillcolor="#039be5"];
+    }
+
+    // Subgraph: Cleanup & Maintenance
+    subgraph cluster_cleanup {
+        label="Cleanup & Maintenance";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        cleanup_scheduler [label="Cleanup\nScheduler", shape=box, fillcolor="#e1bee7"];
+        remove_completed [label="Remove\nCompleted", shape=box, fillcolor="#ce93d8"];
+        archive_failed [label="Archive\nFailed", shape=box, fillcolor="#ba68c8"];
+        purge_old [label="Purge Old\nTasks", shape=box, fillcolor="#ab47bc"];
+        optimize_queue [label="Optimize\nQueue", shape=box, fillcolor="#9c27b0"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Creation", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Scheduling", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Queue", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Execution", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Retry", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Error", shape=box, fillcolor="#f44336"];
+        leg7 [label="Monitoring", shape=box, fillcolor="#03a9f4"];
+        leg8 [label="Cleanup", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7; leg8;}
+    }
+
+    // Task creation flow
+    task_input -> task_type;
+    task_type -> immediate;
+    task_type -> scheduled;
+    task_type -> recurring;
+    task_type -> event_driven;
+
+    immediate -> task_config;
+    scheduled -> schedule_type;
+    recurring -> schedule_type;
+    event_driven -> task_config;
+
+    // Scheduling flow
+    schedule_type -> cron_schedule [label="cron"];
+    schedule_type -> interval_schedule [label="interval"];
+    schedule_type -> delay_schedule [label="delay"];
+    schedule_type -> calendar_schedule [label="calendar"];
+
+    cron_schedule -> cron_expression;
+    cron_expression -> cron_examples [style=dashed];
+    interval_schedule -> interval_config;
+    interval_config -> interval_types [style=dashed];
+    delay_schedule -> delay_config;
+    calendar_schedule -> calendar_config;
+
+    cron_expression -> task_config;
+    interval_config -> task_config;
+    delay_config -> task_config;
+    calendar_config -> task_config;
+
+    task_config -> priority_set;
+    priority_set -> timeout_set;
+
+    // Queue management
+    timeout_set -> queue_manager;
+    queue_manager -> priority_queue [label="priority"];
+    queue_manager -> fifo_queue [label="fifo"];
+    queue_manager -> lifo_queue [label="lifo"];
+
+    priority_queue -> queue_full;
+    fifo_queue -> queue_full;
+    lifo_queue -> queue_full;
+
+    queue_full -> drop_task [label="drop"];
+    queue_full -> wait_slot [label="wait"];
+    queue_full -> overflow_queue [label="overflow"];
+
+    wait_slot -> executor;
+    overflow_queue -> executor;
+
+    // Execution flow
+    executor -> worker_pool;
+    worker_pool -> acquire_worker;
+    acquire_worker -> execute_task;
+    execute_task -> monitor_execution;
+    monitor_execution -> execution_result;
+
+    execution_result -> success [label="success"];
+    execution_result -> failure [label="failure"];
+    execution_result -> timeout [label="timeout"];
+
+    // Retry logic
+    failure -> retry_decision;
+    timeout -> retry_decision;
+
+    retry_decision -> retry_strategy [label="yes"];
+    retry_decision -> error_handler [label="no"];
+
+    retry_strategy -> exponential;
+    retry_strategy -> linear;
+    retry_strategy -> fixed;
+
+    exponential -> exp_delay;
+    linear -> lin_delay;
+    fixed -> fixed_delay;
+
+    exp_delay -> jitter;
+    lin_delay -> jitter;
+    fixed_delay -> jitter;
+
+    jitter -> retry_count;
+    retry_count -> schedule_retry [label="yes"];
+    retry_count -> max_retries [label="no"];
+
+    schedule_retry -> queue_manager;
+    max_retries -> error_handler;
+
+    // Error handling
+    error_handler -> error_classify;
+    error_classify -> transient_error [label="transient"];
+    error_classify -> permanent_error [label="permanent"];
+    error_classify -> rate_limit_error [label="rate limit"];
+
+    transient_error -> circuit_breaker;
+    permanent_error -> fallback_strategy;
+    rate_limit_error -> schedule_retry;
+
+    circuit_breaker -> dead_letter_queue;
+    fallback_strategy -> dead_letter_queue;
+    dead_letter_queue -> error_notification;
+
+    // Monitoring
+    success -> metrics_collector;
+    failure -> metrics_collector;
+    timeout -> metrics_collector;
+
+    metrics_collector -> task_metrics;
+    task_metrics -> metrics_types [style=dashed];
+    task_metrics -> alerting;
+    alerting -> alert_rules [style=dashed];
+    alerting -> dashboard;
+
+    // Cleanup
+    success -> cleanup_scheduler [style=dashed];
+    cleanup_scheduler -> remove_completed;
+    remove_completed -> archive_failed;
+    archive_failed -> purge_old;
+    purge_old -> optimize_queue;
+}

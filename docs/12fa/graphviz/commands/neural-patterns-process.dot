@@ -1,0 +1,122 @@
+// Neural Patterns Command Workflow
+// Train neural patterns for continuous learning
+digraph neural_patterns_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    // === COMMAND TRIGGER ===
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/neural-patterns\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        parse_mode [label="Parse Training\nMode", fillcolor="#2d3748", fontcolor="#ffffff"];
+        select_patterns [label="Select\nPatterns", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === PATTERN TYPES ===
+    subgraph cluster_patterns {
+        label="Neural Pattern Types";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        convergent [label="Convergent\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        divergent [label="Divergent\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        lateral [label="Lateral\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        systems [label="Systems\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        critical [label="Critical\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        abstract [label="Abstract\nThinking", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === TRAINING PROCESS ===
+    subgraph cluster_training {
+        label="Training Process";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        data_collector [label="Training Data\nCollector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_extractor [label="Pattern\nExtractor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        model_trainer [label="Model\nTrainer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        validation_engine [label="Validation\nEngine", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === CONTINUOUS LEARNING ===
+    subgraph cluster_learning {
+        label="Continuous Learning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        feedback_collector [label="Feedback\nCollector", fillcolor="#10b981", fontcolor="#ffffff"];
+        reinforcement_engine [label="Reinforcement\nEngine", fillcolor="#10b981", fontcolor="#ffffff"];
+        adaptation_layer [label="Adaptation\nLayer", fillcolor="#10b981", fontcolor="#ffffff"];
+        knowledge_integrator [label="Knowledge\nIntegrator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === PATTERN STORAGE ===
+    subgraph cluster_storage {
+        label="Pattern Storage";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_db [label="Pattern\nDatabase", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        vector_store [label="Vector\nStore", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        similarity_index [label="Similarity\nIndex", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        retrieval_engine [label="Retrieval\nEngine", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    // === OUTPUT ===
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        trained_model [label="Trained\nModel", fillcolor="#059669", fontcolor="#ffffff"];
+        performance_metrics [label="Performance\nMetrics", fillcolor="#059669", fontcolor="#ffffff"];
+        pattern_report [label="Pattern\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === FLOW ===
+    cmd_trigger -> parse_mode -> select_patterns;
+    select_patterns -> convergent;
+    select_patterns -> divergent;
+    select_patterns -> lateral;
+    select_patterns -> systems;
+    select_patterns -> critical;
+    select_patterns -> abstract;
+
+    convergent -> data_collector;
+    divergent -> data_collector;
+    lateral -> data_collector;
+    systems -> data_collector;
+    critical -> data_collector;
+    abstract -> data_collector;
+
+    data_collector -> pattern_extractor -> model_trainer -> validation_engine;
+    validation_engine -> feedback_collector -> reinforcement_engine -> adaptation_layer -> knowledge_integrator;
+    knowledge_integrator -> pattern_db -> vector_store -> similarity_index -> retrieval_engine;
+    retrieval_engine -> trained_model -> performance_metrics -> pattern_report;
+    pattern_report -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    // Feedback loops
+    validation_engine -> model_trainer [label="Improve", style=dashed, color="#ef4444"];
+    feedback_collector -> data_collector [label="New Data", style=dashed];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Patterns", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend3 [label="Learning", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

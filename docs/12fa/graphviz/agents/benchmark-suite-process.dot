@@ -1,0 +1,134 @@
+digraph benchmark_suite_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Benchmark Suite - Comprehensive Performance Testing";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Benchmark Request", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Setup Phase
+    subgraph cluster_setup {
+        label="Setup Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        configure [label="Configuration\n(Test parameters)"];
+        baseline [label="Baseline Capture\n(Pre-test state)"];
+        prepare [label="Environment Prep\n(Isolation)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Benchmark Execution";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        cpu [label="CPU Benchmark\n(Compute)"];
+        memory [label="Memory Benchmark\n(RAM usage)"];
+        io [label="I/O Benchmark\n(Disk/Network)"];
+        throughput [label="Throughput Test\n(Requests/sec)"];
+        latency [label="Latency Test\n(Response time)"];
+    }
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Analysis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        collect [label="Data Collection\n(Metrics)"];
+        compare [label="Comparison\n(vs baseline)"];
+        regression [label="Regression Detection\n(Performance drops)"];
+    }
+
+    // Reporting Phase
+    subgraph cluster_reporting {
+        label="Reporting Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        visualize [label="Visualization\n(Charts/graphs)"];
+        report [label="Report Generation\n(Summary)"];
+        insights [label="Insights\n(Recommendations)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Comprehensive Benchmarks", fillcolor="#238636"];
+        feature2 [label="Regression Testing", fillcolor="#238636"];
+        feature3 [label="Metrics Analysis", fillcolor="#238636"];
+        feature4 [label="Comparison", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Benchmark Report\n+ Insights", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> configure;
+    configure -> baseline;
+    baseline -> prepare;
+
+    prepare -> cpu;
+    prepare -> memory;
+    prepare -> io;
+    prepare -> throughput;
+    prepare -> latency;
+
+    cpu -> collect;
+    memory -> collect;
+    io -> collect;
+    throughput -> collect;
+    latency -> collect;
+
+    collect -> compare;
+    compare -> regression;
+
+    regression -> visualize;
+    visualize -> report;
+    report -> insights;
+
+    insights -> output;
+
+    // Regression alert
+    regression -> output [label="Alert if regression", color="#f85149", style=dashed];
+
+    // Feature connections
+    cpu -> feature1 [style=dotted, color="#8b949e"];
+    regression -> feature2 [style=dotted, color="#8b949e"];
+    collect -> feature3 [style=dotted, color="#8b949e"];
+    compare -> feature4 [style=dotted, color="#8b949e"];
+}

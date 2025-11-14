@@ -1,0 +1,309 @@
+digraph MULTI_MODEL_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Multi-Model Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Multi-Model Orchestration\nInvoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Task Requirements\nComplexity, Context Size"];
+    validate_input [label="Validate Model Availability\nGemini, Codex, Claude"];
+    check_deps [label="Check API Keys & Quotas"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // MODEL ROUTING LOGIC
+  // =============================================================================
+  subgraph cluster_routing {
+    label="Intelligent Model Routing";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    analyze_task [label="Analyze Task Characteristics\nContext Size, Type, Complexity", fillcolor=purple];
+    decision_routing [shape=diamond, label="Which Model\nOptimal?"];
+
+    // Routing decisions
+    route_gemini [label="Route to Gemini\nMegacontext (1M-2M tokens)\nSearch-grounded", fillcolor=cyan];
+    route_codex [label="Route to Codex\nRapid prototyping\nSandbox execution", fillcolor=lightgreen];
+    route_claude [label="Route to Claude\nCore orchestration\nComplex reasoning", fillcolor=lightblue];
+
+    routing_error [shape=octagon, fillcolor=orange,
+                   label="No Suitable Model"];
+  }
+
+  // Connect validation to routing
+  check_secrets -> analyze_task [label="Pass"];
+
+  // Routing flow
+  analyze_task -> decision_routing;
+  decision_routing -> route_gemini [label="Megacontext"];
+  decision_routing -> route_codex [label="Prototyping"];
+  decision_routing -> route_claude [label="Reasoning"];
+  decision_routing -> routing_error [label="Unknown"];
+
+  // =============================================================================
+  // GEMINI EXECUTION
+  // =============================================================================
+  subgraph cluster_gemini {
+    label="Gemini Processing";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    gemini_load [label="Load Full Context\n1M-2M tokens", fillcolor=cyan];
+    gemini_search [label="Optional: Web Search\nGrounded Answers", fillcolor=cyan];
+    gemini_process [label="Process with Gemini", fillcolor=cyan];
+    gemini_decision [shape=diamond, label="Gemini\nSuccess?"];
+
+    gemini_error [shape=octagon, fillcolor=orange,
+                  label="Gemini Processing Error"];
+  }
+
+  // Connect routing to Gemini
+  route_gemini -> gemini_load;
+  gemini_load -> gemini_search;
+  gemini_search -> gemini_process;
+  gemini_process -> gemini_decision;
+  gemini_decision -> gemini_error [label="No"];
+
+  // =============================================================================
+  // CODEX EXECUTION
+  // =============================================================================
+  subgraph cluster_codex {
+    label="Codex Processing";
+    style="filled,rounded";
+    color="lightgreen";
+    bgcolor="#E8F8E8";
+
+    codex_sandbox [label="Initialize Codex Sandbox\nFull Auto Mode", fillcolor=lightgreen];
+    codex_prototype [label="Rapid Prototyping\nIterative Execution", fillcolor=lightgreen];
+    codex_validate [label="Validate Prototype\nFunctionality Check", fillcolor=lightgreen];
+    codex_decision [shape=diamond, label="Codex\nSuccess?"];
+
+    codex_error [shape=octagon, fillcolor=orange,
+                 label="Codex Execution Error"];
+  }
+
+  // Connect routing to Codex
+  route_codex -> codex_sandbox;
+  codex_sandbox -> codex_prototype;
+  codex_prototype -> codex_validate;
+  codex_validate -> codex_decision;
+  codex_decision -> codex_error [label="No"];
+
+  // =============================================================================
+  // CLAUDE EXECUTION
+  // =============================================================================
+  subgraph cluster_claude {
+    label="Claude Processing";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8E8F8";
+
+    claude_reason [label="Claude Reasoning\nComplex Problem Solving", fillcolor=lightblue];
+    claude_orchestrate [label="Orchestrate Sub-Tasks\nMulti-Agent Coordination", fillcolor=lightblue];
+    claude_validate [label="Validate Outputs\nQuality Assurance", fillcolor=lightblue];
+    claude_decision [shape=diamond, label="Claude\nSuccess?"];
+
+    claude_error [shape=octagon, fillcolor=orange,
+                  label="Claude Processing Error"];
+  }
+
+  // Connect routing to Claude
+  route_claude -> claude_reason;
+  claude_reason -> claude_orchestrate;
+  claude_orchestrate -> claude_validate;
+  claude_validate -> claude_decision;
+  claude_decision -> claude_error [label="No"];
+
+  // =============================================================================
+  // CONSENSUS & MERGING
+  // =============================================================================
+  subgraph cluster_consensus {
+    label="Multi-Model Consensus";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFFEE";
+
+    collect_outputs [label="Collect Model Outputs", fillcolor=yellow];
+    compare_results [label="Compare Results\nConsistency Check", fillcolor=yellow];
+    decision_consensus [shape=diamond, label="Consensus\nReached?"];
+    merge_outputs [label="Merge Outputs\nBest-of-N Selection", fillcolor=yellow];
+
+    consensus_fail [shape=octagon, fillcolor=orange,
+                    label="Consensus Failed"];
+  }
+
+  // Connect model executions to consensus
+  gemini_decision -> collect_outputs [label="Yes"];
+  codex_decision -> collect_outputs [label="Yes"];
+  claude_decision -> collect_outputs [label="Yes"];
+
+  // Consensus flow
+  collect_outputs -> compare_results;
+  compare_results -> decision_consensus;
+  decision_consensus -> merge_outputs [label="Yes"];
+  decision_consensus -> consensus_fail [label="No"];
+
+  // Error fallback
+  gemini_error -> collect_outputs [label="Fallback"];
+  codex_error -> collect_outputs [label="Fallback"];
+  claude_error -> collect_outputs [label="Fallback"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Memory & Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Multi-Model Results\nAll Model Outputs", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator\nTask Complete", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Dependent\nTasks?"];
+  }
+
+  // Connect consensus to coordination
+  merge_outputs -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Output Quality\nAcceptable?"];
+    run_tests [label="Run Quality Tests\nAccuracy, Consistency", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources\nClose API Connections", fillcolor=lightgreen];
+    log_completion [label="Log Multi-Model Metrics\nModel Usage, Performance"];
+    success [label="Multi-Model Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details\nModel, Error Type", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Multi-Model Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  routing_error -> escalate;
+  consensus_fail -> escalate;
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

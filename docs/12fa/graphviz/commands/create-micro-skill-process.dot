@@ -1,0 +1,54 @@
+digraph create_micro_skill_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Create-Micro-Skill Command Workflow\nAtomic Skill Creation with Specialist Agents";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/create-micro-skill", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  define_purpose [label="Define Skill Purpose\n- Single responsibility\n- Clear objective\n- Specific domain", fillcolor="#FFF9C4"];
+
+  atomic_check [label="Is Truly Atomic?", fillcolor="#C5CAE9", shape=diamond];
+
+  decompose [label="Decompose Further\nBreak into smaller skills", fillcolor="#FFE0B2"];
+
+  design_agent [label="Design Specialist Agent\n- Role definition\n- Expertise area\n- Capabilities", fillcolor="#BBDEFB"];
+
+  evidence_prompting [label="Apply Evidence-Based Prompting\n- Self-consistency\n- Program-of-thought\n- Plan-and-solve", fillcolor="#C5CAE9"];
+
+  create_workflow [label="Create Skill Workflow\n- Input validation\n- Processing steps\n- Output format", fillcolor="#B2DFDB"];
+
+  add_error_handling [label="Add Error Handling\n- Validation\n- Recovery\n- Fallbacks", fillcolor="#D1C4E9"];
+
+  write_tests [label="Write Systematic Tests\n- Unit tests\n- Edge cases\n- Integration tests", fillcolor="#F0F4C3"];
+
+  functionality_audit [label="Functionality Audit\nSandbox testing", fillcolor="#FFE0B2"];
+
+  document_skill [label="Document Skill\n- Purpose\n- Usage\n- Examples\n- API reference", fillcolor="#BBDEFB"];
+
+  register_skill [label="Register Skill\nAdd to skill registry", fillcolor="#B2DFDB"];
+
+  success [label="Micro-Skill Created\nReady for use", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> define_purpose;
+  define_purpose -> atomic_check;
+  atomic_check -> design_agent [label="Yes"];
+  atomic_check -> decompose [label="No"];
+  decompose -> define_purpose;
+  design_agent -> evidence_prompting;
+  evidence_prompting -> create_workflow;
+  create_workflow -> add_error_handling;
+  add_error_handling -> write_tests;
+  write_tests -> functionality_audit;
+  functionality_audit -> document_skill [label="Passed"];
+  functionality_audit -> add_error_handling [label="Failed", style=dashed, color=red];
+  document_skill -> register_skill;
+  register_skill -> success;
+}

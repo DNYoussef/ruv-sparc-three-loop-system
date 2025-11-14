@@ -1,3 +1,8 @@
+---
+name: specialists-business-seo-specialist
+description: Specialized agent for task execution
+---
+
 # SEO Specialist Agent
 
 **Agent Name**: `seo-specialist`

@@ -1,3 +1,8 @@
+---
+name: specialists-business-business-analysis-business-analyst-agent
+description: Specialized agent for task execution
+---
+
 # BUSINESS ANALYST AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 157

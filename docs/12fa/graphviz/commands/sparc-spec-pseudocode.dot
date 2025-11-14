@@ -1,0 +1,378 @@
+digraph SPARC_SPEC_PSEUDOCODE {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="/sparc:spec-pseudocode - Specification Writer";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:spec-pseudocode", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n(feature, context)", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+    syntax_error [shape=octagon, fillcolor=crimson, label="Syntax Error\nShow Usage"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // CONTEXT GATHERING
+  // =============================================================================
+  subgraph cluster_context {
+    label="Context & Requirements Gathering";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    load_context [label="Load Project\nContext", fillcolor=lightyellow];
+    analyze_existing [label="Analyze Existing\nCode", fillcolor=lightyellow];
+    review_docs [label="Review Project\nDocumentation", fillcolor=lightyellow];
+    identify_stakeholders [label="Identify\nStakeholders", fillcolor=lightyellow];
+    gather_constraints [label="Gather Technical\nConstraints", fillcolor=lightyellow];
+
+    context_complete [shape=diamond, label="Context\nComplete?"];
+    request_more_info [label="Request Additional\nInformation", fillcolor=orange];
+  }
+
+  validate_syntax -> load_context [label="Yes"];
+  load_context -> analyze_existing;
+  analyze_existing -> review_docs;
+  review_docs -> identify_stakeholders;
+  identify_stakeholders -> gather_constraints;
+  gather_constraints -> context_complete;
+
+  context_complete -> request_more_info [label="No"];
+  request_more_info -> gather_constraints [style=dashed];
+
+  // =============================================================================
+  // REQUIREMENTS ANALYSIS
+  // =============================================================================
+  subgraph cluster_requirements {
+    label="Functional Requirements Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    identify_user_stories [label="Identify User\nStories", fillcolor=purple];
+    define_features [label="Define Core\nFeatures", fillcolor=purple];
+    capture_inputs [label="Capture Input\nRequirements", fillcolor=purple];
+    capture_outputs [label="Capture Output\nRequirements", fillcolor=purple];
+    define_business_rules [label="Define Business\nRules", fillcolor=purple];
+    identify_dependencies [label="Identify System\nDependencies", fillcolor=purple];
+
+    requirements_validated [shape=diamond, label="Requirements\nClear?"];
+    clarify_ambiguities [label="Clarify\nAmbiguities", fillcolor=orange];
+  }
+
+  context_complete -> identify_user_stories [label="Yes"];
+
+  identify_user_stories -> define_features;
+  define_features -> capture_inputs;
+  capture_inputs -> capture_outputs;
+  capture_outputs -> define_business_rules;
+  define_business_rules -> identify_dependencies;
+  identify_dependencies -> requirements_validated;
+
+  requirements_validated -> clarify_ambiguities [label="No"];
+  clarify_ambiguities -> define_features [style=dashed];
+
+  // =============================================================================
+  // EDGE CASES & CONSTRAINTS
+  // =============================================================================
+  subgraph cluster_edge_cases {
+    label="Edge Cases & Constraints";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    identify_edge_cases [label="Identify Edge\nCases", fillcolor=lightblue];
+    define_error_scenarios [label="Define Error\nScenarios", fillcolor=lightblue];
+    capture_performance_reqs [label="Capture Performance\nRequirements", fillcolor=lightblue];
+    define_security_reqs [label="Define Security\nRequirements", fillcolor=lightblue];
+    define_scalability [label="Define Scalability\nNeeds", fillcolor=lightblue];
+    document_limitations [label="Document Known\nLimitations", fillcolor=lightblue];
+  }
+
+  requirements_validated -> identify_edge_cases [label="Yes"];
+
+  identify_edge_cases -> define_error_scenarios;
+  define_error_scenarios -> capture_performance_reqs;
+  capture_performance_reqs -> define_security_reqs;
+  define_security_reqs -> define_scalability;
+  define_scalability -> document_limitations;
+
+  // =============================================================================
+  // ACCEPTANCE CRITERIA DEFINITION
+  // =============================================================================
+  subgraph cluster_acceptance {
+    label="Acceptance Criteria Definition";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    define_success_criteria [label="Define Success\nCriteria", fillcolor=lightgreen];
+    create_test_scenarios [label="Create Test\nScenarios", fillcolor=lightgreen];
+    define_validation_rules [label="Define Validation\nRules", fillcolor=lightgreen];
+    set_quality_metrics [label="Set Quality\nMetrics", fillcolor=lightgreen];
+    define_done_definition [label="Define 'Definition\nof Done'", fillcolor=lightgreen];
+
+    acceptance_complete [shape=diamond, label="Acceptance\nCriteria Clear?"];
+    refine_criteria [label="Refine Acceptance\nCriteria", fillcolor=orange];
+  }
+
+  document_limitations -> define_success_criteria;
+
+  define_success_criteria -> create_test_scenarios;
+  create_test_scenarios -> define_validation_rules;
+  define_validation_rules -> set_quality_metrics;
+  set_quality_metrics -> define_done_definition;
+  define_done_definition -> acceptance_complete;
+
+  acceptance_complete -> refine_criteria [label="No"];
+  refine_criteria -> define_success_criteria [style=dashed];
+
+  // =============================================================================
+  // ALGORITHM DESIGN
+  // =============================================================================
+  subgraph cluster_algorithm {
+    label="Algorithm & Logic Design";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF0E8";
+
+    design_data_structures [label="Design Data\nStructures", fillcolor=lightyellow];
+    outline_algorithm [label="Outline Core\nAlgorithm", fillcolor=lightyellow];
+    define_control_flow [label="Define Control\nFlow", fillcolor=lightyellow];
+    plan_error_handling [label="Plan Error\nHandling", fillcolor=lightyellow];
+    consider_optimization [label="Consider\nOptimizations", fillcolor=lightyellow];
+
+    algorithm_valid [shape=diamond, label="Algorithm\nSound?"];
+    revise_algorithm [label="Revise Algorithm\nDesign", fillcolor=orange];
+  }
+
+  acceptance_complete -> design_data_structures [label="Yes"];
+
+  design_data_structures -> outline_algorithm;
+  outline_algorithm -> define_control_flow;
+  define_control_flow -> plan_error_handling;
+  plan_error_handling -> consider_optimization;
+  consider_optimization -> algorithm_valid;
+
+  algorithm_valid -> revise_algorithm [label="No"];
+  revise_algorithm -> outline_algorithm [style=dashed];
+
+  // =============================================================================
+  // PSEUDOCODE GENERATION
+  // =============================================================================
+  subgraph cluster_pseudocode {
+    label="Pseudocode Generation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    write_main_logic [label="Write Main Logic\nPseudocode", fillcolor=plum];
+    write_helper_functions [label="Write Helper\nFunctions", fillcolor=plum];
+    add_comments [label="Add Explanatory\nComments", fillcolor=plum];
+    annotate_complexity [label="Annotate Time/Space\nComplexity", fillcolor=plum];
+    add_invariants [label="Add Loop\nInvariants", fillcolor=plum];
+
+    pseudocode_complete [shape=diamond, label="Pseudocode\nComplete?"];
+    fill_gaps [label="Fill Missing\nDetails", fillcolor=orange];
+  }
+
+  algorithm_valid -> write_main_logic [label="Yes"];
+
+  write_main_logic -> write_helper_functions;
+  write_helper_functions -> add_comments;
+  add_comments -> annotate_complexity;
+  annotate_complexity -> add_invariants;
+  add_invariants -> pseudocode_complete;
+
+  pseudocode_complete -> fill_gaps [label="No"];
+  fill_gaps -> write_main_logic [style=dashed];
+
+  // =============================================================================
+  // INTERFACE DEFINITION
+  // =============================================================================
+  subgraph cluster_interface {
+    label="Interface Definition";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    define_function_signatures [label="Define Function\nSignatures", fillcolor=lightblue];
+    specify_parameters [label="Specify Parameter\nTypes", fillcolor=lightblue];
+    define_return_types [label="Define Return\nTypes", fillcolor=lightblue];
+    document_side_effects [label="Document Side\nEffects", fillcolor=lightblue];
+    define_exceptions [label="Define Exception\nTypes", fillcolor=lightblue];
+  }
+
+  pseudocode_complete -> define_function_signatures [label="Yes"];
+
+  define_function_signatures -> specify_parameters;
+  specify_parameters -> define_return_types;
+  define_return_types -> document_side_effects;
+  document_side_effects -> define_exceptions;
+
+  // =============================================================================
+  // SPECIFICATION DOCUMENT CREATION
+  // =============================================================================
+  subgraph cluster_spec_doc {
+    label="Specification Document Creation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    create_doc_structure [label="Create Document\nStructure", fillcolor=lightgreen];
+    write_overview [label="Write Feature\nOverview", fillcolor=lightgreen];
+    add_requirements [label="Add Functional\nRequirements", fillcolor=lightgreen];
+    add_pseudocode [label="Add Pseudocode\nSection", fillcolor=lightgreen];
+    add_diagrams [label="Add Flow\nDiagrams", fillcolor=lightgreen];
+    add_examples [label="Add Usage\nExamples", fillcolor=lightgreen];
+    add_acceptance [label="Add Acceptance\nCriteria", fillcolor=lightgreen];
+  }
+
+  define_exceptions -> create_doc_structure;
+
+  create_doc_structure -> write_overview;
+  write_overview -> add_requirements;
+  add_requirements -> add_pseudocode;
+  add_pseudocode -> add_diagrams;
+  add_diagrams -> add_examples;
+  add_examples -> add_acceptance;
+
+  // =============================================================================
+  // VALIDATION & REVIEW
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Validation & Review";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    self_review [label="Self-Review\nSpecification", fillcolor=lightyellow];
+    check_completeness [shape=diamond, label="Specification\nComplete?"];
+    check_clarity [shape=diamond, label="Specification\nClear?"];
+    check_testability [shape=diamond, label="Requirements\nTestable?"];
+
+    add_missing_details [label="Add Missing\nDetails", fillcolor=orange];
+    clarify_sections [label="Clarify Unclear\nSections", fillcolor=orange];
+    refine_testability [label="Refine to Make\nTestable", fillcolor=orange];
+  }
+
+  add_acceptance -> self_review;
+
+  self_review -> check_completeness;
+  check_completeness -> add_missing_details [label="No"];
+  check_completeness -> check_clarity [label="Yes"];
+
+  check_clarity -> clarify_sections [label="No"];
+  check_clarity -> check_testability [label="Yes"];
+
+  check_testability -> refine_testability [label="No"];
+
+  add_missing_details -> self_review [style=dashed];
+  clarify_sections -> self_review [style=dashed];
+  refine_testability -> self_review [style=dashed];
+
+  // =============================================================================
+  // OUTPUT GENERATION
+  // =============================================================================
+  subgraph cluster_output {
+    label="Output Generation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    format_markdown [label="Format as\nMarkdown", fillcolor=plum];
+    generate_pdf [label="Generate PDF\nVersion", fillcolor=plum];
+    create_jira_tickets [label="Create JIRA/GitHub\nIssues", fillcolor=plum];
+    save_specification [label="Save Specification\nDocument", fillcolor=plum];
+    update_project_docs [label="Update Project\nDocumentation", fillcolor=plum];
+  }
+
+  check_testability -> format_markdown [label="Yes"];
+
+  format_markdown -> generate_pdf;
+  generate_pdf -> create_jira_tickets;
+  create_jira_tickets -> save_specification;
+  save_specification -> update_project_docs;
+
+  // =============================================================================
+  // HANDOFF TO NEXT PHASE
+  // =============================================================================
+  subgraph cluster_handoff {
+    label="Handoff to Architecture Phase";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    notify_architect [label="Notify System\nArchitect", fillcolor=lightblue];
+    create_architecture_request [label="Create Architecture\nRequest", fillcolor=lightblue];
+    link_specification [label="Link Specification\nDocument", fillcolor=lightblue];
+
+    success [label="Specification\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  update_project_docs -> notify_architect;
+  notify_architect -> create_architecture_request;
+  create_architecture_request -> link_specification;
+  link_specification -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+    retry_analysis [label="Retry Context\nAnalysis", fillcolor=yellow];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    notify_error [label="Notify User\nof Issue", fillcolor=orange];
+    failure [label="Specification\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+
+  classify_error -> retry_analysis [label="Transient"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_analysis -> load_context [style=dashed];
+
+  log_error -> notify_error;
+  notify_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Needs Action"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_warn [style=invis];
+    legend_warn -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

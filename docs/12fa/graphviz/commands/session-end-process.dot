@@ -1,0 +1,84 @@
+// Session End Command Workflow
+// Session end hooks for cleanup and persistence
+digraph session_end_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/session-end\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        session_validator [label="Session\nValidator", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_cleanup {
+        label="Cleanup Operations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        resource_cleanup [label="Resource\nCleanup", fillcolor="#ef4444", fontcolor="#ffffff"];
+        temp_file_removal [label="Temp File\nRemoval", fillcolor="#ef4444", fontcolor="#ffffff"];
+        connection_closer [label="Connection\nCloser", fillcolor="#ef4444", fontcolor="#ffffff"];
+        cache_flush [label="Cache\nFlush", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_persistence {
+        label="State Persistence";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        state_serializer [label="State\nSerializer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        memory_persister [label="Memory\nPersister", fillcolor="#2563eb", fontcolor="#ffffff"];
+        config_saver [label="Config\nSaver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        checkpoint_creator [label="Checkpoint\nCreator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_summary {
+        label="Summary Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        metrics_aggregator [label="Metrics\nAggregator", fillcolor="#10b981", fontcolor="#ffffff"];
+        summary_generator [label="Summary\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        report_builder [label="Report\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+        export_formatter [label="Export\nFormatter", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        session_report [label="Session\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        persisted_state [label="Persisted\nState", fillcolor="#059669", fontcolor="#ffffff"];
+        cleanup_log [label="Cleanup\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> session_validator;
+    session_validator -> resource_cleanup -> temp_file_removal -> connection_closer -> cache_flush;
+    session_validator -> state_serializer -> memory_persister -> config_saver -> checkpoint_creator;
+    cache_flush -> metrics_aggregator;
+    checkpoint_creator -> metrics_aggregator;
+    metrics_aggregator -> summary_generator -> report_builder -> export_formatter;
+    export_formatter -> session_report -> persisted_state -> cleanup_log;
+    cleanup_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Cleanup", fillcolor="#ef4444", fontcolor="#ffffff"];
+        legend3 [label="Persistence", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

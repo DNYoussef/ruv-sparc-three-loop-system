@@ -1,0 +1,112 @@
+digraph codex_reasoning_agent_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Codex Reasoning Agent - Deep Analysis Workflow";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Complex Problem", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Deep Reasoning Phase
+    subgraph cluster_reasoning {
+        label="Deep Reasoning Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        understand [label="Problem Understanding\n(Context analysis)"];
+        decompose [label="Problem Decomposition\n(First principles)"];
+        analyze [label="Deep Analysis\n(Multi-layer thinking)"];
+        reason [label="Analytical Thinking\n(Logical chains)"];
+    }
+
+    // Solution Synthesis Phase
+    subgraph cluster_synthesis {
+        label="Solution Synthesis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        explore [label="Solution Exploration\n(Multiple paths)"];
+        synthesize [label="Solution Synthesis\n(Combine insights)"];
+        validate [label="Solution Validation\n(Proof checking)"];
+    }
+
+    // Implementation Phase
+    subgraph cluster_implementation {
+        label="Implementation Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        design [label="Implementation Design\n(Detailed plan)"];
+        implement [label="Code Implementation\n(Codex generation)"];
+        verify [label="Verification\n(Logic check)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Deep Reasoning", fillcolor="#238636"];
+        feature2 [label="Problem Decomposition", fillcolor="#238636"];
+        feature3 [label="Analytical Thinking", fillcolor="#238636"];
+        feature4 [label="Solution Synthesis", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Comprehensive Solution\n+ Reasoning Path", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> understand;
+    understand -> decompose;
+    decompose -> analyze;
+    analyze -> reason;
+
+    reason -> explore;
+    explore -> synthesize;
+    synthesize -> validate;
+
+    validate -> design;
+    design -> implement;
+    implement -> verify;
+
+    verify -> output;
+
+    // Feedback loops
+    validate -> analyze [label="Deepen analysis", style=dashed, color="#f85149"];
+    verify -> design [label="Redesign", style=dashed, color="#f85149"];
+
+    // Feature connections
+    analyze -> feature1 [style=dotted, color="#8b949e"];
+    decompose -> feature2 [style=dotted, color="#8b949e"];
+    reason -> feature3 [style=dotted, color="#8b949e"];
+    synthesize -> feature4 [style=dotted, color="#8b949e"];
+}

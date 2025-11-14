@@ -1,0 +1,89 @@
+// CI/CD Engineer Agent - CI/CD Pipeline Development
+// GitHub Actions, automated testing, deployment, monitoring
+digraph cicd_engineer_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        cicd_init [label="CI/CD Engineer\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        pipeline_templates [label="Pipeline\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+        secrets_vault [label="Secrets\nVault", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_ci {
+        label="CI Pipeline"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        build_stage [label="Build\nStage", fillcolor="#2563eb", fontcolor="#ffffff"];
+        test_stage [label="Test\nStage", fillcolor="#2563eb", fontcolor="#ffffff"];
+        lint_stage [label="Lint\nStage", fillcolor="#2563eb", fontcolor="#ffffff"];
+        security_scan [label="Security\nScan", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_cd {
+        label="CD Pipeline"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        artifact_builder [label="Artifact\nBuilder", fillcolor="#059669", fontcolor="#ffffff"];
+        container_builder [label="Container\nBuilder", fillcolor="#059669", fontcolor="#ffffff"];
+        registry_pusher [label="Registry\nPusher", fillcolor="#059669", fontcolor="#ffffff"];
+        deployer [label="Production\nDeployer", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_infra {
+        label="Infrastructure"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        terraform_manager [label="Terraform\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+        k8s_orchestrator [label="Kubernetes\nOrchestrator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        service_mesh [label="Service Mesh\nConfigurator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_monitoring {
+        label="Monitoring"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        health_checker [label="Health\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        metric_collector [label="Metric\nCollector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        log_aggregator [label="Log\nAggregator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        alerting [label="Alert\nManager", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_rollback {
+        label="Rollback & Recovery"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        rollback_manager [label="Rollback\nManager", fillcolor="#8b4789", fontcolor="#ffffff"];
+        backup_manager [label="Backup\nManager", fillcolor="#8b4789", fontcolor="#ffffff"];
+        disaster_recovery [label="Disaster\nRecovery", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        workflow_coord [label="Workflow\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        release_coord [label="Release\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    cicd_init -> pipeline_templates [label="Load"];
+    cicd_init -> secrets_vault [label="Setup"];
+    pipeline_templates -> build_stage [label="Build"];
+    build_stage -> test_stage [label="Test"];
+    test_stage -> lint_stage [label="Lint"];
+    lint_stage -> security_scan [label="Scan"];
+    security_scan -> artifact_builder [label="Build Artifact"];
+    artifact_builder -> container_builder [label="Build Container"];
+    container_builder -> registry_pusher [label="Push"];
+    registry_pusher -> terraform_manager [label="Provision Infra"];
+    terraform_manager -> k8s_orchestrator [label="Orchestrate"];
+    k8s_orchestrator -> service_mesh [label="Configure Mesh"];
+    service_mesh -> deployer [label="Deploy"];
+    deployer -> health_checker [label="Check Health"];
+    health_checker -> metric_collector [label="Collect Metrics"];
+    metric_collector -> log_aggregator [label="Aggregate Logs"];
+    log_aggregator -> alerting [label="Alert"];
+    alerting -> rollback_manager [label="Rollback if Fail"];
+    rollback_manager -> backup_manager [label="Restore Backup"];
+    backup_manager -> disaster_recovery [label="Recover"];
+    deployer -> backend_coord [label="Coordinate"];
+    pipeline_templates -> workflow_coord [label="Sync Workflows"];
+    deployer -> release_coord [label="Coordinate Release"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="CI/CD Engineer", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="CI Pipeline", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

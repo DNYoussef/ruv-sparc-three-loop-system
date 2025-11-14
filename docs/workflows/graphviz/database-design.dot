@@ -1,0 +1,230 @@
+/**
+ * Database Architecture Workflow
+ * Command: /database-design
+ * Phase: 3 (Development Enhancement)
+ */
+
+digraph database_design {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Database Design Workflow</B><BR/>Schema → Migration → Optimization → Monitoring>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Requirements & Analysis
+    subgraph cluster_analysis {
+        label="Requirements Analysis";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="Database Design\nRequest", shape=box, fillcolor="#bbdefb", penwidth=2];
+        data_analysis [label="Analyze Data\nRequirements", shape=box, fillcolor="#90caf9"];
+        identify_entities [label="Identify\nEntities", shape=box, fillcolor="#64b5f6"];
+        define_relations [label="Define\nRelationships", shape=box, fillcolor="#42a5f5"];
+        access_patterns [label="Access\nPatterns", shape=box, fillcolor="#2196f3"];
+        scalability_reqs [label="Scalability\nRequirements", shape=box, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: Database Type Selection
+    subgraph cluster_dbtype {
+        label="Database Type Selection";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        db_choice [label="Database\nType?", shape=diamond, fillcolor="#e1bee7"];
+        sql [label="SQL\n(Relational)", shape=box, fillcolor="#ce93d8"];
+        nosql [label="NoSQL\n(Document/KV)", shape=box, fillcolor="#ba68c8"];
+        graph [label="Graph DB", shape=box, fillcolor="#ab47bc"];
+        timeseries [label="Time Series", shape=box, fillcolor="#9c27b0"];
+        vector [label="Vector DB\n(AI/ML)", shape=box, fillcolor="#8e24aa"];
+
+        // Specific implementations
+        postgres [label="PostgreSQL", shape=box, fillcolor="#ce93d8"];
+        mongo [label="MongoDB", shape=box, fillcolor="#ba68c8"];
+        neo4j [label="Neo4j", shape=box, fillcolor="#ab47bc"];
+        influx [label="InfluxDB", shape=box, fillcolor="#9c27b0"];
+        chromadb [label="ChromaDB", shape=box, fillcolor="#8e24aa"];
+    }
+
+    // Subgraph: Schema Design
+    subgraph cluster_schema {
+        label="Schema Design";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        design_schema [label="Design\nSchema", shape=box, fillcolor="#ffe0b2"];
+        normalization [label="Normalization\n(1NF→3NF→BCNF)", shape=box, fillcolor="#ffcc80"];
+        denormalize [label="Denormalize\n(if needed)", shape=box, fillcolor="#ffb74d"];
+        indexes [label="Define\nIndexes", shape=box, fillcolor="#ffa726"];
+        constraints [label="Constraints\n(FK, PK, Unique)", shape=box, fillcolor="#ff9800"];
+        triggers [label="Triggers &\nStored Procs", shape=box, fillcolor="#fb8c00"];
+        partitioning [label="Partitioning\nStrategy", shape=box, fillcolor="#f57c00"];
+    }
+
+    // Subgraph: Migration Strategy
+    subgraph cluster_migration {
+        label="Migration Strategy";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        migration_tool [label="Migration\nTool?", shape=diamond, fillcolor="#c8e6c9"];
+        flyway [label="Flyway", shape=box, fillcolor="#a5d6a7"];
+        liquibase [label="Liquibase", shape=box, fillcolor="#81c784"];
+        prisma [label="Prisma", shape=box, fillcolor="#66bb6a"];
+        typeorm [label="TypeORM", shape=box, fillcolor="#4caf50"];
+
+        create_migrations [label="Create\nMigrations", shape=box, fillcolor="#43a047"];
+        version_control [label="Version\nControl", shape=box, fillcolor="#388e3c"];
+        rollback_plan [label="Rollback\nPlan", shape=box, fillcolor="#2e7d32"];
+        test_migrations [label="Test\nMigrations", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Optimization
+    subgraph cluster_optimization {
+        label="Performance Optimization";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        query_optimization [label="Query\nOptimization", shape=box, fillcolor="#fff59d"];
+        explain_analyze [label="EXPLAIN\nANALYZE", shape=box, fillcolor="#fff176"];
+        index_tuning [label="Index\nTuning", shape=box, fillcolor="#ffee58"];
+        connection_pool [label="Connection\nPooling", shape=box, fillcolor="#ffeb3b"];
+        caching [label="Caching\nStrategy", shape=box, fillcolor="#fdd835"];
+        replication [label="Replication\nSetup", shape=box, fillcolor="#f9a825"];
+        sharding [label="Sharding\n(if needed)", shape=box, fillcolor="#f57f17"];
+    }
+
+    // Subgraph: Security & Compliance
+    subgraph cluster_security {
+        label="Security & Compliance";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        access_control [label="Access\nControl", shape=box, fillcolor="#ffcdd2"];
+        encryption [label="Encryption\n(at rest/transit)", shape=box, fillcolor="#ef9a9a"];
+        audit_logging [label="Audit\nLogging", shape=box, fillcolor="#e57373"];
+        backup_strategy [label="Backup\nStrategy", shape=box, fillcolor="#ef5350"];
+        disaster_recovery [label="Disaster\nRecovery", shape=box, fillcolor="#f44336"];
+        compliance [label="Compliance\n(GDPR, etc.)", shape=box, fillcolor="#e53935"];
+    }
+
+    // Subgraph: Monitoring & Maintenance
+    subgraph cluster_monitoring {
+        label="Monitoring & Maintenance";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        monitoring_setup [label="Setup\nMonitoring", shape=box, fillcolor="#b3e5fc"];
+        slow_queries [label="Slow Query\nAnalysis", shape=box, fillcolor="#81d4fa"];
+        capacity_planning [label="Capacity\nPlanning", shape=box, fillcolor="#4fc3f7"];
+        health_checks [label="Health\nChecks", shape=box, fillcolor="#29b6f6"];
+        alerting [label="Alerting", shape=box, fillcolor="#03a9f4"];
+        vacuum_analyze [label="VACUUM/\nANALYZE", shape=box, fillcolor="#039be5"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Analysis", shape=box, fillcolor="#2196f3"];
+        leg2 [label="DB Selection", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Schema", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Migration", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Optimization", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Security", shape=box, fillcolor="#f44336"];
+        leg7 [label="Monitoring", shape=box, fillcolor="#03a9f4"];
+
+        leg1 -> leg2 -> leg3 -> leg4 -> leg5 -> leg6 -> leg7 [style=invis];
+    }
+
+    // Analysis flow
+    start -> data_analysis;
+    data_analysis -> identify_entities;
+    identify_entities -> define_relations;
+    define_relations -> access_patterns;
+    access_patterns -> scalability_reqs;
+
+    // Database selection
+    scalability_reqs -> db_choice;
+    db_choice -> sql [label="relational"];
+    db_choice -> nosql [label="flexible"];
+    db_choice -> graph [label="relationships"];
+    db_choice -> timeseries [label="metrics"];
+    db_choice -> vector [label="AI/ML"];
+
+    sql -> postgres;
+    nosql -> mongo;
+    graph -> neo4j;
+    timeseries -> influx;
+    vector -> chromadb;
+
+    // Schema design
+    postgres -> design_schema;
+    mongo -> design_schema;
+    neo4j -> design_schema;
+    influx -> design_schema;
+    chromadb -> design_schema;
+
+    design_schema -> normalization;
+    normalization -> denormalize;
+    denormalize -> indexes;
+    indexes -> constraints;
+    constraints -> triggers;
+    triggers -> partitioning;
+
+    // Migration
+    partitioning -> migration_tool;
+    migration_tool -> flyway;
+    migration_tool -> liquibase;
+    migration_tool -> prisma;
+    migration_tool -> typeorm;
+
+    flyway -> create_migrations;
+    liquibase -> create_migrations;
+    prisma -> create_migrations;
+    typeorm -> create_migrations;
+
+    create_migrations -> version_control;
+    version_control -> rollback_plan;
+    rollback_plan -> test_migrations;
+
+    // Optimization
+    test_migrations -> query_optimization;
+    query_optimization -> explain_analyze;
+    explain_analyze -> index_tuning;
+    index_tuning -> connection_pool;
+    connection_pool -> caching;
+    caching -> replication;
+    replication -> sharding;
+
+    // Security
+    sharding -> access_control;
+    access_control -> encryption;
+    encryption -> audit_logging;
+    audit_logging -> backup_strategy;
+    backup_strategy -> disaster_recovery;
+    disaster_recovery -> compliance;
+
+    // Monitoring
+    compliance -> monitoring_setup;
+    monitoring_setup -> slow_queries;
+    slow_queries -> capacity_planning;
+    capacity_planning -> health_checks;
+    health_checks -> alerting;
+    alerting -> vacuum_analyze;
+}

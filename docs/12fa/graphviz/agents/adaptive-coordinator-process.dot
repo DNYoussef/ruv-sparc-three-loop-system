@@ -1,0 +1,103 @@
+digraph ADAPTIVE_COORDINATOR_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Adaptive Coordinator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\nAdaptive Topology Manager"];
+    validate_caps [label="Validate Capabilities\ntopology_adaptation, dynamic_rebalancing\nworkload_optimization, intelligent_routing"];
+    
+    start -> load_config -> validate_caps;
+  }
+  
+  subgraph cluster_workload_analysis {
+    label="Workload Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+    
+    analyze_tasks [label="Analyze Task Workload\nComplexity, dependencies", fillcolor=purple];
+    analyze_agents [label="Analyze Agent Capacity\nCurrent load"];
+    measure_latency [label="Measure Network Latency\nAgent communication"];
+    calculate_optimal [label="Calculate Optimal Topology\nHierarchical, Mesh, or Ring"];
+    
+    validate_caps -> analyze_tasks;
+    analyze_tasks -> analyze_agents -> measure_latency -> calculate_optimal;
+  }
+  
+  subgraph cluster_topology_selection {
+    label="Dynamic Topology Selection";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+    
+    check_workload_type [shape=diamond, label="Workload\nType?", fillcolor=yellow];
+    use_hierarchical [label="Use Hierarchical\nCentralized control for complex"];
+    use_mesh [label="Use Mesh\nDistributed for parallel"];
+    use_ring [label="Use Ring\nOrdered processing"];
+    apply_topology [label="Apply Selected Topology"];
+    
+    calculate_optimal -> check_workload_type;
+    check_workload_type -> use_hierarchical [label="Complex"];
+    check_workload_type -> use_mesh [label="Parallel"];
+    check_workload_type -> use_ring [label="Sequential"];
+    use_hierarchical -> apply_topology;
+    use_mesh -> apply_topology;
+    use_ring -> apply_topology;
+  }
+  
+  subgraph cluster_execution {
+    label="Adaptive Execution";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    execute_tasks [label="Execute Tasks\nUsing selected topology", fillcolor=lightgreen];
+    monitor_performance [label="Monitor Performance\nLatency, throughput"];
+    check_adaptation [shape=diamond, label="Adaptation\nNeeded?"];
+    rebalance [label="Rebalance Workload\nDynamic redistribution"];
+    
+    apply_topology -> execute_tasks;
+    execute_tasks -> monitor_performance -> check_adaptation;
+    check_adaptation -> rebalance [label="Yes"];
+    rebalance -> execute_tasks [style=dashed];
+    check_adaptation -> monitor_performance [label="No", style=dashed];
+  }
+  
+  subgraph cluster_intelligent_routing {
+    label="Intelligent Routing";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+    
+    route_by_load [label="Route by Load\nLeast busy agent", fillcolor=lightblue];
+    route_by_capability [label="Route by Capability\nBest-fit agent"];
+    route_by_locality [label="Route by Locality\nNearest agent"];
+    optimize_paths [label="Optimize Communication Paths"];
+    
+    monitor_performance -> route_by_load;
+    route_by_load -> route_by_capability -> route_by_locality -> optimize_paths;
+    optimize_paths -> execute_tasks [style=dashed];
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_results [label="Store Results\nmemory_store", fillcolor=lightblue];
+    store_topology_decisions [label="Store Topology Decisions\nFor learning"];
+    log_metrics [label="Log Adaptation Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Adaptive Coordination Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    check_adaptation -> store_results [label="Complete"];
+    store_results -> store_topology_decisions -> log_metrics -> neural_train -> success;
+  }
+}

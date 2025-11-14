@@ -1,0 +1,242 @@
+digraph SWARM_ADVANCED_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Advanced Swarm Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Advanced Swarm Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Swarm Configuration"];
+    validate_input [label="Validate Topology & Strategy"];
+    check_deps [label="Check MCP Dependencies"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    validate_topology [shape=diamond, label="Topology\nSupported?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+    topology_error [shape=octagon, fillcolor=orange,
+                    label="WARN\nUnsupported Topology"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> validate_topology [label="Pass"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+  validate_topology -> topology_error [label="Unsupported"];
+
+  // =============================================================================
+  // EXECUTION PHASE - SWARM COORDINATION
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Swarm Coordination Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_topology [label="Initialize Topology\n(Mesh/Hierarchical/Ring/Star)", fillcolor=purple];
+    topology_check [shape=diamond, label="Topology\nReady?"];
+
+    spawn_agents [label="Spawn Specialized Agents", fillcolor=purple];
+    agent_check [shape=diamond, label="Agents\nSpawned?"];
+
+    establish_connections [label="Establish Agent Connections", fillcolor=purple];
+    connection_check [shape=diamond, label="Connections\nEstablished?"];
+
+    orchestrate_tasks [label="Orchestrate Tasks\nAcross Swarm", fillcolor=purple];
+    task_check [shape=diamond, label="Tasks\nDistributed?"];
+
+    // Error handling within execution
+    topology_init_error [shape=octagon, fillcolor=orange,
+                         label="Topology Init Failed"];
+    spawn_error [shape=octagon, fillcolor=orange,
+                 label="Agent Spawn Failed"];
+    retry_logic [label="Retry with Backoff", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  validate_topology -> init_topology [label="Supported"];
+
+  // Execution flow
+  init_topology -> topology_check;
+  topology_check -> spawn_agents [label="Yes"];
+  topology_check -> topology_init_error [label="No"];
+
+  spawn_agents -> agent_check;
+  agent_check -> establish_connections [label="Yes"];
+  agent_check -> spawn_error [label="No"];
+
+  establish_connections -> connection_check;
+  connection_check -> orchestrate_tasks [label="Yes"];
+  connection_check -> spawn_error [label="No"];
+
+  orchestrate_tasks -> task_check;
+  task_check -> spawn_error [label="No"];
+
+  // Error recovery
+  topology_init_error -> retry_logic;
+  spawn_error -> retry_logic;
+  retry_logic -> init_topology [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Swarm Memory & Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Swarm State\nin Memory", fillcolor=lightblue];
+    sync_agents [label="Synchronize Agent States", fillcolor=lightblue];
+    monitor_health [label="Monitor Swarm Health", fillcolor=lightblue];
+    check_convergence [shape=diamond, label="Swarm\nConverged?"];
+    notify_coordinator [label="Notify\nOrchestrator", fillcolor=lightblue];
+  }
+
+  // Connect execution to coordination
+  task_check -> memory_store [label="Yes"];
+  memory_store -> sync_agents;
+  sync_agents -> monitor_health;
+  monitor_health -> check_convergence;
+  check_convergence -> notify_coordinator [label="Yes"];
+  check_convergence -> sync_agents [label="No", style=dashed];
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Swarm Output\nValid?"];
+    check_consensus [label="Check Agent Consensus", fillcolor=lightgreen];
+    consensus_check [shape=diamond, label="Consensus\nReached?"];
+
+    run_validation [label="Run Validation Tests", fillcolor=lightgreen];
+    validation_results [shape=diamond, label="All Tests\nPass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  notify_coordinator -> validate_output;
+
+  // Quality flow
+  validate_output -> check_consensus [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  check_consensus -> consensus_check;
+  consensus_check -> run_validation [label="Yes"];
+  consensus_check -> quality_gate_fail [label="No"];
+
+  run_validation -> validation_results;
+  validation_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    aggregate_results [label="Aggregate Agent Results", fillcolor=lightgreen];
+    cleanup_agents [label="Cleanup Agent Resources", fillcolor=lightgreen];
+    log_metrics [label="Log Performance Metrics", fillcolor=lightgreen];
+    success [label="Swarm Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  validation_results -> aggregate_results [label="Pass"];
+  aggregate_results -> cleanup_agents;
+  cleanup_agents -> log_metrics;
+  log_metrics -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Swarm State", fillcolor=orange];
+    failure [label="Swarm Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  topology_error -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    // Hide from main layout
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

@@ -1,0 +1,278 @@
+/**
+ * GitHub Actions + External CI/CD Integration
+ * Command: /cicd-github, /cicd-gitlab, /cicd-jenkins, /cicd-circle
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph cicd_platforms {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>CI/CD Platform Integration</B><BR/>GitHub Actions • GitLab CI • Jenkins • CircleCI>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Trigger Events
+    subgraph cluster_triggers {
+        label="CI/CD Triggers";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        git_push [label="Git Push", shape=box, fillcolor="#bbdefb"];
+        pull_request [label="Pull Request", shape=box, fillcolor="#90caf9"];
+        schedule [label="Scheduled\n(Cron)", shape=box, fillcolor="#64b5f6"];
+        manual [label="Manual\nTrigger", shape=box, fillcolor="#42a5f5"];
+        tag_release [label="Tag/Release", shape=box, fillcolor="#2196f3"];
+    }
+
+    // Subgraph: GitHub Actions
+    subgraph cluster_github {
+        label="GitHub Actions Workflow";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        gh_workflow [label="Workflow\nYAML", shape=box, fillcolor="#e1bee7", penwidth=2];
+        gh_checkout [label="Checkout\nCode", shape=box, fillcolor="#ce93d8"];
+        gh_setup [label="Setup\nEnvironment", shape=box, fillcolor="#ba68c8"];
+        gh_cache [label="Cache\nDependencies", shape=box, fillcolor="#ab47bc"];
+        gh_install [label="Install\nDependencies", shape=box, fillcolor="#9c27b0"];
+        gh_lint [label="Lint\nCode", shape=box, fillcolor="#8e24aa"];
+        gh_test [label="Run\nTests", shape=box, fillcolor="#7b1fa2"];
+        gh_build [label="Build\nApplication", shape=box, fillcolor="#6a1b9a"];
+        gh_artifacts [label="Upload\nArtifacts", shape=box, fillcolor="#4a148c"];
+        gh_deploy [label="Deploy", shape=box, fillcolor="#311b92"];
+    }
+
+    // Subgraph: GitLab CI/CD
+    subgraph cluster_gitlab {
+        label="GitLab CI/CD Pipeline";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        gl_config [label=".gitlab-ci.yml", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        gl_stages [label="Define\nStages", shape=box, fillcolor="#ffcc80"];
+
+        gl_build_stage [label="Build\nStage", shape=box, fillcolor="#ffb74d"];
+        gl_test_stage [label="Test\nStage", shape=box, fillcolor="#ffa726"];
+        gl_deploy_stage [label="Deploy\nStage", shape=box, fillcolor="#ff9800"];
+
+        gl_runners [label="GitLab\nRunners", shape=box, fillcolor="#fb8c00"];
+        gl_cache [label="Cache\nManagement", shape=box, fillcolor="#f57c00"];
+        gl_artifacts [label="Artifacts\nStorage", shape=box, fillcolor="#ef6c00"];
+        gl_environments [label="Environment\nManagement", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: Jenkins
+    subgraph cluster_jenkins {
+        label="Jenkins Pipeline";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        jenkins_file [label="Jenkinsfile", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        jenkins_type [label="Pipeline\nType?", shape=diamond, fillcolor="#a5d6a7"];
+        jenkins_declarative [label="Declarative\nPipeline", shape=box, fillcolor="#81c784"];
+        jenkins_scripted [label="Scripted\nPipeline", shape=box, fillcolor="#66bb6a"];
+
+        jenkins_agent [label="Agent\nSelection", shape=box, fillcolor="#4caf50"];
+        jenkins_stages [label="Define\nStages", shape=box, fillcolor="#43a047"];
+        jenkins_parallel [label="Parallel\nExecution", shape=box, fillcolor="#388e3c"];
+        jenkins_post [label="Post\nActions", shape=box, fillcolor="#2e7d32"];
+        jenkins_notifications [label="Notifications", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: CircleCI
+    subgraph cluster_circle {
+        label="CircleCI Workflow";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        circle_config [label="config.yml", shape=box, fillcolor="#fff59d", penwidth=2];
+        circle_orbs [label="Orbs\n(Reusable Config)", shape=box, fillcolor="#fff176"];
+        circle_executors [label="Executors\n(Docker/Machine)", shape=box, fillcolor="#ffee58"];
+        circle_jobs [label="Define\nJobs", shape=box, fillcolor="#ffeb3b"];
+        circle_workflows [label="Workflows", shape=box, fillcolor="#fdd835"];
+        circle_caching [label="Dependency\nCaching", shape=box, fillcolor="#f9a825"];
+        circle_workspaces [label="Workspaces", shape=box, fillcolor="#f57f17"];
+        circle_approval [label="Manual\nApproval", shape=box, fillcolor="#ff6f00"];
+    }
+
+    // Subgraph: Common Pipeline Steps
+    subgraph cluster_common {
+        label="Common Pipeline Steps";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        checkout [label="Checkout\nCode", shape=box, fillcolor="#ffcdd2"];
+        dependencies [label="Install\nDependencies", shape=box, fillcolor="#ef9a9a"];
+        lint_check [label="Lint\nCheck", shape=box, fillcolor="#e57373"];
+        unit_tests [label="Unit\nTests", shape=box, fillcolor="#ef5350"];
+        integration_tests [label="Integration\nTests", shape=box, fillcolor="#f44336"];
+        security_scan [label="Security\nScan", shape=box, fillcolor="#e53935"];
+        build_app [label="Build\nApplication", shape=box, fillcolor="#c62828"];
+        docker_build [label="Build Docker\nImage", shape=box, fillcolor="#b71c1c"];
+        push_registry [label="Push to\nRegistry", shape=box, fillcolor="#a81515"];
+        deploy_env [label="Deploy to\nEnvironment", shape=box, fillcolor="#8b0000"];
+    }
+
+    // Subgraph: Quality Gates
+    subgraph cluster_quality {
+        label="Quality Gates";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        code_coverage [label="Code Coverage\n>80%?", shape=diamond, fillcolor="#b3e5fc"];
+        test_pass [label="All Tests\nPass?", shape=diamond, fillcolor="#81d4fa"];
+        security_check [label="Security\nOK?", shape=diamond, fillcolor="#4fc3f7"];
+        performance_check [label="Performance\nOK?", shape=diamond, fillcolor="#29b6f6"];
+
+        quality_pass [label="Quality Gate\nPassed", shape=box, fillcolor="#03a9f4", penwidth=2];
+        quality_fail [label="Quality Gate\nFailed", shape=box, fillcolor="#0288d1", style="rounded,filled,dashed"];
+    }
+
+    // Subgraph: Deployment Strategies
+    subgraph cluster_deployment {
+        label="Deployment Strategies";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        deploy_strategy [label="Deployment\nStrategy?", shape=diamond, fillcolor="#e1bee7"];
+        blue_green [label="Blue-Green\nDeployment", shape=box, fillcolor="#ce93d8"];
+        canary [label="Canary\nDeployment", shape=box, fillcolor="#ba68c8"];
+        rolling [label="Rolling\nUpdate", shape=box, fillcolor="#ab47bc"];
+        recreate [label="Recreate", shape=box, fillcolor="#9c27b0"];
+
+        smoke_test [label="Smoke\nTests", shape=box, fillcolor="#8e24aa"];
+        rollback_option [label="Rollback\nif Needed", shape=box, fillcolor="#7b1fa2", style="rounded,filled,dashed"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Triggers", shape=box, fillcolor="#2196f3"];
+        leg2 [label="GitHub Actions", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="GitLab CI", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Jenkins", shape=box, fillcolor="#4caf50"];
+        leg5 [label="CircleCI", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Quality Gates", shape=box, fillcolor="#03a9f4"];
+        leg7 [label="Deployment", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7;}
+    }
+
+    // Trigger flows
+    git_push -> gh_workflow;
+    pull_request -> gh_workflow;
+    schedule -> gh_workflow;
+    manual -> gh_workflow;
+    tag_release -> gh_workflow;
+
+    git_push -> gl_config;
+    git_push -> jenkins_file;
+    git_push -> circle_config;
+
+    // GitHub Actions flow
+    gh_workflow -> gh_checkout;
+    gh_checkout -> gh_setup;
+    gh_setup -> gh_cache;
+    gh_cache -> gh_install;
+    gh_install -> gh_lint;
+    gh_lint -> gh_test;
+    gh_test -> gh_build;
+    gh_build -> gh_artifacts;
+    gh_artifacts -> gh_deploy;
+
+    // GitLab CI flow
+    gl_config -> gl_stages;
+    gl_stages -> gl_build_stage;
+    gl_build_stage -> gl_test_stage;
+    gl_test_stage -> gl_deploy_stage;
+    gl_stages -> gl_runners;
+    gl_runners -> gl_cache;
+    gl_cache -> gl_artifacts;
+    gl_artifacts -> gl_environments;
+
+    // Jenkins flow
+    jenkins_file -> jenkins_type;
+    jenkins_type -> jenkins_declarative;
+    jenkins_type -> jenkins_scripted;
+    jenkins_declarative -> jenkins_agent;
+    jenkins_scripted -> jenkins_agent;
+    jenkins_agent -> jenkins_stages;
+    jenkins_stages -> jenkins_parallel;
+    jenkins_parallel -> jenkins_post;
+    jenkins_post -> jenkins_notifications;
+
+    // CircleCI flow
+    circle_config -> circle_orbs;
+    circle_orbs -> circle_executors;
+    circle_executors -> circle_jobs;
+    circle_jobs -> circle_workflows;
+    circle_workflows -> circle_caching;
+    circle_caching -> circle_workspaces;
+    circle_workspaces -> circle_approval;
+
+    // Common steps (converge)
+    gh_deploy -> checkout [style=dashed];
+    gl_environments -> checkout [style=dashed];
+    jenkins_notifications -> checkout [style=dashed];
+    circle_approval -> checkout [style=dashed];
+
+    checkout -> dependencies;
+    dependencies -> lint_check;
+    lint_check -> unit_tests;
+    unit_tests -> integration_tests;
+    integration_tests -> security_scan;
+    security_scan -> build_app;
+    build_app -> docker_build;
+    docker_build -> push_registry;
+
+    // Quality gates
+    lint_check -> code_coverage [style=dashed];
+    unit_tests -> test_pass [style=dashed];
+    security_scan -> security_check [style=dashed];
+    build_app -> performance_check [style=dashed];
+
+    code_coverage -> quality_pass [label="pass"];
+    test_pass -> quality_pass [label="pass"];
+    security_check -> quality_pass [label="pass"];
+    performance_check -> quality_pass [label="pass"];
+
+    code_coverage -> quality_fail [label="fail"];
+    test_pass -> quality_fail [label="fail"];
+    security_check -> quality_fail [label="fail"];
+    performance_check -> quality_fail [label="fail"];
+
+    quality_pass -> push_registry;
+    push_registry -> deploy_env;
+
+    // Deployment strategies
+    deploy_env -> deploy_strategy;
+    deploy_strategy -> blue_green;
+    deploy_strategy -> canary;
+    deploy_strategy -> rolling;
+    deploy_strategy -> recreate;
+
+    blue_green -> smoke_test;
+    canary -> smoke_test;
+    rolling -> smoke_test;
+    recreate -> smoke_test;
+
+    smoke_test -> rollback_option [label="failed", style=dashed];
+}

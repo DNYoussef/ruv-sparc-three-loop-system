@@ -1,0 +1,303 @@
+digraph RESEARCH_DRIVEN_PLANNING_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Loop 1 Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Loop 1: Planning Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Requirements\nParse User Intent"];
+    validate_input [label="Validate Scope\nFeasibility Check"];
+    check_deps [label="Check Agent Availability\n6 Research + 8 Pre-mortem"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE: 6-AGENT RESEARCH
+  // =============================================================================
+  subgraph cluster_research {
+    label="6-Agent Research Swarm";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    spawn_research [label="Spawn 6 Research Agents\nDomain Expert, Tech Scout\nBest Practices, Security\nPerformance, Integration", fillcolor=purple];
+    parallel_research [label="Parallel Research\nGemini Search, Documentation\nCase Studies, Patterns", fillcolor=purple];
+    decision_research [shape=diamond, label="Research\nComplete?"];
+
+    research_error [shape=octagon, fillcolor=orange,
+                    label="Research Gap Detected"];
+    retry_research [label="Spawn Additional Researcher", fillcolor=yellow];
+  }
+
+  // Connect validation to research
+  check_secrets -> spawn_research [label="Pass"];
+
+  // Research flow
+  spawn_research -> parallel_research;
+  parallel_research -> decision_research;
+  decision_research -> research_error [label="Incomplete"];
+
+  // Error recovery
+  research_error -> retry_research;
+  retry_research -> parallel_research [label="Retry", style=dashed];
+  retry_research -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // PRE-MORTEM PHASE: 8-AGENT ANALYSIS
+  // =============================================================================
+  subgraph cluster_premortem {
+    label="8-Agent Pre-mortem (5x Cycles)";
+    style="filled,rounded";
+    color="darkviolet";
+    bgcolor="#F8E8FF";
+
+    spawn_premortem [label="Spawn 8 Pre-mortem Agents\nFailure Predictor, Risk Analyst\nSecurity Auditor, Scale Analyzer\nIntegration Tester, etc.", fillcolor=darkviolet];
+    cycle_1 [label="Cycle 1: Initial Failure Analysis", fillcolor=darkviolet];
+    cycle_2 [label="Cycle 2: Mitigation Planning", fillcolor=darkviolet];
+    cycle_3 [label="Cycle 3: Edge Case Discovery", fillcolor=darkviolet];
+    cycle_4 [label="Cycle 4: Integration Risks", fillcolor=darkviolet];
+    cycle_5 [label="Cycle 5: Final Validation", fillcolor=darkviolet];
+
+    decision_premortem [shape=diamond, label="Failure Confidence\n<3%?"];
+    premortem_fail [shape=octagon, fillcolor=orange,
+                    label="High Failure Risk Detected"];
+  }
+
+  // Connect research to pre-mortem
+  decision_research -> spawn_premortem [label="Complete"];
+
+  // Pre-mortem flow
+  spawn_premortem -> cycle_1;
+  cycle_1 -> cycle_2;
+  cycle_2 -> cycle_3;
+  cycle_3 -> cycle_4;
+  cycle_4 -> cycle_5;
+  cycle_5 -> decision_premortem;
+  decision_premortem -> premortem_fail [label=">=3%"];
+
+  // =============================================================================
+  // CONSENSUS PHASE: BYZANTINE FAULT TOLERANCE
+  // =============================================================================
+  subgraph cluster_consensus {
+    label="Byzantine Consensus";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    consensus_init [label="Initialize Byzantine\nConsensus Protocol", fillcolor=lightblue];
+    voting [label="Multi-Agent Voting\n67% Threshold", fillcolor=lightblue];
+    decision_consensus [shape=diamond, label="Consensus\nReached?"];
+    consensus_fail [shape=octagon, fillcolor=orange,
+                    label="Consensus Failed"];
+  }
+
+  // Connect pre-mortem to consensus
+  decision_premortem -> consensus_init [label="<3%"];
+  premortem_fail -> consensus_init [label="Revise Plan"];
+
+  // Consensus flow
+  consensus_init -> voting;
+  voting -> decision_consensus;
+  decision_consensus -> consensus_fail [label="No"];
+
+  // =============================================================================
+  // PLAN GENERATION
+  // =============================================================================
+  subgraph cluster_planning {
+    label="Plan Generation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_plan [label="Generate Detailed Plan\nTasks, Dependencies, Agents", fillcolor=lightgreen];
+    risk_mitigation [label="Attach Risk Mitigation\nStrategies", fillcolor=lightgreen];
+    validate_plan [shape=diamond, label="Plan Valid?"];
+
+    plan_error [shape=octagon, fillcolor=orange,
+                label="Plan Validation Failed"];
+  }
+
+  // Connect consensus to planning
+  decision_consensus -> generate_plan [label="Yes"];
+
+  // Planning flow
+  generate_plan -> risk_mitigation;
+  risk_mitigation -> validate_plan;
+  validate_plan -> plan_error [label="No"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Handoff to Loop 2";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Plan in Memory\nplanning/{task-id}/requirements", fillcolor=lightblue];
+    notify_loop2 [label="Notify Loop 2\nparallel-swarm-implementation", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Loop 2\nReady?"];
+  }
+
+  // Connect planning to coordination
+  validate_plan -> memory_store [label="Yes"];
+  memory_store -> notify_loop2;
+  notify_loop2 -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Plan Completeness\n100%?"];
+    run_tests [label="Run Feasibility Tests", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="Ready"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Loop 1 Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics\nResearch Depth, Failure Confidence\nConsensus Score"];
+    success [label="Loop 1 Complete\nHandoff to Loop 2", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // FEEDBACK LOOP FROM LOOP 3
+  // =============================================================================
+  subgraph cluster_feedback {
+    label="Loop 3 Feedback Integration";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    receive_feedback [label="Receive Failure Patterns\nfrom Loop 3 (CI/CD)", fillcolor=cyan];
+    integrate_learning [label="Integrate Learnings\ninto Pre-mortem", fillcolor=cyan];
+    decision_iterate [shape=diamond, label="Re-plan\nRequired?"];
+  }
+
+  // Feedback loop (external trigger)
+  receive_feedback -> integrate_learning;
+  integrate_learning -> decision_iterate;
+  decision_iterate -> spawn_premortem [label="Yes", style=dashed];
+  decision_iterate -> success [label="No"];
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Loop 1 Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  consensus_fail -> log_error;
+  plan_error -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

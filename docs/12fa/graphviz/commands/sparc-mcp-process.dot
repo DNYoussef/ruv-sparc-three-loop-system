@@ -1,0 +1,56 @@
+digraph sparc_mcp_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:MCP Command Workflow\nMCP Integration Specialist";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:mcp", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  check_servers [label="Check MCP Servers\nList connected servers", fillcolor="#FFF9C4"];
+
+  server_available [label="Required Servers\nAvailable?", fillcolor="#C5CAE9", shape=diamond];
+
+  install_servers [label="Install MCP Servers\n- claude-flow\n- ruv-swarm\n- flow-nexus", fillcolor="#FFE0B2"];
+
+  configure_servers [label="Configure Servers\n- Authentication\n- Permissions\n- Settings", fillcolor="#BBDEFB"];
+
+  test_connection [label="Test Connections\nVerify server health", fillcolor="#B2DFDB"];
+
+  identify_tools [label="Identify Required Tools\nBased on task type", fillcolor="#D1C4E9"];
+
+  setup_coordination [label="Setup Coordination\n- Swarm init\n- Memory setup\n- Agent registration", fillcolor="#F0F4C3"];
+
+  configure_workflow [label="Configure Workflow\n- Tool mapping\n- Event handlers\n- Error recovery", fillcolor="#FFE0B2"];
+
+  integrate_tools [label="Integrate MCP Tools\n- Tool invocation\n- Response handling\n- State management", fillcolor="#BBDEFB"];
+
+  test_integration [label="Test Integration\n- Tool functionality\n- Error handling\n- Performance", fillcolor="#B2DFDB"];
+
+  monitor_usage [label="Monitor Usage\n- Tool calls\n- Performance metrics\n- Error rates", fillcolor="#D1C4E9"];
+
+  success [label="MCP Integration Complete\nTools ready", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Integration Failed\nCheck configuration", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> check_servers;
+  check_servers -> server_available;
+  server_available -> configure_servers [label="Yes"];
+  server_available -> install_servers [label="No"];
+  install_servers -> configure_servers;
+  configure_servers -> test_connection;
+  test_connection -> identify_tools [label="Connected"];
+  test_connection -> error [label="Failed"];
+  identify_tools -> setup_coordination;
+  setup_coordination -> configure_workflow;
+  configure_workflow -> integrate_tools;
+  integrate_tools -> test_integration;
+  test_integration -> monitor_usage [label="Passed"];
+  test_integration -> error [label="Failed"];
+  monitor_usage -> success;
+}

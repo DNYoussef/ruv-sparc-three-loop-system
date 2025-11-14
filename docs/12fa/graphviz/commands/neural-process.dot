@@ -1,0 +1,25 @@
+digraph NEURAL {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/neural", shape=ellipse, fillcolor=lightblue];
+  select_operation [shape=diamond, label="Operation?"];
+  train_patterns [label="Train Neural\nPatterns", fillcolor=lightpurple, style="filled,bold"];
+  load_patterns [label="Load\nPatterns", fillcolor=lightgreen];
+  query_patterns [label="Query\nPatterns", fillcolor=lightgreen];
+  update_weights [label="Update\nWeights", fillcolor=yellow];
+  collect_feedback [label="Collect\nFeedback", fillcolor=lightblue];
+  adapt_behavior [label="Adapt\nBehavior", fillcolor=purple];
+  store_patterns [label="Store\nPatterns", fillcolor=lightblue];
+  success [label="Neural Operation Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> select_operation;
+  select_operation -> train_patterns [label="train"];
+  select_operation -> load_patterns [label="load"];
+  select_operation -> query_patterns [label="query"];
+  train_patterns -> update_weights -> collect_feedback -> adapt_behavior;
+  load_patterns -> query_patterns;
+  adapt_behavior -> store_patterns;
+  query_patterns -> success;
+  store_patterns -> success;
+}

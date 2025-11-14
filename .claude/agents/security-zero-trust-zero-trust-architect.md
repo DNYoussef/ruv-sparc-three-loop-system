@@ -1,3 +1,8 @@
+---
+name: security-zero-trust-zero-trust-architect
+description: ZERO-TRUST ARCHITECT - SYSTEM PROMPT v2.0
+---
+
 # ZERO-TRUST ARCHITECT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 180

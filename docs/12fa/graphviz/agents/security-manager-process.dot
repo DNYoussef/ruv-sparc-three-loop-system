@@ -1,0 +1,273 @@
+digraph SECURITY_MANAGER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Security Manager Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Security Configuration\nAuthentication, Authorization, Encryption"];
+    validate_capabilities [label="Validate Capabilities\nauthentication, authorization\nencryption, threat_detection"];
+    check_deps [label="Check Dependencies\nSecurity Tools, Policies"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // AUTHENTICATION SETUP
+  // =============================================================================
+  subgraph cluster_authentication {
+    label="Authentication Management";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    init_auth [label="Initialize Auth System", fillcolor=lightblue];
+    setup_identity [label="Setup Identity Verification\nEd25519 keypairs"];
+    setup_jwt [label="Setup JWT/Session\nManagement"];
+    setup_mfa [label="Setup Multi-Factor\nAuthentication"];
+    auth_configured [shape=diamond, label="Auth\nConfigured?"];
+
+    check_deps -> init_auth;
+    init_auth -> setup_identity;
+    setup_identity -> setup_jwt;
+    setup_jwt -> setup_mfa;
+    setup_mfa -> auth_configured;
+    auth_configured -> fix_auth_config [label="No"];
+  }
+
+  // =============================================================================
+  // AUTHORIZATION SETUP
+  // =============================================================================
+  subgraph cluster_authorization {
+    label="Authorization & Access Control";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    define_roles [label="Define Roles\nAdmin, User, Guest", fillcolor=purple];
+    define_permissions [label="Define Permissions\nRead, Write, Execute"];
+    setup_rbac [label="Setup RBAC\nRole-Based Access Control"];
+    setup_abac [label="Setup ABAC\nAttribute-Based Access Control"];
+    authz_configured [shape=diamond, label="Authorization\nConfigured?"];
+
+    auth_configured -> define_roles [label="Yes"];
+    define_roles -> define_permissions;
+    define_permissions -> setup_rbac;
+    setup_rbac -> setup_abac;
+    setup_abac -> authz_configured;
+    authz_configured -> fix_authz_config [label="No"];
+  }
+
+  // =============================================================================
+  // ENCRYPTION SETUP
+  // =============================================================================
+  subgraph cluster_encryption {
+    label="Encryption Management";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    setup_tls [label="Setup TLS/SSL\nData in transit", fillcolor=orange];
+    setup_at_rest [label="Setup Encryption at Rest\nDatabase, files"];
+    setup_key_management [label="Setup Key Management\nKey rotation, storage"];
+    test_encryption [label="Test Encryption\nValidate cipher strength"];
+    encryption_valid [shape=diamond, label="Encryption\nValid?"];
+
+    authz_configured -> setup_tls [label="Yes"];
+    setup_tls -> setup_at_rest;
+    setup_at_rest -> setup_key_management;
+    setup_key_management -> test_encryption;
+    test_encryption -> encryption_valid;
+    encryption_valid -> fix_encryption [label="No"];
+  }
+
+  // =============================================================================
+  // THREAT DETECTION
+  // =============================================================================
+  subgraph cluster_threat_detection {
+    label="Threat Detection System";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    setup_monitoring [label="Setup Security Monitoring\nReal-time detection", fillcolor=yellow];
+    setup_intrusion_detection [label="Setup Intrusion Detection\nIDS/IPS"];
+    setup_anomaly_detection [label="Setup Anomaly Detection\nBehavioral analysis"];
+    setup_rate_limiting [label="Setup Rate Limiting\nDDoS prevention"];
+    threat_detection_active [shape=diamond, label="Detection\nActive?"];
+
+    encryption_valid -> setup_monitoring [label="Yes"];
+    setup_monitoring -> setup_intrusion_detection;
+    setup_intrusion_detection -> setup_anomaly_detection;
+    setup_anomaly_detection -> setup_rate_limiting;
+    setup_rate_limiting -> threat_detection_active;
+    threat_detection_active -> fix_detection [label="No"];
+  }
+
+  // =============================================================================
+  // SECURITY AUDIT
+  // =============================================================================
+  subgraph cluster_audit {
+    label="Security Audit";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    scan_vulnerabilities [label="Scan Vulnerabilities\nOWASP Top 10", fillcolor=lightgreen];
+    check_dependencies [label="Check Dependencies\nnpm audit, Snyk"];
+    check_secrets [label="Check Secrets\nNo hardcoded keys"];
+    check_cors [label="Check CORS\nConfiguration"];
+    check_headers [label="Check Security Headers\nCSP, HSTS, X-Frame"];
+    audit_result [shape=diamond, label="Audit\nPass?"];
+
+    threat_detection_active -> scan_vulnerabilities [label="Yes"];
+    scan_vulnerabilities -> check_dependencies;
+    check_dependencies -> check_secrets;
+    check_secrets -> check_cors;
+    check_cors -> check_headers;
+    check_headers -> audit_result;
+    audit_result -> document_vulnerabilities [label="No"];
+  }
+
+  // =============================================================================
+  // AGENT SECURITY
+  // =============================================================================
+  subgraph cluster_agent_security {
+    label="Distributed Agent Security";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    secure_agent_comm [label="Secure Agent Communication\nEncrypted channels", fillcolor=purple];
+    verify_agent_identity [label="Verify Agent Identity\nPublic key verification"];
+    setup_byzantine [label="Setup Byzantine Protection\n2/3 majority consensus"];
+    detect_malicious_agents [label="Detect Malicious Agents\nBehavioral analysis"];
+    agent_security_valid [shape=diamond, label="Agent Security\nValid?"];
+
+    audit_result -> secure_agent_comm [label="Yes"];
+    secure_agent_comm -> verify_agent_identity;
+    verify_agent_identity -> setup_byzantine;
+    setup_byzantine -> detect_malicious_agents;
+    detect_malicious_agents -> agent_security_valid;
+    agent_security_valid -> fix_agent_security [label="No"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Security Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    store_security_config [label="Store Security Config\nmemory_store(security/config)", fillcolor=lightblue];
+    store_audit_results [label="Store Audit Results\nmemory_store(security/audit)"];
+    store_policies [label="Store Security Policies\nmemory_store(security/policies)"];
+    notify_agents [label="Notify All Agents\nSecurity policies active"];
+    enable_monitoring [label="Enable Continuous Monitoring"];
+
+    agent_security_valid -> store_security_config [label="Yes"];
+    store_security_config -> store_audit_results;
+    store_audit_results -> store_policies;
+    store_policies -> notify_agents;
+    notify_agents -> enable_monitoring;
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    generate_security_report [label="Generate Security Report\nCompliance, vulnerabilities"];
+    log_metrics [label="Log Security Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Security Manager Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    enable_monitoring -> cleanup;
+    cleanup -> generate_security_report;
+    generate_security_report -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Security Incidents";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    fix_auth_config [label="Fix Auth Configuration", fillcolor=orange];
+    fix_authz_config [label="Fix Authorization Configuration", fillcolor=orange];
+    fix_encryption [label="Fix Encryption Configuration", fillcolor=orange];
+    fix_detection [label="Fix Threat Detection", fillcolor=orange];
+    document_vulnerabilities [label="Document Vulnerabilities", fillcolor=red, fontcolor=white];
+    fix_agent_security [label="Fix Agent Security", fillcolor=orange];
+
+    security_incident [label="Security Incident Detected", fillcolor=red, fontcolor=white];
+    isolate_threat [label="Isolate Threat\nQuarantine affected agents"];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser/Admin"];
+    log_error [label="Log Security Error"];
+    failure [label="Security Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    fix_auth_config -> init_auth [style=dashed];
+    fix_authz_config -> define_roles [style=dashed];
+    fix_encryption -> setup_tls [style=dashed];
+    fix_detection -> setup_monitoring [style=dashed];
+    document_vulnerabilities -> security_incident;
+    fix_agent_security -> secure_agent_comm [style=dashed];
+
+    security_incident -> isolate_threat;
+    isolate_threat -> escalate;
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_critical [shape=box, label="Critical", fillcolor=red, fontcolor=white];
+    legend_warn [shape=box, label="Warning", fillcolor=orange];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_critical [style=invis];
+    legend_critical -> legend_warn [style=invis];
+    legend_warn -> legend_process [style=invis];
+    legend_process -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

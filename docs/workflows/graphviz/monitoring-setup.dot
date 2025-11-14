@@ -1,0 +1,235 @@
+digraph MonitoringSetup {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Monitoring & Observability Setup</b><br/>Configure → Alert → Dashboard → SRE>;
+    fontsize=16;
+
+    // Start
+    start [label="Monitoring\nSetup Initiated", shape=oval, fillcolor="#d4edda"];
+
+    // Configuration Phase
+    subgraph cluster_config {
+        label="Phase 1: Monitoring Configuration";
+        style=filled;
+        color="#cfe2ff";
+
+        config_metrics [label="Metrics Config\nPrometheus", shape=box, fillcolor="#b6d7ff"];
+        config_logs [label="Logging Config\nELK/Loki", shape=box, fillcolor="#b6d7ff"];
+        config_traces [label="Tracing Config\nJaeger/Tempo", shape=box, fillcolor="#b6d7ff"];
+        config_apm [label="APM Setup\nDatadog/New Relic", shape=box, fillcolor="#b6d7ff"];
+        config_rum [label="RUM Setup\nReal User Monitoring", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Metrics Collection
+    subgraph cluster_metrics {
+        label="Phase 2: Metrics Collection";
+        style=filled;
+        color="#d1e7dd";
+
+        metrics_infra [label="Infrastructure\nCPU/Memory/Disk", shape=box, fillcolor="#a3cfbb"];
+        metrics_app [label="Application\nLatency/Throughput", shape=box, fillcolor="#a3cfbb"];
+        metrics_business [label="Business KPIs\nConversions/Revenue", shape=box, fillcolor="#a3cfbb"];
+        metrics_custom [label="Custom Metrics\nDomain-Specific", shape=box, fillcolor="#a3cfbb"];
+        metrics_scrape [label="Scrape Targets\n/metrics endpoints", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Log Aggregation
+    subgraph cluster_logs {
+        label="Phase 3: Log Aggregation";
+        style=filled;
+        color="#e7d1e7";
+
+        log_collect [label="Log Collection\nFluentd/Logstash", shape=box, fillcolor="#d4b5d4"];
+        log_parse [label="Log Parsing\nGrok Patterns", shape=box, fillcolor="#d4b5d4"];
+        log_enrich [label="Log Enrichment\nContext/Labels", shape=box, fillcolor="#d4b5d4"];
+        log_index [label="Index Logs\nElasticsearch", shape=box, fillcolor="#d4b5d4"];
+        log_retention [label="Retention Policy\n30d/90d/1y", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Tracing Setup
+    subgraph cluster_tracing {
+        label="Phase 4: Distributed Tracing";
+        style=filled;
+        color="#fff3cd";
+
+        trace_instrument [label="Instrumentation\nOpenTelemetry", shape=box, fillcolor="#ffeeba"];
+        trace_spans [label="Span Collection\nService Calls", shape=box, fillcolor="#ffeeba"];
+        trace_baggage [label="Context Propagation\nBaggage/Headers", shape=box, fillcolor="#ffeeba"];
+        trace_sampling [label="Sampling Strategy\n1% / Adaptive", shape=box, fillcolor="#ffeeba"];
+        trace_analysis [label="Trace Analysis\nLatency Breakdown", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Alert Configuration
+    subgraph cluster_alerts {
+        label="Phase 5: Alert Configuration";
+        style=filled;
+        color="#f8d7da";
+
+        alert_rules [label="Alert Rules\nPrometheus Rules", shape=box, fillcolor="#f5c6cb"];
+        alert_threshold [label="Thresholds\nSLO-based", shape=box, fillcolor="#f5c6cb"];
+        alert_severity [label="Severity Levels\nCritical/Warning/Info", shape=box, fillcolor="#f5c6cb"];
+        alert_routing [label="Alert Routing\nPagerDuty/OpsGenie", shape=box, fillcolor="#f5c6cb"];
+        alert_suppression [label="Alert Suppression\nMaintenance Windows", shape=box, fillcolor="#f5c6cb"];
+        alert_escalation [label="Escalation Policy\nTiers/Timeouts", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    // Dashboard Creation
+    subgraph cluster_dashboards {
+        label="Phase 6: Dashboard Setup";
+        style=filled;
+        color="#d1e7dd";
+
+        dash_grafana [label="Grafana Setup\nVisualization", shape=box, fillcolor="#a3cfbb"];
+        dash_golden [label="Golden Signals\nLatency/Traffic/Errors/Saturation", shape=box, fillcolor="#a3cfbb"];
+        dash_slo [label="SLO Dashboard\nError Budget", shape=box, fillcolor="#a3cfbb"];
+        dash_service [label="Service Dashboard\nPer-Service Metrics", shape=box, fillcolor="#a3cfbb"];
+        dash_infrastructure [label="Infrastructure\nNode/Pod Health", shape=box, fillcolor="#a3cfbb"];
+        dash_business [label="Business Metrics\nKPIs/Funnels", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // SLI/SLO Definition
+    subgraph cluster_slo {
+        label="Phase 7: SLI/SLO Definition";
+        style=filled;
+        color="#e9ecef";
+
+        slo_identify [label="Identify SLIs\nAvailability/Latency", shape=box, fillcolor="#dee2e6"];
+        slo_baseline [label="Baseline Analysis\nHistorical Data", shape=box, fillcolor="#dee2e6"];
+        slo_targets [label="Set SLO Targets\n99.9% uptime", shape=box, fillcolor="#dee2e6"];
+        slo_budget [label="Error Budget\nCalculation", shape=box, fillcolor="#dee2e6"];
+        slo_burn_rate [label="Burn Rate Alerts\nFast/Slow Burn", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Notification Channels
+    subgraph cluster_notifications {
+        label="Phase 8: Notification Channels";
+        style=filled;
+        color="#cfe2ff";
+
+        notify_slack [label="Slack\nChannel Alerts", shape=box, fillcolor="#b6d7ff"];
+        notify_email [label="Email\nSMTP/SendGrid", shape=box, fillcolor="#b6d7ff"];
+        notify_pagerduty [label="PagerDuty\nOn-Call", shape=box, fillcolor="#b6d7ff"];
+        notify_webhook [label="Webhooks\nCustom Integrations", shape=box, fillcolor="#b6d7ff"];
+        notify_sms [label="SMS/Phone\nCritical Only", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Testing & Validation
+    subgraph cluster_testing {
+        label="Phase 9: Testing & Validation";
+        style=filled;
+        color="#e7d1e7";
+
+        test_alerts [label="Test Alerts\nFire Test Events", shape=box, fillcolor="#d4b5d4"];
+        test_dashboards [label="Validate Dashboards\nData Accuracy", shape=box, fillcolor="#d4b5d4"];
+        test_runbooks [label="Runbook Testing\nIncident Response", shape=box, fillcolor="#d4b5d4"];
+        test_chaos [label="Chaos Testing\nFailure Injection", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Artifacts
+    prometheus_config [label="Prometheus Config\nprometheus.yml", shape=cylinder, fillcolor="#f8d7da"];
+    grafana_dashboards [label="Grafana Dashboards\nJSON Models", shape=cylinder, fillcolor="#f8d7da"];
+    alert_rules_file [label="Alert Rules\nalerts.yml", shape=cylinder, fillcolor="#f8d7da"];
+    runbooks [label="Runbooks\nIncident Procedures", shape=cylinder, fillcolor="#f8d7da"];
+
+    // Continuous Improvement
+    subgraph cluster_improvement {
+        label="Phase 10: Continuous Improvement";
+        style=filled;
+        color="#fff3cd";
+
+        review_alerts [label="Alert Review\nReduce Noise", shape=box, fillcolor="#ffeeba"];
+        tune_thresholds [label="Tune Thresholds\nReduce False Positives", shape=box, fillcolor="#ffeeba"];
+        update_slo [label="Update SLOs\nQuarterly Review", shape=box, fillcolor="#ffeeba"];
+        incident_review [label="Incident Review\nPost-Mortems", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // End State
+    success [label="Monitoring\nOperational", shape=oval, fillcolor="#d4edda"];
+
+    // Workflow Connections
+    start -> config_metrics;
+
+    // Configuration
+    config_metrics -> config_logs;
+    config_logs -> config_traces;
+    config_traces -> config_apm;
+    config_apm -> config_rum;
+    config_rum -> metrics_infra;
+
+    // Metrics
+    metrics_infra -> metrics_app;
+    metrics_app -> metrics_business;
+    metrics_business -> metrics_custom;
+    metrics_custom -> metrics_scrape;
+    metrics_scrape -> log_collect;
+
+    // Logs
+    log_collect -> log_parse;
+    log_parse -> log_enrich;
+    log_enrich -> log_index;
+    log_index -> log_retention;
+    log_retention -> trace_instrument;
+
+    // Tracing
+    trace_instrument -> trace_spans;
+    trace_spans -> trace_baggage;
+    trace_baggage -> trace_sampling;
+    trace_sampling -> trace_analysis;
+    trace_analysis -> alert_rules;
+
+    // Alerts
+    alert_rules -> alert_threshold;
+    alert_threshold -> alert_severity;
+    alert_severity -> alert_routing;
+    alert_routing -> alert_suppression;
+    alert_suppression -> alert_escalation;
+    alert_escalation -> dash_grafana;
+
+    // Dashboards
+    dash_grafana -> dash_golden;
+    dash_golden -> dash_slo;
+    dash_slo -> dash_service;
+    dash_service -> dash_infrastructure;
+    dash_infrastructure -> dash_business;
+    dash_business -> slo_identify;
+
+    // SLO
+    slo_identify -> slo_baseline;
+    slo_baseline -> slo_targets;
+    slo_targets -> slo_budget;
+    slo_budget -> slo_burn_rate;
+    slo_burn_rate -> notify_slack;
+
+    // Notifications
+    notify_slack -> notify_email;
+    notify_email -> notify_pagerduty;
+    notify_pagerduty -> notify_webhook;
+    notify_webhook -> notify_sms;
+    notify_sms -> test_alerts;
+
+    // Testing
+    test_alerts -> test_dashboards;
+    test_dashboards -> test_runbooks;
+    test_runbooks -> test_chaos;
+    test_chaos -> prometheus_config;
+
+    // Artifacts
+    prometheus_config -> grafana_dashboards;
+    grafana_dashboards -> alert_rules_file;
+    alert_rules_file -> runbooks;
+    runbooks -> review_alerts;
+
+    // Continuous Improvement
+    review_alerts -> tune_thresholds;
+    tune_thresholds -> update_slo;
+    update_slo -> incident_review;
+    incident_review -> success;
+}

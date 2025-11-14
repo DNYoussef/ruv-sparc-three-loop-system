@@ -1,0 +1,287 @@
+/**
+ * Complete Hook Lifecycle Automation
+ * Command: /hooks-pre, /hooks-post, /hooks-error, /hooks-success, /hooks-git
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph hook_automation {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Complete Hook Lifecycle Automation</B><BR/>Pre/Post Hooks • Error/Success • Git Events>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Hook Types
+    subgraph cluster_types {
+        label="Hook Types";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        hook_trigger [label="Hook\nTrigger", shape=box, fillcolor="#bbdefb", penwidth=2];
+        hook_type [label="Hook\nType?", shape=diamond, fillcolor="#90caf9"];
+        pre_hook [label="Pre-Hook", shape=box, fillcolor="#64b5f6"];
+        post_hook [label="Post-Hook", shape=box, fillcolor="#42a5f5"];
+        error_hook [label="Error Hook", shape=box, fillcolor="#2196f3"];
+        success_hook [label="Success Hook", shape=box, fillcolor="#1e88e5"];
+        git_hook [label="Git Hook", shape=box, fillcolor="#1976d2"];
+    }
+
+    // Subgraph: Pre-Task Hooks
+    subgraph cluster_pre {
+        label="Pre-Task Hooks";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        pre_start [label="Pre-Task\nHook", shape=box, fillcolor="#e1bee7", penwidth=2];
+        pre_validate [label="Validate\nInput", shape=box, fillcolor="#ce93d8"];
+        pre_resources [label="Prepare\nResources", shape=box, fillcolor="#ba68c8"];
+        pre_agent_select [label="Auto-Assign\nAgents", shape=box, fillcolor="#ab47bc"];
+        pre_topology [label="Optimize\nTopology", shape=box, fillcolor="#9c27b0"];
+        pre_cache [label="Cache\nSearch", shape=box, fillcolor="#8e24aa"];
+        pre_memory [label="Load Memory\nContext", shape=box, fillcolor="#7b1fa2"];
+        pre_session [label="Session\nRestore", shape=box, fillcolor="#6a1b9a"];
+        pre_notify [label="Notify\nStart", shape=box, fillcolor="#4a148c"];
+    }
+
+    // Subgraph: Post-Task Hooks
+    subgraph cluster_post {
+        label="Post-Task Hooks";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        post_start [label="Post-Task\nHook", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        post_format [label="Auto-Format\nCode", shape=box, fillcolor="#ffcc80"];
+        post_lint [label="Run\nLinter", shape=box, fillcolor="#ffb74d"];
+        post_neural [label="Train Neural\nPatterns", shape=box, fillcolor="#ffa726"];
+        post_memory [label="Update\nMemory", shape=box, fillcolor="#ff9800"];
+        post_metrics [label="Track\nMetrics", shape=box, fillcolor="#fb8c00"];
+        post_performance [label="Analyze\nPerformance", shape=box, fillcolor="#f57c00"];
+        post_session [label="Session\nEnd", shape=box, fillcolor="#ef6c00"];
+        post_notify [label="Notify\nComplete", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: Error Hooks
+    subgraph cluster_error {
+        label="Error Handling Hooks";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        error_start [label="Error\nHook", shape=box, fillcolor="#ffcdd2", penwidth=2];
+        error_capture [label="Capture\nError", shape=box, fillcolor="#ef9a9a"];
+        error_classify [label="Classify\nError Type", shape=diamond, fillcolor="#e57373"];
+        error_recoverable [label="Recoverable?", shape=diamond, fillcolor="#ef5350"];
+
+        // Recovery paths
+        error_retry [label="Retry\nOperation", shape=box, fillcolor="#f44336"];
+        error_fallback [label="Fallback\nStrategy", shape=box, fillcolor="#e53935"];
+        error_rollback [label="Rollback\nChanges", shape=box, fillcolor="#c62828"];
+
+        // Logging
+        error_log [label="Log\nError", shape=box, fillcolor="#b71c1c"];
+        error_debug [label="Generate Debug\nReport", shape=box, fillcolor="#8b0000"];
+        error_notify [label="Notify\nFailure", shape=box, fillcolor="#6d0000"];
+    }
+
+    // Subgraph: Success Hooks
+    subgraph cluster_success {
+        label="Success Hooks";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        success_start [label="Success\nHook", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        success_validate [label="Validate\nOutput", shape=box, fillcolor="#a5d6a7"];
+        success_quality [label="Quality\nCheck", shape=diamond, fillcolor="#81c784"];
+        success_optimize [label="Optimize\nResults", shape=box, fillcolor="#66bb6a"];
+        success_cache [label="Cache\nResults", shape=box, fillcolor="#4caf50"];
+        success_metrics [label="Update Success\nMetrics", shape=box, fillcolor="#43a047"];
+        success_learn [label="Learn\nPatterns", shape=box, fillcolor="#388e3c"];
+        success_checkpoint [label="Create\nCheckpoint", shape=box, fillcolor="#2e7d32"];
+        success_notify [label="Notify\nSuccess", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Git Hooks
+    subgraph cluster_git {
+        label="Git Event Hooks";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        git_start [label="Git\nHook", shape=box, fillcolor="#fff59d", penwidth=2];
+        git_event [label="Git Event?", shape=diamond, fillcolor="#fff176"];
+
+        // Pre-commit
+        git_pre_commit [label="Pre-Commit", shape=box, fillcolor="#ffee58"];
+        git_stage_check [label="Check Staged\nFiles", shape=box, fillcolor="#ffeb3b"];
+        git_lint_staged [label="Lint Staged\nFiles", shape=box, fillcolor="#fdd835"];
+        git_test_staged [label="Test Staged\nChanges", shape=box, fillcolor="#f9a825"];
+
+        // Pre-push
+        git_pre_push [label="Pre-Push", shape=box, fillcolor="#f57f17"];
+        git_branch_check [label="Check\nBranch", shape=box, fillcolor="#ff6f00"];
+        git_test_all [label="Run All\nTests", shape=box, fillcolor="#e65100"];
+
+        // Post-commit
+        git_post_commit [label="Post-Commit", shape=box, fillcolor="#bf360c"];
+        git_update_memory [label="Update Memory\nContext", shape=box, fillcolor="#a52714"];
+        git_notify_team [label="Notify\nTeam", shape=box, fillcolor="#8e0000"];
+    }
+
+    // Subgraph: Hook Configuration
+    subgraph cluster_config {
+        label="Hook Configuration";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        config_start [label="Hook\nConfiguration", shape=box, fillcolor="#b3e5fc", penwidth=2];
+        config_enable [label="Enable/Disable\nHooks", shape=box, fillcolor="#81d4fa"];
+        config_priority [label="Hook\nPriority", shape=box, fillcolor="#4fc3f7"];
+        config_timeout [label="Timeout\nSettings", shape=box, fillcolor="#29b6f6"];
+        config_retries [label="Retry\nSettings", shape=box, fillcolor="#03a9f4"];
+        config_logging [label="Logging\nLevel", shape=box, fillcolor="#039be5"];
+        config_notifications [label="Notification\nSettings", shape=box, fillcolor="#0288d1"];
+        config_save [label="Save\nConfiguration", shape=box, fillcolor="#0277bd"];
+    }
+
+    // Subgraph: Hook Chain
+    subgraph cluster_chain {
+        label="Hook Chaining";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        chain_start [label="Hook\nChain", shape=box, fillcolor="#e1bee7", penwidth=2];
+        chain_sequential [label="Sequential\nExecution", shape=box, fillcolor="#ce93d8"];
+        chain_parallel [label="Parallel\nExecution", shape=box, fillcolor="#ba68c8"];
+        chain_conditional [label="Conditional\nExecution", shape=box, fillcolor="#ab47bc"];
+        chain_abort [label="Abort on\nFailure?", shape=diamond, fillcolor="#9c27b0"];
+        chain_continue [label="Continue on\nFailure", shape=box, fillcolor="#8e24aa"];
+        chain_stop [label="Stop\nChain", shape=box, fillcolor="#7b1fa2"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Hook Types", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Pre-Task", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Post-Task", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Error", shape=box, fillcolor="#f44336"];
+        leg5 [label="Success", shape=box, fillcolor="#4caf50"];
+        leg6 [label="Git Hooks", shape=box, fillcolor="#ffeb3b"];
+        leg7 [label="Configuration", shape=box, fillcolor="#03a9f4"];
+        leg8 [label="Chaining", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7; leg8;}
+    }
+
+    // Hook type selection
+    hook_trigger -> hook_type;
+    hook_type -> pre_hook [label="pre"];
+    hook_type -> post_hook [label="post"];
+    hook_type -> error_hook [label="error"];
+    hook_type -> success_hook [label="success"];
+    hook_type -> git_hook [label="git"];
+
+    // Pre-hook flow
+    pre_hook -> pre_start;
+    pre_start -> pre_validate;
+    pre_validate -> pre_resources;
+    pre_resources -> pre_agent_select;
+    pre_agent_select -> pre_topology;
+    pre_topology -> pre_cache;
+    pre_cache -> pre_memory;
+    pre_memory -> pre_session;
+    pre_session -> pre_notify;
+
+    // Post-hook flow
+    post_hook -> post_start;
+    post_start -> post_format;
+    post_format -> post_lint;
+    post_lint -> post_neural;
+    post_neural -> post_memory;
+    post_memory -> post_metrics;
+    post_metrics -> post_performance;
+    post_performance -> post_session;
+    post_session -> post_notify;
+
+    // Error hook flow
+    error_hook -> error_start;
+    error_start -> error_capture;
+    error_capture -> error_classify;
+    error_classify -> error_recoverable;
+    error_recoverable -> error_retry [label="yes"];
+    error_recoverable -> error_rollback [label="no"];
+    error_retry -> error_fallback [label="failed"];
+    error_fallback -> error_log;
+    error_rollback -> error_log;
+    error_log -> error_debug;
+    error_debug -> error_notify;
+
+    // Success hook flow
+    success_hook -> success_start;
+    success_start -> success_validate;
+    success_validate -> success_quality;
+    success_quality -> success_optimize [label="pass"];
+    success_quality -> error_start [label="fail", color=red];
+    success_optimize -> success_cache;
+    success_cache -> success_metrics;
+    success_metrics -> success_learn;
+    success_learn -> success_checkpoint;
+    success_checkpoint -> success_notify;
+
+    // Git hooks flow
+    git_hook -> git_start;
+    git_start -> git_event;
+    git_event -> git_pre_commit [label="pre-commit"];
+    git_event -> git_pre_push [label="pre-push"];
+    git_event -> git_post_commit [label="post-commit"];
+
+    git_pre_commit -> git_stage_check;
+    git_stage_check -> git_lint_staged;
+    git_lint_staged -> git_test_staged;
+
+    git_pre_push -> git_branch_check;
+    git_branch_check -> git_test_all;
+
+    git_post_commit -> git_update_memory;
+    git_update_memory -> git_notify_team;
+
+    // Configuration flow
+    config_start -> config_enable;
+    config_enable -> config_priority;
+    config_priority -> config_timeout;
+    config_timeout -> config_retries;
+    config_retries -> config_logging;
+    config_logging -> config_notifications;
+    config_notifications -> config_save;
+
+    // Chain flow
+    chain_start -> chain_sequential;
+    chain_start -> chain_parallel;
+    chain_start -> chain_conditional;
+    chain_sequential -> chain_abort;
+    chain_parallel -> chain_abort;
+    chain_conditional -> chain_abort;
+    chain_abort -> chain_continue [label="no"];
+    chain_abort -> chain_stop [label="yes"];
+
+    // Cross-connections
+    config_save -> hook_trigger [style=dashed, label="configure"];
+    chain_start -> pre_start [style=dashed, label="chain"];
+    chain_start -> post_start [style=dashed, label="chain"];
+}

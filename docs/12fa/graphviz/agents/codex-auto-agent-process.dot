@@ -1,0 +1,112 @@
+digraph codex_auto_agent_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Codex Auto Agent - Extended Reasoning Workflow";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Task Input", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Extended Reasoning Phase
+    subgraph cluster_reasoning {
+        label="Extended Reasoning Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        analyze [label="Problem Analysis\n(Deep Thinking)"];
+        decompose [label="Decomposition\n(Break into sub-problems)"];
+        explore [label="Solution Exploration\n(Multiple approaches)"];
+        reason [label="Extended Reasoning\n(Step-by-step logic)"];
+    }
+
+    // Code Generation Phase
+    subgraph cluster_generation {
+        label="Code Generation Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        generate [label="Code Generation\n(Codex model)"];
+        optimize [label="Code Optimization\n(Performance)"];
+        validate [label="Code Validation\n(Syntax & logic)"];
+    }
+
+    // Automated Decision Phase
+    subgraph cluster_decision {
+        label="Automated Decision Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        evaluate [label="Solution Evaluation\n(Multiple criteria)"];
+        select [label="Best Solution Selection\n(Automated)"];
+        refine [label="Solution Refinement\n(Edge cases)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Extended Reasoning", fillcolor="#238636"];
+        feature2 [label="Automated Decisions", fillcolor="#238636"];
+        feature3 [label="Code Generation", fillcolor="#238636"];
+        feature4 [label="Problem Solving", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Generated Solution\n+ Reasoning Trace", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> analyze;
+    analyze -> decompose;
+    decompose -> explore;
+    explore -> reason;
+
+    reason -> generate;
+    generate -> optimize;
+    optimize -> validate;
+
+    validate -> evaluate;
+    evaluate -> select;
+    select -> refine;
+
+    refine -> output;
+
+    // Feedback loops
+    evaluate -> reason [label="Refine reasoning", style=dashed, color="#f85149"];
+    validate -> generate [label="Re-generate", style=dashed, color="#f85149"];
+
+    // Feature connections
+    reason -> feature1 [style=dotted, color="#8b949e"];
+    select -> feature2 [style=dotted, color="#8b949e"];
+    generate -> feature3 [style=dotted, color="#8b949e"];
+    explore -> feature4 [style=dotted, color="#8b949e"];
+}

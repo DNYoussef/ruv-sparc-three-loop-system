@@ -1,0 +1,132 @@
+digraph multi_model_orchestrator_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Multi-Model Orchestrator - Intelligent Model Routing";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Task Request", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Task Analysis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        classify [label="Task Classification\n(Type identification)"];
+        analyze [label="Requirement Analysis\n(Capabilities needed)"];
+        profile [label="Cost Profiling\n(Budget constraints)"];
+    }
+
+    // Model Selection Phase
+    subgraph cluster_selection {
+        label="Model Selection Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        claude [label="Claude\n(Code, Analysis)", shape=ellipse, fillcolor="#9b59b6"];
+        gemini [label="Gemini\n(Search, Context)", shape=ellipse, fillcolor="#3498db"];
+        codex [label="Codex\n(Generation)", shape=ellipse, fillcolor="#e74c3c"];
+
+        route [label="Intelligent Routing\n(Optimal selection)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Execution Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        execute [label="Model Execution\n(Selected model)"];
+        monitor [label="Performance Monitoring\n(Metrics)"];
+        fallback [label="Fallback Handling\n(If failure)"];
+    }
+
+    // Optimization Phase
+    subgraph cluster_optimization {
+        label="Optimization Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        evaluate [label="Cost Evaluation\n(Actual vs budget)"];
+        optimize [label="Cost Optimization\n(Learning)"];
+        adapt [label="Strategy Adaptation\n(Improve routing)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Multi-model Routing", fillcolor="#238636"];
+        feature2 [label="Optimal Selection", fillcolor="#238636"];
+        feature3 [label="Fallback Handling", fillcolor="#238636"];
+        feature4 [label="Cost Optimization", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Optimal Result\n+ Cost Report", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> classify;
+    classify -> analyze;
+    analyze -> profile;
+
+    profile -> route;
+
+    route -> claude [label="Code tasks"];
+    route -> gemini [label="Search tasks"];
+    route -> codex [label="Generation tasks"];
+
+    claude -> execute;
+    gemini -> execute;
+    codex -> execute;
+
+    execute -> monitor;
+    monitor -> fallback;
+    fallback -> evaluate;
+
+    evaluate -> optimize;
+    optimize -> adapt;
+
+    adapt -> output;
+
+    // Fallback paths
+    fallback -> route [label="Re-route", style=dashed, color="#f85149"];
+
+    // Feature connections
+    route -> feature1 [style=dotted, color="#8b949e"];
+    analyze -> feature2 [style=dotted, color="#8b949e"];
+    fallback -> feature3 [style=dotted, color="#8b949e"];
+    evaluate -> feature4 [style=dotted, color="#8b949e"];
+}

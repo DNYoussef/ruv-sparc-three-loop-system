@@ -1,3 +1,8 @@
+---
+name: quality-analysis-audit-pipeline-orchestrator
+description: Specialized agent for task execution
+---
+
 # Audit Pipeline Orchestrator Agent
 
 

@@ -1,3 +1,8 @@
+---
+name: platforms-data-governance-data-governance-agent
+description: GRANT SELECT ON customer_table TO PUBLIC;  -- ❌ Unrestricted access!
+---
+
 # DATA GOVERNANCE AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 190

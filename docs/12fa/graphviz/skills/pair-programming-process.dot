@@ -1,0 +1,202 @@
+digraph PAIR_PROGRAMMING_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Pair Programming Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Pair Programming Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Session Configuration"];
+    validate_input [label="Validate Programming Mode"];
+    check_deps [label="Check Development Environment"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    validate_mode [shape=diamond, label="Valid Mode?\n(Driver/Navigator/Switch)"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+    mode_error [shape=octagon, fillcolor=orange,
+                label="WARN\nInvalid Mode"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> validate_mode [label="Pass"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+  validate_mode -> mode_error [label="Invalid"];
+
+  // =============================================================================
+  // EXECUTION PHASE - PAIR PROGRAMMING
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Pair Programming Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    select_mode [label="Select Programming Mode\n(Driver/Navigator/TDD)", fillcolor=purple];
+    mode_check [shape=diamond, label="Mode\nSelected?"];
+
+    driver_mode [label="Driver Mode:\nAI Writes Code", fillcolor=purple];
+    navigator_mode [label="Navigator Mode:\nAI Reviews & Guides", fillcolor=purple];
+    tdd_mode [label="TDD Mode:\nTest-First Development", fillcolor=purple];
+
+    real_time_verify [label="Real-Time Verification", fillcolor=purple];
+    verify_check [shape=diamond, label="Verification\nPass?"];
+
+    quality_monitor [label="Monitor Quality Metrics", fillcolor=purple];
+    quality_check [shape=diamond, label="Quality\nAcceptable?"];
+
+    // Error handling
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Execution Error"];
+    retry_logic [label="Retry with Feedback", fillcolor=yellow];
+  }
+
+  validate_mode -> select_mode [label="Valid"];
+  select_mode -> mode_check;
+  mode_check -> driver_mode [label="Driver"];
+  mode_check -> navigator_mode [label="Navigator"];
+  mode_check -> tdd_mode [label="TDD"];
+
+  driver_mode -> real_time_verify;
+  navigator_mode -> real_time_verify;
+  tdd_mode -> real_time_verify;
+
+  real_time_verify -> verify_check;
+  verify_check -> quality_monitor [label="Yes"];
+  verify_check -> execution_error [label="No"];
+
+  quality_monitor -> quality_check;
+  quality_check -> execution_error [label="No"];
+
+  execution_error -> retry_logic;
+  retry_logic -> real_time_verify [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Session Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Session State", fillcolor=lightblue];
+    track_progress [label="Track Progress & Metrics", fillcolor=lightblue];
+    switch_roles [shape=diamond, label="Switch\nRoles?"];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  quality_check -> memory_store [label="Yes"];
+  memory_store -> track_progress;
+  track_progress -> switch_roles;
+  switch_roles -> select_mode [label="Yes", style=dashed];
+  switch_roles -> notify_coordinator [label="No"];
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Code Quality\nVerified?"];
+    run_tests [label="Run Comprehensive Tests", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+
+    security_scan [label="Security Scan", fillcolor=lightgreen];
+    security_check [shape=diamond, label="Security\nClear?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> security_scan [label="Pass"];
+  test_results -> quality_gate_fail [label="Fail"];
+
+  security_scan -> security_check;
+  security_check -> quality_gate_fail [label="No"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_summary [label="Generate Session Summary", fillcolor=lightgreen];
+    save_learnings [label="Save Learnings & Patterns", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Session Metrics"];
+    success [label="Session Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  security_check -> generate_summary [label="Yes"];
+  generate_summary -> save_learnings;
+  save_learnings -> cleanup;
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Session Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  mode_error -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

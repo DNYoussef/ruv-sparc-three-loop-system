@@ -1,0 +1,317 @@
+// Cascade Orchestrator - Multi-Model Workflow Coordination
+// Sequential/parallel/conditional execution with Gemini/Codex routing
+// Ruv-swarm coordination and audit-pipeline integration
+
+digraph cascade_orchestrator {
+  rankdir=TB;
+  bgcolor="#f8f9fa";
+  fontname="Arial";
+  fontsize=12;
+  node [fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    labelloc="b";
+    style=filled;
+    color="#e9ecef";
+
+    legend_sequential [label="Sequential\nExecution", shape=box, style=filled, fillcolor="#cce5ff"];
+    legend_parallel [label="Parallel\nExecution", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    legend_conditional [label="Conditional\nBranch", shape=diamond, style=filled, fillcolor="#fff3cd"];
+    legend_model [label="Model\nRouting", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    legend_sequential -> legend_parallel -> legend_conditional -> legend_model [style=invis];
+  }
+
+  start [label="Cascade Request\n(Workflow Definition)", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Workflow parsing
+  subgraph cluster_parsing {
+    label="1. Workflow Definition & Parsing";
+    style=filled;
+    color="#e3f2fd";
+
+    parse_workflow [label="Parse workflow\ndefinition", shape=box, style=filled, fillcolor="#cce5ff"];
+    identify_skills [label="Identify micro-skills\nrequired", shape=box, style=filled, fillcolor="#cce5ff"];
+    build_dag [label="Build execution DAG\nwith dependencies", shape=box, style=filled, fillcolor="#cce5ff"];
+    classify_nodes [label="Classify execution\npatterns", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    workflow_spec [label="Workflow\nSpecification", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Execution pattern classification
+  subgraph cluster_patterns {
+    label="2. Execution Pattern Classification";
+    style=filled;
+    color="#e8f5e9";
+
+    pattern_sequential [label="Sequential patterns:\nOrdered dependencies", shape=box, style=filled, fillcolor="#cce5ff"];
+    pattern_parallel [label="Parallel patterns:\nIndependent tasks", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    pattern_conditional [label="Conditional patterns:\nBranching logic", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    execution_plan [label="Execution\nPlan", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Multi-model routing
+  subgraph cluster_routing {
+    label="3. Multi-Model Routing (Gemini/Codex/Claude)";
+    style=filled;
+    color="#fff3e0";
+
+    analyze_task [label="Analyze task\ncharacteristics", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    routing_decision [label="Select optimal\nmodel", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    route_gemini [label="Route to Gemini:\n• Web search\n• 2M context\n• Media generation", shape=component, style=filled, fillcolor="#b3e5fc"];
+
+    route_codex [label="Route to Codex:\n• Sandbox prototyping\n• Rapid iteration\n• Full Auto mode", shape=component, style=filled, fillcolor="#b3e5fc"];
+
+    route_claude [label="Route to Claude:\n• Code generation\n• Analysis\n• Orchestration", shape=component, style=filled, fillcolor="#b3e5fc"];
+
+    routing_log [label="Routing\nDecisions", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Ruv-swarm coordination
+  subgraph cluster_swarm {
+    label="4. Ruv-Swarm Coordination Setup";
+    style=filled;
+    color="#f3e5f5";
+
+    init_swarm [label="Initialize ruv-swarm\ntopology", shape=box, style=filled, fillcolor="#cce5ff"];
+    spawn_agents [label="Spawn specialized\nagents", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    setup_coordination [label="Setup coordination\nchannels", shape=box, style=filled, fillcolor="#cce5ff"];
+    init_memory [label="Initialize shared\nmemory stores", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    swarm_state [label="Swarm\nState", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Sequential execution
+  subgraph cluster_sequential {
+    label="5. Sequential Pipeline Execution";
+    style=filled;
+    color="#e1f5fe";
+
+    seq_step1 [label="Execute Step 1:\nDepends on: []", shape=box, style=filled, fillcolor="#cce5ff"];
+    seq_step2 [label="Execute Step 2:\nDepends on: [1]", shape=box, style=filled, fillcolor="#cce5ff"];
+    seq_step3 [label="Execute Step 3:\nDepends on: [2]", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    seq_handoff [label="Sequential handoff:\nOutput → Input", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    seq_memory [label="Sequential\nOutputs", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Parallel execution
+  subgraph cluster_parallel {
+    label="6. Parallel Batch Execution";
+    style=filled;
+    color="#f1f8e9";
+
+    par_coordinator [label="Parallel coordinator:\nBatch orchestration", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    par_task1 [label="Task A:\nIndependent", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    par_task2 [label="Task B:\nIndependent", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    par_task3 [label="Task C:\nIndependent", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+    par_task4 [label="Task D:\nIndependent", shape=parallelogram, style=filled, fillcolor="#e7d4f5"];
+
+    par_aggregate [label="Aggregate parallel\nresults", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    par_memory [label="Parallel\nResults", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Conditional branching
+  subgraph cluster_conditional {
+    label="7. Conditional Branching Logic";
+    style=filled;
+    color="#fff9c4";
+
+    eval_condition [label="Evaluate condition:\nRuntime decision", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    branch_a [label="Branch A:\nCondition true", shape=box, style=filled, fillcolor="#cce5ff"];
+    branch_b [label="Branch B:\nCondition false", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    merge_branches [label="Merge branch\noutputs", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    conditional_memory [label="Conditional\nResults", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Codex sandbox iteration
+  subgraph cluster_codex {
+    label="8. Codex Sandbox Iteration";
+    style=filled;
+    color="#ffebee";
+
+    create_sandbox [label="Create E2B\nsandbox", shape=box, style=filled, fillcolor="#cce5ff"];
+    execute_codex [label="Execute Codex\nFull Auto", shape=box, style=filled, fillcolor="#cce5ff"];
+    capture_output [label="Capture sandbox\noutput", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    iteration_decision [label="Iteration\ncomplete?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    refine_approach [label="Refine approach\nwith feedback", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    codex_history [label="Codex\nIteration History", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Memory persistence
+  subgraph cluster_memory {
+    label="9. Memory Persistence & State Management";
+    style=filled;
+    color="#e8eaf6";
+
+    store_intermediate [label="Store intermediate\nresults", shape=box, style=filled, fillcolor="#cce5ff"];
+    persist_state [label="Persist workflow\nstate", shape=box, style=filled, fillcolor="#cce5ff"];
+    enable_resume [label="Enable workflow\nresume capability", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    checkpoint [label="Checkpoint\nMemory", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Audit pipeline integration
+  subgraph cluster_audit {
+    label="10. Audit Pipeline Integration";
+    style=filled;
+    color="#fce4ec";
+
+    theater_detection [label="Stage 1: Theater\ndetection scan", shape=octagon, style=filled, fillcolor="#f8d7da"];
+    functionality_audit [label="Stage 2: Functionality\naudit with Codex", shape=box, style=filled, fillcolor="#cce5ff"];
+    style_audit [label="Stage 3: Style\nand quality audit", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    audit_pass [label="All audits\npass?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    remediation [label="Trigger remediation\nworkflow", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    audit_log [label="Audit\nResults", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Final aggregation
+  subgraph cluster_output {
+    label="11. Final Aggregation & Output";
+    style=filled;
+    color="#c8e6c9";
+
+    aggregate_all [label="Aggregate all cascade\nresults", shape=box, style=filled, fillcolor="#cce5ff"];
+    validate_completeness [label="Validate workflow\ncompleteness", shape=box, style=filled, fillcolor="#cce5ff"];
+    generate_report [label="Generate cascade\nreport", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    final_output [label="Cascade\nOutput", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  end [label="Cascade Complete\n(All Outputs Ready)", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Main flow
+  start -> parse_workflow;
+  parse_workflow -> workflow_spec [style=dashed, label="store"];
+  parse_workflow -> identify_skills;
+  identify_skills -> build_dag;
+  build_dag -> classify_nodes;
+  classify_nodes -> execution_plan [style=dashed, label="generate"];
+
+  // Pattern classification
+  classify_nodes -> pattern_sequential;
+  classify_nodes -> pattern_parallel;
+  classify_nodes -> pattern_conditional;
+
+  pattern_sequential -> analyze_task;
+  pattern_parallel -> analyze_task;
+  pattern_conditional -> analyze_task;
+
+  // Multi-model routing
+  analyze_task -> routing_decision;
+
+  routing_decision -> route_gemini [label="Web/Context/Media"];
+  routing_decision -> route_codex [label="Prototyping"];
+  routing_decision -> route_claude [label="Code/Analysis"];
+
+  route_gemini -> routing_log [style=dashed, label="log"];
+  route_codex -> routing_log [style=dashed, label="log"];
+  route_claude -> routing_log [style=dashed, label="log"];
+
+  route_gemini -> init_swarm;
+  route_codex -> init_swarm;
+  route_claude -> init_swarm;
+
+  // Swarm coordination
+  init_swarm -> spawn_agents;
+  spawn_agents -> setup_coordination;
+  setup_coordination -> init_memory;
+  init_memory -> swarm_state [style=dashed, label="initialize"];
+
+  // Execute based on pattern
+  init_memory -> seq_step1 [label="Sequential"];
+  init_memory -> par_coordinator [label="Parallel"];
+  init_memory -> eval_condition [label="Conditional"];
+
+  // Sequential execution
+  seq_step1 -> seq_handoff;
+  seq_handoff -> seq_step2;
+  seq_step2 -> seq_handoff;
+  seq_handoff -> seq_step3;
+  seq_step3 -> seq_memory [style=dashed, label="store"];
+  seq_step3 -> store_intermediate;
+
+  // Parallel execution
+  par_coordinator -> par_task1;
+  par_coordinator -> par_task2;
+  par_coordinator -> par_task3;
+  par_coordinator -> par_task4;
+
+  par_task1 -> par_aggregate;
+  par_task2 -> par_aggregate;
+  par_task3 -> par_aggregate;
+  par_task4 -> par_aggregate;
+
+  par_aggregate -> par_memory [style=dashed, label="store"];
+  par_aggregate -> store_intermediate;
+
+  // Conditional execution
+  eval_condition -> branch_a [label="True"];
+  eval_condition -> branch_b [label="False"];
+
+  branch_a -> merge_branches;
+  branch_b -> merge_branches;
+
+  merge_branches -> conditional_memory [style=dashed, label="store"];
+  merge_branches -> store_intermediate;
+
+  // Codex iteration (if routed)
+  route_codex -> create_sandbox;
+  create_sandbox -> execute_codex;
+  execute_codex -> capture_output;
+  capture_output -> codex_history [style=dashed, label="append"];
+  capture_output -> iteration_decision;
+
+  iteration_decision -> store_intermediate [label="Yes"];
+  iteration_decision -> refine_approach [label="No\nIterate"];
+  refine_approach -> execute_codex [style=dashed, color=orange];
+
+  // Memory persistence
+  store_intermediate -> checkpoint [style=dashed, label="checkpoint"];
+  store_intermediate -> persist_state;
+  persist_state -> enable_resume;
+  enable_resume -> theater_detection;
+
+  // Audit pipeline
+  theater_detection -> functionality_audit;
+  functionality_audit -> style_audit;
+  style_audit -> audit_log [style=dashed, label="log"];
+  style_audit -> audit_pass;
+
+  audit_pass -> aggregate_all [label="Yes"];
+  audit_pass -> remediation [label="No", color=red];
+  remediation -> seq_step1 [label="Retry", style=dashed, color=orange];
+
+  // Final output
+  aggregate_all -> validate_completeness;
+  validate_completeness -> generate_report;
+  generate_report -> final_output [style=dashed, label="store"];
+  generate_report -> end;
+
+  // Key features annotation
+  features [label="Key Features:\n• Sequential/Parallel/Conditional execution\n• Multi-model routing (Gemini/Codex/Claude)\n• Ruv-swarm coordination\n• Codex sandbox iteration\n• Memory persistence & resume\n• Audit pipeline integration\n• Theater detection\n• Functionality validation", shape=note, style=filled, fillcolor="#fff9c4"];
+
+  // Model routing guide
+  routing_guide [label="Model Selection Guide:\n━━━━━━━━━━━━━━━━━━━━\nGemini:\n• Web-grounded search\n• 2M token context\n• Media generation\n━━━━━━━━━━━━━━━━━━━━\nCodex:\n• Rapid prototyping\n• Sandbox iteration\n• Full Auto mode\n━━━━━━━━━━━━━━━━━━━━\nClaude:\n• Code generation\n• Deep analysis\n• Orchestration", shape=note, style=filled, fillcolor="#e3f2fd"];
+
+  end -> features [style=dashed, color=blue];
+  routing_decision -> routing_guide [style=dashed, color=blue];
+}

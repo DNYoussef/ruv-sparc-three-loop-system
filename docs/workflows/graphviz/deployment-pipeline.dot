@@ -1,0 +1,144 @@
+digraph DeploymentPipeline {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Complete Deployment Pipeline Workflow</b><br/>Docker Build → Deploy → Kubernetes Orchestration>;
+    fontsize=16;
+
+    // Legend cluster
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#e9ecef";
+
+        legend_start [label="Start/End", shape=oval, fillcolor="#d4edda"];
+        legend_process [label="Process", shape=box, fillcolor="#cfe2ff"];
+        legend_decision [label="Decision", shape=diamond, fillcolor="#fff3cd"];
+        legend_artifact [label="Artifact", shape=cylinder, fillcolor="#f8d7da"];
+
+        legend_start -> legend_process -> legend_decision -> legend_artifact [style=invis];
+    }
+
+    // Start
+    start [label="Deployment\nTriggered", shape=oval, fillcolor="#d4edda"];
+
+    // Docker Build Phase
+    subgraph cluster_docker_build {
+        label="Docker Build Phase";
+        style=filled;
+        color="#cfe2ff";
+
+        git_checkout [label="Git Checkout\nSource Code", shape=box, fillcolor="#b6d7ff"];
+        validate_dockerfile [label="Validate\nDockerfile", shape=box, fillcolor="#b6d7ff"];
+        build_image [label="Docker Build\nImage", shape=box, fillcolor="#b6d7ff"];
+        scan_image [label="Security Scan\nTrivy/Snyk", shape=box, fillcolor="#b6d7ff"];
+        tag_image [label="Tag Image\nv{version}", shape=box, fillcolor="#b6d7ff"];
+        push_registry [label="Push to\nRegistry", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Decision Points
+    scan_passed [label="Security\nScan OK?", shape=diamond, fillcolor="#fff3cd"];
+    deploy_env [label="Target\nEnvironment?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Docker Deploy Phase
+    subgraph cluster_docker_deploy {
+        label="Docker Deploy Phase (Dev/Staging)";
+        style=filled;
+        color="#d1e7dd";
+
+        pull_image [label="Pull Image\nfrom Registry", shape=box, fillcolor="#a3cfbb"];
+        stop_existing [label="Stop Existing\nContainers", shape=box, fillcolor="#a3cfbb"];
+        run_container [label="Run Container\nwith Config", shape=box, fillcolor="#a3cfbb"];
+        health_check_docker [label="Health Check\nEndpoint Test", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Kubernetes Deploy Phase
+    subgraph cluster_k8s_deploy {
+        label="Kubernetes Deploy Phase (Production)";
+        style=filled;
+        color="#d1e7dd";
+
+        update_manifests [label="Update K8s\nManifests", shape=box, fillcolor="#a3cfbb"];
+        apply_config [label="kubectl apply\nConfigMaps/Secrets", shape=box, fillcolor="#a3cfbb"];
+        deploy_strategy [label="Deployment\nStrategy?", shape=diamond, fillcolor="#fff3cd"];
+        rolling_update [label="Rolling Update\n(Zero Downtime)", shape=box, fillcolor="#a3cfbb"];
+        blue_green [label="Blue-Green\nDeployment", shape=box, fillcolor="#a3cfbb"];
+        canary [label="Canary\nRelease 10%", shape=box, fillcolor="#a3cfbb"];
+        health_check_k8s [label="Readiness\nProbe Check", shape=box, fillcolor="#a3cfbb"];
+        promote_canary [label="Promote\nto 100%", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Verification Phase
+    subgraph cluster_verification {
+        label="Post-Deployment Verification";
+        style=filled;
+        color="#e7d1e7";
+
+        smoke_tests [label="Smoke Tests\nCritical Paths", shape=box, fillcolor="#d4b5d4"];
+        metrics_check [label="Metrics Check\nCPU/Memory", shape=box, fillcolor="#d4b5d4"];
+        log_analysis [label="Log Analysis\nErrors/Warnings", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Artifacts
+    docker_image [label="Docker Image\ntag:v{version}", shape=cylinder, fillcolor="#f8d7da"];
+    k8s_pods [label="K8s Pods\nRunning", shape=cylinder, fillcolor="#f8d7da"];
+
+    // Success/Failure
+    deployment_success [label="Deployment\nSuccessful", shape=oval, fillcolor="#d4edda"];
+    deployment_failed [label="Deployment\nFailed", shape=oval, fillcolor="#f8d7da"];
+    rollback [label="Rollback to\nPrevious Version", shape=box, fillcolor="#f8d7da"];
+
+    // Workflow connections
+    start -> git_checkout;
+    git_checkout -> validate_dockerfile;
+    validate_dockerfile -> build_image;
+    build_image -> scan_image;
+    scan_image -> scan_passed;
+
+    scan_passed -> tag_image [label="Pass", color="green"];
+    scan_passed -> deployment_failed [label="Fail", color="red"];
+
+    tag_image -> push_registry;
+    push_registry -> docker_image;
+    docker_image -> deploy_env;
+
+    // Docker deployment path
+    deploy_env -> pull_image [label="Dev/Staging", color="blue"];
+    pull_image -> stop_existing;
+    stop_existing -> run_container;
+    run_container -> health_check_docker;
+    health_check_docker -> smoke_tests;
+
+    // Kubernetes deployment path
+    deploy_env -> update_manifests [label="Production", color="purple"];
+    update_manifests -> apply_config;
+    apply_config -> deploy_strategy;
+
+    deploy_strategy -> rolling_update [label="Rolling"];
+    deploy_strategy -> blue_green [label="Blue-Green"];
+    deploy_strategy -> canary [label="Canary"];
+
+    rolling_update -> health_check_k8s;
+    blue_green -> health_check_k8s;
+    canary -> health_check_k8s;
+
+    health_check_k8s -> promote_canary [label="Canary OK"];
+    promote_canary -> k8s_pods;
+    k8s_pods -> smoke_tests;
+
+    // Verification
+    smoke_tests -> metrics_check;
+    metrics_check -> log_analysis;
+
+    log_analysis -> deployment_success [label="All Pass", color="green"];
+    log_analysis -> rollback [label="Issues Found", color="red"];
+
+    rollback -> deployment_failed;
+}

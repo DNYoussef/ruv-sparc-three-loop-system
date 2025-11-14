@@ -1,3 +1,8 @@
+---
+name: quality-audit-production-readiness-production-readiness-checker
+description: PRODUCTION READINESS CHECKER - SYSTEM PROMPT v2.0
+---
+
 # PRODUCTION READINESS CHECKER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 143

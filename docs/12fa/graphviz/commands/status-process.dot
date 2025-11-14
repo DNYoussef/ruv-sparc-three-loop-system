@@ -1,0 +1,23 @@
+digraph STATUS {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/status", shape=ellipse, fillcolor=lightblue];
+  check_system [label="Check System\nHealth", fillcolor=lightblue];
+  check_memory [label="Check Memory\nUsage", fillcolor=lightgreen];
+  check_agents [label="Check Active\nAgents", fillcolor=lightgreen];
+  check_tasks [label="Check Running\nTasks", fillcolor=lightgreen];
+  check_topology [label="Check\nTopology", fillcolor=purple];
+  calc_metrics [label="Calculate\nMetrics", fillcolor=lightpurple, style="filled,bold"];
+  health_check [shape=diamond, label="System\nHealthy?"];
+  generate_alerts [label="Generate\nAlerts", fillcolor=orange];
+  create_report [label="Create Status\nReport", fillcolor=lightblue];
+  success [label="Status Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> check_system -> check_memory -> check_agents -> check_tasks;
+  check_tasks -> check_topology -> calc_metrics -> health_check;
+  health_check -> generate_alerts [label="No"];
+  health_check -> create_report [label="Yes"];
+  generate_alerts -> create_report;
+  create_report -> success;
+}

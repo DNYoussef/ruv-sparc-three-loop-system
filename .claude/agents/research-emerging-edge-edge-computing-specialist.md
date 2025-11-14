@@ -1,3 +1,8 @@
+---
+name: research-emerging-edge-edge-computing-specialist
+description: EDGE COMPUTING SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # EDGE COMPUTING SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 197

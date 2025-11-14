@@ -1,0 +1,276 @@
+digraph RESEARCHER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Researcher Agent Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\n55 Commands + 27 MCP Tools"];
+    validate_capabilities [label="Validate Capabilities\ncode_analysis, pattern_recognition\nGemini search, knowledge_synthesis"];
+    check_deps [label="Check Dependencies\nMemory, Gemini API"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // COORDINATION SETUP
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Research Coordination Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\nresearch/researcher/{task-id}/*"];
+    retrieve_requirements [label="Retrieve Requirements\nfrom Planner"];
+    define_research_scope [label="Define Research Scope\nTechnologies, patterns, best practices"];
+    formulate_queries [label="Formulate Search Queries"];
+
+    check_deps -> init_memory;
+    init_memory -> retrieve_requirements;
+    retrieve_requirements -> define_research_scope;
+    define_research_scope -> formulate_queries;
+  }
+
+  // =============================================================================
+  // CODE ANALYSIS
+  // =============================================================================
+  subgraph cluster_code_analysis {
+    label="Codebase Analysis";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    scan_codebase [label="Scan Codebase\n/glob-search", fillcolor=yellow];
+    analyze_patterns [label="Analyze Existing Patterns\nDesign patterns, architectures"];
+    analyze_dependencies [label="Analyze Dependencies\npackage.json, imports"];
+    identify_tech_stack [label="Identify Tech Stack\nFrameworks, libraries"];
+    document_findings [label="Document Current State"];
+
+    formulate_queries -> scan_codebase;
+    scan_codebase -> analyze_patterns;
+    analyze_patterns -> analyze_dependencies;
+    analyze_dependencies -> identify_tech_stack;
+    identify_tech_stack -> document_findings;
+  }
+
+  // =============================================================================
+  // GEMINI SEARCH
+  // =============================================================================
+  subgraph cluster_gemini_search {
+    label="Gemini Search Phase";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    gemini_search [label="Gemini Search\nBest practices, patterns", fillcolor=lightblue];
+    search_alternatives [label="Search Alternatives\nLibrary comparisons"];
+    search_security [label="Search Security\nVulnerabilities, CVEs"];
+    search_performance [label="Search Performance\nOptimization techniques"];
+    aggregate_results [label="Aggregate Search Results"];
+
+    document_findings -> gemini_search;
+    gemini_search -> search_alternatives;
+    search_alternatives -> search_security;
+    search_security -> search_performance;
+    search_performance -> aggregate_results;
+  }
+
+  // =============================================================================
+  // PATTERN RECOGNITION
+  // =============================================================================
+  subgraph cluster_patterns {
+    label="Pattern Recognition";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    identify_patterns [label="Identify Patterns\nDesign patterns in use", fillcolor=lightgreen];
+    detect_antipatterns [label="Detect Anti-patterns\nCode smells"];
+    analyze_architecture [label="Analyze Architecture\nLayering, modularity"];
+    check_best_practices [label="Check Best Practices\nIndustry standards"];
+    pattern_quality [shape=diamond, label="Patterns\nGood Quality?"];
+
+    aggregate_results -> identify_patterns;
+    identify_patterns -> detect_antipatterns;
+    detect_antipatterns -> analyze_architecture;
+    analyze_architecture -> check_best_practices;
+    check_best_practices -> pattern_quality;
+    pattern_quality -> document_improvements [label="No"];
+  }
+
+  // =============================================================================
+  // DEPENDENCY ANALYSIS
+  // =============================================================================
+  subgraph cluster_dependencies {
+    label="Dependency Tracking";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    track_dependencies [label="Track Dependencies\nDirect & transitive", fillcolor=purple];
+    check_versions [label="Check Versions\nOutdated packages"];
+    check_vulnerabilities [label="Check Vulnerabilities\nnpm audit, Snyk"];
+    check_licenses [label="Check Licenses\nCompliance"];
+    recommend_updates [label="Recommend Updates"];
+
+    pattern_quality -> track_dependencies [label="Yes"];
+    track_dependencies -> check_versions;
+    check_versions -> check_vulnerabilities;
+    check_vulnerabilities -> check_licenses;
+    check_licenses -> recommend_updates;
+  }
+
+  // =============================================================================
+  // COMPETITIVE ANALYSIS
+  // =============================================================================
+  subgraph cluster_competitive {
+    label="Competitive Analysis";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    identify_competitors [label="Identify Competitors\nSimilar solutions", fillcolor=yellow];
+    analyze_approaches [label="Analyze Approaches\nHow they solve problems"];
+    extract_lessons [label="Extract Lessons\nWhat works, what doesn't"];
+    benchmark_features [label="Benchmark Features\nFeature comparison"];
+    synthesize_insights [label="Synthesize Insights"];
+
+    recommend_updates -> identify_competitors;
+    identify_competitors -> analyze_approaches;
+    analyze_approaches -> extract_lessons;
+    extract_lessons -> benchmark_features;
+    benchmark_features -> synthesize_insights;
+  }
+
+  // =============================================================================
+  // KNOWLEDGE SYNTHESIS
+  // =============================================================================
+  subgraph cluster_synthesis {
+    label="Knowledge Synthesis";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    aggregate_knowledge [label="Aggregate All Knowledge\nFrom all research phases", fillcolor=lightblue];
+    validate_evidence [label="Validate Evidence\nSource credibility"];
+    resolve_conflicts [label="Resolve Conflicts\nContradictory information"];
+    prioritize_findings [label="Prioritize Findings\nCritical, High, Medium"];
+    create_recommendations [label="Create Recommendations\nActionable insights"];
+
+    synthesize_insights -> aggregate_knowledge;
+    aggregate_knowledge -> validate_evidence;
+    validate_evidence -> resolve_conflicts;
+    resolve_conflicts -> prioritize_findings;
+    prioritize_findings -> create_recommendations;
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    store_findings [label="Store Findings\nmemory_store(research/researcher/{task-id}/findings)", fillcolor=lightblue];
+    store_patterns [label="Store Patterns\nmemory_store(.../{task-id}/patterns)"];
+    store_recommendations [label="Store Recommendations\nmemory_store(.../{task-id}/recommendations)"];
+    store_dependencies [label="Store Dependency Analysis\nmemory_store(.../{task-id}/dependencies)"];
+    notify_coder [label="Notify Coder\n/agent-handoff --to coder"];
+
+    create_recommendations -> store_findings;
+    store_findings -> store_patterns;
+    store_patterns -> store_recommendations;
+    store_recommendations -> store_dependencies;
+    store_dependencies -> notify_coder;
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    generate_report [label="Generate Research Report\nFindings, patterns, recommendations"];
+    log_metrics [label="Log Research Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Research Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    notify_coder -> cleanup;
+    cleanup -> generate_report;
+    generate_report -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    document_improvements [label="Document Pattern Improvements", fillcolor=orange];
+    gemini_api_error [label="Gemini API Error", fillcolor=orange];
+    insufficient_data [label="Insufficient Data", fillcolor=orange];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+    log_error [label="Log Error Details"];
+    failure [label="Research Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    document_improvements -> create_recommendations [style=dashed];
+    gemini_api_error -> search_alternatives [style=dashed, label="Retry"];
+    insufficient_data -> escalate;
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_mcp [shape=box, label="MCP Tool", fillcolor=lightblue];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_warn [shape=box, label="Warning", fillcolor=orange];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_mcp [style=invis];
+    legend_mcp -> legend_process [style=invis];
+    legend_process -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

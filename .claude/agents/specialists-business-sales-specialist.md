@@ -1,3 +1,8 @@
+---
+name: specialists-business-sales-specialist
+description: Specialized agent for task execution
+---
+
 # Sales Specialist Agent
 
 **Agent Name**: `sales-specialist`

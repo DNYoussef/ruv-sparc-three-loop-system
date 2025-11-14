@@ -1,3 +1,8 @@
+---
+name: operations-devops-argocd-argocd-gitops-specialist
+description: ARGOCD GITOPS SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # ARGOCD GITOPS SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 168

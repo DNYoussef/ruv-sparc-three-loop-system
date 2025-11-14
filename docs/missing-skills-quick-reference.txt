@@ -1,0 +1,249 @@
+================================================================================
+MISSING SKILLS QUICK REFERENCE - MECE ANALYSIS
+================================================================================
+Report Date: 2025-11-02
+Status: 20 skills missing from CLAUDE.md | 81% coverage (91/111)
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Filesystem Skills:           111
+CLAUDE.md Documented:        91
+Missing from CLAUDE.md:      20
+Invalid References:          94
+Coverage:                    81%
+
+================================================================================
+20 MISSING SKILLS BY CATEGORY
+================================================================================
+
+[DEVELOPMENT LIFECYCLE - 8 skills]
+Priority: HIGH - These are actively used workflow patterns
+Location: Add to "Development Lifecycle Skills" section
+
+  1. when-automating-workflows-use-hooks-automation
+     Trigger: "automate hooks", "lifecycle events"
+     Status: Partially documented (hooks-automation exists, but 'when-*' variant missing)
+  
+  2. when-collaborative-coding-use-pair-programming
+     Trigger: "pair programming", "collaborative coding"
+     Status: pair-programming exists, but 'when-*' variant missing
+  
+  3. when-developing-complete-feature-use-feature-dev-complete
+     Trigger: "complete feature", "end-to-end feature"
+     Status: feature-dev-complete exists, but 'when-*' variant missing
+  
+  4. when-fixing-complex-bug-use-smart-bug-fix
+     Trigger: "complex bug", "hard to debug"
+     Status: smart-bug-fix exists, but 'when-*' variant missing
+  
+  5. when-internationalizing-app-use-i18n-automation
+     Trigger: "internationalize", "multi-language support"
+     Status: i18n-automation exists, but 'when-*' variant missing
+  
+  6. when-releasing-new-product-orchestrate-product-launch
+     Trigger: "release product", "launch product"
+     Status: sop-product-launch exists, but 'when-*' variant missing
+  
+  7. when-reviewing-pull-request-orchestrate-comprehensive-code-review
+     Trigger: "review PR", "code review"
+     Status: code-review-assistant exists, but 'when-*' variant missing
+  
+  8. when-using-sparc-methodology-use-sparc-workflow
+     Trigger: "SPARC", "use SPARC"
+     Status: sparc-methodology exists, but 'when-*' variant missing
+
+---
+
+[CLOUD & INFRASTRUCTURE - 3 skills]
+Priority: MEDIUM - Infrastructure/platform operations
+Location: Create NEW "Cloud & Infrastructure" section
+
+  1. cloud-platforms
+     Trigger: "cloud deployment", "cloud provider", "multi-cloud"
+     Type: Parent/collection directory
+     Contains: Multiple cloud-specific skills
+  
+  2. infrastructure
+     Trigger: "infrastructure", "IaC", "provisioning"
+     Type: Parent/collection directory
+     Contains: Infrastructure management skills
+  
+  3. observability
+     Trigger: "observability", "monitoring", "logging", "tracing"
+     Type: Parent/collection directory
+     Contains: Observability stack skills
+
+---
+
+[LANGUAGE & FRAMEWORK SPECIALISTS - 4 skills]
+Priority: MEDIUM - Technology stack organization
+Location: Add to "Language & Framework Specialists" section
+
+  1. database-specialists
+     Trigger: "database specialist", "DB optimization"
+     Type: Collection skill
+     Related: sql-database-specialist exists
+  
+  2. frontend-specialists
+     Trigger: "frontend specialist", "UI development"
+     Type: Collection skill
+     Related: react-specialist exists
+  
+  3. language-specialists
+     Trigger: "language specialist", "code generation"
+     Type: Collection skill
+     Related: python-specialist, typescript-specialist exist
+  
+  4. machine-learning
+     Trigger: "machine learning", "ML pipeline", "ML development"
+     Type: Collection skill
+     Related: ml-expert, ml-developer exist
+
+---
+
+[TESTING & VALIDATION - 2 skills]
+Priority: MEDIUM - Testing framework/compliance
+Location: Add to "Testing & Validation" section
+
+  1. compliance
+     Trigger: "compliance check", "regulatory audit", "standards"
+     Type: Parent/collection directory
+     Related: wcag-accessibility referenced but also missing
+  
+  2. testing
+     Trigger: "testing framework", "test setup", "testing strategy"
+     Type: Parent/collection directory
+     Related: testing-quality exists
+
+---
+
+[UTILITIES & TOOLS - 2 skills]
+Priority: LOW - Utility/helper functions
+Location: Add to "Utilities & Tools" section
+
+  1. performance
+     Trigger: "performance optimization", "speed improvement", "bottleneck"
+     Type: Parent/collection directory
+     Related: performance-analysis exists
+  
+  2. utilities
+     Trigger: "utility tools", "helper functions"
+     Type: Parent/collection directory
+     Contains: Various utility skills
+
+---
+
+[SELF-IMPROVEMENT & DOGFOODING - 1 skill]
+Priority: MEDIUM - Orchestrator for dogfooding cycle
+Location: Add to "Self-Improvement & Dogfooding" section
+
+  1. dogfooding-system
+     Trigger: "dogfooding", "self-improvement", "continuous improvement"
+     Type: Main orchestrator
+     Related: sop-dogfooding-* variants exist (quality-detection, pattern-retrieval, continuous-improvement)
+     Note: May be parent coordinator for dogfooding phases
+
+================================================================================
+ACTION ITEMS (PRIORITY ORDER)
+================================================================================
+
+IMMEDIATE (Next CLAUDE.md Update):
+  [ ] Add 8 "when-*" conditional skills - HIGH PRIORITY
+      These are frequently used development workflows
+  [ ] Create "Cloud & Infrastructure" section with 3 skills
+  [ ] Add dogfooding-system to self-improvement section
+  [ ] Add 4 specialist collection skills
+
+SHORT TERM (This Sprint):
+  [ ] Audit 94 invalid references in CLAUDE.md
+  [ ] Clarify agents vs. skills distinction
+  [ ] Check status of 51 completely missing specialist skills
+  [ ] Organize parent directories (cloud-platforms, infrastructure, etc.)
+
+LONG TERM (Next Quarter):
+  [ ] Create missing specialist skills (aws-specialist, kubernetes-specialist, etc.)
+  [ ] Create missing coordinator agents (if needed)
+  [ ] Standardize naming conventions across skills and agents
+  [ ] Consolidate skill hierarchy
+
+================================================================================
+VALID REFERENCES (91 Skills - Correctly Documented)
+================================================================================
+
+These skills are in BOTH filesystem AND CLAUDE.md:
+
+✓ agent-creator                        ✓ gemini-extensions
+✓ agentdb                             ✓ gemini-media
+✓ agentdb-advanced                    ✓ gemini-megacontext
+✓ agentdb-learning                    ✓ gemini-search
+✓ agentdb-memory-patterns             ✓ github-code-review
+✓ agentdb-optimization                ✓ github-integration
+✓ agentdb-vector-search               ✓ github-multi-repo
+✓ baseline-replication                ✓ github-project-management
+✓ cascade-orchestrator                ✓ github-release-management
+✓ cicd-intelligent-recovery           ✓ github-workflow-automation
+✓ code-review-assistant               ✓ hive-mind-advanced
+✓ codex-auto                          ✓ holistic-evaluation
+✓ codex-reasoning                     ✓ hooks-automation
+✓ coordination                        ✓ i18n-automation
+✓ debugging                           ✓ intent-analyzer
+✓ deep-research-orchestrator          ✓ interactive-planner
+✓ dependencies                        ✓ literature-synthesis
+✓ deployment-readiness                ✓ meta-tools
+✓ documentation                       ✓ method-development
+✓ feature-dev-complete                ✓ micro-skill-creator
+✓ flow-nexus-neural                   ✓ ml-expert
+✓ flow-nexus-platform                 ✓ ml-training-debugger
+✓ flow-nexus-swarm                    ✓ multi-model
+✓ functionality-audit                 ✓ network-security-setup
+✓ gate-validation                     ✓ pair-programming
+✓ parallel-swarm-implementation       ✓ performance-analysis
+✓ platform                            ✓ pptx-generation
+✓ production-readiness                ✓ prompt-architect
+✓ quick-quality-check                 ✓ reasoningbank-agentdb
+✓ reproducibility-audit               ✓ reasoningbank-intelligence
+✓ research-driven-planning            ✓ research-publication
+✓ reverse-engineer-debug              ✓ reverse-engineering-deep
+✓ reverse-engineering-firmware        ✓ reverse-engineering-quick
+✓ sandbox-configurator                ✓ security
+✓ skill-builder                       ✓ skill-creator-agent
+✓ skill-forge                         ✓ slash-command-encoder
+✓ smart-bug-fix                       ✓ sop-api-development
+✓ sop-code-review                     ✓ sop-dogfooding-continuous-improvement
+✓ sop-dogfooding-pattern-retrieval    ✓ sop-dogfooding-quality-detection
+✓ sop-product-launch                  ✓ sparc-methodology
+✓ specialized-tools                   ✓ stream-chain
+✓ style-audit                         ✓ swarm-advanced
+✓ swarm-orchestration                 ✓ testing-quality
+✓ theater-detection-audit             ✓ verification-quality
+✓ web-cli-teleport                    ✓ workflow
+
+================================================================================
+INTERPRETATION NOTES
+================================================================================
+
+1. "When-*" Skills:
+   - These are conditional/contextual trigger paths
+   - Base skills (pair-programming, etc.) are documented
+   - But the "when-*" variants in filesystem are NOT documented
+   - These need to be added to trigger patterns
+
+2. Collection/Parent Skills:
+   - cloud-platforms, infrastructure, observability, etc.
+   - May be directories containing sub-skills
+   - Need clarification on whether they're standalone skills or coordinators
+
+3. Invalid References:
+   - 43 are agents (coder, tester, reviewer, etc.) - should be in Agent section, not Skill section
+   - 51 are truly missing (need creation or removal from documentation)
+
+4. Coverage Calculation:
+   - 91 correct out of 111 filesystem skills = 81%
+   - Adding 20 missing would reach 100%
+   - Need to handle 94 invalid references separately
+
+================================================================================
+Generated: 2025-11-02 | Analysis: MECE Classification
+Report Location: C:\Users\17175\docs\missing-skills-mece-analysis.md
+================================================================================

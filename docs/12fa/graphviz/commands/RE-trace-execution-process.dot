@@ -1,0 +1,48 @@
+digraph RETraceExecutionProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-trace-execution\nCommand Start", fillcolor=lightgreen];
+    setup_debugger [label="Setup Debugger\n(GDB/LLDB/WinDbg)"];
+    load_target [label="Load Target Binary"];
+    set_breakpoints [label="Set Breakpoints\n& Watchpoints"];
+    configure_tracing [label="Configure Trace\nParameters"];
+    start_execution [label="Start Execution"];
+    capture_instructions [label="Capture Executed\nInstructions"];
+    log_memory_access [label="Log Memory\nAccesses"];
+    track_registers [label="Track Register\nChanges"];
+    monitor_api_calls [label="Monitor API/Syscalls"];
+    detect_branches [label="Detect Branch\nDecisions"];
+    record_coverage [label="Record Code\nCoverage"];
+    analyze_trace [label="Analyze Execution\nTrace"];
+    generate_timeline [label="Generate Execution\nTimeline"];
+    export_trace [label="Export Trace Data"];
+    end [label="Trace Complete", fillcolor=lightcoral];
+
+    // Flow
+    start -> setup_debugger;
+    setup_debugger -> load_target;
+    load_target -> set_breakpoints;
+    set_breakpoints -> configure_tracing;
+    configure_tracing -> start_execution;
+    start_execution -> capture_instructions;
+    capture_instructions -> log_memory_access;
+    log_memory_access -> track_registers;
+    track_registers -> monitor_api_calls;
+    monitor_api_calls -> detect_branches;
+    detect_branches -> record_coverage;
+    record_coverage -> analyze_trace;
+    analyze_trace -> generate_timeline;
+    generate_timeline -> export_trace;
+    export_trace -> end;
+
+    // Loop for continuous tracing
+    capture_instructions -> capture_instructions [label="Continue", style=dashed];
+
+    // Metadata
+    label="RE-trace-execution Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

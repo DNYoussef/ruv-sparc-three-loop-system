@@ -1,3 +1,8 @@
+---
+name: research-emerging-quantum-quantum-computing-researcher
+description: QUANTUM COMPUTING RESEARCHER - SYSTEM PROMPT v2.0
+---
+
 # QUANTUM COMPUTING RESEARCHER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 196

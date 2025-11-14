@@ -1,0 +1,276 @@
+digraph RegressionSuite {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Regression Testing Workflow</b><br/>Select → Execute → Compare → Report → Fix>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Test Selection Strategy";
+        style=filled;
+        color="#e9ecef";
+
+        legend_info [label=<
+            <table border="0" cellspacing="0">
+                <tr><td align="left"><b>Critical Path</b>: Always run</td></tr>
+                <tr><td align="left"><b>Risk-Based</b>: Changed modules only</td></tr>
+                <tr><td align="left"><b>Time-Based</b>: Nightly/Weekly</td></tr>
+                <tr><td align="left"><b>Full Suite</b>: Pre-release</td></tr>
+            </table>
+        >, shape=box, fillcolor="#fff3cd"];
+    }
+
+    // Start
+    start [label="Code Change\nCommitted", shape=oval, fillcolor="#d4edda"];
+
+    // Impact Analysis
+    subgraph cluster_impact {
+        label="Phase 1: Impact Analysis";
+        style=filled;
+        color="#cfe2ff";
+
+        impact_detect [label="Detect Changes\nGit Diff", shape=box, fillcolor="#b6d7ff"];
+        impact_analyze [label="Analyze Impact\nDependency Graph", shape=box, fillcolor="#b6d7ff"];
+        impact_modules [label="Identify Modules\nAffected Components", shape=box, fillcolor="#b6d7ff"];
+        impact_risk [label="Risk Assessment\nCritical/High/Medium", shape=box, fillcolor="#b6d7ff"];
+        impact_scope [label="Test Scope\nFull/Partial", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    scope_decision [label="Test\nScope?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Test Selection
+    subgraph cluster_selection {
+        label="Phase 2: Test Selection";
+        style=filled;
+        color="#d1e7dd";
+
+        select_critical [label="Critical Path Tests\nMust-Run Tests", shape=box, fillcolor="#a3cfbb"];
+        select_affected [label="Affected Module Tests\nRisk-Based", shape=box, fillcolor="#a3cfbb"];
+        select_integration [label="Integration Tests\nCross-Module", shape=box, fillcolor="#a3cfbb"];
+        select_e2e [label="E2E Tests\nUser Workflows", shape=box, fillcolor="#a3cfbb"];
+        select_performance [label="Performance Tests\nBaseline Check", shape=box, fillcolor="#a3cfbb"];
+        select_visual [label="Visual Regression\nScreenshot Diff", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Test Preparation
+    subgraph cluster_preparation {
+        label="Phase 3: Test Preparation";
+        style=filled;
+        color="#e7d1e7";
+
+        prep_environment [label="Setup Environment\nTest Infrastructure", shape=box, fillcolor="#d4b5d4"];
+        prep_data [label="Test Data\nSeed Database", shape=box, fillcolor="#d4b5d4"];
+        prep_baseline [label="Baseline Snapshot\nPrevious Version", shape=box, fillcolor="#d4b5d4"];
+        prep_fixtures [label="Load Fixtures\nTest Doubles", shape=box, fillcolor="#d4b5d4"];
+        prep_mocks [label="Configure Mocks\nExternal Services", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Test Execution
+    subgraph cluster_execution {
+        label="Phase 4: Test Execution";
+        style=filled;
+        color="#fff3cd";
+
+        exec_unit [label="Unit Tests\nIsolated Functions", shape=box, fillcolor="#ffeeba"];
+        exec_integration [label="Integration Tests\nAPI/DB Tests", shape=box, fillcolor="#ffeeba"];
+        exec_e2e [label="E2E Tests\nBrowser Automation", shape=box, fillcolor="#ffeeba"];
+        exec_performance [label="Performance Tests\nLoad Testing", shape=box, fillcolor="#ffeeba"];
+        exec_security [label="Security Tests\nVulnerability Scan", shape=box, fillcolor="#ffeeba"];
+        exec_visual [label="Visual Tests\nPixel Diff", shape=box, fillcolor="#ffeeba"];
+    }
+
+    exec_parallel [label="Parallel Execution\nSpeed Optimization", shape=box, fillcolor="#ffc107"];
+
+    // Result Collection
+    subgraph cluster_collection {
+        label="Phase 5: Result Collection";
+        style=filled;
+        color="#cfe2ff";
+
+        collect_results [label="Collect Results\nJUnit XML", shape=box, fillcolor="#b6d7ff"];
+        collect_coverage [label="Code Coverage\nlcov/cobertura", shape=box, fillcolor="#b6d7ff"];
+        collect_screenshots [label="Screenshots\nFailure Evidence", shape=box, fillcolor="#b6d7ff"];
+        collect_logs [label="Test Logs\nDebug Info", shape=box, fillcolor="#b6d7ff"];
+        collect_metrics [label="Performance Metrics\nLatency/Throughput", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Baseline Comparison
+    subgraph cluster_comparison {
+        label="Phase 6: Baseline Comparison";
+        style=filled;
+        color="#d1e7dd";
+
+        compare_results [label="Compare Results\nPass/Fail Diff", shape=box, fillcolor="#a3cfbb"];
+        compare_coverage [label="Coverage Delta\n+/- %", shape=box, fillcolor="#a3cfbb"];
+        compare_performance [label="Performance Delta\nRegression Check", shape=box, fillcolor="#a3cfbb"];
+        compare_visual [label="Visual Diff\nPixel Changes", shape=box, fillcolor="#a3cfbb"];
+        compare_flaky [label="Flaky Test Detection\nConsistency Check", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    regression_found [label="Regression\nDetected?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Regression Analysis
+    subgraph cluster_regression_analysis {
+        label="Phase 7: Regression Analysis";
+        style=filled;
+        color="#f8d7da";
+
+        analyze_failures [label="Analyze Failures\nStack Traces", shape=box, fillcolor="#f5c6cb"];
+        analyze_diff [label="Code Diff Analysis\nRoot Cause", shape=box, fillcolor="#f5c6cb"];
+        analyze_impact [label="Impact Severity\nP0/P1/P2", shape=box, fillcolor="#f5c6cb"];
+        analyze_triage [label="Triage\nTest Bug vs Code Bug", shape=box, fillcolor="#f5c6cb"];
+        analyze_assign [label="Assign Owner\nDevelopers", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    // Reporting
+    subgraph cluster_reporting {
+        label="Phase 8: Reporting";
+        style=filled;
+        color="#e9ecef";
+
+        report_summary [label="Test Summary\nPass/Fail/Skip", shape=box, fillcolor="#dee2e6"];
+        report_coverage [label="Coverage Report\nHTML/LCOV", shape=box, fillcolor="#dee2e6"];
+        report_trends [label="Trend Analysis\nHistorical Data", shape=box, fillcolor="#dee2e6"];
+        report_dashboard [label="Dashboard Update\nGrafana/Jenkins", shape=box, fillcolor="#dee2e6"];
+        report_notify [label="Notify Teams\nSlack/Email", shape=box, fillcolor="#dee2e6"];
+        report_jira [label="Create Tickets\nRegression Issues", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Fix & Retest
+    subgraph cluster_fix {
+        label="Phase 9: Fix & Retest";
+        style=filled;
+        color="#d1e7dd";
+
+        fix_implement [label="Implement Fix\nCode Changes", shape=box, fillcolor="#a3cfbb"];
+        fix_review [label="Code Review\nPeer Review", shape=box, fillcolor="#a3cfbb"];
+        fix_commit [label="Commit Fix\nGit Push", shape=box, fillcolor="#a3cfbb"];
+        fix_retest [label="Retest\nRegression Suite", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    fix_passed [label="Fix\nVerified?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Update Baseline
+    subgraph cluster_baseline_update {
+        label="Phase 10: Baseline Update";
+        style=filled;
+        color="#cfe2ff";
+
+        baseline_approve [label="Approve Changes\nPR Approved", shape=box, fillcolor="#b6d7ff"];
+        baseline_snapshot [label="Take Snapshot\nNew Baseline", shape=box, fillcolor="#b6d7ff"];
+        baseline_store [label="Store Results\nTest History", shape=box, fillcolor="#b6d7ff"];
+        baseline_tag [label="Tag Version\nRelease", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Artifacts
+    test_results [label="Test Results\nJUnit/XML", shape=cylinder, fillcolor="#f8d7da"];
+    coverage_report [label="Coverage Report\nHTML", shape=cylinder, fillcolor="#f8d7da"];
+    baseline_db [label="Baseline Database\nHistorical Data", shape=cylinder, fillcolor="#f8d7da"];
+    regression_tickets [label="Regression Tickets\nJira/GitHub", shape=cylinder, fillcolor="#f8d7da"];
+
+    // End States
+    success [label="All Tests\nPassed", shape=oval, fillcolor="#d4edda"];
+    blocked [label="Regression\nBLOCKED", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+
+    // Workflow Connections
+    start -> impact_detect;
+
+    // Impact Analysis
+    impact_detect -> impact_analyze;
+    impact_analyze -> impact_modules;
+    impact_modules -> impact_risk;
+    impact_risk -> impact_scope;
+    impact_scope -> scope_decision;
+
+    // Scope branching
+    scope_decision -> select_critical [label="Full Suite", color="blue"];
+    scope_decision -> select_affected [label="Partial Suite", color="green"];
+
+    // Test Selection
+    select_critical -> select_affected;
+    select_affected -> select_integration;
+    select_integration -> select_e2e;
+    select_e2e -> select_performance;
+    select_performance -> select_visual;
+    select_visual -> prep_environment;
+
+    // Preparation
+    prep_environment -> prep_data;
+    prep_data -> prep_baseline;
+    prep_baseline -> prep_fixtures;
+    prep_fixtures -> prep_mocks;
+    prep_mocks -> exec_unit;
+
+    // Execution
+    exec_unit -> exec_integration;
+    exec_integration -> exec_e2e;
+    exec_e2e -> exec_performance;
+    exec_performance -> exec_security;
+    exec_security -> exec_visual;
+    exec_visual -> exec_parallel;
+    exec_parallel -> collect_results;
+
+    // Collection
+    collect_results -> collect_coverage;
+    collect_coverage -> collect_screenshots;
+    collect_screenshots -> collect_logs;
+    collect_logs -> collect_metrics;
+    collect_metrics -> test_results;
+    test_results -> compare_results;
+
+    // Comparison
+    compare_results -> compare_coverage;
+    compare_coverage -> compare_performance;
+    compare_performance -> compare_visual;
+    compare_visual -> compare_flaky;
+    compare_flaky -> regression_found;
+
+    // Regression branching
+    regression_found -> analyze_failures [label="Regression Found", color="red"];
+    regression_found -> report_summary [label="No Regression", color="green"];
+
+    // Regression Analysis
+    analyze_failures -> analyze_diff;
+    analyze_diff -> analyze_impact;
+    analyze_impact -> analyze_triage;
+    analyze_triage -> analyze_assign;
+    analyze_assign -> regression_tickets;
+    regression_tickets -> report_summary;
+
+    // Reporting
+    report_summary -> report_coverage;
+    report_coverage -> report_trends;
+    report_trends -> report_dashboard;
+    report_dashboard -> report_notify;
+    report_notify -> report_jira;
+    report_jira -> coverage_report;
+    coverage_report -> baseline_db;
+
+    // Fix path
+    regression_tickets -> fix_implement [label="Developer Action"];
+    fix_implement -> fix_review;
+    fix_review -> fix_commit;
+    fix_commit -> fix_retest;
+    fix_retest -> fix_passed;
+
+    fix_passed -> baseline_approve [label="Verified", color="green"];
+    fix_passed -> analyze_failures [label="Still Failing", color="red"];
+
+    // Baseline update
+    baseline_db -> baseline_approve [label="No Regression"];
+    baseline_approve -> baseline_snapshot;
+    baseline_snapshot -> baseline_store;
+    baseline_store -> baseline_tag;
+    baseline_tag -> success;
+
+    // Blocked state
+    regression_found -> blocked [label="Critical + No Fix", color="red", style=dashed];
+}

@@ -1,3 +1,8 @@
+---
+name: platforms-data-spark-apache-spark-engineer
+description: APACHE SPARK ENGINEER - SYSTEM PROMPT v2.0
+---
+
 # APACHE SPARK ENGINEER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 186

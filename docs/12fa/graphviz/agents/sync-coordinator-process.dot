@@ -1,0 +1,132 @@
+digraph sync_coordinator_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Sync Coordinator - GitHub Synchronization Management";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Sync Request\n(Branches/Repos)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="State Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        fetch [label="Fetch Latest\n(Remote state)"];
+        compare [label="Compare States\n(Local vs remote)"];
+        identify [label="Identify Changes\n(Diff analysis)"];
+    }
+
+    // Conflict Detection Phase
+    subgraph cluster_conflict {
+        label="Conflict Detection";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        detect [label="Conflict Detection\n(Overlapping changes)"];
+        classify [label="Classify Conflicts\n(Auto/manual)"];
+        strategy [label="Resolution Strategy\n(Plan)"];
+    }
+
+    // Resolution Phase
+    subgraph cluster_resolution {
+        label="Conflict Resolution";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        auto [label="Auto-resolution\n(Simple conflicts)"];
+        manual [label="Manual Resolution\n(Complex conflicts)"];
+        verify [label="Verification\n(Test resolution)"];
+    }
+
+    // Sync Phase
+    subgraph cluster_sync {
+        label="Synchronization Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        merge [label="Merge Coordination\n(Apply changes)"];
+        push [label="Push Changes\n(Update remote)"];
+        validate [label="Validation\n(Confirm sync)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Sync Management", fillcolor="#238636"];
+        feature2 [label="Conflict Resolution", fillcolor="#238636"];
+        feature3 [label="Branch Coordination", fillcolor="#238636"];
+        feature4 [label="Merge Handling", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Synchronized State\n+ Sync Report", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> fetch;
+    fetch -> compare;
+    compare -> identify;
+
+    identify -> detect;
+    detect -> classify;
+    classify -> strategy;
+
+    strategy -> auto;
+    strategy -> manual;
+
+    auto -> verify;
+    manual -> verify;
+
+    verify -> merge;
+    merge -> push;
+    push -> validate;
+
+    validate -> output;
+
+    // Conflict path
+    detect -> manual [label="Complex", color="#f85149"];
+    detect -> auto [label="Simple", color="#238636"];
+
+    // Feedback loops
+    verify -> strategy [label="Re-plan if failed", style=dashed, color="#f85149"];
+    validate -> fetch [label="Re-sync if needed", style=dashed, color="#f85149"];
+
+    // Feature connections
+    merge -> feature1 [style=dotted, color="#8b949e"];
+    auto -> feature2 [style=dotted, color="#8b949e"];
+    compare -> feature3 [style=dotted, color="#8b949e"];
+    push -> feature4 [style=dotted, color="#8b949e"];
+}

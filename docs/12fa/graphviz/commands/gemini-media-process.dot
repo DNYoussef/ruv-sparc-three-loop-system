@@ -1,0 +1,67 @@
+digraph gemini_media_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Gemini-Media Command Workflow\nMultimodal Media Processing";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/gemini-media", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  identify_media [label="Identify Media Type\n- Image\n- Video\n- Audio\n- Mixed", fillcolor="#FFF9C4"];
+
+  media_type [label="Media Type?", fillcolor="#C5CAE9", shape=diamond];
+
+  // Image path
+  process_image [label="Process Image\n- Object detection\n- Scene understanding\n- Text extraction (OCR)", fillcolor="#FFE0B2"];
+  analyze_image [label="Analyze Image\n- Content description\n- Visual elements\n- Metadata", fillcolor="#BBDEFB"];
+
+  // Video path
+  process_video [label="Process Video\n- Frame extraction\n- Scene detection\n- Motion analysis", fillcolor="#C5CAE9"];
+  analyze_video [label="Analyze Video\n- Content timeline\n- Key moments\n- Visual narrative", fillcolor="#B2DFDB"];
+
+  // Audio path
+  process_audio [label="Process Audio\n- Speech-to-text\n- Sound classification\n- Music recognition", fillcolor="#D1C4E9"];
+  analyze_audio [label="Analyze Audio\n- Transcription\n- Speaker identification\n- Sentiment", fillcolor="#F0F4C3"];
+
+  // Mixed media path
+  process_mixed [label="Process Mixed Media\n- Coordinate multimodal\n- Sync timeline\n- Cross-reference", fillcolor="#FFE0B2"];
+
+  multimodal_understanding [label="Multimodal Understanding\n- Combine insights\n- Context synthesis\n- Relationship mapping", fillcolor="#BBDEFB"];
+
+  extract_insights [label="Extract Insights\n- Key information\n- Patterns\n- Relationships", fillcolor="#B2DFDB"];
+
+  generate_description [label="Generate Description\n- Comprehensive summary\n- Structured data\n- Metadata", fillcolor="#D1C4E9"];
+
+  format_output [label="Format Output\n- JSON structure\n- Markdown report\n- Annotated media", fillcolor="#F0F4C3"];
+
+  success [label="Media Processed\nInsights extracted", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> identify_media;
+  identify_media -> media_type;
+  media_type -> process_image [label="Image"];
+  media_type -> process_video [label="Video"];
+  media_type -> process_audio [label="Audio"];
+  media_type -> process_mixed [label="Mixed"];
+
+  process_image -> analyze_image;
+  analyze_image -> multimodal_understanding;
+
+  process_video -> analyze_video;
+  analyze_video -> multimodal_understanding;
+
+  process_audio -> analyze_audio;
+  analyze_audio -> multimodal_understanding;
+
+  process_mixed -> multimodal_understanding;
+
+  multimodal_understanding -> extract_insights;
+  extract_insights -> generate_description;
+  generate_description -> format_output;
+  format_output -> success;
+}

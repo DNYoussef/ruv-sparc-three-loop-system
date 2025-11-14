@@ -1,0 +1,145 @@
+digraph security_manager_enhanced_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Security Manager Enhanced Agent Workflow (v2.0.0)\nAgent ID: agent-096 | Category: Consensus-Distributed\nPurpose: Advanced threat detection and security";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Security Audit\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Security\nValidated", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Threat Intelligence
+    subgraph cluster_intelligence {
+        label="Phase 1: Threat Intelligence";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        ti1 [label="Real-time Threat\nMonitoring", shape=box, fillcolor="#ffecb3"];
+        ti2 [label="CVE Database\nCheck", shape=box, fillcolor="#ffecb3"];
+        ti3 [label="Attack Pattern\nAnalysis", shape=box, fillcolor="#ffecb3"];
+        ti4 [label="Threat\nClassification", shape=box, fillcolor="#ffecb3"];
+
+        ti1 -> ti2 -> ti3 -> ti4;
+    }
+
+    // Phase 2: Vulnerability Scanning
+    subgraph cluster_scanning {
+        label="Phase 2: Advanced Vulnerability Scanning";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        scan1 [label="SAST (Static)\nAnalysis", shape=box, fillcolor="#bbdefb"];
+        scan2 [label="DAST (Dynamic)\nAnalysis", shape=box, fillcolor="#bbdefb"];
+        scan3 [label="Dependency\nVulnerabilities", shape=box, fillcolor="#bbdefb"];
+        scan4 [label="Container\nScanning", shape=box, fillcolor="#bbdefb"];
+        scan5 [label="Infrastructure\nAudit", shape=box, fillcolor="#bbdefb"];
+
+        scan1 -> scan2 -> scan3 -> scan4 -> scan5;
+    }
+
+    // Phase 3: Penetration Testing
+    subgraph cluster_pentest {
+        label="Phase 3: Automated Penetration Testing";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        pen1 [label="SQL Injection\nTests", shape=box, fillcolor="#e1bee7"];
+        pen2 [label="XSS Attack\nSimulation", shape=box, fillcolor="#e1bee7"];
+        pen3 [label="CSRF Protection\nValidation", shape=box, fillcolor="#e1bee7"];
+        pen4 [label="Authentication\nBypass Tests", shape=box, fillcolor="#e1bee7"];
+        pen5 [label="API Security\nTests", shape=box, fillcolor="#e1bee7"];
+
+        pen1 -> pen2 -> pen3 -> pen4 -> pen5;
+    }
+
+    // Phase 4: Automated Response
+    subgraph cluster_response {
+        label="Phase 4: Automated Response";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        resp1 [label="Threat Detection", shape=box, fillcolor="#f8bbd0"];
+        resp2 [label="Risk Assessment", shape=box, fillcolor="#f8bbd0"];
+        resp3 [label="Auto-Mitigation", shape=box, fillcolor="#f8bbd0"];
+        resp4 [label="Alert Generation", shape=box, fillcolor="#f8bbd0"];
+        resp5 [label="Incident Logging", shape=box, fillcolor="#f8bbd0"];
+
+        resp1 -> resp2 -> resp3 -> resp4 -> resp5;
+    }
+
+    // Phase 5: Encryption & Auth
+    subgraph cluster_encryption {
+        label="Phase 5: Encryption & Authentication";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        enc1 [label="Encryption\nValidation", shape=box, fillcolor="#b2dfdb"];
+        enc2 [label="Key Management\nAudit", shape=box, fillcolor="#b2dfdb"];
+        enc3 [label="JWT Security\nCheck", shape=box, fillcolor="#b2dfdb"];
+        enc4 [label="OAuth/OIDC\nValidation", shape=box, fillcolor="#b2dfdb"];
+        enc5 [label="Certificate\nValidation", shape=box, fillcolor="#b2dfdb"];
+
+        enc1 -> enc2 -> enc3 -> enc4 -> enc5;
+    }
+
+    // Phase 6: Compliance & Reporting
+    subgraph cluster_compliance {
+        label="Phase 6: Compliance & Reporting";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        comp1 [label="OWASP Top 10\nCompliance", shape=box, fillcolor="#fff59d"];
+        comp2 [label="GDPR Validation", shape=box, fillcolor="#fff59d"];
+        comp3 [label="SOC 2 Audit", shape=box, fillcolor="#fff59d"];
+        comp4 [label="Security Report\nGeneration", shape=box, fillcolor="#fff59d"];
+
+        comp1 -> comp2 -> comp3 -> comp4;
+    }
+
+    // Decisions
+    critical_threat [label="Critical\nThreat Found?", shape=diamond, fillcolor="#ff5252", color="#d32f2f", penwidth=3];
+    vulnerabilities [label="High-Risk\nVulnerabilities?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> ti1;
+    ti4 -> scan1;
+    scan5 -> pen1;
+    pen5 -> critical_threat;
+
+    critical_threat -> resp1 [label="Yes - Immediate", style="bold", color="#d32f2f"];
+    critical_threat -> enc1 [label="No"];
+
+    enc5 -> vulnerabilities;
+    vulnerabilities -> resp1 [label="Yes"];
+    vulnerabilities -> comp1 [label="No"];
+
+    resp5 -> comp1 [label="Mitigated"];
+    comp4 -> end;
+
+    // V2.0 enhancements
+    enhancements [label="v2.0.0 Enhancements:\n• Threat Intelligence\n• Automated Response\n• Advanced Scanning\n• Penetration Testing\n• Real-time Monitoring\n• Compliance Automation", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Security features
+    features [label="Security Features:\n• SAST + DAST\n• CVE Monitoring\n• Auto-mitigation\n• Encryption Audit\n• Compliance Checks", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: security-manager-enhanced\nPriority: Critical\nComplexity: Very High\nVersion: 2.0.0\nGraphviz Priority: 96", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

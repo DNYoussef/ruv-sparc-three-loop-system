@@ -1,3 +1,8 @@
+---
+name: quality-audit-code-audit-code-audit-specialist
+description: CODE AUDIT SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # CODE AUDIT SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 141

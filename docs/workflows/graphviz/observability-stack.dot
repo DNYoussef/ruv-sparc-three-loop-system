@@ -1,0 +1,253 @@
+digraph ObservabilityStack {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Complete Observability Stack</b><br/>Logs → Metrics → Traces → Profiling → Visualization>;
+    fontsize=16;
+
+    // Legend - Three Pillars
+    subgraph cluster_legend {
+        label="Three Pillars of Observability";
+        style=filled;
+        color="#e9ecef";
+
+        legend_logs [label="Logs\nEvent Records", shape=box, fillcolor="#e7d1e7"];
+        legend_metrics [label="Metrics\nNumeric Measurements", shape=box, fillcolor="#d1e7dd"];
+        legend_traces [label="Traces\nRequest Journey", shape=box, fillcolor="#cfe2ff"];
+
+        legend_logs -> legend_metrics -> legend_traces [style=invis];
+    }
+
+    // Start
+    start [label="Application\nRunning", shape=oval, fillcolor="#d4edda"];
+
+    // Pillar 1: Logs
+    subgraph cluster_logs {
+        label="Pillar 1: Logging";
+        style=filled;
+        color="#e7d1e7";
+
+        log_generate [label="Generate Logs\nApp/System/Audit", shape=box, fillcolor="#d4b5d4"];
+        log_structured [label="Structured Logging\nJSON Format", shape=box, fillcolor="#d4b5d4"];
+        log_context [label="Add Context\nTrace ID/User ID", shape=box, fillcolor="#d4b5d4"];
+        log_ship [label="Ship Logs\nFluentd/Filebeat", shape=box, fillcolor="#d4b5d4"];
+        log_parse [label="Parse Logs\nGrok/Regex", shape=box, fillcolor="#d4b5d4"];
+        log_enrich [label="Enrich\nGeo/User Data", shape=box, fillcolor="#d4b5d4"];
+        log_index [label="Index\nElasticsearch", shape=box, fillcolor="#d4b5d4"];
+        log_search [label="Search/Query\nKibana", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Pillar 2: Metrics
+    subgraph cluster_metrics {
+        label="Pillar 2: Metrics";
+        style=filled;
+        color="#d1e7dd";
+
+        metric_instrument [label="Instrumentation\nCounters/Gauges/Histograms", shape=box, fillcolor="#a3cfbb"];
+        metric_expose [label="Expose Endpoint\n/metrics", shape=box, fillcolor="#a3cfbb"];
+        metric_scrape [label="Scrape Metrics\nPrometheus", shape=box, fillcolor="#a3cfbb"];
+        metric_store [label="Time-Series Store\nPrometheus TSDB", shape=box, fillcolor="#a3cfbb"];
+        metric_aggregate [label="Aggregate\nSum/Avg/Rate", shape=box, fillcolor="#a3cfbb"];
+        metric_alert [label="Alert Rules\nAlertmanager", shape=box, fillcolor="#a3cfbb"];
+        metric_visualize [label="Visualize\nGrafana", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Pillar 3: Traces
+    subgraph cluster_traces {
+        label="Pillar 3: Distributed Tracing";
+        style=filled;
+        color="#cfe2ff";
+
+        trace_instrument [label="Instrumentation\nOpenTelemetry", shape=box, fillcolor="#b6d7ff"];
+        trace_context [label="Context Propagation\nW3C Trace Context", shape=box, fillcolor="#b6d7ff"];
+        trace_span [label="Create Spans\nOperation Duration", shape=box, fillcolor="#b6d7ff"];
+        trace_collect [label="Collect Spans\nOTel Collector", shape=box, fillcolor="#b6d7ff"];
+        trace_sample [label="Sampling\nHead/Tail Sampling", shape=box, fillcolor="#b6d7ff"];
+        trace_store [label="Store Traces\nTempo/Jaeger", shape=box, fillcolor="#b6d7ff"];
+        trace_visualize [label="Visualize\nJaeger UI/Grafana", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Additional Pillar: Profiling
+    subgraph cluster_profiling {
+        label="Continuous Profiling";
+        style=filled;
+        color="#fff3cd";
+
+        profile_cpu [label="CPU Profiling\nFunction Time", shape=box, fillcolor="#ffeeba"];
+        profile_memory [label="Memory Profiling\nHeap/Allocations", shape=box, fillcolor="#ffeeba"];
+        profile_io [label="I/O Profiling\nDisk/Network", shape=box, fillcolor="#ffeeba"];
+        profile_flame [label="Flame Graphs\nVisualization", shape=box, fillcolor="#ffeeba"];
+        profile_continuous [label="Continuous Profiling\nPyroscope/Parca", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Correlation Engine
+    subgraph cluster_correlation {
+        label="Correlation & Context";
+        style=filled;
+        color="#f8d7da";
+
+        corr_trace_id [label="Trace ID\nUnified Identifier", shape=box, fillcolor="#f5c6cb"];
+        corr_span_id [label="Span ID\nOperation Context", shape=box, fillcolor="#f5c6cb"];
+        corr_service [label="Service Name\nMicroservice", shape=box, fillcolor="#f5c6cb"];
+        corr_environment [label="Environment\nProd/Staging/Dev", shape=box, fillcolor="#f5c6cb"];
+        corr_version [label="Version\nRelease Tag", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    // Unified Dashboard
+    subgraph cluster_unified {
+        label="Unified Observability Dashboard";
+        style=filled;
+        color="#e9ecef";
+
+        unified_grafana [label="Grafana\nCentral Hub", shape=box, fillcolor="#dee2e6"];
+        unified_logs_panel [label="Logs Panel\nElasticsearch/Loki", shape=box, fillcolor="#dee2e6"];
+        unified_metrics_panel [label="Metrics Panel\nPrometheus", shape=box, fillcolor="#dee2e6"];
+        unified_traces_panel [label="Traces Panel\nTempo/Jaeger", shape=box, fillcolor="#dee2e6"];
+        unified_apm [label="APM Overview\nService Map", shape=box, fillcolor="#dee2e6"];
+        unified_slo [label="SLO Dashboard\nError Budget", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Stream Processing
+    subgraph cluster_streaming {
+        label="Real-Time Stream Processing";
+        style=filled;
+        color="#d1e7dd";
+
+        stream_log [label="Log Stream\nReal-Time Tail", shape=box, fillcolor="#a3cfbb"];
+        stream_metric [label="Metric Stream\nLive Updates", shape=box, fillcolor="#a3cfbb"];
+        stream_trace [label="Trace Stream\nActive Requests", shape=box, fillcolor="#a3cfbb"];
+        stream_anomaly [label="Anomaly Detection\nML-Based", shape=box, fillcolor="#a3cfbb"];
+        stream_alert [label="Real-Time Alerts\nInstant Notification", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    // Analysis & Insights
+    subgraph cluster_analysis {
+        label="Analysis & Insights";
+        style=filled;
+        color="#cfe2ff";
+
+        analyze_error_rate [label="Error Rate Analysis\nTrend Detection", shape=box, fillcolor="#b6d7ff"];
+        analyze_latency [label="Latency Analysis\np50/p95/p99", shape=box, fillcolor="#b6d7ff"];
+        analyze_bottleneck [label="Bottleneck Detection\nSlow Queries", shape=box, fillcolor="#b6d7ff"];
+        analyze_dependency [label="Dependency Mapping\nService Graph", shape=box, fillcolor="#b6d7ff"];
+        analyze_cost [label="Cost Analysis\nResource Usage", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Alerting & Incident
+    subgraph cluster_alerting {
+        label="Alerting & Incident Management";
+        style=filled;
+        color="#f8d7da";
+
+        alert_define [label="Define Alerts\nThresholds/Anomalies", shape=box, fillcolor="#f5c6cb"];
+        alert_route [label="Route Alerts\nPagerDuty/Slack", shape=box, fillcolor="#f5c6cb"];
+        alert_incident [label="Create Incident\nJira/ServiceNow", shape=box, fillcolor="#f5c6cb"];
+        alert_runbook [label="Attach Runbook\nRemediation Steps", shape=box, fillcolor="#f5c6cb"];
+        alert_postmortem [label="Post-Mortem\nRoot Cause Analysis", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    // Storage
+    elasticsearch [label="Elasticsearch\nLog Storage", shape=cylinder, fillcolor="#e7d1e7"];
+    prometheus [label="Prometheus\nMetric Storage", shape=cylinder, fillcolor="#d1e7dd"];
+    tempo [label="Tempo\nTrace Storage", shape=cylinder, fillcolor="#cfe2ff"];
+
+    // End State
+    observability_complete [label="Full Observability\nAchieved", shape=oval, fillcolor="#d4edda"];
+
+    // Workflow Connections
+    start -> log_generate;
+    start -> metric_instrument;
+    start -> trace_instrument;
+
+    // Logs Flow
+    log_generate -> log_structured;
+    log_structured -> log_context;
+    log_context -> log_ship;
+    log_ship -> log_parse;
+    log_parse -> log_enrich;
+    log_enrich -> log_index;
+    log_index -> elasticsearch;
+    elasticsearch -> log_search;
+
+    // Metrics Flow
+    metric_instrument -> metric_expose;
+    metric_expose -> metric_scrape;
+    metric_scrape -> metric_store;
+    metric_store -> prometheus;
+    prometheus -> metric_aggregate;
+    metric_aggregate -> metric_alert;
+    metric_alert -> metric_visualize;
+
+    // Traces Flow
+    trace_instrument -> trace_context;
+    trace_context -> trace_span;
+    trace_span -> trace_collect;
+    trace_collect -> trace_sample;
+    trace_sample -> trace_store;
+    trace_store -> tempo;
+    tempo -> trace_visualize;
+
+    // Profiling Flow
+    start -> profile_cpu;
+    profile_cpu -> profile_memory;
+    profile_memory -> profile_io;
+    profile_io -> profile_flame;
+    profile_flame -> profile_continuous;
+
+    // Correlation
+    log_context -> corr_trace_id;
+    trace_span -> corr_trace_id;
+    metric_expose -> corr_service;
+    corr_trace_id -> corr_span_id;
+    corr_span_id -> corr_service;
+    corr_service -> corr_environment;
+    corr_environment -> corr_version;
+
+    // Unified Dashboard
+    log_search -> unified_grafana;
+    metric_visualize -> unified_grafana;
+    trace_visualize -> unified_grafana;
+    profile_continuous -> unified_grafana;
+
+    unified_grafana -> unified_logs_panel;
+    unified_grafana -> unified_metrics_panel;
+    unified_grafana -> unified_traces_panel;
+    unified_grafana -> unified_apm;
+    unified_grafana -> unified_slo;
+
+    // Streaming
+    elasticsearch -> stream_log;
+    prometheus -> stream_metric;
+    tempo -> stream_trace;
+    stream_log -> stream_anomaly;
+    stream_metric -> stream_anomaly;
+    stream_trace -> stream_anomaly;
+    stream_anomaly -> stream_alert;
+
+    // Analysis
+    unified_slo -> analyze_error_rate;
+    analyze_error_rate -> analyze_latency;
+    analyze_latency -> analyze_bottleneck;
+    analyze_bottleneck -> analyze_dependency;
+    analyze_dependency -> analyze_cost;
+
+    // Alerting
+    stream_alert -> alert_define;
+    metric_alert -> alert_define;
+    alert_define -> alert_route;
+    alert_route -> alert_incident;
+    alert_incident -> alert_runbook;
+    alert_runbook -> alert_postmortem;
+
+    // Completion
+    unified_slo -> observability_complete;
+    analyze_cost -> observability_complete;
+    alert_postmortem -> observability_complete;
+}

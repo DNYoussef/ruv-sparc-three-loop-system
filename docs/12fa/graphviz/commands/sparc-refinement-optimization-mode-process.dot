@@ -1,0 +1,58 @@
+digraph sparc_refinement_optimization_mode_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Refinement-Optimization-Mode Workflow\nPerformance Tuning & Code Quality";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:refinement-optimization", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  analyze_code [label="Analyze Codebase\n- Complexity metrics\n- Code smells\n- Duplication", fillcolor="#FFF9C4"];
+
+  identify_hotspots [label="Identify Hotspots\n- CPU intensive\n- Memory leaks\n- I/O bottlenecks", fillcolor="#FFE0B2"];
+
+  profiling [label="Performance Profiling\n- Execution time\n- Memory usage\n- Network calls", fillcolor="#BBDEFB"];
+
+  refactor_dry [label="Refactor: DRY\n- Extract common code\n- Eliminate duplication\n- Create utilities", fillcolor="#C5CAE9"];
+
+  refactor_kiss [label="Refactor: KISS\n- Simplify logic\n- Reduce complexity\n- Improve readability", fillcolor="#B2DFDB"];
+
+  optimize_algo [label="Optimize Algorithms\n- Time complexity\n- Space complexity\n- Data structures", fillcolor="#D1C4E9"];
+
+  optimize_db [label="Optimize Database\n- Query optimization\n- Indexing\n- Connection pooling", fillcolor="#F0F4C3"];
+
+  optimize_network [label="Optimize Network\n- Caching\n- Compression\n- CDN usage", fillcolor="#FFE0B2"];
+
+  test_performance [label="Performance Testing\n- Load testing\n- Stress testing\n- Benchmark", fillcolor="#BBDEFB"];
+
+  meets_target [label="Meets Performance Target?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  enforce_limits [label="Enforce Limits\n- File size < 500 lines\n- Function size < 20 lines\n- Cyclomatic complexity < 10", fillcolor="#C5CAE9"];
+
+  update_docs [label="Update Documentation\n- Performance notes\n- Optimization decisions\n- Trade-offs", fillcolor="#B2DFDB"];
+
+  success [label="Optimization Complete\nPerformance improved", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  retry [label="Try Different Approach", fillcolor="#FFE0B2"];
+
+  // Main flow
+  start -> analyze_code;
+  analyze_code -> identify_hotspots;
+  identify_hotspots -> profiling;
+  profiling -> refactor_dry;
+  refactor_dry -> refactor_kiss;
+  refactor_kiss -> optimize_algo;
+  optimize_algo -> optimize_db;
+  optimize_db -> optimize_network;
+  optimize_network -> test_performance;
+  test_performance -> meets_target;
+  meets_target -> enforce_limits [label="Yes"];
+  meets_target -> retry [label="No"];
+  retry -> identify_hotspots;
+  enforce_limits -> update_docs;
+  update_docs -> success;
+}

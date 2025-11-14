@@ -1,0 +1,45 @@
+digraph REAnalyzeBinaryProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-analyze-binary\nCommand Start", fillcolor=lightgreen];
+    validate [label="Validate Binary\nFile Exists"];
+    detect_format [label="Detect File Format\n(ELF/PE/Mach-O)"];
+    extract_metadata [label="Extract Metadata\n(Headers, Sections)"];
+    identify_arch [label="Identify Architecture\n(x86/x64/ARM)"];
+    analyze_imports [label="Analyze Imports\n& Dependencies"];
+    detect_packing [label="Detect Packing\n/Obfuscation"];
+    disassemble [label="Disassemble Code\nSections"];
+    identify_functions [label="Identify Functions\n& Entry Points"];
+    analyze_strings [label="Analyze String\nReferences"];
+    detect_crypto [label="Detect Crypto\nAlgorithms"];
+    generate_cfg [label="Generate Control\nFlow Graph"];
+    generate_report [label="Generate Analysis\nReport"];
+    end [label="Analysis Complete", fillcolor=lightcoral];
+
+    // Error handling
+    error [label="Error Handler\n(Invalid Binary)", fillcolor=pink];
+
+    // Flow
+    start -> validate;
+    validate -> detect_format [label="Valid"];
+    validate -> error [label="Invalid"];
+    detect_format -> extract_metadata;
+    extract_metadata -> identify_arch;
+    identify_arch -> analyze_imports;
+    analyze_imports -> detect_packing;
+    detect_packing -> disassemble;
+    disassemble -> identify_functions;
+    identify_functions -> analyze_strings;
+    analyze_strings -> detect_crypto;
+    detect_crypto -> generate_cfg;
+    generate_cfg -> generate_report;
+    generate_report -> end;
+
+    // Metadata
+    label="RE-analyze-binary Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

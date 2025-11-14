@@ -1,0 +1,162 @@
+digraph EvaluatorAgent {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="evaluator Agent\\nActivated", fillcolor=lightgreen];
+
+    // Core Identity
+    identity [label="Core Identity:\\n- Quality Gate Authority\\n- Multi-Agent Coordinator\\n- GO/NO-GO Decision Maker\\n- All Gates (1, 2, 3)", shape=ellipse, fillcolor=lightyellow];
+
+    // Gate Review Selector
+    gate_selector [label="Gate Review\\nRequested", fillcolor=orange, shape=diamond];
+
+    // ===== GATE 1 WORKFLOW =====
+    gate1_workflow [label="Gate 1 Review\\nWorkflow", fillcolor=lightcyan];
+
+    gate1_orchestrate [label="Orchestrate Reviews:\\ndata-steward,\\nethics-agent"];
+    gate1_consolidate [label="Consolidate Findings\\nfrom Memory MCP"];
+    gate1_validate [label="Run /validate-gate-1\\nPipeline A, C, F"];
+
+    subgraph cluster_gate1_requirements {
+        label="Gate 1 Requirements";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate1_literature [label="Pipeline A:\\nLiterature Review Complete"];
+        gate1_datasheet [label="Pipeline C:\\nDatasheet ≥80%"];
+        gate1_bias [label="Pipeline C:\\nBias Audit Acceptable"];
+        gate1_ethics [label="Pipeline F:\\nEthics Review Initiated"];
+    }
+
+    gate1_decision [label="Make Decision:\\nAPPROVE/CONDITIONAL/REJECT", shape=diamond, fillcolor=gold];
+
+    // ===== GATE 2 WORKFLOW =====
+    gate2_workflow [label="Gate 2 Review\\nWorkflow", fillcolor=lightcyan];
+
+    gate2_orchestrate [label="Orchestrate Reviews:\\nethics-agent,\\narchivist"];
+    gate2_consolidate [label="Consolidate Findings\\nfrom Memory MCP"];
+    gate2_validate [label="Run /validate-gate-2\\nPipeline D, E, F"];
+
+    subgraph cluster_gate2_requirements {
+        label="Gate 2 Requirements";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate2_methods [label="Pipeline D:\\nBaseline Replicated,\\nAblations Complete"];
+        gate2_evaluation [label="Pipeline E:\\nHELM + CheckList\\nPassed"];
+        gate2_fairness [label="Pipeline F:\\nFairness Metrics\\nAcceptable"];
+    }
+
+    gate2_decision [label="Make Decision:\\nAPPROVE/CONDITIONAL/REJECT", shape=diamond, fillcolor=gold];
+
+    // ===== GATE 3 WORKFLOW =====
+    gate3_workflow [label="Gate 3 Review\\nWorkflow", fillcolor=lightcyan];
+
+    gate3_orchestrate [label="Orchestrate Reviews:\\narchivist,\\nethics-agent"];
+    gate3_consolidate [label="Consolidate Findings\\nfrom Memory MCP"];
+    gate3_validate [label="Run /validate-gate-3\\nPipeline G, H, I"];
+
+    subgraph cluster_gate3_requirements {
+        label="Gate 3 Requirements";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate3_artifacts [label="Pipeline G:\\nModel Card ≥90%,\\nDOIs Assigned"];
+        gate3_reproducibility [label="Pipeline G:\\nReproducibility\\nTested"];
+        gate3_production [label="Pipeline H:\\nML Test Score ≥8"];
+        gate3_governance [label="Pipeline I:\\nGovernance Plan\\nDocumented"];
+    }
+
+    gate3_decision [label="Make Decision:\\nAPPROVE/CONDITIONAL/REJECT", shape=diamond, fillcolor=gold];
+
+    // Decision Outcomes
+    decision_approve [label="APPROVED:\\nGenerate Certificate,\\nTag Repository", fillcolor=lightgreen];
+    decision_conditional [label="CONDITIONAL APPROVE:\\nTrack Conditions,\\nSet Deadlines", fillcolor=lightyellow];
+    decision_reject [label="REJECTED:\\nDocument Rationale,\\nProvide Remediation Plan", fillcolor=lightcoral];
+
+    // Memory & Notification
+    store_decision [label="Store Decision\\nin Memory MCP"];
+    notify_team [label="Notify Project Team\\nand Stakeholders"];
+    generate_audit_trail [label="Generate Audit Trail:\\nAll Reviews + Evidence"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- Gate Decision Document\\n- Approval Certificate (if approved)\\n- Complete Audit Trail\\n- Next Steps Guidance"];
+    end [label="evaluator\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Start
+    start -> identity;
+    identity -> gate_selector;
+
+    // Gate Selection
+    gate_selector -> gate1_workflow [label="Gate 1"];
+    gate_selector -> gate2_workflow [label="Gate 2"];
+    gate_selector -> gate3_workflow [label="Gate 3"];
+
+    // Gate 1 Flow
+    gate1_workflow -> gate1_orchestrate;
+    gate1_orchestrate -> gate1_consolidate;
+    gate1_consolidate -> gate1_validate;
+    gate1_validate -> gate1_literature;
+    gate1_validate -> gate1_datasheet;
+    gate1_validate -> gate1_bias;
+    gate1_validate -> gate1_ethics;
+    gate1_literature -> gate1_decision;
+    gate1_datasheet -> gate1_decision;
+    gate1_bias -> gate1_decision;
+    gate1_ethics -> gate1_decision;
+
+    // Gate 2 Flow
+    gate2_workflow -> gate2_orchestrate;
+    gate2_orchestrate -> gate2_consolidate;
+    gate2_consolidate -> gate2_validate;
+    gate2_validate -> gate2_methods;
+    gate2_validate -> gate2_evaluation;
+    gate2_validate -> gate2_fairness;
+    gate2_methods -> gate2_decision;
+    gate2_evaluation -> gate2_decision;
+    gate2_fairness -> gate2_decision;
+
+    // Gate 3 Flow
+    gate3_workflow -> gate3_orchestrate;
+    gate3_orchestrate -> gate3_consolidate;
+    gate3_consolidate -> gate3_validate;
+    gate3_validate -> gate3_artifacts;
+    gate3_validate -> gate3_reproducibility;
+    gate3_validate -> gate3_production;
+    gate3_validate -> gate3_governance;
+    gate3_artifacts -> gate3_decision;
+    gate3_reproducibility -> gate3_decision;
+    gate3_production -> gate3_decision;
+    gate3_governance -> gate3_decision;
+
+    // Decision Outcomes
+    gate1_decision -> decision_approve [label="All Met"];
+    gate1_decision -> decision_conditional [label="Minor Gaps"];
+    gate1_decision -> decision_reject [label="Critical Unmet"];
+
+    gate2_decision -> decision_approve [label="All Met"];
+    gate2_decision -> decision_conditional [label="Minor Gaps"];
+    gate2_decision -> decision_reject [label="Critical Unmet"];
+
+    gate3_decision -> decision_approve [label="All Met"];
+    gate3_decision -> decision_conditional [label="Minor Gaps"];
+    gate3_decision -> decision_reject [label="Critical Unmet"];
+
+    // Memory & Notification
+    decision_approve -> store_decision;
+    decision_conditional -> store_decision;
+    decision_reject -> store_decision;
+    store_decision -> notify_team;
+    notify_team -> generate_audit_trail;
+    generate_audit_trail -> deliverables;
+
+    // Output
+    deliverables -> end;
+
+    // Metadata
+    label="evaluator Agent - Complete Workflow\\nQuality Gate Authority (Gates 1, 2, 3)\\nGO/NO-GO Decision Maker";
+    fontsize=16;
+    fontname="Arial Bold";
+}

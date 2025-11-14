@@ -1,0 +1,144 @@
+digraph github_pr_manager_template_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="GitHub PR Manager Template Agent Workflow\nAgent ID: agent-092 | Category: Templates\nPurpose: Template-based PR management";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="PR Template\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="PR Process\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Template Selection
+    subgraph cluster_template {
+        label="Phase 1: Template Selection";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        t1 [label="Select PR Template\n(feature/bugfix/\nhotfix/release)", shape=box, fillcolor="#ffecb3"];
+        t2 [label="Load Template\nConfiguration", shape=box, fillcolor="#ffecb3"];
+        t3 [label="Load Checklist", shape=box, fillcolor="#ffecb3"];
+        t4 [label="Load Reviewers", shape=box, fillcolor="#ffecb3"];
+
+        t1 -> t2 -> t3 -> t4;
+    }
+
+    // Phase 2: PR Creation
+    subgraph cluster_creation {
+        label="Phase 2: PR Creation";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        c1 [label="Generate PR Title", shape=box, fillcolor="#bbdefb"];
+        c2 [label="Generate\nDescription", shape=box, fillcolor="#bbdefb"];
+        c3 [label="Add Labels", shape=box, fillcolor="#bbdefb"];
+        c4 [label="Assign Reviewers", shape=box, fillcolor="#bbdefb"];
+        c5 [label="Link Issues", shape=box, fillcolor="#bbdefb"];
+
+        c1 -> c2 -> c3 -> c4 -> c5;
+    }
+
+    // Phase 3: Automated Checks
+    subgraph cluster_checks {
+        label="Phase 3: Automated Checks";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        ch1 [label="Run CI/CD\nPipeline", shape=box, fillcolor="#e1bee7"];
+        ch2 [label="Lint Code", shape=box, fillcolor="#e1bee7"];
+        ch3 [label="Run Tests", shape=box, fillcolor="#e1bee7"];
+        ch4 [label="Check Coverage", shape=box, fillcolor="#e1bee7"];
+        ch5 [label="Security Scan", shape=box, fillcolor="#e1bee7"];
+
+        ch1 -> ch2 -> ch3 -> ch4 -> ch5;
+    }
+
+    // Phase 4: Review Process
+    subgraph cluster_review {
+        label="Phase 4: Review Process";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        r1 [label="Request Reviews", shape=box, fillcolor="#f8bbd0"];
+        r2 [label="Collect Feedback", shape=box, fillcolor="#f8bbd0"];
+        r3 [label="Address Comments", shape=box, fillcolor="#f8bbd0"];
+        r4 [label="Re-request Review", shape=box, fillcolor="#f8bbd0"];
+
+        r1 -> r2 -> r3 -> r4;
+    }
+
+    // Phase 5: Merge Management
+    subgraph cluster_merge {
+        label="Phase 5: Merge Management";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        m1 [label="Verify All Checks\nPassed", shape=box, fillcolor="#b2dfdb"];
+        m2 [label="Check Approvals", shape=box, fillcolor="#b2dfdb"];
+        m3 [label="Resolve Conflicts", shape=box, fillcolor="#b2dfdb"];
+        m4 [label="Merge PR", shape=box, fillcolor="#b2dfdb"];
+        m5 [label="Delete Branch", shape=box, fillcolor="#b2dfdb"];
+
+        m1 -> m2 -> m3 -> m4 -> m5;
+    }
+
+    // Phase 6: Post-Merge
+    subgraph cluster_postmerge {
+        label="Phase 6: Post-Merge Actions";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        pm1 [label="Update Linked\nIssues", shape=box, fillcolor="#fff59d"];
+        pm2 [label="Notify Team", shape=box, fillcolor="#fff59d"];
+        pm3 [label="Generate\nChangelog", shape=box, fillcolor="#fff59d"];
+        pm4 [label="Archive PR", shape=box, fillcolor="#fff59d"];
+
+        pm1 -> pm2 -> pm3 -> pm4;
+    }
+
+    // Decisions
+    checks_passed [label="All Checks\nPassed?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    approved [label="Approved by\nReviewers?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> t1;
+    t4 -> c1;
+    c5 -> ch1;
+    ch5 -> checks_passed;
+
+    checks_passed -> r1 [label="Yes"];
+    checks_passed -> ch2 [label="No - Fix", style=dashed, color="#f44336"];
+
+    r4 -> approved;
+    approved -> m1 [label="Yes"];
+    approved -> r3 [label="No", style=dashed, color="#ff9800"];
+
+    m5 -> pm1;
+    pm4 -> end;
+
+    // Capabilities
+    capabilities [label="Key Capabilities:\n• Template-based PR\n• Reusable Workflows\n• Standardized Processes\n• Automated Checks\n• Review Management\n• GitHub Automation", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Template types
+    templates [label="PR Templates:\n• Feature\n• Bug Fix\n• Hotfix\n• Release\n• Documentation", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: github-pr-manager-template\nPriority: Medium\nComplexity: Medium\nGraphviz Priority: 92", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

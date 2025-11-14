@@ -1,0 +1,125 @@
+digraph GEMINI_SEARCH_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Gemini Search Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Gemini Search Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Search Config"];
+    validate_input [label="Validate Query"];
+    check_deps [label="Check Gemini API"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Web-Grounded Search Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    execute_search [label="Execute Gemini Search\n(Web-Grounded)", fillcolor=purple];
+    parse_results [label="Parse Search Results", fillcolor=purple];
+    filter_results [label="Filter & Rank Results", fillcolor=purple];
+    extract_insights [label="Extract Key Insights", fillcolor=purple];
+    insights_check [shape=diamond, label="Insights\nFound?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Search Error"];
+    retry_logic [label="Retry Search", fillcolor=yellow];
+  }
+
+  check_secrets -> execute_search [label="Pass"];
+  execute_search -> parse_results -> filter_results -> extract_insights;
+  extract_insights -> insights_check;
+  insights_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> execute_search [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Search Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Search Results\nin Memory", fillcolor=lightblue];
+    cache_results [label="Cache for Future Queries", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  insights_check -> memory_store [label="Yes"];
+  memory_store -> cache_results -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Results\nRelevant?"];
+    verify_sources [label="Verify Source Quality", fillcolor=lightgreen];
+    source_check [shape=diamond, label="Sources\nReliable?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> verify_sources [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  verify_sources -> source_check;
+  source_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    format_results [label="Format Results", fillcolor=lightgreen];
+    generate_summary [label="Generate Summary", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="Search Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  source_check -> format_results [label="Yes"];
+  format_results -> generate_summary -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Search Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

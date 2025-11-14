@@ -1,0 +1,93 @@
+// Swarm Init Agent - Swarm Initialization & Setup
+// Topology selection, agent spawning, coordination setup, memory initialization
+digraph swarm_init_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        swarm_init [label="Swarm Init Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        topology_library [label="Topology\nLibrary", fillcolor="#2d3748", fontcolor="#ffffff"];
+        agent_registry [label="Agent\nRegistry", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_topology {
+        label="Topology Selection"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        task_analyzer [label="Task\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_assessor [label="Complexity\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        topology_selector [label="Topology\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        optimization_planner [label="Optimization\nPlanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_agent_spawn {
+        label="Agent Spawning"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        agent_selector [label="Agent\nSelector", fillcolor="#059669", fontcolor="#ffffff"];
+        capability_matcher [label="Capability\nMatcher", fillcolor="#059669", fontcolor="#ffffff";
+        spawner [label="Agent\nSpawner", fillcolor="#059669", fontcolor="#ffffff"];
+        initialization_handler [label="Initialization\nHandler", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_coordination {
+        label="Coordination Setup"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        message_bus_setup [label="Message Bus\nSetup", fillcolor="#0891b2", fontcolor="#ffffff"];
+        protocol_configurator [label="Protocol\nConfigurator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        consensus_setup [label="Consensus\nSetup", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_memory {
+        label="Memory Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        memory_allocator [label="Memory\nAllocator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        namespace_creator [label="Namespace\nCreator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        state_initializer [label="State\nInitializer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        health_checker [label="Health\nChecker", fillcolor="#8b4789", fontcolor="#ffffff"];
+        connectivity_tester [label="Connectivity\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        readiness_validator [label="Readiness\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_monitoring {
+        label="Monitoring Setup"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        metric_collector_setup [label="Metric Collector\nSetup", fillcolor="#ef4444", fontcolor="#ffffff"];
+        logger_configurator [label="Logger\nConfigurator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        dashboard_initializer [label="Dashboard\nInitializer", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        task_orchestrator_coord [label="Task Orchestrator\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    swarm_init -> topology_library [label="Load"];
+    swarm_init -> agent_registry [label="Load"];
+    topology_library -> task_analyzer [label="Analyze Task"];
+    task_analyzer -> complexity_assessor [label="Assess Complexity"];
+    complexity_assessor -> topology_selector [label="Select Topology"];
+    topology_selector -> optimization_planner [label="Plan Optimization"];
+    optimization_planner -> agent_selector [label="Select Agents"];
+    agent_selector -> capability_matcher [label="Match Capabilities"];
+    capability_matcher -> spawner [label="Spawn Agents"];
+    spawner -> initialization_handler [label="Initialize"];
+    initialization_handler -> message_bus_setup [label="Setup Bus"];
+    message_bus_setup -> protocol_configurator [label="Configure"];
+    protocol_configurator -> consensus_setup [label="Setup Consensus"];
+    consensus_setup -> memory_allocator [label="Allocate Memory"];
+    memory_allocator -> namespace_creator [label="Create Namespaces"];
+    namespace_creator -> state_initializer [label="Initialize State"];
+    state_initializer -> health_checker [label="Check Health"];
+    health_checker -> connectivity_tester [label="Test Connectivity"];
+    connectivity_tester -> readiness_validator [label="Validate Readiness"];
+    readiness_validator -> metric_collector_setup [label="Setup Metrics"];
+    metric_collector_setup -> logger_configurator [label="Configure Logger"];
+    logger_configurator -> dashboard_initializer [label="Initialize Dashboard"];
+    dashboard_initializer -> task_orchestrator_coord [label="Handoff to Orchestrator"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Swarm Init", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Topology", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

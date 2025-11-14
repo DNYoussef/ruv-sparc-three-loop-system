@@ -1,3 +1,8 @@
+---
+name: platforms-flow-nexus-gemini-media-agent
+description: Specialized agent for task execution
+---
+
 # Gemini Media Generation Agent
 
 

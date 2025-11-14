@@ -1,0 +1,95 @@
+digraph HIERARCHICAL_COORDINATOR_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Hierarchical Coordinator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\nTree Topology Manager"];
+    validate_caps [label="Validate Capabilities\ntopology_management, agent_hierarchy\ntask_delegation, centralized_control"];
+    
+    start -> load_config -> validate_caps;
+  }
+  
+  subgraph cluster_topology {
+    label="Tree Topology Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+    
+    define_hierarchy [label="Define Hierarchy\nLevels, spans", fillcolor=purple];
+    assign_levels [label="Assign Agent Levels\nRoot, Managers, Workers"];
+    define_command_chain [label="Define Command Chain\nTop-down delegation"];
+    setup_reporting [label="Setup Reporting\nBottom-up aggregation"];
+    
+    validate_caps -> define_hierarchy;
+    define_hierarchy -> assign_levels -> define_command_chain -> setup_reporting;
+  }
+  
+  subgraph cluster_delegation {
+    label="Centralized Task Delegation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    receive_tasks [label="Receive Tasks\nAt root level", fillcolor=lightgreen];
+    decompose [label="Decompose Tasks\nTop-level breakdown"];
+    delegate_to_managers [label="Delegate to Managers\nSubtask assignment"];
+    managers_delegate_workers [label="Managers Delegate to Workers\nLeaf-level execution"];
+    monitor_execution [label="Monitor Execution\nHierarchical tracking"];
+    
+    setup_reporting -> receive_tasks;
+    receive_tasks -> decompose -> delegate_to_managers;
+    delegate_to_managers -> managers_delegate_workers -> monitor_execution;
+  }
+  
+  subgraph cluster_aggregation {
+    label="Result Aggregation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+    
+    collect_leaf [label="Collect from Workers\nLeaf results", fillcolor=lightblue];
+    aggregate_manager [label="Aggregate at Manager Level\nPartial results"];
+    aggregate_root [label="Aggregate at Root\nFinal result"];
+    validate_completeness [shape=diamond, label="Complete?"];
+    
+    monitor_execution -> collect_leaf;
+    collect_leaf -> aggregate_manager -> aggregate_root -> validate_completeness;
+    validate_completeness -> collect_leaf [label="No", style=dashed];
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_results [label="Store Results\nmemory_store", fillcolor=lightblue];
+    log_metrics [label="Log Hierarchy Metrics"];
+    success [label="Coordination Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    validate_completeness -> store_results [label="Yes"];
+    store_results -> log_metrics -> success;
+  }
+  
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+    
+    node_failure [label="Node Failure Detected", fillcolor=orange];
+    escalate_up [label="Escalate Up Hierarchy"];
+    redistribute [label="Redistribute Tasks"];
+    failure [label="Coordination Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+    
+    monitor_execution -> node_failure [style=dashed];
+    node_failure -> escalate_up -> redistribute;
+    redistribute -> failure [label="Cannot Recover"];
+  }
+}

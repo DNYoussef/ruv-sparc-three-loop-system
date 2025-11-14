@@ -1,0 +1,170 @@
+digraph flow_nexus_neural_network_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Neural Network Agent Workflow\nAgent ID: agent-084 | Category: Flow-Nexus Integration\nPurpose: Distributed neural network training and deployment";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Neural Training\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Model Deployed", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Cluster Initialization
+    subgraph cluster_init {
+        label="Phase 1: Cluster Initialization";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        init1 [label="Initialize Neural\nCluster", shape=box, fillcolor="#ffecb3"];
+        init2 [label="Select Architecture\n(transformer/cnn/\nrnn/gnn/hybrid)", shape=box, fillcolor="#ffecb3"];
+        init3 [label="Configure Topology\n(mesh/ring/star/\nhierarchical)", shape=box, fillcolor="#ffecb3"];
+        init4 [label="Enable DAA\nAutonomy", shape=box, fillcolor="#ffecb3"];
+        init5 [label="Enable WASM\nOptimization", shape=box, fillcolor="#ffecb3"];
+
+        init1 -> init2 -> init3 -> init4 -> init5;
+    }
+
+    // Phase 2: Node Deployment
+    subgraph cluster_nodes {
+        label="Phase 2: Neural Node Deployment";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        node1 [label="Deploy Worker\nNodes", shape=box, fillcolor="#bbdefb"];
+        node2 [label="Deploy Parameter\nServers", shape=box, fillcolor="#bbdefb"];
+        node3 [label="Deploy\nAggregators", shape=box, fillcolor="#bbdefb"];
+        node4 [label="Deploy Validators", shape=box, fillcolor="#bbdefb"];
+        node5 [label="Configure Node\nAutonomy (0-1)", shape=box, fillcolor="#bbdefb"];
+
+        node1 -> node2 -> node3 -> node4 -> node5;
+    }
+
+    // Phase 3: Network Configuration
+    subgraph cluster_network {
+        label="Phase 3: Network Configuration";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        net1 [label="Connect Nodes\nby Topology", shape=box, fillcolor="#e1bee7"];
+        net2 [label="Setup Consensus\nMechanism", shape=box, fillcolor="#e1bee7"];
+        net3 [label="Configure\nGradient Sync", shape=box, fillcolor="#e1bee7"];
+        net4 [label="Enable Federated\nLearning (optional)", shape=box, fillcolor="#e1bee7"];
+        net5 [label="Verify Network\nConnectivity", shape=box, fillcolor="#e1bee7"];
+
+        net1 -> net2 -> net3 -> net4 -> net5;
+    }
+
+    // Phase 4: Training Configuration
+    subgraph cluster_training {
+        label="Phase 4: Training Configuration";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        train1 [label="Load Dataset", shape=box, fillcolor="#f8bbd0"];
+        train2 [label="Set Hyperparameters\n(epochs/batch/lr)", shape=box, fillcolor="#f8bbd0"];
+        train3 [label="Choose Optimizer\n(adam/sgd/rmsprop)", shape=box, fillcolor="#f8bbd0"];
+        train4 [label="Configure\nDistribution Strategy", shape=box, fillcolor="#f8bbd0"];
+        train5 [label="Enable Checkpointing", shape=box, fillcolor="#f8bbd0"];
+
+        train1 -> train2 -> train3 -> train4 -> train5;
+    }
+
+    // Phase 5: Distributed Training
+    subgraph cluster_distributed {
+        label="Phase 5: Distributed Training";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        dist1 [label="Start Training\nAcross Cluster", shape=box, fillcolor="#b2dfdb"];
+        dist2 [label="Synchronize\nGradients", shape=box, fillcolor="#b2dfdb"];
+        dist3 [label="Aggregate Updates", shape=box, fillcolor="#b2dfdb"];
+        dist4 [label="Monitor Training\nMetrics", shape=box, fillcolor="#b2dfdb"];
+        dist5 [label="Handle Node\nFailures", shape=box, fillcolor="#b2dfdb"];
+
+        dist1 -> dist2 -> dist3 -> dist4 -> dist5;
+    }
+
+    // Phase 6: Model Deployment
+    subgraph cluster_deployment {
+        label="Phase 6: Model Deployment";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        deploy1 [label="Save Model\nCheckpoint", shape=box, fillcolor="#fff59d"];
+        deploy2 [label="Run Validation\nWorkflow", shape=box, fillcolor="#fff59d"];
+        deploy3 [label="Performance\nBenchmark", shape=box, fillcolor="#fff59d"];
+        deploy4 [label="Deploy for\nInference", shape=box, fillcolor="#fff59d"];
+        deploy5 [label="Publish as\nTemplate (optional)", shape=box, fillcolor="#fff59d"];
+
+        deploy1 -> deploy2 -> deploy3 -> deploy4 -> deploy5;
+    }
+
+    // Phase 7: Inference & Monitoring
+    subgraph cluster_inference {
+        label="Phase 7: Distributed Inference";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        inf1 [label="Load Model\nAcross Nodes", shape=box, fillcolor="#b3e5fc"];
+        inf2 [label="Distribute Input\nData", shape=box, fillcolor="#b3e5fc"];
+        inf3 [label="Run Parallel\nInference", shape=box, fillcolor="#b3e5fc"];
+        inf4 [label="Aggregate\nPredictions", shape=box, fillcolor="#b3e5fc"];
+        inf5 [label="Return Results", shape=box, fillcolor="#b3e5fc"];
+
+        inf1 -> inf2 -> inf3 -> inf4 -> inf5;
+    }
+
+    // Decision nodes
+    converged [label="Model\nConverged?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    validated [label="Validation\nPassed?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> init1 [label="Begin Setup"];
+    init5 -> node1 [label="Cluster\nInitialized"];
+    node5 -> net1 [label="Nodes\nDeployed"];
+    net5 -> train1 [label="Network\nConfigured"];
+    train5 -> dist1 [label="Training\nConfigured"];
+
+    dist5 -> converged [label="Check\nConvergence"];
+    converged -> deploy1 [label="Yes"];
+    converged -> dist2 [label="No - Continue", style=dashed, color="#ff9800"];
+
+    deploy2 -> validated [label="Run\nValidation"];
+    validated -> deploy3 [label="Pass"];
+    validated -> train2 [label="Fail - Retrain", style=dashed, color="#f44336"];
+
+    deploy5 -> inf1 [label="Model Ready"];
+    inf5 -> end [label="Inference\nAvailable"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Distributed Training\n• Multiple Architectures\n• DAA Autonomy\n• WASM Optimization\n• Federated Learning\n• Model Templates", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    mcp_tools [label="MCP Tools:\n• neural_cluster_init\n• neural_node_deploy\n• neural_cluster_connect\n• neural_train_distributed\n• neural_predict_distributed\n• neural_cluster_status\n• neural_cluster_terminate", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Architectures
+    architectures [label="Architectures:\n• Transformer\n• CNN\n• RNN\n• GNN\n• Hybrid", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-neural-network\nPriority: High\nComplexity: Very High\nGraphviz Priority: 84", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

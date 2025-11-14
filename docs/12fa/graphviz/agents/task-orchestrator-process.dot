@@ -1,0 +1,270 @@
+digraph TASK_ORCHESTRATOR_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Task Orchestrator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\nWorkflow Management Tools"];
+    validate_capabilities [label="Validate Capabilities\ntask_management, workflow_orchestration\ndependency_resolution, parallel_execution"];
+    check_deps [label="Check Dependencies\nMemory, MCP Tools"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // TASK INTAKE
+  // =============================================================================
+  subgraph cluster_intake {
+    label="Task Intake & Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\norchestration/{task-id}/*"];
+    retrieve_plan [label="Retrieve Plan\nfrom Planner"];
+    analyze_tasks [label="Analyze Tasks\nComplexity, dependencies"];
+    categorize_tasks [label="Categorize Tasks\nParallel, Sequential, Conditional"];
+    validate_dependencies [shape=diamond, label="Dependencies\nValid?"];
+
+    check_deps -> init_memory;
+    init_memory -> retrieve_plan;
+    retrieve_plan -> analyze_tasks;
+    analyze_tasks -> categorize_tasks;
+    categorize_tasks -> validate_dependencies;
+    validate_dependencies -> resolve_circular [label="Circular Detected"];
+  }
+
+  // =============================================================================
+  // WORKFLOW DESIGN
+  // =============================================================================
+  subgraph cluster_workflow_design {
+    label="Workflow Design";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    design_workflow [label="Design Workflow\nDAG structure", fillcolor=yellow];
+    identify_parallel_paths [label="Identify Parallel Paths\nIndependent tasks"];
+    identify_critical_path [label="Identify Critical Path\nLongest dependency chain"];
+    define_checkpoints [label="Define Checkpoints\nMilestones"];
+    add_error_handling [label="Add Error Handling\nRetry, rollback logic"];
+    workflow_valid [shape=diamond, label="Workflow\nValid?"];
+
+    validate_dependencies -> design_workflow [label="Yes"];
+    design_workflow -> identify_parallel_paths;
+    identify_parallel_paths -> identify_critical_path;
+    identify_critical_path -> define_checkpoints;
+    define_checkpoints -> add_error_handling;
+    add_error_handling -> workflow_valid;
+    workflow_valid -> refine_workflow [label="No"];
+  }
+
+  // =============================================================================
+  // AGENT ASSIGNMENT
+  // =============================================================================
+  subgraph cluster_agent_assignment {
+    label="Agent Assignment";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    analyze_requirements [label="Analyze Task Requirements\nSkills needed", fillcolor=lightblue];
+    match_agents [label="Match Agents to Tasks\nCapability-based"];
+    load_balance [label="Load Balance\nDistribute evenly"];
+    assign_tasks [label="Assign Tasks to Agents"];
+    check_capacity [shape=diamond, label="Capacity\nSufficient?"];
+
+    workflow_valid -> analyze_requirements [label="Yes"];
+    analyze_requirements -> match_agents;
+    match_agents -> load_balance;
+    load_balance -> assign_tasks;
+    assign_tasks -> check_capacity;
+    check_capacity -> spawn_agents [label="No"];
+  }
+
+  // =============================================================================
+  // EXECUTION MANAGEMENT
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Execution Management";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    orchestrate_tasks [label="Orchestrate Tasks\nmcp__ruv-swarm__task_orchestrate", fillcolor=lightgreen];
+    execute_parallel [label="Execute Parallel Tasks\nConcurrent execution"];
+    execute_sequential [label="Execute Sequential Tasks\nOrdered execution"];
+    monitor_progress [label="Monitor Progress\nmcp__ruv-swarm__task_status"];
+    check_completion [shape=diamond, label="All Tasks\nComplete?"];
+
+    check_capacity -> orchestrate_tasks [label="Yes"];
+    spawn_agents -> orchestrate_tasks;
+    orchestrate_tasks -> execute_parallel;
+    execute_parallel -> execute_sequential;
+    execute_sequential -> monitor_progress;
+    monitor_progress -> check_completion;
+    check_completion -> monitor_progress [label="No", style=dashed];
+  }
+
+  // =============================================================================
+  // ERROR HANDLING & RECOVERY
+  // =============================================================================
+  subgraph cluster_error_handling {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    detect_failure [label="Detect Failure\nTask/Agent failure", fillcolor=orange];
+    analyze_failure [label="Analyze Failure\nRoot cause"];
+    check_retry [shape=diamond, label="Retry\nPossible?"];
+    retry_task [label="Retry Task\nWith backoff"];
+    check_rollback [shape=diamond, label="Rollback\nNeeded?"];
+    rollback_tasks [label="Rollback Completed Tasks"];
+    reassign_task [label="Reassign to Different Agent"];
+
+    check_completion -> detect_failure [label="Failure Detected"];
+    detect_failure -> analyze_failure;
+    analyze_failure -> check_retry;
+    check_retry -> retry_task [label="Yes"];
+    check_retry -> check_rollback [label="No"];
+    retry_task -> monitor_progress [style=dashed];
+    check_rollback -> rollback_tasks [label="Yes"];
+    rollback_tasks -> reassign_task;
+    reassign_task -> orchestrate_tasks [style=dashed];
+  }
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_aggregation {
+    label="Result Aggregation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    collect_results [label="Collect Results\nmcp__ruv-swarm__task_results", fillcolor=purple];
+    validate_results [label="Validate Results\nQuality check"];
+    aggregate_outputs [label="Aggregate Outputs\nCombine results"];
+    check_quality [shape=diamond, label="Quality\nAcceptable?"];
+    store_results [label="Store Results\nmemory_store(orchestration/{task-id}/results)"];
+
+    check_completion -> collect_results [label="Yes"];
+    collect_results -> validate_results;
+    validate_results -> aggregate_outputs;
+    aggregate_outputs -> check_quality;
+    check_quality -> store_results [label="Yes"];
+    check_quality -> request_rework [label="No"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    store_workflow [label="Store Workflow\nmemory_store(orchestration/{task-id}/workflow)", fillcolor=lightblue];
+    store_metrics [label="Store Metrics\nmemory_store(orchestration/{task-id}/metrics)"];
+    notify_completion [label="Notify Completion\n/communicate-notify"];
+    handoff_results [label="Handoff Results\nTo requesting agent"];
+
+    store_results -> store_workflow;
+    store_workflow -> store_metrics;
+    store_metrics -> notify_completion;
+    notify_completion -> handoff_results;
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_agents [label="Cleanup Agents\nTerminate completed", fillcolor=lightgreen];
+    generate_report [label="Generate Orchestration Report\nTasks, timeline, metrics"];
+    log_metrics [label="Log Orchestration Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Orchestration Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    handoff_results -> cleanup_agents;
+    cleanup_agents -> generate_report;
+    generate_report -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR PATHS
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Critical Error Paths";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    resolve_circular [label="Resolve Circular Dependencies", fillcolor=orange];
+    refine_workflow [label="Refine Workflow Design", fillcolor=orange];
+    spawn_agents [label="Spawn Additional Agents", fillcolor=yellow];
+    request_rework [label="Request Rework from Agents", fillcolor=orange];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser/Queen"];
+    log_error [label="Log Error Details"];
+    failure [label="Orchestration Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    resolve_circular -> analyze_tasks [style=dashed];
+    refine_workflow -> design_workflow [style=dashed];
+    request_rework -> orchestrate_tasks [style=dashed];
+
+    check_rollback -> escalate [label="Cannot Rollback"];
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_mcp [shape=box, label="MCP Tool", fillcolor=lightblue];
+    legend_warn [shape=box, label="Warning", fillcolor=orange];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_mcp [style=invis];
+    legend_mcp -> legend_warn [style=invis];
+    legend_warn -> legend_process [style=invis];
+    legend_process -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

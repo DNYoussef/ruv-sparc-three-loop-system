@@ -1,0 +1,75 @@
+digraph claude_flow_memory_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Claude-Flow Memory Command Workflow\nCRDT-Based Memory System";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/claude-flow-memory", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  operation_type [label="Determine Operation\n- store\n- retrieve\n- search\n- clear\n- persist", fillcolor="#FFF9C4", shape=diamond];
+
+  // Store path
+  store_validate [label="Validate Store\n- Key format\n- Value structure\n- Namespace", fillcolor="#FFE0B2"];
+  store_crdt [label="CRDT Operation\nConflict-free replication", fillcolor="#BBDEFB"];
+  store_persist [label="Persist to Storage\nDurable write", fillcolor="#B2DFDB"];
+
+  // Retrieve path
+  retrieve_key [label="Parse Key\nNamespace lookup", fillcolor="#FFE0B2"];
+  retrieve_data [label="Fetch from CRDT\nConflict resolution", fillcolor="#BBDEFB"];
+
+  // Search path
+  search_pattern [label="Parse Search Pattern\nGlob matching", fillcolor="#FFE0B2"];
+  search_index [label="Index Search\nPattern matching", fillcolor="#BBDEFB"];
+  search_filter [label="Filter Results\nApply query", fillcolor="#C5CAE9"];
+
+  // Clear path
+  clear_confirm [label="Confirm Clear\nSafety check", fillcolor="#FFE0B2"];
+  clear_execute [label="Clear Memory\nRemove entries", fillcolor="#F44336", fontcolor=white];
+
+  // Persist path
+  persist_export [label="Export Memory\nSerialize CRDT state", fillcolor="#FFE0B2"];
+  persist_save [label="Save to File\nJSON export", fillcolor="#B2DFDB"];
+
+  success [label="Operation Complete\nReturn result", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Error\nReturn error message", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> operation_type;
+
+  // Store flow
+  operation_type -> store_validate [label="store"];
+  store_validate -> store_crdt [label="Valid"];
+  store_validate -> error [label="Invalid"];
+  store_crdt -> store_persist;
+  store_persist -> success;
+
+  // Retrieve flow
+  operation_type -> retrieve_key [label="retrieve"];
+  retrieve_key -> retrieve_data;
+  retrieve_data -> success;
+  retrieve_data -> error [label="Not found", style=dashed, color=red];
+
+  // Search flow
+  operation_type -> search_pattern [label="search"];
+  search_pattern -> search_index;
+  search_index -> search_filter;
+  search_filter -> success;
+
+  // Clear flow
+  operation_type -> clear_confirm [label="clear"];
+  clear_confirm -> clear_execute [label="Confirmed"];
+  clear_confirm -> error [label="Cancelled"];
+  clear_execute -> success;
+
+  // Persist flow
+  operation_type -> persist_export [label="persist"];
+  persist_export -> persist_save;
+  persist_save -> success;
+  persist_save -> error [label="Failed", style=dashed, color=red];
+}

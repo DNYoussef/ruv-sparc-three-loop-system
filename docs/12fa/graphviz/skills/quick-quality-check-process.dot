@@ -1,0 +1,37 @@
+digraph QUICK_QUALITY_CHECK_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="quick-quality-check\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_code [label="Load Codebase"];
+
+  parallel_checks [label="Parallel Quality Checks\nLightning Fast", fillcolor=purple];
+
+  theater_check [label="Theater Detection\nQuick Scan", fillcolor=red];
+  lint_check [label="Linting\nCode Standards", fillcolor=blue];
+  security_check [label="Security Scan\nBasic Vulnerabilities", fillcolor=orange];
+  test_check [label="Basic Tests\nUnit Test Run", fillcolor=green];
+
+  collect_results [label="Collect Results", fillcolor=lightblue];
+  decision [shape=diamond, label="All Pass?"];
+
+  report [label="Generate Quick Report\nIssues Found", fillcolor=yellow];
+  success [label="Quick Check Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  failure [label="Issues Found", shape=doublecircle, fillcolor=orange, style="filled,bold"];
+
+  start -> load_code -> parallel_checks;
+  parallel_checks -> theater_check;
+  parallel_checks -> lint_check;
+  parallel_checks -> security_check;
+  parallel_checks -> test_check;
+
+  theater_check -> collect_results;
+  lint_check -> collect_results;
+  security_check -> collect_results;
+  test_check -> collect_results;
+
+  collect_results -> decision;
+  decision -> report [label="No"];
+  decision -> success [label="Yes"];
+  report -> failure;
+}

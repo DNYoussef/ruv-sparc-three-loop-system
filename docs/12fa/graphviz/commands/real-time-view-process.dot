@@ -1,0 +1,96 @@
+// Real-time View Command Workflow
+// Real-time system visualization
+digraph real_time_view_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/real-time-view\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        view_config [label="View\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_stream {
+        label="Data Streaming";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        event_stream [label="Event\nStream", fillcolor="#2563eb", fontcolor="#ffffff"];
+        metric_stream [label="Metric\nStream", fillcolor="#2563eb", fontcolor="#ffffff"];
+        log_stream [label="Log\nStream", fillcolor="#2563eb", fontcolor="#ffffff"];
+        status_stream [label="Status\nStream", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_processing {
+        label="Stream Processing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        aggregator [label="Data\nAggregator", fillcolor="#10b981", fontcolor="#ffffff"];
+        filter [label="Event\nFilter", fillcolor="#10b981", fontcolor="#ffffff"];
+        transformer [label="Data\nTransformer", fillcolor="#10b981", fontcolor="#ffffff"];
+        enricher [label="Data\nEnricher", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_visualization {
+        label="Live Visualization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        dashboard_renderer [label="Dashboard\nRenderer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        chart_updater [label="Chart\nUpdater", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        alert_displayer [label="Alert\nDisplayer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        status_indicator [label="Status\nIndicator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_interaction {
+        label="User Interaction";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        drill_down [label="Drill-Down\nHandler", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        filter_control [label="Filter\nControl", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        export_handler [label="Export\nHandler", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        live_dashboard [label="Live\nDashboard", fillcolor="#059669", fontcolor="#ffffff"];
+        interactive_view [label="Interactive\nView", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> view_config;
+    view_config -> event_stream -> aggregator;
+    view_config -> metric_stream -> aggregator;
+    view_config -> log_stream -> aggregator;
+    view_config -> status_stream -> aggregator;
+    aggregator -> filter -> transformer -> enricher;
+    enricher -> dashboard_renderer -> chart_updater -> alert_displayer -> status_indicator;
+    status_indicator -> drill_down -> filter_control -> export_handler;
+    export_handler -> live_dashboard -> interactive_view;
+    interactive_view -> cmd_trigger [label="Active", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Streaming", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Visualization", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+}

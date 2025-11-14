@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-azure-azure-specialist
+description: AZURE SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # AZURE SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 135

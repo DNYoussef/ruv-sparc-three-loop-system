@@ -1,0 +1,154 @@
+digraph flow_nexus_sandbox_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Sandbox Agent Workflow\nAgent ID: agent-083 | Category: Flow-Nexus Integration\nPurpose: Cloud sandbox for isolated execution";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Sandbox Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Execution\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Sandbox Creation
+    subgraph cluster_create {
+        label="Phase 1: Sandbox Creation";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        create1 [label="Select Template\n(node/python/react/\nnextjs/claude-code)", shape=box, fillcolor="#ffecb3"];
+        create2 [label="Set Environment\nVariables", shape=box, fillcolor="#ffecb3"];
+        create3 [label="Specify Packages\nto Install", shape=box, fillcolor="#ffecb3"];
+        create4 [label="Configure\nTimeout", shape=box, fillcolor="#ffecb3"];
+        create5 [label="Provision Cloud\nSandbox", shape=box, fillcolor="#ffecb3"];
+
+        create1 -> create2 -> create3 -> create4 -> create5;
+    }
+
+    // Phase 2: Configuration
+    subgraph cluster_config {
+        label="Phase 2: Sandbox Configuration";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        config1 [label="Add Anthropic\nAPI Key", shape=box, fillcolor="#bbdefb"];
+        config2 [label="Install npm/pip\nPackages", shape=box, fillcolor="#bbdefb"];
+        config3 [label="Run Configuration\nCommands", shape=box, fillcolor="#bbdefb"];
+        config4 [label="Setup Working\nDirectory", shape=box, fillcolor="#bbdefb"];
+        config5 [label="Verify\nConfiguration", shape=box, fillcolor="#bbdefb"];
+
+        config1 -> config2 -> config3 -> config4 -> config5;
+    }
+
+    // Phase 3: File Operations
+    subgraph cluster_files {
+        label="Phase 3: File Operations";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        file1 [label="Upload Source\nFiles", shape=box, fillcolor="#e1bee7"];
+        file2 [label="Create Directory\nStructure", shape=box, fillcolor="#e1bee7"];
+        file3 [label="Copy Assets", shape=box, fillcolor="#e1bee7"];
+        file4 [label="Set File\nPermissions", shape=box, fillcolor="#e1bee7"];
+        file5 [label="Verify File\nIntegrity", shape=box, fillcolor="#e1bee7"];
+
+        file1 -> file2 -> file3 -> file4 -> file5;
+    }
+
+    // Phase 4: Code Execution
+    subgraph cluster_execution {
+        label="Phase 4: Code Execution";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        exec1 [label="Prepare Code", shape=box, fillcolor="#f8bbd0"];
+        exec2 [label="Set Execution\nContext", shape=box, fillcolor="#f8bbd0"];
+        exec3 [label="Execute Code\nin Sandbox", shape=box, fillcolor="#f8bbd0"];
+        exec4 [label="Capture\nOutput/Errors", shape=box, fillcolor="#f8bbd0"];
+        exec5 [label="Handle Timeout\n(max 600s)", shape=box, fillcolor="#f8bbd0"];
+
+        exec1 -> exec2 -> exec3 -> exec4 -> exec5;
+    }
+
+    // Phase 5: Monitoring & Logs
+    subgraph cluster_monitoring {
+        label="Phase 5: Monitoring & Logs";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        mon1 [label="Real-time Stream\nSubscription", shape=box, fillcolor="#b2dfdb"];
+        mon2 [label="Monitor Execution\nStatus", shape=box, fillcolor="#b2dfdb"];
+        mon3 [label="Collect Logs\n(up to 1000 lines)", shape=box, fillcolor="#b2dfdb"];
+        mon4 [label="Track Resource\nUsage", shape=box, fillcolor="#b2dfdb"];
+        mon5 [label="Generate Reports", shape=box, fillcolor="#b2dfdb"];
+
+        mon1 -> mon2 -> mon3 -> mon4 -> mon5;
+    }
+
+    // Phase 6: Cleanup & Management
+    subgraph cluster_cleanup {
+        label="Phase 6: Cleanup & Management";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        clean1 [label="List Active\nSandboxes", shape=box, fillcolor="#fff59d"];
+        clean2 [label="Check Sandbox\nStatus", shape=box, fillcolor="#fff59d"];
+        clean3 [label="Stop Running\nSandbox", shape=box, fillcolor="#fff59d"];
+        clean4 [label="Delete Sandbox", shape=box, fillcolor="#fff59d"];
+        clean5 [label="Free Resources", shape=box, fillcolor="#fff59d"];
+
+        clean1 -> clean2 -> clean3 -> clean4 -> clean5;
+    }
+
+    // Decision nodes
+    success [label="Execution\nSuccessful?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    retry [label="Retry\nExecution?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> create1 [label="Request\nSandbox"];
+    create5 -> config1 [label="Sandbox\nProvisioned"];
+    config5 -> file1 [label="Configuration\nComplete"];
+    file5 -> exec1 [label="Files Ready"];
+
+    exec5 -> success [label="Check Result"];
+    success -> mon1 [label="Yes"];
+    success -> retry [label="No - Failed"];
+
+    retry -> exec1 [label="Yes", style=dashed, color="#ff9800"];
+    retry -> mon1 [label="No - Abort", style=dashed, color="#f44336"];
+
+    mon5 -> clean1 [label="Analysis\nComplete"];
+    clean5 -> end [label="Resources\nReleased"];
+
+    // Parallel monitoring
+    exec3 -> mon1 [style=dotted, color="#757575", label="Live Monitor"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Isolated Execution\n• Multi-language Support\n• Environment Management\n• Real-time Monitoring\n• Secure Sandbox\n• Resource Management", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    mcp_tools [label="MCP Tools:\n• sandbox_create\n• sandbox_execute\n• sandbox_configure\n• sandbox_upload\n• sandbox_logs\n• sandbox_status\n• sandbox_delete", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Templates
+    templates [label="Templates:\n• node - Node.js env\n• python - Python env\n• react - React app\n• nextjs - Next.js app\n• claude-code - Claude", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-sandbox\nPriority: High\nComplexity: High\nGraphviz Priority: 83", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

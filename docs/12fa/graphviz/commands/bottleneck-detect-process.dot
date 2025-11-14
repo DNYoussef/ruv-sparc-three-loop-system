@@ -1,0 +1,324 @@
+digraph BOTTLENECK_DETECT_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /bottleneck-detect";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/bottleneck-detect", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--target <swarm|agent|task>\n--id <identifier>\n--analyze-all", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--target <swarm|agent|task>\n--id <identifier>\n--analyze-all (all components)"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // TARGET SELECTION
+  // =============================================================================
+  subgraph cluster_target {
+    label="Target Selection";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    select_target [shape=diamond, label="Analysis\nTarget?"];
+
+    target_swarm [label="Analyze\nSwarm", fillcolor=purple];
+    target_agent [label="Analyze\nAgent", fillcolor=purple];
+    target_task [label="Analyze\nTask", fillcolor=purple];
+    target_all [label="Analyze\nAll Components", fillcolor=purple];
+  }
+
+  validate_syntax -> select_target [label="Yes"];
+
+  select_target -> target_swarm [label="swarm"];
+  select_target -> target_agent [label="agent"];
+  select_target -> target_task [label="task"];
+  select_target -> target_all [label="all"];
+
+  // =============================================================================
+  // DATA COLLECTION
+  // =============================================================================
+  subgraph cluster_collection {
+    label="Data Collection";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    collect_metrics [label="Collect Performance\nMetrics", fillcolor=lightblue, style="filled,bold"];
+
+    get_cpu_usage [label="Get CPU\nUsage", fillcolor=lightblue];
+    get_memory_usage [label="Get Memory\nUsage", fillcolor=lightblue];
+    get_task_count [label="Get Task\nCount", fillcolor=lightblue];
+    get_response_time [label="Get Response\nTime", fillcolor=lightblue];
+    get_throughput [label="Get\nThroughput", fillcolor=lightblue];
+    get_queue_depth [label="Get Queue\nDepth", fillcolor=lightblue];
+
+    aggregate_data [label="Aggregate\nData", fillcolor=lightblue];
+  }
+
+  target_swarm -> collect_metrics;
+  target_agent -> collect_metrics;
+  target_task -> collect_metrics;
+  target_all -> collect_metrics;
+
+  collect_metrics -> get_cpu_usage;
+  get_cpu_usage -> get_memory_usage;
+  get_memory_usage -> get_task_count;
+  get_task_count -> get_response_time;
+  get_response_time -> get_throughput;
+  get_throughput -> get_queue_depth;
+
+  get_queue_depth -> aggregate_data;
+
+  // =============================================================================
+  // STATISTICAL ANALYSIS
+  // =============================================================================
+  subgraph cluster_analysis {
+    label="Statistical Analysis";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    calc_percentiles [label="Calculate\nPercentiles\n(p50, p95, p99)", fillcolor=lightgreen];
+    calc_std_dev [label="Calculate Standard\nDeviation", fillcolor=lightgreen];
+    identify_outliers [label="Identify\nOutliers", fillcolor=lightgreen];
+
+    detect_patterns [label="Detect\nPatterns", fillcolor=lightgreen, style="filled,bold"];
+
+    pattern_check [shape=diamond, label="Patterns\nFound?"];
+  }
+
+  aggregate_data -> calc_percentiles;
+  calc_percentiles -> calc_std_dev;
+  calc_std_dev -> identify_outliers;
+  identify_outliers -> detect_patterns;
+
+  detect_patterns -> pattern_check;
+
+  // =============================================================================
+  // BOTTLENECK IDENTIFICATION
+  // =============================================================================
+  subgraph cluster_bottleneck {
+    label="Bottleneck Identification";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    check_cpu_bottleneck [shape=diamond, label="CPU\nBottleneck?"];
+    check_memory_bottleneck [shape=diamond, label="Memory\nBottleneck?"];
+    check_io_bottleneck [shape=diamond, label="I/O\nBottleneck?"];
+    check_network_bottleneck [shape=diamond, label="Network\nBottleneck?"];
+    check_coordination_bottleneck [shape=diamond, label="Coordination\nBottleneck?"];
+
+    cpu_bottleneck [label="CPU Bottleneck\nDetected", fillcolor=yellow];
+    memory_bottleneck [label="Memory Bottleneck\nDetected", fillcolor=yellow];
+    io_bottleneck [label="I/O Bottleneck\nDetected", fillcolor=yellow];
+    network_bottleneck [label="Network Bottleneck\nDetected", fillcolor=yellow];
+    coordination_bottleneck [label="Coordination Bottleneck\nDetected", fillcolor=yellow];
+
+    categorize_bottlenecks [label="Categorize\nBottlenecks", fillcolor=orange];
+  }
+
+  pattern_check -> check_cpu_bottleneck [label="Yes"];
+
+  check_cpu_bottleneck -> cpu_bottleneck [label="Yes"];
+  check_cpu_bottleneck -> check_memory_bottleneck [label="No"];
+  cpu_bottleneck -> check_memory_bottleneck;
+
+  check_memory_bottleneck -> memory_bottleneck [label="Yes"];
+  check_memory_bottleneck -> check_io_bottleneck [label="No"];
+  memory_bottleneck -> check_io_bottleneck;
+
+  check_io_bottleneck -> io_bottleneck [label="Yes"];
+  check_io_bottleneck -> check_network_bottleneck [label="No"];
+  io_bottleneck -> check_network_bottleneck;
+
+  check_network_bottleneck -> network_bottleneck [label="Yes"];
+  check_network_bottleneck -> check_coordination_bottleneck [label="No"];
+  network_bottleneck -> check_coordination_bottleneck;
+
+  check_coordination_bottleneck -> coordination_bottleneck [label="Yes"];
+  check_coordination_bottleneck -> categorize_bottlenecks [label="No"];
+  coordination_bottleneck -> categorize_bottlenecks;
+
+  // =============================================================================
+  // ROOT CAUSE ANALYSIS
+  // =============================================================================
+  subgraph cluster_root_cause {
+    label="Root Cause Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    analyze_root_cause [label="Analyze Root\nCause", fillcolor=lightpurple, style="filled,bold"];
+
+    trace_dependencies [label="Trace\nDependencies", fillcolor=lightpurple];
+    identify_blocking_tasks [label="Identify Blocking\nTasks", fillcolor=lightpurple];
+    analyze_resource_contention [label="Analyze Resource\nContention", fillcolor=lightpurple];
+
+    determine_severity [shape=diamond, label="Severity\nLevel?"];
+
+    critical_severity [label="Critical\nSeverity", fillcolor=red];
+    high_severity [label="High\nSeverity", fillcolor=orange];
+    medium_severity [label="Medium\nSeverity", fillcolor=yellow];
+  }
+
+  categorize_bottlenecks -> analyze_root_cause;
+
+  analyze_root_cause -> trace_dependencies;
+  trace_dependencies -> identify_blocking_tasks;
+  identify_blocking_tasks -> analyze_resource_contention;
+
+  analyze_resource_contention -> determine_severity;
+
+  determine_severity -> critical_severity [label="Critical"];
+  determine_severity -> high_severity [label="High"];
+  determine_severity -> medium_severity [label="Medium"];
+
+  // =============================================================================
+  // OPTIMIZATION RECOMMENDATIONS
+  // =============================================================================
+  subgraph cluster_recommendations {
+    label="Optimization Recommendations";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_recommendations [label="Generate\nRecommendations", fillcolor=lightgreen, style="filled,bold"];
+
+    recommend_topology_change [label="Recommend Topology\nChange", fillcolor=lightgreen];
+    recommend_agent_scaling [label="Recommend Agent\nScaling", fillcolor=lightgreen];
+    recommend_task_redistribution [label="Recommend Task\nRedistribution", fillcolor=lightgreen];
+    recommend_resource_allocation [label="Recommend Resource\nAllocation", fillcolor=lightgreen];
+    recommend_caching [label="Recommend\nCaching", fillcolor=lightgreen];
+
+    prioritize_recommendations [label="Prioritize\nRecommendations", fillcolor=lightgreen];
+  }
+
+  critical_severity -> generate_recommendations;
+  high_severity -> generate_recommendations;
+  medium_severity -> generate_recommendations;
+
+  generate_recommendations -> recommend_topology_change;
+  recommend_topology_change -> recommend_agent_scaling;
+  recommend_agent_scaling -> recommend_task_redistribution;
+  recommend_task_redistribution -> recommend_resource_allocation;
+  recommend_resource_allocation -> recommend_caching;
+
+  recommend_caching -> prioritize_recommendations;
+
+  // =============================================================================
+  // REPORT GENERATION
+  // =============================================================================
+  subgraph cluster_report {
+    label="Report Generation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    create_report [label="Create Bottleneck\nReport", fillcolor=lightblue, style="filled,bold"];
+
+    include_visualizations [label="Include\nVisualizations", fillcolor=lightblue];
+    include_metrics_table [label="Include Metrics\nTable", fillcolor=lightblue];
+    include_timeline [label="Include\nTimeline", fillcolor=lightblue];
+
+    format_report [label="Format\nReport", fillcolor=lightblue];
+    display_report [label="Display\nReport", fillcolor=lightblue];
+  }
+
+  prioritize_recommendations -> create_report;
+
+  create_report -> include_visualizations;
+  include_visualizations -> include_metrics_table;
+  include_metrics_table -> include_timeline;
+
+  include_timeline -> format_report;
+  format_report -> display_report;
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    store_results [label="Store Results\nin Memory", fillcolor=lightgreen];
+    success [label="Bottleneck Detection\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  display_report -> store_results;
+  store_results -> success;
+
+  // =============================================================================
+  // NO BOTTLENECKS PATH
+  // =============================================================================
+  subgraph cluster_no_bottleneck {
+    label="No Bottlenecks Path";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    no_bottleneck_report [label="No Bottlenecks\nDetected", fillcolor=lightgreen, style="filled,bold"];
+    system_healthy [label="System Performing\nOptimally", fillcolor=green];
+  }
+
+  pattern_check -> no_bottleneck_report [label="No"];
+  no_bottleneck_report -> system_healthy;
+  system_healthy -> store_results;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    failure [label="Bottleneck Detection\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+  log_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_blocker [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_blocker [style=invis];
+    legend_blocker -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

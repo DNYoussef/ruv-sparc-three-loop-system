@@ -1,0 +1,326 @@
+digraph DEPLOY_CHECK_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /deploy-check";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/deploy-check", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--environment <env>\n--skip-smoke\n--dry-run", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--environment <prod|staging>\n--skip-smoke (skip smoke tests)\n--dry-run (validation only)"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // PRE-DEPLOYMENT VALIDATION
+  // =============================================================================
+  subgraph cluster_pre_deploy {
+    label="Pre-Deployment Validation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    check_branch [shape=diamond, label="On Correct\nBranch?"];
+    check_commits [shape=diamond, label="All Commits\nPushed?"];
+    check_version [shape=diamond, label="Version\nBumped?"];
+
+    branch_error [shape=octagon, fillcolor=crimson,
+                  label="Wrong Branch\nMust be main/master"];
+    commits_error [shape=octagon, fillcolor=orange,
+                   label="Unpushed Commits\nPush first"];
+    version_warning [shape=octagon, fillcolor=yellow,
+                     label="Version Not Bumped\nWarning"];
+  }
+
+  validate_syntax -> check_branch [label="Yes"];
+
+  check_branch -> branch_error [label="No"];
+  check_branch -> check_commits [label="Yes"];
+
+  check_commits -> commits_error [label="No"];
+  check_commits -> check_version [label="Yes"];
+
+  check_version -> version_warning [label="No"];
+
+  // =============================================================================
+  // COMPREHENSIVE AUDIT PIPELINE
+  // =============================================================================
+  subgraph cluster_audit {
+    label="Comprehensive Audit Pipeline";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    run_theater_detect [label="Theater Detection\n0% tolerance", fillcolor=yellow, style="filled,bold"];
+    run_functionality_audit [label="Functionality Audit\nSandbox testing", fillcolor=yellow, style="filled,bold"];
+    run_style_audit [label="Style Audit\nLinting & formatting", fillcolor=yellow];
+
+    theater_found [shape=diamond, label="Theater\nDetected?"];
+
+    theater_blocker [shape=octagon, fillcolor=crimson,
+                     label="THEATER DETECTED\nDEPLOYMENT BLOCKED"];
+
+    functionality_pass [shape=diamond, label="Functionality\nTests Pass?"];
+
+    functionality_blocker [shape=octagon, fillcolor=crimson,
+                           label="FUNCTIONALITY FAILED\nDEPLOYMENT BLOCKED"];
+
+    style_pass [shape=diamond, label="Style\nIssues?"];
+
+    style_warning [shape=octagon, fillcolor=orange,
+                   label="Style Issues\nWarning"];
+  }
+
+  check_version -> run_theater_detect [label="Yes"];
+  version_warning -> run_theater_detect;
+
+  run_theater_detect -> theater_found;
+  theater_found -> theater_blocker [label="Yes"];
+  theater_found -> run_functionality_audit [label="No"];
+
+  run_functionality_audit -> functionality_pass;
+  functionality_pass -> functionality_blocker [label="No"];
+  functionality_pass -> run_style_audit [label="Yes"];
+
+  run_style_audit -> style_pass;
+  style_pass -> style_warning [label="Yes"];
+
+  // =============================================================================
+  // PERFORMANCE VALIDATION
+  // =============================================================================
+  subgraph cluster_performance {
+    label="Performance Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    run_performance_tests [label="Run Performance\nBenchmarks", fillcolor=lightblue];
+    check_memory_usage [label="Check Memory\nUsage", fillcolor=lightblue];
+    check_load_time [label="Check Load\nTime", fillcolor=lightblue];
+
+    performance_pass [shape=diamond, label="Performance\nAcceptable?"];
+
+    performance_warning [shape=octagon, fillcolor=orange,
+                         label="Performance Degradation\nWarning"];
+  }
+
+  style_pass -> run_performance_tests [label="No"];
+  style_warning -> run_performance_tests;
+
+  run_performance_tests -> check_memory_usage;
+  check_memory_usage -> check_load_time;
+  check_load_time -> performance_pass;
+
+  performance_pass -> performance_warning [label="No"];
+
+  // =============================================================================
+  // SECURITY VALIDATION
+  // =============================================================================
+  subgraph cluster_security {
+    label="Security Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    scan_dependencies [label="Scan Dependencies\nfor Vulnerabilities", fillcolor=yellow];
+    check_secrets [label="Check for\nSecrets", fillcolor=yellow];
+    validate_env_vars [label="Validate Environment\nVariables", fillcolor=yellow];
+
+    security_pass [shape=diamond, label="Security\nIssues?"];
+
+    security_blocker [shape=octagon, fillcolor=crimson,
+                      label="SECURITY ISSUES\nDEPLOYMENT BLOCKED"];
+  }
+
+  performance_pass -> scan_dependencies [label="Yes"];
+  performance_warning -> scan_dependencies;
+
+  scan_dependencies -> check_secrets;
+  check_secrets -> validate_env_vars;
+  validate_env_vars -> security_pass;
+
+  security_pass -> security_blocker [label="Yes"];
+
+  // =============================================================================
+  // SMOKE TESTS
+  // =============================================================================
+  subgraph cluster_smoke {
+    label="Smoke Tests";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    build_project [label="Build\nProject", fillcolor=lightgreen];
+    start_local [label="Start Local\nInstance", fillcolor=lightgreen];
+
+    test_health [label="Test Health\nEndpoint", fillcolor=lightgreen];
+    test_critical_paths [label="Test Critical\nPaths", fillcolor=lightgreen];
+    test_api_responses [label="Test API\nResponses", fillcolor=lightgreen];
+
+    smoke_pass [shape=diamond, label="Smoke Tests\nPass?"];
+
+    smoke_blocker [shape=octagon, fillcolor=crimson,
+                   label="SMOKE TESTS FAILED\nDEPLOYMENT BLOCKED"];
+
+    stop_local [label="Stop Local\nInstance", fillcolor=lightgreen];
+  }
+
+  security_pass -> build_project [label="No"];
+
+  build_project -> start_local;
+  start_local -> test_health;
+
+  test_health -> test_critical_paths;
+  test_critical_paths -> test_api_responses;
+
+  test_api_responses -> smoke_pass;
+
+  smoke_pass -> smoke_blocker [label="No"];
+  smoke_pass -> stop_local [label="Yes"];
+
+  // =============================================================================
+  // DEPLOYMENT CHECKLIST
+  // =============================================================================
+  subgraph cluster_checklist {
+    label="Deployment Checklist";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    verify_backup [shape=diamond, label="Backup\nExists?"];
+    verify_rollback [shape=diamond, label="Rollback Plan\nReady?"];
+    verify_monitoring [shape=diamond, label="Monitoring\nConfigured?"];
+
+    backup_warning [shape=octagon, fillcolor=orange,
+                    label="No Backup\nWarning"];
+    rollback_warning [shape=octagon, fillcolor=orange,
+                      label="No Rollback Plan\nWarning"];
+    monitoring_warning [shape=octagon, fillcolor=orange,
+                        label="Monitoring Not Configured\nWarning"];
+
+    generate_checklist [label="Generate Deployment\nChecklist", fillcolor=lightpurple, style="filled,bold"];
+  }
+
+  stop_local -> verify_backup;
+
+  verify_backup -> backup_warning [label="No"];
+  verify_backup -> verify_rollback [label="Yes"];
+  backup_warning -> verify_rollback;
+
+  verify_rollback -> rollback_warning [label="No"];
+  verify_rollback -> verify_monitoring [label="Yes"];
+  rollback_warning -> verify_monitoring;
+
+  verify_monitoring -> monitoring_warning [label="No"];
+  verify_monitoring -> generate_checklist [label="Yes"];
+  monitoring_warning -> generate_checklist;
+
+  // =============================================================================
+  // READINESS REPORT
+  // =============================================================================
+  subgraph cluster_report {
+    label="Readiness Report";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    calc_readiness_score [label="Calculate Readiness\nScore", fillcolor=lightblue];
+
+    readiness_check [shape=diamond, label="Readiness\nScore?"];
+
+    green_light [label="✓ GREEN LIGHT\nDeploy Approved", fillcolor=green, style="filled,bold"];
+    yellow_light [label="⚠ YELLOW LIGHT\nDeploy with Caution", fillcolor=yellow];
+    red_light [label="✗ RED LIGHT\nDeploy Blocked", fillcolor=red, style="filled,bold"];
+
+    display_report [label="Display Readiness\nReport", fillcolor=lightblue];
+  }
+
+  generate_checklist -> calc_readiness_score;
+  calc_readiness_score -> readiness_check;
+
+  readiness_check -> green_light [label="≥ 90%"];
+  readiness_check -> yellow_light [label="70-89%"];
+  readiness_check -> red_light [label="< 70%"];
+
+  green_light -> display_report;
+  yellow_light -> display_report;
+  red_light -> display_report;
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    store_results [label="Store Results\nin Memory", fillcolor=lightgreen];
+    success [label="Deploy Check\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  display_report -> store_results;
+  store_results -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    failure [label="Deploy Check\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+  branch_error -> log_error;
+  theater_blocker -> log_error;
+  functionality_blocker -> log_error;
+  security_blocker -> log_error;
+  smoke_blocker -> log_error;
+
+  log_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_blocker [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warning [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_blocker [style=invis];
+    legend_blocker -> legend_warning [style=invis];
+    legend_warning -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

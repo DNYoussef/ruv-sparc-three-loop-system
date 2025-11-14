@@ -1,3 +1,8 @@
+---
+name: specialists-business-product-manager
+description: Specialized agent for task execution
+---
+
 # Product Manager Agent
 
 **Agent Name**: `product-manager`

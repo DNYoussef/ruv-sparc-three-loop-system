@@ -1,0 +1,185 @@
+/**
+ * Agent Cloning and Benchmarking Process
+ * Command: /agent-clone, /benchmark-agent
+ * Phase: 2 (Memory & State)
+ */
+
+digraph agent_cloning {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Agent Cloning &amp; Benchmarking</B><BR/>Clone → Configure → Benchmark → Deploy>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Source Agent Analysis
+    subgraph cluster_source {
+        label="Source Agent Analysis";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        source_agent [label="Source Agent", shape=box, fillcolor="#bbdefb", penwidth=2];
+        analyze_config [label="Analyze\nConfiguration", shape=box, fillcolor="#90caf9"];
+        extract_state [label="Extract\nState", shape=box, fillcolor="#64b5f6"];
+        capture_memory [label="Capture\nMemory", shape=box, fillcolor="#42a5f5"];
+        snapshot_neural [label="Snapshot Neural\nPatterns", shape=box, fillcolor="#2196f3"];
+        record_metrics [label="Record\nMetrics", shape=box, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: Cloning Process
+    subgraph cluster_clone {
+        label="Cloning Process";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        clone_trigger [label="Clone\nTrigger", shape=box, fillcolor="#e1bee7"];
+        create_blueprint [label="Create\nBlueprint", shape=box, fillcolor="#ce93d8"];
+        clone_type [label="Clone Type?", shape=diamond, fillcolor="#ba68c8"];
+        full_clone [label="Full Clone\n(exact copy)", shape=box, fillcolor="#ab47bc"];
+        partial_clone [label="Partial Clone\n(config only)", shape=box, fillcolor="#9c27b0"];
+        custom_clone [label="Custom Clone\n(selective)", shape=box, fillcolor="#8e24aa"];
+        generate_id [label="Generate\nClone ID", shape=box, fillcolor="#7b1fa2"];
+        instantiate [label="Instantiate\nClone", shape=box, fillcolor="#6a1b9a"];
+    }
+
+    // Subgraph: Configuration
+    subgraph cluster_config {
+        label="Clone Configuration";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        apply_config [label="Apply Base\nConfiguration", shape=box, fillcolor="#ffe0b2"];
+        customize [label="Customize?", shape=diamond, fillcolor="#ffcc80"];
+        modify_params [label="Modify\nParameters", shape=box, fillcolor="#ffb74d"];
+        inject_memory [label="Inject\nMemory State", shape=box, fillcolor="#ffa726"];
+        apply_neural [label="Apply Neural\nPatterns", shape=box, fillcolor="#ff9800"];
+        validate_clone [label="Validate\nClone", shape=diamond, fillcolor="#fb8c00"];
+        clone_ready [label="Clone Ready", shape=box, fillcolor="#f57c00"];
+        clone_failed [label="Clone Failed", shape=box, fillcolor="#ef6c00", style="rounded,filled,dashed"];
+    }
+
+    // Subgraph: Benchmarking
+    subgraph cluster_benchmark {
+        label="Benchmarking Suite";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        benchmark_start [label="Benchmark\nStart", shape=box, fillcolor="#c8e6c9"];
+
+        // Performance tests
+        perf_tests [label="Performance\nTests", shape=box, fillcolor="#a5d6a7"];
+        response_time [label="Response\nTime", shape=box, fillcolor="#81c784"];
+        throughput [label="Throughput", shape=box, fillcolor="#66bb6a"];
+        resource_usage [label="Resource\nUsage", shape=box, fillcolor="#4caf50"];
+
+        // Quality tests
+        quality_tests [label="Quality\nTests", shape=box, fillcolor="#66bb6a"];
+        accuracy [label="Accuracy", shape=box, fillcolor="#4caf50"];
+        consistency [label="Consistency", shape=box, fillcolor="#43a047"];
+        reliability [label="Reliability", shape=box, fillcolor="#388e3c"];
+
+        // Comparison
+        compare_baseline [label="Compare to\nBaseline", shape=box, fillcolor="#2e7d32"];
+        generate_report [label="Generate\nBenchmark Report", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Deployment
+    subgraph cluster_deploy {
+        label="Deployment";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        deploy_decision [label="Deploy?", shape=diamond, fillcolor="#fff59d"];
+        register_clone [label="Register\nClone", shape=box, fillcolor="#fff176"];
+        assign_tasks [label="Assign\nTasks", shape=box, fillcolor="#ffee58"];
+        monitor_clone [label="Monitor\nPerformance", shape=box, fillcolor="#ffeb3b"];
+        optimization [label="Optimize\nif Needed", shape=box, fillcolor="#fdd835"];
+        archive_clone [label="Archive/\nDecommission", shape=box, fillcolor="#f9a825"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Source Analysis", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Cloning", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Configuration", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Benchmarking", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Deployment", shape=box, fillcolor="#ffeb3b"];
+
+        leg1 -> leg2 -> leg3 -> leg4 -> leg5 [style=invis];
+    }
+
+    // Source analysis flow
+    source_agent -> analyze_config;
+    analyze_config -> extract_state;
+    extract_state -> capture_memory;
+    capture_memory -> snapshot_neural;
+    snapshot_neural -> record_metrics;
+
+    // Cloning flow
+    clone_trigger -> create_blueprint;
+    record_metrics -> create_blueprint [style=dashed];
+    create_blueprint -> clone_type;
+    clone_type -> full_clone [label="full"];
+    clone_type -> partial_clone [label="partial"];
+    clone_type -> custom_clone [label="custom"];
+    full_clone -> generate_id;
+    partial_clone -> generate_id;
+    custom_clone -> generate_id;
+    generate_id -> instantiate;
+
+    // Configuration flow
+    instantiate -> apply_config;
+    apply_config -> customize;
+    customize -> modify_params [label="yes"];
+    customize -> inject_memory [label="no"];
+    modify_params -> inject_memory;
+    inject_memory -> apply_neural;
+    apply_neural -> validate_clone;
+    validate_clone -> clone_ready [label="valid"];
+    validate_clone -> clone_failed [label="invalid"];
+
+    // Benchmarking flow
+    clone_ready -> benchmark_start;
+    benchmark_start -> perf_tests;
+    benchmark_start -> quality_tests;
+
+    perf_tests -> response_time;
+    perf_tests -> throughput;
+    perf_tests -> resource_usage;
+
+    quality_tests -> accuracy;
+    quality_tests -> consistency;
+    quality_tests -> reliability;
+
+    response_time -> compare_baseline;
+    throughput -> compare_baseline;
+    resource_usage -> compare_baseline;
+    accuracy -> compare_baseline;
+    consistency -> compare_baseline;
+    reliability -> compare_baseline;
+
+    compare_baseline -> generate_report;
+
+    // Deployment flow
+    generate_report -> deploy_decision;
+    deploy_decision -> register_clone [label="yes"];
+    deploy_decision -> archive_clone [label="no"];
+    register_clone -> assign_tasks;
+    assign_tasks -> monitor_clone;
+    monitor_clone -> optimization;
+    optimization -> monitor_clone [label="iterate", style=dashed];
+}

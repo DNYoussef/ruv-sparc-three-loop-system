@@ -1,0 +1,715 @@
+{
+  "metadata": {
+    "generated": "2025-11-01T00:00:00Z",
+    "total_skills": 73,
+    "scan_source": "~/.claude/skills/ directory",
+    "analysis_completeness": "comprehensive"
+  },
+  "skills": [
+    {
+      "name": "agent-creator",
+      "path": ".claude/skills/agent-creator",
+      "purpose": "Creates specialized AI agents with optimized system prompts using official 4-phase SOP methodology",
+      "category": "meta-tool",
+      "priority": "critical",
+      "complexity": "very-high",
+      "diagram_type": "workflow",
+      "key_features": ["4-phase-methodology", "evidence-based-prompting", "claude-agent-sdk", "production-ready"],
+      "time_investment": "3.5-5.5 hours",
+      "dependencies": ["prompt-architect", "skill-forge"],
+      "graphviz_priority": 1
+    },
+    {
+      "name": "research-driven-planning",
+      "path": ".claude/skills/research-driven-planning",
+      "purpose": "Loop 1: Research-driven requirements analysis with 5x pre-mortem cycles and multi-agent consensus",
+      "category": "planning",
+      "priority": "critical",
+      "complexity": "very-high",
+      "diagram_type": "workflow",
+      "key_features": ["6-agent-research", "8-agent-premortem", "byzantine-consensus", "failure-prevention-85-95-percent"],
+      "time_investment": "6-11 hours",
+      "feeds_to": ["parallel-swarm-implementation"],
+      "receives_from": ["cicd-intelligent-recovery"],
+      "graphviz_priority": 2
+    },
+    {
+      "name": "parallel-swarm-implementation",
+      "path": ".claude/skills/parallel-swarm-implementation",
+      "purpose": "Loop 2: META-SKILL dynamically compiling plans into agent+skill execution graphs",
+      "category": "implementation",
+      "priority": "critical",
+      "complexity": "very-high",
+      "diagram_type": "workflow",
+      "key_features": ["agent-skill-matrix", "dynamic-selection", "theater-detection", "8.3x-speedup"],
+      "time_investment": "4-6 hours",
+      "feeds_to": ["cicd-intelligent-recovery"],
+      "receives_from": ["research-driven-planning"],
+      "graphviz_priority": 3
+    },
+    {
+      "name": "cicd-intelligent-recovery",
+      "path": ".claude/skills/cicd-intelligent-recovery",
+      "purpose": "Loop 3: CI/CD automation with intelligent failure recovery and root cause analysis",
+      "category": "quality",
+      "priority": "critical",
+      "complexity": "very-high",
+      "diagram_type": "workflow",
+      "key_features": ["gemini-2M-context", "7-agent-analysis", "byzantine-consensus", "100-percent-success"],
+      "time_investment": "1.5-2 hours",
+      "feeds_to": ["research-driven-planning"],
+      "receives_from": ["parallel-swarm-implementation"],
+      "graphviz_priority": 4
+    },
+    {
+      "name": "cascade-orchestrator",
+      "path": ".claude/skills/cascade-orchestrator",
+      "purpose": "Creates sophisticated workflow cascades with multi-model routing and Codex sandbox iteration",
+      "category": "orchestration",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["sequential-parallel-conditional", "multi-model-routing", "codex-iteration", "memory-persistence"],
+      "version": "2.0.0",
+      "graphviz_priority": 5
+    },
+    {
+      "name": "functionality-audit",
+      "path": ".claude/skills/functionality-audit",
+      "purpose": "Validates code actually works through sandbox testing and systematic debugging",
+      "category": "quality",
+      "priority": "high",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "key_features": ["sandbox-testing", "execution-verification", "systematic-debugging", "reality-validation"],
+      "used_by": ["cicd-intelligent-recovery", "audit-pipeline"],
+      "graphviz_priority": 10
+    },
+    {
+      "name": "theater-detection-audit",
+      "path": ".claude/skills/theater-detection-audit",
+      "purpose": "Detects completion theater, mock theater, and test theater with 6-agent Byzantine consensus",
+      "category": "quality",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["6-agent-consensus", "theater-detection", "zero-tolerance", "reality-validation"],
+      "used_by": ["parallel-swarm-implementation", "cicd-intelligent-recovery"],
+      "graphviz_priority": 11
+    },
+    {
+      "name": "prompt-architect",
+      "path": ".claude/skills/prompt-architect",
+      "purpose": "Comprehensive framework for creating and refining prompts using evidence-based techniques",
+      "category": "meta-tool",
+      "priority": "high",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "key_features": ["self-consistency", "program-of-thought", "plan-and-solve", "structural-optimization"],
+      "used_by": ["agent-creator", "micro-skill-creator"],
+      "graphviz_priority": 8
+    },
+    {
+      "name": "micro-skill-creator",
+      "path": ".claude/skills/micro-skill-creator",
+      "purpose": "Rapidly creates atomic, focused skills with evidence-based specialist agents",
+      "category": "meta-tool",
+      "priority": "high",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "key_features": ["atomic-excellence", "evidence-based-agents", "composability", "unix-philosophy"],
+      "version": "2.0.0",
+      "used_by": ["cascade-orchestrator"],
+      "graphviz_priority": 9
+    },
+    {
+      "name": "code-review-assistant",
+      "path": ".claude/skills/code-review-assistant",
+      "purpose": "Comprehensive PR review using multi-agent swarm with specialized reviewers",
+      "category": "quality",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["5-agent-swarm", "security-performance-style-tests-docs", "auto-fix-suggestions", "merge-readiness"],
+      "version": "1.0.0",
+      "graphviz_priority": 15
+    },
+    {
+      "name": "github-code-review",
+      "path": ".claude/skills/github-code-review",
+      "purpose": "AI-powered GitHub code review with swarm coordination and gh CLI integration",
+      "category": "github",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["multi-agent-review", "pr-management", "security-performance-analysis", "intelligent-comments"],
+      "requires": ["github-cli", "ruv-swarm", "claude-flow"],
+      "graphviz_priority": 16
+    },
+    {
+      "name": "pptx-generation",
+      "path": ".claude/skills/pptx-generation",
+      "purpose": "Enterprise-grade PowerPoint generation with evidence-based prompting and spatial optimization",
+      "category": "generation",
+      "priority": "medium",
+      "complexity": "very-high",
+      "diagram_type": "workflow",
+      "key_features": ["html2pptx-workflow", "constraint-based-design", "multi-chat-architecture", "accessibility-compliance"],
+      "graphviz_priority": 20
+    },
+    {
+      "name": "skill-forge",
+      "path": ".claude/skills/skill-forge",
+      "purpose": "Comprehensive skill creation framework with templates and best practices",
+      "category": "meta-tool",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 25
+    },
+    {
+      "name": "skill-creator-agent",
+      "path": ".claude/skills/skill-creator-agent",
+      "purpose": "Creates skills where each ties to a specialist agent with evidence-based prompting",
+      "category": "meta-tool",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 26
+    },
+    {
+      "name": "intent-analyzer",
+      "path": ".claude/skills/intent-analyzer",
+      "purpose": "Advanced intent interpretation using cognitive science and probabilistic mapping",
+      "category": "analysis",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 30
+    },
+    {
+      "name": "feature-dev-complete",
+      "path": ".claude/skills/feature-dev-complete",
+      "purpose": "Complete feature development lifecycle from research to deployment",
+      "category": "workflow",
+      "priority": "medium",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["12-stage-workflow", "gemini-search", "codex-prototyping", "comprehensive-testing"],
+      "graphviz_priority": 35
+    },
+    {
+      "name": "production-readiness",
+      "path": ".claude/skills/production-readiness",
+      "purpose": "Comprehensive pre-deployment validation with audit pipeline and quality checks",
+      "category": "quality",
+      "priority": "high",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 12
+    },
+    {
+      "name": "quick-quality-check",
+      "path": ".claude/skills/quick-quality-check",
+      "purpose": "Lightning-fast parallel quality check for instant feedback",
+      "category": "quality",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "workflow",
+      "graphviz_priority": 40
+    },
+    {
+      "name": "smart-bug-fix",
+      "path": ".claude/skills/smart-bug-fix",
+      "purpose": "Intelligent bug fixing with root cause analysis",
+      "category": "debugging",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 41
+    },
+    {
+      "name": "agentdb-advanced",
+      "path": ".claude/skills/agentdb-advanced",
+      "purpose": "Master advanced AgentDB features including QUIC sync and distributed systems",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 50
+    },
+    {
+      "name": "agentdb-learning",
+      "path": ".claude/skills/agentdb-learning",
+      "purpose": "Create and train AI learning plugins with AgentDB's 9 RL algorithms",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 51
+    },
+    {
+      "name": "agentdb-memory-patterns",
+      "path": ".claude/skills/agentdb-memory-patterns",
+      "purpose": "Implement persistent memory patterns for AI agents",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 52
+    },
+    {
+      "name": "agentdb-optimization",
+      "path": ".claude/skills/agentdb-optimization",
+      "purpose": "Optimize AgentDB with quantization and HNSW indexing",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 53
+    },
+    {
+      "name": "agentdb-vector-search",
+      "path": ".claude/skills/agentdb-vector-search",
+      "purpose": "Implement semantic vector search with AgentDB",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 54
+    },
+    {
+      "name": "flow-nexus-neural",
+      "path": ".claude/skills/flow-nexus-neural",
+      "purpose": "Train and deploy neural networks in distributed E2B sandboxes",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 55
+    },
+    {
+      "name": "flow-nexus-platform",
+      "path": ".claude/skills/flow-nexus-platform",
+      "purpose": "Comprehensive Flow Nexus platform management",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 56
+    },
+    {
+      "name": "flow-nexus-swarm",
+      "path": ".claude/skills/flow-nexus-swarm",
+      "purpose": "Cloud-based AI swarm deployment with Flow Nexus",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "reference",
+      "graphviz_priority": 57
+    },
+    {
+      "name": "github-multi-repo",
+      "path": ".claude/skills/github-multi-repo",
+      "purpose": "Multi-repository coordination and architecture management",
+      "category": "github",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 45
+    },
+    {
+      "name": "github-project-management",
+      "path": ".claude/skills/github-project-management",
+      "purpose": "Comprehensive GitHub project management with swarm coordination",
+      "category": "github",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 46
+    },
+    {
+      "name": "github-release-management",
+      "path": ".claude/skills/github-release-management",
+      "purpose": "GitHub release orchestration with AI swarm coordination",
+      "category": "github",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 47
+    },
+    {
+      "name": "github-workflow-automation",
+      "path": ".claude/skills/github-workflow-automation",
+      "purpose": "Advanced GitHub Actions automation with swarm coordination",
+      "category": "github",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 48
+    },
+    {
+      "name": "hive-mind-advanced",
+      "path": ".claude/skills/hive-mind-advanced",
+      "purpose": "Advanced Hive Mind collective intelligence with queen-led coordination",
+      "category": "orchestration",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "graphviz_priority": 60
+    },
+    {
+      "name": "hooks-automation",
+      "path": ".claude/skills/hooks-automation",
+      "purpose": "Automated coordination and learning from Claude Code operations",
+      "category": "automation",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 42
+    },
+    {
+      "name": "i18n-automation",
+      "path": ".claude/skills/i18n-automation",
+      "purpose": "Automate internationalization workflows",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "workflow",
+      "graphviz_priority": 70
+    },
+    {
+      "name": "interactive-planner",
+      "path": ".claude/skills/interactive-planner",
+      "purpose": "Gather requirements through structured multi-select questions",
+      "category": "planning",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "workflow",
+      "graphviz_priority": 71
+    },
+    {
+      "name": "network-security-setup",
+      "path": ".claude/skills/network-security-setup",
+      "purpose": "Configure Claude Code sandbox network isolation",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 72
+    },
+    {
+      "name": "pair-programming",
+      "path": ".claude/skills/pair-programming",
+      "purpose": "AI-assisted pair programming with multiple modes and real-time verification",
+      "category": "workflow",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 43
+    },
+    {
+      "name": "performance-analysis",
+      "path": ".claude/skills/performance-analysis",
+      "purpose": "Comprehensive performance analysis and bottleneck detection",
+      "category": "analysis",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 44
+    },
+    {
+      "name": "reasoningbank-agentdb",
+      "path": ".claude/skills/reasoningbank-agentdb",
+      "purpose": "ReasoningBank adaptive learning with AgentDB's 150x faster vector DB",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 58
+    },
+    {
+      "name": "reasoningbank-intelligence",
+      "path": ".claude/skills/reasoningbank-intelligence",
+      "purpose": "Adaptive learning with ReasoningBank for pattern recognition",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 59
+    },
+    {
+      "name": "sandbox-configurator",
+      "path": ".claude/skills/sandbox-configurator",
+      "purpose": "Configure Claude Code sandbox security",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 73
+    },
+    {
+      "name": "skill-builder",
+      "path": ".claude/skills/skill-builder",
+      "purpose": "Create Claude Code Skills with proper YAML frontmatter",
+      "category": "meta-tool",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 27
+    },
+    {
+      "name": "sparc-methodology",
+      "path": ".claude/skills/sparc-methodology",
+      "purpose": "SPARC development methodology implementation",
+      "category": "workflow",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "key_features": ["specification", "pseudocode", "architecture", "refinement", "completion"],
+      "graphviz_priority": 6
+    },
+    {
+      "name": "stream-chain",
+      "path": ".claude/skills/stream-chain",
+      "purpose": "Stream-based workflow chaining",
+      "category": "orchestration",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 61
+    },
+    {
+      "name": "style-audit",
+      "path": ".claude/skills/style-audit",
+      "purpose": "Code style and quality audit",
+      "category": "quality",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "workflow",
+      "graphviz_priority": 49
+    },
+    {
+      "name": "swarm-advanced",
+      "path": ".claude/skills/swarm-advanced",
+      "purpose": "Advanced swarm coordination patterns",
+      "category": "orchestration",
+      "priority": "medium",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "graphviz_priority": 36
+    },
+    {
+      "name": "swarm-orchestration",
+      "path": ".claude/skills/swarm-orchestration",
+      "purpose": "Multi-agent swarm orchestration",
+      "category": "orchestration",
+      "priority": "medium",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "graphviz_priority": 37
+    },
+    {
+      "name": "verification-quality",
+      "path": ".claude/skills/verification-quality",
+      "purpose": "Comprehensive quality verification",
+      "category": "quality",
+      "priority": "medium",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 38
+    },
+    {
+      "name": "web-cli-teleport",
+      "path": ".claude/skills/web-cli-teleport",
+      "purpose": "Web CLI integration and teleportation",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 74
+    },
+    {
+      "name": "slash-command-encoder",
+      "path": ".claude/skills/slash-command-encoder",
+      "purpose": "Create and manage slash commands",
+      "category": "meta-tool",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 75
+    },
+    {
+      "name": "sop-product-launch",
+      "path": ".claude/skills/sop-product-launch",
+      "purpose": "Standard Operating Procedure for product launches",
+      "category": "workflow",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 62
+    },
+    {
+      "name": "sop-api-development",
+      "path": ".claude/skills/sop-api-development",
+      "purpose": "Standard Operating Procedure for API development",
+      "category": "workflow",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 63
+    },
+    {
+      "name": "sop-code-review",
+      "path": ".claude/skills/sop-code-review",
+      "purpose": "Standard Operating Procedure for code reviews",
+      "category": "workflow",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 64
+    },
+    {
+      "name": "ml-expert",
+      "path": ".claude/skills/ml-expert",
+      "purpose": "Machine learning expertise and guidance",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "reference",
+      "graphviz_priority": 65
+    },
+    {
+      "name": "ml-training-debugger",
+      "path": ".claude/skills/ml-training-debugger",
+      "purpose": "Debug machine learning training issues",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "graphviz_priority": 66
+    },
+    {
+      "name": "reverse-engineer-debug",
+      "path": ".claude/skills/reverse-engineer-debug.md",
+      "purpose": "Reverse engineering and debugging workflows",
+      "category": "debugging",
+      "priority": "low",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 67
+    },
+    {
+      "name": "gemini-megacontext",
+      "path": ".claude/skills/gemini-megacontext.md",
+      "purpose": "Leverage Gemini's 1M-2M token context window",
+      "category": "specialized",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 31
+    },
+    {
+      "name": "gemini-search",
+      "path": ".claude/skills/gemini-search.md",
+      "purpose": "Web-grounded search with Gemini",
+      "category": "specialized",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 32
+    },
+    {
+      "name": "gemini-media",
+      "path": ".claude/skills/gemini-media.md",
+      "purpose": "Gemini media generation (Imagen/Veo)",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 68
+    },
+    {
+      "name": "gemini-extensions",
+      "path": ".claude/skills/gemini-extensions.md",
+      "purpose": "Gemini extension integrations",
+      "category": "specialized",
+      "priority": "low",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 69
+    },
+    {
+      "name": "codex-auto",
+      "path": ".claude/skills/codex-auto.md",
+      "purpose": "Codex Full Auto mode for rapid prototyping",
+      "category": "specialized",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 33
+    },
+    {
+      "name": "codex-reasoning",
+      "path": ".claude/skills/codex-reasoning.md",
+      "purpose": "Codex Reasoning mode for alternative perspectives",
+      "category": "specialized",
+      "priority": "medium",
+      "complexity": "low",
+      "diagram_type": "reference",
+      "graphviz_priority": 34
+    },
+    {
+      "name": "multi-model",
+      "path": ".claude/skills/multi-model.md",
+      "purpose": "Multi-model orchestration (Gemini/Codex/Claude)",
+      "category": "orchestration",
+      "priority": "high",
+      "complexity": "medium",
+      "diagram_type": "workflow",
+      "graphviz_priority": 7
+    },
+    {
+      "name": "audit-pipeline",
+      "path": ".claude/skills/audit-pipeline.md",
+      "purpose": "Complete audit pipeline: theater → functionality → style",
+      "category": "quality",
+      "priority": "high",
+      "complexity": "high",
+      "diagram_type": "workflow",
+      "graphviz_priority": 13
+    }
+  ],
+  "statistics": {
+    "by_category": {
+      "meta-tool": 7,
+      "planning": 2,
+      "implementation": 1,
+      "quality": 10,
+      "orchestration": 7,
+      "workflow": 11,
+      "specialized": 23,
+      "github": 5,
+      "debugging": 2,
+      "analysis": 2,
+      "automation": 1,
+      "generation": 1
+    },
+    "by_priority": {
+      "critical": 4,
+      "high": 11,
+      "medium": 22,
+      "low": 36
+    },
+    "by_complexity": {
+      "very-high": 6,
+      "high": 16,
+      "medium": 32,
+      "low": 19
+    },
+    "graphviz_candidates": {
+      "top_10": ["agent-creator", "research-driven-planning", "parallel-swarm-implementation", "cicd-intelligent-recovery", "cascade-orchestrator", "sparc-methodology", "multi-model", "prompt-architect", "micro-skill-creator", "functionality-audit"],
+      "total_high_priority": 15
+    }
+  }
+}

@@ -1,3 +1,8 @@
+---
+name: platforms-platform-istio-istio-service-mesh-agent
+description: These metrics enable continuous improvement and cost optimization.
+---
+
 # ISTIO SERVICE MESH AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 192

@@ -1,3 +1,8 @@
+---
+name: specialists-business-roadmap-product-roadmap-planner
+description: PRODUCT ROADMAP PLANNER - SYSTEM PROMPT v2.0
+---
+
 # PRODUCT ROADMAP PLANNER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 159

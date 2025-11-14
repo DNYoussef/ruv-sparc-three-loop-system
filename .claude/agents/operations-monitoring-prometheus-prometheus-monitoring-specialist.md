@@ -1,3 +1,8 @@
+---
+name: operations-monitoring-prometheus-prometheus-monitoring-specialist
+description: PROMETHEUS MONITORING SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # PROMETHEUS MONITORING SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 171

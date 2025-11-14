@@ -1,3 +1,8 @@
+---
+name: quality-audit-compliance-compliance-validation-agent
+description: Specialized agent for task execution
+---
+
 # COMPLIANCE VALIDATION AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 142

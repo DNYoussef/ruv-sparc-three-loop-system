@@ -1,3 +1,8 @@
+---
+name: operations-devops-gitlab-gitlab-cicd-specialist
+description: GITLAB CI/CD SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # GITLAB CI/CD SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 167

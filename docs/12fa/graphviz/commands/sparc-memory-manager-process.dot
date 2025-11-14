@@ -1,0 +1,82 @@
+// SPARC Memory Manager Command Workflow
+// State management and memory coordination
+digraph sparc_memory_manager_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:memory-manager\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        operation_parser [label="Operation\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_storage {
+        label="Memory Storage";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        namespace_manager [label="Namespace\nManager", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        data_serializer [label="Data\nSerializer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        storage_engine [label="Storage\nEngine", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        indexer [label="Search\nIndexer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_coordination {
+        label="State Coordination";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        crdt_manager [label="CRDT\nManager", fillcolor="#2563eb", fontcolor="#ffffff"];
+        conflict_resolver [label="Conflict\nResolver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        sync_coordinator [label="Sync\nCoordinator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        version_controller [label="Version\nController", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_context {
+        label="Context Management";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        context_builder [label="Context\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+        relevance_scorer [label="Relevance\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+        context_trimmer [label="Context\nTrimmer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        memory_state [label="Memory\nState", fillcolor="#059669", fontcolor="#ffffff"];
+        coordination_log [label="Coordination\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> operation_parser;
+    operation_parser -> namespace_manager -> data_serializer -> storage_engine -> indexer;
+    indexer -> crdt_manager -> conflict_resolver -> sync_coordinator -> version_controller;
+    version_controller -> context_builder -> relevance_scorer -> context_trimmer;
+    context_trimmer -> memory_state -> coordination_log;
+    coordination_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    conflict_resolver -> storage_engine [label="Update", style=dashed];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Storage", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend3 [label="Coordination", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

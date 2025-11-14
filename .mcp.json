@@ -1,8 +1,10 @@
 {
   "mcpServers": {
     "claude-flow": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "claude-flow@alpha",
         "mcp",
         "start"
@@ -26,8 +28,10 @@
       "required": true
     },
     "ruv-swarm": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "ruv-swarm",
         "mcp",
         "start"
@@ -64,8 +68,10 @@
       "required": false
     },
     "flow-nexus": {
-      "command": "npx",
+      "command": "cmd",
       "args": [
+        "/c",
+        "npx",
         "flow-nexus@latest",
         "mcp",
         "start"

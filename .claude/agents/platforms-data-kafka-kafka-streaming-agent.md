@@ -1,3 +1,8 @@
+---
+name: platforms-data-kafka-kafka-streaming-agent
+description: Specialized agent for task execution
+---
+
 # KAFKA STREAMING AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 189

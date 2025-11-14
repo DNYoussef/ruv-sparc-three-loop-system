@@ -1,0 +1,17 @@
+digraph SETUP {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/setup", shape=ellipse, fillcolor=lightblue];
+  detect_system [label="Detect\nSystem", fillcolor=lightblue];
+  check_dependencies [label="Check\nDependencies", fillcolor=purple];
+  install_missing [label="Install Missing\nDependencies", fillcolor=yellow];
+  configure_hooks [label="Configure\nHooks", fillcolor=lightgreen, style="filled,bold"];
+  define_triggers [label="Define\nTriggers", fillcolor=lightpurple];
+  test_hooks [label="Test\nHooks", fillcolor=lightgreen];
+  save_config [label="Save\nConfiguration", fillcolor=lightblue];
+  success [label="Setup Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> detect_system -> check_dependencies -> install_missing;
+  install_missing -> configure_hooks -> define_triggers -> test_hooks -> save_config -> success;
+}

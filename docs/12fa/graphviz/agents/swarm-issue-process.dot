@@ -1,0 +1,134 @@
+digraph swarm_issue_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Swarm Issue - Multi-Agent Issue Triage & Resolution";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="New Issue\n(Created)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Triage Phase
+    subgraph cluster_triage {
+        label="Auto-Triage Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        parse [label="Issue Parsing\n(Extract info)"];
+        classify [label="Classification\n(Bug/Feature/Question)"];
+        priority [label="Priority Assignment\n(Critical/High/Medium/Low)"];
+    }
+
+    // Analysis Swarm
+    subgraph cluster_swarm {
+        label="Analysis Swarm (Parallel)";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        duplicate [label="Duplicate Detector\n(Check existing)", shape=ellipse, fillcolor="#9b59b6"];
+        impact [label="Impact Analyzer\n(Users affected)", shape=ellipse, fillcolor="#3498db"];
+        technical [label="Technical Analyzer\n(Root cause)", shape=ellipse, fillcolor="#e74c3c"];
+        effort [label="Effort Estimator\n(Time to fix)", shape=ellipse, fillcolor="#f39c12"];
+
+        consensus [label="Consensus\n(Aggregate analysis)"];
+    }
+
+    // Assignment Phase
+    subgraph cluster_assignment {
+        label="Assignment Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        recommend [label="Assignee Recommendation\n(Best fit)"];
+        label_suggest [label="Label Suggestions\n(Tags)"];
+        milestone [label="Milestone Assignment\n(Sprint)"];
+    }
+
+    // Tracking Phase
+    subgraph cluster_tracking {
+        label="Resolution Tracking";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        monitor [label="Progress Monitoring\n(Status updates)"];
+        coordinate [label="Coordinated Response\n(Team communication)"];
+        close [label="Closure Validation\n(Resolution check)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Auto-triage", fillcolor="#238636"];
+        feature2 [label="Priority Assignment", fillcolor="#238636"];
+        feature3 [label="Resolution Tracking", fillcolor="#238636"];
+        feature4 [label="Coordinated Response", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Triaged Issue\n+ Action Plan", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> parse;
+    parse -> classify;
+    classify -> priority;
+
+    priority -> duplicate;
+    priority -> impact;
+    priority -> technical;
+    priority -> effort;
+
+    duplicate -> consensus;
+    impact -> consensus;
+    technical -> consensus;
+    effort -> consensus;
+
+    consensus -> recommend;
+    recommend -> label_suggest;
+    label_suggest -> milestone;
+
+    milestone -> monitor;
+    monitor -> coordinate;
+    coordinate -> close;
+
+    close -> output;
+
+    // Duplicate handling
+    duplicate -> output [label="Close if duplicate", color="#f85149", style=dashed];
+
+    // Feature connections
+    classify -> feature1 [style=dotted, color="#8b949e"];
+    priority -> feature2 [style=dotted, color="#8b949e"];
+    monitor -> feature3 [style=dotted, color="#8b949e"];
+    coordinate -> feature4 [style=dotted, color="#8b949e"];
+}

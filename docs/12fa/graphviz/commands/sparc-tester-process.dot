@@ -1,0 +1,100 @@
+// SPARC Tester Command Workflow
+// Comprehensive testing and validation
+digraph sparc_tester_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:tester\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        test_scope_analyzer [label="Test Scope\nAnalyzer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_generation {
+        label="Test Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        unit_test_generator [label="Unit Test\nGenerator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        integration_test_gen [label="Integration Test\nGenerator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        e2e_test_generator [label="E2E Test\nGenerator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        edge_case_finder [label="Edge Case\nFinder", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_execution {
+        label="Test Execution";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        parallel_runner [label="Parallel\nRunner", fillcolor="#10b981", fontcolor="#ffffff"];
+        isolation_manager [label="Isolation\nManager", fillcolor="#10b981", fontcolor="#ffffff"];
+        mock_controller [label="Mock\nController", fillcolor="#10b981", fontcolor="#ffffff"];
+        assertion_validator [label="Assertion\nValidator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_coverage {
+        label="Coverage Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        line_coverage [label="Line\nCoverage", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        branch_coverage [label="Branch\nCoverage", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        mutation_testing [label="Mutation\nTesting", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        coverage_validator [label="Coverage\nValidator (>90%)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_reporting {
+        label="Reporting";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        result_aggregator [label="Result\nAggregator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        failure_analyzer [label="Failure\nAnalyzer", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        report_generator [label="Report\nGenerator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        test_report [label="Test\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        coverage_report [label="Coverage\nReport (>90%)", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> test_scope_analyzer;
+    test_scope_analyzer -> unit_test_generator -> parallel_runner;
+    test_scope_analyzer -> integration_test_gen -> parallel_runner;
+    test_scope_analyzer -> e2e_test_generator -> parallel_runner;
+    test_scope_analyzer -> edge_case_finder -> parallel_runner;
+    parallel_runner -> isolation_manager -> mock_controller -> assertion_validator;
+    assertion_validator -> line_coverage -> branch_coverage -> mutation_testing -> coverage_validator;
+    coverage_validator -> result_aggregator -> failure_analyzer -> report_generator;
+    report_generator -> test_report -> coverage_report;
+    coverage_report -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    coverage_validator -> unit_test_generator [label="<90%", style=dashed, color="#ef4444"];
+    assertion_validator -> unit_test_generator [label="Failures", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Generation", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Execution", fillcolor="#10b981", fontcolor="#ffffff"];
+        legend4 [label="Coverage", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+}

@@ -1,3 +1,8 @@
+---
+name: platforms-flow-nexus-gemini-megacontext-agent
+description: Run Gemini CLI command using Bash tool with appropriate timeout (may take 2-5 minutes for large codebases).
+---
+
 # Gemini Mega-Context Agent
 
 

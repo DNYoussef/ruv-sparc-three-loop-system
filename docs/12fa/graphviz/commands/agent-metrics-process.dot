@@ -1,0 +1,80 @@
+// Agent Metrics Command Workflow
+// Detailed agent performance metrics
+digraph agent_metrics_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/agent-metrics\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        agent_selector [label="Agent\nSelector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collection {
+        label="Metrics Collection";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        performance_collector [label="Performance\nCollector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        resource_monitor [label="Resource\nMonitor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        efficiency_tracker [label="Efficiency\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        task_analyzer [label="Task\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Metrics Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        throughput_analyzer [label="Throughput\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        latency_analyzer [label="Latency\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        quality_analyzer [label="Quality\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        cost_analyzer [label="Cost\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_visualization {
+        label="Visualization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        chart_generator [label="Chart\nGenerator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        dashboard_builder [label="Dashboard\nBuilder", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        trend_visualizer [label="Trend\nVisualizer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        metrics_report [label="Metrics\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        recommendations [label="Optimization\nRecommendations", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> agent_selector;
+    agent_selector -> performance_collector -> resource_monitor -> efficiency_tracker -> task_analyzer;
+    task_analyzer -> throughput_analyzer -> latency_analyzer -> quality_analyzer -> cost_analyzer;
+    cost_analyzer -> chart_generator -> dashboard_builder -> trend_visualizer;
+    trend_visualizer -> metrics_report -> recommendations;
+    recommendations -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Collection", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Analysis", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

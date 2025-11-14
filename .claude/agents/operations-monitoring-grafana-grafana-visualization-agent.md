@@ -1,3 +1,8 @@
+---
+name: operations-monitoring-grafana-grafana-visualization-agent
+description: These metrics enable continuous improvement and cost optimization.
+---
+
 # GRAFANA VISUALIZATION AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 172

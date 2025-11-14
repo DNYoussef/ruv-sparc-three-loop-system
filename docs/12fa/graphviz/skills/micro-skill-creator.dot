@@ -1,0 +1,409 @@
+digraph MicroSkillCreator {
+    // Graph configuration
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.7;
+    ranksep=0.9;
+    fontname="Arial";
+    fontsize=12;
+
+    // Style definitions
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Color scheme
+    node [fillcolor=lightblue, shape=box];
+
+    // Start/End nodes
+    start [label="Micro-skill\nCreation Request", shape=ellipse, fillcolor=lightgreen];
+    end_success [label="Skill\nDeployed", shape=doubleoctagon, fillcolor=lightgreen];
+    end_failed [label="Creation\nFailed", shape=doubleoctagon, fillcolor=red];
+
+    // Requirement Analysis
+    subgraph cluster_requirements {
+        label="Requirement Analysis";
+        style=filled;
+        fillcolor=lightyellow;
+
+        parse_intent [label="Parse User\nIntent"];
+        identify_objective [label="Identify Single\nObjective"];
+        verify_atomic [label="Verify Atomic\nNature", shape=diamond, fillcolor=yellow];
+        decompose_complex [label="Decompose into\nAtomic Skills"];
+        define_scope [label="Define\nScope"];
+        identify_inputs [label="Identify\nInputs"];
+        identify_outputs [label="Identify\nOutputs"];
+        requirements_doc [label="Requirements\nDocument", shape=note];
+
+        parse_intent -> identify_objective;
+        identify_objective -> verify_atomic;
+        verify_atomic -> define_scope [label="Is Atomic"];
+        verify_atomic -> decompose_complex [label="Too Complex"];
+        decompose_complex -> identify_objective;
+        define_scope -> identify_inputs;
+        identify_inputs -> identify_outputs;
+        identify_outputs -> requirements_doc;
+    }
+
+    // Evidence-Based Prompting Design
+    subgraph cluster_prompt_design {
+        label="Evidence-Based Prompt Engineering";
+        style=filled;
+        fillcolor=lightcyan;
+
+        analyze_task_type [label="Analyze\nTask Type", shape=diamond, fillcolor=yellow];
+        reasoning_task [label="Reasoning\nTask"];
+        creative_task [label="Creative\nTask"];
+        analytical_task [label="Analytical\nTask"];
+        procedural_task [label="Procedural\nTask"];
+
+        apply_cot [label="Apply Chain-of-Thought\nPattern"];
+        apply_self_consistency [label="Apply Self-Consistency\nPattern"];
+        apply_program_of_thought [label="Apply Program-of-Thought\nPattern"];
+        apply_plan_solve [label="Apply Plan-and-Solve\nPattern"];
+
+        structure_prompt [label="Structure\nPrompt"];
+        add_constraints [label="Add\nConstraints"];
+        add_examples [label="Add Few-Shot\nExamples"];
+        optimize_clarity [label="Optimize\nClarity"];
+        prompt_template [label="Prompt\nTemplate", shape=note];
+
+        analyze_task_type -> reasoning_task [label="Reasoning"];
+        analyze_task_type -> creative_task [label="Creative"];
+        analyze_task_type -> analytical_task [label="Analytical"];
+        analyze_task_type -> procedural_task [label="Procedural"];
+
+        reasoning_task -> apply_cot;
+        reasoning_task -> apply_self_consistency;
+        creative_task -> apply_program_of_thought;
+        analytical_task -> apply_plan_solve;
+        procedural_task -> apply_plan_solve;
+
+        apply_cot -> structure_prompt;
+        apply_self_consistency -> structure_prompt;
+        apply_program_of_thought -> structure_prompt;
+        apply_plan_solve -> structure_prompt;
+
+        structure_prompt -> add_constraints;
+        add_constraints -> add_examples;
+        add_examples -> optimize_clarity;
+        optimize_clarity -> prompt_template;
+    }
+
+    // Specialist Agent Assignment
+    subgraph cluster_agent_assignment {
+        label="Specialist Agent Assignment";
+        style=filled;
+        fillcolor=lavender;
+
+        analyze_skill_domain [label="Analyze Skill\nDomain"];
+        match_specialist [label="Match to\nSpecialist Agent", shape=diamond, fillcolor=yellow];
+
+        researcher_agent [label="Researcher\nAgent", shape=component, fillcolor=orange];
+        coder_agent [label="Coder\nAgent", shape=component, fillcolor=orange];
+        reviewer_agent [label="Reviewer\nAgent", shape=component, fillcolor=orange];
+        tester_agent [label="Tester\nAgent", shape=component, fillcolor=orange];
+        architect_agent [label="Architect\nAgent", shape=component, fillcolor=orange];
+        optimizer_agent [label="Optimizer\nAgent", shape=component, fillcolor=orange];
+
+        define_agent_role [label="Define Agent\nRole"];
+        define_capabilities [label="Define\nCapabilities"];
+        define_constraints [label="Define\nConstraints"];
+        agent_spec [label="Agent\nSpecification", shape=note];
+
+        analyze_skill_domain -> match_specialist;
+        match_specialist -> researcher_agent [label="Research Task"];
+        match_specialist -> coder_agent [label="Code Task"];
+        match_specialist -> reviewer_agent [label="Review Task"];
+        match_specialist -> tester_agent [label="Test Task"];
+        match_specialist -> architect_agent [label="Design Task"];
+        match_specialist -> optimizer_agent [label="Optimize Task"];
+
+        researcher_agent -> define_agent_role;
+        coder_agent -> define_agent_role;
+        reviewer_agent -> define_agent_role;
+        tester_agent -> define_agent_role;
+        architect_agent -> define_agent_role;
+        optimizer_agent -> define_agent_role;
+
+        define_agent_role -> define_capabilities;
+        define_capabilities -> define_constraints;
+        define_constraints -> agent_spec;
+    }
+
+    // Skill Template Generation
+    subgraph cluster_template {
+        label="Skill Template Generation";
+        style=filled;
+        fillcolor=honeydew;
+
+        create_yaml_frontmatter [label="Create YAML\nFrontmatter"];
+        add_metadata [label="Add\nMetadata"];
+        add_description [label="Add\nDescription"];
+        add_triggers [label="Add\nTriggers"];
+        add_examples [label="Add Usage\nExamples"];
+        create_instructions [label="Create\nInstructions"];
+        add_best_practices [label="Add Best\nPractices"];
+        add_error_handling [label="Add Error\nHandling"];
+        skill_template [label="Skill\nTemplate", shape=note];
+
+        create_yaml_frontmatter -> add_metadata;
+        add_metadata -> add_description;
+        add_description -> add_triggers;
+        add_triggers -> add_examples;
+        add_examples -> create_instructions;
+        create_instructions -> add_best_practices;
+        add_best_practices -> add_error_handling;
+        add_error_handling -> skill_template;
+    }
+
+    // Systematic Testing
+    subgraph cluster_testing {
+        label="Systematic Testing & Validation";
+        style=filled;
+        fillcolor=mistyrose;
+
+        create_test_cases [label="Create Test\nCases"];
+        unit_tests [label="Unit Tests", shape=hexagon];
+        integration_tests [label="Integration Tests", shape=hexagon];
+        edge_case_tests [label="Edge Case Tests", shape=hexagon];
+
+        sandbox_init [label="Initialize Test\nSandbox", shape=cylinder, fillcolor=orange];
+        execute_tests [label="Execute\nTests", shape=hexagon];
+        validate_outputs [label="Validate\nOutputs"];
+        test_gate [label="Test Gate", shape=diamond, fillcolor=yellow];
+        test_results [label="Test\nResults", shape=note];
+
+        create_test_cases -> unit_tests;
+        create_test_cases -> integration_tests;
+        create_test_cases -> edge_case_tests;
+
+        unit_tests -> sandbox_init;
+        integration_tests -> sandbox_init;
+        edge_case_tests -> sandbox_init;
+
+        sandbox_init -> execute_tests;
+        execute_tests -> validate_outputs;
+        validate_outputs -> test_gate;
+        test_gate -> test_results [label="Pass"];
+        test_gate -> create_test_cases [label="Fail", color=red];
+    }
+
+    // Self-Consistency Validation
+    subgraph cluster_self_consistency {
+        label="Self-Consistency Validation";
+        style=filled;
+        fillcolor=wheat;
+
+        generate_variants [label="Generate\nPrompt Variants"];
+        execute_parallel [label="Execute in\nParallel"];
+        collect_results [label="Collect\nResults"];
+        analyze_consistency [label="Analyze\nConsistency", shape=diamond, fillcolor=yellow];
+        calculate_agreement [label="Calculate\nAgreement Score"];
+        consistency_gate [label="Consistency\nGate", shape=diamond, fillcolor=yellow];
+        consistency_report [label="Consistency\nReport", shape=note];
+
+        generate_variants -> execute_parallel;
+        execute_parallel -> collect_results;
+        collect_results -> analyze_consistency;
+        analyze_consistency -> calculate_agreement;
+        calculate_agreement -> consistency_gate;
+        consistency_gate -> consistency_report [label="High Agreement"];
+        consistency_gate -> structure_prompt [label="Low Agreement", color=orange, style=dashed];
+    }
+
+    // Composability Patterns
+    subgraph cluster_composability {
+        label="Composability Pattern Design";
+        style=filled;
+        fillcolor=palegreen;
+
+        define_interfaces [label="Define\nInterfaces"];
+        design_inputs [label="Design\nInput Format"];
+        design_outputs [label="Design\nOutput Format"];
+        create_contracts [label="Create\nContracts"];
+        add_validation [label="Add Input\nValidation"];
+        add_error_codes [label="Add Error\nCodes"];
+        test_composition [label="Test\nComposition", shape=hexagon];
+        composability_spec [label="Composability\nSpecification", shape=note];
+
+        define_interfaces -> design_inputs;
+        design_inputs -> design_outputs;
+        design_outputs -> create_contracts;
+        create_contracts -> add_validation;
+        add_validation -> add_error_codes;
+        add_error_codes -> test_composition;
+        test_composition -> composability_spec;
+    }
+
+    // Documentation Generation
+    subgraph cluster_documentation {
+        label="Documentation Generation";
+        style=filled;
+        fillcolor=lemonchiffon;
+
+        generate_api_docs [label="Generate API\nDocumentation"];
+        create_examples [label="Create Usage\nExamples"];
+        document_limitations [label="Document\nLimitations"];
+        add_troubleshooting [label="Add\nTroubleshooting"];
+        create_changelog [label="Create\nChangelog"];
+        docs_complete [label="Documentation\nComplete", shape=note];
+
+        generate_api_docs -> create_examples;
+        create_examples -> document_limitations;
+        document_limitations -> add_troubleshooting;
+        add_troubleshooting -> create_changelog;
+        create_changelog -> docs_complete;
+    }
+
+    // Quality Gates
+    subgraph cluster_quality {
+        label="Quality Gates";
+        style=filled;
+        fillcolor=lightsteelblue;
+
+        gate_atomic [label="Atomic\nGate", shape=diamond, fillcolor=yellow];
+        gate_prompt [label="Prompt Quality\nGate", shape=diamond, fillcolor=yellow];
+        gate_agent [label="Agent\nGate", shape=diamond, fillcolor=yellow];
+        gate_test [label="Testing\nGate", shape=diamond, fillcolor=yellow];
+        gate_consistency [label="Consistency\nGate", shape=diamond, fillcolor=yellow];
+        gate_composability [label="Composability\nGate", shape=diamond, fillcolor=yellow];
+
+        gate_atomic -> gate_prompt [label="Pass"];
+        gate_prompt -> gate_agent [label="Pass"];
+        gate_agent -> gate_test [label="Pass"];
+        gate_test -> gate_consistency [label="Pass"];
+        gate_consistency -> gate_composability [label="Pass"];
+    }
+
+    // Skill Assembly
+    subgraph cluster_assembly {
+        label="Skill Assembly";
+        style=filled;
+        fillcolor=aliceblue;
+
+        merge_components [label="Merge\nComponents"];
+        validate_structure [label="Validate\nStructure"];
+        apply_formatting [label="Apply\nFormatting"];
+        final_validation [label="Final\nValidation", shape=diamond, fillcolor=yellow];
+        skill_package [label="Skill\nPackage", shape=note];
+
+        merge_components -> validate_structure;
+        validate_structure -> apply_formatting;
+        apply_formatting -> final_validation;
+        final_validation -> skill_package [label="Pass"];
+        final_validation -> merge_components [label="Fail", color=red];
+    }
+
+    // Deployment
+    subgraph cluster_deployment {
+        label="Skill Deployment";
+        style=filled;
+        fillcolor=lavenderblush;
+
+        create_directory [label="Create Skill\nDirectory"];
+        write_skill_file [label="Write Skill\nFile"];
+        register_skill [label="Register\nSkill"];
+        verify_deployment [label="Verify\nDeployment", shape=diamond, fillcolor=yellow];
+        deployment_report [label="Deployment\nReport", shape=note];
+
+        create_directory -> write_skill_file;
+        write_skill_file -> register_skill;
+        register_skill -> verify_deployment;
+        verify_deployment -> deployment_report [label="Success"];
+        verify_deployment -> create_directory [label="Retry", color=orange];
+    }
+
+    // Error Handling
+    subgraph cluster_error {
+        label="Error Handling & Recovery";
+        style=filled;
+        fillcolor=mistyrose;
+
+        error_detect [label="Error\nDetection", shape=octagon, fillcolor=red];
+        categorize_error [label="Categorize\nError", shape=diamond, fillcolor=yellow];
+        prompt_error [label="Prompt\nError"];
+        agent_error [label="Agent\nError"];
+        test_error [label="Test\nError"];
+        deployment_error [label="Deployment\nError"];
+        auto_fix [label="Auto-fix\nAttempt"];
+        manual_intervention [label="Manual\nIntervention", shape=octagon, fillcolor=orange];
+
+        error_detect -> categorize_error;
+        categorize_error -> prompt_error [label="Prompt"];
+        categorize_error -> agent_error [label="Agent"];
+        categorize_error -> test_error [label="Test"];
+        categorize_error -> deployment_error [label="Deploy"];
+
+        prompt_error -> auto_fix;
+        agent_error -> auto_fix;
+        test_error -> auto_fix;
+        deployment_error -> auto_fix;
+
+        auto_fix -> manual_intervention [label="Cannot Fix"];
+    }
+
+    // Memory & Pattern Learning
+    memory_store [label="Memory Store\n(Skill Registry)", shape=cylinder, fillcolor=lightgray];
+    pattern_library [label="Pattern\nLibrary", shape=cylinder, fillcolor=lightgray];
+
+    // Main workflow
+    start -> parse_intent;
+    requirements_doc -> analyze_task_type;
+    requirements_doc -> gate_atomic;
+
+    prompt_template -> create_yaml_frontmatter;
+    prompt_template -> gate_prompt;
+
+    agent_spec -> add_metadata;
+    agent_spec -> gate_agent;
+
+    skill_template -> create_test_cases;
+    test_results -> gate_test;
+
+    skill_template -> generate_variants;
+    consistency_report -> gate_consistency;
+
+    skill_template -> define_interfaces;
+    composability_spec -> gate_composability;
+
+    gate_composability -> generate_api_docs [label="Pass"];
+    docs_complete -> merge_components;
+
+    test_results -> merge_components;
+    consistency_report -> merge_components;
+    composability_spec -> merge_components;
+
+    skill_package -> create_directory;
+    deployment_report -> end_success [label="Success"];
+
+    // Memory connections
+    requirements_doc -> memory_store [style=dashed, color=blue];
+    prompt_template -> pattern_library [style=dashed, color=purple];
+    skill_package -> memory_store [style=dashed, color=blue];
+    deployment_report -> memory_store [style=dashed, color=blue];
+
+    // Error routing
+    gate_atomic -> error_detect [label="Fail", color=red, style=dashed];
+    gate_prompt -> error_detect [label="Fail", color=red, style=dashed];
+    gate_agent -> error_detect [label="Fail", color=red, style=dashed];
+    gate_test -> error_detect [label="Fail", color=red, style=dashed];
+    gate_consistency -> error_detect [label="Fail", color=red, style=dashed];
+    gate_composability -> error_detect [label="Fail", color=red, style=dashed];
+    verify_deployment -> error_detect [label="Fail", color=red, style=dashed];
+
+    manual_intervention -> end_failed [label="Cannot Resolve"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor=white;
+
+        legend_gate [label="Quality Gate", shape=diamond, fillcolor=yellow];
+        legend_agent [label="Agent Type", shape=component, fillcolor=orange];
+        legend_test [label="Test Phase", shape=hexagon];
+        legend_error [label="Error State", shape=octagon, fillcolor=red];
+        legend_storage [label="Storage", shape=cylinder, fillcolor=lightgray];
+        legend_output [label="Output/Artifact", shape=note];
+    }
+}

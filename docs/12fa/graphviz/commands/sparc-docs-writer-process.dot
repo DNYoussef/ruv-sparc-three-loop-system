@@ -1,0 +1,52 @@
+digraph sparc_docs_writer_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Docs-Writer Command Workflow\nComprehensive Documentation Generation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:docs-writer", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  analyze_code [label="Analyze Codebase\n- Functions\n- Classes\n- APIs\n- Modules", fillcolor="#FFF9C4"];
+
+  identify_type [label="Identify Doc Type\n- API docs\n- User guide\n- Tutorial\n- README\n- Technical spec", fillcolor="#FFE0B2"];
+
+  extract_signatures [label="Extract Signatures\n- Function definitions\n- Parameters\n- Return types\n- Exceptions", fillcolor="#BBDEFB"];
+
+  generate_api_docs [label="Generate API Docs\n- JSDoc/TSDoc format\n- Examples\n- Type definitions", fillcolor="#C5CAE9"];
+
+  create_user_guide [label="Create User Guide\n- Installation\n- Configuration\n- Usage examples\n- Troubleshooting", fillcolor="#B2DFDB"];
+
+  write_tutorial [label="Write Tutorial\n- Step-by-step guide\n- Code examples\n- Best practices", fillcolor="#D1C4E9"];
+
+  generate_readme [label="Generate README\n- Overview\n- Quick start\n- Features\n- Contributing", fillcolor="#F0F4C3"];
+
+  add_examples [label="Add Code Examples\n- Common use cases\n- Integration patterns\n- Best practices", fillcolor="#FFE0B2"];
+
+  generate_diagrams [label="Generate Diagrams\n- Architecture\n- Flow charts\n- Sequence diagrams", fillcolor="#BBDEFB"];
+
+  format_markdown [label="Format Markdown\n- Headers\n- Code blocks\n- Links\n- Tables", fillcolor="#B2DFDB"];
+
+  validate_links [label="Validate Links\n- Internal references\n- External URLs\n- Code references", fillcolor="#D1C4E9"];
+
+  success [label="Documentation Complete\nReady for publication", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> analyze_code;
+  analyze_code -> identify_type;
+  identify_type -> extract_signatures;
+  extract_signatures -> generate_api_docs;
+  generate_api_docs -> create_user_guide;
+  create_user_guide -> write_tutorial;
+  write_tutorial -> generate_readme;
+  generate_readme -> add_examples;
+  add_examples -> generate_diagrams;
+  generate_diagrams -> format_markdown;
+  format_markdown -> validate_links;
+  validate_links -> success;
+}

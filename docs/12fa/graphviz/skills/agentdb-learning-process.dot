@@ -1,0 +1,125 @@
+digraph AGENTDB_LEARNING_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="AgentDB Learning Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="AgentDB Learning Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Learning Config"];
+    validate_input [label="Validate RL Algorithm"];
+    check_deps [label="Check AgentDB SDK"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Learning Plugin Creation Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    select_algorithm [label="Select RL Algorithm\n(9 Options)", fillcolor=purple];
+    create_plugin [label="Create Learning Plugin", fillcolor=purple];
+    configure_training [label="Configure Training Parameters", fillcolor=purple];
+    train_model [label="Train Agent Model", fillcolor=purple];
+    training_check [shape=diamond, label="Training\nConverged?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Training Error"];
+    retry_logic [label="Adjust & Retry", fillcolor=yellow];
+  }
+
+  check_secrets -> select_algorithm [label="Pass"];
+  select_algorithm -> create_plugin -> configure_training -> train_model;
+  train_model -> training_check;
+  training_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> configure_training [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Learning Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Trained Model", fillcolor=lightblue];
+    track_progress [label="Track Learning Progress", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  training_check -> memory_store [label="Yes"];
+  memory_store -> track_progress -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Model\nPerforming?"];
+    run_evaluation [label="Run Model Evaluation", fillcolor=lightgreen];
+    eval_check [shape=diamond, label="Meets\nTarget?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> run_evaluation [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  run_evaluation -> eval_check;
+  eval_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    export_model [label="Export Trained Model", fillcolor=lightgreen];
+    generate_docs [label="Generate Documentation", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="Learning Plugin Ready", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  eval_check -> export_model [label="Yes"];
+  export_model -> generate_docs -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Learning Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

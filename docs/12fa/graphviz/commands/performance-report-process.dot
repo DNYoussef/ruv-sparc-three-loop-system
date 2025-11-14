@@ -1,0 +1,31 @@
+digraph PERFORMANCE_REPORT {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/performance-report", shape=ellipse, fillcolor=lightblue];
+  set_timeframe [label="Set Analysis\nTimeframe", fillcolor=lightblue];
+  collect_metrics [label="Collect Performance\nMetrics", fillcolor=lightgreen, style="filled,bold"];
+  cpu_metrics [label="CPU\nMetrics", fillcolor=lightgreen];
+  memory_metrics [label="Memory\nMetrics", fillcolor=lightgreen];
+  task_metrics [label="Task\nMetrics", fillcolor=lightgreen];
+  throughput_metrics [label="Throughput\nMetrics", fillcolor=lightgreen];
+  aggregate_data [label="Aggregate\nData", fillcolor=purple];
+  calc_trends [label="Calculate\nTrends", fillcolor=purple];
+  identify_improvements [label="Identify\nImprovements", fillcolor=yellow];
+  create_visualizations [label="Create\nVisualizations", fillcolor=lightpurple];
+  generate_report [label="Generate Comprehensive\nReport", fillcolor=lightblue, style="filled,bold"];
+  display_report [label="Display\nReport", fillcolor=lightblue];
+  success [label="Report Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> set_timeframe -> collect_metrics;
+  collect_metrics -> cpu_metrics;
+  collect_metrics -> memory_metrics;
+  collect_metrics -> task_metrics;
+  collect_metrics -> throughput_metrics;
+  cpu_metrics -> aggregate_data;
+  memory_metrics -> aggregate_data;
+  task_metrics -> aggregate_data;
+  throughput_metrics -> aggregate_data;
+  aggregate_data -> calc_trends -> identify_improvements -> create_visualizations;
+  create_visualizations -> generate_report -> display_report -> success;
+}

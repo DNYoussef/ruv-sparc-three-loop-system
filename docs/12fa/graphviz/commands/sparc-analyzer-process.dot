@@ -1,0 +1,80 @@
+// SPARC Analyzer Command Workflow
+// Code analysis with pattern detection
+digraph sparc_analyzer_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:analyzer\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        codebase_scanner [label="Codebase\nScanner", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Code Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        static_analyzer [label="Static\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_detector [label="Pattern\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_analyzer [label="Complexity\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_analyzer [label="Dependency\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_quality {
+        label="Quality Metrics";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        maintainability_scorer [label="Maintainability\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+        readability_scorer [label="Readability\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+        testability_scorer [label="Testability\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+        security_scorer [label="Security\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_recommendations {
+        label="Recommendations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        improvement_suggester [label="Improvement\nSuggester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        refactoring_planner [label="Refactoring\nPlanner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        priority_ranker [label="Priority\nRanker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        analysis_report [label="Analysis\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        action_items [label="Action\nItems", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> codebase_scanner;
+    codebase_scanner -> static_analyzer -> pattern_detector -> complexity_analyzer -> dependency_analyzer;
+    dependency_analyzer -> maintainability_scorer -> readability_scorer -> testability_scorer -> security_scorer;
+    security_scorer -> improvement_suggester -> refactoring_planner -> priority_ranker;
+    priority_ranker -> analysis_report -> action_items;
+    action_items -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Quality", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

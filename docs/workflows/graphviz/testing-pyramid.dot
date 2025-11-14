@@ -1,0 +1,208 @@
+digraph TestingPyramid {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Testing Pyramid Strategy</b><br/>Smoke → Integration → E2E → Load Testing>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Testing Pyramid Levels";
+        style=filled;
+        color="#e9ecef";
+
+        legend_info [label=<
+            <table border="0" cellspacing="0">
+                <tr><td align="left"><b>Unit Tests (70%)</b>: Fast, isolated, many</td></tr>
+                <tr><td align="left"><b>Integration Tests (20%)</b>: API, DB, services</td></tr>
+                <tr><td align="left"><b>E2E Tests (10%)</b>: User workflows, UI</td></tr>
+                <tr><td align="left"><b>Load Tests</b>: Performance validation</td></tr>
+            </table>
+        >, shape=box, fillcolor="#fff3cd"];
+    }
+
+    // Start
+    start [label="Testing Phase\nTriggered", shape=oval, fillcolor="#d4edda"];
+
+    // Smoke Tests (Level 0 - Health Checks)
+    subgraph cluster_smoke {
+        label="Level 0: Smoke Tests (Critical Path Validation)";
+        style=filled;
+        color="#f8d7da";
+
+        smoke_health [label="Health Check\n/health endpoint", shape=box, fillcolor="#f5c6cb"];
+        smoke_db [label="Database\nConnection", shape=box, fillcolor="#f5c6cb"];
+        smoke_cache [label="Cache/Redis\nConnection", shape=box, fillcolor="#f5c6cb"];
+        smoke_auth [label="Auth Service\nBasic Login", shape=box, fillcolor="#f5c6cb"];
+        smoke_api [label="Critical APIs\n200 OK", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    smoke_passed [label="Smoke Tests\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Unit Tests (Level 1 - Foundation)
+    subgraph cluster_unit {
+        label="Level 1: Unit Tests (70% of tests - Fast, Isolated)";
+        style=filled;
+        color="#cfe2ff";
+
+        unit_functions [label="Pure Functions\nLogic Tests", shape=box, fillcolor="#b6d7ff"];
+        unit_classes [label="Class Methods\nBehavior Tests", shape=box, fillcolor="#b6d7ff"];
+        unit_utils [label="Utilities\nHelper Functions", shape=box, fillcolor="#b6d7ff"];
+        unit_validators [label="Validators\nInput/Output", shape=box, fillcolor="#b6d7ff"];
+        unit_coverage [label="Code Coverage\n>80% Required", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    unit_passed [label="Unit Tests\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Integration Tests (Level 2 - Service Interaction)
+    subgraph cluster_integration {
+        label="Level 2: Integration Tests (20% - API/DB/Services)";
+        style=filled;
+        color="#d1e7dd";
+
+        int_api [label="API Endpoints\nREST/GraphQL", shape=box, fillcolor="#a3cfbb"];
+        int_db [label="Database\nCRUD Operations", shape=box, fillcolor="#a3cfbb"];
+        int_external [label="External Services\nThird-party APIs", shape=box, fillcolor="#a3cfbb"];
+        int_message [label="Message Queue\nRabbitMQ/Kafka", shape=box, fillcolor="#a3cfbb"];
+        int_auth [label="Authentication\nJWT/OAuth", shape=box, fillcolor="#a3cfbb"];
+        int_contracts [label="Contract Tests\nPact/OpenAPI", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    integration_passed [label="Integration\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // E2E Tests (Level 3 - User Workflows)
+    subgraph cluster_e2e {
+        label="Level 3: E2E Tests (10% - User Workflows)";
+        style=filled;
+        color="#e7d1e7";
+
+        e2e_user_flows [label="User Workflows\nLogin→Action→Logout", shape=box, fillcolor="#d4b5d4"];
+        e2e_ui [label="UI Testing\nCypress/Playwright", shape=box, fillcolor="#d4b5d4"];
+        e2e_cross_browser [label="Cross-Browser\nChrome/Firefox/Safari", shape=box, fillcolor="#d4b5d4"];
+        e2e_mobile [label="Mobile Testing\nResponsive/Native", shape=box, fillcolor="#d4b5d4"];
+        e2e_accessibility [label="Accessibility\nWCAG 2.1 AA", shape=box, fillcolor="#d4b5d4"];
+        e2e_visual [label="Visual Regression\nScreenshot Diff", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    e2e_passed [label="E2E Tests\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Load Tests (Level 4 - Performance)
+    subgraph cluster_load {
+        label="Level 4: Load & Performance Tests";
+        style=filled;
+        color="#fff3cd";
+
+        load_baseline [label="Baseline Load\n100 RPS", shape=box, fillcolor="#ffeeba"];
+        load_stress [label="Stress Test\n1000+ RPS", shape=box, fillcolor="#ffeeba"];
+        load_spike [label="Spike Test\nSudden Traffic", shape=box, fillcolor="#ffeeba"];
+        load_soak [label="Soak Test\n24h Endurance", shape=box, fillcolor="#ffeeba"];
+        load_latency [label="Latency Check\np95 < 500ms", shape=box, fillcolor="#ffeeba"];
+        load_throughput [label="Throughput\nReq/sec Target", shape=box, fillcolor="#ffeeba"];
+    }
+
+    load_passed [label="Performance\nMet SLAs?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Regression Tests
+    subgraph cluster_regression {
+        label="Regression Test Suite";
+        style=filled;
+        color="#d1e7dd";
+
+        regression_select [label="Select Tests\nRisk-Based", shape=box, fillcolor="#a3cfbb"];
+        regression_run [label="Run Suite\nAll Levels", shape=box, fillcolor="#a3cfbb"];
+        regression_compare [label="Compare Baseline\nPrevious Results", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    regression_passed [label="No\nRegressions?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Reporting
+    subgraph cluster_reporting {
+        label="Test Reporting & Analytics";
+        style=filled;
+        color="#e9ecef";
+
+        report_generate [label="Generate Reports\nJUnit/HTML", shape=box, fillcolor="#dee2e6"];
+        report_coverage [label="Coverage Report\nIstanbul/Jacoco", shape=box, fillcolor="#dee2e6"];
+        report_trends [label="Trend Analysis\nFlaky Tests", shape=box, fillcolor="#dee2e6"];
+        report_publish [label="Publish Results\nCI/CD Dashboard", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Artifacts
+    test_results [label="Test Results\nJUnit XML", shape=cylinder, fillcolor="#f8d7da"];
+    coverage_data [label="Coverage Data\nlcov/cobertura", shape=cylinder, fillcolor="#f8d7da"];
+
+    // End States
+    success [label="All Tests\nPassed", shape=oval, fillcolor="#d4edda"];
+    failed [label="Tests\nFailed", shape=oval, fillcolor="#f8d7da"];
+
+    // Workflow Connections
+    start -> smoke_health;
+    smoke_health -> smoke_db;
+    smoke_db -> smoke_cache;
+    smoke_cache -> smoke_auth;
+    smoke_auth -> smoke_api;
+    smoke_api -> smoke_passed;
+
+    smoke_passed -> unit_functions [label="Pass", color="green"];
+    smoke_passed -> failed [label="Fail - Critical", color="red"];
+
+    unit_functions -> unit_classes;
+    unit_classes -> unit_utils;
+    unit_utils -> unit_validators;
+    unit_validators -> unit_coverage;
+    unit_coverage -> unit_passed;
+
+    unit_passed -> int_api [label="Pass", color="green"];
+    unit_passed -> failed [label="Fail", color="red"];
+
+    int_api -> int_db;
+    int_db -> int_external;
+    int_external -> int_message;
+    int_message -> int_auth;
+    int_auth -> int_contracts;
+    int_contracts -> integration_passed;
+
+    integration_passed -> e2e_user_flows [label="Pass", color="green"];
+    integration_passed -> failed [label="Fail", color="red"];
+
+    e2e_user_flows -> e2e_ui;
+    e2e_ui -> e2e_cross_browser;
+    e2e_cross_browser -> e2e_mobile;
+    e2e_mobile -> e2e_accessibility;
+    e2e_accessibility -> e2e_visual;
+    e2e_visual -> e2e_passed;
+
+    e2e_passed -> load_baseline [label="Pass", color="green"];
+    e2e_passed -> failed [label="Fail", color="red"];
+
+    load_baseline -> load_stress;
+    load_stress -> load_spike;
+    load_spike -> load_soak;
+    load_soak -> load_latency;
+    load_latency -> load_throughput;
+    load_throughput -> load_passed;
+
+    load_passed -> regression_select [label="Pass", color="green"];
+    load_passed -> failed [label="Fail - Performance", color="red"];
+
+    regression_select -> regression_run;
+    regression_run -> regression_compare;
+    regression_compare -> regression_passed;
+
+    regression_passed -> report_generate [label="No Regressions", color="green"];
+    regression_passed -> failed [label="Regression Found", color="red"];
+
+    report_generate -> report_coverage;
+    report_coverage -> report_trends;
+    report_trends -> report_publish;
+    report_publish -> test_results;
+    test_results -> coverage_data;
+    coverage_data -> success;
+}

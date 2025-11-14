@@ -1,0 +1,130 @@
+digraph flow_nexus_payments_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Payments Agent Workflow\nAgent ID: agent-088 | Category: Flow-Nexus Integration\nPurpose: Payment processing and credit management";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Payment Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Payment\nProcessed", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Balance Check
+    subgraph cluster_balance {
+        label="Phase 1: Balance Check";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        bal1 [label="Check Credit\nBalance", shape=box, fillcolor="#ffecb3"];
+        bal2 [label="Check Auto-Refill\nStatus", shape=box, fillcolor="#ffecb3"];
+        bal3 [label="View Transaction\nHistory", shape=box, fillcolor="#ffecb3"];
+
+        bal1 -> bal2 -> bal3;
+    }
+
+    // Phase 2: Payment Link Creation
+    subgraph cluster_payment {
+        label="Phase 2: Payment Link Creation";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        pay1 [label="Set Purchase\nAmount ($10 min)", shape=box, fillcolor="#bbdefb"];
+        pay2 [label="Generate Secure\nPayment Link", shape=box, fillcolor="#bbdefb"];
+        pay3 [label="Redirect to\nPayment Gateway", shape=box, fillcolor="#bbdefb"];
+        pay4 [label="Process Payment", shape=box, fillcolor="#bbdefb"];
+        pay5 [label="Confirm Payment\nSuccess", shape=box, fillcolor="#bbdefb"];
+
+        pay1 -> pay2 -> pay3 -> pay4 -> pay5;
+    }
+
+    // Phase 3: Auto-Refill Configuration
+    subgraph cluster_autorefill {
+        label="Phase 3: Auto-Refill Configuration";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        ar1 [label="Enable/Disable\nAuto-Refill", shape=box, fillcolor="#e1bee7"];
+        ar2 [label="Set Threshold\n(min $10)", shape=box, fillcolor="#e1bee7"];
+        ar3 [label="Set Refill Amount\n(min $10)", shape=box, fillcolor="#e1bee7"];
+        ar4 [label="Save Configuration", shape=box, fillcolor="#e1bee7"];
+
+        ar1 -> ar2 -> ar3 -> ar4;
+    }
+
+    // Phase 4: Credit Management
+    subgraph cluster_credits {
+        label="Phase 4: Credit Management";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        cr1 [label="Add Credits to\nAccount", shape=box, fillcolor="#f8bbd0"];
+        cr2 [label="Update Balance", shape=box, fillcolor="#f8bbd0"];
+        cr3 [label="Log Transaction", shape=box, fillcolor="#f8bbd0"];
+        cr4 [label="Send Receipt", shape=box, fillcolor="#f8bbd0"];
+
+        cr1 -> cr2 -> cr3 -> cr4;
+    }
+
+    // Phase 5: Transaction History
+    subgraph cluster_history {
+        label="Phase 5: Transaction History";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        h1 [label="Fetch Recent\nTransactions", shape=box, fillcolor="#b2dfdb"];
+        h2 [label="Filter by Date", shape=box, fillcolor="#b2dfdb"];
+        h3 [label="View Transaction\nDetails", shape=box, fillcolor="#b2dfdb"];
+        h4 [label="Export History", shape=box, fillcolor="#b2dfdb"];
+
+        h1 -> h2 -> h3 -> h4;
+    }
+
+    // Decisions
+    low_balance [label="Balance\nBelow Threshold?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    auto_refill_enabled [label="Auto-Refill\nEnabled?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> bal1;
+    bal3 -> low_balance;
+
+    low_balance -> auto_refill_enabled [label="Yes"];
+    low_balance -> end [label="No"];
+
+    auto_refill_enabled -> pay1 [label="Yes - Auto"];
+    auto_refill_enabled -> pay1 [label="No - Manual"];
+
+    pay5 -> cr1;
+    cr4 -> h1;
+    h4 -> end;
+
+    // Configuration path
+    start -> ar1 [label="Configure", style=dashed];
+    ar4 -> bal1;
+
+    // Capabilities
+    capabilities [label="Key Capabilities:\n• Balance Management\n• Payment Processing\n• Auto-Refill\n• Transaction History\n• Secure Payments\n• Receipt Generation", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    tools [label="MCP Tools:\n• check_balance\n• create_payment_link\n• configure_auto_refill\n• get_payment_history\n• ruv_balance\n• ruv_history", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Payment info
+    payment_info [label="Payment Details:\n• Min purchase: $10\n• Max purchase: $10,000\n• Auto-refill threshold: $10+\n• Secure payment gateway", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-payments\nPriority: Medium\nComplexity: High\nGraphviz Priority: 88", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

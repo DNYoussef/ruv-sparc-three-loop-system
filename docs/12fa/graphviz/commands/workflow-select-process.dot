@@ -1,0 +1,23 @@
+digraph WORKFLOW_SELECT {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/workflow-select", shape=ellipse, fillcolor=lightblue];
+  analyze_requirements [label="Analyze\nRequirements", fillcolor=purple];
+  pattern_match [label="Pattern Matching", fillcolor=lightpurple, style="filled,bold"];
+  select_workflow [shape=diamond, label="Workflow\nType?"];
+  dev_workflow [label="Development\nWorkflow", fillcolor=lightgreen];
+  research_workflow [label="Research\nWorkflow", fillcolor=lightgreen];
+  sparc_workflow [label="SPARC\nWorkflow", fillcolor=lightgreen];
+  execute [label="Execute\nWorkflow", fillcolor=lightblue];
+  success [label="Workflow Selected", shape=doublecircle, fillcolor=green];
+
+  invoke -> analyze_requirements -> pattern_match -> select_workflow;
+  select_workflow -> dev_workflow [label="Dev"];
+  select_workflow -> research_workflow [label="Research"];
+  select_workflow -> sparc_workflow [label="SPARC"];
+  dev_workflow -> execute;
+  research_workflow -> execute;
+  sparc_workflow -> execute;
+  execute -> success;
+}

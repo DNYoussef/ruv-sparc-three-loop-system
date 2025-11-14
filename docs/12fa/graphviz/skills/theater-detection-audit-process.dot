@@ -1,0 +1,117 @@
+digraph THEATER_DETECTION_AUDIT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Initialization";
+    style="filled,rounded";
+    bgcolor="#E8F4F8";
+
+    start [label="theater-detection-audit\nInvoked", shape=ellipse, fillcolor=lightblue];
+    load_outputs [label="Load Outputs to Audit\nCode, Tests, Results"];
+    check_agents [label="Check 6-Agent Availability\nByzantine Consensus"];
+
+    start -> load_outputs -> check_agents;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED"];
+
+    check_agents -> check_policy;
+    check_policy -> policy_violation [label="Fail"];
+  }
+
+  subgraph cluster_execution {
+    label="6-Agent Theater Detection";
+    style="filled,rounded";
+    bgcolor="#F0E8F8";
+
+    spawn_agents [label="Spawn 6 Detection Agents\nCompletion, Mock, Test\nSecurity, Integration, Quality", fillcolor=purple];
+    detect_completion_theater [label="Detect Completion Theater\nTask Marked Done Prematurely", fillcolor=red];
+    detect_mock_theater [label="Detect Mock Theater\nFake Implementations", fillcolor=red];
+    detect_test_theater [label="Detect Test Theater\nSuperficial Tests", fillcolor=red];
+    parallel_detection [label="Parallel Detection\nAll Agents Simultaneously", fillcolor=purple];
+
+    check_policy -> spawn_agents [label="Pass"];
+    spawn_agents -> parallel_detection;
+    parallel_detection -> detect_completion_theater;
+    parallel_detection -> detect_mock_theater;
+    parallel_detection -> detect_test_theater;
+  }
+
+  subgraph cluster_consensus {
+    label="Byzantine Consensus";
+    style="filled,rounded";
+    bgcolor="#FFE8E8";
+
+    collect_verdicts [label="Collect Agent Verdicts", fillcolor=orange];
+    byzantine_consensus [label="Byzantine Fault-Tolerant\nConsensus (67% Threshold)", fillcolor=orange];
+    decision_consensus [shape=diamond, label="Consensus:\nTheater?"];
+
+    detect_completion_theater -> collect_verdicts;
+    detect_mock_theater -> collect_verdicts;
+    detect_test_theater -> collect_verdicts;
+    collect_verdicts -> byzantine_consensus;
+    byzantine_consensus -> decision_consensus;
+  }
+
+  subgraph cluster_zero_tolerance {
+    label="Zero Tolerance Enforcement";
+    style="filled,rounded";
+    bgcolor="#FF0000";
+
+    theater_alert [shape=octagon, fillcolor=crimson, label="THEATER DETECTED\nZERO TOLERANCE", fontcolor=white];
+    identify_source [label="Identify Theater Source\nAgent, File, Line", fillcolor=orange];
+    document_theater [label="Document Theater Type\nEvidence, Severity", fillcolor=orange];
+
+    decision_consensus -> theater_alert [label="Yes (Theater)"];
+    theater_alert -> identify_source;
+    identify_source -> document_theater;
+  }
+
+  subgraph cluster_coordination {
+    label="Coordination";
+    style="filled,rounded";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Detection Results\nTheater Type, Evidence", fillcolor=lightblue];
+    notify_loop2 [label="Notify parallel-swarm\nBlock Completion", fillcolor=lightblue];
+
+    decision_consensus -> memory_store [label="No Theater"];
+    document_theater -> memory_store;
+    memory_store -> notify_loop2;
+  }
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_metrics [label="Log Metrics\nTheater Detected?, Type"];
+    success [label="Audit Complete\nNo Theater", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    blocked [label="BLOCKED\nTheater Detected", shape=doublecircle, fillcolor=red, style="filled,bold"];
+
+    notify_loop2 -> cleanup;
+    cleanup -> log_metrics;
+    log_metrics -> success [label="No Theater"];
+    log_metrics -> blocked [label="Theater Found"];
+  }
+
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate"];
+    log_error [label="Log Error", fillcolor=orange];
+
+    policy_violation -> log_error;
+    log_error -> escalate;
+  }
+}

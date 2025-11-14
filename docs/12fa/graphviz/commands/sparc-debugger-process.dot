@@ -1,0 +1,82 @@
+// SPARC Debugger Command Workflow
+// Systematic debugging and troubleshooting
+digraph sparc_debugger_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:debugger\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        error_collector [label="Error\nCollector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_tracing {
+        label="Error Tracing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        stack_tracer [label="Stack\nTracer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        log_analyzer [label="Log\nAnalyzer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        state_inspector [label="State\nInspector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        flow_tracer [label="Execution Flow\nTracer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Root Cause Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_matcher [label="Error Pattern\nMatcher", fillcolor="#2563eb", fontcolor="#ffffff"];
+        hypothesis_builder [label="Hypothesis\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        test_generator [label="Test Case\nGenerator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        root_cause_finder [label="Root Cause\nFinder", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_fix {
+        label="Fix Recommendations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        solution_generator [label="Solution\nGenerator", fillcolor="#16a34a", fontcolor="#ffffff"];
+        fix_validator [label="Fix\nValidator", fillcolor="#16a34a", fontcolor="#ffffff"];
+        regression_checker [label="Regression\nChecker", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        debug_report [label="Debug\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        fix_instructions [label="Fix\nInstructions", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> error_collector;
+    error_collector -> stack_tracer -> log_analyzer -> state_inspector -> flow_tracer;
+    flow_tracer -> pattern_matcher -> hypothesis_builder -> test_generator -> root_cause_finder;
+    root_cause_finder -> solution_generator -> fix_validator -> regression_checker;
+    regression_checker -> debug_report -> fix_instructions;
+    fix_instructions -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    test_generator -> hypothesis_builder [label="Refine", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Tracing", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend3 [label="Fix", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+}

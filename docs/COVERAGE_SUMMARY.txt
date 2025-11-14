@@ -1,0 +1,139 @@
+====================================================================
+ACTUAL CODE COVERAGE MEASUREMENT - EXECUTIVE SUMMARY
+====================================================================
+
+Date: 2025-11-13
+Tool: pytest-cov 4.1.0 with coverage.py 7.11.0
+Test Suite: tests/test_unified_coordinator.py
+
+====================================================================
+HEADLINE NUMBERS
+====================================================================
+
+OVERALL LINE COVERAGE:     73.71% (254/343 statements)
+OVERALL BRANCH COVERAGE:   71.88% (46/64 branches)
+TARGET LINE COVERAGE:      80%
+STATUS:                    Below target by 6.29%
+
+ALL TESTS PASSING:         25/25 (100%)
+EXECUTION TIME:            6.62 seconds
+
+====================================================================
+COMPARISON TO CLAIMED COVERAGE
+====================================================================
+
+Week 4 Documentation Claim:    90.2%
+Actual Measured Coverage:       73.71%
+Discrepancy:                    -16.49 percentage points
+
+VERDICT: The 90.2% claim appears to be estimated/documentation-based.
+         The 73.71% is REAL coverage from pytest-cov measurements.
+
+====================================================================
+COMPONENT BREAKDOWN
+====================================================================
+
+CacheManager:         60.27% | Branch: 65.00% | Status: BELOW TARGET
+StreamProcessor:      70.83% | Branch: 100.00% | Status: BELOW TARGET
+MetricsCollector:     61.36% | Branch: 57.14% | Status: BELOW TARGET
+ReportGenerator:      61.11% | Branch: 75.00% | Status: BELOW TARGET
+UnifiedCoordinator:   78.79% | Branch: 85.71% | Status: CLOSE TO TARGET
+
+====================================================================
+UNCOVERED FUNCTIONALITY
+====================================================================
+
+HIGH PRIORITY (Core Features):
+  - CacheManager.warm_cache (0%) - Cache warming
+  - StreamProcessor streaming lifecycle (0%) - Real-time analysis
+  - MetricsCollector.create_snapshot (0%) - Metrics snapshots
+  - ReportGenerator.generate_all_formats (0%) - Multi-format reports
+
+MEDIUM PRIORITY (Utilities):
+  - CacheManager performance metrics (0%)
+  - UnifiedCoordinator dashboard methods (0%)
+  - Report export functionality (0%)
+
+LOW PRIORITY (Helpers):
+  - Internal helper methods (0%)
+  - Severity normalization (0%)
+
+====================================================================
+PATH TO 80% COVERAGE
+====================================================================
+
+QUICK WINS (+3-4%):
+  1. Add tests for ReportGenerator.generate_all_formats (10 statements)
+  2. Add tests for CacheManager.warm_cache (8 statements)
+  3. Add tests for MetricsCollector.create_snapshot (4 statements)
+
+MEDIUM EFFORT (+2-3%):
+  1. Test StreamProcessor lifecycle methods (7 statements)
+  2. Test CacheManager performance methods (4 statements)
+  3. Test UnifiedCoordinator dashboard (4 statements)
+
+TOTAL EFFORT:
+  - 15-20 additional test cases
+  - 4-6 hours of work
+  - Would achieve ~80-82% coverage
+
+====================================================================
+GENERATED REPORTS
+====================================================================
+
+1. Detailed Markdown Report:
+   C:/Users/17175/docs/ACTUAL_CODE_COVERAGE_REPORT.md
+
+2. Machine-Readable JSON:
+   C:/Users/17175/docs/coverage_metrics.json
+
+3. Coverage.py JSON Report:
+   C:/Users/17175/docs/coverage_report.json
+
+4. HTML Interactive Report:
+   C:/Users/17175/htmlcov/index.html
+
+5. This Summary:
+   C:/Users/17175/docs/COVERAGE_SUMMARY.txt
+
+====================================================================
+QUALITY ASSESSMENT
+====================================================================
+
+STRENGTHS:
+  + All 25 tests passing (100% success rate)
+  + Branch coverage exceeds 70% target (71.88%)
+  + Core functionality well-covered
+  + StreamProcessor has perfect branch coverage (100%)
+
+WEAKNESSES:
+  - Line coverage below 80% target (73.71%)
+  - Many utility methods untested (0%)
+  - Streaming features not tested
+  - Cache warming logic untested
+
+OVERALL GRADE: B+ (Good foundation, needs improvement)
+
+====================================================================
+RECOMMENDATIONS
+====================================================================
+
+1. IMMEDIATE: Add tests for high-priority uncovered methods
+2. SHORT-TERM: Test streaming lifecycle and cache warming
+3. MEDIUM-TERM: Achieve 80%+ coverage across all components
+4. LONG-TERM: Add integration tests for end-to-end workflows
+
+====================================================================
+NOTES
+====================================================================
+
+This report contains ACTUAL measured coverage from pytest-cov,
+not estimated or documentation-based coverage percentages.
+
+All numbers are reproducible by running:
+  pytest tests/test_unified_coordinator.py --cov=analyzer/architecture --cov-report=term-missing --cov-branch
+
+Branch coverage is enabled and measures decision point coverage,
+providing a more rigorous assessment than line coverage alone.
+
+====================================================================

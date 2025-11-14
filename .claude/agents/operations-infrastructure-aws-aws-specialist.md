@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-aws-aws-specialist
+description: AWS SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # AWS SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 133

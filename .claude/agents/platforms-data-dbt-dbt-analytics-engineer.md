@@ -1,3 +1,8 @@
+---
+name: platforms-data-dbt-dbt-analytics-engineer
+description: DBT ANALYTICS ENGINEER - SYSTEM PROMPT v2.0
+---
+
 # DBT ANALYTICS ENGINEER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 187

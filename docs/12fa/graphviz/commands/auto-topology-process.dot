@@ -1,0 +1,29 @@
+digraph AUTO_TOPOLOGY {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/auto-topology", shape=ellipse, fillcolor=lightblue];
+  analyze_task [label="Analyze Task\nComplexity", fillcolor=purple, style="filled,bold"];
+  count_agents [label="Count Active\nAgents", fillcolor=lightblue];
+  measure_communication [label="Measure Communication\nPatterns", fillcolor=lightpurple];
+  calc_optimal [label="Calculate Optimal\nTopology", fillcolor=lightgreen];
+  select_topology [shape=diamond, label="Recommended\nTopology?"];
+  mesh_topology [label="Mesh Topology\n(High collaboration)", fillcolor=lightgreen];
+  hierarchical_topology [label="Hierarchical\n(Large scale)", fillcolor=lightgreen];
+  ring_topology [label="Ring Topology\n(Sequential)", fillcolor=lightgreen];
+  star_topology [label="Star Topology\n(Centralized)", fillcolor=lightgreen];
+  apply_topology [label="Apply Topology\nChange", fillcolor=yellow];
+  validate_performance [label="Validate\nPerformance", fillcolor=lightblue];
+  success [label="Topology Optimized", shape=doublecircle, fillcolor=green];
+
+  invoke -> analyze_task -> count_agents -> measure_communication -> calc_optimal -> select_topology;
+  select_topology -> mesh_topology [label="mesh"];
+  select_topology -> hierarchical_topology [label="hierarchical"];
+  select_topology -> ring_topology [label="ring"];
+  select_topology -> star_topology [label="star"];
+  mesh_topology -> apply_topology;
+  hierarchical_topology -> apply_topology;
+  ring_topology -> apply_topology;
+  star_topology -> apply_topology;
+  apply_topology -> validate_performance -> success;
+}

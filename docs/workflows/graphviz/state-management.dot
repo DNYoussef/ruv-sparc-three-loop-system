@@ -1,0 +1,159 @@
+/**
+ * State Checkpoint and Restore Workflow
+ * Command: /state-checkpoint, /state-restore
+ * Phase: 2 (Memory & State)
+ */
+
+digraph state_management {
+    rankdir=LR;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>State Management Workflow</B><BR/>Checkpoint → Restore → Rollback>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Checkpoint Creation
+    subgraph cluster_checkpoint {
+        label="State Checkpoint";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        cp_trigger [label="Checkpoint\nTrigger", shape=box, fillcolor="#bbdefb"];
+        capture_state [label="Capture Current\nState", shape=box, fillcolor="#90caf9"];
+        serialize_data [label="Serialize\nData", shape=box, fillcolor="#64b5f6"];
+        compress [label="Compress\n(if enabled)", shape=diamond, fillcolor="#42a5f5"];
+        compress_data [label="Apply\nCompression", shape=box, fillcolor="#2196f3"];
+        generate_id [label="Generate\nCheckpoint ID", shape=box, fillcolor="#1e88e5"];
+        store_metadata [label="Store\nMetadata", shape=box, fillcolor="#1976d2"];
+        save_checkpoint [label="Save to\nStorage", shape=cylinder, fillcolor="#1565c0"];
+    }
+
+    // Subgraph: State Components
+    subgraph cluster_components {
+        label="State Components";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        agent_state [label="Agent State\n(config, status)", shape=box, fillcolor="#e1bee7"];
+        memory_state [label="Memory State\n(key-values)", shape=box, fillcolor="#ce93d8"];
+        task_state [label="Task State\n(progress, results)", shape=box, fillcolor="#ba68c8"];
+        swarm_state [label="Swarm State\n(topology, metrics)", shape=box, fillcolor="#ab47bc"];
+        neural_state [label="Neural State\n(patterns, weights)", shape=box, fillcolor="#9c27b0"];
+    }
+
+    // Subgraph: Restore Operations
+    subgraph cluster_restore {
+        label="State Restore";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        restore_trigger [label="Restore\nTrigger", shape=box, fillcolor="#ffe0b2"];
+        load_checkpoint [label="Load\nCheckpoint", shape=cylinder, fillcolor="#ffcc80"];
+        validate_cp [label="Validate\nCheckpoint", shape=diamond, fillcolor="#ffb74d"];
+        decompress [label="Decompress\n(if needed)", shape=box, fillcolor="#ffa726"];
+        deserialize [label="Deserialize\nData", shape=box, fillcolor="#ff9800"];
+        restore_state [label="Restore State\nComponents", shape=box, fillcolor="#fb8c00"];
+        verify_restore [label="Verify\nRestore", shape=diamond, fillcolor="#f57c00"];
+        restore_success [label="Restore\nSuccess", shape=box, fillcolor="#ef6c00"];
+        restore_fail [label="Restore\nFailed", shape=box, fillcolor="#e65100", style="rounded,filled,dashed"];
+    }
+
+    // Subgraph: Rollback Operations
+    subgraph cluster_rollback {
+        label="Rollback Operations";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        rollback_trigger [label="Rollback\nTrigger", shape=box, fillcolor="#c8e6c9"];
+        list_checkpoints [label="List Available\nCheckpoints", shape=box, fillcolor="#a5d6a7"];
+        select_cp [label="Select\nCheckpoint", shape=box, fillcolor="#81c784"];
+        confirm_rollback [label="Confirm\nRollback?", shape=diamond, fillcolor="#66bb6a"];
+        execute_rollback [label="Execute\nRollback", shape=box, fillcolor="#4caf50"];
+        rollback_complete [label="Rollback\nComplete", shape=box, fillcolor="#43a047"];
+        rollback_cancel [label="Cancel\nRollback", shape=box, fillcolor="#388e3c"];
+    }
+
+    // Subgraph: Checkpoint Management
+    subgraph cluster_management {
+        label="Checkpoint Management";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        list_cps [label="List\nCheckpoints", shape=box, fillcolor="#ffcdd2"];
+        delete_cp [label="Delete\nCheckpoint", shape=box, fillcolor="#ef9a9a"];
+        export_cp [label="Export\nCheckpoint", shape=box, fillcolor="#e57373"];
+        import_cp [label="Import\nCheckpoint", shape=box, fillcolor="#ef5350"];
+        compare_cps [label="Compare\nCheckpoints", shape=box, fillcolor="#f44336"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Checkpoint", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Components", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Restore", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Rollback", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Management", shape=box, fillcolor="#f44336"];
+
+        {rank=same; leg1; leg2; leg3; leg4; leg5;}
+    }
+
+    // Checkpoint flow
+    cp_trigger -> capture_state;
+    capture_state -> serialize_data;
+    serialize_data -> compress;
+    compress -> compress_data [label="yes"];
+    compress -> generate_id [label="no"];
+    compress_data -> generate_id;
+    generate_id -> store_metadata;
+    store_metadata -> save_checkpoint;
+
+    // Components to capture
+    agent_state -> capture_state [style=dashed];
+    memory_state -> capture_state [style=dashed];
+    task_state -> capture_state [style=dashed];
+    swarm_state -> capture_state [style=dashed];
+    neural_state -> capture_state [style=dashed];
+
+    // Restore flow
+    restore_trigger -> load_checkpoint;
+    load_checkpoint -> validate_cp;
+    validate_cp -> decompress [label="valid"];
+    validate_cp -> restore_fail [label="invalid"];
+    decompress -> deserialize;
+    deserialize -> restore_state;
+    restore_state -> verify_restore;
+    verify_restore -> restore_success [label="success"];
+    verify_restore -> restore_fail [label="failure"];
+
+    // Rollback flow
+    rollback_trigger -> list_checkpoints;
+    list_checkpoints -> select_cp;
+    select_cp -> confirm_rollback;
+    confirm_rollback -> execute_rollback [label="yes"];
+    confirm_rollback -> rollback_cancel [label="no"];
+    execute_rollback -> rollback_complete;
+
+    // Management operations
+    list_cps -> delete_cp [style=dotted];
+    list_cps -> export_cp [style=dotted];
+    import_cp -> save_checkpoint [style=dotted];
+    list_cps -> compare_cps [style=dotted];
+
+    // Cross connections
+    save_checkpoint -> load_checkpoint [style=dashed, label="storage"];
+    execute_rollback -> restore_trigger [style=dashed, color=green, penwidth=2];
+}

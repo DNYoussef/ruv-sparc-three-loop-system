@@ -1,0 +1,189 @@
+digraph PERFORMANCE_ANALYSIS_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Performance Analysis Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Performance Analysis Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Performance Targets"];
+    validate_input [label="Validate Target System"];
+    check_deps [label="Check Profiling Tools"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE - PERFORMANCE ANALYSIS
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Performance Analysis Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    profile_cpu [label="Profile CPU Usage\n(Hotspots, Call Stacks)", fillcolor=purple];
+    cpu_check [shape=diamond, label="CPU Usage\nOptimal?"];
+
+    profile_memory [label="Profile Memory Usage\n(Leaks, Allocations)", fillcolor=purple];
+    memory_check [shape=diamond, label="Memory\nOptimal?"];
+
+    profile_io [label="Profile I/O Operations\n(Disk, Network)", fillcolor=purple];
+    io_check [shape=diamond, label="I/O\nOptimal?"];
+
+    analyze_bottlenecks [label="Identify Bottlenecks\n& Performance Issues", fillcolor=purple];
+    bottleneck_check [shape=diamond, label="Bottlenecks\nFound?"];
+
+    // Error handling
+    profiling_error [shape=octagon, fillcolor=orange,
+                     label="Profiling Error"];
+    retry_logic [label="Retry Analysis", fillcolor=yellow];
+  }
+
+  check_secrets -> profile_cpu [label="Pass"];
+
+  profile_cpu -> cpu_check;
+  cpu_check -> profile_memory [label="Yes"];
+  cpu_check -> analyze_bottlenecks [label="No"];
+
+  profile_memory -> memory_check;
+  memory_check -> profile_io [label="Yes"];
+  memory_check -> analyze_bottlenecks [label="No"];
+
+  profile_io -> io_check;
+  io_check -> analyze_bottlenecks;
+
+  analyze_bottlenecks -> bottleneck_check;
+  bottleneck_check -> profiling_error [label="Analysis Failed"];
+
+  profiling_error -> retry_logic;
+  retry_logic -> profile_cpu [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Performance Tracking";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Performance Metrics", fillcolor=lightblue];
+    track_trends [label="Track Performance Trends", fillcolor=lightblue];
+    compare_baseline [label="Compare to Baseline", fillcolor=lightblue];
+    check_regression [shape=diamond, label="Performance\nRegression?"];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  bottleneck_check -> memory_store;
+  memory_store -> track_trends;
+  track_trends -> compare_baseline;
+  compare_baseline -> check_regression;
+  check_regression -> notify_coordinator [label="No"];
+  check_regression -> escalate [label="Yes"];
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="All Metrics\nWithin Targets?"];
+    run_benchmarks [label="Run Performance Benchmarks", fillcolor=lightgreen];
+    benchmark_results [shape=diamond, label="Benchmarks\nPass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> run_benchmarks [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_benchmarks -> benchmark_results;
+  benchmark_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_report [label="Generate Analysis Report\n(Graphs, Recommendations)", fillcolor=lightgreen];
+    create_optimization_plan [label="Create Optimization Plan", fillcolor=lightgreen];
+    cleanup [label="Cleanup Profiling Data", fillcolor=lightgreen];
+    log_completion [label="Log Analysis Metrics"];
+    success [label="Analysis Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  benchmark_results -> generate_report [label="Pass"];
+  generate_report -> create_optimization_plan;
+  create_optimization_plan -> cleanup;
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Analysis Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

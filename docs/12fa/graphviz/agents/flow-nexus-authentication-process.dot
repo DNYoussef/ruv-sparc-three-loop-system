@@ -1,0 +1,179 @@
+digraph flow_nexus_authentication_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Authentication Agent Workflow\nAgent ID: agent-086 | Category: Flow-Nexus Integration\nPurpose: User authentication and authorization";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Auth Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Authenticated", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: User Registration
+    subgraph cluster_registration {
+        label="Phase 1: User Registration";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        reg1 [label="Collect User Info\n(email/password)", shape=box, fillcolor="#ffecb3"];
+        reg2 [label="Validate Email\nFormat", shape=box, fillcolor="#ffecb3"];
+        reg3 [label="Hash Password\n(bcrypt)", shape=box, fillcolor="#ffecb3"];
+        reg4 [label="Create User\nAccount", shape=box, fillcolor="#ffecb3"];
+        reg5 [label="Send Verification\nEmail", shape=box, fillcolor="#ffecb3"];
+
+        reg1 -> reg2 -> reg3 -> reg4 -> reg5;
+    }
+
+    // Phase 2: Email Verification
+    subgraph cluster_verification {
+        label="Phase 2: Email Verification";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        ver1 [label="Generate\nVerification Token", shape=box, fillcolor="#bbdefb"];
+        ver2 [label="Send Token\nvia Email", shape=box, fillcolor="#bbdefb"];
+        ver3 [label="User Clicks\nVerification Link", shape=box, fillcolor="#bbdefb"];
+        ver4 [label="Validate Token", shape=box, fillcolor="#bbdefb"];
+        ver5 [label="Activate Account", shape=box, fillcolor="#bbdefb"];
+
+        ver1 -> ver2 -> ver3 -> ver4 -> ver5;
+    }
+
+    // Phase 3: User Login
+    subgraph cluster_login {
+        label="Phase 3: User Login";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        login1 [label="Enter Email &\nPassword", shape=box, fillcolor="#e1bee7"];
+        login2 [label="Verify Account\nExists", shape=box, fillcolor="#e1bee7"];
+        login3 [label="Validate\nPassword Hash", shape=box, fillcolor="#e1bee7"];
+        login4 [label="Check Account\nStatus", shape=box, fillcolor="#e1bee7"];
+        login5 [label="Create Session", shape=box, fillcolor="#e1bee7"];
+
+        login1 -> login2 -> login3 -> login4 -> login5;
+    }
+
+    // Phase 4: Session Management
+    subgraph cluster_session {
+        label="Phase 4: Session Management";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        sess1 [label="Generate JWT\nToken", shape=box, fillcolor="#f8bbd0"];
+        sess2 [label="Set Session\nExpiration", shape=box, fillcolor="#f8bbd0"];
+        sess3 [label="Store Session\nData", shape=box, fillcolor="#f8bbd0"];
+        sess4 [label="Return Auth\nToken", shape=box, fillcolor="#f8bbd0"];
+        sess5 [label="Track Session\nActivity", shape=box, fillcolor="#f8bbd0"];
+
+        sess1 -> sess2 -> sess3 -> sess4 -> sess5;
+    }
+
+    // Phase 5: Authorization
+    subgraph cluster_authorization {
+        label="Phase 5: Authorization";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        authz1 [label="Verify JWT\nToken", shape=box, fillcolor="#b2dfdb"];
+        authz2 [label="Check User\nPermissions", shape=box, fillcolor="#b2dfdb"];
+        authz3 [label="Validate Resource\nAccess", shape=box, fillcolor="#b2dfdb"];
+        authz4 [label="Apply Role-Based\nAccess Control", shape=box, fillcolor="#b2dfdb"];
+        authz5 [label="Grant/Deny\nAccess", shape=box, fillcolor="#b2dfdb"];
+
+        authz1 -> authz2 -> authz3 -> authz4 -> authz5;
+    }
+
+    // Phase 6: Password Management
+    subgraph cluster_password {
+        label="Phase 6: Password Management";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        pwd1 [label="Request Password\nReset", shape=box, fillcolor="#fff59d"];
+        pwd2 [label="Generate Reset\nToken", shape=box, fillcolor="#fff59d"];
+        pwd3 [label="Send Reset Email", shape=box, fillcolor="#fff59d"];
+        pwd4 [label="Validate Reset\nToken", shape=box, fillcolor="#fff59d"];
+        pwd5 [label="Update Password\nHash", shape=box, fillcolor="#fff59d"];
+
+        pwd1 -> pwd2 -> pwd3 -> pwd4 -> pwd5;
+    }
+
+    // Phase 7: User Profile
+    subgraph cluster_profile {
+        label="Phase 7: User Profile Management";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        prof1 [label="Get User\nProfile", shape=box, fillcolor="#b3e5fc"];
+        prof2 [label="Update Profile\nInfo", shape=box, fillcolor="#b3e5fc"];
+        prof3 [label="Upgrade User\nTier", shape=box, fillcolor="#b3e5fc"];
+        prof4 [label="Get User\nStatistics", shape=box, fillcolor="#b3e5fc"];
+        prof5 [label="Logout User", shape=box, fillcolor="#b3e5fc"];
+
+        prof1 -> prof2 -> prof3 -> prof4 -> prof5;
+    }
+
+    // Decision nodes
+    verified [label="Email\nVerified?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    valid_login [label="Valid\nCredentials?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    authorized [label="Authorized?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections - Registration path
+    start -> reg1 [label="Register"];
+    reg5 -> ver1 [label="Account\nCreated"];
+    ver5 -> verified [label="Check\nStatus"];
+    verified -> login1 [label="Yes"];
+    verified -> ver2 [label="No - Resend", style=dashed, color="#ff9800"];
+
+    // Login path
+    start -> login1 [label="Login"];
+    login5 -> valid_login [label="Validate"];
+    valid_login -> sess1 [label="Yes"];
+    valid_login -> login1 [label="No - Retry", style=dashed, color="#f44336"];
+
+    sess5 -> authz1 [label="Session\nActive"];
+    authz5 -> authorized [label="Check\nAccess"];
+    authorized -> end [label="Granted"];
+    authorized -> authz1 [label="Denied", style=dashed, color="#f44336"];
+
+    // Password reset path
+    start -> pwd1 [label="Forgot\nPassword"];
+    pwd5 -> login1 [label="Password\nReset"];
+
+    // Profile management
+    sess5 -> prof1 [label="Manage\nProfile"];
+    prof5 -> end [label="Logout"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• User Registration\n• Email Verification\n• JWT Authentication\n• Session Management\n• RBAC Authorization\n• Password Reset", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    mcp_tools [label="MCP Tools:\n• user_register\n• user_login\n• user_logout\n• user_verify_email\n• user_reset_password\n• user_update_password\n• user_profile\n• user_update_profile\n• auth_status", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Security features
+    security [label="Security:\n• bcrypt hashing\n• JWT tokens\n• Email verification\n• Session expiration\n• RBAC", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-authentication\nPriority: High\nComplexity: High\nGraphviz Priority: 86", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

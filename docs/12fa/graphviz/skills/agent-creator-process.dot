@@ -1,0 +1,227 @@
+digraph AGENT_CREATOR_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="agent-creator Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml\n4-Phase SOP Methodology"];
+    validate_input [label="Validate Agent Requirements\nDomain, Role, Constraints"];
+    check_deps [label="Check Dependencies\nprompt-architect, skill-forge"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    check_sop [shape=diamond, label="SOP Methodology\nFollowed?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_sop [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_sop -> check_secrets [label="Pass"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE: 4-PHASE SOP METHODOLOGY
+  // =============================================================================
+  subgraph cluster_execution {
+    label="4-Phase SOP Execution";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    // Phase 1: Analysis
+    phase1_analysis [label="Phase 1: Domain Analysis\nExtract requirements, constraints\nIdentify specialization needs", fillcolor=purple];
+    decision_1 [shape=diamond, label="Analysis\nComplete?"];
+
+    // Phase 2: Architecture
+    phase2_architecture [label="Phase 2: Agent Architecture\nDefine capabilities, tools, commands\nMap to Claude Agent SDK", fillcolor=purple];
+    decision_2 [shape=diamond, label="Architecture\nValid?"];
+
+    // Phase 3: Prompt Engineering
+    phase3_prompting [label="Phase 3: Evidence-Based Prompting\nSelf-consistency, Program-of-Thought\nPlan-and-Solve patterns", fillcolor=purple];
+    decision_3 [shape=diamond, label="Prompt Quality\n>90%?"];
+
+    // Phase 4: Integration
+    phase4_integration [label="Phase 4: SDK Integration\nGenerate agent.md with metadata\nConfigure MCP tools, commands", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Execution Error"];
+    retry_logic [label="Retry with Refinement", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> phase1_analysis [label="Pass"];
+
+  // Execution flow
+  phase1_analysis -> decision_1;
+  decision_1 -> phase2_architecture [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  phase2_architecture -> decision_2;
+  decision_2 -> phase3_prompting [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  phase3_prompting -> decision_3;
+  decision_3 -> phase4_integration [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> phase1_analysis [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Agent Definition\nin Memory", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator\nAgent Ready", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Dependent Skills\nWaiting?"];
+  }
+
+  // Connect execution to coordination
+  phase4_integration -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Agent.md Valid?"];
+    run_tests [label="Run Agent Tests\nPrompt effectiveness\nTool availability", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?\n>95% accuracy"];
+    production_check [label="Production Readiness\nVerification", fillcolor=lightgreen];
+    prod_ready [shape=diamond, label="Production\nReady?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> production_check [label="Pass"];
+  test_results -> quality_gate_fail [label="Fail"];
+
+  production_check -> prod_ready;
+  prod_ready -> quality_gate_fail [label="Not Ready"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Agent Metrics\nCapabilities, Complexity\nTime Investment"];
+    success [label="Agent Created\nProduction Ready", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  prod_ready -> cleanup [label="Ready"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details\nPhase, Reason, Context", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Agent Creation Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    // Hide from main layout
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

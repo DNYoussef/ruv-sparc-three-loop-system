@@ -1,0 +1,87 @@
+// ML Developer Agent - Machine Learning Development
+// Model training, neural networks, inference, optimization
+digraph ml_developer_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        ml_init [label="ML Developer\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        framework_setup [label="Framework\nSetup", fillcolor="#2d3748", fontcolor="#ffffff"];
+        data_connector [label="Data\nConnector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_data {
+        label="Data Pipeline"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        data_loader [label="Data\nLoader", fillcolor="#2563eb", fontcolor="#ffffff"];
+        preprocessor [label="Data\nPreprocessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        augmenter [label="Data\nAugmenter", fillcolor="#2563eb", fontcolor="#ffffff"];
+        splitter [label="Train/Val/Test\nSplitter", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_model {
+        label="Model Development"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        architecture_designer [label="Architecture\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        layer_builder [label="Layer\nBuilder", fillcolor="#059669", fontcolor="#ffffff"];
+        hyperparameter_tuner [label="Hyperparameter\nTuner", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_training {
+        label="Training Pipeline"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        trainer [label="Model\nTrainer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        loss_calculator [label="Loss\nCalculator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        optimizer [label="Gradient\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        checkpoint_manager [label="Checkpoint\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_evaluation {
+        label="Evaluation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        validator [label="Model\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        metric_calculator [label="Metric\nCalculator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        visualizer [label="Results\nVisualizer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_deployment {
+        label="Deployment"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        model_optimizer [label="Model\nOptimizer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        quantizer [label="Model\nQuantizer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        inference_engine [label="Inference\nEngine", fillcolor="#8b4789", fontcolor="#ffffff"];
+        api_wrapper [label="API\nWrapper", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        data_coord [label="Data Engineer\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    ml_init -> framework_setup [label="Setup"];
+    ml_init -> data_connector [label="Connect"];
+    data_connector -> data_loader [label="Load"];
+    data_loader -> preprocessor [label="Preprocess"];
+    preprocessor -> augmenter [label="Augment"];
+    augmenter -> splitter [label="Split"];
+    splitter -> architecture_designer [label="Design"];
+    architecture_designer -> layer_builder [label="Build Layers"];
+    layer_builder -> hyperparameter_tuner [label="Tune"];
+    hyperparameter_tuner -> trainer [label="Train"];
+    trainer -> loss_calculator [label="Calculate Loss"];
+    loss_calculator -> optimizer [label="Optimize"];
+    optimizer -> checkpoint_manager [label="Checkpoint"];
+    checkpoint_manager -> validator [label="Validate"];
+    validator -> metric_calculator [label="Calculate Metrics"];
+    metric_calculator -> visualizer [label="Visualize"];
+    visualizer -> model_optimizer [label="Optimize Model"];
+    model_optimizer -> quantizer [label="Quantize"];
+    quantizer -> inference_engine [label="Deploy Engine"];
+    inference_engine -> api_wrapper [label="Wrap API"];
+    api_wrapper -> backend_coord [label="Integrate"];
+    data_loader -> data_coord [label="Coordinate Data"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="ML Developer", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Data Pipeline", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

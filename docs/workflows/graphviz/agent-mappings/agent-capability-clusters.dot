@@ -1,0 +1,490 @@
+// Agent Capability Clusters
+// Groups agents by primary domain/capability
+// Shows command overlap between agent groups and cross-domain usage
+
+digraph AgentCapabilityClusters {
+    // Graph settings
+    graph [
+        rankdir=TB,
+        splines=curved,
+        overlap=false,
+        nodesep=0.8,
+        ranksep=1.5,
+        fontname="Arial",
+        fontsize=14,
+        label="Agent Capability Clusters\nCommand Overlap & Cross-Domain Usage Patterns",
+        labelloc=t,
+        bgcolor="#FAFAFA",
+        compound=true
+    ];
+
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=8];
+
+    // ========== CLUSTER 1: Core Development Agents ==========
+    subgraph cluster_core_dev {
+        label="Core Development Cluster\n(Primary: Code Creation & Modification)";
+        style=filled;
+        color="#E3F2FD";
+        fontsize=12;
+        fontcolor="#0D47A1";
+
+        node [shape=box, fillcolor="#2196F3", fontcolor=white];
+        coder [label="Coder"];
+        sparc_coder [label="SPARC Coder"];
+        backend_dev [label="Backend Dev"];
+        mobile_dev [label="Mobile Dev"];
+        ml_developer [label="ML Developer"];
+        base_template [label="Base Template\nGenerator"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#BBDEFB", fontcolor=black, width=1.2];
+        dev_file_write [label="/file-write"];
+        dev_file_edit [label="/file-edit"];
+        dev_git_commit [label="/git-commit"];
+        dev_code_format [label="/code-format"];
+        dev_test_run [label="/test-run"];
+
+        coder -> dev_file_write;
+        coder -> dev_file_edit;
+        coder -> dev_git_commit;
+        coder -> dev_code_format;
+        sparc_coder -> dev_file_write;
+        sparc_coder -> dev_file_edit;
+        sparc_coder -> dev_git_commit;
+        sparc_coder -> dev_test_run;
+        backend_dev -> dev_file_write;
+        backend_dev -> dev_file_edit;
+        backend_dev -> dev_git_commit;
+        mobile_dev -> dev_file_write;
+        mobile_dev -> dev_file_edit;
+        ml_developer -> dev_file_write;
+        ml_developer -> dev_test_run;
+        base_template -> dev_file_write;
+    }
+
+    // ========== CLUSTER 2: Quality Assurance Agents ==========
+    subgraph cluster_qa {
+        label="Quality Assurance Cluster\n(Primary: Testing & Validation)";
+        style=filled;
+        color="#F3E5F5";
+        fontsize=12;
+        fontcolor="#4A148C";
+
+        node [shape=box, fillcolor="#9C27B0", fontcolor=white];
+        tester [label="Tester"];
+        reviewer [label="Reviewer"];
+        code_analyzer [label="Code Analyzer"];
+        prod_validator [label="Production\nValidator"];
+        tdd_london [label="TDD London\nSwarm"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#E1BEE7", fontcolor=black, width=1.2];
+        qa_test_run [label="/test-run"];
+        qa_lint [label="/lint"];
+        qa_test_coverage [label="/test-coverage"];
+        qa_test_validate [label="/test-validate"];
+        qa_file_read [label="/file-read"];
+        qa_grep_search [label="/grep-search"];
+
+        tester -> qa_test_run;
+        tester -> qa_test_coverage;
+        reviewer -> qa_file_read;
+        reviewer -> qa_lint;
+        reviewer -> qa_grep_search;
+        code_analyzer -> qa_file_read;
+        code_analyzer -> qa_lint;
+        code_analyzer -> qa_grep_search;
+        prod_validator -> qa_test_run;
+        prod_validator -> qa_test_coverage;
+        prod_validator -> qa_test_validate;
+        prod_validator -> qa_lint;
+        tdd_london -> qa_test_run;
+    }
+
+    // ========== CLUSTER 3: Coordination & Orchestration Agents ==========
+    subgraph cluster_coordination {
+        label="Coordination & Orchestration Cluster\n(Primary: Agent Management & Workflow)";
+        style=filled;
+        color="#FFF3E0";
+        fontsize=12;
+        fontcolor="#E65100";
+
+        node [shape=box, fillcolor="#FF9800", fontcolor=white];
+        task_orch [label="Task\nOrchestrator"];
+        hierarchical [label="Hierarchical\nCoordinator"];
+        mesh_coord [label="Mesh\nCoordinator"];
+        adaptive [label="Adaptive\nCoordinator"];
+        collective [label="Collective\nIntelligence"];
+        planner [label="Planner"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#FFE0B2", fontcolor=black, width=1.2];
+        coord_agent_delegate [label="/agent-delegate"];
+        coord_agent_coord [label="/agent-coordinate"];
+        coord_mem_store [label="/memory-store"];
+        coord_mem_retrieve [label="/memory-retrieve"];
+        coord_comm_notify [label="/communicate-notify"];
+
+        task_orch -> coord_agent_delegate;
+        task_orch -> coord_agent_coord;
+        task_orch -> coord_mem_store;
+        hierarchical -> coord_agent_delegate;
+        hierarchical -> coord_agent_coord;
+        hierarchical -> coord_mem_store;
+        hierarchical -> coord_mem_retrieve;
+        mesh_coord -> coord_agent_coord;
+        mesh_coord -> coord_mem_store;
+        adaptive -> coord_agent_delegate;
+        adaptive -> coord_mem_store;
+        collective -> coord_mem_store;
+        collective -> coord_mem_retrieve;
+        planner -> coord_agent_delegate;
+        planner -> coord_mem_store;
+        planner -> coord_mem_retrieve;
+    }
+
+    // ========== CLUSTER 4: Version Control & Repository Agents ==========
+    subgraph cluster_vcs {
+        label="Version Control & Repository Cluster\n(Primary: Git & GitHub Operations)";
+        style=filled;
+        color="#E8F5E9";
+        fontsize=12;
+        fontcolor="#1B5E20";
+
+        node [shape=box, fillcolor="#4CAF50", fontcolor=white];
+        github_modes [label="GitHub\nModes"];
+        pr_manager [label="PR Manager"];
+        release_mgr [label="Release\nManager"];
+        workflow_auto [label="Workflow\nAutomation"];
+        multi_repo [label="Multi-Repo\nSwarm"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#C8E6C9", fontcolor=black, width=1.2];
+        vcs_git_status [label="/git-status"];
+        vcs_git_diff [label="/git-diff"];
+        vcs_git_commit [label="/git-commit"];
+        vcs_git_push [label="/git-push"];
+        vcs_git_branch [label="/git-branch"];
+
+        github_modes -> vcs_git_status;
+        github_modes -> vcs_git_diff;
+        github_modes -> vcs_git_commit;
+        github_modes -> vcs_git_push;
+        github_modes -> vcs_git_branch;
+        pr_manager -> vcs_git_diff;
+        pr_manager -> vcs_git_branch;
+        release_mgr -> vcs_git_push;
+        workflow_auto -> vcs_git_status;
+        multi_repo -> vcs_git_status;
+        multi_repo -> vcs_git_push;
+    }
+
+    // ========== CLUSTER 5: Memory & State Management Agents ==========
+    subgraph cluster_memory_mgmt {
+        label="Memory & State Management Cluster\n(Primary: Persistent State & Context)";
+        style=filled;
+        color="#FCE4EC";
+        fontsize=12;
+        fontcolor="#880E4F";
+
+        node [shape=box, fillcolor="#E91E63", fontcolor=white];
+        mem_coordinator [label="Memory\nCoordinator"];
+        swarm_memory [label="Swarm Memory\nManager"];
+        crdt_sync [label="CRDT\nSynchronizer"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#F8BBD0", fontcolor=black, width=1.2];
+        mem_mem_store [label="/memory-store"];
+        mem_mem_retrieve [label="/memory-retrieve"];
+        mem_mem_search [label="/memory-search"];
+        mem_mem_persist [label="/memory-persist"];
+        mem_mem_clear [label="/memory-clear"];
+
+        mem_coordinator -> mem_mem_store;
+        mem_coordinator -> mem_mem_retrieve;
+        mem_coordinator -> mem_mem_search;
+        mem_coordinator -> mem_mem_persist;
+        mem_coordinator -> mem_mem_clear;
+        swarm_memory -> mem_mem_store;
+        swarm_memory -> mem_mem_retrieve;
+        swarm_memory -> mem_mem_search;
+        swarm_memory -> mem_mem_persist;
+        crdt_sync -> mem_mem_store;
+        crdt_sync -> mem_mem_retrieve;
+        crdt_sync -> mem_mem_persist;
+    }
+
+    // ========== CLUSTER 6: Research & Analysis Agents ==========
+    subgraph cluster_research {
+        label="Research & Analysis Cluster\n(Primary: Information Gathering & Insights)";
+        style=filled;
+        color="#E0F2F1";
+        fontsize=12;
+        fontcolor="#004D40";
+
+        node [shape=box, fillcolor="#009688", fontcolor=white];
+        researcher [label="Researcher"];
+        perf_analyzer [label="Performance\nAnalyzer"];
+        repo_architect [label="Repository\nArchitect"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#B2DFDB", fontcolor=black, width=1.2];
+        research_file_read [label="/file-read"];
+        research_grep_search [label="/grep-search"];
+        research_mem_search [label="/memory-search"];
+        research_markdown_gen [label="/markdown-gen"];
+
+        researcher -> research_file_read;
+        researcher -> research_grep_search;
+        researcher -> research_mem_search;
+        researcher -> research_markdown_gen;
+        perf_analyzer -> research_file_read;
+        perf_analyzer -> research_grep_search;
+        repo_architect -> research_file_read;
+        repo_architect -> research_grep_search;
+        repo_architect -> research_markdown_gen;
+    }
+
+    // ========== CLUSTER 7: Consensus & Distributed Systems Agents ==========
+    subgraph cluster_consensus {
+        label="Consensus & Distributed Systems Cluster\n(Primary: Byzantine Fault Tolerance & Coordination)";
+        style=filled;
+        color="#FFF9C4";
+        fontsize=12;
+        fontcolor="#F57F17";
+
+        node [shape=box, fillcolor="#FBC02D", fontcolor=black];
+        byzantine [label="Byzantine\nCoordinator"];
+        raft [label="Raft\nManager"];
+        gossip [label="Gossip\nCoordinator"];
+        consensus [label="Consensus\nBuilder"];
+        quorum [label="Quorum\nManager"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#FFF59D", fontcolor=black, width=1.2];
+        cons_agent_coord [label="/agent-coordinate"];
+        cons_mem_store [label="/memory-store"];
+        cons_test_validate [label="/test-validate"];
+
+        byzantine -> cons_agent_coord;
+        byzantine -> cons_mem_store;
+        byzantine -> cons_test_validate;
+        raft -> cons_agent_coord;
+        raft -> cons_mem_store;
+        gossip -> cons_agent_coord;
+        gossip -> cons_mem_store;
+        consensus -> cons_agent_coord;
+        consensus -> cons_test_validate;
+        quorum -> cons_agent_coord;
+        quorum -> cons_mem_store;
+    }
+
+    // ========== CLUSTER 8: Documentation & Specification Agents ==========
+    subgraph cluster_documentation {
+        label="Documentation & Specification Cluster\n(Primary: Specification & Documentation)";
+        style=filled;
+        color="#E8EAF6";
+        fontsize=12;
+        fontcolor="#1A237E";
+
+        node [shape=box, fillcolor="#3F51B5", fontcolor=white];
+        specification [label="Specification"];
+        pseudocode [label="Pseudocode"];
+        architecture [label="Architecture"];
+        api_docs [label="API Docs"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#C5CAE9", fontcolor=black, width=1.2];
+        doc_markdown_gen [label="/markdown-gen"];
+        doc_file_read [label="/file-read"];
+        doc_mem_store [label="/memory-store"];
+
+        specification -> doc_markdown_gen;
+        specification -> doc_mem_store;
+        pseudocode -> doc_markdown_gen;
+        pseudocode -> doc_mem_store;
+        architecture -> doc_markdown_gen;
+        architecture -> doc_mem_store;
+        api_docs -> doc_file_read;
+        api_docs -> doc_markdown_gen;
+    }
+
+    // ========== CLUSTER 9: DevOps & Automation Agents ==========
+    subgraph cluster_devops {
+        label="DevOps & Automation Cluster\n(Primary: CI/CD & Infrastructure)";
+        style=filled;
+        color="#EFEBE9";
+        fontsize=12;
+        fontcolor="#3E2723";
+
+        node [shape=box, fillcolor="#795548", fontcolor=white];
+        cicd_engineer [label="CI/CD\nEngineer"];
+        perf_benchmarker [label="Performance\nBenchmarker"];
+        smart_agent [label="Smart Agent"];
+
+        // Shared commands within cluster
+        node [shape=ellipse, fillcolor="#D7CCC8", fontcolor=black, width=1.2];
+        devops_test_run [label="/test-run"];
+        devops_yaml_format [label="/yaml-format"];
+        devops_file_write [label="/file-write"];
+
+        cicd_engineer -> devops_test_run;
+        cicd_engineer -> devops_yaml_format;
+        cicd_engineer -> devops_file_write;
+        perf_benchmarker -> devops_test_run;
+        smart_agent -> devops_file_write;
+    }
+
+    // ========== CROSS-CLUSTER COMMAND SHARING ==========
+    // Show high-overlap commands that span clusters
+
+    // Universal file-read (used across 6 clusters)
+    universal_file_read [
+        label="/file-read\n(Universal)\n6 clusters",
+        shape=octagon,
+        fillcolor="#FF5722",
+        fontcolor=white,
+        width=2.0,
+        height=2.0,
+        fontsize=11
+    ];
+
+    dev_file_write -> universal_file_read [style=dotted, color="#FF5722"];
+    qa_file_read -> universal_file_read [style=dotted, color="#FF5722"];
+    research_file_read -> universal_file_read [style=dotted, color="#FF5722"];
+    doc_file_read -> universal_file_read [style=dotted, color="#FF5722"];
+
+    // Universal memory-store (used across 7 clusters)
+    universal_mem_store [
+        label="/memory-store\n(Universal)\n7 clusters",
+        shape=octagon,
+        fillcolor="#673AB7",
+        fontcolor=white,
+        width=2.0,
+        height=2.0,
+        fontsize=11
+    ];
+
+    coord_mem_store -> universal_mem_store [style=dotted, color="#673AB7"];
+    mem_mem_store -> universal_mem_store [style=dotted, color="#673AB7"];
+    cons_mem_store -> universal_mem_store [style=dotted, color="#673AB7"];
+    doc_mem_store -> universal_mem_store [style=dotted, color="#673AB7"];
+
+    // Cross-cluster workflows
+    // Development -> QA
+    dev_git_commit -> qa_test_run [label="commit then test", color="#00BCD4", penwidth=2, style=dashed];
+
+    // QA -> Documentation
+    qa_lint -> doc_markdown_gen [label="quality to docs", color="#8BC34A", penwidth=2, style=dashed];
+
+    // Coordination -> Development
+    coord_agent_delegate -> dev_file_write [label="assign dev task", color="#FF9800", penwidth=2, style=dashed];
+
+    // VCS -> DevOps
+    vcs_git_push -> devops_test_run [label="deploy trigger", color="#FFC107", penwidth=2, style=dashed];
+
+    // Research -> Coordination
+    research_mem_search -> coord_mem_retrieve [label="insight sharing", color="#009688", penwidth=2, style=dashed];
+
+    // Statistics and insights
+    subgraph cluster_stats {
+        label="Cross-Cluster Statistics";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        stats_table [
+            shape=plaintext,
+            fontsize=10,
+            label=<
+                <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+                    <TR>
+                        <TD BGCOLOR="#37474F"><FONT COLOR="white"><B>Cluster</B></FONT></TD>
+                        <TD BGCOLOR="#37474F"><FONT COLOR="white"><B>Agents</B></FONT></TD>
+                        <TD BGCOLOR="#37474F"><FONT COLOR="white"><B>Shared Cmds</B></FONT></TD>
+                        <TD BGCOLOR="#37474F"><FONT COLOR="white"><B>Cohesion</B></FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Core Development</TD>
+                        <TD>6</TD>
+                        <TD>5</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Quality Assurance</TD>
+                        <TD>5</TD>
+                        <TD>6</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Coordination</TD>
+                        <TD>6</TD>
+                        <TD>5</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Memory Management</TD>
+                        <TD>3</TD>
+                        <TD>5</TD>
+                        <TD BGCOLOR="#2196F3"><FONT COLOR="white">VERY HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Version Control</TD>
+                        <TD>5</TD>
+                        <TD>5</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">HIGH</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Research</TD>
+                        <TD>3</TD>
+                        <TD>4</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Consensus</TD>
+                        <TD>5</TD>
+                        <TD>3</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Documentation</TD>
+                        <TD>4</TD>
+                        <TD>3</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">DevOps</TD>
+                        <TD>3</TD>
+                        <TD>3</TD>
+                        <TD BGCOLOR="#FBC02D">MEDIUM</TD>
+                    </TR>
+                </TABLE>
+            >
+        ];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        legend_note [
+            shape=note,
+            fontsize=10,
+            label="Cluster Cohesion:\n\nVERY HIGH = 80%+ command overlap\nHIGH = 60-80% command overlap\nMEDIUM = 40-60% command overlap\nLOW = <40% command overlap\n\nDashed Lines = Cross-cluster workflows\nDotted Lines = Universal command usage\nOctagon = Universal commands (5+ clusters)",
+            fillcolor="#E3F2FD",
+            fontcolor=black
+        ];
+
+        insights [
+            shape=note,
+            fontsize=10,
+            label="Key Insights:\n\n• Memory Management has highest cohesion (83%)\n• file-read spans 6/9 clusters (universal)\n• memory-store spans 7/9 clusters (universal)\n• 5 cross-cluster workflows identified\n• Development→QA is most common workflow",
+            fillcolor="#FFF9C4",
+            fontcolor=black
+        ];
+    }
+}

@@ -1,0 +1,139 @@
+digraph release_swarm_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Release Swarm - Multi-Agent Release Coordination";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Release Request\n(Version bump)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Planning Phase
+    subgraph cluster_planning {
+        label="Release Planning";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        analyze [label="Change Analysis\n(Since last release)"];
+        version [label="Version Management\n(Semantic versioning)"];
+        scope [label="Scope Definition\n(What's included)"];
+    }
+
+    // Preparation Swarm
+    subgraph cluster_preparation {
+        label="Preparation Swarm (Parallel)";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        changelog [label="Changelog Generator\n(Auto-generate)", shape=ellipse, fillcolor="#9b59b6"];
+        docs [label="Documentation Updater\n(Version docs)", shape=ellipse, fillcolor="#3498db"];
+        assets [label="Asset Builder\n(Binaries)", shape=ellipse, fillcolor="#e74c3c"];
+        tests [label="Test Runner\n(Full suite)", shape=ellipse, fillcolor="#f39c12"];
+
+        verify [label="Verification\n(All ready)"];
+    }
+
+    // Deployment Phase
+    subgraph cluster_deployment {
+        label="Deployment Orchestration";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        tag [label="Tag Creation\n(Git tag)"];
+        build [label="Build Pipeline\n(CI/CD)"];
+        deploy [label="Deployment\n(Publish)"];
+        notify [label="Notifications\n(Stakeholders)"];
+    }
+
+    // Validation Phase
+    subgraph cluster_validation {
+        label="Post-Release Validation";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        smoke [label="Smoke Tests\n(Basic checks)"];
+        monitor [label="Monitoring\n(Health)"];
+        rollback [label="Rollback Management\n(If needed)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Release Coordination", fillcolor="#238636"];
+        feature2 [label="Version Management", fillcolor="#238636"];
+        feature3 [label="Deployment Orchestration", fillcolor="#238636"];
+        feature4 [label="Rollback", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Release Complete\n+ Artifacts", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> analyze;
+    analyze -> version;
+    version -> scope;
+
+    scope -> changelog;
+    scope -> docs;
+    scope -> assets;
+    scope -> tests;
+
+    changelog -> verify;
+    docs -> verify;
+    assets -> verify;
+    tests -> verify;
+
+    verify -> tag;
+    tag -> build;
+    build -> deploy;
+    deploy -> notify;
+
+    notify -> smoke;
+    smoke -> monitor;
+    monitor -> rollback;
+
+    rollback -> output;
+
+    // Success path
+    monitor -> output [label="Success", color="#238636"];
+
+    // Rollback path
+    rollback -> deploy [label="Rollback to previous", color="#f85149", style=dashed];
+
+    // Feature connections
+    verify -> feature1 [style=dotted, color="#8b949e"];
+    version -> feature2 [style=dotted, color="#8b949e"];
+    deploy -> feature3 [style=dotted, color="#8b949e"];
+    rollback -> feature4 [style=dotted, color="#8b949e"];
+}

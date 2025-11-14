@@ -1,0 +1,97 @@
+// SPARC Innovator Command Workflow
+// Creative problem solving and innovation
+digraph sparc_innovator_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:innovator\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        problem_analyzer [label="Problem\nAnalyzer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_brainstorm {
+        label="Brainstorming";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        divergent_thinker [label="Divergent\nThinker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        lateral_thinker [label="Lateral\nThinker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        analogical_thinker [label="Analogical\nThinker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        disruptive_thinker [label="Disruptive\nThinker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_generation {
+        label="Idea Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        idea_generator [label="Idea\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        combination_engine [label="Combination\nEngine", fillcolor="#10b981", fontcolor="#ffffff"];
+        novelty_scorer [label="Novelty\nScorer", fillcolor="#10b981", fontcolor="#ffffff"];
+        feasibility_checker [label="Feasibility\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_evaluation {
+        label="Evaluation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        impact_assessor [label="Impact\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        risk_analyzer [label="Risk\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        value_ranker [label="Value\nRanker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_refinement {
+        label="Refinement";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        concept_refiner [label="Concept\nRefiner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        prototype_designer [label="Prototype\nDesigner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        implementation_planner [label="Implementation\nPlanner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        innovation_proposal [label="Innovation\nProposal", fillcolor="#059669", fontcolor="#ffffff"];
+        action_roadmap [label="Action\nRoadmap", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> problem_analyzer;
+    problem_analyzer -> divergent_thinker -> idea_generator;
+    problem_analyzer -> lateral_thinker -> idea_generator;
+    problem_analyzer -> analogical_thinker -> idea_generator;
+    problem_analyzer -> disruptive_thinker -> idea_generator;
+    idea_generator -> combination_engine -> novelty_scorer -> feasibility_checker;
+    feasibility_checker -> impact_assessor -> risk_analyzer -> value_ranker;
+    value_ranker -> concept_refiner -> prototype_designer -> implementation_planner;
+    implementation_planner -> innovation_proposal -> action_roadmap;
+    action_roadmap -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    feasibility_checker -> idea_generator [label="More Ideas", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Brainstorm", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend3 [label="Generation", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

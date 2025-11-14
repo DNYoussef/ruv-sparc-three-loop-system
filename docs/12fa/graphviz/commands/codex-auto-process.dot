@@ -1,0 +1,57 @@
+digraph codex_auto_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Codex-Auto Command Workflow\nExtended Reasoning & Automated Agent";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/codex-auto", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  parse_task [label="Parse Task\nUnderstand objective", fillcolor="#FFF9C4"];
+
+  enable_reasoning [label="Enable Extended Reasoning\nDeep thinking mode", fillcolor="#FFE0B2"];
+
+  decompose [label="Decompose Problem\n- Break into steps\n- Identify dependencies\n- Plan approach", fillcolor="#BBDEFB"];
+
+  reasoning_cycle [label="Reasoning Cycle\n- Analyze\n- Hypothesize\n- Validate\n- Iterate", fillcolor="#C5CAE9"];
+
+  generate_plan [label="Generate Execution Plan\n- Step-by-step approach\n- Resource requirements\n- Success criteria", fillcolor="#B2DFDB"];
+
+  execute_step [label="Execute Next Step\nAutonomous action", fillcolor="#D1C4E9"];
+
+  validate_result [label="Validate Result\n- Check expectations\n- Verify correctness\n- Test edge cases", fillcolor="#F0F4C3"];
+
+  step_successful [label="Step Successful?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  adapt_plan [label="Adapt Plan\n- Learn from failure\n- Try alternative\n- Adjust approach", fillcolor="#FFE0B2"];
+
+  more_steps [label="More Steps?", fillcolor="#C5CAE9", shape=diamond];
+
+  synthesize [label="Synthesize Solution\n- Combine results\n- Generate output\n- Document decisions", fillcolor="#BBDEFB"];
+
+  final_validation [label="Final Validation\n- Complete check\n- Quality assurance\n- Documentation", fillcolor="#B2DFDB"];
+
+  success [label="Task Complete\nAutomated solution", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> parse_task;
+  parse_task -> enable_reasoning;
+  enable_reasoning -> decompose;
+  decompose -> reasoning_cycle;
+  reasoning_cycle -> generate_plan;
+  generate_plan -> execute_step;
+  execute_step -> validate_result;
+  validate_result -> step_successful;
+  step_successful -> more_steps [label="Yes"];
+  step_successful -> adapt_plan [label="No"];
+  adapt_plan -> execute_step;
+  more_steps -> execute_step [label="Yes"];
+  more_steps -> synthesize [label="No"];
+  synthesize -> final_validation;
+  final_validation -> success;
+}

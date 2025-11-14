@@ -1,0 +1,166 @@
+digraph InitModelCardCommand {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Command definition
+    start [label="/init-model-card\\nCommand Activated", fillcolor=lightgreen];
+
+    // Phase 1: Model Metadata Collection
+    metadata_phase [label="PHASE 1: Model Metadata Collection", fillcolor=lightyellow, shape=box3d];
+    collect_basic_info [label="Collect Basic Info:\\nName, Version, Type,\\nDevelopers"];
+    collect_architecture [label="Collect Architecture:\\nLayers, Parameters,\\nSize"];
+    collect_training_config [label="Collect Training Config:\\nOptimizer, Batch Size,\\nEpochs"];
+    collect_framework [label="Collect Framework:\\nPyTorch/TF, Dependencies"];
+
+    // Phase 2: Model Card Sections (9 Sections)
+    sections_phase [label="PHASE 2: Model Card Sections (9 Sections)", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_model_card_sections {
+        label="Model Card Structure (Mitchell et al. 2019)";
+        style=filled;
+        fillcolor=lightgrey;
+
+        section1 [label="1. Model Details"];
+        section2 [label="2. Intended Use"];
+        section3 [label="3. Factors"];
+        section4 [label="4. Metrics"];
+        section5 [label="5. Training Data"];
+        section6 [label="6. Evaluation Data"];
+        section7 [label="7. Quantitative Analysis"];
+        section8 [label="8. Ethical Considerations"];
+        section9 [label="9. Caveats &\\nRecommendations"];
+    }
+
+    // Phase 3: Performance Metrics Integration
+    metrics_phase [label="PHASE 3: Performance Metrics Integration", fillcolor=lightyellow, shape=box3d];
+    fetch_metrics [label="Fetch Metrics from\\nMLflow/WandB/TensorBoard"];
+    compute_overall [label="Compute Overall\\nPerformance"];
+    compute_disaggregated [label="Compute Disaggregated\\nPerformance"];
+    compute_fairness [label="Compute Fairness\\nMetrics"];
+    compute_efficiency [label="Compute Efficiency\\n(Latency, Memory)"];
+
+    // Phase 4: Ethical Considerations
+    ethics_phase [label="PHASE 4: Ethical Considerations", fillcolor=lightyellow, shape=box3d];
+    link_bias_audit [label="Link Bias Audit\\nResults"];
+    link_risk_assessment [label="Link Risk\\nAssessment"];
+    document_harms [label="Document Potential\\nHarms"];
+    document_privacy [label="Document Privacy\\nConsiderations"];
+    compute_carbon [label="Compute Carbon\\nFootprint"];
+
+    // Phase 5: Limitations Documentation
+    limitations_phase [label="PHASE 5: Limitations Documentation", fillcolor=lightyellow, shape=box3d];
+    identify_failure_modes [label="Identify Known\\nFailure Modes"];
+    document_domain_limits [label="Document Domain\\nLimitations"];
+    list_not_recommended [label="List Not Recommended\\nUse Cases"];
+
+    // Phase 6: Quality Validation
+    validation_phase [label="PHASE 6: Quality Validation", fillcolor=lightyellow, shape=box3d];
+    check_completion [label="Check Completion Rate\\n(≥90% required)"];
+    validate_critical_sections [label="Validate Critical\\nSections Populated"];
+    validate_metrics [label="Validate Metrics\\nPresent"];
+    validate_ethics [label="Validate Ethics\\nSection Complete"];
+
+    // Phase 7: Multi-Format Generation
+    generation_phase [label="PHASE 7: Multi-Format Generation", fillcolor=lightyellow, shape=box3d];
+    generate_markdown [label="Generate Markdown\\nModel Card"];
+    generate_json [label="Generate JSON\\n(Machine-Readable)"];
+    generate_metrics_csv [label="Generate Metrics CSV"];
+    generate_validation_report [label="Generate Gate 3\\nValidation Report"];
+    generate_yaml_metadata [label="Generate YAML\\nMetadata"];
+
+    // Phase 8: Registry Integration (Optional)
+    registry_phase [label="PHASE 8: Registry Integration", fillcolor=lightyellow, shape=box3d];
+    publish_huggingface [label="Publish to\\nHugging Face Hub"];
+    publish_mlflow [label="Publish to\\nMLflow Registry"];
+    publish_zenodo [label="Publish to Zenodo\\n(with DOI)"];
+
+    // Phase 9: Memory Integration
+    memory_phase [label="PHASE 9: Memory Integration", fillcolor=lightyellow, shape=box3d];
+    store_model_card [label="Store Model Card\\nin Memory MCP"];
+    tag_metadata [label="Tag: SOP, Pipeline-G,\\nForm-F-G2, gate-3"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- {model}-model-card.md (90%+ complete)\\n- {model}-model-card.json\\n- {model}-metrics.csv\\n- {model}-validation-report.md\\n- {model}-metadata.yaml"];
+    end [label="/init-model-card\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Metadata Collection
+    start -> metadata_phase;
+    metadata_phase -> collect_basic_info;
+    collect_basic_info -> collect_architecture;
+    collect_architecture -> collect_training_config;
+    collect_training_config -> collect_framework;
+
+    // Flow - Model Card Sections
+    collect_framework -> sections_phase;
+    sections_phase -> section1;
+    section1 -> section2;
+    section2 -> section3;
+    section3 -> section4;
+    section4 -> section5;
+    section5 -> section6;
+    section6 -> section7;
+    section7 -> section8;
+    section8 -> section9;
+
+    // Flow - Performance Metrics
+    section9 -> metrics_phase [label="--include-metrics"];
+    section9 -> ethics_phase [label="Skip Metrics"];
+    metrics_phase -> fetch_metrics;
+    fetch_metrics -> compute_overall;
+    compute_overall -> compute_disaggregated;
+    compute_disaggregated -> compute_fairness;
+    compute_fairness -> compute_efficiency;
+    compute_efficiency -> ethics_phase;
+
+    // Flow - Ethical Considerations
+    ethics_phase -> link_bias_audit;
+    link_bias_audit -> link_risk_assessment;
+    link_risk_assessment -> document_harms;
+    document_harms -> document_privacy;
+    document_privacy -> compute_carbon;
+
+    // Flow - Limitations
+    compute_carbon -> limitations_phase;
+    limitations_phase -> identify_failure_modes;
+    identify_failure_modes -> document_domain_limits;
+    document_domain_limits -> list_not_recommended;
+
+    // Flow - Quality Validation
+    list_not_recommended -> validation_phase;
+    validation_phase -> check_completion;
+    check_completion -> validate_critical_sections;
+    validate_critical_sections -> validate_metrics;
+    validate_metrics -> validate_ethics;
+
+    // Flow - Multi-Format Generation
+    validate_ethics -> generation_phase;
+    generation_phase -> generate_markdown;
+    generate_markdown -> generate_json;
+    generate_json -> generate_metrics_csv;
+    generate_metrics_csv -> generate_validation_report;
+    generate_validation_report -> generate_yaml_metadata;
+
+    // Flow - Registry Integration (Optional)
+    generate_yaml_metadata -> registry_phase [label="--publish"];
+    generate_yaml_metadata -> memory_phase [label="Skip Publish"];
+    registry_phase -> publish_huggingface;
+    registry_phase -> publish_mlflow;
+    registry_phase -> publish_zenodo;
+    publish_huggingface -> memory_phase;
+    publish_mlflow -> memory_phase;
+    publish_zenodo -> memory_phase;
+
+    // Flow - Memory Integration
+    memory_phase -> store_model_card;
+    store_model_card -> tag_metadata;
+    tag_metadata -> deliverables;
+
+    // Flow - Output
+    deliverables -> end;
+
+    // Metadata
+    label="/init-model-card Command - Complete Workflow\\nForm F-G2 (Model Card for Model Reporting)\\nQuality Gate 3 Requirement";
+    fontsize=16;
+    fontname="Arial Bold";
+}

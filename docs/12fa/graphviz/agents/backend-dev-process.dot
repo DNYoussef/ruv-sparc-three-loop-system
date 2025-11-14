@@ -1,0 +1,81 @@
+// Backend Developer Agent - Backend API Development
+// RESTful API, GraphQL, database, authentication
+digraph backend_dev_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_init [label="Backend Developer\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        framework_selector [label="Framework\nSelector", fillcolor="#2d3748", fontcolor="#ffffff"];
+        db_connector [label="Database\nConnector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_api {
+        label="API Development"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        rest_designer [label="REST API\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        graphql_designer [label="GraphQL\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        endpoint_builder [label="Endpoint\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        middleware_creator [label="Middleware\nCreator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_database {
+        label="Database Layer"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        schema_designer [label="Schema\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        migration_generator [label="Migration\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+        query_builder [label="Query\nBuilder", fillcolor="#059669", fontcolor="#ffffff"];
+        orm_integrator [label="ORM\nIntegrator", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_auth {
+        label="Authentication & Security"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        auth_handler [label="Auth\nHandler", fillcolor="#0891b2", fontcolor="#ffffff"];
+        jwt_manager [label="JWT\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+        permission_checker [label="Permission\nChecker", fillcolor="#0891b2", fontcolor="#ffffff"];
+        security_validator [label="Security\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation & Testing"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        input_validator [label="Input\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        api_tester [label="API\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+        integration_tester [label="Integration\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        frontend_coord [label="Frontend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        api_docs_coord [label="API Docs\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        cicd_coord [label="CI/CD\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    backend_init -> framework_selector [label="Select Framework"];
+    backend_init -> db_connector [label="Connect DB"];
+    framework_selector -> rest_designer [label="REST Option"];
+    framework_selector -> graphql_designer [label="GraphQL Option"];
+    rest_designer -> endpoint_builder [label="Build Endpoints"];
+    graphql_designer -> endpoint_builder [label="Build Resolvers"];
+    endpoint_builder -> middleware_creator [label="Create Middleware"];
+    db_connector -> schema_designer [label="Design Schema"];
+    schema_designer -> migration_generator [label="Generate Migrations"];
+    migration_generator -> query_builder [label="Build Queries"];
+    query_builder -> orm_integrator [label="Integrate ORM"];
+    middleware_creator -> auth_handler [label="Handle Auth"];
+    auth_handler -> jwt_manager [label="Manage JWT"];
+    jwt_manager -> permission_checker [label="Check Permissions"];
+    permission_checker -> security_validator [label="Validate Security"];
+    security_validator -> input_validator [label="Validate Input"];
+    input_validator -> api_tester [label="Test API"];
+    api_tester -> integration_tester [label="Integration Test"];
+    integration_tester -> frontend_coord [label="Coordinate"];
+    endpoint_builder -> api_docs_coord [label="Document API"];
+    api_tester -> cicd_coord [label="Deploy"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Backend Developer", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="API Layer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Database", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+}

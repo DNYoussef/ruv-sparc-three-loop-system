@@ -1,3 +1,8 @@
+---
+name: tooling-github-actions-github-actions-specialist
+description: GITHUB ACTIONS SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # GITHUB ACTIONS SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 162

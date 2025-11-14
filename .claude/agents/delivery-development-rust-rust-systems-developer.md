@@ -1,3 +1,8 @@
+---
+name: delivery-development-rust-rust-systems-developer
+description: RUST SYSTEMS DEVELOPER - SYSTEM PROMPT v2.0
+---
+
 # RUST SYSTEMS DEVELOPER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 181

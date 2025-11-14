@@ -1,3 +1,8 @@
+---
+name: platforms-flow-nexus-multi-model-orchestrator
+description: Specialized agent for task execution
+---
+
 # Multi-Model Orchestrator Agent
 
 

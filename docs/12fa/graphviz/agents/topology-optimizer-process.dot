@@ -1,0 +1,131 @@
+digraph topology_optimizer_workflow {
+    // Graph styling
+    rankdir=LR;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Topology Optimizer - Dynamic Swarm Rebalancing";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Current Swarm State", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Workload Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        monitor [label="Performance Monitoring\n(Real-time metrics)"];
+        analyze [label="Workload Analysis\n(Patterns)"];
+        bottleneck [label="Bottleneck Detection\n(Inefficiencies)"];
+    }
+
+    // Topology Options
+    subgraph cluster_topologies {
+        label="Topology Options";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        hierarchical [label="Hierarchical\n(Tree)", shape=triangle, fillcolor="#9b59b6"];
+        mesh [label="Mesh\n(P2P)", shape=diamond, fillcolor="#3498db"];
+        ring [label="Ring\n(Circular)", shape=circle, fillcolor="#e74c3c"];
+        star [label="Star\n(Hub)", shape=star, fillcolor="#f39c12"];
+    }
+
+    // Optimization Phase
+    subgraph cluster_optimization {
+        label="Optimization Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        evaluate [label="Topology Evaluation\n(Best fit)"];
+        select [label="Selection\n(Optimal topology)"];
+        plan [label="Migration Planning\n(Transition)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Dynamic Rebalancing";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        migrate [label="Topology Migration\n(Switch)"];
+        rebalance [label="Load Rebalancing\n(Redistribute)"];
+        validate [label="Validation\n(Performance check)"];
+    }
+
+    // Key Features (bottom)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Topology Optimization", fillcolor="#238636"];
+        feature2 [label="Dynamic Rebalancing", fillcolor="#238636"];
+        feature3 [label="Performance Tuning", fillcolor="#238636"];
+        feature4 [label="Workload Analysis", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Optimized Swarm\n+ Performance Report", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> monitor;
+    monitor -> analyze;
+    analyze -> bottleneck;
+
+    bottleneck -> evaluate;
+
+    evaluate -> hierarchical [label="For control"];
+    evaluate -> mesh [label="For resilience"];
+    evaluate -> ring [label="For order"];
+    evaluate -> star [label="For speed"];
+
+    hierarchical -> select;
+    mesh -> select;
+    ring -> select;
+    star -> select;
+
+    select -> plan;
+    plan -> migrate;
+    migrate -> rebalance;
+    rebalance -> validate;
+
+    validate -> output;
+
+    // Feedback loop
+    validate -> monitor [label="Continuous optimization", style=dashed, color="#f85149"];
+
+    // Feature connections
+    evaluate -> feature1 [style=dotted, color="#8b949e"];
+    rebalance -> feature2 [style=dotted, color="#8b949e"];
+    validate -> feature3 [style=dotted, color="#8b949e"];
+    analyze -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-terraform-terraform-iac-specialist
+description: TERRAFORM IaC SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # TERRAFORM IaC SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 132

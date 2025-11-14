@@ -1,0 +1,245 @@
+digraph SKILL_FORGE_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Forge Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Forge Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Skill Requirements"];
+    check_deps [label="Check Template Dependencies"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    validate_structure [shape=diamond, label="Valid Skill\nStructure?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+    structure_violation [shape=octagon, fillcolor=orange,
+                         label="WARN\nInvalid Structure"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> validate_structure [label="Pass"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+  validate_structure -> structure_violation [label="Invalid"];
+
+  // =============================================================================
+  // EXECUTION PHASE - SKILL CREATION
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Skill Creation Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    load_template [label="Load Skill Template", fillcolor=purple];
+    template_check [shape=diamond, label="Template\nExists?"];
+
+    create_structure [label="Create Directory Structure", fillcolor=purple];
+    generate_yaml [label="Generate skill.yaml Frontmatter", fillcolor=purple];
+    structure_check [shape=diamond, label="Structure\nValid?"];
+
+    write_content [label="Write Skill Content", fillcolor=purple];
+    add_metadata [label="Add Metadata & Tags", fillcolor=purple];
+    content_check [shape=diamond, label="Content\nComplete?"];
+
+    // Error handling within execution
+    template_error [shape=octagon, fillcolor=orange,
+                    label="Template Not Found"];
+    creation_error [shape=octagon, fillcolor=orange,
+                    label="Creation Error"];
+    retry_logic [label="Retry Creation", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  validate_structure -> load_template [label="Valid"];
+
+  // Execution flow
+  load_template -> template_check;
+  template_check -> create_structure [label="Yes"];
+  template_check -> template_error [label="No"];
+
+  create_structure -> generate_yaml;
+  generate_yaml -> structure_check;
+  structure_check -> write_content [label="Yes"];
+  structure_check -> creation_error [label="No"];
+
+  write_content -> add_metadata;
+  add_metadata -> content_check;
+  content_check -> creation_error [label="No"];
+
+  // Error recovery
+  creation_error -> retry_logic;
+  template_error -> retry_logic;
+  retry_logic -> load_template [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // COORDINATION & INTEGRATION
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Skill Integration";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    register_skill [label="Register Skill\nin System", fillcolor=lightblue];
+    update_catalog [label="Update Skill Catalog", fillcolor=lightblue];
+    check_conflicts [shape=diamond, label="Name\nConflicts?"];
+    resolve_conflicts [label="Resolve Naming", fillcolor=yellow];
+
+    memory_store [label="Store Metadata\nin Memory", fillcolor=lightblue];
+    notify_coordinator [label="Notify\nOrchestrator", fillcolor=lightblue];
+  }
+
+  // Connect execution to coordination
+  content_check -> register_skill [label="Yes"];
+  register_skill -> update_catalog;
+  update_catalog -> check_conflicts;
+  check_conflicts -> resolve_conflicts [label="Conflicts"];
+  check_conflicts -> memory_store [label="Clear"];
+  resolve_conflicts -> memory_store;
+
+  memory_store -> notify_coordinator;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_yaml [shape=diamond, label="YAML Valid?"];
+    validate_syntax [label="Validate Syntax", fillcolor=lightgreen];
+    syntax_check [shape=diamond, label="Syntax Valid?"];
+
+    test_invocation [label="Test Skill Invocation", fillcolor=lightgreen];
+    invocation_check [shape=diamond, label="Invocation\nSuccessful?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  notify_coordinator -> validate_yaml;
+
+  // Quality flow
+  validate_yaml -> validate_syntax [label="Yes"];
+  validate_yaml -> quality_gate_fail [label="No"];
+
+  validate_syntax -> syntax_check;
+  syntax_check -> test_invocation [label="Yes"];
+  syntax_check -> quality_gate_fail [label="No"];
+
+  test_invocation -> invocation_check;
+  invocation_check -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_docs [label="Generate Documentation", fillcolor=lightgreen];
+    add_examples [label="Add Usage Examples", fillcolor=lightgreen];
+    cleanup [label="Cleanup Temp Files", fillcolor=lightgreen];
+    log_completion [label="Log Creation Metrics"];
+    success [label="Skill Created", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  invocation_check -> generate_docs [label="Pass"];
+  generate_docs -> add_examples;
+  add_examples -> cleanup;
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Skill Creation Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  structure_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    // Hide from main layout
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

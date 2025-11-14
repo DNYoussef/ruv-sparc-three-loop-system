@@ -1,0 +1,80 @@
+// SPARC Coder Command Workflow
+// Implementation with clean code practices
+digraph sparc_coder_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:coder\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        spec_parser [label="Specification\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_planning {
+        label="Implementation Planning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        structure_planner [label="Structure\nPlanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_selector [label="Pattern\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_resolver [label="Dependency\nResolver", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_coding {
+        label="Code Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_generator [label="Code\nGenerator", fillcolor="#16a34a", fontcolor="#ffffff"];
+        interface_builder [label="Interface\nBuilder", fillcolor="#16a34a", fontcolor="#ffffff"];
+        logic_implementer [label="Logic\nImplementer", fillcolor="#16a34a", fontcolor="#ffffff"];
+        error_handler [label="Error Handler\nBuilder", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_quality {
+        label="Code Quality";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        clean_code_enforcer [label="Clean Code\nEnforcer", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        solid_validator [label="SOLID\nValidator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        refactorer [label="Refactorer", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        documenter [label="Documenter", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        implementation [label="Clean\nImplementation", fillcolor="#059669", fontcolor="#ffffff"];
+        documentation [label="Code\nDocumentation", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> spec_parser;
+    spec_parser -> structure_planner -> pattern_selector -> dependency_resolver;
+    dependency_resolver -> code_generator -> interface_builder -> logic_implementer -> error_handler;
+    error_handler -> clean_code_enforcer -> solid_validator -> refactorer -> documenter;
+    documenter -> implementation -> documentation;
+    documentation -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Planning", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Coding", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+}

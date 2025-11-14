@@ -1,0 +1,54 @@
+digraph sparc_security_review_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Security-Review Command Workflow\nComprehensive Security Audit";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:security-review", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  scan_secrets [label="Scan for Secrets\n- API keys\n- Passwords\n- Tokens\n- Credentials", fillcolor="#FFF9C4"];
+
+  input_validation [label="Input Validation Check\n- SQL injection\n- XSS prevention\n- CSRF protection\n- Command injection", fillcolor="#FFE0B2"];
+
+  auth_check [label="Authentication Review\n- Password policies\n- Session management\n- Token handling\n- MFA support", fillcolor="#BBDEFB"];
+
+  authz_check [label="Authorization Review\n- Access control\n- Role-based permissions\n- Resource ownership\n- Privilege escalation", fillcolor="#C5CAE9"];
+
+  encryption_check [label="Encryption Check\n- Data at rest\n- Data in transit\n- TLS/SSL config\n- Key management", fillcolor="#B2DFDB"];
+
+  dependency_scan [label="Dependency Scan\n- Known vulnerabilities\n- Outdated packages\n- License compliance", fillcolor="#D1C4E9"];
+
+  code_analysis [label="Static Code Analysis\n- Security patterns\n- Anti-patterns\n- Code smells\n- Complexity", fillcolor="#F0F4C3"];
+
+  penetration_test [label="Penetration Testing\n- OWASP Top 10\n- API security\n- Network security", fillcolor="#F44336", fontcolor=white];
+
+  compliance_check [label="Compliance Check\n- GDPR\n- HIPAA\n- PCI-DSS\n- SOC 2", fillcolor="#FFE0B2"];
+
+  generate_report [label="Generate Report\n- Vulnerabilities\n- Risk levels\n- Recommendations\n- Remediation steps", fillcolor="#BBDEFB"];
+
+  critical_found [label="Critical Issues?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  success [label="Security Review Passed\nNo critical issues", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  blocked [label="Deployment Blocked\nCritical issues found", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> scan_secrets;
+  scan_secrets -> input_validation;
+  input_validation -> auth_check;
+  auth_check -> authz_check;
+  authz_check -> encryption_check;
+  encryption_check -> dependency_scan;
+  dependency_scan -> code_analysis;
+  code_analysis -> penetration_test;
+  penetration_test -> compliance_check;
+  compliance_check -> generate_report;
+  generate_report -> critical_found;
+  critical_found -> success [label="No"];
+  critical_found -> blocked [label="Yes"];
+}

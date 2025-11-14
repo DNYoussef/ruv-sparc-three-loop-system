@@ -1,0 +1,142 @@
+digraph product_manager_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Product Manager - Roadmap Planning & Feature Prioritization";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Product Vision\n(Strategic goals)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Discovery Phase
+    subgraph cluster_discovery {
+        label="Discovery Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        research [label="Market Research\n(Customer needs)"];
+        feedback [label="User Feedback\n(Current users)"];
+        competitive [label="Competitive Analysis\n(Market gaps)"];
+    }
+
+    // Feature Phase
+    subgraph cluster_features {
+        label="Feature Management";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        ideation [label="Feature Ideation\n(Brainstorming)"];
+        prioritize [label="Feature Prioritization\n(Value vs effort)"];
+        stories [label="User Story Creation\n(Requirements)"];
+    }
+
+    // Roadmap Phase
+    subgraph cluster_roadmap {
+        label="Roadmap Planning";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        roadmap [label="Product Roadmap\n(Timeline)"];
+        milestones [label="Milestone Setting\n(Key dates)"];
+        releases [label="Release Planning\n(Versions)"];
+    }
+
+    // Sprint Phase
+    subgraph cluster_sprint {
+        label="Sprint Planning";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        backlog [label="Backlog Grooming\n(Story refinement)"];
+        planning [label="Sprint Planning\n(What to build)"];
+        acceptance [label="Acceptance Criteria\n(Definition of done)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Execution & Tracking";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        track [label="Progress Tracking\n(Sprint velocity)"];
+        review [label="Sprint Review\n(Demo)"];
+        iterate [label="Iteration\n(Continuous improvement)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_key_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Product Roadmap", fillcolor="#238636"];
+        feature2 [label="Feature Prioritization", fillcolor="#238636"];
+        feature3 [label="User Stories", fillcolor="#238636"];
+        feature4 [label="Sprint Planning", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Product Roadmap\n+ Sprint Plans", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> research;
+    research -> feedback;
+    feedback -> competitive;
+
+    competitive -> ideation;
+    ideation -> prioritize;
+    prioritize -> stories;
+
+    stories -> roadmap;
+    roadmap -> milestones;
+    milestones -> releases;
+
+    releases -> backlog;
+    backlog -> planning;
+    planning -> acceptance;
+
+    acceptance -> track;
+    track -> review;
+    review -> iterate;
+
+    iterate -> output;
+
+    // Feedback loops
+    iterate -> feedback [label="User feedback loop", style=dashed, color="#238636"];
+    review -> prioritize [label="Re-prioritize", style=dashed, color="#f85149"];
+
+    // Feature connections
+    roadmap -> feature1 [style=dotted, color="#8b949e"];
+    prioritize -> feature2 [style=dotted, color="#8b949e"];
+    stories -> feature3 [style=dotted, color="#8b949e"];
+    planning -> feature4 [style=dotted, color="#8b949e"];
+}

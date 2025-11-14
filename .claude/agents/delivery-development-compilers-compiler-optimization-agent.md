@@ -1,3 +1,8 @@
+---
+name: delivery-development-compilers-compiler-optimization-agent
+description: Specialized agent for task execution
+---
+
 # COMPILER OPTIMIZATION AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 184

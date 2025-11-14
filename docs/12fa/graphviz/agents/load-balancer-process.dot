@@ -1,0 +1,130 @@
+digraph load_balancer_workflow {
+    // Graph styling
+    rankdir=LR;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Load Balancer - Traffic Distribution & Health Management";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Incoming Requests", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Health Check Phase
+    subgraph cluster_health {
+        label="Health Monitoring";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        health [label="Health Checking\n(Agent status)"];
+        capacity [label="Capacity Check\n(Available resources)"];
+        availability [label="Availability\n(Online agents)"];
+    }
+
+    // Agent Pool
+    subgraph cluster_agents {
+        label="Agent Pool";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        agent1 [label="Agent 1", shape=ellipse, fillcolor="#238636"];
+        agent2 [label="Agent 2", shape=ellipse, fillcolor="#238636"];
+        agent3 [label="Agent 3", shape=ellipse, fillcolor="#f39c12"];
+        agent4 [label="Agent 4", shape=ellipse, fillcolor="#f85149"];
+
+        legend [label="● Healthy\n● Degraded\n● Unhealthy", shape=plaintext];
+    }
+
+    // Routing Phase
+    subgraph cluster_routing {
+        label="Traffic Routing";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        route [label="Route Selection\n(Algorithm)"];
+        distribute [label="Load Distribution\n(Balance)"];
+        track [label="Connection Tracking\n(Monitor)"];
+    }
+
+    // Failover Phase
+    subgraph cluster_failover {
+        label="Failover Management";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        detect [label="Failure Detection\n(Quick)"];
+        failover [label="Failover\n(Switch agent)"];
+        recover [label="Recovery\n(Restore service)"];
+    }
+
+    // Key Features (bottom)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Load Distribution", fillcolor="#238636"];
+        feature2 [label="Health Checking", fillcolor="#238636"];
+        feature3 [label="Failover", fillcolor="#238636"];
+        feature4 [label="Traffic Routing", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Balanced Responses", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> health;
+    health -> capacity;
+    capacity -> availability;
+
+    availability -> route;
+
+    route -> agent1 [label="Round-robin"];
+    route -> agent2 [label="Least connections"];
+    route -> agent3 [label="Weighted"];
+
+    agent1 -> distribute;
+    agent2 -> distribute;
+    agent3 -> distribute;
+
+    distribute -> track;
+    track -> output;
+
+    // Health monitoring
+    agent4 -> detect [label="Unhealthy", color="#f85149"];
+    detect -> failover;
+    failover -> recover;
+    recover -> agent1 [label="Redirect", style=dashed];
+
+    // Feature connections
+    distribute -> feature1 [style=dotted, color="#8b949e"];
+    health -> feature2 [style=dotted, color="#8b949e"];
+    failover -> feature3 [style=dotted, color="#8b949e"];
+    route -> feature4 [style=dotted, color="#8b949e"];
+}

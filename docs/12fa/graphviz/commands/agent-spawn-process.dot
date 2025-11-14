@@ -1,0 +1,28 @@
+digraph AGENT_SPAWN {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/agent-spawn", shape=ellipse, fillcolor=lightblue];
+  select_type [shape=diamond, label="Agent\nType?"];
+  researcher [label="Spawn\nResearcher", fillcolor=lightgreen];
+  coder [label="Spawn\nCoder", fillcolor=lightgreen];
+  analyst [label="Spawn\nAnalyst", fillcolor=lightgreen];
+  optimizer [label="Spawn\nOptimizer", fillcolor=lightgreen];
+  coordinator [label="Spawn\nCoordinator", fillcolor=lightgreen];
+  assign_capabilities [label="Assign Specialized\nCapabilities", fillcolor=purple, style="filled,bold"];
+  register_swarm [label="Register in\nSwarm", fillcolor=lightblue];
+  success [label="Specialized Agent Spawned", shape=doublecircle, fillcolor=green];
+
+  invoke -> select_type;
+  select_type -> researcher [label="researcher"];
+  select_type -> coder [label="coder"];
+  select_type -> analyst [label="analyst"];
+  select_type -> optimizer [label="optimizer"];
+  select_type -> coordinator [label="coordinator"];
+  researcher -> assign_capabilities;
+  coder -> assign_capabilities;
+  analyst -> assign_capabilities;
+  optimizer -> assign_capabilities;
+  coordinator -> assign_capabilities;
+  assign_capabilities -> register_swarm -> success;
+}

@@ -1,3 +1,8 @@
+---
+name: orchestration-consensus-readme
+description: See individual agent files for detailed implementation examples and integration patterns with specific consensus protocols and use cases.
+---
+
 # Distributed Consensus Builder Agents
 
 ## Overview

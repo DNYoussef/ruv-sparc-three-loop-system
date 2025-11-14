@@ -1,3 +1,8 @@
+---
+name: operations-devops-release-release-orchestration-agent
+description: These metrics enable continuous improvement and release optimization.
+---
+
 # RELEASE ORCHESTRATION AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 170

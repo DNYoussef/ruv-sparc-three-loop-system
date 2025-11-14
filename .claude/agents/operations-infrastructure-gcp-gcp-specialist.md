@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-gcp-gcp-specialist
+description: GCP SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # GCP SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 134

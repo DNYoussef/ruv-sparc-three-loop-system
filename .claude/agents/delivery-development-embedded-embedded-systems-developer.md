@@ -1,3 +1,8 @@
+---
+name: delivery-development-embedded-embedded-systems-developer
+description: EMBEDDED SYSTEMS DEVELOPER - SYSTEM PROMPT v2.0
+---
+
 # EMBEDDED SYSTEMS DEVELOPER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 185

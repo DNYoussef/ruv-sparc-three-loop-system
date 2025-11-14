@@ -1,0 +1,392 @@
+digraph SPARC_ORCHESTRATOR {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="/sparc:sparc - SPARC Orchestrator (Meta-Workflow)";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:sparc", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n(objective, scope)", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+    syntax_error [shape=octagon, fillcolor=crimson, label="Syntax Error\nShow Usage"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // OBJECTIVE ANALYSIS
+  // =============================================================================
+  subgraph cluster_objective {
+    label="Objective Analysis & Decomposition";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    analyze_objective [label="Analyze Large\nObjective", fillcolor=lightyellow];
+    assess_complexity [label="Assess\nComplexity", fillcolor=lightyellow];
+    identify_phases [label="Identify Project\nPhases", fillcolor=lightyellow];
+    estimate_scope [label="Estimate Scope &\nEffort", fillcolor=lightyellow];
+
+    complexity_level [shape=diamond, label="Complexity\nLevel?"];
+    simple_workflow [label="Use Simple\nWorkflow", fillcolor=lightgreen];
+    complex_workflow [label="Use Complex\nWorkflow", fillcolor=orange];
+  }
+
+  validate_syntax -> analyze_objective [label="Yes"];
+  analyze_objective -> assess_complexity;
+  assess_complexity -> identify_phases;
+  identify_phases -> estimate_scope;
+  estimate_scope -> complexity_level;
+
+  complexity_level -> simple_workflow [label="Low"];
+  complexity_level -> complex_workflow [label="High"];
+
+  // =============================================================================
+  // WORKFLOW DESIGN
+  // =============================================================================
+  subgraph cluster_workflow_design {
+    label="Workflow Architecture";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    design_workflow [label="Design Overall\nWorkflow", fillcolor=purple];
+    define_stages [label="Define SPARC\nStages", fillcolor=purple];
+    identify_agents [label="Identify Required\nAgents", fillcolor=purple];
+    plan_handoffs [label="Plan Agent\nHandoffs", fillcolor=purple];
+    define_quality_gates [label="Define Quality\nGates", fillcolor=purple];
+    create_dependency_graph [label="Create Dependency\nGraph", fillcolor=purple];
+  }
+
+  simple_workflow -> design_workflow;
+  complex_workflow -> design_workflow;
+
+  design_workflow -> define_stages;
+  define_stages -> identify_agents;
+  identify_agents -> plan_handoffs;
+  plan_handoffs -> define_quality_gates;
+  define_quality_gates -> create_dependency_graph;
+
+  // =============================================================================
+  // PHASE 1: SPECIFICATION
+  // =============================================================================
+  subgraph cluster_specification {
+    label="Phase 1: Specification";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    invoke_spec_mode [label="Invoke\n/sparc:spec-pseudocode", fillcolor=lightblue, style="filled,bold"];
+    capture_requirements [label="Capture Full\nRequirements", fillcolor=lightblue];
+    define_acceptance [label="Define Acceptance\nCriteria", fillcolor=lightblue];
+    generate_pseudocode [label="Generate\nPseudocode", fillcolor=lightblue];
+
+    spec_complete [shape=diamond, label="Specification\nComplete?"];
+    spec_gate [label="Specification Gate\nPASSED", fillcolor=green, shape=octagon];
+    spec_failed [label="Specification Gate\nFAILED", fillcolor=crimson, shape=octagon];
+  }
+
+  create_dependency_graph -> invoke_spec_mode;
+  invoke_spec_mode -> capture_requirements;
+  capture_requirements -> define_acceptance;
+  define_acceptance -> generate_pseudocode;
+  generate_pseudocode -> spec_complete;
+
+  spec_complete -> spec_gate [label="Yes"];
+  spec_complete -> spec_failed [label="No"];
+
+  spec_failed -> capture_requirements [style=dashed];
+
+  // =============================================================================
+  // PHASE 2: ARCHITECTURE
+  // =============================================================================
+  subgraph cluster_architecture {
+    label="Phase 2: Architecture";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF0E8";
+
+    invoke_architect [label="Invoke\nSystem Architect", fillcolor=lightyellow, style="filled,bold"];
+    design_system [label="Design System\nArchitecture", fillcolor=lightyellow];
+    define_components [label="Define\nComponents", fillcolor=lightyellow];
+    plan_integrations [label="Plan\nIntegrations", fillcolor=lightyellow];
+    create_diagrams [label="Create Architecture\nDiagrams", fillcolor=lightyellow];
+
+    arch_complete [shape=diamond, label="Architecture\nComplete?"];
+    arch_gate [label="Architecture Gate\nPASSED", fillcolor=green, shape=octagon];
+    arch_failed [label="Architecture Gate\nFAILED", fillcolor=crimson, shape=octagon];
+  }
+
+  spec_gate -> invoke_architect;
+  invoke_architect -> design_system;
+  design_system -> define_components;
+  define_components -> plan_integrations;
+  plan_integrations -> create_diagrams;
+  create_diagrams -> arch_complete;
+
+  arch_complete -> arch_gate [label="Yes"];
+  arch_complete -> arch_failed [label="No"];
+
+  arch_failed -> design_system [style=dashed];
+
+  // =============================================================================
+  // PHASE 3: REFINEMENT (TDD)
+  // =============================================================================
+  subgraph cluster_refinement {
+    label="Phase 3: Refinement (TDD)";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    invoke_tdd [label="Invoke TDD\nWorkflow", fillcolor=lightgreen, style="filled,bold"];
+    write_tests [label="Write Failing\nTests", fillcolor=lightgreen];
+    implement_code [label="Implement\nCode", fillcolor=lightgreen];
+    run_tests [label="Run Test\nSuite", fillcolor=lightgreen];
+    refactor_code [label="Refactor\nCode", fillcolor=lightgreen];
+
+    tests_pass [shape=diamond, label="All Tests\nPass?"];
+    tdd_gate [label="TDD Gate\nPASSED", fillcolor=green, shape=octagon];
+    tdd_failed [label="TDD Gate\nFAILED", fillcolor=crimson, shape=octagon];
+  }
+
+  arch_gate -> invoke_tdd;
+  invoke_tdd -> write_tests;
+  write_tests -> implement_code;
+  implement_code -> run_tests;
+  run_tests -> tests_pass;
+
+  tests_pass -> refactor_code [label="Yes"];
+  tests_pass -> tdd_failed [label="No"];
+
+  refactor_code -> tdd_gate;
+  tdd_failed -> implement_code [style=dashed];
+
+  // =============================================================================
+  // PHASE 4: SECURITY REVIEW
+  // =============================================================================
+  subgraph cluster_security {
+    label="Phase 4: Security Review";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    invoke_security [label="Invoke\n/sparc:security-review", fillcolor=lightcoral, style="filled,bold"];
+    static_analysis [label="Static Security\nAnalysis", fillcolor=lightcoral];
+    dynamic_testing [label="Dynamic Security\nTesting", fillcolor=lightcoral];
+    penetration_test [label="Penetration\nTesting", fillcolor=lightcoral];
+    compliance_check [label="Compliance\nValidation", fillcolor=lightcoral];
+
+    security_pass [shape=diamond, label="Security\nPassed?"];
+    security_gate [label="Security Gate\nPASSED", fillcolor=green, shape=octagon];
+    security_failed [label="Security Gate\nFAILED - BLOCKER", fillcolor=crimson, shape=octagon];
+  }
+
+  tdd_gate -> invoke_security;
+  invoke_security -> static_analysis;
+  static_analysis -> dynamic_testing;
+  dynamic_testing -> penetration_test;
+  penetration_test -> compliance_check;
+  compliance_check -> security_pass;
+
+  security_pass -> security_gate [label="Yes"];
+  security_pass -> security_failed [label="No"];
+
+  security_failed -> implement_code [label="Fix & Retry", style=dashed];
+
+  // =============================================================================
+  // PHASE 5: OPTIMIZATION
+  // =============================================================================
+  subgraph cluster_optimization {
+    label="Phase 5: Optimization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    invoke_optimizer [label="Invoke\n/sparc:refinement-optimization", fillcolor=plum, style="filled,bold"];
+    optimize_performance [label="Optimize\nPerformance", fillcolor=plum];
+    refactor_quality [label="Refactor for\nQuality", fillcolor=plum];
+    reduce_debt [label="Reduce Technical\nDebt", fillcolor=plum];
+    optimize_resources [label="Optimize Resource\nUsage", fillcolor=plum];
+
+    optimization_complete [shape=diamond, label="Optimization\nComplete?"];
+    opt_gate [label="Optimization Gate\nPASSED", fillcolor=green, shape=octagon];
+  }
+
+  security_gate -> invoke_optimizer;
+  invoke_optimizer -> optimize_performance;
+  optimize_performance -> refactor_quality;
+  refactor_quality -> reduce_debt;
+  reduce_debt -> optimize_resources;
+  optimize_resources -> optimization_complete;
+
+  optimization_complete -> opt_gate [label="Yes"];
+  optimization_complete -> optimize_performance [label="No", style=dashed];
+
+  // =============================================================================
+  // PHASE 6: INTEGRATION
+  // =============================================================================
+  subgraph cluster_integration {
+    label="Phase 6: Integration";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    invoke_integration [label="Invoke\n/sparc:integration", fillcolor=lightblue, style="filled,bold"];
+    merge_components [label="Merge All\nComponents", fillcolor=lightblue];
+    integration_tests [label="Run Integration\nTests", fillcolor=lightblue];
+    e2e_tests [label="Run End-to-End\nTests", fillcolor=lightblue];
+    validate_system [label="Validate Complete\nSystem", fillcolor=lightblue];
+
+    integration_pass [shape=diamond, label="Integration\nSucceeded?"];
+    integration_gate [label="Integration Gate\nPASSED", fillcolor=green, shape=octagon];
+    integration_failed [label="Integration Gate\nFAILED", fillcolor=crimson, shape=octagon];
+  }
+
+  opt_gate -> invoke_integration;
+  invoke_integration -> merge_components;
+  merge_components -> integration_tests;
+  integration_tests -> e2e_tests;
+  e2e_tests -> validate_system;
+  validate_system -> integration_pass;
+
+  integration_pass -> integration_gate [label="Yes"];
+  integration_pass -> integration_failed [label="No"];
+
+  integration_failed -> invoke_tdd [label="Fix & Retry", style=dashed];
+
+  // =============================================================================
+  // PHASE 7: DEPLOYMENT
+  // =============================================================================
+  subgraph cluster_deployment {
+    label="Phase 7: Deployment";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    invoke_devops [label="Invoke DevOps\nAgent", fillcolor=lightgreen, style="filled,bold"];
+    prepare_deployment [label="Prepare\nDeployment", fillcolor=lightgreen];
+    build_artifacts [label="Build\nArtifacts", fillcolor=lightgreen];
+    deploy_staging [label="Deploy to\nStaging", fillcolor=lightgreen];
+    smoke_tests [label="Run Smoke\nTests", fillcolor=lightgreen];
+    deploy_production [label="Deploy to\nProduction", fillcolor=lightgreen];
+
+    deployment_success [shape=diamond, label="Deployment\nSucceeded?"];
+  }
+
+  integration_gate -> invoke_devops;
+  invoke_devops -> prepare_deployment;
+  prepare_deployment -> build_artifacts;
+  build_artifacts -> deploy_staging;
+  deploy_staging -> smoke_tests;
+  smoke_tests -> deploy_production;
+  deploy_production -> deployment_success;
+
+  // =============================================================================
+  // POST-DEPLOYMENT
+  // =============================================================================
+  subgraph cluster_post_deployment {
+    label="Post-Deployment Monitoring";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    invoke_monitoring [label="Invoke\n/sparc:post-deployment", fillcolor=lightyellow, style="filled,bold"];
+    setup_monitoring [label="Setup\nMonitoring", fillcolor=lightyellow];
+    collect_metrics [label="Collect\nMetrics", fillcolor=lightyellow];
+    analyze_performance [label="Analyze\nPerformance", fillcolor=lightyellow];
+    monitor_errors [label="Monitor\nErrors", fillcolor=lightyellow];
+  }
+
+  deployment_success -> invoke_monitoring [label="Yes"];
+  invoke_monitoring -> setup_monitoring;
+  setup_monitoring -> collect_metrics;
+  collect_metrics -> analyze_performance;
+  analyze_performance -> monitor_errors;
+
+  // =============================================================================
+  // COMPLETION & REPORTING
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Reporting";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    generate_final_report [label="Generate Final\nProject Report", fillcolor=plum];
+    document_lessons [label="Document Lessons\nLearned", fillcolor=plum];
+    archive_artifacts [label="Archive All\nArtifacts", fillcolor=plum];
+    notify_stakeholders [label="Notify\nStakeholders", fillcolor=plum];
+
+    success [label="SPARC Workflow\nCOMPLETE", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  monitor_errors -> generate_final_report;
+  generate_final_report -> document_lessons;
+  document_lessons -> archive_artifacts;
+  archive_artifacts -> notify_stakeholders;
+  notify_stakeholders -> success;
+
+  // =============================================================================
+  // ERROR HANDLING & ROLLBACK
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Rollback";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+    retry_phase [label="Retry Failed\nPhase", fillcolor=yellow];
+    rollback [label="Rollback\nChanges", fillcolor=orange];
+
+    log_error [label="Log Workflow\nError", fillcolor=orange];
+    escalate [label="Escalate to\nHuman", fillcolor=orange];
+    failure [label="SPARC Workflow\nFAILED", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+  deployment_success -> rollback [label="No"];
+
+  rollback -> classify_error;
+  classify_error -> retry_phase [label="Transient"];
+  classify_error -> log_error [label="Fatal"];
+
+  log_error -> escalate;
+  escalate -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_phase [shape=box, fillcolor=lightblue, label="SPARC Phase", style="filled,bold"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_gate [shape=octagon, fillcolor=green, label="Quality Gate"];
+    legend_blocker [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_phase [style=invis];
+    legend_phase -> legend_decision [style=invis];
+    legend_decision -> legend_gate [style=invis];
+    legend_gate -> legend_blocker [style=invis];
+    legend_blocker -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

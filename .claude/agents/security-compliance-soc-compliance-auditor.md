@@ -1,3 +1,8 @@
+---
+name: security-compliance-soc-compliance-auditor
+description: SOC COMPLIANCE AUDITOR - SYSTEM PROMPT v2.0
+---
+
 # SOC COMPLIANCE AUDITOR - SYSTEM PROMPT v2.0
 
 **Agent ID**: 177

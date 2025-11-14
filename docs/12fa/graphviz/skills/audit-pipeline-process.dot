@@ -1,0 +1,94 @@
+digraph AUDIT_PIPELINE_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Initialization";
+    style="filled,rounded";
+    bgcolor="#E8F4F8";
+
+    start [label="audit-pipeline\nInvoked", shape=ellipse, fillcolor=lightblue];
+    load_code [label="Load Codebase"];
+    check_skills [label="Check Skill Availability\nTheater, Functionality, Style"];
+
+    start -> load_code -> check_skills;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED"];
+
+    check_skills -> check_policy;
+    check_policy -> policy_violation [label="Fail"];
+  }
+
+  subgraph cluster_pipeline {
+    label="3-Stage Audit Pipeline";
+    style="filled,rounded";
+    bgcolor="#F0E8F8";
+
+    stage1_theater [label="Stage 1:\ntheater-detection-audit\n6-Agent Byzantine Consensus", fillcolor=red];
+    decision1 [shape=diamond, label="Pass?"];
+
+    stage2_functionality [label="Stage 2:\nfunctionality-audit\nSandbox Reality Validation", fillcolor=purple];
+    decision2 [shape=diamond, label="Pass?"];
+
+    stage3_style [label="Stage 3:\nstyle-audit\nCode Quality & Standards", fillcolor=blue];
+    decision3 [shape=diamond, label="Pass?"];
+
+    check_policy -> stage1_theater [label="Pass"];
+    stage1_theater -> decision1;
+    decision1 -> stage2_functionality [label="Yes"];
+    stage2_functionality -> decision2;
+    decision2 -> stage3_style [label="Yes"];
+    stage3_style -> decision3;
+  }
+
+  subgraph cluster_coordination {
+    label="Coordination";
+    style="filled,rounded";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Pipeline Results\nAll 3 Stages", fillcolor=lightblue];
+    notify [label="Notify cicd-intelligent-recovery\nOr production-readiness", fillcolor=lightblue];
+
+    decision3 -> memory_store [label="Yes"];
+    memory_store -> notify;
+  }
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_metrics [label="Log Pipeline Metrics\nStages Passed"];
+    success [label="Audit Pipeline Complete\nAll Gates Passed", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    failure [label="Audit Failed\nGate Blocked", shape=doublecircle, fillcolor=red, style="filled,bold"];
+
+    notify -> cleanup;
+    cleanup -> log_metrics;
+    log_metrics -> success;
+
+    decision1 -> failure [label="No (Theater)"];
+    decision2 -> failure [label="No (Non-Functional)"];
+    decision3 -> failure [label="No (Poor Quality)"];
+  }
+
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate"];
+    log_error [label="Log Error", fillcolor=orange];
+
+    policy_violation -> log_error;
+    log_error -> escalate;
+    escalate -> failure;
+  }
+}

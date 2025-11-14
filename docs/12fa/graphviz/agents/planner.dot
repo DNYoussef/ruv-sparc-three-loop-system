@@ -1,0 +1,347 @@
+// Planner Agent - Strategic Planner
+// Task decomposition, dependency analysis, resource allocation
+digraph planner_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        planner_init [label="Planner Agent\nInitialize", fillcolor="#0891b2", fontcolor="#ffffff"];
+        load_config [label="Load\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_templates [label="Load Planning\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_history [label="Load Historical\nData", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === SPECIFICATION ANALYSIS ===
+    subgraph cluster_spec_analysis {
+        label="Specification Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        spec_receiver [label="Specification\nReceiver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        completeness_analyzer [label="Completeness\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        ambiguity_detector [label="Ambiguity\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        scope_definer [label="Scope\nDefiner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        success_criteria [label="Success Criteria\nDefiner", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === TASK DECOMPOSITION ===
+    subgraph cluster_decomposition {
+        label="Task Decomposition Workflow";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        feature_breaker [label="Feature\nBreaker", fillcolor="#059669", fontcolor="#ffffff"];
+        wbs_creator [label="Work Breakdown\nStructure (WBS)", fillcolor="#059669", fontcolor="#ffffff"];
+        task_categorizer [label="Task\nCategorizer", fillcolor="#059669", fontcolor="#ffffff"];
+        effort_estimator [label="Effort\nEstimator", fillcolor="#059669", fontcolor="#ffffff"];
+        complexity_scorer [label="Complexity\nScorer", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === DEPENDENCY ANALYSIS ===
+    subgraph cluster_dependencies {
+        label="Dependency Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        dependency_mapper [label="Dependency\nMapper", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        critical_path [label="Critical Path\nAnalyzer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        parallel_detector [label="Parallel Execution\nDetector", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        bottleneck_finder [label="Bottleneck\nFinder", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === RESOURCE ALLOCATION ===
+    subgraph cluster_resources {
+        label="Resource Allocation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        skill_matcher [label="Skill\nMatcher", fillcolor="#d97706", fontcolor="#ffffff"];
+        capacity_calculator [label="Capacity\nCalculator", fillcolor="#d97706", fontcolor="#ffffff"];
+        agent_allocator [label="Agent\nAllocator", fillcolor="#d97706", fontcolor="#ffffff"];
+        workload_balancer [label="Workload\nBalancer", fillcolor="#d97706", fontcolor="#ffffff"];
+        utilization_optimizer [label="Utilization\nOptimizer", fillcolor="#d97706", fontcolor="#ffffff"];
+    }
+
+    // === TIMELINE ESTIMATION ===
+    subgraph cluster_timeline {
+        label="Timeline Estimation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        duration_estimator [label="Duration\nEstimator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        milestone_planner [label="Milestone\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        gantt_generator [label="Gantt Chart\nGenerator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        buffer_calculator [label="Buffer Time\nCalculator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        deadline_validator [label="Deadline\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === RISK ASSESSMENT ===
+    subgraph cluster_risk {
+        label="Risk Assessment Process";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        risk_identifier [label="Risk\nIdentifier", fillcolor="#dc2626", fontcolor="#ffffff"];
+        probability_assessor [label="Probability\nAssessor", fillcolor="#dc2626", fontcolor="#ffffff"];
+        impact_analyzer [label="Impact\nAnalyzer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        severity_calculator [label="Severity\nCalculator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        mitigation_planner [label="Mitigation\nPlanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === RISK CATEGORIES ===
+    subgraph cluster_risk_types {
+        label="Risk Categories";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        technical_risk [label="Technical\nRisks", fillcolor="#ef4444", fontcolor="#ffffff"];
+        resource_risk [label="Resource\nRisks", fillcolor="#ef4444", fontcolor="#ffffff"];
+        timeline_risk [label="Timeline\nRisks", fillcolor="#ef4444", fontcolor="#ffffff"];
+        quality_risk [label="Quality\nRisks", fillcolor="#ef4444", fontcolor="#ffffff"];
+        external_risk [label="External\nRisks", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === QUALITY GATES ===
+    subgraph cluster_quality_gates {
+        label="Quality Gate Planning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        spec_gate [label="Specification\nGate", fillcolor="#16a34a", fontcolor="#ffffff"];
+        design_gate [label="Design\nGate", fillcolor="#16a34a", fontcolor="#ffffff"];
+        implementation_gate [label="Implementation\nGate", fillcolor="#16a34a", fontcolor="#ffffff"];
+        integration_gate [label="Integration\nGate", fillcolor="#16a34a", fontcolor="#ffffff"];
+        deployment_gate [label="Deployment\nGate", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    // === PARALLEL EXECUTION ===
+    subgraph cluster_parallel {
+        label="Parallel Execution Patterns";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        feature_decomp [label="Feature\nDecomposition", fillcolor="#10b981", fontcolor="#ffffff"];
+        layer_separation [label="Layer\nSeparation", fillcolor="#10b981", fontcolor="#ffffff"];
+        test_first_parallel [label="Test-First\nDevelopment", fillcolor="#10b981", fontcolor="#ffffff"];
+        doc_parallel [label="Documentation\nParallel", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === COORDINATION ===
+    subgraph cluster_coordination {
+        label="Multi-Agent Coordination";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        workstream_manager [label="Workstream\nManager", fillcolor="#6366f1", fontcolor="#ffffff"];
+        handoff_coordinator [label="Handoff\nCoordinator", fillcolor="#6366f1", fontcolor="#ffffff"];
+        checkpoint_scheduler [label="Checkpoint\nScheduler", fillcolor="#6366f1", fontcolor="#ffffff"];
+        status_reporter [label="Status\nReporter", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === EXECUTION MONITORING ===
+    subgraph cluster_monitoring {
+        label="Execution Monitoring";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        progress_tracker [label="Progress\nTracker", fillcolor="#0891b2", fontcolor="#ffffff"];
+        velocity_calculator [label="Velocity\nCalculator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        variance_analyzer [label="Variance\nAnalyzer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        blocker_detector [label="Blocker\nDetector", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === ADAPTIVE PLANNING ===
+    subgraph cluster_adaptive {
+        label="Adaptive Planning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        plan_adjuster [label="Plan\nAdjuster", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        scope_negotiator [label="Scope\nNegotiator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        resource_reallocator [label="Resource\nReallocator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        priority_shifter [label="Priority\nShifter", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    // === METRICS & REPORTING ===
+    subgraph cluster_metrics {
+        label="Planning Metrics & Performance";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        estimation_accuracy [label="Estimation\nAccuracy", fillcolor="#059669", fontcolor="#ffffff"];
+        resource_utilization [label="Resource\nUtilization", fillcolor="#059669", fontcolor="#ffffff"];
+        quality_outcomes [label="Quality\nOutcomes", fillcolor="#059669", fontcolor="#ffffff"];
+        risk_management [label="Risk Management\nEffectiveness", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === KNOWLEDGE MANAGEMENT ===
+    subgraph cluster_knowledge {
+        label="Knowledge & Learning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_analyzer [label="Pattern\nAnalyzer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        template_creator [label="Template\nCreator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        lessons_learned [label="Lessons\nLearned", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nDocumenter", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    planner_init -> load_config [label="Load"];
+    planner_init -> load_templates [label="Load"];
+    planner_init -> load_history [label="Load"];
+
+    // === SPECIFICATION ANALYSIS FLOW ===
+    planner_init -> spec_receiver [label="Receive Spec"];
+    spec_receiver -> completeness_analyzer [label="Analyze"];
+    completeness_analyzer -> ambiguity_detector [label="Detect"];
+    ambiguity_detector -> scope_definer [label="Define"];
+    scope_definer -> success_criteria [label="Define Criteria"];
+
+    // === DECOMPOSITION FLOW ===
+    success_criteria -> feature_breaker [label="Break Features"];
+    feature_breaker -> wbs_creator [label="Create WBS"];
+    wbs_creator -> task_categorizer [label="Categorize"];
+    task_categorizer -> effort_estimator [label="Estimate"];
+    effort_estimator -> complexity_scorer [label="Score"];
+
+    // === DEPENDENCY FLOW ===
+    complexity_scorer -> dependency_mapper [label="Map Dependencies"];
+    dependency_mapper -> critical_path [label="Analyze Critical Path"];
+    critical_path -> parallel_detector [label="Detect Parallel"];
+    parallel_detector -> bottleneck_finder [label="Find Bottlenecks"];
+
+    // === RESOURCE ALLOCATION FLOW ===
+    bottleneck_finder -> skill_matcher [label="Match Skills"];
+    skill_matcher -> capacity_calculator [label="Calculate Capacity"];
+    capacity_calculator -> agent_allocator [label="Allocate Agents"];
+    agent_allocator -> workload_balancer [label="Balance Workload"];
+    workload_balancer -> utilization_optimizer [label="Optimize"];
+
+    // === TIMELINE FLOW ===
+    utilization_optimizer -> duration_estimator [label="Estimate Duration"];
+    duration_estimator -> milestone_planner [label="Plan Milestones"];
+    milestone_planner -> gantt_generator [label="Generate Gantt"];
+    gantt_generator -> buffer_calculator [label="Calculate Buffer"];
+    buffer_calculator -> deadline_validator [label="Validate Deadline"];
+
+    // === RISK ASSESSMENT FLOW ===
+    deadline_validator -> risk_identifier [label="Identify Risks"];
+    risk_identifier -> probability_assessor [label="Assess Probability"];
+    probability_assessor -> impact_analyzer [label="Analyze Impact"];
+    impact_analyzer -> severity_calculator [label="Calculate Severity"];
+    severity_calculator -> mitigation_planner [label="Plan Mitigation"];
+
+    // === RISK CATEGORY MAPPING ===
+    risk_identifier -> technical_risk [label="Technical"];
+    risk_identifier -> resource_risk [label="Resource"];
+    risk_identifier -> timeline_risk [label="Timeline"];
+    risk_identifier -> quality_risk [label="Quality"];
+    risk_identifier -> external_risk [label="External"];
+
+    // === QUALITY GATES FLOW ===
+    mitigation_planner -> spec_gate [label="Plan Gate"];
+    spec_gate -> design_gate [label="Next"];
+    design_gate -> implementation_gate [label="Next"];
+    implementation_gate -> integration_gate [label="Next"];
+    integration_gate -> deployment_gate [label="Next"];
+
+    // === PARALLEL EXECUTION FLOW ===
+    parallel_detector -> feature_decomp [label="Decompose"];
+    feature_decomp -> layer_separation [label="Separate"];
+    layer_separation -> test_first_parallel [label="TDD Parallel"];
+    test_first_parallel -> doc_parallel [label="Doc Parallel"];
+
+    // === COORDINATION FLOW ===
+    deployment_gate -> workstream_manager [label="Manage Workstreams"];
+    workstream_manager -> handoff_coordinator [label="Coordinate Handoffs"];
+    handoff_coordinator -> checkpoint_scheduler [label="Schedule Checkpoints"];
+    checkpoint_scheduler -> status_reporter [label="Report Status"];
+
+    // === MONITORING FLOW ===
+    status_reporter -> progress_tracker [label="Track Progress"];
+    progress_tracker -> velocity_calculator [label="Calculate Velocity"];
+    velocity_calculator -> variance_analyzer [label="Analyze Variance"];
+    variance_analyzer -> blocker_detector [label="Detect Blockers"];
+
+    // === ADAPTIVE PLANNING FLOW ===
+    blocker_detector -> plan_adjuster [label="Adjust Plan"];
+    plan_adjuster -> scope_negotiator [label="Negotiate Scope"];
+    scope_negotiator -> resource_reallocator [label="Reallocate Resources"];
+    resource_reallocator -> priority_shifter [label="Shift Priorities"];
+
+    // === METRICS FLOW ===
+    priority_shifter -> estimation_accuracy [label="Measure"];
+    estimation_accuracy -> resource_utilization [label="Measure"];
+    resource_utilization -> quality_outcomes [label="Measure"];
+    quality_outcomes -> risk_management [label="Measure"];
+
+    // === KNOWLEDGE FLOW ===
+    risk_management -> pattern_analyzer [label="Analyze Patterns"];
+    pattern_analyzer -> template_creator [label="Create Templates"];
+    template_creator -> lessons_learned [label="Document Lessons"];
+    lessons_learned -> best_practices [label="Document Practices"];
+    best_practices -> planner_init [label="Complete", style=bold, color="#10b981"];
+
+    // === FEEDBACK LOOPS ===
+    blocker_detector -> risk_identifier [label="New Risks", style=dashed, color="#ef4444"];
+    variance_analyzer -> plan_adjuster [label="Adjust Plan", style=dashed, color="#f59e0b"];
+    scope_negotiator -> success_criteria [label="Redefine Scope", style=dashed, color="#ef4444"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Planner Agent", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend2 [label="Decomposition", fillcolor="#059669", fontcolor="#ffffff"];
+        legend3 [label="Resources", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend4 [label="Risks", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend5 [label="Quality Gates", fillcolor="#16a34a", fontcolor="#ffffff"];
+        legend6 [label="Coordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+}

@@ -1,0 +1,201 @@
+digraph STREAM_CHAIN_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Stream\nConfiguration"];
+    check_deps [label="Check Stream\nLibraries"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Stream Chain Implementation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    create_pipeline [label="Create Stream\nPipeline", fillcolor=purple];
+    decision_1 [shape=diamond, label="Pipeline\nCreated?"];
+
+    connect_stages [label="Connect Processing\nStages", fillcolor=purple];
+    decision_2 [shape=diamond, label="Stages\nLinked?"];
+
+    setup_transforms [label="Setup Data\nTransformations", fillcolor=purple];
+    decision_3 [shape=diamond, label="Transforms\nConfigured?"];
+
+    implement_backpressure [label="Implement\nBackpressure", fillcolor=purple];
+    decision_4 [shape=diamond, label="Flow Control\nActive?"];
+
+    start_streaming [label="Start Stream\nProcessing", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Stream Error"];
+    retry_logic [label="Restart Stream", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> create_pipeline [label="Pass"];
+
+  // Execution flow
+  create_pipeline -> decision_1;
+  decision_1 -> connect_stages [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  connect_stages -> decision_2;
+  decision_2 -> setup_transforms [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  setup_transforms -> decision_3;
+  decision_3 -> implement_backpressure [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  implement_backpressure -> decision_4;
+  decision_4 -> start_streaming [label="Yes"];
+  decision_4 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> create_pipeline [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Stream Failed"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Stream\nMetrics", fillcolor=lightblue];
+    notify_coordinator [label="Notify Stream\nActive", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Other Streams\nWaiting?"];
+  }
+
+  // Connect execution to coordination
+  start_streaming -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Stream\nFlowing?"];
+    run_tests [label="Test Data\nThroughput", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Throughput\nOK?"];
+
+    backpressure_test [label="Test Backpressure\nHandling", fillcolor=lightgreen];
+    backpressure_check [shape=diamond, label="Flow Control\nWorking?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> backpressure_test [label="Pass"];
+  test_results -> quality_gate_fail [label="Fail"];
+
+  backpressure_test -> backpressure_check;
+  backpressure_check -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Stream\nResources", fillcolor=lightgreen];
+    log_completion [label="Log Stream\nMetrics"];
+    success [label="Skill Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  backpressure_check -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Close Stream", fillcolor=orange];
+    failure [label="Skill Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

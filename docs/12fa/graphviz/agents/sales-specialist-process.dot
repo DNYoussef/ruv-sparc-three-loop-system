@@ -1,0 +1,168 @@
+digraph sales_specialist_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Sales Specialist Agent Workflow\nAgent ID: agent-081 | Category: Business\nPurpose: Sales and business development";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Lead Generated", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Deal Closed", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Lead Generation
+    subgraph cluster_leadgen {
+        label="Phase 1: Lead Generation";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        lg1 [label="Identify Target\nMarket", shape=box, fillcolor="#ffecb3"];
+        lg2 [label="Prospecting\nResearch", shape=box, fillcolor="#ffecb3"];
+        lg3 [label="Outbound\nOutreach", shape=box, fillcolor="#ffecb3"];
+        lg4 [label="Inbound Lead\nCapture", shape=box, fillcolor="#ffecb3"];
+        lg5 [label="Lead Qualification", shape=box, fillcolor="#ffecb3"];
+
+        lg1 -> lg2 -> lg3;
+        lg2 -> lg4;
+        lg3 -> lg5;
+        lg4 -> lg5;
+    }
+
+    // Phase 2: Lead Nurturing
+    subgraph cluster_nurture {
+        label="Phase 2: Lead Nurturing";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        ln1 [label="Initial Contact", shape=box, fillcolor="#bbdefb"];
+        ln2 [label="Needs Assessment", shape=box, fillcolor="#bbdefb"];
+        ln3 [label="Value Proposition", shape=box, fillcolor="#bbdefb"];
+        ln4 [label="Follow-up\nSequence", shape=box, fillcolor="#bbdefb"];
+        ln5 [label="Relationship\nBuilding", shape=box, fillcolor="#bbdefb"];
+
+        ln1 -> ln2 -> ln3 -> ln4 -> ln5;
+    }
+
+    // Decision: Lead Quality
+    quality [label="Qualified\nLead?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Phase 3: Sales Process
+    subgraph cluster_sales {
+        label="Phase 3: Sales Process";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        sp1 [label="Discovery Call", shape=box, fillcolor="#e1bee7"];
+        sp2 [label="Product Demo", shape=box, fillcolor="#e1bee7"];
+        sp3 [label="Proposal\nCreation", shape=box, fillcolor="#e1bee7"];
+        sp4 [label="Pricing\nNegotiation", shape=box, fillcolor="#e1bee7"];
+        sp5 [label="Contract\nReview", shape=box, fillcolor="#e1bee7"];
+
+        sp1 -> sp2 -> sp3 -> sp4 -> sp5;
+    }
+
+    // Phase 4: Objection Handling
+    subgraph cluster_objections {
+        label="Phase 4: Objection Handling";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        oh1 [label="Identify\nObjections", shape=box, fillcolor="#f8bbd0"];
+        oh2 [label="Address Concerns", shape=box, fillcolor="#f8bbd0"];
+        oh3 [label="Provide Evidence", shape=box, fillcolor="#f8bbd0"];
+        oh4 [label="Case Studies/\nTestimonials", shape=box, fillcolor="#f8bbd0"];
+        oh5 [label="Re-engage", shape=box, fillcolor="#f8bbd0"];
+
+        oh1 -> oh2 -> oh3 -> oh4 -> oh5;
+    }
+
+    // Phase 5: Deal Closing
+    subgraph cluster_closing {
+        label="Phase 5: Deal Closing";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        dc1 [label="Final Proposal", shape=box, fillcolor="#b2dfdb"];
+        dc2 [label="Decision Maker\nMeeting", shape=box, fillcolor="#b2dfdb"];
+        dc3 [label="Contract Signing", shape=box, fillcolor="#b2dfdb"];
+        dc4 [label="Payment Setup", shape=box, fillcolor="#b2dfdb"];
+        dc5 [label="Onboarding\nHandoff", shape=box, fillcolor="#b2dfdb"];
+
+        dc1 -> dc2 -> dc3 -> dc4 -> dc5;
+    }
+
+    // Phase 6: CRM & Reporting
+    subgraph cluster_crm {
+        label="Phase 6: CRM & Reporting";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        crm1 [label="Update CRM\nRecords", shape=box, fillcolor="#fff59d"];
+        crm2 [label="Pipeline\nManagement", shape=box, fillcolor="#fff59d"];
+        crm3 [label="Sales Forecasting", shape=box, fillcolor="#fff59d"];
+        crm4 [label="Activity Logging", shape=box, fillcolor="#fff59d"];
+        crm5 [label="Performance\nReporting", shape=box, fillcolor="#fff59d"];
+
+        crm1 -> crm2 -> crm3 -> crm4 -> crm5;
+    }
+
+    // Decision nodes
+    objection [label="Objections\nRaised?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    ready [label="Ready to\nClose?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> lg5 [label="New Lead"];
+    lg5 -> quality [label="Evaluate"];
+
+    quality -> ln1 [label="Yes - Pursue"];
+    quality -> lg2 [label="No - Find Better", style=dashed, color="#f44336"];
+
+    ln5 -> sp1 [label="Interest\nConfirmed"];
+    sp5 -> objection [label="Review\nFeedback"];
+
+    objection -> oh1 [label="Yes"];
+    objection -> ready [label="No"];
+
+    oh5 -> sp3 [label="Re-present"];
+
+    ready -> dc1 [label="Yes"];
+    ready -> ln4 [label="Not Yet", style=dashed, color="#ff9800"];
+
+    dc5 -> crm1 [label="Deal Won"];
+    crm5 -> end [label="Complete"];
+
+    // Parallel CRM updates
+    lg5 -> crm1 [style=dotted, color="#757575", label="Log Activity"];
+    ln1 -> crm1 [style=dotted, color="#757575"];
+    sp1 -> crm1 [style=dotted, color="#757575"];
+    dc1 -> crm1 [style=dotted, color="#757575"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Lead Generation\n• Sales Strategy\n• Deal Closing\n• CRM Management\n• Objection Handling\n• Relationship Building", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Tools & Systems
+    tools [label="Tools:\n• Salesforce/HubSpot\n• LinkedIn Sales Nav\n• Email Automation\n• Calendar Scheduling\n• E-signature Platform", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metrics
+    metrics [label="Key Metrics:\n• Conversion Rate\n• Deal Size\n• Sales Cycle Length\n• Pipeline Value\n• Win Rate", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: sales-specialist\nPriority: Medium\nComplexity: Medium\nGraphviz Priority: 81", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

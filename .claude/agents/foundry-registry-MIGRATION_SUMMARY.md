@@ -1,3 +1,8 @@
+---
+name: foundry-registry-migration-summary
+description: Specialized agent for task execution
+---
+
 # Claude Flow Commands to Agent System Migration Summary
 
 ## Executive Summary

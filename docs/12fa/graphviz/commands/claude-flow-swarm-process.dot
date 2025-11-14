@@ -1,0 +1,62 @@
+digraph claude_flow_swarm_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  // Color scheme
+  node [fillcolor="#E3F2FD"];
+
+  // Title
+  label="Claude-Flow Swarm Command Workflow\nMulti-Agent Swarm Coordination";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  // Entry point
+  start [label="Command Invoked\n/claude-flow-swarm", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Parameter validation
+  validate_params [label="Validate Parameters\n- Topology type\n- Max agents\n- Strategy", fillcolor="#FFF9C4"];
+
+  // Topology selection
+  topology_select [label="Select Topology\n- mesh (peer-to-peer)\n- hierarchical (tree)\n- ring (circular)\n- star (centralized)", fillcolor="#FFE0B2"];
+
+  // Strategy setup
+  strategy_setup [label="Configure Strategy\n- balanced\n- specialized\n- adaptive", fillcolor="#FFE0B2"];
+
+  // Agent initialization
+  agent_init [label="Initialize Agents\nSpawn coordinator and workers", fillcolor="#BBDEFB"];
+
+  // Consensus setup
+  consensus_setup [label="Setup Consensus\nByzantine fault-tolerant", fillcolor="#C5CAE9"];
+
+  // Memory coordination
+  memory_coord [label="Initialize Memory\nCRDT-based coordination", fillcolor="#B2DFDB"];
+
+  // Task distribution
+  task_dist [label="Distribute Tasks\nAcross swarm agents", fillcolor="#D1C4E9"];
+
+  // Monitoring
+  monitoring [label="Enable Monitoring\nReal-time status tracking", fillcolor="#F0F4C3"];
+
+  // Output
+  success [label="Swarm Ready\nReturn swarm ID", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Error\nReturn error message", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> validate_params;
+  validate_params -> topology_select [label="Valid"];
+  validate_params -> error [label="Invalid"];
+  topology_select -> strategy_setup;
+  strategy_setup -> agent_init;
+  agent_init -> consensus_setup;
+  consensus_setup -> memory_coord;
+  memory_coord -> task_dist;
+  task_dist -> monitoring;
+  monitoring -> success;
+
+  // Error handling
+  agent_init -> error [label="Failed", style=dashed, color=red];
+  consensus_setup -> error [label="Failed", style=dashed, color=red];
+  memory_coord -> error [label="Failed", style=dashed, color=red];
+}

@@ -1,0 +1,37 @@
+digraph GEMINI_MEGACONTEXT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="gemini-megacontext\nInvoked", shape=ellipse, fillcolor=lightblue];
+  analyze_task [label="Analyze Task\nContext Size Requirements"];
+  decision_size [shape=diamond, label="Context\n>200K tokens?"];
+
+  route_claude [label="Route to Claude\nSufficient Context", fillcolor=lightblue];
+
+  route_gemini [label="Route to Gemini\nMegacontext Needed", fillcolor=cyan];
+  load_context [label="Load Full Context\n1M-2M Tokens", fillcolor=cyan];
+  gemini_process [label="Process with Gemini\nFlash or Pro", fillcolor=cyan];
+
+  optional_search [label="Optional: Grounded Search\nWeb-Grounded Answers", fillcolor=yellow];
+  decision_search [shape=diamond, label="Search\nNeeded?"];
+
+  validate_output [label="Validate Output\nQuality Check", fillcolor=lightgreen];
+
+  memory_store [label="Store Results\nWith Model Used", fillcolor=lightblue];
+  success [label="Megacontext Processing\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  start -> analyze_task -> decision_size;
+  decision_size -> route_claude [label="No"];
+  decision_size -> route_gemini [label="Yes"];
+
+  route_gemini -> load_context;
+  load_context -> gemini_process;
+  gemini_process -> decision_search;
+  decision_search -> optional_search [label="Yes"];
+  decision_search -> validate_output [label="No"];
+  optional_search -> validate_output;
+
+  route_claude -> success;
+  validate_output -> memory_store;
+  memory_store -> success;
+}

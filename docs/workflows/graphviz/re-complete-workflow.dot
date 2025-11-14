@@ -1,0 +1,270 @@
+/**
+ * Complete Reverse Engineering Workflow
+ * Command: /re-level1 through /re-level5, /re-malware-sandbox
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph re_complete {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=11, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Complete Reverse Engineering Workflow</B><BR/>Level 1-5 Analysis + Malware Sandbox>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Initial Analysis
+    subgraph cluster_init {
+        label="Initial Analysis";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="Binary/Code\nInput", shape=box, fillcolor="#bbdefb", penwidth=2];
+        file_type [label="Identify\nFile Type", shape=box, fillcolor="#90caf9"];
+        security_check [label="Security\nCheck", shape=diamond, fillcolor="#64b5f6"];
+        sandbox_isolate [label="Sandbox\nIsolation", shape=box, fillcolor="#42a5f5"];
+        level_select [label="Select RE\nLevel", shape=diamond, fillcolor="#2196f3"];
+    }
+
+    // Subgraph: Level 1 - Basic Static Analysis
+    subgraph cluster_level1 {
+        label="Level 1: Basic Static Analysis";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        l1_start [label="Level 1\nAnalysis", shape=box, fillcolor="#e1bee7", penwidth=2];
+        l1_strings [label="Extract\nStrings", shape=box, fillcolor="#ce93d8"];
+        l1_headers [label="Analyze\nHeaders", shape=box, fillcolor="#ba68c8"];
+        l1_metadata [label="Extract\nMetadata", shape=box, fillcolor="#ab47bc"];
+        l1_imports [label="Imports/\nExports", shape=box, fillcolor="#9c27b0"];
+        l1_entropy [label="Entropy\nAnalysis", shape=box, fillcolor="#8e24aa"];
+        l1_signatures [label="Signature\nScanning", shape=box, fillcolor="#7b1fa2"];
+        l1_report [label="Level 1\nReport", shape=box, fillcolor="#6a1b9a"];
+    }
+
+    // Subgraph: Level 2 - Advanced Static Analysis
+    subgraph cluster_level2 {
+        label="Level 2: Advanced Static Analysis";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        l2_start [label="Level 2\nAnalysis", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        l2_disassemble [label="Disassemble\nCode", shape=box, fillcolor="#ffcc80"];
+        l2_cfg [label="Control Flow\nGraph", shape=box, fillcolor="#ffb74d"];
+        l2_functions [label="Function\nAnalysis", shape=box, fillcolor="#ffa726"];
+        l2_xrefs [label="Cross-\nReferences", shape=box, fillcolor="#ff9800"];
+        l2_patterns [label="Pattern\nMatching", shape=box, fillcolor="#fb8c00"];
+        l2_obfuscation [label="Detect\nObfuscation", shape=box, fillcolor="#f57c00"];
+        l2_report [label="Level 2\nReport", shape=box, fillcolor="#ef6c00"];
+    }
+
+    // Subgraph: Level 3 - Basic Dynamic Analysis
+    subgraph cluster_level3 {
+        label="Level 3: Basic Dynamic Analysis";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        l3_start [label="Level 3\nAnalysis", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        l3_debugger [label="Attach\nDebugger", shape=box, fillcolor="#a5d6a7"];
+        l3_breakpoints [label="Set\nBreakpoints", shape=box, fillcolor="#81c784"];
+        l3_execute [label="Execute in\nSandbox", shape=box, fillcolor="#66bb6a"];
+        l3_monitor [label="Monitor\nBehavior", shape=box, fillcolor="#4caf50"];
+        l3_api_calls [label="API Call\nTracking", shape=box, fillcolor="#43a047"];
+        l3_memory [label="Memory\nInspection", shape=box, fillcolor="#388e3c"];
+        l3_network [label="Network\nMonitoring", shape=box, fillcolor="#2e7d32"];
+        l3_report [label="Level 3\nReport", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Level 4 - Advanced Dynamic Analysis
+    subgraph cluster_level4 {
+        label="Level 4: Advanced Dynamic Analysis";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        l4_start [label="Level 4\nAnalysis", shape=box, fillcolor="#fff59d", penwidth=2];
+        l4_hooking [label="API\nHooking", shape=box, fillcolor="#fff176"];
+        l4_injection [label="Code\nInjection", shape=box, fillcolor="#ffee58"];
+        l4_unpacking [label="Dynamic\nUnpacking", shape=box, fillcolor="#ffeb3b"];
+        l4_antidbg [label="Anti-Debug\nBypass", shape=box, fillcolor="#fdd835"];
+        l4_antivm [label="Anti-VM\nBypass", shape=box, fillcolor="#f9a825"];
+        l4_dump [label="Memory\nDump", shape=box, fillcolor="#f57f17"];
+        l4_decrypt [label="Runtime\nDecryption", shape=box, fillcolor="#ff6f00"];
+        l4_report [label="Level 4\nReport", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: Level 5 - Full Code Recovery
+    subgraph cluster_level5 {
+        label="Level 5: Full Code Recovery";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        l5_start [label="Level 5\nAnalysis", shape=box, fillcolor="#ffcdd2", penwidth=2];
+        l5_decompile [label="Decompile\nto HLL", shape=box, fillcolor="#ef9a9a"];
+        l5_algorithms [label="Algorithm\nRecovery", shape=box, fillcolor="#e57373"];
+        l5_datastructs [label="Data Structure\nReconstruction", shape=box, fillcolor="#ef5350"];
+        l5_protocols [label="Protocol\nReverse", shape=box, fillcolor="#f44336"];
+        l5_crypto [label="Cryptographic\nAnalysis", shape=box, fillcolor="#e53935"];
+        l5_reconstruct [label="Full Code\nReconstruction", shape=box, fillcolor="#c62828"];
+        l5_documentation [label="Generate\nDocumentation", shape=box, fillcolor="#b71c1c"];
+        l5_report [label="Level 5\nReport", shape=box, fillcolor="#8b0000"];
+    }
+
+    // Subgraph: Malware Sandbox
+    subgraph cluster_malware {
+        label="Malware Sandbox Analysis";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        malware_start [label="Malware\nSandbox", shape=box, fillcolor="#b3e5fc", penwidth=2];
+        malware_isolate [label="Full\nIsolation", shape=box, fillcolor="#81d4fa"];
+        malware_vm [label="Disposable\nVM", shape=box, fillcolor="#4fc3f7"];
+        malware_network [label="Network\nCapture", shape=box, fillcolor="#29b6f6"];
+        malware_file [label="File System\nMonitoring", shape=box, fillcolor="#03a9f4"];
+        malware_registry [label="Registry\nMonitoring", shape=box, fillcolor="#039be5"];
+        malware_process [label="Process\nMonitoring", shape=box, fillcolor="#0288d1"];
+        malware_c2 [label="C2 Server\nDetection", shape=box, fillcolor="#0277bd"];
+        malware_iocs [label="Extract\nIOCs", shape=box, fillcolor="#01579b"];
+        malware_yara [label="YARA\nRules", shape=box, fillcolor="#004d40"];
+        malware_report [label="Malware\nReport", shape=box, fillcolor="#006064"];
+    }
+
+    // Subgraph: Synthesis & Reporting
+    subgraph cluster_synthesis {
+        label="Synthesis & Reporting";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        aggregate [label="Aggregate\nFindings", shape=box, fillcolor="#e1bee7"];
+        correlate [label="Correlate\nData", shape=box, fillcolor="#ce93d8"];
+        threat_intel [label="Threat\nIntelligence", shape=box, fillcolor="#ba68c8"];
+        vulnerability [label="Vulnerability\nAnalysis", shape=box, fillcolor="#ab47bc"];
+        mitigation [label="Mitigation\nStrategies", shape=box, fillcolor="#9c27b0"];
+        final_report [label="Final\nReport", shape=box, fillcolor="#8e24aa", penwidth=2];
+        share_intel [label="Share\nIntelligence", shape=box, fillcolor="#7b1fa2"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Initial", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Level 1", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Level 2", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Level 3", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Level 4", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Level 5", shape=box, fillcolor="#f44336"];
+        leg7 [label="Malware", shape=box, fillcolor="#03a9f4"];
+        leg8 [label="Synthesis", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7; leg8;}
+    }
+
+    // Initial flow
+    start -> file_type;
+    file_type -> security_check;
+    security_check -> sandbox_isolate [label="suspicious"];
+    security_check -> level_select [label="clean"];
+    sandbox_isolate -> level_select;
+
+    // Level selection
+    level_select -> l1_start [label="Level 1"];
+    level_select -> l2_start [label="Level 2"];
+    level_select -> l3_start [label="Level 3"];
+    level_select -> l4_start [label="Level 4"];
+    level_select -> l5_start [label="Level 5"];
+    level_select -> malware_start [label="Malware"];
+
+    // Level 1 flow
+    l1_start -> l1_strings;
+    l1_strings -> l1_headers;
+    l1_headers -> l1_metadata;
+    l1_metadata -> l1_imports;
+    l1_imports -> l1_entropy;
+    l1_entropy -> l1_signatures;
+    l1_signatures -> l1_report;
+
+    // Level 2 flow
+    l2_start -> l2_disassemble;
+    l1_report -> l2_disassemble [style=dashed, label="proceed"];
+    l2_disassemble -> l2_cfg;
+    l2_cfg -> l2_functions;
+    l2_functions -> l2_xrefs;
+    l2_xrefs -> l2_patterns;
+    l2_patterns -> l2_obfuscation;
+    l2_obfuscation -> l2_report;
+
+    // Level 3 flow
+    l3_start -> l3_debugger;
+    l2_report -> l3_debugger [style=dashed, label="proceed"];
+    l3_debugger -> l3_breakpoints;
+    l3_breakpoints -> l3_execute;
+    l3_execute -> l3_monitor;
+    l3_monitor -> l3_api_calls;
+    l3_api_calls -> l3_memory;
+    l3_memory -> l3_network;
+    l3_network -> l3_report;
+
+    // Level 4 flow
+    l4_start -> l4_hooking;
+    l3_report -> l4_hooking [style=dashed, label="proceed"];
+    l4_hooking -> l4_injection;
+    l4_injection -> l4_unpacking;
+    l4_unpacking -> l4_antidbg;
+    l4_antidbg -> l4_antivm;
+    l4_antivm -> l4_dump;
+    l4_dump -> l4_decrypt;
+    l4_decrypt -> l4_report;
+
+    // Level 5 flow
+    l5_start -> l5_decompile;
+    l4_report -> l5_decompile [style=dashed, label="proceed"];
+    l5_decompile -> l5_algorithms;
+    l5_algorithms -> l5_datastructs;
+    l5_datastructs -> l5_protocols;
+    l5_protocols -> l5_crypto;
+    l5_crypto -> l5_reconstruct;
+    l5_reconstruct -> l5_documentation;
+    l5_documentation -> l5_report;
+
+    // Malware sandbox flow
+    malware_start -> malware_isolate;
+    malware_isolate -> malware_vm;
+    malware_vm -> malware_network;
+    malware_network -> malware_file;
+    malware_file -> malware_registry;
+    malware_registry -> malware_process;
+    malware_process -> malware_c2;
+    malware_c2 -> malware_iocs;
+    malware_iocs -> malware_yara;
+    malware_yara -> malware_report;
+
+    // Synthesis
+    l1_report -> aggregate;
+    l2_report -> aggregate;
+    l3_report -> aggregate;
+    l4_report -> aggregate;
+    l5_report -> aggregate;
+    malware_report -> aggregate;
+
+    aggregate -> correlate;
+    correlate -> threat_intel;
+    threat_intel -> vulnerability;
+    vulnerability -> mitigation;
+    mitigation -> final_report;
+    final_report -> share_intel;
+}

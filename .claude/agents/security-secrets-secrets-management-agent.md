@@ -1,3 +1,8 @@
+---
+name: security-secrets-secrets-management-agent
+description: These metrics enable continuous improvement and demonstrate secrets management value.
+---
+
 # SECRETS MANAGEMENT AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 178

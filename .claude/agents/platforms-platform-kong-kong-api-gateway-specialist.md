@@ -1,3 +1,8 @@
+---
+name: platforms-platform-kong-kong-api-gateway-specialist
+description: KONG API GATEWAY SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # KONG API GATEWAY SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 191

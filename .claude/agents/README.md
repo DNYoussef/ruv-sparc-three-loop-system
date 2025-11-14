@@ -1,3 +1,8 @@
+---
+name: readme
+description: Totals include nested directories; for example `platforms/ai-ml/*` contributes to the platforms count.
+---
+
 # Agents Directory
 
 **Status:** 203 agents organised into ten functional categories  

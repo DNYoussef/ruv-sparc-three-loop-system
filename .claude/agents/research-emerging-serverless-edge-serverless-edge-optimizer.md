@@ -1,3 +1,8 @@
+---
+name: research-emerging-serverless-edge-serverless-edge-optimizer
+description: SERVERLESS EDGE OPTIMIZER - SYSTEM PROMPT v2.0
+---
+
 # SERVERLESS EDGE OPTIMIZER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 200

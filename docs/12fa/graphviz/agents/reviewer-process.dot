@@ -1,0 +1,287 @@
+digraph REVIEWER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Reviewer Agent Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\n45 Commands + 18 MCP Tools"];
+    validate_capabilities [label="Validate Capabilities\ncode_review, security_audit,\nperformance_analysis"];
+    check_deps [label="Check Dependencies\nMemory, Review Tools"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // COORDINATION SETUP
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Review Coordination Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\nquality/reviewer/{task-id}/*"];
+    retrieve_implementation [label="Retrieve Implementation\nfrom Coder"];
+    retrieve_decisions [label="Retrieve Design Decisions"];
+    check_review_mode [shape=diamond, label="Swarm Review?"];
+    spawn_specialists [label="Spawn Specialist Reviewers\nSecurity, Performance, Style"];
+
+    check_deps -> init_memory;
+    init_memory -> retrieve_implementation;
+    retrieve_implementation -> retrieve_decisions;
+    retrieve_decisions -> check_review_mode;
+    check_review_mode -> spawn_specialists [label="Yes"];
+  }
+
+  // =============================================================================
+  // CODE QUALITY REVIEW
+  // =============================================================================
+  subgraph cluster_quality_review {
+    label="Code Quality Review";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    analyze_code [label="Analyze Code Quality\n/code-analyze", fillcolor=yellow];
+    check_patterns [label="Check Design Patterns\nSOLID, DRY, KISS"];
+    check_standards [label="Check Standards Compliance\nLinting, Formatting"];
+    quality_score [shape=diamond, label="Quality\nScore >8/10?"];
+    document_issues [label="Document Quality Issues"];
+
+    spawn_specialists -> analyze_code;
+    check_review_mode -> analyze_code [label="No"];
+    analyze_code -> check_patterns;
+    check_patterns -> check_standards;
+    check_standards -> quality_score;
+    quality_score -> document_issues [label="No"];
+  }
+
+  // =============================================================================
+  // SECURITY AUDIT
+  // =============================================================================
+  subgraph cluster_security {
+    label="Security Audit";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    security_scan [label="Security Scan\n/security-audit", fillcolor=crimson, fontcolor=white];
+    check_secrets [label="Check for Secrets\nAPI keys, passwords"];
+    check_vulnerabilities [label="Check Vulnerabilities\nInjection, XSS, CSRF"];
+    check_auth [label="Check Authentication\n& Authorization"];
+    security_result [shape=diamond, label="Security\nPass?"];
+    document_security [label="Document Security Issues", fillcolor=orange];
+
+    quality_score -> security_scan [label="Yes"];
+    security_scan -> check_secrets;
+    check_secrets -> check_vulnerabilities;
+    check_vulnerabilities -> check_auth;
+    check_auth -> security_result;
+    security_result -> document_security [label="No"];
+  }
+
+  // =============================================================================
+  // PERFORMANCE ANALYSIS
+  // =============================================================================
+  subgraph cluster_performance {
+    label="Performance Analysis";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    analyze_performance [label="Analyze Performance\n/performance-analyze", fillcolor=lightblue];
+    check_complexity [label="Check Time Complexity\nBig O notation"];
+    check_memory [label="Check Memory Usage\nSpace complexity"];
+    check_optimization [label="Check Optimization\nOpportunities"];
+    performance_result [shape=diamond, label="Performance\nAcceptable?"];
+    document_performance [label="Document Performance Issues"];
+
+    security_result -> analyze_performance [label="Yes"];
+    analyze_performance -> check_complexity;
+    check_complexity -> check_memory;
+    check_memory -> check_optimization;
+    check_optimization -> performance_result;
+    performance_result -> document_performance [label="No"];
+  }
+
+  // =============================================================================
+  // TEST REVIEW
+  // =============================================================================
+  subgraph cluster_test_review {
+    label="Test Coverage Review";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    review_tests [label="Review Test Suite\n/test-review", fillcolor=lightgreen];
+    check_coverage [label="Check Coverage >80%"];
+    check_edge_cases [label="Check Edge Cases\n& Error Scenarios"];
+    check_test_quality [label="Check Test Quality\nClear, Maintainable"];
+    test_result [shape=diamond, label="Tests\nAdequate?"];
+    document_test_gaps [label="Document Test Gaps"];
+
+    performance_result -> review_tests [label="Yes"];
+    review_tests -> check_coverage;
+    check_coverage -> check_edge_cases;
+    check_edge_cases -> check_test_quality;
+    check_test_quality -> test_result;
+    test_result -> document_test_gaps [label="No"];
+  }
+
+  // =============================================================================
+  // DOCUMENTATION REVIEW
+  // =============================================================================
+  subgraph cluster_documentation {
+    label="Documentation Review";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    review_docs [label="Review Documentation", fillcolor=purple];
+    check_comments [label="Check Code Comments\nClarity, Accuracy"];
+    check_api_docs [label="Check API Documentation\nCompleteness"];
+    check_readme [label="Check README\n& Setup Instructions"];
+    docs_result [shape=diamond, label="Docs\nComplete?"];
+    document_doc_gaps [label="Document Doc Gaps"];
+
+    test_result -> review_docs [label="Yes"];
+    review_docs -> check_comments;
+    check_comments -> check_api_docs;
+    check_api_docs -> check_readme;
+    check_readme -> docs_result;
+    docs_result -> document_doc_gaps [label="No"];
+  }
+
+  // =============================================================================
+  // FEEDBACK GENERATION
+  // =============================================================================
+  subgraph cluster_feedback {
+    label="Feedback Generation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    aggregate_findings [label="Aggregate All Findings"];
+    prioritize_issues [label="Prioritize Issues\nCritical > High > Medium > Low"];
+    generate_recommendations [label="Generate Recommendations\nActionable fixes"];
+    check_auto_fix [shape=diamond, label="Auto-fixable\nIssues?"];
+    generate_fixes [label="Generate Auto-fixes"];
+
+    document_issues -> aggregate_findings;
+    document_security -> aggregate_findings;
+    document_performance -> aggregate_findings;
+    document_test_gaps -> aggregate_findings;
+    document_doc_gaps -> aggregate_findings;
+
+    docs_result -> aggregate_findings [label="Yes"];
+    aggregate_findings -> prioritize_issues;
+    prioritize_issues -> generate_recommendations;
+    generate_recommendations -> check_auto_fix;
+    check_auto_fix -> generate_fixes [label="Yes"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    store_feedback [label="Store Feedback\nmemory_store(quality/reviewer/{task-id}/feedback)", fillcolor=lightblue];
+    store_auto_fixes [label="Store Auto-fixes\nmemory_store(quality/reviewer/{task-id}/fixes)"];
+    check_approval [shape=diamond, label="Approve\nImplementation?"];
+    notify_coder [label="Notify Coder\n/communicate-notify"];
+    notify_tester [label="Notify Tester\n/agent-handoff --to tester"];
+
+    generate_fixes -> store_feedback;
+    check_auto_fix -> store_feedback [label="No"];
+    store_feedback -> store_auto_fixes;
+    store_auto_fixes -> check_approval;
+    check_approval -> notify_coder [label="No"];
+    check_approval -> notify_tester [label="Yes"];
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_metrics [label="Log Review Metrics\nIssues found, severity, resolution"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Review Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    notify_tester -> cleanup;
+    cleanup -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    critical_issues [label="Critical Issues Found", fillcolor=red, fontcolor=white];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser/Queen"];
+    log_error [label="Log Error Details"];
+    failure [label="Review Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    quality_score -> critical_issues [label="Score <5/10"];
+    security_result -> critical_issues [label="Critical Security"];
+    critical_issues -> escalate;
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_critical [shape=box, label="Critical", fillcolor=red, fontcolor=white];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_critical [style=invis];
+    legend_critical -> legend_process [style=invis];
+    legend_process -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

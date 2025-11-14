@@ -1,0 +1,61 @@
+digraph sparc_integration_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Integration Command Workflow\nSystem Integration & Validation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:integration", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  gather_components [label="Gather Components\nFrom implementation phase", fillcolor="#FFF9C4"];
+
+  verify_interfaces [label="Verify Interfaces\n- API contracts\n- Data schemas\n- Dependencies", fillcolor="#FFE0B2"];
+
+  merge_components [label="Merge Components\n- Sequential integration\n- Dependency order\n- Conflict resolution", fillcolor="#BBDEFB"];
+
+  unit_tests [label="Run Unit Tests\nComponent-level validation", fillcolor="#B2DFDB"];
+
+  integration_tests [label="Run Integration Tests\nComponent interactions", fillcolor="#C5CAE9"];
+
+  e2e_tests [label="Run E2E Tests\nFull system validation", fillcolor="#D1C4E9"];
+
+  performance_check [label="Performance Check\n- Load testing\n- Response times\n- Resource usage", fillcolor="#F0F4C3"];
+
+  security_scan [label="Security Scan\n- Vulnerability check\n- Penetration testing\n- Compliance", fillcolor="#F44336", fontcolor=white];
+
+  compatibility [label="Compatibility Check\n- Browser support\n- API versions\n- Dependencies", fillcolor="#FFE0B2"];
+
+  deployment_prep [label="Deployment Preparation\n- Build artifacts\n- Config files\n- Documentation", fillcolor="#BBDEFB"];
+
+  validation_gate [label="Validation Gate\nAll checks passed?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  success [label="Integration Complete\nDeployment ready", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Integration Failed\nReturn to refinement", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> gather_components;
+  gather_components -> verify_interfaces;
+  verify_interfaces -> merge_components [label="Valid"];
+  verify_interfaces -> error [label="Invalid"];
+  merge_components -> unit_tests;
+  unit_tests -> integration_tests [label="Passed"];
+  unit_tests -> error [label="Failed"];
+  integration_tests -> e2e_tests [label="Passed"];
+  integration_tests -> error [label="Failed"];
+  e2e_tests -> performance_check [label="Passed"];
+  e2e_tests -> error [label="Failed"];
+  performance_check -> security_scan [label="Passed"];
+  performance_check -> error [label="Failed"];
+  security_scan -> compatibility [label="Passed"];
+  security_scan -> error [label="Failed"];
+  compatibility -> deployment_prep [label="Passed"];
+  compatibility -> error [label="Failed"];
+  deployment_prep -> validation_gate;
+  validation_gate -> success [label="Yes"];
+  validation_gate -> error [label="No"];
+}

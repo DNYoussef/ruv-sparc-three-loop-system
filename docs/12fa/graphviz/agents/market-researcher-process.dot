@@ -1,0 +1,122 @@
+digraph market_researcher_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Market Researcher - Competitive Analysis & Trends";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Research Request\n(Market area)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Market Research Phase
+    subgraph cluster_market {
+        label="Market Research";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        size [label="Market Sizing\n(Total addressable market)"];
+        segments [label="Segmentation\n(Customer groups)"];
+        trends [label="Trend Identification\n(Emerging patterns)"];
+    }
+
+    // Competitive Analysis Phase
+    subgraph cluster_competitive {
+        label="Competitive Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        identify [label="Competitor Identification\n(Key players)"];
+        analyze [label="Competitor Analysis\n(Strengths/weaknesses)"];
+        positioning [label="Positioning Map\n(Market position)"];
+    }
+
+    // Customer Analysis Phase
+    subgraph cluster_customer {
+        label="Customer Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        personas [label="Customer Personas\n(Target profiles)"];
+        needs [label="Needs Assessment\n(Pain points)"];
+        journey [label="Customer Journey\n(Touchpoints)"];
+    }
+
+    // Opportunity Phase
+    subgraph cluster_opportunity {
+        label="Opportunity Assessment";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        gaps [label="Market Gaps\n(Unmet needs)"];
+        opportunities [label="Opportunity Identification\n(Potential)"];
+        recommendations [label="Strategic Recommendations\n(Actions)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Market Research", fillcolor="#238636"];
+        feature2 [label="Competitive Analysis", fillcolor="#238636"];
+        feature3 [label="Trend Identification", fillcolor="#238636"];
+        feature4 [label="Opportunity Assessment", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Market Research Report\n+ Recommendations", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> size;
+    size -> segments;
+    segments -> trends;
+
+    trends -> identify;
+    identify -> analyze;
+    analyze -> positioning;
+
+    positioning -> personas;
+    personas -> needs;
+    needs -> journey;
+
+    journey -> gaps;
+    gaps -> opportunities;
+    opportunities -> recommendations;
+
+    recommendations -> output;
+
+    // Feature connections
+    size -> feature1 [style=dotted, color="#8b949e"];
+    analyze -> feature2 [style=dotted, color="#8b949e"];
+    trends -> feature3 [style=dotted, color="#8b949e"];
+    opportunities -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,0 +1,59 @@
+{
+  "total_violations": 7,
+  "by_rule": {
+    "CLARITY011": 1,
+    "CLARITY001": 3,
+    "CLARITY002": 3
+  },
+  "violations": [
+    {
+      "rule_id": "CLARITY011",
+      "file": "C:\\Users\\17175\\analyzer\\example_usage.py",
+      "line": 0,
+      "message": "Function 'main' is 87 LOC (threshold: 60), exceeds NASA Rule 4",
+      "severity": "WARNING"
+    },
+    {
+      "rule_id": "CLARITY001",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity002_single_use.py",
+      "line": 161,
+      "message": "Thin helper function 'visit_FunctionDef' (4 LOC) called from single location",
+      "severity": "WARNING"
+    },
+    {
+      "rule_id": "CLARITY001",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py",
+      "line": 154,
+      "message": "Thin helper function '_extract_instance_variables' (11 LOC) called from single location",
+      "severity": "WARNING"
+    },
+    {
+      "rule_id": "CLARITY001",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py",
+      "line": 254,
+      "message": "Thin helper function '_rank_extraction_suggestions' (8 LOC) called from single location",
+      "severity": "WARNING"
+    },
+    {
+      "rule_id": "CLARITY002",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py",
+      "line": 0,
+      "message": "Function 'detect_god_objects' defined at line 270 but called only once at line 340",
+      "severity": "INFO"
+    },
+    {
+      "rule_id": "CLARITY002",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py",
+      "line": 0,
+      "message": "Function 'format_violation' defined at line 290 but called only once at line 341",
+      "severity": "INFO"
+    },
+    {
+      "rule_id": "CLARITY002",
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py",
+      "line": 0,
+      "message": "Function 'analyze_file' defined at line 324 but called only once at line 352",
+      "severity": "INFO"
+    }
+  ]
+}

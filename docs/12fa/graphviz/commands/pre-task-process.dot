@@ -1,0 +1,82 @@
+// Pre-Task Command Workflow
+// Pre-task hooks for preparation and validation
+digraph pre_task_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/pre-task\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        task_parser [label="Task\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        requirement_validator [label="Requirement\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_checker [label="Dependency\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        resource_validator [label="Resource\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        permission_checker [label="Permission\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_preparation {
+        label="Resource Preparation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        resource_allocator [label="Resource\nAllocator", fillcolor="#10b981", fontcolor="#ffffff"];
+        workspace_setup [label="Workspace\nSetup", fillcolor="#10b981", fontcolor="#ffffff"];
+        tool_initializer [label="Tool\nInitializer", fillcolor="#10b981", fontcolor="#ffffff"];
+        config_loader [label="Config\nLoader", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_agent {
+        label="Agent Assignment";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        agent_selector [label="Agent\nSelector", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        capability_matcher [label="Capability\nMatcher", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        agent_spawner [label="Agent\nSpawner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        ready_signal [label="Ready\nSignal", fillcolor="#059669", fontcolor="#ffffff"];
+        preparation_log [label="Preparation\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> task_parser;
+    task_parser -> requirement_validator -> dependency_checker -> resource_validator -> permission_checker;
+    permission_checker -> resource_allocator -> workspace_setup -> tool_initializer -> config_loader;
+    config_loader -> agent_selector -> capability_matcher -> agent_spawner;
+    agent_spawner -> ready_signal -> preparation_log;
+    preparation_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    permission_checker -> cmd_trigger [label="Failed", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Validation", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Preparation", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

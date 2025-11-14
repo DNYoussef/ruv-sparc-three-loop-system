@@ -1,3 +1,8 @@
+---
+name: platforms-ai-ml-feature-engineering-feature-engineering-specialist
+description: FEATURE ENGINEERING SPECIALIST - SYSTEM PROMPT v2.0
+---
+
 # FEATURE ENGINEERING SPECIALIST - SYSTEM PROMPT v2.0
 
 **Agent ID**: 149

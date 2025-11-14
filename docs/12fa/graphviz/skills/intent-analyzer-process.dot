@@ -1,0 +1,36 @@
+digraph INTENT_ANALYZER_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="intent-analyzer\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_request [label="Load User Request\nAmbiguous or Vague"];
+
+  parse_request [label="Parse Request\nExtract Keywords, Context", fillcolor=purple];
+  apply_cognitive_science [label="Apply Cognitive Science\nPrinciples", fillcolor=purple];
+  probabilistic_mapping [label="Probabilistic Intent Mapping\nMultiple Interpretations", fillcolor=purple];
+
+  first_principles [label="First Principles\nDecomposition", fillcolor=cyan];
+  identify_goals [label="Identify Logical Goals\nWhat User Truly Needs", fillcolor=cyan];
+
+  socratic_clarification [label="Socratic Clarification\nGenerate Questions", fillcolor=yellow];
+  decision [shape=diamond, label="Intent\nClear?"];
+
+  present_options [label="Present Options to User\nClarify Ambiguity", fillcolor=lightgreen];
+  confirm_intent [label="Confirm Final Intent", fillcolor=lightgreen];
+
+  memory_store [label="Store Intent Analysis\nLearned Pattern", fillcolor=lightblue];
+  success [label="Intent Understood", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  start -> load_request -> parse_request;
+  parse_request -> apply_cognitive_science;
+  apply_cognitive_science -> probabilistic_mapping;
+  probabilistic_mapping -> first_principles;
+  first_principles -> identify_goals;
+  identify_goals -> decision;
+  decision -> socratic_clarification [label="No"];
+  decision -> memory_store [label="Yes"];
+  socratic_clarification -> present_options;
+  present_options -> confirm_intent;
+  confirm_intent -> memory_store;
+  memory_store -> success;
+}

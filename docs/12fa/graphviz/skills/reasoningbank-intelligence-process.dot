@@ -1,0 +1,194 @@
+digraph REASONINGBANK_INTELLIGENCE_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Intelligence\nConfig"];
+    check_deps [label="Check ReasoningBank\nFramework"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Adaptive Learning";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    recognize_patterns [label="Recognize Decision\nPatterns", fillcolor=purple];
+    decision_1 [shape=diamond, label="Patterns\nFound?"];
+
+    optimize_strategy [label="Optimize Strategy\nSelection", fillcolor=purple];
+    decision_2 [shape=diamond, label="Strategy\nImproved?"];
+
+    implement_improvement [label="Implement Continuous\nImprovement", fillcolor=purple];
+    decision_3 [shape=diamond, label="Learning\nActive?"];
+
+    metacognitive_analysis [label="Meta-Cognitive\nAnalysis", fillcolor=purple];
+    decision_4 [shape=diamond, label="Self-Awareness\nImproved?"];
+
+    adapt_behavior [label="Adapt Agent\nBehavior", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Intelligence Error"];
+    retry_logic [label="Retry Analysis", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> recognize_patterns [label="Pass"];
+
+  // Execution flow
+  recognize_patterns -> decision_1;
+  decision_1 -> optimize_strategy [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  optimize_strategy -> decision_2;
+  decision_2 -> implement_improvement [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  implement_improvement -> decision_3;
+  decision_3 -> metacognitive_analysis [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  metacognitive_analysis -> decision_4;
+  decision_4 -> adapt_behavior [label="Yes"];
+  decision_4 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> recognize_patterns [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Cannot Learn"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Intelligence\nState", fillcolor=lightblue];
+    notify_coordinator [label="Notify Adaptation\nComplete", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Other Agents\nAdapting?"];
+  }
+
+  // Connect execution to coordination
+  adapt_behavior -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Intelligence\nImproved?"];
+    run_tests [label="Test Adaptive\nBehavior", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Performance\nBetter?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Analysis\nData", fillcolor=lightgreen];
+    log_completion [label="Log Intelligence\nMetrics"];
+    success [label="Skill Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Revert Adaptations", fillcolor=orange];
+    failure [label="Skill Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

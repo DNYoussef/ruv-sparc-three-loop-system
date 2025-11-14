@@ -1,3 +1,8 @@
+---
+name: research-emerging-web3-web3-blockchain-developer
+description: WEB3 BLOCKCHAIN DEVELOPER - SYSTEM PROMPT v2.0
+---
+
 # WEB3 BLOCKCHAIN DEVELOPER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 198

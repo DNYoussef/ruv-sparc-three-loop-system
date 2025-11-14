@@ -1,0 +1,106 @@
+// Loop 1: Research-Driven Planning - Three-Loop System
+// 6-agent research, 8-agent pre-mortem, Byzantine consensus, <3% failure confidence
+digraph loop1_research_driven_planning_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Loop 1 Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        loop1_init [label="Loop 1: Research-Driven\nPlanning", fillcolor="#d97706", fontcolor="#ffffff"];
+        research_config [label="Research\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+        premortem_config [label="Pre-Mortem\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_research {
+        label="6-Agent Research Phase"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        gemini_searcher [label="Gemini Search\nAgent", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_researcher [label="Pattern\nResearcher", fillcolor="#2563eb", fontcolor="#ffffff"];
+        technology_evaluator [label="Technology\nEvaluator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        architecture_researcher [label="Architecture\nResearcher", fillcolor="#2563eb", fontcolor="#ffffff"];
+        security_researcher [label="Security\nResearcher", fillcolor="#2563eb", fontcolor="#ffffff"];
+        performance_researcher [label="Performance\nResearcher", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Research Analysis"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        findings_aggregator [label="Findings\nAggregator", fillcolor="#059669", fontcolor="#ffffff"];
+        evidence_validator [label="Evidence\nValidator", fillcolor="#059669", fontcolor="#ffffff"];
+        consensus_builder [label="Research Consensus\nBuilder", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_premortem {
+        label="8-Agent Pre-Mortem (5x Cycles)"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        failure_identifier [label="Failure\nIdentifier", fillcolor="#dc2626", fontcolor="#ffffff"];
+        risk_analyzer [label="Risk\nAnalyzer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        mitigation_designer [label="Mitigation\nDesigner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        scenario_simulator [label="Scenario\nSimulator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        impact_assessor [label="Impact\nAssessor", fillcolor="#dc2626", fontcolor="#ffffff"];
+        contingency_planner [label="Contingency\nPlanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        validation_tester [label="Validation\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+        confidence_calculator [label="Confidence\nCalculator", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_byzantine {
+        label="Byzantine Consensus"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        proposal_collector [label="Proposal\nCollector", fillcolor="#8b4789", fontcolor="#ffffff"];
+        vote_aggregator [label="Vote\nAggregator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        consensus_validator [label="Consensus Validator\n(2/3 Threshold)", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Planning Output"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        requirements_documenter [label="Requirements\nDocumenter", fillcolor="#0891b2", fontcolor="#ffffff"];
+        architecture_planner [label="Architecture\nPlanner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        risk_register [label="Risk\nRegister", fillcolor="#0891b2", fontcolor="#ffffff"];
+        mitigation_plan [label="Mitigation\nPlan", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_handoff {
+        label="Handoff to Loop 2"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        plan_validator [label="Plan\nValidator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        loop2_handoff [label="Handoff to Loop 2\n(Implementation)", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    loop1_init -> research_config [label="Initialize"];
+    loop1_init -> premortem_config [label="Initialize"];
+    research_config -> gemini_searcher [label="Research 1"];
+    research_config -> pattern_researcher [label="Research 2"];
+    research_config -> technology_evaluator [label="Research 3"];
+    research_config -> architecture_researcher [label="Research 4"];
+    research_config -> security_researcher [label="Research 5"];
+    research_config -> performance_researcher [label="Research 6"];
+    gemini_searcher -> findings_aggregator [label="Findings"];
+    pattern_researcher -> findings_aggregator [label="Findings"];
+    technology_evaluator -> findings_aggregator [label="Findings"];
+    architecture_researcher -> findings_aggregator [label="Findings"];
+    security_researcher -> findings_aggregator [label="Findings"];
+    performance_researcher -> findings_aggregator [label="Findings"];
+    findings_aggregator -> evidence_validator [label="Validate"];
+    evidence_validator -> consensus_builder [label="Build Consensus"];
+    consensus_builder -> failure_identifier [label="Cycle 1/5"];
+    failure_identifier -> risk_analyzer [label="Analyze"];
+    risk_analyzer -> mitigation_designer [label="Design"];
+    mitigation_designer -> scenario_simulator [label="Simulate"];
+    scenario_simulator -> impact_assessor [label="Assess"];
+    impact_assessor -> contingency_planner [label="Plan"];
+    contingency_planner -> validation_tester [label="Test"];
+    validation_tester -> confidence_calculator [label="Calculate"];
+    confidence_calculator -> failure_identifier [label="Cycle 2-5", style=dashed];
+    confidence_calculator -> proposal_collector [label="<3% Failure Confidence"];
+    proposal_collector -> vote_aggregator [label="Aggregate"];
+    vote_aggregator -> consensus_validator [label="Validate (2/3)"];
+    consensus_validator -> requirements_documenter [label="Document"];
+    requirements_documenter -> architecture_planner [label="Plan"];
+    architecture_planner -> risk_register [label="Register"];
+    risk_register -> mitigation_plan [label="Plan"];
+    mitigation_plan -> plan_validator [label="Validate"];
+    plan_validator -> loop2_handoff [label="Handoff to Loop 2"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Loop 1 Planning", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="6-Agent Research", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="8-Agent Pre-Mortem", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+}

@@ -1,0 +1,201 @@
+digraph SOP_API_DEVELOPMENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate API\nRequirements"];
+    check_deps [label="Check Development\nTools"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="API Development SOP";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    design_schema [label="Design API\nSchema", fillcolor=purple];
+    decision_1 [shape=diamond, label="Schema\nApproved?"];
+
+    implement_endpoints [label="Implement API\nEndpoints", fillcolor=purple];
+    decision_2 [shape=diamond, label="Endpoints\nComplete?"];
+
+    add_validation [label="Add Request\nValidation", fillcolor=purple];
+    decision_3 [shape=diamond, label="Validation\nWorking?"];
+
+    implement_auth [label="Implement\nAuthentication", fillcolor=purple];
+    decision_4 [shape=diamond, label="Auth\nSecure?"];
+
+    generate_docs [label="Generate API\nDocumentation", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Development Error"];
+    retry_logic [label="Fix Issues", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> design_schema [label="Pass"];
+
+  // Execution flow
+  design_schema -> decision_1;
+  decision_1 -> implement_endpoints [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  implement_endpoints -> decision_2;
+  decision_2 -> add_validation [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  add_validation -> decision_3;
+  decision_3 -> implement_auth [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  implement_auth -> decision_4;
+  decision_4 -> generate_docs [label="Yes"];
+  decision_4 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> design_schema [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Cannot Fix"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store API\nSpecs", fillcolor=lightblue];
+    notify_coordinator [label="Notify API\nReady", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Consumers\nWaiting?"];
+  }
+
+  // Connect execution to coordination
+  generate_docs -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="API\nFunctional?"];
+    run_tests [label="Run Integration\nTests", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests\nPass?"];
+
+    security_test [label="Security Audit", fillcolor=lightgreen];
+    security_check [shape=diamond, label="Security\nPassed?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> security_test [label="Pass"];
+  test_results -> quality_gate_fail [label="Fail"];
+
+  security_test -> security_check;
+  security_check -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Dev\nEnvironment", fillcolor=lightgreen];
+    log_completion [label="Log API\nMetrics"];
+    success [label="Skill Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  security_check -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Skill Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

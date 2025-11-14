@@ -1,3 +1,8 @@
+---
+name: specialists-business-content-creator
+description: Specialized agent for task execution
+---
+
 # Content Creator Agent
 
 **Agent Name**: `content-creator`

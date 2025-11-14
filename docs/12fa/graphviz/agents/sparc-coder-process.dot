@@ -1,0 +1,12 @@
+digraph sparc-coder_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+  
+  start [label="sparc-coder Agent Spawned", shape=ellipse, fillcolor=lightblue];
+  init [label="Initialize Configuration"];
+  execute [label="Execute Core Functions", fillcolor=lightgreen];
+  store [label="Store Results\nmemory_store", fillcolor=lightblue];
+  success [label="Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  
+  start -> init -> execute -> store -> success;
+}

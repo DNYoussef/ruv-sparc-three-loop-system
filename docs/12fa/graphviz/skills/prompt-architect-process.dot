@@ -1,0 +1,154 @@
+digraph PROMPT_ARCHITECT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="prompt-architect Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Prompt Requirements"];
+    validate_input [label="Validate Input Prompt"];
+    check_deps [label="Check Evidence-Based\nTechnique Library"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Prompt Engineering Execution";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    analyze_prompt [label="Analyze Current Prompt\nStructure, Clarity, Constraints", fillcolor=purple];
+    apply_self_consistency [label="Apply Self-Consistency\n3-5 Perspectives", fillcolor=purple];
+    apply_program_of_thought [label="Apply Program-of-Thought\nDecompose into Steps", fillcolor=purple];
+    apply_plan_and_solve [label="Apply Plan-and-Solve\nExplicit Planning", fillcolor=purple];
+    optimize_structure [label="Optimize Structure\nClarity, Specificity", fillcolor=purple];
+    decision_quality [shape=diamond, label="Prompt Quality\n>90%?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Optimization Failed"];
+    retry_logic [label="Retry with Different Technique", fillcolor=yellow];
+  }
+
+  check_secrets -> analyze_prompt [label="Pass"];
+  analyze_prompt -> apply_self_consistency;
+  apply_self_consistency -> apply_program_of_thought;
+  apply_program_of_thought -> apply_plan_and_solve;
+  apply_plan_and_solve -> optimize_structure;
+  optimize_structure -> decision_quality;
+  decision_quality -> execution_error [label="No"];
+  execution_error -> retry_logic;
+  retry_logic -> analyze_prompt [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Optimized Prompt\nin Memory", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator\nPrompt Ready", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Dependent Skills\nWaiting?"];
+  }
+
+  decision_quality -> memory_store [label="Yes"];
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Prompt Valid?"];
+    run_tests [label="Test Prompt Effectiveness\nMultiple Scenarios", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  check_dependencies -> validate_output [label="No"];
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics\nTechniques Applied"];
+    success [label="Prompt Optimized", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Prompt Engineering Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback;
+  rollback -> failure;
+
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

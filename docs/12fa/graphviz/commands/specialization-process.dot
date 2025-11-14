@@ -1,0 +1,82 @@
+// Specialization Command Workflow
+// Agent specialization training
+digraph specialization_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/specialization\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        domain_selector [label="Domain\nSelector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_skill {
+        label="Skill Development";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        skill_identifier [label="Skill\nIdentifier", fillcolor="#2563eb", fontcolor="#ffffff"];
+        training_planner [label="Training\nPlanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        practice_generator [label="Practice\nGenerator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        proficiency_tracker [label="Proficiency\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_expertise {
+        label="Expertise Building";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        knowledge_builder [label="Knowledge\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+        pattern_learner [label="Pattern\nLearner", fillcolor="#10b981", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nIntegrator", fillcolor="#10b981", fontcolor="#ffffff"];
+        capability_enhancer [label="Capability\nEnhancer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        skill_tester [label="Skill\nTester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        certification_engine [label="Certification\nEngine", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        benchmark_runner [label="Benchmark\nRunner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        specialized_agent [label="Specialized\nAgent", fillcolor="#059669", fontcolor="#ffffff"];
+        certification [label="Skill\nCertification", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> domain_selector;
+    domain_selector -> skill_identifier -> training_planner -> practice_generator -> proficiency_tracker;
+    proficiency_tracker -> knowledge_builder -> pattern_learner -> best_practices -> capability_enhancer;
+    capability_enhancer -> skill_tester -> certification_engine -> benchmark_runner;
+    benchmark_runner -> specialized_agent -> certification;
+    certification -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    proficiency_tracker -> practice_generator [label="More Practice", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Skill Dev", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Expertise", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

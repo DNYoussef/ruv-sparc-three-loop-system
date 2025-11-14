@@ -1,3 +1,8 @@
+---
+name: quality-audit-quality-gates-quality-gate-enforcer
+description: QUALITY GATE ENFORCER - SYSTEM PROMPT v2.0
+---
+
 # QUALITY GATE ENFORCER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 144

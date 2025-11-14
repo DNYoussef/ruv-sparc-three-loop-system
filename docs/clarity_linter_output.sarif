@@ -1,0 +1,199 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ClarityLinter",
+          "version": "1.0.0",
+          "informationUri": "https://github.com/ruvnet/claude-flow/tree/main/analyzer",
+          "rules": [
+            {
+              "id": "CLARITY001",
+              "name": "ThinHelper",
+              "shortDescription": {
+                "text": "Thin Helper Functions"
+              },
+              "fullDescription": {
+                "text": "Functions that only call another function without adding value"
+              },
+              "help": {
+                "text": "Remove thin helper functions that add no value"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "CLARITY002",
+              "name": "SingleUseAbstraction",
+              "shortDescription": {
+                "text": "Single-Use Abstraction"
+              },
+              "fullDescription": {
+                "text": "Abstraction used only once, adding unnecessary indirection"
+              },
+              "help": {
+                "text": "Inline single-use abstractions or use them in multiple places"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "CLARITY011",
+              "name": "MegaFunction",
+              "shortDescription": {
+                "text": "Mega-Function"
+              },
+              "fullDescription": {
+                "text": "Function exceeds recommended line count threshold"
+              },
+              "help": {
+                "text": "Split large functions into smaller, focused functions"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "CLARITY012",
+              "name": "GodObject",
+              "shortDescription": {
+                "text": "God Object"
+              },
+              "fullDescription": {
+                "text": "Class with too many methods or attributes"
+              },
+              "help": {
+                "text": "Split God Objects into focused, single-responsibility classes"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "CLARITY021",
+              "name": "PassThrough",
+              "shortDescription": {
+                "text": "Pass-Through Function"
+              },
+              "fullDescription": {
+                "text": "Function that only forwards arguments to another function"
+              },
+              "help": {
+                "text": "Remove pass-through functions or add meaningful logic"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CLARITY011",
+          "level": "warning",
+          "message": {
+            "text": "Function 'main' is 87 LOC (threshold: 60), exceeds NASA Rule 4"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:\\Users\\17175\\analyzer\\example_usage.py"
+                },
+                "region": {
+                  "startLine": 98,
+                  "startColumn": 0
+                }
+              }
+            }
+          ],
+          "properties": {
+            "function_name": "main",
+            "suggested_fix": "Consider splitting at lines 107, 111, 114\nSplit points:\n  - Line 107: Comment-marked section boundary\n  - Line 111: Conditional logic block\n  - Line 114: Comment-marked section boundary",
+            "severity": "WARNING"
+          }
+        },
+        {
+          "ruleId": "CLARITY002",
+          "level": "warning",
+          "message": {
+            "text": "Function 'detect_god_objects' defined at line 270 but called only once at line 340"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py"
+                },
+                "region": {
+                  "startLine": 270,
+                  "startColumn": 0
+                }
+              }
+            }
+          ],
+          "properties": {
+            "function_name": "detect_god_objects",
+            "suggested_fix": "Consider inlining or removing 'detect_god_objects':\n  - Only called by 'analyze_file' at line 340\n  - Single-use functions add unnecessary indirection\n  - Consider inlining the code directly at the call site\n  - If the function provides meaningful abstraction, add more call sites",
+            "severity": "INFO"
+          }
+        },
+        {
+          "ruleId": "CLARITY002",
+          "level": "warning",
+          "message": {
+            "text": "Function 'format_violation' defined at line 290 but called only once at line 341"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py"
+                },
+                "region": {
+                  "startLine": 290,
+                  "startColumn": 0
+                }
+              }
+            }
+          ],
+          "properties": {
+            "function_name": "format_violation",
+            "suggested_fix": "Consider inlining or removing 'format_violation':\n  - Only called by 'analyze_file' at line 341\n  - Single-use functions add unnecessary indirection\n  - Consider inlining the code directly at the call site\n  - If the function provides meaningful abstraction, add more call sites",
+            "severity": "INFO"
+          }
+        },
+        {
+          "ruleId": "CLARITY002",
+          "level": "warning",
+          "message": {
+            "text": "Function 'analyze_file' defined at line 324 but called only once at line 352"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity012_god_object.py"
+                },
+                "region": {
+                  "startLine": 324,
+                  "startColumn": 0
+                }
+              }
+            }
+          ],
+          "properties": {
+            "function_name": "analyze_file",
+            "suggested_fix": "Consider inlining or removing 'analyze_file':\n  - Only called at line 352\n  - Single-use functions add unnecessary indirection\n  - Consider inlining the code directly at the call site\n  - If the function provides meaningful abstraction, add more call sites",
+            "severity": "INFO"
+          }
+        }
+      ]
+    }
+  ]
+}

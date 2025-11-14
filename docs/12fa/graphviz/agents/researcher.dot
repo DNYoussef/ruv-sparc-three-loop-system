@@ -1,0 +1,329 @@
+digraph RESEARCHER_AGENT {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+  compound=true;
+
+  // =============================================================================
+  // AGENT INITIALIZATION
+  // =============================================================================
+  subgraph cluster_init {
+    label="Researcher Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    spawn_researcher [label="Spawn Researcher\nAgent", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load researcher.yaml\n55 Commands\n27 MCP Tools", fillcolor=lightblue];
+    validate_12fa [shape=diamond, label="12-FA\nCompliant?"];
+    init_search [label="Initialize\nGemini Search", fillcolor=lightblue];
+    load_patterns [label="Load Pattern\nRecognition DB", fillcolor=lightblue];
+
+    spawn_researcher -> load_spec;
+    load_spec -> validate_12fa;
+    validate_12fa -> init_search [label="Pass"];
+    validate_12fa -> spawn_blocked [label="Fail"];
+    init_search -> load_patterns;
+  }
+
+  spawn_blocked [shape=octagon, fillcolor=crimson, label="BLOCKED\nAgent Spawn Denied"];
+
+  // =============================================================================
+  // RESEARCH REQUEST INTAKE
+  // =============================================================================
+  subgraph cluster_intake {
+    label="Research Request Processing";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    receive_request [label="Receive Research\nRequest", fillcolor=purple];
+    parse_intent [label="Parse Research\nIntent", fillcolor=purple];
+    request_type [shape=diamond, label="Request\nType?"];
+
+    code_analysis_req [label="Code Analysis", fillcolor=lightpurple];
+    pattern_search_req [label="Pattern Search", fillcolor=lightpurple];
+    gemini_search_req [label="Gemini Search", fillcolor=lightpurple];
+    validation_req [label="Evidence\nValidation", fillcolor=lightpurple];
+  }
+
+  load_patterns -> receive_request;
+  receive_request -> parse_intent;
+  parse_intent -> request_type;
+
+  request_type -> code_analysis_req [label="Code"];
+  request_type -> pattern_search_req [label="Pattern"];
+  request_type -> gemini_search_req [label="Web"];
+  request_type -> validation_req [label="Validate"];
+
+  // =============================================================================
+  // CODE ANALYSIS WORKFLOW
+  // =============================================================================
+  subgraph cluster_code_analysis {
+    label="Code Analysis Workflow";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    scan_codebase [label="/glob-search\nScan Codebase", fillcolor=lightblue];
+    identify_files [label="Identify Relevant\nFiles", fillcolor=lightblue];
+    read_files [label="/file-read\nRead Source Files", fillcolor=lightblue];
+    parse_syntax [label="Parse Syntax\nand Structure", fillcolor=lightblue];
+    extract_patterns [label="Extract Code\nPatterns", fillcolor=lightblue];
+    analyze_deps [label="Analyze\nDependencies", fillcolor=lightblue];
+    detect_antipatterns [label="Detect Anti-\nPatterns", fillcolor=lightblue];
+    generate_insights [label="Generate Code\nInsights", fillcolor=lightblue];
+  }
+
+  code_analysis_req -> scan_codebase;
+  scan_codebase -> identify_files;
+  identify_files -> read_files;
+  read_files -> parse_syntax;
+  parse_syntax -> extract_patterns;
+  extract_patterns -> analyze_deps;
+  analyze_deps -> detect_antipatterns;
+  detect_antipatterns -> generate_insights;
+
+  // =============================================================================
+  // PATTERN RECOGNITION WORKFLOW
+  // =============================================================================
+  subgraph cluster_pattern_recognition {
+    label="Pattern Recognition Process";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8FFE8";
+
+    load_pattern_db [label="Load Pattern\nDatabase", fillcolor=lightgreen];
+    search_patterns [label="/grep-search\nSearch Patterns", fillcolor=lightgreen];
+    match_templates [label="Match Against\nTemplates", fillcolor=lightgreen];
+    similarity_score [label="Calculate\nSimilarity Score", fillcolor=lightgreen];
+    rank_matches [label="Rank Pattern\nMatches", fillcolor=lightgreen];
+    extract_examples [label="Extract\nExamples", fillcolor=lightgreen];
+    document_patterns [label="Document Found\nPatterns", fillcolor=lightgreen];
+  }
+
+  pattern_search_req -> load_pattern_db;
+  load_pattern_db -> search_patterns;
+  search_patterns -> match_templates;
+  match_templates -> similarity_score;
+  similarity_score -> rank_matches;
+  rank_matches -> extract_examples;
+  extract_examples -> document_patterns;
+
+  // =============================================================================
+  // GEMINI SEARCH INTEGRATION
+  // =============================================================================
+  subgraph cluster_gemini_search {
+    label="Gemini Search Integration";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    formulate_query [label="Formulate Search\nQuery", fillcolor=orange];
+    gemini_api_call [label="Gemini Search API\nCall", fillcolor=orange, shape=box3d];
+    parse_results [label="Parse Search\nResults", fillcolor=orange];
+    extract_snippets [label="Extract Code\nSnippets", fillcolor=orange];
+    validate_sources [label="Validate\nSources", fillcolor=orange];
+    rank_relevance [label="Rank by\nRelevance", fillcolor=orange];
+    cache_results [label="/memory-store\nCache Results", fillcolor=orange];
+  }
+
+  gemini_search_req -> formulate_query;
+  formulate_query -> gemini_api_call;
+  gemini_api_call -> parse_results;
+  parse_results -> extract_snippets;
+  extract_snippets -> validate_sources;
+  validate_sources -> rank_relevance;
+  rank_relevance -> cache_results;
+
+  // =============================================================================
+  // EVIDENCE-BASED VALIDATION
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Evidence-Based Validation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    collect_evidence [label="Collect Evidence\nData", fillcolor=pink];
+    cross_reference [label="Cross-Reference\nSources", fillcolor=pink];
+    verify_claims [label="Verify Claims", fillcolor=pink];
+    check_consistency [shape=diamond, label="Consistent?"];
+    confidence_score [label="Calculate\nConfidence Score", fillcolor=pink];
+    flag_conflicts [label="Flag\nConflicts", fillcolor=yellow];
+    generate_report [label="Generate\nValidation Report", fillcolor=pink];
+  }
+
+  validation_req -> collect_evidence;
+  collect_evidence -> cross_reference;
+  cross_reference -> verify_claims;
+  verify_claims -> check_consistency;
+  check_consistency -> confidence_score [label="Yes"];
+  check_consistency -> flag_conflicts [label="No"];
+  confidence_score -> generate_report;
+  flag_conflicts -> generate_report;
+
+  // =============================================================================
+  // MEMORY COORDINATION
+  // =============================================================================
+  subgraph cluster_memory {
+    label="Memory Synchronization";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    memory_store [label="/memory-store\nStore Findings", fillcolor=cyan];
+    memory_retrieve [label="/memory-retrieve\nRetrieve Context", fillcolor=cyan];
+    memory_search [label="/memory-search\nSearch History", fillcolor=cyan];
+    cross_agent_sync [label="Cross-Agent\nSync", fillcolor=cyan, shape=box3d];
+    deduplicate [label="Deduplicate\nFindings", fillcolor=cyan];
+  }
+
+  generate_insights -> memory_store;
+  document_patterns -> memory_store;
+  cache_results -> memory_store;
+  generate_report -> memory_store;
+
+  memory_store -> cross_agent_sync;
+  memory_retrieve -> cross_agent_sync;
+  memory_search -> cross_agent_sync;
+  cross_agent_sync -> deduplicate;
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_aggregation {
+    label="Result Aggregation & Synthesis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8E8F8";
+
+    merge_findings [label="Merge All\nFindings", fillcolor=purple];
+    synthesize_insights [label="Synthesize\nInsights", fillcolor=purple];
+    prioritize_results [label="Prioritize\nResults", fillcolor=purple];
+    format_output [label="Format Output", fillcolor=purple];
+    quality_check [shape=diamond, label="Quality\nThreshold?"];
+    enhance_results [label="Enhance\nResults", fillcolor=yellow];
+  }
+
+  deduplicate -> merge_findings;
+  merge_findings -> synthesize_insights;
+  synthesize_insights -> prioritize_results;
+  prioritize_results -> format_output;
+  format_output -> quality_check;
+  quality_check -> enhance_results [label="Below"];
+  quality_check -> final_report [label="Pass"];
+  enhance_results -> merge_findings [style=dashed];
+
+  // =============================================================================
+  // COMMUNICATION & REPORTING
+  // =============================================================================
+  subgraph cluster_communication {
+    label="Communication & Reporting";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    final_report [label="Generate Final\nResearch Report", fillcolor=lightblue];
+    notify_agents [label="/communicate-notify\nNotify Agents", fillcolor=lightblue];
+    log_results [label="/communicate-log\nLog Results", fillcolor=lightblue];
+    create_docs [label="/markdown-gen\nCreate Docs", fillcolor=lightblue];
+    git_commit [label="/git-commit\nCommit Findings", fillcolor=lightblue];
+  }
+
+  final_report -> notify_agents;
+  notify_agents -> log_results;
+  log_results -> create_docs;
+  create_docs -> git_commit;
+
+  // =============================================================================
+  // MCP TOOL INTEGRATION
+  // =============================================================================
+  subgraph cluster_mcp_tools {
+    label="MCP Tool Integration (27 Tools)";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    swarm_status [label="mcp__ruv-swarm\nswarm_status", fillcolor=lightgreen, shape=box3d];
+    agent_metrics [label="mcp__ruv-swarm\nagent_metrics", fillcolor=lightgreen, shape=box3d];
+    neural_patterns [label="mcp__ruv-swarm\nneural_patterns", fillcolor=lightgreen, shape=box3d];
+    task_results [label="mcp__ruv-swarm\ntask_results", fillcolor=lightgreen, shape=box3d];
+    benchmark_run [label="mcp__ruv-swarm\nbenchmark_run", fillcolor=lightgreen, shape=box3d];
+  }
+
+  cross_agent_sync -> swarm_status;
+  cross_agent_sync -> agent_metrics;
+  synthesize_insights -> neural_patterns;
+  merge_findings -> task_results;
+  enhance_results -> benchmark_run;
+
+  // =============================================================================
+  // COMMAND EXECUTION
+  // =============================================================================
+  subgraph cluster_commands {
+    label="Command Execution (55 Commands)";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    file_ops [label="File Operations\n8 commands", fillcolor=lightyellow];
+    git_ops [label="Git Operations\n10 commands", fillcolor=lightyellow];
+    comm_ops [label="Communication\n8 commands", fillcolor=lightyellow];
+    memory_ops [label="Memory & State\n6 commands", fillcolor=lightyellow];
+    test_ops [label="Testing\n6 commands", fillcolor=lightyellow];
+    util_ops [label="Utilities\n7 commands", fillcolor=lightyellow];
+    specialist_ops [label="Specialist Commands\n10 commands", fillcolor=lightyellow];
+  }
+
+  scan_codebase -> file_ops;
+  create_docs -> git_ops;
+  notify_agents -> comm_ops;
+  memory_store -> memory_ops;
+  confidence_score -> test_ops;
+  format_output -> util_ops;
+  formulate_query -> specialist_ops;
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Cleanup";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup\nResources", fillcolor=lightgreen];
+    log_metrics [label="Log Research\nMetrics", fillcolor=lightgreen];
+    update_patterns [label="Update Pattern\nDatabase", fillcolor=lightgreen];
+    success [label="Research\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  git_commit -> cleanup;
+  cleanup -> log_metrics;
+  log_metrics -> update_patterns;
+  update_patterns -> success;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_process [shape=box, fillcolor=lightblue, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_api [shape=box3d, fillcolor=orange, label="API/MCP"];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=box, fillcolor=yellow, label="Warning"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_api [style=invis];
+    legend_api -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_success [style=invis];
+  }
+}

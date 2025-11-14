@@ -1,0 +1,141 @@
+digraph coder_enhanced_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Coder Enhanced Agent Workflow (v2.0.0)\nAgent ID: agent-095 | Category: Core Development\nPurpose: Enhanced coder with advanced capabilities";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Implementation\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Code Delivered", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Context-Aware Analysis
+    subgraph cluster_context {
+        label="Phase 1: Context-Aware Analysis";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        ctx1 [label="Deep Context\nAnalysis", shape=box, fillcolor="#ffecb3"];
+        ctx2 [label="Codebase Pattern\nRecognition", shape=box, fillcolor="#ffecb3"];
+        ctx3 [label="Dependency\nMapping", shape=box, fillcolor="#ffecb3"];
+        ctx4 [label="Architecture\nUnderstanding", shape=box, fillcolor="#ffecb3"];
+
+        ctx1 -> ctx2 -> ctx3 -> ctx4;
+    }
+
+    // Phase 2: Intelligent Design
+    subgraph cluster_design {
+        label="Phase 2: Intelligent Design";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        d1 [label="SOLID Principles\nApplication", shape=box, fillcolor="#bbdefb"];
+        d2 [label="Design Pattern\nSelection", shape=box, fillcolor="#bbdefb"];
+        d3 [label="API Contract\nDesign", shape=box, fillcolor="#bbdefb"];
+        d4 [label="Error Handling\nStrategy", shape=box, fillcolor="#bbdefb"];
+
+        d1 -> d2 -> d3 -> d4;
+    }
+
+    // Phase 3: Enhanced Implementation
+    subgraph cluster_implementation {
+        label="Phase 3: Enhanced Implementation";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        impl1 [label="TDD-First\nImplementation", shape=box, fillcolor="#e1bee7"];
+        impl2 [label="Clean Code\nGeneration", shape=box, fillcolor="#e1bee7"];
+        impl3 [label="Performance\nOptimization", shape=box, fillcolor="#e1bee7"];
+        impl4 [label="Type Safety\nEnforcement", shape=box, fillcolor="#e1bee7"];
+
+        impl1 -> impl2 -> impl3 -> impl4;
+    }
+
+    // Phase 4: Advanced Refactoring
+    subgraph cluster_refactoring {
+        label="Phase 4: Advanced Refactoring";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        ref1 [label="Code Smell\nDetection", shape=box, fillcolor="#f8bbd0"];
+        ref2 [label="Automated\nRefactoring", shape=box, fillcolor="#f8bbd0"];
+        ref3 [label="DRY Principle\nEnforcement", shape=box, fillcolor="#f8bbd0"];
+        ref4 [label="Complexity\nReduction", shape=box, fillcolor="#f8bbd0"];
+
+        ref1 -> ref2 -> ref3 -> ref4;
+    }
+
+    // Phase 5: Quality Assurance (Enhanced)
+    subgraph cluster_qa {
+        label="Phase 5: Enhanced Quality Assurance";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        qa1 [label="Unit Test\nGeneration (90%+)", shape=box, fillcolor="#b2dfdb"];
+        qa2 [label="Integration\nTest Coverage", shape=box, fillcolor="#b2dfdb"];
+        qa3 [label="Edge Case\nValidation", shape=box, fillcolor="#b2dfdb"];
+        qa4 [label="Performance\nBenchmarking", shape=box, fillcolor="#b2dfdb"];
+
+        qa1 -> qa2 -> qa3 -> qa4;
+    }
+
+    // Phase 6: Documentation & Coordination
+    subgraph cluster_documentation {
+        label="Phase 6: Documentation & Coordination";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        doc1 [label="Inline\nDocumentation", shape=box, fillcolor="#fff59d"];
+        doc2 [label="API\nDocumentation", shape=box, fillcolor="#fff59d"];
+        doc3 [label="Memory\nCoordination", shape=box, fillcolor="#fff59d"];
+        doc4 [label="Handoff to\nReviewer", shape=box, fillcolor="#fff59d"];
+
+        doc1 -> doc2 -> doc3 -> doc4;
+    }
+
+    // Decisions
+    quality_gate [label="Quality Gate\nPassed?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    coverage_gate [label="Coverage\n≥ 90%?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> ctx1;
+    ctx4 -> d1;
+    d4 -> impl1;
+    impl4 -> ref1;
+    ref4 -> qa1;
+
+    qa4 -> coverage_gate;
+    coverage_gate -> quality_gate [label="Yes"];
+    coverage_gate -> qa1 [label="No - Add Tests", style=dashed, color="#f44336"];
+
+    quality_gate -> doc1 [label="Pass"];
+    quality_gate -> ref1 [label="Fail", style=dashed, color="#ff9800"];
+
+    doc4 -> end;
+
+    // V2.0 enhancements
+    enhancements [label="v2.0.0 Enhancements:\n• Context-Aware Generation\n• Advanced Refactoring\n• 90%+ Test Coverage\n• Memory Coordination\n• Pattern Recognition\n• Intelligent Optimization", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Commands & Tools
+    tools [label="80 Commands:\n45 Universal + 35 Specialist\n\n40 MCP Tools:\n18 Universal + 22 Specialist", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: coder-enhanced\nPriority: Critical\nComplexity: Very High\nVersion: 2.0.0\nGraphviz Priority: 95", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

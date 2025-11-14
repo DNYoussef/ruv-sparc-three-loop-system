@@ -1,3 +1,8 @@
+---
+name: tooling-github-security-github-security-agent
+description: Specialized agent for task execution
+---
+
 # GITHUB SECURITY AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 163

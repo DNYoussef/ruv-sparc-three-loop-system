@@ -1,3 +1,8 @@
+---
+name: security-containers-container-security-scanner
+description: CONTAINER SECURITY SCANNER - SYSTEM PROMPT v2.0
+---
+
 # CONTAINER SECURITY SCANNER - SYSTEM PROMPT v2.0
 
 **Agent ID**: 179

@@ -1,3 +1,8 @@
+---
+name: tooling-github-analytics-github-analytics-agent
+description: Specialized agent for task execution
+---
+
 # GITHUB ANALYTICS AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 164

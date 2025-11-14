@@ -1,0 +1,84 @@
+// Scout Explorer Agent - Exploration & Reconnaissance
+// Exploration, pattern discovery, opportunity identification, reporting
+digraph scout_explorer_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        scout_init [label="Scout Explorer\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        exploration_config [label="Exploration\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+        pattern_db [label="Pattern\nDatabase", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_discovery {
+        label="Discovery"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        codebase_scanner [label="Codebase\nScanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_explorer [label="Dependency\nExplorer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        api_discoverer [label="API\nDiscoverer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        resource_identifier [label="Resource\nIdentifier", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_pattern {
+        label="Pattern Recognition"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        pattern_detector [label="Pattern\nDetector", fillcolor="#059669", fontcolor="#ffffff"];
+        antipattern_finder [label="Anti-Pattern\nFinder", fillcolor="#059669", fontcolor="#ffffff"];
+        trend_analyzer [label="Trend\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_opportunity {
+        label="Opportunity Identification"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        optimization_spotter [label="Optimization\nSpotter", fillcolor="#0891b2", fontcolor="#ffffff"];
+        refactoring_suggester [label="Refactoring\nSuggester", fillcolor="#0891b2", fontcolor="#ffffff"];
+        improvement_identifier [label="Improvement\nIdentifier", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Analysis"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        impact_assessor [label="Impact\nAssessor", fillcolor="#dc2626", fontcolor="#ffffff"];
+        priority_ranker [label="Priority\nRanker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        feasibility_analyzer [label="Feasibility\nAnalyzer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_reporting {
+        label="Reporting"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        findings_compiler [label="Findings\nCompiler", fillcolor="#8b4789", fontcolor="#ffffff"];
+        visualization_generator [label="Visualization\nGenerator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        report_writer [label="Report\nWriter", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        queen_coord [label="Queen Seraphina\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        worker_coord [label="Worker Specialists\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    scout_init -> exploration_config [label="Load"];
+    scout_init -> pattern_db [label="Load"];
+    exploration_config -> codebase_scanner [label="Scan Codebase"];
+    codebase_scanner -> dependency_explorer [label="Explore Dependencies"];
+    dependency_explorer -> api_discoverer [label="Discover APIs"];
+    api_discoverer -> resource_identifier [label="Identify Resources"];
+    resource_identifier -> pattern_detector [label="Detect Patterns"];
+    pattern_detector -> antipattern_finder [label="Find Anti-Patterns"];
+    antipattern_finder -> trend_analyzer [label="Analyze Trends"];
+    trend_analyzer -> optimization_spotter [label="Spot Optimizations"];
+    optimization_spotter -> refactoring_suggester [label="Suggest Refactoring"];
+    refactoring_suggester -> improvement_identifier [label="Identify Improvements"];
+    improvement_identifier -> impact_assessor [label="Assess Impact"];
+    impact_assessor -> priority_ranker [label="Rank Priority"];
+    priority_ranker -> feasibility_analyzer [label="Analyze Feasibility"];
+    feasibility_analyzer -> findings_compiler [label="Compile Findings"];
+    findings_compiler -> visualization_generator [label="Generate Visualizations"];
+    visualization_generator -> report_writer [label="Write Report"];
+    report_writer -> queen_coord [label="Report to Queen"];
+    improvement_identifier -> worker_coord [label="Coordinate Workers"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Scout Explorer", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Discovery", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Pattern Recognition", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+}

@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-security-network-security-infrastructure
+description: Specialized agent for task execution
+---
+
 # Network Security Infrastructure Agent
 
 **Agent ID**: `network-security-infrastructure` (Agent #140)

@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-docker-docker-containerization-specialist
+description: COPY requirements.txt .
+---
+
 # Docker Containerization Specialist Agent
 
 **Agent ID**: `docker-containerization-specialist` (Agent #136)

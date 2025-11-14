@@ -1,0 +1,24 @@
+digraph MEMORY_PERSIST {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/memory-persist", shape=ellipse, fillcolor=lightblue];
+  select_mode [shape=diamond, label="Mode?"];
+  export_memory [label="Export\nMemory", fillcolor=lightgreen, style="filled,bold"];
+  import_memory [label="Import\nMemory", fillcolor=lightgreen, style="filled,bold"];
+  backup_memory [label="Backup\nMemory", fillcolor=yellow];
+  validate_data [label="Validate\nData", fillcolor=purple];
+  resolve_conflicts [label="Resolve\nConflicts", fillcolor=orange];
+  write_file [label="Write to\nFile", fillcolor=lightblue];
+  read_file [label="Read from\nFile", fillcolor=lightblue];
+  update_memory [label="Update\nMemory", fillcolor=lightpurple];
+  success [label="Persistence Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> select_mode;
+  select_mode -> export_memory [label="export"];
+  select_mode -> import_memory [label="import"];
+  select_mode -> backup_memory [label="backup"];
+  export_memory -> validate_data -> write_file -> success;
+  import_memory -> read_file -> resolve_conflicts -> update_memory -> success;
+  backup_memory -> write_file;
+}

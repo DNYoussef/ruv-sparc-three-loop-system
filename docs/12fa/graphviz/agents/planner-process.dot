@@ -1,0 +1,264 @@
+digraph PLANNER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Planner Agent Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\n45 Commands + 18 MCP Tools"];
+    validate_capabilities [label="Validate Capabilities\ntask_decomposition, dependency_analysis\nresource_allocation, risk_assessment"];
+    check_deps [label="Check Dependencies\nMemory, Planning Tools"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // REQUIREMENTS GATHERING
+  // =============================================================================
+  subgraph cluster_requirements {
+    label="Requirements Gathering";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\nplanning/planner/{task-id}/*"];
+    parse_user_request [label="Parse User Request\nExtract objectives"];
+    clarify_requirements [label="Clarify Requirements\nAsk questions if needed"];
+    define_acceptance [label="Define Acceptance Criteria"];
+    requirements_complete [shape=diamond, label="Requirements\nComplete?"];
+
+    check_deps -> init_memory;
+    init_memory -> parse_user_request;
+    parse_user_request -> clarify_requirements;
+    clarify_requirements -> define_acceptance;
+    define_acceptance -> requirements_complete;
+    requirements_complete -> clarify_requirements [label="No"];
+  }
+
+  // =============================================================================
+  // TASK DECOMPOSITION
+  // =============================================================================
+  subgraph cluster_decomposition {
+    label="Task Decomposition";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    identify_subtasks [label="Identify Subtasks\nBreak down into modules", fillcolor=yellow];
+    estimate_complexity [label="Estimate Complexity\nHigh, Medium, Low"];
+    estimate_effort [label="Estimate Effort\nHours, Days"];
+    prioritize_tasks [label="Prioritize Tasks\nCritical, High, Medium, Low"];
+    decomposition_complete [shape=diamond, label="Decomposition\nComplete?"];
+
+    requirements_complete -> identify_subtasks [label="Yes"];
+    identify_subtasks -> estimate_complexity;
+    estimate_complexity -> estimate_effort;
+    estimate_effort -> prioritize_tasks;
+    prioritize_tasks -> decomposition_complete;
+    decomposition_complete -> identify_subtasks [label="No (Refine)"];
+  }
+
+  // =============================================================================
+  // DEPENDENCY ANALYSIS
+  // =============================================================================
+  subgraph cluster_dependencies {
+    label="Dependency Analysis";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    identify_dependencies [label="Identify Dependencies\nTask ordering", fillcolor=lightblue];
+    build_dependency_graph [label="Build Dependency Graph\nDAG structure"];
+    identify_parallel [label="Identify Parallel Tasks\nNo dependencies"];
+    identify_critical_path [label="Identify Critical Path\nBottleneck tasks"];
+    validate_dependencies [shape=diamond, label="Dependencies\nValid?"];
+
+    decomposition_complete -> identify_dependencies [label="Yes"];
+    identify_dependencies -> build_dependency_graph;
+    build_dependency_graph -> identify_parallel;
+    identify_parallel -> identify_critical_path;
+    identify_critical_path -> validate_dependencies;
+    validate_dependencies -> resolve_circular [label="Circular Detected"];
+  }
+
+  // =============================================================================
+  // RESOURCE ALLOCATION
+  // =============================================================================
+  subgraph cluster_resources {
+    label="Resource Allocation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    identify_agents [label="Identify Required Agents\nCoder, Tester, Reviewer", fillcolor=lightgreen];
+    assign_tasks_to_agents [label="Assign Tasks to Agents\nBased on capabilities"];
+    estimate_resources [label="Estimate Resources\nAgent count, time, memory"];
+    check_topology [shape=diamond, label="Swarm\nTopology?"];
+    select_topology [label="Select Optimal Topology\nMesh, Hierarchical, Adaptive"];
+
+    validate_dependencies -> identify_agents [label="Yes"];
+    identify_agents -> assign_tasks_to_agents;
+    assign_tasks_to_agents -> estimate_resources;
+    estimate_resources -> check_topology;
+    check_topology -> select_topology;
+  }
+
+  // =============================================================================
+  // RISK ASSESSMENT
+  // =============================================================================
+  subgraph cluster_risk {
+    label="Risk Assessment";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    identify_risks [label="Identify Risks\nTechnical, Resource, Time", fillcolor=orange];
+    assess_probability [label="Assess Probability\nHigh, Medium, Low"];
+    assess_impact [label="Assess Impact\nCritical, High, Medium, Low"];
+    prioritize_risks [label="Prioritize Risks\nRisk Score = P × I"];
+    plan_mitigation [label="Plan Mitigation\nPreventive measures"];
+    risk_acceptable [shape=diamond, label="Risk\nAcceptable?"];
+
+    select_topology -> identify_risks;
+    identify_risks -> assess_probability;
+    assess_probability -> assess_impact;
+    assess_impact -> prioritize_risks;
+    prioritize_risks -> plan_mitigation;
+    plan_mitigation -> risk_acceptable;
+    risk_acceptable -> adjust_plan [label="No"];
+  }
+
+  // =============================================================================
+  // TIMELINE PLANNING
+  // =============================================================================
+  subgraph cluster_timeline {
+    label="Timeline Planning";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    create_schedule [label="Create Schedule\nBased on critical path", fillcolor=purple];
+    allocate_time_buffers [label="Allocate Time Buffers\n20% contingency"];
+    define_milestones [label="Define Milestones\nCheckpoints"];
+    calculate_total_time [label="Calculate Total Time\nEnd-to-end estimate"];
+    timeline_approved [shape=diamond, label="Timeline\nApproved?"];
+
+    risk_acceptable -> create_schedule [label="Yes"];
+    create_schedule -> allocate_time_buffers;
+    allocate_time_buffers -> define_milestones;
+    define_milestones -> calculate_total_time;
+    calculate_total_time -> timeline_approved;
+    timeline_approved -> adjust_timeline [label="No"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    store_plan [label="Store Complete Plan\nmemory_store(planning/planner/{task-id}/plan)", fillcolor=lightblue];
+    store_requirements [label="Store Requirements\nmemory_store(.../{task-id}/requirements)"];
+    store_dependencies [label="Store Dependencies\nmemory_store(.../{task-id}/dependencies)"];
+    store_timeline [label="Store Timeline\nmemory_store(.../{task-id}/timeline)"];
+    notify_researcher [label="Notify Researcher\n/agent-handoff --to researcher"];
+    notify_coder [label="Notify Coder\n/agent-handoff --to coder"];
+
+    timeline_approved -> store_plan [label="Yes"];
+    store_plan -> store_requirements;
+    store_requirements -> store_dependencies;
+    store_dependencies -> store_timeline;
+    store_timeline -> notify_researcher;
+    notify_researcher -> notify_coder;
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    generate_planning_report [label="Generate Planning Report\nTasks, agents, timeline"];
+    log_metrics [label="Log Planning Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Planning Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    notify_coder -> cleanup;
+    cleanup -> generate_planning_report;
+    generate_planning_report -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    resolve_circular [label="Resolve Circular Dependencies", fillcolor=orange];
+    adjust_plan [label="Adjust Plan for Risks", fillcolor=orange];
+    adjust_timeline [label="Adjust Timeline", fillcolor=orange];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+    log_error [label="Log Error Details"];
+    failure [label="Planning Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    resolve_circular -> build_dependency_graph [style=dashed];
+    adjust_plan -> identify_subtasks [style=dashed];
+    adjust_timeline -> create_schedule [style=dashed];
+
+    resolve_circular -> escalate [label="Cannot Resolve"];
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_warn [shape=box, label="Warning", fillcolor=orange];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_warn [style=invis];
+    legend_warn -> legend_process [style=invis];
+    legend_process -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

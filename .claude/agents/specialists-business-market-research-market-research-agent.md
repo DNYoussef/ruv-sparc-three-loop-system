@@ -1,3 +1,8 @@
+---
+name: specialists-business-market-research-market-research-agent
+description: Conclusion: Launch AI feature immediately!
+---
+
 # MARKET RESEARCH AGENT - SYSTEM PROMPT v2.0
 
 **Agent ID**: 160

@@ -1,0 +1,350 @@
+// Reviewer Agent - Code Reviewer
+// Code review workflow, security audit, performance analysis
+digraph reviewer_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        reviewer_init [label="Reviewer Agent\nInitialize", fillcolor="#8b4789", fontcolor="#ffffff"];
+        load_rules [label="Load Review\nRules", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_checklists [label="Load Review\nChecklists", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_tools [label="Load Analysis\nTools", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === PRE-REVIEW VALIDATION ===
+    subgraph cluster_pre_review {
+        label="Pre-Review Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_receiver [label="Code\nReceiver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        test_validator [label="Test Pass\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        lint_validator [label="Lint & Type\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        coverage_validator [label="Coverage\nValidator (≥80%)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        git_history_check [label="Git History\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === CODE REVIEW WORKFLOW ===
+    subgraph cluster_code_review {
+        label="Code Review Workflow";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        functionality_reviewer [label="Functionality\nReviewer", fillcolor="#059669", fontcolor="#ffffff"];
+        architecture_reviewer [label="Architecture\nReviewer", fillcolor="#059669", fontcolor="#ffffff"];
+        maintainability_reviewer [label="Maintainability\nReviewer", fillcolor="#059669", fontcolor="#ffffff"];
+        error_handling_reviewer [label="Error Handling\nReviewer", fillcolor="#059669", fontcolor="#ffffff"];
+        dependency_reviewer [label="Dependency\nReviewer", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === SECURITY AUDIT ===
+    subgraph cluster_security {
+        label="Security Audit Process";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        input_validator [label="Input Validation\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        auth_reviewer [label="Authentication\nReviewer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        authorization_reviewer [label="Authorization\nReviewer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        secret_scanner [label="Secrets\nScanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        crypto_reviewer [label="Cryptographic\nUsage Reviewer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        error_disclosure [label="Error Disclosure\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        dependency_audit [label="Dependency\nVulnerability Audit", fillcolor="#dc2626", fontcolor="#ffffff"];
+        config_security [label="Configuration\nSecurity Checker", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === PERFORMANCE ANALYSIS ===
+    subgraph cluster_performance {
+        label="Performance Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        complexity_analyzer [label="Algorithm\nComplexity Analyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        memory_analyzer [label="Memory Usage\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        query_optimizer [label="Database Query\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        cache_reviewer [label="Caching Strategy\nReviewer", fillcolor="#10b981", fontcolor="#ffffff"];
+        resource_cleanup [label="Resource Cleanup\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+        scalability_reviewer [label="Scalability\nReviewer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === BEST PRACTICES VALIDATION ===
+    subgraph cluster_best_practices {
+        label="Best Practices Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        solid_checker [label="SOLID Principles\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        dry_checker [label="DRY Principle\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        kiss_checker [label="KISS Principle\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        yagni_checker [label="YAGNI Principle\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        pattern_validator [label="Design Pattern\nValidator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === DOCUMENTATION REVIEW ===
+    subgraph cluster_documentation {
+        label="Documentation Review";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        inline_doc_checker [label="Inline Documentation\nChecker", fillcolor="#0891b2", fontcolor="#ffffff"];
+        api_doc_validator [label="API Documentation\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        readme_reviewer [label="README\nReviewer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        comment_quality [label="Comment Quality\nAnalyzer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        example_validator [label="Code Example\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === AUTOMATED ANALYSIS ===
+    subgraph cluster_automated {
+        label="Automated Analysis Tools";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        static_analyzer [label="Static Code\nAnalyzer", fillcolor="#d97706", fontcolor="#ffffff"];
+        complexity_metrics [label="Cyclomatic\nComplexity", fillcolor="#d97706", fontcolor="#ffffff"];
+        duplication_detector [label="Code Duplication\nDetector", fillcolor="#d97706", fontcolor="#ffffff"];
+        dead_code_finder [label="Dead Code\nFinder", fillcolor="#d97706", fontcolor="#ffffff"];
+        unused_deps [label="Unused Dependencies\nDetector", fillcolor="#d97706", fontcolor="#ffffff"];
+    }
+
+    // === FINDING CATEGORIZATION ===
+    subgraph cluster_findings {
+        label="Finding Categorization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        critical_findings [label="Critical\nFindings", fillcolor="#ef4444", fontcolor="#ffffff"];
+        major_findings [label="Major\nFindings", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        minor_findings [label="Minor\nFindings", fillcolor="#fbbf24", fontcolor="#ffffff"];
+        suggestions [label="Suggestions", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === QUALITY SCORING ===
+    subgraph cluster_scoring {
+        label="Quality Scoring System";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        overall_score [label="Overall Quality\nScore", fillcolor="#6366f1", fontcolor="#ffffff"];
+        security_score [label="Security\nScore", fillcolor="#6366f1", fontcolor="#ffffff"];
+        maintainability_score [label="Maintainability\nScore", fillcolor="#6366f1", fontcolor="#ffffff"];
+        performance_score [label="Performance\nScore", fillcolor="#6366f1", fontcolor="#ffffff"];
+        documentation_score [label="Documentation\nScore", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === APPROVAL DECISION ===
+    subgraph cluster_approval {
+        label="Approval Decision";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        decision_engine [label="Approval Decision\nEngine", fillcolor="#8b4789", fontcolor="#ffffff"];
+        approved [label="Approved\n(Ship It!)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        conditional [label="Conditional\n(Fix Required)", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        rejected [label="Rejected\n(Major Issues)", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collaboration {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coder_feedback [label="Coder\nFeedback", fillcolor="#6366f1", fontcolor="#ffffff"];
+        tester_feedback [label="Tester\nFeedback", fillcolor="#6366f1", fontcolor="#ffffff"];
+        security_escalation [label="Security Agent\nEscalation", fillcolor="#6366f1", fontcolor="#ffffff"];
+        architect_consult [label="Architect\nConsultation", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === REPORTING ===
+    subgraph cluster_reporting {
+        label="Review Report Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        finding_aggregator [label="Finding\nAggregator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        priority_sorter [label="Priority\nSorter", fillcolor="#0891b2", fontcolor="#ffffff"];
+        action_item_generator [label="Action Item\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        report_formatter [label="Report\nFormatter", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === KNOWLEDGE MANAGEMENT ===
+    subgraph cluster_knowledge {
+        label="Knowledge & Learning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_tracker [label="Anti-Pattern\nTracker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        vulnerability_db [label="Vulnerability\nDatabase", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        best_practice_db [label="Best Practice\nDatabase", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        review_metrics [label="Review\nMetrics", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    reviewer_init -> load_rules [label="Load"];
+    reviewer_init -> load_checklists [label="Load"];
+    reviewer_init -> load_tools [label="Load"];
+
+    // === PRE-REVIEW FLOW ===
+    reviewer_init -> code_receiver [label="Receive Code"];
+    code_receiver -> test_validator [label="Validate Tests"];
+    test_validator -> lint_validator [label="Validate Lint"];
+    lint_validator -> coverage_validator [label="Validate Coverage"];
+    coverage_validator -> git_history_check [label="Check History"];
+
+    // === CODE REVIEW FLOW ===
+    git_history_check -> functionality_reviewer [label="Review Functionality"];
+    functionality_reviewer -> architecture_reviewer [label="Review Architecture"];
+    architecture_reviewer -> maintainability_reviewer [label="Review Maintainability"];
+    maintainability_reviewer -> error_handling_reviewer [label="Review Error Handling"];
+    error_handling_reviewer -> dependency_reviewer [label="Review Dependencies"];
+
+    // === SECURITY AUDIT FLOW ===
+    dependency_reviewer -> input_validator [label="Security Audit"];
+    input_validator -> auth_reviewer [label="Check Auth"];
+    auth_reviewer -> authorization_reviewer [label="Check Authz"];
+    authorization_reviewer -> secret_scanner [label="Scan Secrets"];
+    secret_scanner -> crypto_reviewer [label="Review Crypto"];
+    crypto_reviewer -> error_disclosure [label="Check Error Disclosure"];
+    error_disclosure -> dependency_audit [label="Audit Dependencies"];
+    dependency_audit -> config_security [label="Check Config"];
+
+    // === PERFORMANCE ANALYSIS FLOW ===
+    config_security -> complexity_analyzer [label="Analyze Performance"];
+    complexity_analyzer -> memory_analyzer [label="Analyze Memory"];
+    memory_analyzer -> query_optimizer [label="Optimize Queries"];
+    query_optimizer -> cache_reviewer [label="Review Cache"];
+    cache_reviewer -> resource_cleanup [label="Check Cleanup"];
+    resource_cleanup -> scalability_reviewer [label="Review Scalability"];
+
+    // === BEST PRACTICES FLOW ===
+    scalability_reviewer -> solid_checker [label="Check SOLID"];
+    solid_checker -> dry_checker [label="Check DRY"];
+    dry_checker -> kiss_checker [label="Check KISS"];
+    kiss_checker -> yagni_checker [label="Check YAGNI"];
+    yagni_checker -> pattern_validator [label="Validate Patterns"];
+
+    // === DOCUMENTATION FLOW ===
+    pattern_validator -> inline_doc_checker [label="Review Docs"];
+    inline_doc_checker -> api_doc_validator [label="Validate API Docs"];
+    api_doc_validator -> readme_reviewer [label="Review README"];
+    readme_reviewer -> comment_quality [label="Analyze Comments"];
+    comment_quality -> example_validator [label="Validate Examples"];
+
+    // === AUTOMATED ANALYSIS FLOW ===
+    example_validator -> static_analyzer [label="Run Analysis"];
+    static_analyzer -> complexity_metrics [label="Calculate Complexity"];
+    complexity_metrics -> duplication_detector [label="Detect Duplication"];
+    duplication_detector -> dead_code_finder [label="Find Dead Code"];
+    dead_code_finder -> unused_deps [label="Detect Unused Deps"];
+
+    // === FINDING CATEGORIZATION FLOW ===
+    unused_deps -> critical_findings [label="Categorize Critical"];
+    unused_deps -> major_findings [label="Categorize Major"];
+    unused_deps -> minor_findings [label="Categorize Minor"];
+    unused_deps -> suggestions [label="Categorize Suggestions"];
+
+    // === SCORING FLOW ===
+    critical_findings -> overall_score [label="Calculate"];
+    major_findings -> overall_score [label="Calculate"];
+    minor_findings -> overall_score [label="Calculate"];
+    suggestions -> overall_score [label="Calculate"];
+
+    secret_scanner -> security_score [label="Score"];
+    maintainability_reviewer -> maintainability_score [label="Score"];
+    complexity_analyzer -> performance_score [label="Score"];
+    inline_doc_checker -> documentation_score [label="Score"];
+
+    security_score -> overall_score [label="Aggregate"];
+    maintainability_score -> overall_score [label="Aggregate"];
+    performance_score -> overall_score [label="Aggregate"];
+    documentation_score -> overall_score [label="Aggregate"];
+
+    // === APPROVAL DECISION FLOW ===
+    overall_score -> decision_engine [label="Make Decision"];
+    decision_engine -> approved [label="Score ≥8.5"];
+    decision_engine -> conditional [label="Score 6.0-8.4"];
+    decision_engine -> rejected [label="Score <6.0"];
+
+    // === COLLABORATION FLOW ===
+    approved -> coder_feedback [label="Send Feedback"];
+    conditional -> coder_feedback [label="Send Feedback"];
+    rejected -> coder_feedback [label="Send Feedback"];
+
+    critical_findings -> security_escalation [label="Escalate", style=bold];
+    architecture_reviewer -> architect_consult [label="Consult"];
+    coverage_validator -> tester_feedback [label="Feedback"];
+
+    // === REPORTING FLOW ===
+    coder_feedback -> finding_aggregator [label="Aggregate Findings"];
+    finding_aggregator -> priority_sorter [label="Sort by Priority"];
+    priority_sorter -> action_item_generator [label="Generate Actions"];
+    action_item_generator -> report_formatter [label="Format Report"];
+
+    // === KNOWLEDGE FLOW ===
+    report_formatter -> pattern_tracker [label="Track Patterns"];
+    pattern_tracker -> vulnerability_db [label="Update DB"];
+    vulnerability_db -> best_practice_db [label="Update DB"];
+    best_practice_db -> review_metrics [label="Calculate Metrics"];
+    review_metrics -> reviewer_init [label="Complete", style=bold, color="#10b981"];
+
+    // === FEEDBACK LOOPS ===
+    rejected -> functionality_reviewer [label="Major Rework", style=dashed, color="#ef4444"];
+    conditional -> maintainability_reviewer [label="Minor Fixes", style=dashed, color="#f59e0b"];
+    critical_findings -> security_escalation [label="Security Issue", style=dashed, color="#dc2626"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Reviewer Agent", fillcolor="#8b4789", fontcolor="#ffffff"];
+        legend2 [label="Code Review", fillcolor="#059669", fontcolor="#ffffff"];
+        legend3 [label="Security", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend4 [label="Performance", fillcolor="#10b981", fontcolor="#ffffff"];
+        legend5 [label="Best Practices", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend6 [label="Documentation", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+}

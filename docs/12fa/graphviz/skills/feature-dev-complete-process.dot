@@ -1,0 +1,33 @@
+digraph FEATURE_DEV_COMPLETE_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="feature-dev-complete\nInvoked", shape=ellipse, fillcolor=lightblue];
+
+  subgraph cluster_stages {
+    label="12-Stage Complete Lifecycle";
+    style="filled,rounded";
+    bgcolor="#F0F0F0";
+
+    stage1 [label="1. Research\nGemini Search", fillcolor=cyan];
+    stage2 [label="2. Requirements\nAnalysis", fillcolor=purple];
+    stage3 [label="3. Architecture\nDesign", fillcolor=blue];
+    stage4 [label="4. Prototyping\nCodex Sandbox", fillcolor=lightgreen];
+    stage5 [label="5. Implementation\nCore Development", fillcolor=green];
+    stage6 [label="6. Unit Tests\nTDD", fillcolor=yellow];
+    stage7 [label="7. Integration\nSystem Assembly", fillcolor=orange];
+    stage8 [label="8. E2E Tests\nFull Validation", fillcolor=red];
+    stage9 [label="9. Documentation\nAPI Docs, README", fillcolor=pink];
+    stage10 [label="10. Code Review\nQuality Check", fillcolor=lightblue];
+    stage11 [label="11. Performance\nOptimization", fillcolor=darkgreen];
+    stage12 [label="12. Deployment\nProduction Ready", fillcolor=darkblue];
+  }
+
+  memory_store [label="Store Complete\nFeature Package", fillcolor=lightblue];
+  success [label="Feature Complete\nProduction Deployed", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  start -> stage1 -> stage2 -> stage3 -> stage4;
+  stage4 -> stage5 -> stage6 -> stage7 -> stage8;
+  stage8 -> stage9 -> stage10 -> stage11 -> stage12;
+  stage12 -> memory_store -> success;
+}

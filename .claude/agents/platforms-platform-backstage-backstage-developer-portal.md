@@ -1,3 +1,8 @@
+---
+name: platforms-platform-backstage-backstage-developer-portal
+description: BACKSTAGE DEVELOPER PORTAL - SYSTEM PROMPT v2.0
+---
+
 # BACKSTAGE DEVELOPER PORTAL - SYSTEM PROMPT v2.0
 
 **Agent ID**: 194

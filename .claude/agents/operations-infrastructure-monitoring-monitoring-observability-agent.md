@@ -1,3 +1,8 @@
+---
+name: operations-infrastructure-monitoring-monitoring-observability-agent
+description: Specialized agent for task execution
+---
+
 # Monitoring & Observability Agent
 
 **Agent ID**: `monitoring-observability-agent` (Agent #138)

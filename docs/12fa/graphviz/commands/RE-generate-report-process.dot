@@ -1,0 +1,53 @@
+digraph REGenerateReportProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-generate-report\nCommand Start", fillcolor=lightgreen];
+    gather_analysis_data [label="Gather All\nAnalysis Data"];
+    aggregate_results [label="Aggregate Results\nfrom Tools"];
+    compile_metadata [label="Compile Binary\nMetadata"];
+    summarize_functions [label="Summarize Function\nAnalysis"];
+    document_strings [label="Document Extracted\nStrings"];
+    visualize_cfg [label="Generate CFG\nVisualizations"];
+    analyze_threats [label="Analyze Security\nThreats"];
+    calculate_metrics [label="Calculate Complexity\nMetrics"];
+    generate_iocs [label="Generate IOCs\n(Indicators)"];
+    create_timeline [label="Create Analysis\nTimeline"];
+    format_html [label="Format HTML\nReport"];
+    format_pdf [label="Format PDF\nReport"];
+    format_json [label="Format JSON\nReport"];
+    include_screenshots [label="Include Tool\nScreenshots"];
+    add_recommendations [label="Add Security\nRecommendations"];
+    validate_report [label="Validate Report\nCompleteness"];
+    export_report [label="Export Multi-Format\nReport"];
+    end [label="Report Generated", fillcolor=lightcoral];
+
+    // Flow
+    start -> gather_analysis_data;
+    gather_analysis_data -> aggregate_results;
+    aggregate_results -> compile_metadata;
+    compile_metadata -> summarize_functions;
+    summarize_functions -> document_strings;
+    document_strings -> visualize_cfg;
+    visualize_cfg -> analyze_threats;
+    analyze_threats -> calculate_metrics;
+    calculate_metrics -> generate_iocs;
+    generate_iocs -> create_timeline;
+    create_timeline -> format_html;
+    create_timeline -> format_pdf;
+    create_timeline -> format_json;
+    format_html -> include_screenshots;
+    format_pdf -> include_screenshots;
+    format_json -> include_screenshots;
+    include_screenshots -> add_recommendations;
+    add_recommendations -> validate_report;
+    validate_report -> export_report;
+    export_report -> end;
+
+    // Metadata
+    label="RE-generate-report Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

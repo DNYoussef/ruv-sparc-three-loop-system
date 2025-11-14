@@ -1,0 +1,250 @@
+/**
+ * Multi-Platform Deployment Workflow
+ * Command: /deploy-vercel, /deploy-cloudflare, /deploy-aws, /deploy-k8s
+ * Phase: 3 (Development Enhancement)
+ */
+
+digraph deployment_platforms {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    splines=ortho;
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Multi-Platform Deployment Workflow</B><BR/>Vercel • Cloudflare • AWS • Kubernetes>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Pre-Deployment
+    subgraph cluster_prep {
+        label="Pre-Deployment Preparation";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="Deploy\nRequest", shape=box, fillcolor="#bbdefb", penwidth=2];
+        platform_choice [label="Select\nPlatform?", shape=diamond, fillcolor="#90caf9"];
+        env_validation [label="Validate\nEnvironment", shape=box, fillcolor="#64b5f6"];
+        build_app [label="Build\nApplication", shape=box, fillcolor="#42a5f5"];
+        run_tests [label="Run\nTests", shape=box, fillcolor="#2196f3"];
+        tests_pass [label="Tests\nPass?", shape=diamond, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: Vercel Deployment
+    subgraph cluster_vercel {
+        label="Vercel Deployment";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        vercel_start [label="Vercel\nDeployment", shape=box, fillcolor="#e1bee7", penwidth=2];
+        vercel_config [label="vercel.json\nConfiguration", shape=box, fillcolor="#ce93d8"];
+        vercel_env [label="Environment\nVariables", shape=box, fillcolor="#ba68c8"];
+        vercel_build [label="Vercel Build\n(Zero Config)", shape=box, fillcolor="#ab47bc"];
+        vercel_deploy [label="Deploy to\nEdge Network", shape=box, fillcolor="#9c27b0"];
+        vercel_preview [label="Preview\nDeployment", shape=box, fillcolor="#8e24aa"];
+        vercel_prod [label="Production\nDeployment", shape=box, fillcolor="#7b1fa2"];
+        vercel_dns [label="DNS\nConfiguration", shape=box, fillcolor="#6a1b9a"];
+    }
+
+    // Subgraph: Cloudflare Deployment
+    subgraph cluster_cloudflare {
+        label="Cloudflare Pages/Workers";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        cf_start [label="Cloudflare\nDeployment", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        cf_type [label="Type?", shape=diamond, fillcolor="#ffcc80"];
+        cf_pages [label="Cloudflare\nPages", shape=box, fillcolor="#ffb74d"];
+        cf_workers [label="Cloudflare\nWorkers", shape=box, fillcolor="#ffa726"];
+        cf_wrangler [label="Wrangler\nConfiguration", shape=box, fillcolor="#ff9800"];
+        cf_build [label="Build\nAssets", shape=box, fillcolor="#fb8c00"];
+        cf_kv [label="KV Storage\nSetup", shape=box, fillcolor="#f57c00"];
+        cf_deploy [label="Deploy to\nEdge", shape=box, fillcolor="#ef6c00"];
+        cf_domain [label="Custom\nDomain", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: AWS Deployment
+    subgraph cluster_aws {
+        label="AWS Deployment";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        aws_start [label="AWS\nDeployment", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        aws_service [label="Service?", shape=diamond, fillcolor="#a5d6a7"];
+
+        // S3 + CloudFront
+        aws_s3 [label="S3 Static\nHosting", shape=box, fillcolor="#81c784"];
+        aws_cloudfront [label="CloudFront\nCDN", shape=box, fillcolor="#66bb6a"];
+
+        // EC2
+        aws_ec2 [label="EC2\nInstance", shape=box, fillcolor="#4caf50"];
+        aws_ami [label="Create\nAMI", shape=box, fillcolor="#43a047"];
+
+        // ECS/Fargate
+        aws_ecs [label="ECS/\nFargate", shape=box, fillcolor="#388e3c"];
+        aws_task_def [label="Task\nDefinition", shape=box, fillcolor="#2e7d32"];
+
+        // Lambda
+        aws_lambda [label="Lambda\nFunctions", shape=box, fillcolor="#1b5e20"];
+
+        aws_iam [label="IAM\nPermissions", shape=box, fillcolor="#81c784"];
+        aws_route53 [label="Route 53\nDNS", shape=box, fillcolor="#66bb6a"];
+    }
+
+    // Subgraph: Kubernetes Deployment
+    subgraph cluster_k8s {
+        label="Kubernetes Deployment";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        k8s_start [label="Kubernetes\nDeployment", shape=box, fillcolor="#fff59d", penwidth=2];
+        k8s_manifests [label="Create\nManifests", shape=box, fillcolor="#fff176"];
+        k8s_deployment [label="Deployment\nYAML", shape=box, fillcolor="#ffee58"];
+        k8s_service [label="Service\nYAML", shape=box, fillcolor="#ffeb3b"];
+        k8s_ingress [label="Ingress\nYAML", shape=box, fillcolor="#fdd835"];
+        k8s_configmap [label="ConfigMap &\nSecrets", shape=box, fillcolor="#f9a825"];
+        k8s_helm [label="Helm Chart\n(optional)", shape=box, fillcolor="#f57f17"];
+        k8s_apply [label="kubectl apply", shape=box, fillcolor="#ff6f00"];
+        k8s_hpa [label="Horizontal Pod\nAutoscaler", shape=box, fillcolor="#e65100"];
+        k8s_monitor [label="Monitor\nPods", shape=box, fillcolor="#bf360c"];
+    }
+
+    // Subgraph: Post-Deployment
+    subgraph cluster_post {
+        label="Post-Deployment";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        smoke_tests [label="Smoke\nTests", shape=box, fillcolor="#ffcdd2"];
+        health_check [label="Health\nCheck", shape=diamond, fillcolor="#ef9a9a"];
+        monitoring_setup [label="Setup\nMonitoring", shape=box, fillcolor="#e57373"];
+        logging_setup [label="Setup\nLogging", shape=box, fillcolor="#ef5350"];
+        alerts_setup [label="Setup\nAlerts", shape=box, fillcolor="#f44336"];
+        rollback [label="Rollback\nProcedure", shape=box, fillcolor="#e53935", style="rounded,filled,dashed"];
+        success [label="Deployment\nSuccess", shape=box, fillcolor="#c62828", penwidth=2];
+    }
+
+    // Subgraph: CI/CD Integration
+    subgraph cluster_cicd {
+        label="CI/CD Integration";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        github_actions [label="GitHub\nActions", shape=box, fillcolor="#b3e5fc"];
+        gitlab_ci [label="GitLab\nCI/CD", shape=box, fillcolor="#81d4fa"];
+        jenkins [label="Jenkins", shape=box, fillcolor="#4fc3f7"];
+        circleci [label="CircleCI", shape=box, fillcolor="#29b6f6"];
+
+        auto_deploy [label="Auto\nDeploy?", shape=diamond, fillcolor="#03a9f4"];
+        manual_approve [label="Manual\nApproval", shape=box, fillcolor="#039be5"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Preparation", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Vercel", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Cloudflare", shape=box, fillcolor="#ff9800"];
+        leg4 [label="AWS", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Kubernetes", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Post-Deploy", shape=box, fillcolor="#f44336"];
+        leg7 [label="CI/CD", shape=box, fillcolor="#03a9f4"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7;}
+    }
+
+    // Pre-deployment flow
+    start -> platform_choice;
+    platform_choice -> env_validation;
+    env_validation -> build_app;
+    build_app -> run_tests;
+    run_tests -> tests_pass;
+
+    // Vercel path
+    tests_pass -> vercel_start [label="Vercel"];
+    vercel_start -> vercel_config;
+    vercel_config -> vercel_env;
+    vercel_env -> vercel_build;
+    vercel_build -> vercel_deploy;
+    vercel_deploy -> vercel_preview;
+    vercel_preview -> vercel_prod;
+    vercel_prod -> vercel_dns;
+
+    // Cloudflare path
+    tests_pass -> cf_start [label="Cloudflare"];
+    cf_start -> cf_type;
+    cf_type -> cf_pages [label="Pages"];
+    cf_type -> cf_workers [label="Workers"];
+    cf_pages -> cf_build;
+    cf_workers -> cf_wrangler;
+    cf_wrangler -> cf_kv;
+    cf_build -> cf_deploy;
+    cf_kv -> cf_deploy;
+    cf_deploy -> cf_domain;
+
+    // AWS path
+    tests_pass -> aws_start [label="AWS"];
+    aws_start -> aws_service;
+    aws_service -> aws_s3 [label="S3"];
+    aws_service -> aws_ec2 [label="EC2"];
+    aws_service -> aws_ecs [label="ECS"];
+    aws_service -> aws_lambda [label="Lambda"];
+
+    aws_s3 -> aws_cloudfront;
+    aws_ec2 -> aws_ami;
+    aws_ecs -> aws_task_def;
+
+    aws_cloudfront -> aws_iam;
+    aws_ami -> aws_iam;
+    aws_task_def -> aws_iam;
+    aws_lambda -> aws_iam;
+    aws_iam -> aws_route53;
+
+    // Kubernetes path
+    tests_pass -> k8s_start [label="K8s"];
+    k8s_start -> k8s_manifests;
+    k8s_manifests -> k8s_deployment;
+    k8s_deployment -> k8s_service;
+    k8s_service -> k8s_ingress;
+    k8s_ingress -> k8s_configmap;
+    k8s_configmap -> k8s_helm;
+    k8s_helm -> k8s_apply;
+    k8s_apply -> k8s_hpa;
+    k8s_hpa -> k8s_monitor;
+
+    // Post-deployment
+    vercel_dns -> smoke_tests;
+    cf_domain -> smoke_tests;
+    aws_route53 -> smoke_tests;
+    k8s_monitor -> smoke_tests;
+
+    smoke_tests -> health_check;
+    health_check -> monitoring_setup [label="healthy"];
+    health_check -> rollback [label="unhealthy"];
+    monitoring_setup -> logging_setup;
+    logging_setup -> alerts_setup;
+    alerts_setup -> success;
+
+    // CI/CD integration
+    github_actions -> auto_deploy;
+    gitlab_ci -> auto_deploy;
+    jenkins -> auto_deploy;
+    circleci -> auto_deploy;
+
+    auto_deploy -> start [label="yes", style=dashed];
+    auto_deploy -> manual_approve [label="no"];
+    manual_approve -> start [style=dashed];
+}

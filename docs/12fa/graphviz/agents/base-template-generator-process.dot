@@ -1,0 +1,89 @@
+// Base Template Generator Agent - Project Template Generation
+// Project scaffolding, template generation, best practices, customization
+digraph base_template_generator_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        generator_init [label="Template Generator\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        template_library [label="Template\nLibrary", fillcolor="#2d3748", fontcolor="#ffffff"];
+        best_practices_db [label="Best Practices\nDatabase", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_selection {
+        label="Template Selection"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        project_type_selector [label="Project Type\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        framework_selector [label="Framework\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        stack_selector [label="Tech Stack\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_structure {
+        label="Structure Generation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        folder_creator [label="Folder\nCreator", fillcolor="#059669", fontcolor="#ffffff"];
+        file_generator [label="File\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+        config_generator [label="Config\nGenerator", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_code {
+        label="Code Generation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        boilerplate_generator [label="Boilerplate\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        interface_generator [label="Interface\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        example_generator [label="Example\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_tooling {
+        label="Tooling Setup"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        dependency_installer [label="Dependency\nInstaller", fillcolor="#dc2626", fontcolor="#ffffff"];
+        linter_configurator [label="Linter\nConfigurator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        formatter_configurator [label="Formatter\nConfigurator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        git_initializer [label="Git\nInitializer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_docs {
+        label="Documentation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        readme_generator [label="README\nGenerator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        contributing_guide [label="Contributing\nGuide", fillcolor="#8b4789", fontcolor="#ffffff"];
+        license_generator [label="License\nGenerator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        structure_validator [label="Structure\nValidator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        build_tester [label="Build\nTester", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        coder_coord [label="Coder\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    generator_init -> template_library [label="Load"];
+    generator_init -> best_practices_db [label="Load"];
+    template_library -> project_type_selector [label="Select Type"];
+    project_type_selector -> framework_selector [label="Select Framework"];
+    framework_selector -> stack_selector [label="Select Stack"];
+    stack_selector -> folder_creator [label="Create Folders"];
+    folder_creator -> file_generator [label="Generate Files"];
+    file_generator -> config_generator [label="Generate Configs"];
+    config_generator -> boilerplate_generator [label="Generate Boilerplate"];
+    boilerplate_generator -> interface_generator [label="Generate Interfaces"];
+    interface_generator -> example_generator [label="Generate Examples"];
+    example_generator -> dependency_installer [label="Install"];
+    dependency_installer -> linter_configurator [label="Configure"];
+    linter_configurator -> formatter_configurator [label="Configure"];
+    formatter_configurator -> git_initializer [label="Initialize"];
+    git_initializer -> readme_generator [label="Generate"];
+    readme_generator -> contributing_guide [label="Generate"];
+    contributing_guide -> license_generator [label="Generate"];
+    license_generator -> structure_validator [label="Validate"];
+    structure_validator -> build_tester [label="Test"];
+    build_tester -> coder_coord [label="Handoff"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Template Generator", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Selection", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}
