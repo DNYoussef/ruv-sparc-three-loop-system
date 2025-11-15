@@ -1,43 +1,339 @@
-# Claude Code Configuration v2.0 - Playbook-First Workflow System
+# Claude Code Configuration v2.1 - Universal 4-Phase Workflow System
 
-**Version**: 2.0.0
-**Last Updated**: 2025-11-14
-**Previous Version**: CLAUDE.md.v1.0-backup-20251114
+**Version**: 2.1.0
+**Last Updated**: 2025-11-15
+**Previous Version**: v2.0.0 (2025-11-14)
 
 ---
 
-## 1. FIRST-MESSAGE WORKFLOW (AUTO-EXECUTE ON EVERY REQUEST)
+## 1. UNIVERSAL MESSAGE PROCESSING WORKFLOW (AUTO-EXECUTE ON EVERY REQUEST)
 
-**On EVERY first user message, execute these steps SEQUENTIALLY:**
+**On EVERY user message, execute this 4-phase workflow SEQUENTIALLY:**
 
-### Step 1: Analyze Intent
-- **ALWAYS run FIRST**: `Skill("intent-analyzer")`
+---
+
+### Phase 1: Intent Analysis (ALWAYS FIRST)
+**Skill**: `Skill("intent-analyzer")`
+
+**What It Does**:
 - Extract underlying goals using first principles decomposition
 - Identify constraints (explicit + implicit)
 - Determine if intent is clear & actionable
-- Clarify ambiguous requests with Socratic questions if needed
-- **Output**: Analyzed intent for Step 2
+- Apply probabilistic intent mapping (>80% confidence = proceed)
+- Clarify ambiguous requests with Socratic questions if needed (<80% confidence)
 
-### Step 2: Optimize Prompt
-- **ALWAYS run SECOND** (after Step 1): `Skill("prompt-architect")`
+**Output**:
+```json
+{
+  "understood_intent": "What the user actually wants to accomplish",
+  "explicit_constraints": ["stated requirements"],
+  "implicit_constraints": ["inferred requirements"],
+  "confidence": 0.85,
+  "ambiguities": ["areas needing clarification"]
+}
+```
+
+---
+
+### Phase 2: Prompt Optimization (ALWAYS SECOND)
+**Skill**: `Skill("prompt-architect")`
+
+**What It Does**:
+- Take analyzed intent from Phase 1
 - Apply evidence-based prompting techniques
-- Structure request for clarity and completeness
-- Generate optimized prompt for downstream workflow
-- **Input**: Analyzed intent from Step 1
-- **Output**: Optimized prompt for Step 3
+- Restructure request for clarity and completeness
+- Add missing context from intent analysis
+- Generate optimized prompt: "If this was the real intent, what should they have asked?"
 
-### Step 3: Route to Playbook/Skill
-- **ALWAYS run THIRD** (after Step 2)
-- Match keywords to playbook category (see Section 3)
-- Select specific playbook or skill based on intent
-- Execute with optimized prompt from Step 2
+**Input**: Analyzed intent from Phase 1
+**Output**:
+```json
+{
+  "optimized_request": "Restructured request with clarity and context",
+  "added_context": ["missing information now included"],
+  "prompting_patterns": ["self-consistency", "plan-and-solve"],
+  "success_criteria": "Clear definition of done"
+}
+```
 
-**CRITICAL**: Execute steps SEQUENTIALLY (1→2→3), not concurrently. Each step depends on the previous step's output.
+---
 
-**Escape Hatch**: Explicit skill invocation bypasses Steps 1-2:
-- `Skill("micro-skill-creator")` → Direct execution
-- `/research:literature-review` → Direct command
-- `@agent-creator` → Direct agent reference
+### Phase 3: Strategic Planning (ALWAYS THIRD)
+**Skill**: `Skill("research-driven-planning")` OR `Skill("planner")` (based on complexity)
+
+**What It Does**:
+- Take optimized request from Phase 2
+- Break down into actionable tasks
+- **Identify dependencies** (what MUST be sequential)
+- **Identify parallelizable tasks** (what CAN run concurrently)
+- Select appropriate playbooks and skills for each task
+- Determine execution order and parallelization strategy
+- Create comprehensive execution plan
+
+**Input**: Optimized request from Phase 2
+**Output**:
+```json
+{
+  "plan": {
+    "sequential_phases": [
+      {
+        "phase": 1,
+        "name": "Foundation Setup",
+        "tasks": [
+          {
+            "task": "Research best practices",
+            "playbook": "research-quick-investigation",
+            "skills": ["gemini-search", "researcher"],
+            "agents": ["researcher"],
+            "prerequisites": [],
+            "can_parallelize": false
+          }
+        ]
+      },
+      {
+        "phase": 2,
+        "name": "Parallel Implementation",
+        "tasks": [
+          {
+            "task": "Build backend API",
+            "playbook": "backend-api-development",
+            "skills": ["backend-dev"],
+            "agents": ["backend-dev"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          },
+          {
+            "task": "Build frontend UI",
+            "playbook": "frontend-development",
+            "skills": ["react-specialist"],
+            "agents": ["coder"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          },
+          {
+            "task": "Setup database schema",
+            "playbook": "database-design",
+            "skills": ["sql-database-specialist"],
+            "agents": ["code-analyzer"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          }
+        ]
+      },
+      {
+        "phase": 3,
+        "name": "Integration & Validation",
+        "tasks": [
+          {
+            "task": "Integration testing",
+            "playbook": "testing-quality",
+            "skills": ["tester"],
+            "agents": ["tester"],
+            "prerequisites": ["phase 2 all tasks complete"],
+            "can_parallelize": false
+          }
+        ]
+      }
+    ]
+  },
+  "execution_strategy": {
+    "total_phases": 3,
+    "sequential_phases": [1, 3],
+    "parallel_phases": [2],
+    "estimated_time": "4-8 hours",
+    "mcp_requirements": ["flow-nexus", "memory-mcp"]
+  },
+  "dependencies": {
+    "phase_1_blocks": ["phase_2", "phase_3"],
+    "phase_2_blocks": ["phase_3"]
+  }
+}
+```
+
+**Key Outputs**:
+- **Sequential Tasks**: Must be done in order (Phase 1 → Phase 2 → Phase 3)
+- **Parallel Tasks**: Can run concurrently within a phase (backend + frontend + database)
+- **Playbooks/Skills**: Specific tools needed for each task
+- **Prerequisites**: What must complete before each task starts
+- **MCP Requirements**: Which MCPs to activate for the workflow
+
+---
+
+### Phase 4: Execution (ALWAYS FOURTH)
+**Action**: Execute the plan from Phase 3
+
+**Sequential Execution** (when prerequisites exist):
+```javascript
+// Phase 1 MUST complete before Phase 2
+Skill("gemini-search")
+// Wait for completion, then...
+
+// Phase 2 - Spawn in PARALLEL (single message, Golden Rule)
+[Single Message]:
+  Task("Backend Developer", "Build REST API...", "backend-dev")
+  Task("Frontend Developer", "Build React UI...", "coder")
+  Task("Database Architect", "Design schema...", "code-analyzer")
+  TodoWrite({ todos: [8-10 todos for all parallel work] })
+// Wait for all Phase 2 tasks, then...
+
+// Phase 3 - Sequential again
+Task("Integration Tester", "Test all components...", "tester")
+```
+
+**Parallel Execution** (when no prerequisites):
+```javascript
+// All tasks can run concurrently
+[Single Message]:
+  Task("Agent 1", "Independent task 1...", "researcher")
+  Task("Agent 2", "Independent task 2...", "coder")
+  Task("Agent 3", "Independent task 3...", "reviewer")
+  TodoWrite({ todos: [all tasks listed] })
+```
+
+---
+
+### Workflow Summary
+
+```mermaid
+User Message
+    ↓
+Phase 1: intent-analyzer
+    ├─ Analyze intent
+    ├─ Identify constraints
+    └─ Output: Understood intent (confidence score)
+    ↓
+Phase 2: prompt-architect
+    ├─ Optimize request
+    ├─ Add missing context
+    └─ Output: "What they should have asked"
+    ↓
+Phase 3: planner (research-driven-planning)
+    ├─ Break down into tasks
+    ├─ Identify dependencies (sequential)
+    ├─ Identify parallelizable tasks
+    ├─ Select playbooks/skills/agents
+    └─ Output: Execution plan with dependencies
+    ↓
+Phase 4: Execute Plan
+    ├─ Sequential phases (prerequisites)
+    ├─ Parallel phases (concurrent agents)
+    └─ Follow Golden Rule (1 MESSAGE = ALL RELATED OPERATIONS)
+```
+
+---
+
+### Execution Rules
+
+**CRITICAL RULES**:
+1. **ALWAYS run all 4 phases** for EVERY user message (no exceptions)
+2. **Phases 1-3 are ALWAYS SEQUENTIAL** (each depends on previous output)
+3. **Phase 4 execution** follows the plan:
+   - Sequential tasks: One message per phase, wait for completion
+   - Parallel tasks: ALL agents in ONE message (Golden Rule)
+4. **Output transparency**: Show the plan from Phase 3 to the user before executing
+5. **User approval**: For complex plans (>3 phases or >5 tasks), ask user to confirm before Phase 4
+
+---
+
+### Escape Hatches
+
+**Skip Phases 1-3 only if**:
+- Explicit skill invocation: `Skill("micro-skill-creator")` → Direct to Phase 4
+- Explicit command: `/research:literature-review` → Direct to Phase 4
+- Explicit agent reference: `@agent-creator` → Direct to Phase 4
+- User says "skip planning" or "just do it" → Direct to Phase 4
+
+**Otherwise**: ALWAYS execute all 4 phases sequentially.
+
+---
+
+### Example Walkthrough
+
+**User Message**: "Build a REST API for user management with authentication"
+
+**Phase 1 Output** (intent-analyzer):
+```
+Understood Intent: Build production-grade REST API with:
+- User CRUD operations
+- JWT-based authentication
+- Password hashing
+- Input validation
+Confidence: 92%
+```
+
+**Phase 2 Output** (prompt-architect):
+```
+Optimized Request: "Build a production-ready REST API with Express.js including:
+- User registration, login, CRUD endpoints
+- JWT authentication middleware
+- Bcrypt password hashing
+- Input validation with Joi
+- PostgreSQL database integration
+- Comprehensive test suite
+- API documentation (OpenAPI/Swagger)
+Success Criteria: All endpoints working, 90% test coverage, documented API"
+```
+
+**Phase 3 Output** (planner):
+```
+Plan:
+PHASE 1 (Sequential - Research):
+  - Task: Research Express.js auth best practices [gemini-search]
+  - Prerequisites: None
+
+PHASE 2 (Parallel - Implementation):
+  - Task 1: Backend API structure [backend-dev]
+  - Task 2: Database schema design [code-analyzer]
+  - Task 3: Auth middleware [coder]
+  - Prerequisites: Phase 1 complete
+  - Can parallelize: YES (all 3 tasks concurrent)
+
+PHASE 3 (Sequential - Testing):
+  - Task: Integration tests [tester]
+  - Prerequisites: Phase 2 all tasks complete
+
+PHASE 4 (Sequential - Documentation):
+  - Task: API docs generation [api-docs]
+  - Prerequisites: Phase 3 complete
+
+Execution Strategy:
+- Sequential phases: 1 → 2 → 3 → 4
+- Parallel: Phase 2 only (3 agents concurrently)
+- Total time: 4-6 hours
+- MCPs needed: flow-nexus (research), memory-mcp (state)
+```
+
+**Phase 4 Execution**:
+```javascript
+// Show plan to user, get approval
+// Then execute:
+
+// Phase 1 (sequential)
+Skill("gemini-search")
+// Wait for completion
+
+// Phase 2 (parallel - ONE message)
+[Single Message]:
+  Task("Backend Developer", "Build Express API structure with routes, controllers, models...", "backend-dev")
+  Task("Database Architect", "Design PostgreSQL schema with users table, indexes, constraints...", "code-analyzer")
+  Task("Auth Developer", "Implement JWT middleware, bcrypt hashing, session management...", "coder")
+  TodoWrite({ todos: [10 todos covering all Phase 2-4 work] })
+// Wait for all Phase 2 tasks
+
+// Phase 3 (sequential)
+Task("Integration Tester", "Write comprehensive tests covering all endpoints, auth flows...", "tester")
+// Wait for completion
+
+// Phase 4 (sequential)
+Task("API Documentor", "Generate OpenAPI/Swagger docs for all endpoints...", "api-docs")
+```
+
+---
+
+**Remember**: This 4-phase workflow is **MANDATORY for EVERY user message** unless explicitly bypassed with skill/command invocation.
 
 ---
 
