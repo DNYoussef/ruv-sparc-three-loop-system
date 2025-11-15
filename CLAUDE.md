@@ -1,14 +1,16 @@
-# Claude Code Configuration v2.1 - Universal 4-Phase Workflow System
+# Claude Code Configuration v2.2 - Universal 5-Phase Workflow System
 
-**Version**: 2.1.0
+**Version**: 2.2.0
 **Last Updated**: 2025-11-15
-**Previous Version**: v2.0.0 (2025-11-14)
+**Previous Version**: v2.1.0 (2025-11-15)
 
 ---
 
 ## 1. UNIVERSAL MESSAGE PROCESSING WORKFLOW (AUTO-EXECUTE ON EVERY REQUEST)
 
-**On EVERY user message, execute this 4-phase workflow SEQUENTIALLY:**
+**On EVERY user message, execute this 5-phase workflow SEQUENTIALLY:**
+
+**intent → prompt → plan → route → execute**
 
 ---
 
@@ -162,8 +164,85 @@
 
 ---
 
-### Phase 4: Execution (ALWAYS FOURTH)
-**Action**: Execute the plan from Phase 3
+### Phase 4: Playbook/Skill Routing (ALWAYS FOURTH)
+**Action**: Route each task to optimal playbook/skill
+
+**What It Does**:
+- Take execution plan from Phase 3
+- For each task in the plan, select the best playbook or skill
+- Match task requirements to playbook categories (see Section 3)
+- Consider:
+  - Task complexity (simple feature vs complex multi-loop)
+  - Domain (frontend, backend, ML, security, etc.)
+  - Time constraints (quick vs comprehensive)
+  - MCP availability (which MCPs are active)
+- Output routing decisions for Phase 5
+
+**Input**: Execution plan from Phase 3
+**Output**:
+```json
+{
+  "routing_decisions": [
+    {
+      "phase": 1,
+      "task": "Research Express.js auth best practices",
+      "selected_playbook": "research-quick-investigation",
+      "primary_skill": "gemini-search",
+      "fallback_skill": "researcher",
+      "rationale": "Quick research task, Gemini search optimal for best practices"
+    },
+    {
+      "phase": 2,
+      "parallel_group": "implementation",
+      "tasks": [
+        {
+          "task": "Build backend API",
+          "selected_playbook": "backend-api-development",
+          "primary_skill": "backend-dev",
+          "agents": ["backend-dev"],
+          "rationale": "Backend API development specialist playbook"
+        },
+        {
+          "task": "Database schema design",
+          "selected_playbook": "database-design",
+          "primary_skill": "sql-database-specialist",
+          "agents": ["code-analyzer"],
+          "rationale": "Database specialist with schema design expertise"
+        },
+        {
+          "task": "Auth middleware",
+          "selected_playbook": "simple-feature-implementation",
+          "primary_skill": "sparc-methodology",
+          "agents": ["coder"],
+          "rationale": "Single feature with TDD workflow"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Routing Criteria**:
+
+| Task Type | Route To | When |
+|-----------|----------|------|
+| Simple feature | simple-feature-implementation | <4 hours, single component |
+| Complex feature | three-loop-system (FLAGSHIP) | >4 hours, multi-component, high risk |
+| Quick research | research-quick-investigation | <2 hours, specific question |
+| Deep research | deep-research-sop (FLAGSHIP) | Multi-month, academic rigor |
+| Code quality | comprehensive-review | Audit, security, clarity |
+| Bug fix | smart-bug-fix | Production issue, debugging needed |
+| ML pipeline | ml-pipeline-development | Neural training, experiments |
+| API development | backend-api-development | REST/GraphQL endpoints |
+| Frontend | frontend-development | React/Vue/UI components |
+| Full-stack | feature-dev-complete | End-to-end 12-stage workflow |
+
+**Key Insight**: Routing happens AFTER planning, so we know exact requirements before selecting playbooks.
+
+---
+
+### Phase 5: Execution (ALWAYS FIFTH)
+**Action**: Execute using routed playbooks/skills from Phase 4
 
 **Sequential Execution** (when prerequisites exist):
 ```javascript
@@ -214,10 +293,16 @@ Phase 3: planner (research-driven-planning)
     ├─ Break down into tasks
     ├─ Identify dependencies (sequential)
     ├─ Identify parallelizable tasks
-    ├─ Select playbooks/skills/agents
     └─ Output: Execution plan with dependencies
     ↓
-Phase 4: Execute Plan
+Phase 4: router (playbook/skill routing)
+    ├─ Match tasks to playbooks (Section 3)
+    ├─ Select optimal skills per task
+    ├─ Choose appropriate agents
+    └─ Output: Routing decisions for each task
+    ↓
+Phase 5: Execute
+    ├─ Use routed playbooks/skills
     ├─ Sequential phases (prerequisites)
     ├─ Parallel phases (concurrent agents)
     └─ Follow Golden Rule (1 MESSAGE = ALL RELATED OPERATIONS)
@@ -228,25 +313,26 @@ Phase 4: Execute Plan
 ### Execution Rules
 
 **CRITICAL RULES**:
-1. **ALWAYS run all 4 phases** for EVERY user message (no exceptions)
-2. **Phases 1-3 are ALWAYS SEQUENTIAL** (each depends on previous output)
-3. **Phase 4 execution** follows the plan:
+1. **ALWAYS run all 5 phases** for EVERY user message (no exceptions)
+2. **Phases 1-4 are ALWAYS SEQUENTIAL** (each depends on previous output)
+3. **Phase 5 execution** follows the plan + routing:
    - Sequential tasks: One message per phase, wait for completion
    - Parallel tasks: ALL agents in ONE message (Golden Rule)
-4. **Output transparency**: Show the plan from Phase 3 to the user before executing
-5. **User approval**: For complex plans (>3 phases or >5 tasks), ask user to confirm before Phase 4
+   - Use playbooks/skills selected in Phase 4 routing
+4. **Output transparency**: Show plan (Phase 3) + routing (Phase 4) to user before Phase 5
+5. **User approval**: For complex plans (>3 phases or >5 tasks), ask user to confirm before Phase 5
 
 ---
 
 ### Escape Hatches
 
-**Skip Phases 1-3 only if**:
-- Explicit skill invocation: `Skill("micro-skill-creator")` → Direct to Phase 4
-- Explicit command: `/research:literature-review` → Direct to Phase 4
-- Explicit agent reference: `@agent-creator` → Direct to Phase 4
-- User says "skip planning" or "just do it" → Direct to Phase 4
+**Skip Phases 1-4 only if**:
+- Explicit skill invocation: `Skill("micro-skill-creator")` → Direct to Phase 5
+- Explicit command: `/research:literature-review` → Direct to Phase 5
+- Explicit agent reference: `@agent-creator` → Direct to Phase 5
+- User says "skip planning" or "just do it" → Skip to Phase 5
 
-**Otherwise**: ALWAYS execute all 4 phases sequentially.
+**Otherwise**: ALWAYS execute all 5 phases sequentially.
 
 ---
 
@@ -281,22 +367,22 @@ Success Criteria: All endpoints working, 90% test coverage, documented API"
 ```
 Plan:
 PHASE 1 (Sequential - Research):
-  - Task: Research Express.js auth best practices [gemini-search]
+  - Task: Research Express.js auth best practices
   - Prerequisites: None
 
 PHASE 2 (Parallel - Implementation):
-  - Task 1: Backend API structure [backend-dev]
-  - Task 2: Database schema design [code-analyzer]
-  - Task 3: Auth middleware [coder]
+  - Task 1: Backend API structure
+  - Task 2: Database schema design
+  - Task 3: Auth middleware
   - Prerequisites: Phase 1 complete
   - Can parallelize: YES (all 3 tasks concurrent)
 
 PHASE 3 (Sequential - Testing):
-  - Task: Integration tests [tester]
+  - Task: Integration tests
   - Prerequisites: Phase 2 all tasks complete
 
 PHASE 4 (Sequential - Documentation):
-  - Task: API docs generation [api-docs]
+  - Task: API docs generation
   - Prerequisites: Phase 3 complete
 
 Execution Strategy:
@@ -306,7 +392,50 @@ Execution Strategy:
 - MCPs needed: flow-nexus (research), memory-mcp (state)
 ```
 
-**Phase 4 Execution**:
+**Phase 4 Output** (router):
+```
+Routing Decisions:
+PHASE 1:
+  - Task: Research best practices
+  - Route: Skill("gemini-search") via research-quick-investigation playbook
+  - Agent: researcher
+  - Rationale: Quick research (<2 hours), Gemini optimal for best practices
+
+PHASE 2 (Parallel):
+  - Task 1: Backend API
+    Route: backend-api-development playbook
+    Skills: backend-dev
+    Agent: backend-dev
+    Rationale: Specialist backend development playbook
+
+  - Task 2: Database schema
+    Route: database-design playbook
+    Skills: sql-database-specialist
+    Agent: code-analyzer
+    Rationale: Database specialist with schema expertise
+
+  - Task 3: Auth middleware
+    Route: simple-feature-implementation playbook
+    Skills: sparc-methodology
+    Agent: coder
+    Rationale: Single feature with TDD (SPARC)
+
+PHASE 3:
+  - Task: Integration tests
+  - Route: testing-quality playbook
+  - Skills: tester
+  - Agent: tester
+  - Rationale: Comprehensive testing playbook
+
+PHASE 4:
+  - Task: API documentation
+  - Route: api-documentation-specialist playbook
+  - Skills: api-docs
+  - Agent: api-docs
+  - Rationale: OpenAPI/Swagger specialist
+```
+
+**Phase 5 Execution**:
 ```javascript
 // Show plan to user, get approval
 // Then execute:
@@ -333,7 +462,17 @@ Task("API Documentor", "Generate OpenAPI/Swagger docs for all endpoints...", "ap
 
 ---
 
-**Remember**: This 4-phase workflow is **MANDATORY for EVERY user message** unless explicitly bypassed with skill/command invocation.
+**Remember**: This 5-phase workflow is **MANDATORY for EVERY user message** unless explicitly bypassed with skill/command invocation.
+
+**Why 5 Phases vs 4?**
+- **Planning (Phase 3)**: Creates the strategy (WHAT to do, WHEN, dependencies)
+- **Routing (Phase 4)**: Selects the tools (HOW to do it, which playbooks/skills)
+- **Separation of concerns**: Strategy vs tactics, planning vs execution tools
+
+**Best of Both Worlds**:
+- ✅ v2.0 routing intelligence (playbook selection from Section 3)
+- ✅ v2.1 planning intelligence (dependency detection, parallelization)
+- ✅ v2.2 combined power (plan THEN route THEN execute)
 
 ---
 
