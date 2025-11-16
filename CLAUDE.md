@@ -236,6 +236,15 @@
 | API development | backend-api-development | REST/GraphQL endpoints |
 | Frontend | frontend-development | React/Vue/UI components |
 | Full-stack | feature-dev-complete | End-to-end 12-stage workflow |
+| **Learn codebase** | **codebase-onboarding** | **New developer, unfamiliar codebase** |
+| **Production down** | **emergency-incident-response** | **P0, critical outage, emergency** |
+| **Refactor code** | **refactoring-technical-debt** | **God objects, code smells, cleanup** |
+| **Database migration** | **database-migration** | **Schema changes, DB upgrades** |
+| **Update dependencies** | **dependency-upgrade-audit** | **Security patches, major upgrades** |
+| **Generate docs** | **comprehensive-documentation** | **API docs, architecture, guides** |
+| **Performance issues** | **performance-optimization-deep-dive** | **Slow app, high latency, bottlenecks** |
+| **Add languages** | **i18n-implementation** | **Multi-language, localization** |
+| **Accessibility** | **a11y-compliance** | **WCAG compliance, screen readers** |
 
 **Key Insight**: Routing happens AFTER planning, so we know exact requirements before selecting playbooks.
 
@@ -510,7 +519,7 @@ Task("API Documentor", "Generate OpenAPI/Swagger docs for all endpoints...", "ap
 | Scripts | `/scripts` | `scripts/deploy.sh`, `scripts/setup/` |
 | Configuration | `/config` | `config/database.yml` |
 
-### 2.3 Agent Usage (131 Total Agents)
+### 2.3 Agent Usage (203 Total Agents)
 
 **CRITICAL**: ONLY use predefined agents from registry.
 
@@ -532,7 +541,7 @@ Task("API Documentor", "Generate OpenAPI/Swagger docs for all endpoints...", "ap
 **How to Find Agents**:
 ```bash
 # List all agents by category
-Read(".claude/agents/README.md") | grep "^###"
+Read("claude-code-plugins/ruv-sparc-three-loop-system/agents/README.md") | grep "^###"
 
 # Search by capability
 npx claude-flow agents search "database"
@@ -736,7 +745,7 @@ npx claude-flow hooks session-end --export-metrics true
 
 - **Memory MCP not working?** Check `~/.claude/claude_desktop_config.json`
 - **Connascence Analyzer not working?** Verify server running on port 3000
-- **Agent not found?** Check `.claude/agents/` registry with `Read(".claude/agents/README.md")`
+- **Agent not found?** Check `claude-code-plugins/ruv-sparc-three-loop-system/agents/` registry with `Read("claude-code-plugins/ruv-sparc-three-loop-system/agents/README.md")`
 - **Skill not triggering?** Verify keyword match in Section 3 (Playbook Router)
 - **Playbook not found?** Run `npx claude-flow playbooks list` to see available
 
@@ -913,7 +922,7 @@ npx claude-flow hooks session-end --export-metrics true
 - `C:\Users\17175\.claude\agents\README.md`
 
 **Deep Research SOP**:
-- `.claude/agents/research/deep-research-orchestrator.md`
+- `claude-code-plugins/ruv-sparc-three-loop-system/agents/research/deep-research-orchestrator.md`
 
 **Claude Flow Documentation**:
 - https://github.com/ruvnet/claude-flow
