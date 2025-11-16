@@ -1,6 +1,14 @@
 ---
 name: sop-api-development
-description: Complete REST API development workflow coordinating backend, database, testing, documentation, and DevOps agents. 2-week timeline with TDD approach.
+description: Complete REST API development workflow coordinating backend, database,
+  testing, documentation, and DevOps agents. 2-week timeline with TDD approach.
+version: 1.0.0
+category: delivery
+tags:
+- delivery
+- development
+- workflow
+author: ruv
 ---
 
 # SOP: REST API Development

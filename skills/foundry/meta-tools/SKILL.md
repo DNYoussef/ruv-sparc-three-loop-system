@@ -1,3 +1,18 @@
+---
+name: meta-tools
+description: Meta-tools is a comprehensive framework for creating, validating, optimizing,
+  and composing development tools. It provides automated workflows for tool generation,
+  cross-tool composition, and orchestration patterns that enable developers to build
+  custom tooling ecosystems.
+version: 1.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
+---
+
 # Meta-Tools - Tool Creation and Composition Framework
 
 ## Overview

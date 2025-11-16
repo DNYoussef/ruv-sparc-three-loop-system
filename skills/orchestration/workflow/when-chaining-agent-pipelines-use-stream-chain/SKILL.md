@@ -1,28 +1,30 @@
 ---
 name: when-chaining-agent-pipelines-use-stream-chain
-description: Chain agent outputs as inputs in sequential or parallel pipelines for data flow orchestration
+description: Chain agent outputs as inputs in sequential or parallel pipelines for
+  data flow orchestration
 version: 1.0.0
 tags:
-  - pipeline
-  - streaming
-  - data-flow
-  - chaining
-  - orchestration
+- pipeline
+- streaming
+- data-flow
+- chaining
+- orchestration
 category: workflow
 agents:
-  - task-orchestrator
-  - memory-coordinator
+- task-orchestrator
+- memory-coordinator
 complexity: intermediate
 estimated_duration: 30-60 minutes
 prerequisites:
-  - Claude Flow installed
-  - Understanding of pipeline concepts
-  - Agent coordination experience
+- Claude Flow installed
+- Understanding of pipeline concepts
+- Agent coordination experience
 outputs:
-  - Pipeline configuration
-  - Streaming data flows
-  - Chained results
-  - Performance metrics
+- Pipeline configuration
+- Streaming data flows
+- Chained results
+- Performance metrics
+author: ruv
 ---
 
 # Agent Pipeline Chaining SOP

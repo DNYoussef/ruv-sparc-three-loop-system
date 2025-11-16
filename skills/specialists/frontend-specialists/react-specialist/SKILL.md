@@ -1,9 +1,28 @@
 ---
 name: react-specialist
-description: Modern React development specialist for React 18+ with hooks, context, suspense, server components (Next.js 13+), state management (Redux/Zustand/Jotai), performance optimization (React.memo, useMemo, useCallback), and component library development. Use when building React applications, optimizing rendering performance, implementing complex state management, or creating reusable component libraries.
+description: Modern React development specialist for React 18+ with hooks, context,
+  suspense, server components (Next.js 13+), state management (Redux/Zustand/Jotai),
+  performance optimization (React.memo, useMemo, useCallback), and component library
+  development. Use when building React applications, optimizing rendering performance,
+  implementing complex state management, or creating reusable component libraries.
 category: Frontend Specialists
 complexity: Medium
-triggers: ["react", "react 18", "hooks", "next.js", "redux", "zustand", "react performance", "server components", "suspense", "react testing library"]
+triggers:
+- react
+- react 18
+- hooks
+- next.js
+- redux
+- zustand
+- react performance
+- server components
+- suspense
+- react testing library
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # React Specialist

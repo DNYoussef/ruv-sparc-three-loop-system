@@ -1,9 +1,31 @@
 ---
 name: opentelemetry-observability
-description: OpenTelemetry specialist for distributed tracing, metrics collection, log correlation, auto-instrumentation, custom spans, trace context propagation, and sampling strategies. Use when implementing observability in microservices, debugging production issues, monitoring performance, or requiring OpenTelemetry best practices. Handles integration with Jaeger/Zipkin/Tempo, Prometheus/Grafana, and cloud-native observability platforms.
+description: OpenTelemetry specialist for distributed tracing, metrics collection,
+  log correlation, auto-instrumentation, custom spans, trace context propagation,
+  and sampling strategies. Use when implementing observability in microservices, debugging
+  production issues, monitoring performance, or requiring OpenTelemetry best practices.
+  Handles integration with Jaeger/Zipkin/Tempo, Prometheus/Grafana, and cloud-native
+  observability platforms.
 category: Observability
 complexity: High
-triggers: ["opentelemetry", "otel", "distributed tracing", "observability", "metrics", "spans", "tracing", "jaeger", "zipkin", "tempo", "instrumentation"]
+triggers:
+- opentelemetry
+- otel
+- distributed tracing
+- observability
+- metrics
+- spans
+- tracing
+- jaeger
+- zipkin
+- tempo
+- instrumentation
+version: 1.0.0
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # OpenTelemetry Observability Specialist

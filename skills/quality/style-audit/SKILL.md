@@ -1,6 +1,18 @@
 ---
 name: style-audit
-description: Audits code against CI/CD style rules, quality guidelines, and best practices, then rewrites code to meet standards without breaking functionality. Use this skill after functionality validation to ensure code is not just correct but also maintainable, readable, and production-ready. The skill applies linting rules, enforces naming conventions, improves code organization, and refactors for clarity while preserving all behavioral correctness verified by functionality audits.
+description: Audits code against CI/CD style rules, quality guidelines, and best practices,
+  then rewrites code to meet standards without breaking functionality. Use this skill
+  after functionality validation to ensure code is not just correct but also maintainable,
+  readable, and production-ready. The skill applies linting rules, enforces naming
+  conventions, improves code organization, and refactors for clarity while preserving
+  all behavioral correctness verified by functionality audits.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Style Audit
@@ -240,4 +252,3 @@ Style audit is the final step after theater-detection-audit ensures all mock cod
 To use this skill effectively, provide code to audit, team style guidelines or linting configurations, information about target production environment, and priorities for which issues are most important. The more context about team standards and project requirements, the more targeted and valuable the style improvements.
 
 The skill will systematically audit code, identify style issues, rewrite code to address problems, and verify functionality is preserved. It produces code that is not just correct but exemplifies professional software engineering standards. When combined with theater-detection-audit and functionality-audit, it ensures code meets the highest standards of quality before deployment.
-

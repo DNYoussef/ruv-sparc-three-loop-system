@@ -1,9 +1,28 @@
 ---
 name: typescript-specialist
-description: Modern TypeScript development specialist for Node.js backends, Express/Nest.js frameworks, type-safe frontend development, npm package creation, and monorepo management with Turborepo/nx. Use when building TypeScript APIs, implementing type-safe full-stack applications, creating npm libraries, or requiring TypeScript best practices. Handles strict mode, advanced types, build tooling, and ESM/CommonJS modules.
+description: Modern TypeScript development specialist for Node.js backends, Express/Nest.js
+  frameworks, type-safe frontend development, npm package creation, and monorepo management
+  with Turborepo/nx. Use when building TypeScript APIs, implementing type-safe full-stack
+  applications, creating npm libraries, or requiring TypeScript best practices. Handles
+  strict mode, advanced types, build tooling, and ESM/CommonJS modules.
 category: Language Specialists
 complexity: Medium
-triggers: ["typescript", "node.js", "express", "nest.js", "npm package", "typescript api", "type safety", "monorepo", "turborepo", "ts-node"]
+triggers:
+- typescript
+- node.js
+- express
+- nest.js
+- npm package
+- typescript api
+- type safety
+- monorepo
+- turborepo
+- ts-node
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # TypeScript Specialist

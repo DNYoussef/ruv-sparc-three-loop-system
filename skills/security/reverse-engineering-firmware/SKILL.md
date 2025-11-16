@@ -1,28 +1,38 @@
 ---
-name: "Reverse Engineering: Firmware Analysis"
-description: "Firmware extraction and IoT security analysis (RE Level 5) for routers and embedded systems. Use when analyzing IoT firmware, extracting embedded filesystems (SquashFS/JFFS2/CramFS), finding hardcoded credentials, performing CVE scans, or auditing embedded system security. Handles encrypted firmware with known decryption schemes. Completes in 2-8 hours with binwalk+firmadyne+QEMU emulation."
+name: reverse-engineering-firmware-analysis
+description: Firmware extraction and IoT security analysis (RE Level 5) for routers
+  and embedded systems. Use when analyzing IoT firmware, extracting embedded filesystems
+  (SquashFS/JFFS2/CramFS), finding hardcoded credentials, performing CVE scans, or
+  auditing embedded system security. Handles encrypted firmware with known decryption
+  schemes. Completes in 2-8 hours with binwalk+firmadyne+QEMU emulation.
 re_level: 5
-category: "IoT Security, Embedded Systems, Firmware Reverse Engineering"
-timebox: "2-8 hours"
-agents: "RE-Firmware-Analyst, security-manager, data-steward"
-difficulty: "Advanced"
+category: IoT Security, Embedded Systems, Firmware Reverse Engineering
+timebox: 2-8 hours
+agents: RE-Firmware-Analyst, security-manager, data-steward
+difficulty: Advanced
 badges:
-  - "RE Level 5"
-  - "Firmware Analysis"
-  - "⏱️ 2-8 hours"
+- RE Level 5
+- Firmware Analysis
+- "\u23F1\uFE0F 2-8 hours"
 keywords:
-  - firmware
-  - binwalk
-  - iot-security
-  - router-analysis
-  - embedded-systems
-  - squashfs
-  - jffs2
-  - cramfs
-  - qemu-emulation
-  - cve-scanning
-  - credential-extraction
-  - vulnerability-assessment
+- firmware
+- binwalk
+- iot-security
+- router-analysis
+- embedded-systems
+- squashfs
+- jffs2
+- cramfs
+- qemu-emulation
+- cve-scanning
+- credential-extraction
+- vulnerability-assessment
+version: 1.0.0
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # Reverse Engineering: Firmware Analysis

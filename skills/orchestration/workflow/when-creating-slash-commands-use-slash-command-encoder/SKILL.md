@@ -1,28 +1,30 @@
 ---
 name: when-creating-slash-commands-use-slash-command-encoder
-description: Create ergonomic slash commands for fast access to micro-skills with auto-discovery and parameter validation
+description: Create ergonomic slash commands for fast access to micro-skills with
+  auto-discovery and parameter validation
 version: 1.0.0
 tags:
-  - slash-commands
-  - cli
-  - automation
-  - micro-skills
-  - encoding
+- slash-commands
+- cli
+- automation
+- micro-skills
+- encoding
 category: workflow
 agents:
-  - coder
-  - base-template-generator
+- coder
+- base-template-generator
 complexity: intermediate
 estimated_duration: 20-40 minutes
 prerequisites:
-  - Claude Flow installed
-  - Understanding of command-line interfaces
-  - Micro-skills knowledge
+- Claude Flow installed
+- Understanding of command-line interfaces
+- Micro-skills knowledge
 outputs:
-  - Slash command definitions
-  - Command handlers
-  - Documentation
-  - Validation logic
+- Slash command definitions
+- Command handlers
+- Documentation
+- Validation logic
+author: ruv
 ---
 
 # Slash Command Encoder SOP

@@ -1,25 +1,40 @@
 ---
-name: "Reproducibility Audit"
-description: "Comprehensive audit of ML reproducibility packages ensuring ACM Artifact Evaluation compliance with statistical validation for Deep Research SOP Pipeline G. Use before Quality Gate 3 validation when reproducibility packages created, archiving research artifacts to Zenodo/HuggingFace, or preparing for academic publication (NeurIPS, ICML, CVPR). Validates Docker environment builds, README instructions (≤5 steps), dependency pinning, deterministic execution with fixed seeds, and requires 3/3 successful reproduction runs within ±1% tolerance using paired t-tests. Recommends ACM badges (Available, Functional, Reproduced, Reusable) based on audit results."
-pipeline: "Pipeline G (Reproducibility & Archival)"
-quality_gate: "Gate 3"
-phase: "Phase 3 (Production)"
-agents: "tester (lead), archivist"
-time_estimate: "1-2 days"
-acm_badges: "Available, Functional, Reproduced, Reusable"
+name: reproducibility-audit
+description: "Comprehensive audit of ML reproducibility packages ensuring ACM Artifact\
+  \ Evaluation compliance with statistical validation for Deep Research SOP Pipeline\
+  \ G. Use before Quality Gate 3 validation when reproducibility packages created,\
+  \ archiving research artifacts to Zenodo/HuggingFace, or preparing for academic\
+  \ publication (NeurIPS, ICML, CVPR). Validates Docker environment builds, README\
+  \ instructions (\u22645 steps), dependency pinning, deterministic execution with\
+  \ fixed seeds, and requires 3/3 successful reproduction runs within \xB11% tolerance\
+  \ using paired t-tests. Recommends ACM badges (Available, Functional, Reproduced,\
+  \ Reusable) based on audit results."
+pipeline: Pipeline G (Reproducibility & Archival)
+quality_gate: Gate 3
+phase: Phase 3 (Production)
+agents: tester (lead), archivist
+time_estimate: 1-2 days
+acm_badges: Available, Functional, Reproduced, Reusable
 keywords:
-  - reproducibility-audit
-  - acm-artifact-evaluation
-  - docker-validation
-  - deterministic-execution
-  - statistical-validation
-  - paired-t-test
-  - tolerance-checking
-  - zenodo-archival
-  - huggingface-hub
-  - neurips-checklist
-  - gate-3-validation
-  - publication-readiness
+- reproducibility-audit
+- acm-artifact-evaluation
+- docker-validation
+- deterministic-execution
+- statistical-validation
+- paired-t-test
+- tolerance-checking
+- zenodo-archival
+- huggingface-hub
+- neurips-checklist
+- gate-3-validation
+- publication-readiness
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Reproducibility Audit

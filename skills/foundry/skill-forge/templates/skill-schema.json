@@ -1,0 +1,336 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skill Schema Template",
+  "description": "Phase 0: Schema-first design template for defining I/O contracts BEFORE writing prose instructions",
+  "type": "object",
+
+  "skill_metadata": {
+    "skill_name": "",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "created_date": "",
+    "last_modified": "",
+    "complexity": "simple|medium|complex",
+    "track": "quick|expert"
+  },
+
+  "input_contract": {
+    "description": "Define what the skill expects as input",
+    "required": [
+      {
+        "name": "",
+        "type": "string|number|boolean|array|object|file|url",
+        "description": "",
+        "validation_rules": [],
+        "example": ""
+      }
+    ],
+    "optional": [
+      {
+        "name": "",
+        "type": "",
+        "description": "",
+        "default_value": "",
+        "example": ""
+      }
+    ],
+    "constraints": [
+      {
+        "type": "size_limit|format|range|pattern|dependency",
+        "description": "",
+        "enforcement": "validation|error|warning"
+      }
+    ]
+  },
+
+  "output_contract": {
+    "description": "Define what the skill produces as output",
+    "format": "text|json|yaml|markdown|code|file|structured",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "success_conditions": [
+      {
+        "condition": "",
+        "validation_method": "assertion|test|manual_check",
+        "pass_criteria": ""
+      }
+    ],
+    "output_examples": [
+      {
+        "scenario": "nominal_case",
+        "input": {},
+        "expected_output": {},
+        "notes": ""
+      },
+      {
+        "scenario": "edge_case",
+        "input": {},
+        "expected_output": {},
+        "notes": ""
+      }
+    ]
+  },
+
+  "behavior_contract": {
+    "description": "Define how the skill behaves during execution",
+    "phases": [
+      {
+        "name": "",
+        "description": "",
+        "inputs": [],
+        "outputs": [],
+        "side_effects": [],
+        "error_handling": ""
+      }
+    ],
+    "state_management": {
+      "stateless": true,
+      "state_preserved": [],
+      "state_cleanup": ""
+    },
+    "timeout_behavior": {
+      "max_duration": "",
+      "timeout_action": "abort|partial_result|retry",
+      "cleanup_on_timeout": ""
+    }
+  },
+
+  "error_conditions": {
+    "description": "Define all ways the skill can fail and how to handle them",
+    "error_types": [
+      {
+        "error_code": "",
+        "error_name": "",
+        "trigger_conditions": [],
+        "severity": "critical|high|medium|low",
+        "recovery_strategy": "abort|retry|fallback|user_intervention",
+        "user_message": "",
+        "internal_message": ""
+      }
+    ],
+    "validation_failures": [
+      {
+        "validation": "",
+        "failure_message": "",
+        "suggested_fix": ""
+      }
+    ]
+  },
+
+  "dependencies": {
+    "description": "Define external requirements and dependencies",
+    "tools_required": [
+      {
+        "name": "",
+        "version": "",
+        "purpose": "",
+        "installation_check": "",
+        "installation_instructions": ""
+      }
+    ],
+    "files_required": [
+      {
+        "path": "",
+        "purpose": "",
+        "format": "",
+        "validation": ""
+      }
+    ],
+    "api_dependencies": [
+      {
+        "service": "",
+        "endpoint": "",
+        "authentication": "",
+        "rate_limits": ""
+      }
+    ],
+    "other_skills": [
+      {
+        "skill_name": "",
+        "purpose": "",
+        "fallback_if_missing": ""
+      }
+    ]
+  },
+
+  "performance_contract": {
+    "description": "Define performance expectations and limits",
+    "time_complexity": {
+      "best_case": "",
+      "average_case": "",
+      "worst_case": ""
+    },
+    "space_complexity": {
+      "memory_usage": "",
+      "disk_usage": ""
+    },
+    "scalability": {
+      "max_input_size": "",
+      "max_output_size": "",
+      "concurrent_executions": ""
+    },
+    "resource_limits": {
+      "cpu_limit": "",
+      "memory_limit": "",
+      "disk_limit": "",
+      "network_limit": ""
+    }
+  },
+
+  "testing_contract": {
+    "description": "Define how the skill will be tested",
+    "test_cases": [
+      {
+        "type": "nominal|edge|error|boundary|integration",
+        "name": "",
+        "input": {},
+        "expected_output": {},
+        "success_criteria": ""
+      }
+    ],
+    "coverage_requirements": {
+      "code_coverage": ">=80%",
+      "use_case_coverage": ">=95%",
+      "error_coverage": ">=90%"
+    },
+    "performance_benchmarks": [
+      {
+        "metric": "",
+        "target": "",
+        "measurement_method": ""
+      }
+    ]
+  },
+
+  "versioning_contract": {
+    "description": "Define how schema changes are versioned",
+    "version_policy": "semver",
+    "breaking_changes": [
+      "Remove required input field",
+      "Change output format",
+      "Remove error condition",
+      "Change behavior significantly"
+    ],
+    "non_breaking_changes": [
+      "Add optional input field",
+      "Add new error condition",
+      "Improve error messages",
+      "Optimize performance"
+    ],
+    "deprecation_policy": {
+      "notice_period": "30 days",
+      "migration_path": ""
+    }
+  },
+
+  "frozen_structure": {
+    "description": "Lock 80% of structure, allow 20% content flexibility",
+    "locked_elements": [
+      "input_contract.required (structure)",
+      "output_contract.format",
+      "error_conditions.error_types (structure)",
+      "dependencies.tools_required (list)",
+      "testing_contract.coverage_requirements"
+    ],
+    "flexible_elements": [
+      "input_contract.optional (can add more)",
+      "error_conditions.error_types.user_message (content)",
+      "output_contract.output_examples (can add more)",
+      "dependencies (can add more items within categories)",
+      "performance_contract (targets can adjust)"
+    ]
+  },
+
+  "schema_validation": {
+    "description": "Validation rules for this schema file",
+    "required_sections": [
+      "skill_metadata",
+      "input_contract",
+      "output_contract",
+      "error_conditions"
+    ],
+    "validation_script": "scripts/validate-schema.js",
+    "schema_version": "2.0.0"
+  },
+
+  "usage_notes": {
+    "when_to_use": "Use Phase 0 for Expert Track skills or complex Quick Track skills with well-defined I/O requirements",
+    "time_investment": "5-10 minutes to complete schema",
+    "benefits": [
+      "+62% format compliance (fewer structural errors)",
+      "+47% fewer missing elements (comprehensive planning)",
+      "Clearer error handling (upfront error design)",
+      "Better testability (explicit success criteria)",
+      "Easier maintenance (frozen contracts prevent drift)"
+    ],
+    "integration_with_phases": {
+      "Phase 1": "Schema informs intent analysis - what inputs/outputs needed?",
+      "Phase 2": "Use cases must match schema's output_examples",
+      "Phase 3": "Structure must implement schema's contracts",
+      "Phase 5": "Instructions must satisfy schema's success_conditions",
+      "Phase 7": "Testing validates against schema's test_cases",
+      "Phase 8": "Metrics track deviation from schema over time"
+    }
+  },
+
+  "examples": {
+    "simple_skill": {
+      "skill_name": "code-formatter",
+      "input_contract": {
+        "required": [
+          {
+            "name": "file_path",
+            "type": "file",
+            "description": "Path to file to format",
+            "validation_rules": ["file_exists", "is_text_file"],
+            "example": "src/index.js"
+          }
+        ],
+        "optional": [
+          {
+            "name": "formatter",
+            "type": "string",
+            "description": "Formatter tool to use",
+            "default_value": "prettier",
+            "example": "prettier|black|rustfmt"
+          }
+        ]
+      },
+      "output_contract": {
+        "format": "text",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "formatted_content": {"type": "string"},
+            "changes_made": {"type": "integer"},
+            "success": {"type": "boolean"}
+          }
+        },
+        "success_conditions": [
+          {
+            "condition": "File formatted without errors",
+            "validation_method": "assertion",
+            "pass_criteria": "success === true && changes_made >= 0"
+          }
+        ]
+      },
+      "error_conditions": {
+        "error_types": [
+          {
+            "error_code": "FILE_NOT_FOUND",
+            "error_name": "File does not exist",
+            "trigger_conditions": ["file_path invalid"],
+            "severity": "high",
+            "recovery_strategy": "abort",
+            "user_message": "File not found: {file_path}. Please check the path and try again.",
+            "internal_message": "FileNotFoundError: {file_path}"
+          }
+        ]
+      }
+    }
+  }
+}

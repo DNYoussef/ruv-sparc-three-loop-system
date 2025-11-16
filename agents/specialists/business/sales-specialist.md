@@ -355,5 +355,5 @@ customer-support/support-specialist/feedback     // Customer satisfaction
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/sales-specialist.md`
+**Deployment**: `~/agents/specialists/business/sales-specialist.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

@@ -351,5 +351,5 @@ development/coder/technical-constraints             // Technical limitations
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/product-manager.md`
+**Deployment**: `~/agents/specialists/business/product-manager.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

@@ -1,6 +1,14 @@
 ---
 name: sop-code-review
-description: Comprehensive code review workflow coordinating quality, security, performance, and documentation reviewers. 4-hour timeline for thorough multi-agent review.
+description: Comprehensive code review workflow coordinating quality, security, performance,
+  and documentation reviewers. 4-hour timeline for thorough multi-agent review.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # SOP: Code Review Workflow

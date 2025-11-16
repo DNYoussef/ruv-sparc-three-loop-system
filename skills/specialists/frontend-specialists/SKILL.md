@@ -1,10 +1,26 @@
 ---
 name: frontend-specialists
-description: Comprehensive frontend development system with specialist agents for React, Vue, UI components, CSS styling, accessibility, and performance optimization. Use when building modern web applications, component libraries, or optimizing frontend performance. Includes production-ready scripts, templates, and testing utilities.
+description: Comprehensive frontend development system with specialist agents for
+  React, Vue, UI components, CSS styling, accessibility, and performance optimization.
+  Use when building modern web applications, component libraries, or optimizing frontend
+  performance. Includes production-ready scripts, templates, and testing utilities.
 category: Frontend Development
 complexity: High
 tier: Gold
-triggers: ["frontend", "react", "vue", "ui components", "css", "accessibility", "performance optimization", "component library"]
+triggers:
+- frontend
+- react
+- vue
+- ui components
+- css
+- accessibility
+- performance optimization
+- component library
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # Frontend Specialists

@@ -1,0 +1,18 @@
+{
+  "name": "skill-forge-validation",
+  "version": "2.0.0",
+  "description": "Validation scripts for skill-forge v2.0",
+  "scripts": {
+    "validate:intake": "node validate-intake.js",
+    "validate:instructions": "node validate-instructions.js",
+    "validate:schema": "node validate-schema.js",
+    "validate:skill": "node validate-skill.js"
+  },
+  "keywords": ["skill-forge", "validation", "claude-code"],
+  "author": "skill-forge",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {}
+}

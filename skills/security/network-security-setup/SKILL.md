@@ -1,8 +1,16 @@
 ---
 name: network-security-setup
-description: Configure Claude Code sandbox network isolation with trusted domains, custom access policies, and environment variables
-tags: [security, network, isolation, trusted-domains, configuration]
+description: Configure Claude Code sandbox network isolation with trusted domains,
+  custom access policies, and environment variables
+tags:
+- security
+- network
+- isolation
+- trusted-domains
+- configuration
 version: 1.0.0
+category: security
+author: ruv
 ---
 
 # Network Security Setup

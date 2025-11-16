@@ -1,5 +1,5 @@
 // Skills-Agent Coordination - Bipartite Graph
-// 106 Skills × 130 Agents with PRIMARY agent assignments
+// 106 Skills × 203 Agents with PRIMARY agent assignments
 // Generated: 2025-11-02
 
 digraph SkillsAgentCoordination {
@@ -15,7 +15,7 @@ digraph SkillsAgentCoordination {
         label=<
             <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="10">
                 <TR><TD BGCOLOR="#1976D2"><FONT COLOR="white" POINT-SIZE="24"><B>Skills-Agent Coordination Map</B></FONT></TD></TR>
-                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">106 Skills × 130 Agents | PRIMARY Assignments + Coordination Patterns</FONT></TD></TR>
+                <TR><TD BGCOLOR="#E3F2FD"><FONT POINT-SIZE="14">106 Skills × 203 Agents | PRIMARY Assignments + Coordination Patterns</FONT></TD></TR>
             </TABLE>
         >
         shape=plaintext
@@ -192,7 +192,7 @@ digraph SkillsAgentCoordination {
                 <TR><TD>ML & AI</TD><TD>6</TD><TD>4.0</TD></TR>
                 <TR><TD>Research SOP</TD><TD>4</TD><TD>5.5</TD></TR>
                 <TR><TD>Other Specialized</TD><TD>53</TD><TD>1.2</TD></TR>
-                <TR><TD COLSPAN="3" BGCOLOR="#E0E0E0"><B>Total: 130 Agents | Avg: 1.96 skills/agent</B></TD></TR>
+                <TR><TD COLSPAN="3" BGCOLOR="#E0E0E0"><B>Total: 203 Agents | Avg: 1.96 skills/agent</B></TD></TR>
             </TABLE>
         >
         shape=plaintext

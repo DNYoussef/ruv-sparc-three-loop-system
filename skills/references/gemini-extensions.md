@@ -70,4 +70,4 @@ Plus 60+ community extensions on GitHub.
 
 ---
 
-**See full documentation** in `.claude/agents/gemini-extensions-agent.md`
+**See full documentation** in `agents/gemini-extensions-agent.md`

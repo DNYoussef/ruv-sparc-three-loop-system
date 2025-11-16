@@ -1,9 +1,18 @@
 ---
 name: sop-dogfooding-pattern-retrieval
-description: 3-part dogfooding workflow Phase 2 - Query Memory-MCP for similar past fixes using vector search, rank patterns, optionally apply transformations. 10-30 seconds execution time.
+description: 3-part dogfooding workflow Phase 2 - Query Memory-MCP for similar past
+  fixes using vector search, rank patterns, optionally apply transformations. 10-30
+  seconds execution time.
 agents: code-analyzer, coder, reviewer
 mcp_tools: memory-mcp
 scripts: dogfood-memory-retrieval.bat, query-memory-mcp.js, apply-fix-pattern.js
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # SOP: Dogfooding Pattern Retrieval

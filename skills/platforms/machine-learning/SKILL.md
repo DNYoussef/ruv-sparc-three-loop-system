@@ -1,24 +1,31 @@
 ---
-skill_name: machine-learning
-description: Comprehensive machine learning development with training, evaluation, and deployment capabilities
+name: machine-learning
+description: Comprehensive machine learning development with training, evaluation, and deployment capabilities. Use when training models, developing ML pipelines, or deploying machine learning systems.
 version: 2.0.0
 tier: gold
 author: SPARC System
-tags: [ml, deep-learning, training, evaluation, deployment, data-science]
+tags:
+- ml
+- deep-learning
+- training
+- evaluation
+- deployment
+- data-science
 dependencies:
-  - python-specialist
-  - agentdb-learning
-  - ml-expert
+- python-specialist
+- agentdb-learning
+- ml-expert
 agents:
-  - ml-developer
-  - data-steward
-  - evaluator
+- ml-developer
+- data-steward
+- evaluator
 related_skills:
-  - when-debugging-ml-training-use-ml-training-debugger
-  - when-developing-ml-models-use-ml-expert
-  - agentdb-learning
-  - holistic-evaluation
-  - baseline-replication
+- when-debugging-ml-training-use-ml-training-debugger
+- when-developing-ml-models-use-ml-expert
+- agentdb-learning
+- holistic-evaluation
+- baseline-replication
+category: platforms
 ---
 
 # Machine Learning Development Skill

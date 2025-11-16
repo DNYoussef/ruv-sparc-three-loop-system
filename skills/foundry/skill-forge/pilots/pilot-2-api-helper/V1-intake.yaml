@@ -1,0 +1,95 @@
+# Skill Intake Template - Pilot 2: api-integration-helper
+
+skill_name: "api-integration-helper"
+
+skill_category: "development"
+
+complexity_level: "medium"
+
+problem_solved: "Integrating with third-party REST APIs requires writing repetitive boilerplate code for authentication, request handling, error management, and retries. This is time-consuming and error-prone, especially when developers need to handle edge cases like rate limiting, timeouts, and network failures."
+
+desired_outcome: "Developers receive production-ready boilerplate code for REST API integrations that includes authentication (API key or OAuth), HTTP request functions, comprehensive error handling with retries, rate limit handling, and example usage code in their preferred language (JavaScript or Python)."
+
+primary_users:
+  - "backend developers"
+  - "full-stack developers"
+  - "API integration engineers"
+  - "DevOps engineers"
+
+trigger_keywords:
+  - "integrate with API"
+  - "REST API integration"
+  - "API boilerplate"
+  - "generate API code"
+  - "API authentication setup"
+  - "API request handling"
+  - "connect to REST API"
+  - "API client code"
+  - "setup API integration"
+
+negative_triggers:
+  - "GraphQL API"
+  - "SOAP API"
+  - "WebSocket"
+
+example_usage_1:
+  scenario: "nominal_case"
+  description: "Generate GitHub API integration code"
+  user_request: "Help me integrate with the GitHub REST API using API key authentication in JavaScript"
+  expected_behavior: "Generate complete JavaScript module with auth headers, request function, retry logic, and example usage"
+  expected_output: "Complete api-client.js file with authentication, apiRequest() function, withRetry() helper, rate limit handling, and example calls"
+
+example_usage_2:
+  scenario: "edge_case"
+  description: "OAuth authentication for complex API"
+  user_request: "Generate Python code for OpenAI API with OAuth authentication"
+  expected_behavior: "Generate OAuth flow implementation with token refresh, request signing, and error handling"
+  expected_output: "Python module with OAuth2 flow, token management, automatic refresh, and authenticated request functions"
+
+example_usage_3:
+  scenario: "error_case"
+  description: "Missing API credentials"
+  user_request: "Generate API code but no authentication method specified"
+  expected_behavior: "Ask user to specify authentication method (API key, OAuth, or none) and provide guidance"
+  expected_output: "Prompt: 'Which authentication method does this API use? (1) API key, (2) OAuth 2.0, (3) None (public API)'"
+
+constraints:
+  - "Supports REST APIs only (not GraphQL, SOAP, or WebSocket)"
+  - "Supports JavaScript (Node.js/Fetch) and Python (requests library)"
+  - "Requires API documentation or at least base URL and auth method"
+  - "Generated code assumes async/await (JavaScript) or asyncio (Python) support"
+
+must_have_features:
+  - "Authentication setup (API key or OAuth)"
+  - "HTTP request function with error handling"
+  - "Exponential backoff retry logic (3 attempts)"
+  - "Rate limit detection and handling (429 status)"
+  - "Response parsing and validation"
+  - "Example usage code"
+
+nice_to_have_features:
+  - "TypeScript type definitions"
+  - "Request/response logging"
+  - "API response caching"
+  - "Webhook handler generation"
+
+success_criteria:
+  - "Generated code runs without errors when API credentials provided"
+  - "Retries work for transient failures (verified with mock 500 error)"
+  - "Rate limiting respected (verified with mock 429 response)"
+  - "Example usage code executes successfully"
+  - "All error conditions have specific handlers (network, auth, rate limit, server error)"
+
+failure_conditions:
+  - "Generated code has syntax errors"
+  - "Authentication not implemented correctly"
+  - "Retry logic missing or infinite loop"
+  - "Rate limits ignored (causing API bans)"
+  - "No error handling (crashes on first failure)"
+
+metadata:
+  created_date: "2025-11-06"
+  created_by: "pilot-test"
+  track: "quick"
+  version: "1.0.0"
+  status: "draft"

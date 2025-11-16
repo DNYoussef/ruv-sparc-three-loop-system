@@ -16,7 +16,7 @@
    - Statistics tables and legends
 
 2. **skills-agent-coordination.dot** (17 KB)
-   - 106 skills × 130 agents relationships
+   - 106 skills × 203 agents relationships
    - PRIMARY agent assignments
    - Coordination patterns: Hierarchical, Parallel, Consensus
 
@@ -72,7 +72,7 @@
 **Focus:** Who does what and how they coordinate
 
 **Shows:**
-- 130 agents grouped by role
+- 203 agents grouped by role
 - Coordination patterns (Hierarchical, Parallel, Consensus)
 - Agent utilization statistics
 - PRIMARY assignments for each skill
@@ -425,7 +425,7 @@ All diagrams use Material Design colors for consistency:
 ### v1.0.0 (2025-11-02) - Initial Release
 - Created 6 comprehensive GraphViz diagrams
 - 106 skills (62 current + 44 planned)
-- 130 agents mapped
+- 203 agents mapped
 - 10 MECE categories
 - 200+ MCP tools integrated
 - Coverage analysis: 85% → 92%

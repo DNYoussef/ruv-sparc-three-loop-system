@@ -1,6 +1,16 @@
 ---
-name: "Holistic Evaluation"
-description: "Comprehensive multi-dimensional model evaluation across accuracy, fairness, robustness, efficiency, interpretability, and safety for Deep Research SOP Pipeline E. Use after method development when Quality Gate 2 validation is required, ensuring models meet production-ready standards across 6+ evaluation dimensions before deployment."
+name: holistic-evaluation
+description: Comprehensive multi-dimensional model evaluation across accuracy, fairness,
+  robustness, efficiency, interpretability, and safety for Deep Research SOP Pipeline
+  E. Use after method development when Quality Gate 2 validation is required, ensuring
+  models meet production-ready standards across 6+ evaluation dimensions before deployment.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Holistic Evaluation

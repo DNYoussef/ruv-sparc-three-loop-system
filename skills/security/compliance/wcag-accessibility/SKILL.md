@@ -1,9 +1,30 @@
 ---
 name: wcag-accessibility
-description: WCAG 2.1 AA/AAA accessibility compliance specialist for ARIA attributes, keyboard navigation, screen reader testing, color contrast validation, semantic HTML, and automated a11y testing with axe-core/Lighthouse. Use when ensuring web accessibility, meeting legal compliance (ADA, Section 508), implementing inclusive design, or requiring WCAG best practices. Handles focus management, live regions, accessible forms, and assistive technology compatibility.
+description: WCAG 2.1 AA/AAA accessibility compliance specialist for ARIA attributes,
+  keyboard navigation, screen reader testing, color contrast validation, semantic
+  HTML, and automated a11y testing with axe-core/Lighthouse. Use when ensuring web
+  accessibility, meeting legal compliance (ADA, Section 508), implementing inclusive
+  design, or requiring WCAG best practices. Handles focus management, live regions,
+  accessible forms, and assistive technology compatibility.
 category: Compliance
 complexity: Medium
-triggers: ["wcag", "accessibility", "a11y", "aria", "screen reader", "keyboard navigation", "color contrast", "ada compliance", "section 508", "inclusive design"]
+triggers:
+- wcag
+- accessibility
+- a11y
+- aria
+- screen reader
+- keyboard navigation
+- color contrast
+- ada compliance
+- section 508
+- inclusive design
+version: 1.0.0
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # WCAG Accessibility Specialist

@@ -1,9 +1,32 @@
 ---
 name: aws-specialist
-description: AWS cloud specialist for infrastructure as code with CloudFormation/CDK, serverless with Lambda, container orchestration with ECS/Fargate, database management with RDS, storage with S3/CloudFront CDN, and deployment automation. Use when deploying to AWS, optimizing cloud costs, implementing auto-scaling, or requiring AWS-specific best practices. Handles IAM policies, VPC networking, monitoring with CloudWatch, and multi-region deployments.
+description: AWS cloud specialist for infrastructure as code with CloudFormation/CDK,
+  serverless with Lambda, container orchestration with ECS/Fargate, database management
+  with RDS, storage with S3/CloudFront CDN, and deployment automation. Use when deploying
+  to AWS, optimizing cloud costs, implementing auto-scaling, or requiring AWS-specific
+  best practices. Handles IAM policies, VPC networking, monitoring with CloudWatch,
+  and multi-region deployments.
 category: Cloud Platforms
 complexity: High
-triggers: ["aws", "cloudformation", "lambda", "ecs", "fargate", "rds", "s3", "cloudfront", "aws deployment", "aws cdk", "cloudwatch", "auto-scaling"]
+triggers:
+- aws
+- cloudformation
+- lambda
+- ecs
+- fargate
+- rds
+- s3
+- cloudfront
+- aws deployment
+- aws cdk
+- cloudwatch
+- auto-scaling
+version: 1.0.0
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # AWS Specialist

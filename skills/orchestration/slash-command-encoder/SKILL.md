@@ -1,8 +1,19 @@
 ---
 name: slash-command-encoder
-description: Creates ergonomic slash commands (/command) that provide fast, unambiguous access to micro-skills, cascades, and agents. Enhanced with auto-discovery, intelligent routing, parameter validation, and command chaining. Generates comprehensive command catalogs for all installed skills with multi-model integration.
-tags: [commands, interface, ergonomics, auto-discovery, composition, tier-3]
+description: Creates ergonomic slash commands (/command) that provide fast, unambiguous
+  access to micro-skills, cascades, and agents. Enhanced with auto-discovery, intelligent
+  routing, parameter validation, and command chaining. Generates comprehensive command
+  catalogs for all installed skills with multi-model integration.
+tags:
+- commands
+- interface
+- ergonomics
+- auto-discovery
+- composition
+- tier-3
 version: 2.0.0
+category: orchestration
+author: ruv
 ---
 
 # Slash Command Encoder (Enhanced)

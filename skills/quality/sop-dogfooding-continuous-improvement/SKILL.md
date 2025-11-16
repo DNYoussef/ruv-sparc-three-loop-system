@@ -1,9 +1,18 @@
 ---
 name: sop-dogfooding-continuous-improvement
-description: 3-part dogfooding workflow Phase 3 - Full cycle orchestration combining Quality Detection + Pattern Retrieval + Application with automated metrics tracking. 60-120 seconds execution time.
+description: 3-part dogfooding workflow Phase 3 - Full cycle orchestration combining
+  Quality Detection + Pattern Retrieval + Application with automated metrics tracking.
+  60-120 seconds execution time.
 agents: hierarchical-coordinator, code-analyzer, coder, reviewer
 mcp_tools: connascence-analyzer, memory-mcp, claude-flow
 scripts: dogfood-continuous-improvement.bat, generate-cycle-summary.js, update-dashboard.js
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # SOP: Dogfooding Continuous Improvement

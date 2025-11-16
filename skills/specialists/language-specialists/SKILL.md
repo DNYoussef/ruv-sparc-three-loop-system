@@ -1,9 +1,24 @@
 ---
 name: language-specialists
-description: Unified language specialists for Python and TypeScript development, providing expert guidance for modern backend APIs, type-safe development, async optimization, and framework integration (Django/Flask/FastAPI for Python, Express/Nest.js for TypeScript). Includes comprehensive resources, testing tools, and production-ready examples.
+description: Unified language specialists for Python and TypeScript development, providing
+  expert guidance for modern backend APIs, type-safe development, async optimization,
+  and framework integration (Django/Flask/FastAPI for Python, Express/Nest.js for
+  TypeScript). Includes comprehensive resources, testing tools, and production-ready
+  examples.
 category: Specialized Development
 complexity: Medium-High
-triggers: ["language specialist", "python typescript", "multi-language", "backend development", "type safety", "api development"]
+triggers:
+- language specialist
+- python typescript
+- multi-language
+- backend development
+- type safety
+- api development
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # Language Specialists - Gold Tier

@@ -353,5 +353,5 @@ support/customer-support/feedback/common-issues     // Support trends
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/market-researcher.md`
+**Deployment**: `~/agents/specialists/business/market-researcher.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

@@ -1,6 +1,17 @@
 ---
 name: dogfooding-system
-description: Self-improvement system enabling Claude Code to detect code quality violations, retrieve past fix patterns from memory, and orchestrate automated improvement cycles. Uses Connascence Analyzer for 7+ violation types, Memory-MCP for pattern storage with WHO/WHEN/PROJECT/WHY tagging, and sandbox testing with automated rollback. Perfect for continuous quality improvement and self-healing codebases.
+description: Self-improvement system enabling Claude Code to detect code quality violations,
+  retrieve past fix patterns from memory, and orchestrate automated improvement cycles.
+  Uses Connascence Analyzer for 7+ violation types, Memory-MCP for pattern storage
+  with WHO/WHEN/PROJECT/WHY tagging, and sandbox testing with automated rollback.
+  Perfect for continuous quality improvement and self-healing codebases.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Dogfooding System - Self-Improvement Architecture

@@ -295,7 +295,7 @@
 #### ❌ Issues Identified
 
 **HIGH Priority**:
-1. **Stub Skill** (Line 72-74): References `.claude/agents/gemini-extensions-agent.md` which may not exist
+1. **Stub Skill** (Line 72-74): References `agents/gemini-extensions-agent.md` which may not exist
    - **Evidence**: "See full documentation" with no inline content
    - **Fix**: Either expand skill or verify linked doc exists
 
@@ -357,7 +357,7 @@
 #### ⚠️ Minor Issues
 
 **LOW Priority**:
-1. **Agent Reference** (Line 100): References `.claude/agents/codex-auto-agent.md` without inline summary
+1. **Agent Reference** (Line 100): References `agents/codex-auto-agent.md` without inline summary
 2. **GPT-5-Codex** (Line 98): Mentions model but not how to select it in Codex
 3. **Overnight Task** (Line 54-58): Great use case but no progress monitoring guidance
 
@@ -632,7 +632,7 @@
 2. feature-dev-complete: Some commands unverified
 
 **External Doc References**: 6 instances (acceptable if docs exist):
-- codex-auto, codex-reasoning, multi-model, audit-pipeline reference `.claude/agents/*`
+- codex-auto, codex-reasoning, multi-model, audit-pipeline reference `agents/*`
 - gemini-extensions references full documentation
 - **Recommendation**: Verify all linked docs exist
 
@@ -781,8 +781,8 @@ Comparing against `C:\Users\17175\docs\workflows\AGENT-CREATION-METHODOLOGY.md`:
 3. **Validate External Doc Links**:
    ```bash
    # Check all referenced documents exist
-   test -f ".claude/agents/codex-auto-agent.md" || echo "MISSING"
-   test -f ".claude/agents/gemini-extensions-agent.md" || echo "MISSING"
+   test -f "agents/codex-auto-agent.md" || echo "MISSING"
+   test -f "agents/gemini-extensions-agent.md" || echo "MISSING"
    test -f "docs/agents/multi-model-guide.md" || echo "MISSING"
    test -f "docs/agents/audit-pipeline-guide.md" || echo "MISSING"
    ```

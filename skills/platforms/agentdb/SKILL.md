@@ -1,6 +1,16 @@
 ---
 name: agentdb
-description: High-performance vector search and semantic memory for AI agents. Use when implementing RAG systems, semantic document retrieval, or persistent agent memory. Provides 150x faster vector search vs traditional databases with HNSW indexing and 384-dimensional embeddings.
+description: High-performance vector search and semantic memory for AI agents. Use
+  when implementing RAG systems, semantic document retrieval, or persistent agent
+  memory. Provides 150x faster vector search vs traditional databases with HNSW indexing
+  and 384-dimensional embeddings.
+version: 1.0.0
+category: platforms
+tags:
+- platforms
+- integration
+- tools
+author: ruv
 ---
 
 # AgentDB - Vector Search & Semantic Memory

@@ -341,5 +341,5 @@ analytics/analyst/traffic/organic               // Performance data
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/seo-specialist.md`
+**Deployment**: `~/agents/specialists/business/seo-specialist.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

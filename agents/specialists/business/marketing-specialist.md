@@ -732,7 +732,7 @@ asyncio.run(run_marketing_agent())
 ---
 
 **Agent Status**: Production-Ready
-**Deployment**: `~/.claude/agents/specialists/business/marketing-specialist.md`
+**Deployment**: `~/agents/specialists/business/marketing-specialist.md`
 **Documentation**: Complete with examples, failure modes, and integration patterns
 
 

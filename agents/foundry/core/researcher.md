@@ -631,7 +631,7 @@ Remember: Good research is the foundation of successful implementation. Take tim
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/foundry/core/researcher.md`
+**Deployment**: `~/agents/foundry/core/researcher.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization
 
 ---

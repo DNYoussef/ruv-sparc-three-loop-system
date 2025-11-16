@@ -1,6 +1,18 @@
 ---
 name: intent-analyzer
-description: Advanced intent interpretation system that analyzes user requests using cognitive science principles and extrapolates logical volition. Use when user requests are ambiguous, when deeper understanding would improve response quality, or when helping users clarify what they truly need. Applies probabilistic intent mapping, first principles decomposition, and Socratic clarification to transform vague requests into well-understood goals.
+description: Advanced intent interpretation system that analyzes user requests using
+  cognitive science principles and extrapolates logical volition. Use when user requests
+  are ambiguous, when deeper understanding would improve response quality, or when
+  helping users clarify what they truly need. Applies probabilistic intent mapping,
+  first principles decomposition, and Socratic clarification to transform vague requests
+  into well-understood goals.
+version: 1.0.0
+category: research
+tags:
+- research
+- analysis
+- planning
+author: ruv
 ---
 
 # Intent Analyzer

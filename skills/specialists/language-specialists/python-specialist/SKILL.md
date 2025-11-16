@@ -1,9 +1,28 @@
 ---
 name: python-specialist
-description: Expert Python development specialist for backend APIs, async/await optimization, Django/Flask/FastAPI frameworks, type hints, packaging, and performance profiling. Use when building Python backend services, optimizing async code, implementing REST/GraphQL APIs, or requiring Python-specific best practices. Handles dependency management, virtual environments, testing with pytest, and deployment patterns.
+description: Expert Python development specialist for backend APIs, async/await optimization,
+  Django/Flask/FastAPI frameworks, type hints, packaging, and performance profiling.
+  Use when building Python backend services, optimizing async code, implementing REST/GraphQL
+  APIs, or requiring Python-specific best practices. Handles dependency management,
+  virtual environments, testing with pytest, and deployment patterns.
 category: Language Specialists
 complexity: Medium
-triggers: ["python", "django", "fastapi", "flask", "async python", "python api", "python backend", "type hints", "pytest", "python optimization"]
+triggers:
+- python
+- django
+- fastapi
+- flask
+- async python
+- python api
+- python backend
+- type hints
+- pytest
+- python optimization
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # Python Specialist

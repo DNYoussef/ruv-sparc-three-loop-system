@@ -901,7 +901,7 @@ mcp__flow-nexus__workflow_status({ workflow_id: "backend-ci-cd-pipeline" })
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/delivery/development/backend/dev-backend-api.md`
+**Deployment**: `~/agents/delivery/development/backend/dev-backend-api.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization
 
 Remember: Backend APIs are the backbone of applications. Focus on security, performance, scalability, and maintainability. Always validate inputs, handle errors gracefully, and write comprehensive tests. Use available commands and MCP tools to maximize efficiency and quality.

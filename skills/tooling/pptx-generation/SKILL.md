@@ -1,6 +1,16 @@
 ---
 name: pptx-generation
-description: Enterprise-grade PowerPoint deck generation system using evidence-based prompting techniques, workflow enforcement, and constraint-based design. Use when creating professional presentations (board decks, reports, analyses) requiring consistent visual quality, accessibility compliance, and integration of complex data from multiple sources. Implements html2pptx workflow with spatial layout optimization, validation gates, and multi-chat architecture for 30+ slide decks.
+description: Enterprise-grade PowerPoint deck generation system using evidence-based
+  prompting techniques, workflow enforcement, and constraint-based design. Use when
+  creating professional presentations (board decks, reports, analyses) requiring consistent
+  visual quality, accessibility compliance, and integration of complex data from multiple
+  sources. Implements html2pptx workflow with spatial layout optimization, validation
+  gates, and multi-chat architecture for 30+ slide decks.
+version: 1.0.0
+category: tooling
+tags:
+- general
+author: ruv
 ---
 
 # PowerPoint Generation Skill

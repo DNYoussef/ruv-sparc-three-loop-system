@@ -1,8 +1,18 @@
 ---
 name: smart-bug-fix
-description: Intelligent bug fixing workflow combining root cause analysis, multi-model reasoning, Codex auto-fix, and comprehensive testing. Uses RCA agent, Codex iteration, and validation to systematically fix bugs.
-tags: [debugging, rca, codex, testing, essential, tier-1]
+description: Intelligent bug fixing workflow combining root cause analysis, multi-model
+  reasoning, Codex auto-fix, and comprehensive testing. Uses RCA agent, Codex iteration,
+  and validation to systematically fix bugs.
+tags:
+- debugging
+- rca
+- codex
+- testing
+- essential
+- tier-1
 version: 1.0.0
+category: delivery
+author: ruv
 ---
 
 # Smart Bug Fix

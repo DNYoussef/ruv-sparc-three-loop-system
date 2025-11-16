@@ -924,7 +924,7 @@ development/frontend/{task-id}/patterns          // Shared UI patterns
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/specialized/mobile/spec-mobile-react-native.md`
+**Deployment**: `~/agents/specialists/specialized/mobile/spec-mobile-react-native.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization
 
 Remember: React Native development requires careful attention to platform differences, performance, and user experience. Always test on both iOS and Android. Use platform-specific code when necessary, but strive for maximum code reuse. Focus on performance optimization and smooth animations for the best user experience.

@@ -1,6 +1,16 @@
 ---
 name: compliance
-description: Regulatory compliance validation and documentation for GDPR, HIPAA, SOC 2, PCI-DSS, and ISO 27001. Use when implementing compliance controls, conducting compliance audits, or preparing for certification. Provides automated compliance checks and evidence collection.
+description: Regulatory compliance validation and documentation for GDPR, HIPAA, SOC
+  2, PCI-DSS, and ISO 27001. Use when implementing compliance controls, conducting
+  compliance audits, or preparing for certification. Provides automated compliance
+  checks and evidence collection.
+version: 1.0.0
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # Compliance - Regulatory Standards Validation

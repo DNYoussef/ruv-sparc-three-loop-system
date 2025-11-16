@@ -1,0 +1,3453 @@
+{
+  "summary": {
+    "total": 122,
+    "passed": 122,
+    "failed": 0,
+    "warnings": 73
+  },
+  "field_usage": {
+    "version": {
+      "count": 122,
+      "skills": [
+        "api-docs",
+        "debugging",
+        "feature-dev-complete",
+        "i18n-automation",
+        "pair-programming",
+        "smart-bug-fix",
+        "sop-api-development",
+        "sparc-methodology",
+        "agent-creation",
+        "agent-creator",
+        "base-template-generator",
+        "meta-tools",
+        "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+        "when-managing-token-budget-use-token-budget-advisor",
+        "when-optimizing-prompts-use-prompt-optimization-analyzer",
+        "micro-skill-creator",
+        "prompt-architect",
+        "skill-creator-agent",
+        "code-formatter",
+        "skill-forge",
+        "cicd-intelligent-recovery",
+        "aws-specialist",
+        "kubernetes-specialist",
+        "cloud-platforms",
+        "deployment-readiness",
+        "github-multi-repo",
+        "github-project-management",
+        "github-release-management",
+        "github-workflow-automation",
+        "hooks-automation",
+        "docker-containerization",
+        "infrastructure",
+        "terraform-iac",
+        "opentelemetry-observability",
+        "performance-analysis",
+        "platform-integration",
+        "production-readiness",
+        "sop-product-launch",
+        "advanced-coordination",
+        "cascade-orchestrator",
+        "coordination",
+        "flow-nexus-swarm",
+        "hive-mind-advanced",
+        "parallel-swarm-implementation",
+        "slash-command-encoder",
+        "stream-chain",
+        "swarm-advanced",
+        "swarm-orchestration",
+        "when-bridging-web-cli-use-web-cli-teleport",
+        "when-chaining-agent-pipelines-use-stream-chain",
+        "when-creating-slash-commands-use-slash-command-encoder",
+        "when-orchestrating-swarm-use-swarm-orchestration",
+        "when-using-advanced-swarm-use-swarm-advanced",
+        "agentdb",
+        "agentdb-advanced-features",
+        "agentdb-learning-plugins",
+        "agentdb-memory-patterns",
+        "agentdb-performance-optimization",
+        "agentdb-vector-search",
+        "flow-nexus-neural",
+        "flow-nexus-platform",
+        "machine-learning",
+        "when-debugging-ml-training-use-ml-training-debugger",
+        "when-developing-ml-models-use-ml-expert",
+        "reasoningbank-with-agentdb",
+        "reasoningbank-intelligence",
+        "code-review-assistant",
+        "dogfooding-system",
+        "functionality-audit",
+        "gate-validation",
+        "github-code-review",
+        "holistic-evaluation",
+        "quick-quality-check",
+        "reproducibility-audit",
+        "sop-code-review",
+        "sop-dogfooding-continuous-improvement",
+        "sop-dogfooding-pattern-retrieval",
+        "sop-dogfooding-quality-detection",
+        "style-audit",
+        "when-testing-code-use-testing-framework",
+        "when-auditing-code-style-use-style-audit",
+        "when-detecting-fake-code-use-theater-detection",
+        "when-reviewing-code-comprehensively-use-code-review-assistant",
+        "when-validating-code-works-use-functionality-audit",
+        "when-verifying-quality-use-verification-quality",
+        "theater-detection-audit",
+        "verification-and-quality-assurance",
+        "baseline-replication",
+        "deep-research-orchestrator",
+        "intent-analyzer",
+        "interactive-planner",
+        "literature-synthesis",
+        "method-development",
+        "research-driven-planning",
+        "research-publication",
+        "researcher",
+        "when-gathering-requirements-use-interactive-planner",
+        "compliance",
+        "wcag-accessibility",
+        "network-security-setup",
+        "reverse-engineering-deep-analysis",
+        "reverse-engineering-firmware-analysis",
+        "reverse-engineering-quick-triage",
+        "sandbox-configurator",
+        "when-configuring-sandbox-security-use-sandbox-configurator",
+        "when-setting-network-security-use-network-security-setup",
+        "when-auditing-security-use-security-analyzer",
+        "sql-database-specialist",
+        "react-specialist",
+        "frontend-specialists",
+        "python-specialist",
+        "language-specialists",
+        "typescript-specialist",
+        "ml",
+        "ml-expert",
+        "ml-training-debugger",
+        "pptx-generation",
+        "when-analyzing-user-intent-use-intent-analyzer",
+        "when-creating-presentations-use-pptx-generation",
+        "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+        "when-optimizing-prompts-use-prompt-architect",
+        "web-cli-teleport"
+      ]
+    },
+    "category": {
+      "count": 122,
+      "skills": [
+        "api-docs",
+        "debugging",
+        "feature-dev-complete",
+        "i18n-automation",
+        "pair-programming",
+        "smart-bug-fix",
+        "sop-api-development",
+        "sparc-methodology",
+        "agent-creation",
+        "agent-creator",
+        "base-template-generator",
+        "meta-tools",
+        "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+        "when-managing-token-budget-use-token-budget-advisor",
+        "when-optimizing-prompts-use-prompt-optimization-analyzer",
+        "micro-skill-creator",
+        "prompt-architect",
+        "skill-creator-agent",
+        "code-formatter",
+        "skill-forge",
+        "cicd-intelligent-recovery",
+        "aws-specialist",
+        "kubernetes-specialist",
+        "cloud-platforms",
+        "deployment-readiness",
+        "github-multi-repo",
+        "github-project-management",
+        "github-release-management",
+        "github-workflow-automation",
+        "hooks-automation",
+        "docker-containerization",
+        "infrastructure",
+        "terraform-iac",
+        "opentelemetry-observability",
+        "performance-analysis",
+        "platform-integration",
+        "production-readiness",
+        "sop-product-launch",
+        "advanced-coordination",
+        "cascade-orchestrator",
+        "coordination",
+        "flow-nexus-swarm",
+        "hive-mind-advanced",
+        "parallel-swarm-implementation",
+        "slash-command-encoder",
+        "stream-chain",
+        "swarm-advanced",
+        "swarm-orchestration",
+        "when-bridging-web-cli-use-web-cli-teleport",
+        "when-chaining-agent-pipelines-use-stream-chain",
+        "when-creating-slash-commands-use-slash-command-encoder",
+        "when-orchestrating-swarm-use-swarm-orchestration",
+        "when-using-advanced-swarm-use-swarm-advanced",
+        "agentdb",
+        "agentdb-advanced-features",
+        "agentdb-learning-plugins",
+        "agentdb-memory-patterns",
+        "agentdb-performance-optimization",
+        "agentdb-vector-search",
+        "flow-nexus-neural",
+        "flow-nexus-platform",
+        "machine-learning",
+        "when-debugging-ml-training-use-ml-training-debugger",
+        "when-developing-ml-models-use-ml-expert",
+        "reasoningbank-with-agentdb",
+        "reasoningbank-intelligence",
+        "code-review-assistant",
+        "dogfooding-system",
+        "functionality-audit",
+        "gate-validation",
+        "github-code-review",
+        "holistic-evaluation",
+        "quick-quality-check",
+        "reproducibility-audit",
+        "sop-code-review",
+        "sop-dogfooding-continuous-improvement",
+        "sop-dogfooding-pattern-retrieval",
+        "sop-dogfooding-quality-detection",
+        "style-audit",
+        "when-testing-code-use-testing-framework",
+        "when-auditing-code-style-use-style-audit",
+        "when-detecting-fake-code-use-theater-detection",
+        "when-reviewing-code-comprehensively-use-code-review-assistant",
+        "when-validating-code-works-use-functionality-audit",
+        "when-verifying-quality-use-verification-quality",
+        "theater-detection-audit",
+        "verification-and-quality-assurance",
+        "baseline-replication",
+        "deep-research-orchestrator",
+        "intent-analyzer",
+        "interactive-planner",
+        "literature-synthesis",
+        "method-development",
+        "research-driven-planning",
+        "research-publication",
+        "researcher",
+        "when-gathering-requirements-use-interactive-planner",
+        "compliance",
+        "wcag-accessibility",
+        "network-security-setup",
+        "reverse-engineering-deep-analysis",
+        "reverse-engineering-firmware-analysis",
+        "reverse-engineering-quick-triage",
+        "sandbox-configurator",
+        "when-configuring-sandbox-security-use-sandbox-configurator",
+        "when-setting-network-security-use-network-security-setup",
+        "when-auditing-security-use-security-analyzer",
+        "sql-database-specialist",
+        "react-specialist",
+        "frontend-specialists",
+        "python-specialist",
+        "language-specialists",
+        "typescript-specialist",
+        "ml",
+        "ml-expert",
+        "ml-training-debugger",
+        "pptx-generation",
+        "when-analyzing-user-intent-use-intent-analyzer",
+        "when-creating-presentations-use-pptx-generation",
+        "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+        "when-optimizing-prompts-use-prompt-architect",
+        "web-cli-teleport"
+      ]
+    },
+    "tags": {
+      "count": 122,
+      "skills": [
+        "api-docs",
+        "debugging",
+        "feature-dev-complete",
+        "i18n-automation",
+        "pair-programming",
+        "smart-bug-fix",
+        "sop-api-development",
+        "sparc-methodology",
+        "agent-creation",
+        "agent-creator",
+        "base-template-generator",
+        "meta-tools",
+        "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+        "when-managing-token-budget-use-token-budget-advisor",
+        "when-optimizing-prompts-use-prompt-optimization-analyzer",
+        "micro-skill-creator",
+        "prompt-architect",
+        "skill-creator-agent",
+        "code-formatter",
+        "skill-forge",
+        "cicd-intelligent-recovery",
+        "aws-specialist",
+        "kubernetes-specialist",
+        "cloud-platforms",
+        "deployment-readiness",
+        "github-multi-repo",
+        "github-project-management",
+        "github-release-management",
+        "github-workflow-automation",
+        "hooks-automation",
+        "docker-containerization",
+        "infrastructure",
+        "terraform-iac",
+        "opentelemetry-observability",
+        "performance-analysis",
+        "platform-integration",
+        "production-readiness",
+        "sop-product-launch",
+        "advanced-coordination",
+        "cascade-orchestrator",
+        "coordination",
+        "flow-nexus-swarm",
+        "hive-mind-advanced",
+        "parallel-swarm-implementation",
+        "slash-command-encoder",
+        "stream-chain",
+        "swarm-advanced",
+        "swarm-orchestration",
+        "when-bridging-web-cli-use-web-cli-teleport",
+        "when-chaining-agent-pipelines-use-stream-chain",
+        "when-creating-slash-commands-use-slash-command-encoder",
+        "when-orchestrating-swarm-use-swarm-orchestration",
+        "when-using-advanced-swarm-use-swarm-advanced",
+        "agentdb",
+        "agentdb-advanced-features",
+        "agentdb-learning-plugins",
+        "agentdb-memory-patterns",
+        "agentdb-performance-optimization",
+        "agentdb-vector-search",
+        "flow-nexus-neural",
+        "flow-nexus-platform",
+        "machine-learning",
+        "when-debugging-ml-training-use-ml-training-debugger",
+        "when-developing-ml-models-use-ml-expert",
+        "reasoningbank-with-agentdb",
+        "reasoningbank-intelligence",
+        "code-review-assistant",
+        "dogfooding-system",
+        "functionality-audit",
+        "gate-validation",
+        "github-code-review",
+        "holistic-evaluation",
+        "quick-quality-check",
+        "reproducibility-audit",
+        "sop-code-review",
+        "sop-dogfooding-continuous-improvement",
+        "sop-dogfooding-pattern-retrieval",
+        "sop-dogfooding-quality-detection",
+        "style-audit",
+        "when-testing-code-use-testing-framework",
+        "when-auditing-code-style-use-style-audit",
+        "when-detecting-fake-code-use-theater-detection",
+        "when-reviewing-code-comprehensively-use-code-review-assistant",
+        "when-validating-code-works-use-functionality-audit",
+        "when-verifying-quality-use-verification-quality",
+        "theater-detection-audit",
+        "verification-and-quality-assurance",
+        "baseline-replication",
+        "deep-research-orchestrator",
+        "intent-analyzer",
+        "interactive-planner",
+        "literature-synthesis",
+        "method-development",
+        "research-driven-planning",
+        "research-publication",
+        "researcher",
+        "when-gathering-requirements-use-interactive-planner",
+        "compliance",
+        "wcag-accessibility",
+        "network-security-setup",
+        "reverse-engineering-deep-analysis",
+        "reverse-engineering-firmware-analysis",
+        "reverse-engineering-quick-triage",
+        "sandbox-configurator",
+        "when-configuring-sandbox-security-use-sandbox-configurator",
+        "when-setting-network-security-use-network-security-setup",
+        "when-auditing-security-use-security-analyzer",
+        "sql-database-specialist",
+        "react-specialist",
+        "frontend-specialists",
+        "python-specialist",
+        "language-specialists",
+        "typescript-specialist",
+        "ml",
+        "ml-expert",
+        "ml-training-debugger",
+        "pptx-generation",
+        "when-analyzing-user-intent-use-intent-analyzer",
+        "when-creating-presentations-use-pptx-generation",
+        "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+        "when-optimizing-prompts-use-prompt-architect",
+        "web-cli-teleport"
+      ]
+    },
+    "author": {
+      "count": 122,
+      "skills": [
+        "api-docs",
+        "debugging",
+        "feature-dev-complete",
+        "i18n-automation",
+        "pair-programming",
+        "smart-bug-fix",
+        "sop-api-development",
+        "sparc-methodology",
+        "agent-creation",
+        "agent-creator",
+        "base-template-generator",
+        "meta-tools",
+        "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+        "when-managing-token-budget-use-token-budget-advisor",
+        "when-optimizing-prompts-use-prompt-optimization-analyzer",
+        "micro-skill-creator",
+        "prompt-architect",
+        "skill-creator-agent",
+        "code-formatter",
+        "skill-forge",
+        "cicd-intelligent-recovery",
+        "aws-specialist",
+        "kubernetes-specialist",
+        "cloud-platforms",
+        "deployment-readiness",
+        "github-multi-repo",
+        "github-project-management",
+        "github-release-management",
+        "github-workflow-automation",
+        "hooks-automation",
+        "docker-containerization",
+        "infrastructure",
+        "terraform-iac",
+        "opentelemetry-observability",
+        "performance-analysis",
+        "platform-integration",
+        "production-readiness",
+        "sop-product-launch",
+        "advanced-coordination",
+        "cascade-orchestrator",
+        "coordination",
+        "flow-nexus-swarm",
+        "hive-mind-advanced",
+        "parallel-swarm-implementation",
+        "slash-command-encoder",
+        "stream-chain",
+        "swarm-advanced",
+        "swarm-orchestration",
+        "when-bridging-web-cli-use-web-cli-teleport",
+        "when-chaining-agent-pipelines-use-stream-chain",
+        "when-creating-slash-commands-use-slash-command-encoder",
+        "when-orchestrating-swarm-use-swarm-orchestration",
+        "when-using-advanced-swarm-use-swarm-advanced",
+        "agentdb",
+        "agentdb-advanced-features",
+        "agentdb-learning-plugins",
+        "agentdb-memory-patterns",
+        "agentdb-performance-optimization",
+        "agentdb-vector-search",
+        "flow-nexus-neural",
+        "flow-nexus-platform",
+        "machine-learning",
+        "when-debugging-ml-training-use-ml-training-debugger",
+        "when-developing-ml-models-use-ml-expert",
+        "reasoningbank-with-agentdb",
+        "reasoningbank-intelligence",
+        "code-review-assistant",
+        "dogfooding-system",
+        "functionality-audit",
+        "gate-validation",
+        "github-code-review",
+        "holistic-evaluation",
+        "quick-quality-check",
+        "reproducibility-audit",
+        "sop-code-review",
+        "sop-dogfooding-continuous-improvement",
+        "sop-dogfooding-pattern-retrieval",
+        "sop-dogfooding-quality-detection",
+        "style-audit",
+        "when-testing-code-use-testing-framework",
+        "when-auditing-code-style-use-style-audit",
+        "when-detecting-fake-code-use-theater-detection",
+        "when-reviewing-code-comprehensively-use-code-review-assistant",
+        "when-validating-code-works-use-functionality-audit",
+        "when-verifying-quality-use-verification-quality",
+        "theater-detection-audit",
+        "verification-and-quality-assurance",
+        "baseline-replication",
+        "deep-research-orchestrator",
+        "intent-analyzer",
+        "interactive-planner",
+        "literature-synthesis",
+        "method-development",
+        "research-driven-planning",
+        "research-publication",
+        "researcher",
+        "when-gathering-requirements-use-interactive-planner",
+        "compliance",
+        "wcag-accessibility",
+        "network-security-setup",
+        "reverse-engineering-deep-analysis",
+        "reverse-engineering-firmware-analysis",
+        "reverse-engineering-quick-triage",
+        "sandbox-configurator",
+        "when-configuring-sandbox-security-use-sandbox-configurator",
+        "when-setting-network-security-use-network-security-setup",
+        "when-auditing-security-use-security-analyzer",
+        "sql-database-specialist",
+        "react-specialist",
+        "frontend-specialists",
+        "python-specialist",
+        "language-specialists",
+        "typescript-specialist",
+        "ml",
+        "ml-expert",
+        "ml-training-debugger",
+        "pptx-generation",
+        "when-analyzing-user-intent-use-intent-analyzer",
+        "when-creating-presentations-use-pptx-generation",
+        "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+        "when-optimizing-prompts-use-prompt-architect",
+        "web-cli-teleport"
+      ]
+    }
+  },
+  "results": [
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\api-docs\\SKILL.md",
+      "skill_name": "api-docs",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "api-docs",
+        "description": "Generate and maintain comprehensive API documentation using OpenAPI 3.0, Swagger UI, and GraphQL Playground. Use when documenting REST APIs, GraphQL services, or creating API reference materials. Ensures consistent, machine-readable, and developer-friendly documentation.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "delivery",
+            "development",
+            "workflow"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 7233
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\debugging\\SKILL.md",
+      "skill_name": "debugging",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "debugging",
+        "description": "Systematic debugging methodology using a 5-phase protocol. Use when troubleshooting code failures, investigating bugs, or analyzing unexpected behavior. Applies 10 proven debugging techniques including binary search, rubber duck, hypothesis-driven, and differential debugging.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "delivery",
+            "development",
+            "workflow"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 6391
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\feature-dev-complete\\SKILL.md",
+      "skill_name": "feature-dev-complete",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "feature-dev-complete",
+        "description": "Complete feature development lifecycle from research to deployment. Uses Gemini Search for best practices, architecture design, Codex prototyping, comprehensive testing, and documentation generation. Full 12-stage workflow.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "feature",
+            "development",
+            "lifecycle",
+            "multi-model",
+            "essential",
+            "tier-1"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 9291
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\i18n-automation\\SKILL.md",
+      "skill_name": "i18n-automation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "i18n-automation",
+        "description": "Automate internationalization and localization workflows for web applications with translation, key generation, and library setup",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "i18n",
+            "translation",
+            "localization",
+            "automation",
+            "react",
+            "nextjs"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12976
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\pair-programming\\SKILL.md",
+      "skill_name": "pair-programming",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "pair-programming",
+        "description": "AI-assisted pair programming with multiple modes (driver/navigator/switch), real-time verification, quality monitoring, and comprehensive testing. Supports TDD, debugging, refactoring, and learning sessions. Features automatic role switching, continuous code review, security scanning, and performance optimization with truth-score verification.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "delivery",
+            "development",
+            "workflow"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 23772
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\smart-bug-fix\\SKILL.md",
+      "skill_name": "smart-bug-fix",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "smart-bug-fix",
+        "description": "Intelligent bug fixing workflow combining root cause analysis, multi-model reasoning, Codex auto-fix, and comprehensive testing. Uses RCA agent, Codex iteration, and validation to systematically fix bugs.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "debugging",
+            "rca",
+            "codex",
+            "testing",
+            "essential",
+            "tier-1"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 6182
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\sop-api-development\\SKILL.md",
+      "skill_name": "sop-api-development",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-api-development",
+        "description": "Complete REST API development workflow coordinating backend, database, testing, documentation, and DevOps agents. 2-week timeline with TDD approach.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "delivery",
+          "tags": [
+            "delivery",
+            "development",
+            "workflow"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12902
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\delivery\\sparc-methodology\\SKILL.md",
+      "skill_name": "sparc-methodology",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sparc-methodology",
+        "description": "SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) comprehensive development methodology with multi-agent orchestration",
+        "optional_fields": {
+          "version": "2.7.0",
+          "category": "development",
+          "tags": [
+            "sparc",
+            "tdd",
+            "architecture",
+            "orchestration",
+            "methodology",
+            "multi-agent"
+          ],
+          "author": "Claude Flow"
+        },
+        "content_length": 24661
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\agent-creation\\SKILL.md",
+      "skill_name": "agent-creation",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agent-creation",
+        "description": "Systematic agent creation using evidence-based prompting principles and 4-phase SOP methodology. Use when creating new specialist agents, refining existing agent prompts, or designing multi-agent systems. Applies Chain-of-Thought, few-shot learning, and role-based prompting. Includes validation scripts, templates, comprehensive tests, and production-ready examples.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 7055
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\agent-creator\\SKILL.md",
+      "skill_name": "agent-creator",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agent-creator",
+        "description": "Creates specialized AI agents with optimized system prompts using the official 4-phase SOP methodology from Desktop .claude-flow, combined with evidence-based prompting techniques and Claude Agent SDK implementation. Use this skill when creating production-ready agents for specific domains, workflows, or tasks requiring consistent high-quality performance with deeply embedded domain knowledge.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 18555
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\base-template-generator\\SKILL.md",
+      "skill_name": "base-template-generator",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "base-template-generator",
+        "description": "Generate clean, production-ready boilerplate templates for Node.js, Python, Go, React, Vue, and other frameworks. Use when starting new projects or creating consistent foundational code structures. Provides modern best practices with minimal dependencies. Gold tier with automated scripts, validation tools, and Docker/CI/CD support.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 7292
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\meta-tools\\SKILL.md",
+      "skill_name": "meta-tools",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "meta-tools",
+        "description": "Meta-tools is a comprehensive framework for creating, validating, optimizing, and composing development tools. It provides automated workflows for tool generation, cross-tool composition, and orchestration patterns that enable developers to build custom tooling ecosystems.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 6363
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\meta-tools\\when-analyzing-skill-gaps-use-skill-gap-analyzer\\SKILL.md",
+      "skill_name": "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-analyzing-skill-gaps-use-skill-gap-analyzer",
+        "description": "Analyze skill library to identify coverage gaps, redundant overlaps, optimization opportunities, and provide recommendations for skill portfolio improvement",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "meta-tool",
+            "skill-management",
+            "gap-analysis",
+            "portfolio-optimization"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17115
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\meta-tools\\when-managing-token-budget-use-token-budget-advisor\\SKILL.md",
+      "skill_name": "when-managing-token-budget-use-token-budget-advisor",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-managing-token-budget-use-token-budget-advisor",
+        "description": "Proactive token budget management tool for assessing usage, analyzing task complexity, generating chunking strategies, and creating execution plans that stay within budget limits",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "meta-tool",
+            "token-management",
+            "budget-optimization",
+            "task-planning",
+            "chunking"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20514
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\meta-tools\\when-optimizing-prompts-use-prompt-optimization-analyzer\\SKILL.md",
+      "skill_name": "when-optimizing-prompts-use-prompt-optimization-analyzer",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-optimizing-prompts-use-prompt-optimization-analyzer",
+        "description": "Active diagnostic tool for analyzing prompt quality, detecting anti-patterns, identifying token waste, and providing optimization recommendations",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "meta-tool",
+            "prompt-engineering",
+            "optimization",
+            "analysis",
+            "diagnostics"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12384
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\micro-skill-creator\\SKILL.md",
+      "skill_name": "micro-skill-creator",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "micro-skill-creator",
+        "description": "Rapidly creates atomic, focused skills optimized with evidence-based prompting, specialist agents, and systematic testing. Each micro-skill does one thing exceptionally well using self-consistency, program-of-thought, and plan-and-solve patterns. Enhanced with agent-creator principles and functionality-audit validation. Perfect for building composable workflow components.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "foundry",
+          "tags": [
+            "skill-creation",
+            "atomic",
+            "modular",
+            "evidence-based",
+            "specialist-agents",
+            "tier-1"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10275
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\prompt-architect\\SKILL.md",
+      "skill_name": "prompt-architect",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "prompt-architect",
+        "description": "Comprehensive framework for analyzing, creating, and refining prompts for AI systems. Use when creating prompts for Claude, ChatGPT, or other language models, improving existing prompts, or applying evidence-based prompt engineering techniques. Applies structural optimization, self-consistency patterns, and anti-pattern detection to transform prompts into highly effective versions.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16447
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\skill-creator-agent\\SKILL.md",
+      "skill_name": "skill-creator-agent",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "skill-creator-agent",
+        "description": "Creates Claude Code skills where each skill is tied to a specialist agent optimized with evidence-based prompting techniques. Use this skill when users need to create reusable skills that leverage specialized agents for consistent high-quality performance. The skill ensures that each created skill spawns an appropriately crafted agent that communicates effectively with the parent Claude Code instance using best practices.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 32630
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\skill-forge\\pilots\\pilot-1-code-formatter\\SKILL.md",
+      "skill_name": "code-formatter",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "code-formatter",
+        "description": "Automatically format code files using the appropriate formatter based on file type, providing clear feedback on changes made",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "pilot-test"
+        },
+        "content_length": 9164
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\foundry\\skill-forge\\SKILL.md",
+      "skill_name": "skill-forge",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "skill-forge",
+        "description": "Advanced skill creation system for Claude Code that combines deep intent analysis, evidence-based prompting principles, and systematic skill engineering. Use when creating new skills or refining existing skills to ensure they are well-structured, follow best practices, and incorporate sophisticated prompt engineering techniques. This skill transforms skill creation from template filling into a strategic design process.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "foundry",
+          "tags": [
+            "foundry",
+            "creation",
+            "meta-tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 52988
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\cicd-intelligent-recovery\\SKILL.md",
+      "skill_name": "cicd-intelligent-recovery",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "cicd-intelligent-recovery",
+        "description": "Loop 3 of the Three-Loop Integrated Development System. CI/CD automation with intelligent failure recovery, root cause analysis, and comprehensive quality validation. Receives implementation from Loop 2, feeds failure patterns back to Loop 1. Achieves 100% test success through automated repair and theater validation. v2.0.0 with explicit agent SOPs.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 67674
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\cloud-platforms\\aws-specialist\\SKILL.md",
+      "skill_name": "aws-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "aws-specialist",
+        "description": "AWS cloud specialist for infrastructure as code with CloudFormation/CDK, serverless with Lambda, container orchestration with ECS/Fargate, database management with RDS, storage with S3/CloudFront CDN, and deployment automation. Use when deploying to AWS, optimizing cloud costs, implementing auto-scaling, or requiring AWS-specific best practices. Handles IAM policies, VPC networking, monitoring with CloudWatch, and multi-region deployments.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Cloud Platforms",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 8020
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\cloud-platforms\\kubernetes-specialist\\SKILL.md",
+      "skill_name": "kubernetes-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "kubernetes-specialist",
+        "description": "Kubernetes orchestration expert for Helm chart development, custom operators and CRDs, service mesh (Istio/Linkerd), auto-scaling strategies (HPA/VPA/Cluster Autoscaler), multi-cluster management, and production-grade deployments. Use when deploying containerized applications to K8s, implementing GitOps workflows, optimizing pod scheduling, or requiring Kubernetes best practices. Handles ingress controllers, persistent volumes, network policies, and security contexts.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Cloud Platforms",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 9437
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\cloud-platforms\\SKILL.md",
+      "skill_name": "cloud-platforms",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "cloud-platforms",
+        "description": "Multi-cloud deployment and infrastructure management across AWS, GCP, and Azure. Use when deploying applications to cloud platforms, implementing serverless architectures, or managing cloud infrastructure as code. Supports containers, serverless, and traditional compute.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 6207
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\deployment-readiness\\SKILL.md",
+      "skill_name": "deployment-readiness",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "deployment-readiness",
+        "description": "Production deployment validation for Deep Research SOP Pipeline H ensuring models ready for real-world deployment. Use before deploying to production, creating deployment plans, or validating infrastructure requirements. Validates performance benchmarks, monitoring setup, incident response plans, rollback strategies, and infrastructure scalability for Quality Gate 3.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16322
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\github-multi-repo\\SKILL.md",
+      "skill_name": "github-multi-repo",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "github-multi-repo",
+        "description": "Multi-repository coordination, synchronization, and architecture management with AI swarm orchestration",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "github-integration",
+          "tags": [
+            "multi-repo",
+            "synchronization",
+            "architecture",
+            "coordination",
+            "github"
+          ],
+          "author": "Claude Flow Team"
+        },
+        "content_length": 21923
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\github-project-management\\SKILL.md",
+      "skill_name": "github-project-management",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "github-project-management",
+        "description": "Comprehensive GitHub project management with swarm-coordinated issue tracking, project board automation, and sprint planning",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "github",
+          "tags": [
+            "github",
+            "project-management",
+            "issue-tracking",
+            "project-boards",
+            "sprint-planning",
+            "agile",
+            "swarm-coordination"
+          ],
+          "author": "Claude Code"
+        },
+        "content_length": 27550
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\github-release-management\\SKILL.md",
+      "skill_name": "github-release-management",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "github-release-management",
+        "description": "Comprehensive GitHub release orchestration with AI swarm coordination for automated versioning, testing, deployment, and rollback management",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "github",
+          "tags": [
+            "release",
+            "deployment",
+            "versioning",
+            "automation",
+            "ci-cd",
+            "swarm",
+            "orchestration"
+          ],
+          "author": "Claude Flow Team"
+        },
+        "content_length": 28960
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\github-workflow-automation\\SKILL.md",
+      "skill_name": "github-workflow-automation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "github-workflow-automation",
+        "description": "Advanced GitHub Actions workflow automation with AI swarm coordination, intelligent CI/CD pipelines, and comprehensive repository management",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "github",
+          "tags": [
+            "github",
+            "github-actions",
+            "ci-cd",
+            "workflow-automation",
+            "swarm-coordination",
+            "deployment",
+            "security"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 23350
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\hooks-automation\\SKILL.md",
+      "skill_name": "hooks-automation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "hooks-automation",
+        "description": "Automated coordination, formatting, and learning from Claude Code operations using intelligent hooks with MCP integration. Includes pre/post task hooks, session management, Git integration, memory coordination, and neural pattern training for enhanced development workflows.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 31025
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\infrastructure\\docker-containerization\\SKILL.md",
+      "skill_name": "docker-containerization",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "docker-containerization",
+        "description": "Docker containerization specialist for multi-stage builds, layer caching optimization, security scanning with Trivy, Docker Compose orchestration, BuildKit advanced features, and production-grade Dockerfile best practices. Use when containerizing applications, optimizing image size, implementing CI/CD pipelines, or requiring Docker best practices. Handles secrets management, health checks, resource limits, and registry operations.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Infrastructure",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 8820
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\infrastructure\\SKILL.md",
+      "skill_name": "infrastructure",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "infrastructure",
+        "description": "- **Skill ID**: infrastructure-orchestration",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11081
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\infrastructure\\terraform-iac\\SKILL.md",
+      "skill_name": "terraform-iac",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "terraform-iac",
+        "description": "Terraform infrastructure as code specialist for multi-cloud deployments (AWS/GCP/Azure), state management with remote backends, module development, drift detection, policy as code with Sentinel/OPA, and GitOps workflows. Use when provisioning cloud infrastructure, managing infrastructure state, implementing IaC best practices, or requiring Terraform expertise. Handles workspaces, dynamic blocks, for_each loops, and production-grade Terraform configurations.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Infrastructure",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10115
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\observability\\opentelemetry-observability\\SKILL.md",
+      "skill_name": "opentelemetry-observability",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "opentelemetry-observability",
+        "description": "OpenTelemetry specialist for distributed tracing, metrics collection, log correlation, auto-instrumentation, custom spans, trace context propagation, and sampling strategies. Use when implementing observability in microservices, debugging production issues, monitoring performance, or requiring OpenTelemetry best practices. Handles integration with Jaeger/Zipkin/Tempo, Prometheus/Grafana, and cloud-native observability platforms.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Observability",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11376
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\performance-analysis\\SKILL.md",
+      "skill_name": "performance-analysis",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "performance-analysis",
+        "description": "Comprehensive performance analysis, bottleneck detection, and optimization recommendations for Claude Flow swarms",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "monitoring",
+          "tags": [
+            "performance",
+            "bottleneck",
+            "optimization",
+            "profiling",
+            "metrics",
+            "analysis"
+          ],
+          "author": "Claude Flow Team"
+        },
+        "content_length": 14242
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\platform-integration\\SKILL.md",
+      "skill_name": "platform-integration",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "platform-integration",
+        "description": "Enterprise platform integration orchestration with API connectivity, webhook automation, data synchronization, and multi-platform coordination. Supports REST, GraphQL, WebSockets, message queues, and event-driven architectures.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "operations",
+          "tags": [
+            "platform",
+            "integration",
+            "api",
+            "webhooks",
+            "sync",
+            "essential",
+            "tier-2"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17812
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\production-readiness\\SKILL.md",
+      "skill_name": "production-readiness",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "production-readiness",
+        "description": "Comprehensive pre-deployment validation ensuring code is production-ready. Runs complete audit pipeline, performance benchmarks, security scan, documentation check, and generates deployment checklist.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "deployment",
+            "production",
+            "validation",
+            "essential",
+            "tier-1"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 13175
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\operations\\sop-product-launch\\SKILL.md",
+      "skill_name": "sop-product-launch",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-product-launch",
+        "description": "Complete product launch workflow coordinating 15+ specialist agents across research, development, marketing, sales, and operations. Uses sequential and parallel orchestration for 10-week launch timeline.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "operations",
+          "tags": [
+            "operations",
+            "deployment",
+            "infrastructure"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 13493
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\advanced-coordination\\SKILL.md",
+      "skill_name": "advanced-coordination",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "advanced-coordination",
+        "description": "Advanced multi-agent coordination patterns for complex distributed systems. Use when coordinating 5+ agents with dynamic task dependencies, implementing Byzantine fault tolerance, or managing distributed consensus protocols. Provides RAFT, Gossip, and Byzantine coordination strategies.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "orchestration",
+          "tags": [
+            "orchestration",
+            "coordination",
+            "swarm"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 2011
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\cascade-orchestrator\\SKILL.md",
+      "skill_name": "cascade-orchestrator",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "cascade-orchestrator",
+        "description": "Creates sophisticated workflow cascades coordinating multiple micro-skills with sequential pipelines, parallel execution, conditional branching, and Codex sandbox iteration. Enhanced with multi-model routing (Gemini/Codex), ruv-swarm coordination, memory persistence, and audit-pipeline patterns for production workflows.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "orchestration",
+          "tags": [
+            "orchestration",
+            "workflows",
+            "cascades",
+            "multi-model",
+            "codex-integration",
+            "tier-2"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11975
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\coordination\\SKILL.md",
+      "skill_name": "coordination",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "coordination",
+        "description": "Advanced multi-agent coordination patterns including mesh, hierarchical, and adaptive topologies with state synchronization, consensus mechanisms, and distributed task execution. Use when orchestrating complex multi-agent workflows requiring sophisticated coordination, consensus building, or distributed decision-making.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "orchestration",
+          "tags": [
+            "coordination",
+            "multi-agent",
+            "orchestration",
+            "topology",
+            "consensus",
+            "distributed"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12276
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\flow-nexus-swarm\\SKILL.md",
+      "skill_name": "flow-nexus-swarm",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "flow-nexus-swarm",
+        "description": "Cloud-based AI swarm deployment and event-driven workflow automation with Flow Nexus platform",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "orchestration",
+          "tags": [
+            "swarm",
+            "workflow",
+            "cloud",
+            "agents",
+            "automation",
+            "message-queue"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16414
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\hive-mind-advanced\\SKILL.md",
+      "skill_name": "hive-mind-advanced",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "hive-mind-advanced",
+        "description": "Advanced Hive Mind collective intelligence system for queen-led multi-agent coordination with consensus mechanisms and persistent memory",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "coordination",
+          "tags": [
+            "hive-mind",
+            "swarm",
+            "queen-worker",
+            "consensus",
+            "collective-intelligence",
+            "multi-agent",
+            "coordination"
+          ],
+          "author": "Claude Flow Team"
+        },
+        "content_length": 16373
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\parallel-swarm-implementation\\SKILL.md",
+      "skill_name": "parallel-swarm-implementation",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "parallel-swarm-implementation",
+        "description": "Loop 2 of the Three-Loop Integrated Development System. META-SKILL that dynamically compiles Loop 1 plans into agent+skill execution graphs. Queen Coordinator selects optimal agents from 86-agent registry and assigns skills (when available) or custom instructions. 9-step swarm with theater detection and reality validation. Receives plans from research-driven-planning, feeds to cicd-intelligent-recovery. Use for adaptive, theater-free implementation.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "orchestration",
+          "tags": [
+            "orchestration",
+            "coordination",
+            "swarm"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 31105
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\slash-command-encoder\\SKILL.md",
+      "skill_name": "slash-command-encoder",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "slash-command-encoder",
+        "description": "Creates ergonomic slash commands (/command) that provide fast, unambiguous access to micro-skills, cascades, and agents. Enhanced with auto-discovery, intelligent routing, parameter validation, and command chaining. Generates comprehensive command catalogs for all installed skills with multi-model integration.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "orchestration",
+          "tags": [
+            "commands",
+            "interface",
+            "ergonomics",
+            "auto-discovery",
+            "composition",
+            "tier-3"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17970
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\stream-chain\\SKILL.md",
+      "skill_name": "stream-chain",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "stream-chain",
+        "description": "Stream-JSON chaining for multi-agent pipelines, data transformation, and sequential workflows",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "streaming",
+            "pipeline",
+            "chaining",
+            "multi-agent",
+            "workflow"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12477
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\swarm-advanced\\SKILL.md",
+      "skill_name": "swarm-advanced",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "swarm-advanced",
+        "description": "Advanced swarm orchestration patterns for research, development, testing, and complex distributed workflows",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "orchestration",
+          "tags": [
+            "swarm",
+            "distributed",
+            "parallel",
+            "research",
+            "testing",
+            "development",
+            "coordination"
+          ],
+          "author": "Claude Flow Team"
+        },
+        "content_length": 23493
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\swarm-orchestration\\SKILL.md",
+      "skill_name": "swarm-orchestration",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "swarm-orchestration",
+        "description": "Orchestrate multi-agent swarms with agentic-flow for parallel task execution, dynamic topology, and intelligent coordination. Use when scaling beyond single agents, implementing complex workflows, or building distributed AI systems.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "orchestration",
+          "tags": [
+            "orchestration",
+            "coordination",
+            "swarm"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 4024
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\workflow\\when-bridging-web-cli-use-web-cli-teleport\\SKILL.md",
+      "skill_name": "when-bridging-web-cli-use-web-cli-teleport",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-bridging-web-cli-use-web-cli-teleport",
+        "description": "Bridge web interfaces with CLI workflows for seamless bidirectional integration",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "web",
+            "cli",
+            "integration",
+            "bridge",
+            "teleport"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10490
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\workflow\\when-chaining-agent-pipelines-use-stream-chain\\SKILL.md",
+      "skill_name": "when-chaining-agent-pipelines-use-stream-chain",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-chaining-agent-pipelines-use-stream-chain",
+        "description": "Chain agent outputs as inputs in sequential or parallel pipelines for data flow orchestration",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "pipeline",
+            "streaming",
+            "data-flow",
+            "chaining",
+            "orchestration"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 7047
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\workflow\\when-creating-slash-commands-use-slash-command-encoder\\SKILL.md",
+      "skill_name": "when-creating-slash-commands-use-slash-command-encoder",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-creating-slash-commands-use-slash-command-encoder",
+        "description": "Create ergonomic slash commands for fast access to micro-skills with auto-discovery and parameter validation",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "slash-commands",
+            "cli",
+            "automation",
+            "micro-skills",
+            "encoding"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 9625
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\workflow\\when-orchestrating-swarm-use-swarm-orchestration\\SKILL.md",
+      "skill_name": "when-orchestrating-swarm-use-swarm-orchestration",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-orchestrating-swarm-use-swarm-orchestration",
+        "description": "Complex multi-agent swarm orchestration with task decomposition, distributed execution, and result synthesis",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "swarm",
+            "orchestration",
+            "coordination",
+            "task-decomposition",
+            "result-synthesis"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16904
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\orchestration\\workflow\\when-using-advanced-swarm-use-swarm-advanced\\SKILL.md",
+      "skill_name": "when-using-advanced-swarm-use-swarm-advanced",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-using-advanced-swarm-use-swarm-advanced",
+        "description": "Advanced swarm patterns with dynamic topology switching and self-organizing behaviors for complex multi-agent coordination",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "workflow",
+          "tags": [
+            "swarm",
+            "advanced",
+            "coordination",
+            "topology",
+            "self-organizing"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17082
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb\\SKILL.md",
+      "skill_name": "agentdb",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agentdb",
+        "description": "High-performance vector search and semantic memory for AI agents. Use when implementing RAG systems, semantic document retrieval, or persistent agent memory. Provides 150x faster vector search vs traditional databases with HNSW indexing and 384-dimensional embeddings.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 1813
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb-advanced\\SKILL.md",
+      "skill_name": "agentdb-advanced-features",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agentdb-advanced-features",
+        "description": "Master advanced AgentDB features including QUIC synchronization, multi-database management, custom distance metrics, hybrid search, and distributed systems integration. Use when building distributed AI systems, multi-agent coordination, or advanced vector search applications.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12724
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb-learning\\SKILL.md",
+      "skill_name": "agentdb-learning-plugins",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "agentdb-learning-plugins",
+        "description": "Create AI learning plugins using AgentDB's 9 reinforcement learning algorithms. Train Decision Transformer, Q-Learning, SARSA, and Actor-Critic models. Deploy these plugins to build self-learning agents, implement RL workflows, and optimize agent behavior through experience. Apply offline RL for safe learning from logged data.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11722
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb-memory-patterns\\SKILL.md",
+      "skill_name": "agentdb-memory-patterns",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agentdb-memory-patterns",
+        "description": "Apply persistent memory patterns for AI agents using AgentDB. Implement session memory, configure long-term storage, enable pattern learning, and manage context across sessions. Use when building stateful agents, creating chat systems, or designing intelligent assistants that learn from interactions.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 8843
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb-optimization\\SKILL.md",
+      "skill_name": "agentdb-performance-optimization",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agentdb-performance-optimization",
+        "description": "Apply quantization to reduce memory by 4-32x. Enable HNSW indexing for 150x faster search. Configure caching strategies and implement batch operations. Use when optimizing memory usage, improving search speed, or scaling to millions of vectors. Deploy these optimizations to achieve 12,500x performance gains.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12302
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\agentdb-vector-search\\SKILL.md",
+      "skill_name": "agentdb-vector-search",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "agentdb-vector-search",
+        "description": "Implement semantic vector search with AgentDB for intelligent document retrieval, similarity matching, and context-aware querying. Use when building RAG systems, semantic search engines, or intelligent knowledge bases.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 8670
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\flow-nexus-neural\\SKILL.md",
+      "skill_name": "flow-nexus-neural",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "flow-nexus-neural",
+        "description": "Train and deploy neural networks in distributed E2B sandboxes with Flow Nexus",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "ai-ml",
+          "tags": [
+            "neural-networks",
+            "distributed-training",
+            "machine-learning",
+            "deep-learning",
+            "flow-nexus",
+            "e2b-sandboxes"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16001
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\flow-nexus-platform\\SKILL.md",
+      "skill_name": "flow-nexus-platform",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "flow-nexus-platform",
+        "description": "Comprehensive Flow Nexus platform management - authentication, sandboxes, app deployment, payments, and challenges (Gold Tier)",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "platform",
+          "tags": [
+            "authentication",
+            "sandboxes",
+            "deployment",
+            "payments",
+            "gamification",
+            "cloud",
+            "automation"
+          ],
+          "author": "Flow Nexus"
+        },
+        "content_length": 31171
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\machine-learning\\SKILL.md",
+      "skill_name": "machine-learning",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "machine-learning",
+        "description": "Comprehensive machine learning development with training, evaluation, and deployment capabilities. Use when training models, developing ML pipelines, or deploying machine learning systems.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "platforms",
+          "tags": [
+            "ml",
+            "deep-learning",
+            "training",
+            "evaluation",
+            "deployment",
+            "data-science"
+          ],
+          "author": "SPARC System"
+        },
+        "content_length": 2843
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\machine-learning\\when-debugging-ml-training-use-ml-training-debugger\\SKILL.md",
+      "skill_name": "when-debugging-ml-training-use-ml-training-debugger",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-debugging-ml-training-use-ml-training-debugger",
+        "description": "Debug ML training issues and optimize performance including loss divergence, overfitting, and slow convergence",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "machine-learning",
+          "tags": [
+            "debugging",
+            "ml",
+            "training",
+            "optimization",
+            "troubleshooting"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 15416
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\machine-learning\\when-developing-ml-models-use-ml-expert\\SKILL.md",
+      "skill_name": "when-developing-ml-models-use-ml-expert",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-developing-ml-models-use-ml-expert",
+        "description": "Specialized ML model development, training, and deployment workflow",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "machine-learning",
+          "tags": [
+            "ml",
+            "training",
+            "deployment",
+            "model-development",
+            "neural-networks"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11056
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\reasoningbank-agentdb\\SKILL.md",
+      "skill_name": "reasoningbank-with-agentdb",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "reasoningbank-with-agentdb",
+        "description": "Implement ReasoningBank adaptive learning with AgentDB's 150x faster vector database. Includes trajectory tracking, verdict judgment, memory distillation, and pattern recognition. Use when building self-learning agents, optimizing decision-making, or implementing experience replay systems.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10578
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\platforms\\reasoningbank-intelligence\\SKILL.md",
+      "skill_name": "reasoningbank-intelligence",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "reasoningbank-intelligence",
+        "description": "Implement adaptive learning with ReasoningBank for pattern recognition, strategy optimization, and continuous improvement. Use when building self-learning agents, optimizing workflows, or implementing meta-cognitive systems.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "platforms",
+          "tags": [
+            "platforms",
+            "integration",
+            "tools"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 4545
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\code-review-assistant\\SKILL.md",
+      "skill_name": "code-review-assistant",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "code-review-assistant",
+        "description": "Comprehensive PR review using multi-agent swarm with specialized reviewers for security, performance, style, tests, and documentation. Provides detailed feedback with auto-fix suggestions and merge readiness assessment.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "review",
+            "pr",
+            "github",
+            "swarm",
+            "essential",
+            "tier-1"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10482
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\dogfooding-system\\SKILL.md",
+      "skill_name": "dogfooding-system",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "dogfooding-system",
+        "description": "Self-improvement system enabling Claude Code to detect code quality violations, retrieve past fix patterns from memory, and orchestrate automated improvement cycles. Uses Connascence Analyzer for 7+ violation types, Memory-MCP for pattern storage with WHO/WHEN/PROJECT/WHY tagging, and sandbox testing with automated rollback. Perfect for continuous quality improvement and self-healing codebases.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12087
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\functionality-audit\\SKILL.md",
+      "skill_name": "functionality-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "functionality-audit",
+        "description": "Validates that code actually works through sandbox testing, execution verification, and systematic debugging. Use this skill after code generation or modification to ensure functionality is genuine rather than assumed. The skill creates isolated test environments, executes code with realistic inputs, identifies bugs through systematic analysis, and applies best practices to fix issues without breaking existing functionality. This ensures code delivers its intended behavior reliably.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 19474
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\gate-validation\\SKILL.md",
+      "skill_name": "gate-validation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "gate-validation",
+        "description": "Validate Deep Research SOP quality gates (Gates 1-3) ensuring rigorous GO/NO-GO decisions based on comprehensive requirement checklists with statistical validation. Use at end of research phases (Foundations\u2192Development\u2192Production) to determine if criteria met for phase transition. Coordinates evaluator agent with ethics-agent, data-steward, and archivist for systematic validation across data quality, baseline replication, novel methods, holistic evaluation, reproducibility, and production readiness. Implements multiple comparison correction (Bonferroni), effect size calculation (Cohen's d), and statistical power analysis (1-\u03b2 \u2265 0.8).",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20240
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\github-code-review\\SKILL.md",
+      "skill_name": "github-code-review",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "github-code-review",
+        "description": "Comprehensive GitHub code review with AI-powered swarm coordination",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "github",
+          "tags": [
+            "code-review",
+            "github",
+            "swarm",
+            "pr-management",
+            "automation"
+          ],
+          "author": "Claude Code Flow"
+        },
+        "content_length": 25433
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\holistic-evaluation\\SKILL.md",
+      "skill_name": "holistic-evaluation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "holistic-evaluation",
+        "description": "Comprehensive multi-dimensional model evaluation across accuracy, fairness, robustness, efficiency, interpretability, and safety for Deep Research SOP Pipeline E. Use after method development when Quality Gate 2 validation is required, ensuring models meet production-ready standards across 6+ evaluation dimensions before deployment.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 27351
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\quick-quality-check\\SKILL.md",
+      "skill_name": "quick-quality-check",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "quick-quality-check",
+        "description": "Lightning-fast quality check using parallel command execution. Runs theater detection, linting, security scan, and basic tests in parallel for instant feedback on code quality.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "quick",
+            "parallel",
+            "essential",
+            "tier-enhanced"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 3023
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\reproducibility-audit\\SKILL.md",
+      "skill_name": "reproducibility-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "reproducibility-audit",
+        "description": "Comprehensive audit of ML reproducibility packages ensuring ACM Artifact Evaluation compliance with statistical validation for Deep Research SOP Pipeline G. Use before Quality Gate 3 validation when reproducibility packages created, archiving research artifacts to Zenodo/HuggingFace, or preparing for academic publication (NeurIPS, ICML, CVPR). Validates Docker environment builds, README instructions (\u22645 steps), dependency pinning, deterministic execution with fixed seeds, and requires 3/3 successful reproduction runs within \u00b11% tolerance using paired t-tests. Recommends ACM badges (Available, Functional, Reproduced, Reusable) based on audit results.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16463
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\sop-code-review\\SKILL.md",
+      "skill_name": "sop-code-review",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-code-review",
+        "description": "Comprehensive code review workflow coordinating quality, security, performance, and documentation reviewers. 4-hour timeline for thorough multi-agent review.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12663
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\sop-dogfooding-continuous-improvement\\SKILL.md",
+      "skill_name": "sop-dogfooding-continuous-improvement",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-dogfooding-continuous-improvement",
+        "description": "3-part dogfooding workflow Phase 3 - Full cycle orchestration combining Quality Detection + Pattern Retrieval + Application with automated metrics tracking. 60-120 seconds execution time.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 22837
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\sop-dogfooding-pattern-retrieval\\SKILL.md",
+      "skill_name": "sop-dogfooding-pattern-retrieval",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-dogfooding-pattern-retrieval",
+        "description": "3-part dogfooding workflow Phase 2 - Query Memory-MCP for similar past fixes using vector search, rank patterns, optionally apply transformations. 10-30 seconds execution time.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 15150
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\sop-dogfooding-quality-detection\\SKILL.md",
+      "skill_name": "sop-dogfooding-quality-detection",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sop-dogfooding-quality-detection",
+        "description": "3-part dogfooding workflow Phase 1 - Run Connascence analysis, store results in Memory-MCP with WHO/WHEN/PROJECT/WHY tagging. 30-60 seconds execution time.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12105
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\style-audit\\SKILL.md",
+      "skill_name": "style-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "style-audit",
+        "description": "Audits code against CI/CD style rules, quality guidelines, and best practices, then rewrites code to meet standards without breaking functionality. Use this skill after functionality validation to ensure code is not just correct but also maintainable, readable, and production-ready. The skill applies linting rules, enforces naming conventions, improves code organization, and refactors for clarity while preserving all behavioral correctness verified by functionality audits.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 23153
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing\\when-testing-code-use-testing-framework\\SKILL.md",
+      "skill_name": "when-testing-code-use-testing-framework",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-testing-code-use-testing-framework",
+        "description": "- **Skill ID**: when-testing-code-use-testing-framework",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20228
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing-quality\\when-auditing-code-style-use-style-audit\\SKILL.md",
+      "skill_name": "when-auditing-code-style-use-style-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-auditing-code-style-use-style-audit",
+        "description": "Code style and conventions audit with auto-fix capabilities for comprehensive style enforcement",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "testing-quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 35999
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing-quality\\when-detecting-fake-code-use-theater-detection\\SKILL.md",
+      "skill_name": "when-detecting-fake-code-use-theater-detection",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "when-detecting-fake-code-use-theater-detection",
+        "description": "Detects non-functional \"theater\" code that appears complete but doesn't actually work.\nUse this skill to identify code that looks correct in static analysis but fails during execution,\npreventing fake implementations from reaching production. Scans for suspicious patterns,\nvalidates actual functionality, and reports findings with recommendations.\n",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 40009
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing-quality\\when-reviewing-code-comprehensively-use-code-review-assistant\\SKILL.md",
+      "skill_name": "when-reviewing-code-comprehensively-use-code-review-assistant",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-reviewing-code-comprehensively-use-code-review-assistant",
+        "description": "Comprehensive PR review with multi-agent swarm specialization for security, performance, style, tests, and documentation",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "testing-quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 25385
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing-quality\\when-validating-code-works-use-functionality-audit\\SKILL.md",
+      "skill_name": "when-validating-code-works-use-functionality-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "when-validating-code-works-use-functionality-audit",
+        "description": "Validates that code actually works through sandbox testing, execution verification, and systematic debugging.\nUse this skill after code generation or modification to ensure functionality is genuine rather than assumed.\nThe skill creates isolated test environments, executes code with realistic inputs, identifies bugs through\nsystematic analysis, and applies best practices to fix issues without breaking existing functionality.\n",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 26473
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\testing-quality\\when-verifying-quality-use-verification-quality\\SKILL.md",
+      "skill_name": "when-verifying-quality-use-verification-quality",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-verifying-quality-use-verification-quality",
+        "description": "Comprehensive quality verification and validation through static analysis, dynamic testing, integration validation, and certification gates",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "testing-quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 27697
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\theater-detection-audit\\SKILL.md",
+      "skill_name": "theater-detection-audit",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "theater-detection-audit",
+        "description": "Performs comprehensive audits to detect placeholder code, mock data, TODO markers, and incomplete implementations in codebases. Use this skill when you need to find all instances of \"theater\" in code such as hardcoded mock responses, stub functions, commented-out production logic, or fake data that needs to be replaced with real implementations. The skill systematically identifies these instances, reads their full context, and completes them with production-quality code.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "quality",
+          "tags": [
+            "quality",
+            "testing",
+            "validation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16825
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\quality\\verification-quality\\SKILL.md",
+      "skill_name": "verification-and-quality-assurance",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "verification-and-quality-assurance",
+        "description": "Comprehensive truth scoring, code quality verification, and automatic rollback system with 0.95 accuracy threshold for ensuring high-quality agent outputs and codebase reliability.",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "quality-assurance",
+          "tags": [
+            "verification",
+            "truth-scoring",
+            "quality",
+            "rollback",
+            "metrics",
+            "ci-cd"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 15516
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\baseline-replication\\SKILL.md",
+      "skill_name": "baseline-replication",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "baseline-replication",
+        "description": "Replicate published ML baseline experiments with exact reproducibility (\u00b11% tolerance) for Deep Research SOP Pipeline D. Use when validating baselines, reproducing experiments, verifying published results, or preparing for novel method development.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16695
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\deep-research-orchestrator\\SKILL.md",
+      "skill_name": "deep-research-orchestrator",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "deep-research-orchestrator",
+        "description": "Meta-orchestrator for complete Deep Research SOP lifecycle managing 3 phases, 9 pipelines (A-I), and 3 quality gates. Use when starting new research projects, conducting systematic ML research, or ensuring rigorous scientific methodology from literature review through production deployment. Coordinates all SOP skills and agents for end-to-end research execution.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20124
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\intent-analyzer\\SKILL.md",
+      "skill_name": "intent-analyzer",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "intent-analyzer",
+        "description": "Advanced intent interpretation system that analyzes user requests using cognitive science principles and extrapolates logical volition. Use when user requests are ambiguous, when deeper understanding would improve response quality, or when helping users clarify what they truly need. Applies probabilistic intent mapping, first principles decomposition, and Socratic clarification to transform vague requests into well-understood goals.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17740
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\interactive-planner\\SKILL.md",
+      "skill_name": "interactive-planner",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "interactive-planner",
+        "description": "Use Claude Code's interactive question tool to gather comprehensive requirements through structured multi-select questions",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "planning",
+            "requirements",
+            "questions",
+            "scoping",
+            "interactive"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 11474
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\literature-synthesis\\SKILL.md",
+      "skill_name": "literature-synthesis",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "literature-synthesis",
+        "description": "Systematic literature review and synthesis for Deep Research SOP Pipeline A. Use when starting research projects, conducting SOTA analysis, identifying research gaps, or preparing academic papers. Implements PRISMA-compliant systematic review methodology with automated search, screening, and synthesis across ArXiv, Semantic Scholar, and Papers with Code.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20149
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\method-development\\SKILL.md",
+      "skill_name": "method-development",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "method-development",
+        "description": "Develop novel machine learning methods with rigorous ablation studies for Deep Research SOP Pipeline D. Use after baseline replication passes Quality Gate 1, when creating new algorithms, proposing modifications to existing methods, or conducting systematic experimental validation. Includes architectural innovation, hyperparameter optimization, and component-wise ablation analysis leading to Quality Gate 2.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 26100
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\research-driven-planning\\SKILL.md",
+      "skill_name": "research-driven-planning",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "research-driven-planning",
+        "description": "Loop 1 of the Three-Loop Integrated Development System. Research-driven requirements analysis with iterative risk mitigation through 5x pre-mortem cycles using multi-agent consensus. Feeds validated, risk-mitigated plans to parallel-swarm-implementation. Use when starting new features or projects requiring comprehensive planning with <3% failure confidence and evidence-based technology selection.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 28230
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\research-publication\\SKILL.md",
+      "skill_name": "research-publication",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "research-publication",
+        "description": "Academic publication preparation for Deep Research SOP Pipeline I including paper writing, reproducibility artifacts, and venue submission. Use when preparing research for publication after Gate 3 APPROVED, submitting to conferences (NeurIPS, ICML, CVPR), or creating ACM artifact submissions. Ensures reproducibility checklists complete, supplementary materials prepared, and all artifacts publicly accessible.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 17710
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\researcher\\SKILL.md",
+      "skill_name": "researcher",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "researcher",
+        "description": "Multi-level research with Gemini Search integration supporting 3 research depths. Use when gathering information, conducting systematic analysis, or synthesizing knowledge from multiple sources. Applies 90%+ credibility scoring and comprehensive source evaluation.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 2558
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\research\\specialized-tools\\when-gathering-requirements-use-interactive-planner\\SKILL.md",
+      "skill_name": "when-gathering-requirements-use-interactive-planner",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-gathering-requirements-use-interactive-planner",
+        "description": "```yaml",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "research",
+          "tags": [
+            "research",
+            "analysis",
+            "planning"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 1570
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\compliance\\SKILL.md",
+      "skill_name": "compliance",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "compliance",
+        "description": "Regulatory compliance validation and documentation for GDPR, HIPAA, SOC 2, PCI-DSS, and ISO 27001. Use when implementing compliance controls, conducting compliance audits, or preparing for certification. Provides automated compliance checks and evidence collection.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 2651
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\compliance\\wcag-accessibility\\SKILL.md",
+      "skill_name": "wcag-accessibility",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "wcag-accessibility",
+        "description": "WCAG 2.1 AA/AAA accessibility compliance specialist for ARIA attributes, keyboard navigation, screen reader testing, color contrast validation, semantic HTML, and automated a11y testing with axe-core/Lighthouse. Use when ensuring web accessibility, meeting legal compliance (ADA, Section 508), implementing inclusive design, or requiring WCAG best practices. Handles focus management, live regions, accessible forms, and assistive technology compatibility.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Compliance",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12256
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\network-security-setup\\SKILL.md",
+      "skill_name": "network-security-setup",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "network-security-setup",
+        "description": "Configure Claude Code sandbox network isolation with trusted domains, custom access policies, and environment variables",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "network",
+            "isolation",
+            "trusted-domains",
+            "configuration"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10429
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\reverse-engineering-deep\\SKILL.md",
+      "skill_name": "reverse-engineering-deep-analysis",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "reverse-engineering-deep-analysis",
+        "description": "Advanced binary analysis with runtime execution and symbolic path exploration (RE Levels 3-4). Use when need runtime behavior, memory dumps, secret extraction, or input synthesis to reach specific program states. Completes in 3-7 hours with GDB+Angr.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 33920
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\reverse-engineering-firmware\\SKILL.md",
+      "skill_name": "reverse-engineering-firmware-analysis",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "reverse-engineering-firmware-analysis",
+        "description": "Firmware extraction and IoT security analysis (RE Level 5) for routers and embedded systems. Use when analyzing IoT firmware, extracting embedded filesystems (SquashFS/JFFS2/CramFS), finding hardcoded credentials, performing CVE scans, or auditing embedded system security. Handles encrypted firmware with known decryption schemes. Completes in 2-8 hours with binwalk+firmadyne+QEMU emulation.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "IoT Security, Embedded Systems, Firmware Reverse Engineering",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 35630
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\reverse-engineering-quick\\SKILL.md",
+      "skill_name": "reverse-engineering-quick-triage",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "reverse-engineering-quick-triage",
+        "description": "Fast binary analysis with string reconnaissance and static disassembly (RE Levels 1-2). Use when triaging suspicious binaries, extracting IOCs quickly, or performing initial malware analysis. Completes in \u22642 hours with automated decision gates.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 14367
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\sandbox-configurator\\SKILL.md",
+      "skill_name": "sandbox-configurator",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "sandbox-configurator",
+        "description": "Configure Claude Code sandbox security with file system and network isolation boundaries",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "sandbox",
+            "configuration",
+            "network-isolation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 5226
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\specialized-tools\\when-configuring-sandbox-security-use-sandbox-configurator\\SKILL.md",
+      "skill_name": "when-configuring-sandbox-security-use-sandbox-configurator",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-configuring-sandbox-security-use-sandbox-configurator",
+        "description": "```yaml",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20788
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\specialized-tools\\when-setting-network-security-use-network-security-setup\\SKILL.md",
+      "skill_name": "when-setting-network-security-use-network-security-setup",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-setting-network-security-use-network-security-setup",
+        "description": "```yaml",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 5526
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\security\\when-auditing-security-use-security-analyzer\\SKILL.md",
+      "skill_name": "when-auditing-security-use-security-analyzer",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-auditing-security-use-security-analyzer",
+        "description": "Comprehensive security auditing across static analysis, dynamic testing, dependency vulnerabilities, secrets detection, and OWASP compliance",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "security",
+          "tags": [
+            "security",
+            "compliance",
+            "safety"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 24436
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\database-specialists\\sql-database-specialist\\SKILL.md",
+      "skill_name": "sql-database-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "sql-database-specialist",
+        "description": "SQL database specialist for PostgreSQL/MySQL optimization, EXPLAIN plan analysis, index optimization, query rewriting, partitioning strategies, connection pooling, and database performance tuning. Use when optimizing slow queries, designing efficient database schemas, implementing replication/HA, or requiring SQL best practices. Handles JSONB queries, full-text search, vacuum maintenance, and migration strategies.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Database Specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10633
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\frontend-specialists\\react-specialist\\SKILL.md",
+      "skill_name": "react-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "react-specialist",
+        "description": "Modern React development specialist for React 18+ with hooks, context, suspense, server components (Next.js 13+), state management (Redux/Zustand/Jotai), performance optimization (React.memo, useMemo, useCallback), and component library development. Use when building React applications, optimizing rendering performance, implementing complex state management, or creating reusable component libraries.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Frontend Specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12646
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\frontend-specialists\\SKILL.md",
+      "skill_name": "frontend-specialists",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "frontend-specialists",
+        "description": "Comprehensive frontend development system with specialist agents for React, Vue, UI components, CSS styling, accessibility, and performance optimization. Use when building modern web applications, component libraries, or optimizing frontend performance. Includes production-ready scripts, templates, and testing utilities.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Frontend Development",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10529
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\language-specialists\\python-specialist\\SKILL.md",
+      "skill_name": "python-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "python-specialist",
+        "description": "Expert Python development specialist for backend APIs, async/await optimization, Django/Flask/FastAPI frameworks, type hints, packaging, and performance profiling. Use when building Python backend services, optimizing async code, implementing REST/GraphQL APIs, or requiring Python-specific best practices. Handles dependency management, virtual environments, testing with pytest, and deployment patterns.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Language Specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 13951
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\language-specialists\\SKILL.md",
+      "skill_name": "language-specialists",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "language-specialists",
+        "description": "Unified language specialists for Python and TypeScript development, providing expert guidance for modern backend APIs, type-safe development, async optimization, and framework integration (Django/Flask/FastAPI for Python, Express/Nest.js for TypeScript). Includes comprehensive resources, testing tools, and production-ready examples.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Specialized Development",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 13430
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\language-specialists\\typescript-specialist\\SKILL.md",
+      "skill_name": "typescript-specialist",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "typescript-specialist",
+        "description": "Modern TypeScript development specialist for Node.js backends, Express/Nest.js frameworks, type-safe frontend development, npm package creation, and monorepo management with Turborepo/nx. Use when building TypeScript APIs, implementing type-safe full-stack applications, creating npm libraries, or requiring TypeScript best practices. Handles strict mode, advanced types, build tooling, and ESM/CommonJS modules.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "Language Specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 16389
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\ml\\SKILL.md",
+      "skill_name": "ml",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "ml",
+        "description": "Machine Learning development workflow with experiment tracking, hyperparameter optimization, and MLOps integration",
+        "optional_fields": {
+          "version": "2.0.0",
+          "category": "specialized-development",
+          "tags": [
+            "machine-learning",
+            "mlops",
+            "experiment-tracking",
+            "hyperparameter-tuning",
+            "model-registry"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 4926
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\ml-expert\\SKILL.md",
+      "skill_name": "ml-expert",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "ml-expert",
+        "description": "**Version**: 1.0.0",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 9067
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\specialists\\ml-training-debugger\\SKILL.md",
+      "skill_name": "ml-training-debugger",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "ml-training-debugger",
+        "description": "**Version**: 1.0.0",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "specialists",
+          "tags": [
+            "specialists",
+            "domain-expert"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 8391
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\pptx-generation\\SKILL.md",
+      "skill_name": "pptx-generation",
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "info": {
+        "name": "pptx-generation",
+        "description": "Enterprise-grade PowerPoint deck generation system using evidence-based prompting techniques, workflow enforcement, and constraint-based design. Use when creating professional presentations (board decks, reports, analyses) requiring consistent visual quality, accessibility compliance, and integration of complex data from multiple sources. Implements html2pptx workflow with spatial layout optimization, validation gates, and multi-chat architecture for 30+ slide decks.",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "tooling",
+          "tags": [
+            "general"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 12262
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\utilities\\when-analyzing-user-intent-use-intent-analyzer\\SKILL.md",
+      "skill_name": "when-analyzing-user-intent-use-intent-analyzer",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-analyzing-user-intent-use-intent-analyzer",
+        "description": "Advanced intent interpretation system using cognitive science principles and probabilistic intent mapping",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "utilities",
+          "tags": [
+            "intent-analysis",
+            "cognitive-science",
+            "disambiguation",
+            "user-understanding"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20662
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\utilities\\when-creating-presentations-use-pptx-generation\\SKILL.md",
+      "skill_name": "when-creating-presentations-use-pptx-generation",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-creating-presentations-use-pptx-generation",
+        "description": "Enterprise-grade PowerPoint deck generation using evidence-based prompting, workflow enforcement, constraint-based design",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "utilities",
+          "tags": [
+            "presentation",
+            "pptx",
+            "slides",
+            "enterprise",
+            "documentation"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 10245
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\utilities\\when-optimizing-agent-learning-use-reasoningbank-intelligence\\SKILL.md",
+      "skill_name": "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-optimizing-agent-learning-use-reasoningbank-intelligence",
+        "description": "Implement adaptive learning with ReasoningBank for pattern recognition, strategy optimization, and continuous improvement",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "utilities",
+          "tags": [
+            "machine-learning",
+            "adaptive-learning",
+            "pattern-recognition",
+            "optimization"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 15460
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\utilities\\when-optimizing-prompts-use-prompt-architect\\SKILL.md",
+      "skill_name": "when-optimizing-prompts-use-prompt-architect",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "when-optimizing-prompts-use-prompt-architect",
+        "description": "Comprehensive framework for analyzing, creating, and refining prompts for AI systems using evidence-based techniques",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "utilities",
+          "tags": [
+            "prompt-engineering",
+            "optimization",
+            "ai-systems",
+            "llm"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 20922
+      }
+    },
+    {
+      "skill_path": "C:\\Users\\17175\\claude-code-plugins\\ruv-sparc-three-loop-system\\skills\\tooling\\web-cli-teleport\\SKILL.md",
+      "skill_name": "web-cli-teleport",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Description should include usage triggers (e.g., 'Use when...')"
+      ],
+      "info": {
+        "name": "web-cli-teleport",
+        "description": "Guide users on when to use Claude Code Web vs CLI and seamlessly teleport sessions between environments",
+        "optional_fields": {
+          "version": "1.0.0",
+          "category": "tooling",
+          "tags": [
+            "workflow",
+            "teleport",
+            "session-management",
+            "web",
+            "cli"
+          ],
+          "author": "ruv"
+        },
+        "content_length": 7570
+      }
+    }
+  ]
+}

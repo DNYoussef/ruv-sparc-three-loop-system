@@ -1,7 +1,7 @@
 # Claude Flow Commands to Agent System Migration Summary
 
 ## Executive Summary
-This document provides a complete migration plan for converting the existing command-based system (`.claude/commands/`) to the new intelligent agent-based system (`.claude/agents/`). The migration preserves all functionality while adding natural language understanding, intelligent coordination, and improved parallelization.
+This document provides a complete migration plan for converting the existing command-based system (`.claude/commands/`) to the new intelligent agent-based system (`agents/`). The migration preserves all functionality while adding natural language understanding, intelligent coordination, and improved parallelization.
 
 ## Key Migration Benefits
 
@@ -207,9 +207,9 @@ triggers:
 
 ## Support and Resources
 
-- Agent documentation: `.claude/agents/README.md`
-- Migration guides: `.claude/agents/migration/`
-- Example workflows: `.claude/agents/examples/`
+- Agent documentation: `agents/README.md`
+- Migration guides: `agents/migration/`
+- Example workflows: `agents/examples/`
 - Community support: GitHub discussions
 
 The new agent system represents a significant advancement in AI-assisted development, providing a more intuitive, powerful, and efficient way to accomplish complex tasks.

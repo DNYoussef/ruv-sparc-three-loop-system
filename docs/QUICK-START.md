@@ -93,7 +93,7 @@ claude mcp list
 
 1. Clone or download this plugin repository
 2. Claude Code will auto-discover:
-   - 207 agents from `.claude/agents/*.md`
+   - 207 agents from `agents/*.md`
    - 121 skills from `skills/**/SKILL.md`
    - 233 commands from `commands/**/*.md`
 

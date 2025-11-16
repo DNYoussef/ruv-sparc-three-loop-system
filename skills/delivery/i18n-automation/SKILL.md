@@ -1,8 +1,17 @@
 ---
 name: i18n-automation
-description: Automate internationalization and localization workflows for web applications with translation, key generation, and library setup
-tags: [i18n, translation, localization, automation, react, nextjs]
+description: Automate internationalization and localization workflows for web applications
+  with translation, key generation, and library setup
+tags:
+- i18n
+- translation
+- localization
+- automation
+- react
+- nextjs
 version: 1.0.0
+category: delivery
+author: ruv
 ---
 
 # i18n Automation

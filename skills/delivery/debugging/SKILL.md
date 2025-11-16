@@ -1,6 +1,16 @@
 ---
 name: debugging
-description: Systematic debugging methodology using a 5-phase protocol. Use when troubleshooting code failures, investigating bugs, or analyzing unexpected behavior. Applies 10 proven debugging techniques including binary search, rubber duck, hypothesis-driven, and differential debugging.
+description: Systematic debugging methodology using a 5-phase protocol. Use when troubleshooting
+  code failures, investigating bugs, or analyzing unexpected behavior. Applies 10
+  proven debugging techniques including binary search, rubber duck, hypothesis-driven,
+  and differential debugging.
+version: 1.0.0
+category: delivery
+tags:
+- delivery
+- development
+- workflow
+author: ruv
 ---
 
 # Debugging - Systematic Code Investigation

@@ -1,18 +1,22 @@
 ---
 name: when-managing-token-budget-use-token-budget-advisor
 version: 1.0.0
-description: Proactive token budget management tool for assessing usage, analyzing task complexity, generating chunking strategies, and creating execution plans that stay within budget limits
+description: Proactive token budget management tool for assessing usage, analyzing
+  task complexity, generating chunking strategies, and creating execution plans that
+  stay within budget limits
 tags:
-  - meta-tool
-  - token-management
-  - budget-optimization
-  - task-planning
-  - chunking
+- meta-tool
+- token-management
+- budget-optimization
+- task-planning
+- chunking
 complexity: MEDIUM
 agents_required:
-  - planner
-  - code-analyzer
+- planner
+- code-analyzer
 auto_trigger: false
+category: foundry
+author: ruv
 ---
 
 # Token Budget Advisor

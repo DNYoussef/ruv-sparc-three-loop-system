@@ -226,7 +226,7 @@ gemini "Generate a video: [detailed description]. Duration: [seconds]"
 **Documentation Quality**: ⚠️ Abbreviated
 - Clear purpose and examples
 - Missing detailed setup for each extension
-- Points to agent documentation (`.claude/agents/gemini-extensions-agent.md`)
+- Points to agent documentation (`agents/gemini-extensions-agent.md`)
 
 **Setup Time**: 10-15 minutes (per extension)
 
@@ -470,7 +470,7 @@ choco install graphviz
 - **External dependencies required**: 2 skills (22.2%)
 
 ### Broken Links/References
-- ❌ `.claude/agents/gemini-extensions-agent.md` - Referenced but not found
+- ❌ `agents/gemini-extensions-agent.md` - Referenced but not found
 - ❌ `docs/agents/multi-model-guide.md` - Referenced but not found
 - ❌ `docs/agents/audit-pipeline-guide.md` - Referenced but not found
 - ⚠️ Dependency skills missing (theater/functionality/style audits)

@@ -780,7 +780,7 @@ triggers:
 - Results are aggregated by coordinator agents
 
 ### 4. Migration Steps
-1. Create `.claude/agents/` directory structure
+1. Create `agents/` directory structure
 2. Convert each command to agent definition format
 3. Update activation patterns for natural language
 4. Test agent interactions and handoffs

@@ -1,6 +1,16 @@
 ---
 name: advanced-coordination
-description: Advanced multi-agent coordination patterns for complex distributed systems. Use when coordinating 5+ agents with dynamic task dependencies, implementing Byzantine fault tolerance, or managing distributed consensus protocols. Provides RAFT, Gossip, and Byzantine coordination strategies.
+description: Advanced multi-agent coordination patterns for complex distributed systems.
+  Use when coordinating 5+ agents with dynamic task dependencies, implementing Byzantine
+  fault tolerance, or managing distributed consensus protocols. Provides RAFT, Gossip,
+  and Byzantine coordination strategies.
+version: 1.0.0
+category: orchestration
+tags:
+- orchestration
+- coordination
+- swarm
+author: ruv
 ---
 
 # Advanced Coordination - Distributed Agent Management

@@ -1,6 +1,17 @@
 ---
-name: "Deployment Readiness"
-description: "Production deployment validation for Deep Research SOP Pipeline H ensuring models ready for real-world deployment. Use before deploying to production, creating deployment plans, or validating infrastructure requirements. Validates performance benchmarks, monitoring setup, incident response plans, rollback strategies, and infrastructure scalability for Quality Gate 3."
+name: deployment-readiness
+description: Production deployment validation for Deep Research SOP Pipeline H ensuring
+  models ready for real-world deployment. Use before deploying to production, creating
+  deployment plans, or validating infrastructure requirements. Validates performance
+  benchmarks, monitoring setup, incident response plans, rollback strategies, and
+  infrastructure scalability for Quality Gate 3.
+version: 1.0.0
+category: operations
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # Deployment Readiness

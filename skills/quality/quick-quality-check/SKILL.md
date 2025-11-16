@@ -1,9 +1,18 @@
 ---
 name: quick-quality-check
-description: Lightning-fast quality check using parallel command execution. Runs theater detection, linting, security scan, and basic tests in parallel for instant feedback on code quality.
-tags: [quality, quick, parallel, essential, tier-enhanced]
+description: Lightning-fast quality check using parallel command execution. Runs theater
+  detection, linting, security scan, and basic tests in parallel for instant feedback
+  on code quality.
+tags:
+- quality
+- quick
+- parallel
+- essential
+- tier-enhanced
 version: 2.0.0
 tier: enhanced
+category: quality
+author: ruv
 ---
 
 # Quick Quality Check

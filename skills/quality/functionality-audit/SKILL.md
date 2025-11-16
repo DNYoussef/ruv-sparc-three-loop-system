@@ -1,6 +1,18 @@
 ---
 name: functionality-audit
-description: Validates that code actually works through sandbox testing, execution verification, and systematic debugging. Use this skill after code generation or modification to ensure functionality is genuine rather than assumed. The skill creates isolated test environments, executes code with realistic inputs, identifies bugs through systematic analysis, and applies best practices to fix issues without breaking existing functionality. This ensures code delivers its intended behavior reliably.
+description: Validates that code actually works through sandbox testing, execution
+  verification, and systematic debugging. Use this skill after code generation or
+  modification to ensure functionality is genuine rather than assumed. The skill creates
+  isolated test environments, executes code with realistic inputs, identifies bugs
+  through systematic analysis, and applies best practices to fix issues without breaking
+  existing functionality. This ensures code delivers its intended behavior reliably.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Functionality Audit
@@ -210,4 +222,3 @@ Functionality audit findings feed into other quality skills. Bugs discovered dur
 To use this skill effectively, provide clear specifications of expected code behavior, representative test data or inputs, any known edge cases or problem areas, and information about dependencies or external systems the code interacts with. The more context provided, the more thorough and accurate the functionality testing becomes.
 
 The skill will systematically test code, identify bugs, debug issues using best practices, and produce a comprehensive report. It transforms code from "possibly correct" to "verified correct" through rigorous execution validation. When combined with theater-detection-audit and style-audit, it ensures code is genuine, functional, and well-crafted before deployment.
-

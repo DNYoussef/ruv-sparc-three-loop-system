@@ -349,5 +349,5 @@ sales/sales-specialist/customer-stories          // Case study material
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/content-creator.md`
+**Deployment**: `~/agents/specialists/business/content-creator.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

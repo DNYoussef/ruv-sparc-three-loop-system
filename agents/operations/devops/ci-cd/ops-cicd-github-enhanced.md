@@ -749,5 +749,5 @@ testing/qa-engineer/{task-id}/test-reports
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/operations/devops/ci-cd/ops-cicd-github.md`
+**Deployment**: `~/agents/operations/devops/ci-cd/ops-cicd-github.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

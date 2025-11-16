@@ -1,8 +1,18 @@
 ---
 name: base-template-generator
-description: Generate clean, production-ready boilerplate templates for Node.js, Python, Go, React, Vue, and other frameworks. Use when starting new projects or creating consistent foundational code structures. Provides modern best practices with minimal dependencies. Gold tier with automated scripts, validation tools, and Docker/CI/CD support.
+description: Generate clean, production-ready boilerplate templates for Node.js, Python,
+  Go, React, Vue, and other frameworks. Use when starting new projects or creating
+  consistent foundational code structures. Provides modern best practices with minimal
+  dependencies. Gold tier with automated scripts, validation tools, and Docker/CI/CD
+  support.
 tier: gold
 version: 2.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
 ---
 
 # Base Template Generator (Gold Tier)

@@ -857,7 +857,7 @@ Share all implementation decisions via MCP memory tools:
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/foundry/core/coder.md`
+**Deployment**: `~/agents/foundry/core/coder.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization
 
 ---

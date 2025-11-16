@@ -1,6 +1,16 @@
 ---
-name: "AgentDB Performance Optimization"
-description: "Apply quantization to reduce memory by 4-32x. Enable HNSW indexing for 150x faster search. Configure caching strategies and implement batch operations. Use when optimizing memory usage, improving search speed, or scaling to millions of vectors. Deploy these optimizations to achieve 12,500x performance gains."
+name: agentdb-performance-optimization
+description: Apply quantization to reduce memory by 4-32x. Enable HNSW indexing for
+  150x faster search. Configure caching strategies and implement batch operations.
+  Use when optimizing memory usage, improving search speed, or scaling to millions
+  of vectors. Deploy these optimizations to achieve 12,500x performance gains.
+version: 1.0.0
+category: platforms
+tags:
+- platforms
+- integration
+- tools
+author: ruv
 ---
 
 # AgentDB Performance Optimization

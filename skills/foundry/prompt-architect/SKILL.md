@@ -1,6 +1,17 @@
 ---
 name: prompt-architect
-description: Comprehensive framework for analyzing, creating, and refining prompts for AI systems. Use when creating prompts for Claude, ChatGPT, or other language models, improving existing prompts, or applying evidence-based prompt engineering techniques. Applies structural optimization, self-consistency patterns, and anti-pattern detection to transform prompts into highly effective versions.
+description: Comprehensive framework for analyzing, creating, and refining prompts
+  for AI systems. Use when creating prompts for Claude, ChatGPT, or other language
+  models, improving existing prompts, or applying evidence-based prompt engineering
+  techniques. Applies structural optimization, self-consistency patterns, and anti-pattern
+  detection to transform prompts into highly effective versions.
+version: 1.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
 ---
 
 # Prompt Architect

@@ -1,3 +1,15 @@
+---
+name: infrastructure
+description: '- **Skill ID**: infrastructure-orchestration'
+version: 1.0.0
+category: operations
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
+---
+
 # Infrastructure Orchestration Skill
 
 ## Metadata

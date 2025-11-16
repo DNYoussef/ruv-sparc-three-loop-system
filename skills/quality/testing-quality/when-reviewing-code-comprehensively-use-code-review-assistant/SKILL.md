@@ -1,17 +1,23 @@
 ---
 name: when-reviewing-code-comprehensively-use-code-review-assistant
-description: Comprehensive PR review with multi-agent swarm specialization for security, performance, style, tests, and documentation
+description: Comprehensive PR review with multi-agent swarm specialization for security,
+  performance, style, tests, and documentation
 version: 1.0.0
 category: testing-quality
 agents:
-  - code-review-swarm
-  - security-manager
-  - performance-analyzer
-  - tester
+- code-review-swarm
+- security-manager
+- performance-analyzer
+- tester
 topology: hierarchical
 coordination: claude-flow
 evidence_based: true
 validation_gates: true
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Comprehensive Code Review Assistant

@@ -84,4 +84,4 @@ Result: Codex approach 2x faster for this use case
 
 **Uses your ChatGPT Plus subscription.** Use `/model` in Codex to switch to GPT-5-Codex.
 
-See `.claude/agents/codex-reasoning-agent.md` for details.
+See `agents/codex-reasoning-agent.md` for details.

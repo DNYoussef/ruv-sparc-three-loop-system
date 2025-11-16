@@ -1,9 +1,29 @@
 ---
 name: docker-containerization
-description: Docker containerization specialist for multi-stage builds, layer caching optimization, security scanning with Trivy, Docker Compose orchestration, BuildKit advanced features, and production-grade Dockerfile best practices. Use when containerizing applications, optimizing image size, implementing CI/CD pipelines, or requiring Docker best practices. Handles secrets management, health checks, resource limits, and registry operations.
+description: Docker containerization specialist for multi-stage builds, layer caching
+  optimization, security scanning with Trivy, Docker Compose orchestration, BuildKit
+  advanced features, and production-grade Dockerfile best practices. Use when containerizing
+  applications, optimizing image size, implementing CI/CD pipelines, or requiring
+  Docker best practices. Handles secrets management, health checks, resource limits,
+  and registry operations.
 category: Infrastructure
 complexity: Medium
-triggers: ["docker", "dockerfile", "docker compose", "containerization", "docker build", "buildkit", "trivy", "docker security", "multi-stage build"]
+triggers:
+- docker
+- dockerfile
+- docker compose
+- containerization
+- docker build
+- buildkit
+- trivy
+- docker security
+- multi-stage build
+version: 1.0.0
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # Docker Containerization Specialist

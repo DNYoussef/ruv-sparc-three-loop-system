@@ -1,8 +1,19 @@
 ---
 name: platform-integration
-description: Enterprise platform integration orchestration with API connectivity, webhook automation, data synchronization, and multi-platform coordination. Supports REST, GraphQL, WebSockets, message queues, and event-driven architectures.
-tags: [platform, integration, api, webhooks, sync, essential, tier-2]
+description: Enterprise platform integration orchestration with API connectivity,
+  webhook automation, data synchronization, and multi-platform coordination. Supports
+  REST, GraphQL, WebSockets, message queues, and event-driven architectures.
+tags:
+- platform
+- integration
+- api
+- webhooks
+- sync
+- essential
+- tier-2
 version: 2.0.0
+category: operations
+author: ruv
 ---
 
 # Platform Integration

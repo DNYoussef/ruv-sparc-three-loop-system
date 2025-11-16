@@ -1,8 +1,17 @@
 ---
 name: production-readiness
-description: Comprehensive pre-deployment validation ensuring code is production-ready. Runs complete audit pipeline, performance benchmarks, security scan, documentation check, and generates deployment checklist.
-tags: [deployment, production, validation, essential, tier-1]
+description: Comprehensive pre-deployment validation ensuring code is production-ready.
+  Runs complete audit pipeline, performance benchmarks, security scan, documentation
+  check, and generates deployment checklist.
+tags:
+- deployment
+- production
+- validation
+- essential
+- tier-1
 version: 1.0.0
+category: operations
+author: ruv
 ---
 
 # Production Readiness

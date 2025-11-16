@@ -1,6 +1,18 @@
 ---
 name: theater-detection-audit
-description: Performs comprehensive audits to detect placeholder code, mock data, TODO markers, and incomplete implementations in codebases. Use this skill when you need to find all instances of "theater" in code such as hardcoded mock responses, stub functions, commented-out production logic, or fake data that needs to be replaced with real implementations. The skill systematically identifies these instances, reads their full context, and completes them with production-quality code.
+description: Performs comprehensive audits to detect placeholder code, mock data,
+  TODO markers, and incomplete implementations in codebases. Use this skill when you
+  need to find all instances of "theater" in code such as hardcoded mock responses,
+  stub functions, commented-out production logic, or fake data that needs to be replaced
+  with real implementations. The skill systematically identifies these instances,
+  reads their full context, and completes them with production-quality code.
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Theater Detection Audit
@@ -146,4 +158,3 @@ To use this skill effectively, provide clear scope for the audit including what 
 The skill will systematically scan, analyze, and report on theater in the codebase, providing a comprehensive view of what needs to be completed before production deployment. It will prioritize findings by risk and dependency, and provide clear guidance on completion order and approach.
 
 This skill is particularly valuable as part of a larger code quality workflow where theater detection feeds into functionality audits and style audits, creating a comprehensive quality improvement pipeline. Together, these audit skills help transform prototype code into production-ready systems.
-

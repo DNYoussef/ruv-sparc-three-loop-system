@@ -1,6 +1,15 @@
 ---
 name: sop-product-launch
-description: Complete product launch workflow coordinating 15+ specialist agents across research, development, marketing, sales, and operations. Uses sequential and parallel orchestration for 10-week launch timeline.
+description: Complete product launch workflow coordinating 15+ specialist agents across
+  research, development, marketing, sales, and operations. Uses sequential and parallel
+  orchestration for 10-week launch timeline.
+version: 1.0.0
+category: operations
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # SOP: Product Launch Workflow

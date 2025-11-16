@@ -1,15 +1,21 @@
 ---
 name: when-auditing-code-style-use-style-audit
-description: Code style and conventions audit with auto-fix capabilities for comprehensive style enforcement
+description: Code style and conventions audit with auto-fix capabilities for comprehensive
+  style enforcement
 version: 1.0.0
 category: testing-quality
 agents:
-  - code-analyzer
-  - reviewer
+- code-analyzer
+- reviewer
 topology: mesh
 coordination: claude-flow
 evidence_based: true
 auto_fix: true
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Code Style Audit with Auto-Fix

@@ -2,24 +2,26 @@
 name: github-workflow-automation
 version: 1.0.0
 category: github
-description: Advanced GitHub Actions workflow automation with AI swarm coordination, intelligent CI/CD pipelines, and comprehensive repository management
+description: Advanced GitHub Actions workflow automation with AI swarm coordination,
+  intelligent CI/CD pipelines, and comprehensive repository management
 tags:
-  - github
-  - github-actions
-  - ci-cd
-  - workflow-automation
-  - swarm-coordination
-  - deployment
-  - security
+- github
+- github-actions
+- ci-cd
+- workflow-automation
+- swarm-coordination
+- deployment
+- security
 authors:
-  - claude-flow
+- claude-flow
 requires:
-  - gh (GitHub CLI)
-  - git
-  - claude-flow@alpha
-  - node (v16+)
+- gh (GitHub CLI)
+- git
+- claude-flow@alpha
+- node (v16+)
 priority: high
 progressive_disclosure: true
+author: ruv
 ---
 
 # GitHub Workflow Automation Skill

@@ -1,8 +1,19 @@
 ---
 name: cascade-orchestrator
-description: Creates sophisticated workflow cascades coordinating multiple micro-skills with sequential pipelines, parallel execution, conditional branching, and Codex sandbox iteration. Enhanced with multi-model routing (Gemini/Codex), ruv-swarm coordination, memory persistence, and audit-pipeline patterns for production workflows.
-tags: [orchestration, workflows, cascades, multi-model, codex-integration, tier-2]
+description: Creates sophisticated workflow cascades coordinating multiple micro-skills
+  with sequential pipelines, parallel execution, conditional branching, and Codex
+  sandbox iteration. Enhanced with multi-model routing (Gemini/Codex), ruv-swarm coordination,
+  memory persistence, and audit-pipeline patterns for production workflows.
+tags:
+- orchestration
+- workflows
+- cascades
+- multi-model
+- codex-integration
+- tier-2
 version: 2.0.0
+category: orchestration
+author: ruv
 ---
 
 # Cascade Orchestrator (Enhanced)

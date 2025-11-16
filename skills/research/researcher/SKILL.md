@@ -1,6 +1,16 @@
 ---
 name: researcher
-description: Multi-level research with Gemini Search integration supporting 3 research depths. Use when gathering information, conducting systematic analysis, or synthesizing knowledge from multiple sources. Applies 90%+ credibility scoring and comprehensive source evaluation.
+description: Multi-level research with Gemini Search integration supporting 3 research
+  depths. Use when gathering information, conducting systematic analysis, or synthesizing
+  knowledge from multiple sources. Applies 90%+ credibility scoring and comprehensive
+  source evaluation.
+version: 1.0.0
+category: research
+tags:
+- research
+- analysis
+- planning
+author: ruv
 ---
 
 # Researcher - Systematic Information Gathering

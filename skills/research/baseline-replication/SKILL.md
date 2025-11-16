@@ -1,6 +1,16 @@
 ---
-name: "Baseline Replication"
-description: "Replicate published ML baseline experiments with exact reproducibility (±1% tolerance) for Deep Research SOP Pipeline D. Use when validating baselines, reproducing experiments, verifying published results, or preparing for novel method development."
+name: baseline-replication
+description: "Replicate published ML baseline experiments with exact reproducibility\
+  \ (\xB11% tolerance) for Deep Research SOP Pipeline D. Use when validating baselines,\
+  \ reproducing experiments, verifying published results, or preparing for novel method\
+  \ development."
+version: 1.0.0
+category: research
+tags:
+- research
+- analysis
+- planning
+author: ruv
 ---
 
 # Baseline Replication
@@ -610,7 +620,7 @@ memory-store --key "sop/pipeline-d/baseline-bert/gate-1" \
 ### Deep Research SOP Documentation
 - Pipeline D specification: `docs/deep-research-sop-gap-analysis.md`
 - Quality Gates overview: `CLAUDE.md`
-- Agent definitions: `.claude/agents/research/`
+- Agent definitions: `agents/research/`
 - Command specifications: `.claude/commands/research/`
 
 ---

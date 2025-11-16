@@ -1,8 +1,20 @@
 ---
 name: micro-skill-creator
-description: Rapidly creates atomic, focused skills optimized with evidence-based prompting, specialist agents, and systematic testing. Each micro-skill does one thing exceptionally well using self-consistency, program-of-thought, and plan-and-solve patterns. Enhanced with agent-creator principles and functionality-audit validation. Perfect for building composable workflow components.
-tags: [skill-creation, atomic, modular, evidence-based, specialist-agents, tier-1]
+description: Rapidly creates atomic, focused skills optimized with evidence-based
+  prompting, specialist agents, and systematic testing. Each micro-skill does one
+  thing exceptionally well using self-consistency, program-of-thought, and plan-and-solve
+  patterns. Enhanced with agent-creator principles and functionality-audit validation.
+  Perfect for building composable workflow components.
+tags:
+- skill-creation
+- atomic
+- modular
+- evidence-based
+- specialist-agents
+- tier-1
 version: 2.0.0
+category: foundry
+author: ruv
 ---
 
 # Micro-Skill Creator (Enhanced)

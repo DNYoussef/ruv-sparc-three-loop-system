@@ -1,0 +1,88 @@
+# Skill Intake Template (Quick Track - Phase 1)
+# Pilot 1: code-formatter
+
+skill_name: "code-formatter"
+
+skill_category: "development"
+
+complexity_level: "simple"
+
+problem_solved: "Manually formatting code files is time-consuming and error-prone, especially when switching between languages with different formatters. Developers need a unified way to format code regardless of language."
+
+desired_outcome: "Code files are automatically formatted according to language-specific style guides, with clear feedback on changes made and proper error handling for edge cases."
+
+primary_users:
+  - "frontend developers"
+  - "backend developers"
+  - "full-stack developers"
+
+trigger_keywords:
+  - "format code"
+  - "run prettier"
+  - "run black"
+  - "format file"
+  - "apply code formatting"
+  - "fix code style"
+  - "format javascript"
+  - "format python"
+
+negative_triggers:
+  - "format hard drive"
+  - "format date"
+  - "code review"
+
+example_usage_1:
+  scenario: "nominal_case"
+  description: "Format a JavaScript file"
+  user_request: "Format my src/app.js file"
+  expected_behavior: "Detect JavaScript, run Prettier, report changes"
+  expected_output: "Formatted src/app.js with Prettier. 12 lines changed."
+
+example_usage_2:
+  scenario: "edge_case"
+  description: "File has syntax errors"
+  user_request: "Format main.py with syntax error"
+  expected_behavior: "Detect syntax error, warn user, ask whether to fix or abort"
+  expected_output: "Syntax error at line 15: unexpected indent. Fix syntax first? (y/n)"
+
+example_usage_3:
+  scenario: "error_case"
+  description: "Formatter not installed"
+  user_request: "Format app.rs but rustfmt not installed"
+  expected_behavior: "Check for rustfmt, provide installation instructions if missing"
+  expected_output: "Error: rustfmt not installed. Install with: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+
+constraints:
+  - "Only supports text files (no binary formats)"
+  - "Requires formatter tools installed (Prettier, Black, rustfmt)"
+  - "Max file size: 10MB"
+  - "Must preserve file encoding (UTF-8, UTF-16)"
+
+must_have_features:
+  - "Detect file language automatically from extension"
+  - "Use appropriate formatter per language"
+  - "Provide clear success/error feedback"
+  - "Check formatter availability before running"
+
+nice_to_have_features:
+  - "Support custom formatter configuration files"
+  - "Batch format entire directories"
+
+success_criteria:
+  - "File formatted according to language style guide (verified by formatter --check)"
+  - "User receives clear feedback on number of lines changed"
+  - "Syntax errors detected and reported before formatting"
+  - "Original file preserved if formatting fails"
+
+failure_conditions:
+  - "File corrupted or lost"
+  - "Silent failure (no error message)"
+  - "Wrong formatter used for file type"
+  - "Formatter hangs indefinitely (no timeout)"
+
+metadata:
+  created_date: "2025-11-06"
+  created_by: "pilot-test"
+  track: "quick"
+  version: "1.0.0"
+  status: "draft"

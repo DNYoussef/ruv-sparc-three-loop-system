@@ -1,29 +1,36 @@
 ---
 name: when-auditing-security-use-security-analyzer
 version: 1.0.0
-description: Comprehensive security auditing across static analysis, dynamic testing, dependency vulnerabilities, secrets detection, and OWASP compliance
+description: Comprehensive security auditing across static analysis, dynamic testing,
+  dependency vulnerabilities, secrets detection, and OWASP compliance
 agents:
-  - security-manager
-  - code-analyzer
-  - tester
+- security-manager
+- code-analyzer
+- tester
 complexity: HIGH
 triggers:
-  - security audit
-  - vulnerability scan
-  - penetration test
-  - security review
-  - compliance check
+- security audit
+- vulnerability scan
+- penetration test
+- security review
+- compliance check
 categories:
-  - security
-  - testing
-  - compliance
+- security
+- testing
+- compliance
 coordination:
   topology: hierarchical
   pattern: sequential-with-gates
 memory_patterns:
-  - swarm/security/findings
-  - swarm/security/vulnerabilities
-  - swarm/security/compliance
+- swarm/security/findings
+- swarm/security/vulnerabilities
+- swarm/security/compliance
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # Security Analyzer - Comprehensive Security Auditing Skill

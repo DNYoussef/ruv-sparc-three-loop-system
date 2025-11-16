@@ -1,32 +1,41 @@
 ---
 name: when-analyzing-user-intent-use-intent-analyzer
 version: 1.0.0
-description: Advanced intent interpretation system using cognitive science principles and probabilistic intent mapping
+description: Advanced intent interpretation system using cognitive science principles
+  and probabilistic intent mapping
 category: utilities
-tags: [intent-analysis, cognitive-science, disambiguation, user-understanding]
-agents: [researcher, analyst, planner]
+tags:
+- intent-analysis
+- cognitive-science
+- disambiguation
+- user-understanding
+agents:
+- researcher
+- analyst
+- planner
 difficulty: intermediate
 estimated_duration: 15-30min
 success_criteria:
-  - Clear understanding of user intent achieved
-  - Ambiguities resolved through targeted questions
-  - Actionable task definition created
-  - User confirmation obtained
+- Clear understanding of user intent achieved
+- Ambiguities resolved through targeted questions
+- Actionable task definition created
+- User confirmation obtained
 validation_method: user_confirmation
 dependencies:
-  - claude-flow@alpha
-  - hooks-integration
+- claude-flow@alpha
+- hooks-integration
 prerequisites:
-  - User request captured
-  - Context information available
+- User request captured
+- Context information available
 outputs:
-  - Interpreted intent document
-  - Clarifying questions (if needed)
-  - Action plan
+- Interpreted intent document
+- Clarifying questions (if needed)
+- Action plan
 triggers:
-  - Ambiguous user requests
-  - Complex multi-part instructions
-  - Vague or unclear requirements
+- Ambiguous user requests
+- Complex multi-part instructions
+- Vague or unclear requirements
+author: ruv
 ---
 
 # Intent Analyzer - Advanced User Intent Interpretation

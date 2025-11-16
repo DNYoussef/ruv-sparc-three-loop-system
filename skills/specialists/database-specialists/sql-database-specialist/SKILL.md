@@ -1,9 +1,28 @@
 ---
 name: sql-database-specialist
-description: SQL database specialist for PostgreSQL/MySQL optimization, EXPLAIN plan analysis, index optimization, query rewriting, partitioning strategies, connection pooling, and database performance tuning. Use when optimizing slow queries, designing efficient database schemas, implementing replication/HA, or requiring SQL best practices. Handles JSONB queries, full-text search, vacuum maintenance, and migration strategies.
+description: SQL database specialist for PostgreSQL/MySQL optimization, EXPLAIN plan
+  analysis, index optimization, query rewriting, partitioning strategies, connection
+  pooling, and database performance tuning. Use when optimizing slow queries, designing
+  efficient database schemas, implementing replication/HA, or requiring SQL best practices.
+  Handles JSONB queries, full-text search, vacuum maintenance, and migration strategies.
 category: Database Specialists
 complexity: High
-triggers: ["sql", "postgresql", "mysql", "database optimization", "query optimization", "indexes", "explain plan", "database performance", "postgres", "mariadb"]
+triggers:
+- sql
+- postgresql
+- mysql
+- database optimization
+- query optimization
+- indexes
+- explain plan
+- database performance
+- postgres
+- mariadb
+version: 1.0.0
+tags:
+- specialists
+- domain-expert
+author: ruv
 ---
 
 # SQL Database Specialist

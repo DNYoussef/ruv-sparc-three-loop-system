@@ -1,8 +1,16 @@
 ---
 name: web-cli-teleport
-description: Guide users on when to use Claude Code Web vs CLI and seamlessly teleport sessions between environments
-tags: [workflow, teleport, session-management, web, cli]
+description: Guide users on when to use Claude Code Web vs CLI and seamlessly teleport
+  sessions between environments
+tags:
+- workflow
+- teleport
+- session-management
+- web
+- cli
 version: 1.0.0
+category: tooling
+author: ruv
 ---
 
 # Web-CLI Teleport Guide

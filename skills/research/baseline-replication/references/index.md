@@ -292,7 +292,7 @@ Phase 3: Production Deployment
 
 - Pipeline D specification: `docs/deep-research-sop-gap-analysis.md`
 - Quality Gates overview: `CLAUDE.md`
-- Agent definitions: `.claude/agents/research/`
+- Agent definitions: `agents/research/`
 - Command specifications: `.claude/commands/research/`
 
 ---

@@ -1,3 +1,14 @@
+---
+name: ml-training-debugger
+description: '**Version**: 1.0.0'
+version: 1.0.0
+category: specialists
+tags:
+- specialists
+- domain-expert
+author: ruv
+---
+
 # ML Training Debugger
 
 **Version**: 1.0.0

@@ -1,8 +1,18 @@
 ---
 name: feature-dev-complete
-description: Complete feature development lifecycle from research to deployment. Uses Gemini Search for best practices, architecture design, Codex prototyping, comprehensive testing, and documentation generation. Full 12-stage workflow.
-tags: [feature, development, lifecycle, multi-model, essential, tier-1]
+description: Complete feature development lifecycle from research to deployment. Uses
+  Gemini Search for best practices, architecture design, Codex prototyping, comprehensive
+  testing, and documentation generation. Full 12-stage workflow.
+tags:
+- feature
+- development
+- lifecycle
+- multi-model
+- essential
+- tier-1
 version: 1.0.0
+category: delivery
+author: ruv
 ---
 
 # Feature Development Complete

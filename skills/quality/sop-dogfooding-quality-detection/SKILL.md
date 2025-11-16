@@ -1,9 +1,18 @@
 ---
 name: sop-dogfooding-quality-detection
-description: 3-part dogfooding workflow Phase 1 - Run Connascence analysis, store results in Memory-MCP with WHO/WHEN/PROJECT/WHY tagging. 30-60 seconds execution time.
+description: 3-part dogfooding workflow Phase 1 - Run Connascence analysis, store
+  results in Memory-MCP with WHO/WHEN/PROJECT/WHY tagging. 30-60 seconds execution
+  time.
 agents: code-analyzer, reviewer
 mcp_tools: connascence-analyzer, memory-mcp
 scripts: dogfood-quality-check.bat, store-connascence-results.js
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # SOP: Dogfooding Quality Detection

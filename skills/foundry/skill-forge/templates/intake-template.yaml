@@ -1,0 +1,262 @@
+# Skill Intake Template (Quick Track - Phase 1)
+# Time: 5 minutes | Purpose: Capture intent quickly with structured format
+
+# ==============================================================================
+# BASIC INFORMATION (Required)
+# ==============================================================================
+
+skill_name: ""
+  # Brief, descriptive name using kebab-case
+  # Examples: "code-formatter", "api-integration-helper", "data-transformer"
+
+skill_category: ""
+  # Choose one: development|testing|documentation|automation|analysis|workflow|integration|utility
+
+complexity_level: "simple|medium|complex"
+  # simple: Single-step operation, clear I/O
+  # medium: Multi-step workflow, some conditionals
+  # complex: Advanced logic, external dependencies, error handling
+
+# ==============================================================================
+# PROBLEM & SOLUTION (Required)
+# ==============================================================================
+
+problem_solved: ""
+  # What pain point does this skill address? (1-2 sentences)
+  # Example: "Manually formatting code files is time-consuming and error-prone,
+  # especially when switching between languages with different formatters."
+
+desired_outcome: ""
+  # What should be different after using this skill? (1-2 sentences)
+  # Example: "Code files are automatically formatted according to language-specific
+  # style guides, with clear feedback on changes made."
+
+# ==============================================================================
+# USERS & TRIGGERS (Required)
+# ==============================================================================
+
+primary_users:
+  - ""
+  # Who will use this skill? (personas or roles)
+  # Examples: "frontend developers", "DevOps engineers", "data scientists"
+
+trigger_keywords:
+  - ""
+  # 5-10 phrases that should activate this skill
+  # Mix specific and general terms
+  # Examples:
+  #   - "format code"
+  #   - "run prettier"
+  #   - "fix code style"
+  #   - "apply linting"
+  #   - "standardize formatting"
+
+negative_triggers:
+  - ""
+  # 3-5 phrases that should NOT trigger this skill (avoid false positives)
+  # Examples:
+  #   - "format hard drive" (different meaning of format)
+  #   - "code review" (different workflow)
+
+# ==============================================================================
+# USE CASES & EXAMPLES (Required - Minimum 3)
+# ==============================================================================
+
+example_usage_1:
+  scenario: "nominal_case"
+  description: "Most common use case"
+  user_request: ""
+    # What user would say: "Format my JavaScript files with Prettier"
+  expected_behavior: ""
+    # What skill should do: "Scan directory for .js files, run Prettier on each, report changes"
+  expected_output: ""
+    # What user should see: "Formatted 15 files, 47 changes made"
+
+example_usage_2:
+  scenario: "edge_case"
+  description: "Uncommon but valid scenario"
+  user_request: ""
+    # Example: "Format a single file with syntax errors"
+  expected_behavior: ""
+    # Example: "Detect syntax error, ask user whether to fix or skip"
+  expected_output: ""
+    # Example: "Syntax error detected at line 23. Fix first? (Yes/No)"
+
+example_usage_3:
+  scenario: "error_case"
+  description: "Something goes wrong"
+  user_request: ""
+    # Example: "Format file that doesn't exist"
+  expected_behavior: ""
+    # Example: "Check file existence, provide clear error message"
+  expected_output: ""
+    # Example: "Error: File 'app.js' not found. Check path and try again."
+
+# Optional: Add more examples for complex skills
+example_usage_4:
+  scenario: ""
+  description: ""
+  user_request: ""
+  expected_behavior: ""
+  expected_output: ""
+
+# ==============================================================================
+# CONSTRAINTS & REQUIREMENTS (Required)
+# ==============================================================================
+
+constraints:
+  - ""
+  # Limitations or boundaries (3-5 items)
+  # Examples:
+  #   - "Only supports text files (no binary formats)"
+  #   - "Requires formatter tools installed (Prettier, Black, etc.)"
+  #   - "Max file size: 10MB"
+  #   - "Must preserve file encoding (UTF-8, UTF-16, etc.)"
+
+must_have_features:
+  - ""
+  # Core functionality that MUST be present (3-5 items)
+  # Examples:
+  #   - "Detect file language automatically"
+  #   - "Use appropriate formatter per language"
+  #   - "Provide clear success/error feedback"
+
+nice_to_have_features:
+  - ""
+  # Optional enhancements if time permits (2-3 items)
+  # Examples:
+  #   - "Support custom formatter configuration"
+  #   - "Batch format entire directories"
+  #   - "Preview changes before applying"
+
+# ==============================================================================
+# SUCCESS CRITERIA (Required)
+# ==============================================================================
+
+success_criteria:
+  - ""
+  # How to know the skill works correctly (3-5 measurable criteria)
+  # Examples:
+  #   - "File is formatted according to style guide (verified by formatter --check)"
+  #   - "User receives clear feedback on number of changes"
+  #   - "Syntax errors are detected and reported before formatting"
+  #   - "Original file is preserved if formatting fails"
+
+failure_conditions:
+  - ""
+  # What constitutes failure (3-5 scenarios)
+  # Examples:
+  #   - "File is corrupted or lost"
+  #   - "Silent failure (no error message shown)"
+  #   - "Wrong formatter used for file type"
+  #   - "Formatter hangs indefinitely (no timeout)"
+
+# ==============================================================================
+# DEPENDENCIES & INTEGRATION (Optional but Recommended)
+# ==============================================================================
+
+tools_required:
+  - tool: ""
+    version: ""
+    installation: ""
+    # Example:
+    #   tool: "Prettier"
+    #   version: ">=2.0.0"
+    #   installation: "npm install -g prettier"
+
+files_required:
+  - path: ""
+    purpose: ""
+    # Example:
+    #   path: ".prettierrc"
+    #   purpose: "Formatter configuration"
+
+other_skills_used:
+  - skill: ""
+    purpose: ""
+    # Example:
+    #   skill: "file-validator"
+    #   purpose: "Validate file exists before formatting"
+
+# ==============================================================================
+# WORKFLOW CONTEXT (Optional)
+# ==============================================================================
+
+workflow_integration:
+  when_used: ""
+    # What triggers the need for this skill in real workflows?
+    # Example: "After writing or editing code, before committing to git"
+
+  precedes: ""
+    # What typically happens before using this skill?
+    # Example: "Code editing in IDE"
+
+  follows: ""
+    # What typically happens after using this skill?
+    # Example: "Git commit, code review, or running tests"
+
+  related_workflows:
+    - ""
+    # Other workflows this integrates with
+    # Examples: "CI/CD pipeline", "pre-commit hooks", "code review process"
+
+# ==============================================================================
+# EDGE CASES & ERROR HANDLING (Optional but Recommended)
+# ==============================================================================
+
+edge_cases:
+  - case: ""
+    handling: ""
+    # Example:
+    #   case: "File has mixed line endings (CRLF and LF)"
+    #   handling: "Normalize to LF (Unix style) or preserve based on .editorconfig"
+
+error_scenarios:
+  - error: ""
+    recovery: ""
+    # Example:
+    #   error: "Formatter not installed"
+    #   recovery: "Provide installation instructions, offer to install automatically"
+
+# ==============================================================================
+# METADATA (Auto-filled)
+# ==============================================================================
+
+metadata:
+  created_date: ""
+  created_by: ""
+  track: "quick"
+  version: "1.0.0"
+  status: "draft|review|approved"
+
+# ==============================================================================
+# VALIDATION CHECKLIST (Auto-checked by scripts/validate-intake.js)
+# ==============================================================================
+
+validation:
+  required_fields_complete: false
+  minimum_examples: false  # At least 3
+  trigger_keywords: false   # At least 5
+  constraints_defined: false # At least 3
+  success_criteria: false    # At least 3
+  overall_pass: false
+
+# ==============================================================================
+# USAGE INSTRUCTIONS
+# ==============================================================================
+
+# HOW TO USE THIS TEMPLATE:
+# 1. Copy this template to your skill directory
+# 2. Fill in all "Required" sections (15 min)
+# 3. Run: node scripts/validate-intake.js skill-name-intake.yaml
+# 4. Fix any validation errors
+# 5. Proceed to Phase 2 (Use Case Crystallization)
+
+# QUICK TIPS:
+# - Use concrete examples (not "format file" but "format src/index.js with Prettier")
+# - Think about failure modes early (what could go wrong?)
+# - Consider users who aren't familiar with the skill (clear trigger keywords)
+# - Be specific about success criteria (how do you KNOW it worked?)
+
+# TIME INVESTMENT: 5-10 minutes
+# ROI: Prevents 30-60 minutes of rework later by catching requirements gaps early

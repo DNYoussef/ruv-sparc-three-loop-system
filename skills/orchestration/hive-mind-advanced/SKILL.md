@@ -502,7 +502,7 @@ npx claude-flow hive-mind spawn "..." --consensus majority
 
 ### Custom Worker Types
 
-Define specialized workers in `.claude/agents/`:
+Define specialized workers in `agents/`:
 
 ```yaml
 name: security-auditor

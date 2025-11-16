@@ -1,16 +1,22 @@
 ---
 name: when-verifying-quality-use-verification-quality
-description: Comprehensive quality verification and validation through static analysis, dynamic testing, integration validation, and certification gates
+description: Comprehensive quality verification and validation through static analysis,
+  dynamic testing, integration validation, and certification gates
 version: 1.0.0
 category: testing-quality
 agents:
-  - tester
-  - code-analyzer
-  - production-validator
+- tester
+- code-analyzer
+- production-validator
 topology: hierarchical
 coordination: claude-flow
 evidence_based: true
 validation_gates: true
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Quality Verification and Validation

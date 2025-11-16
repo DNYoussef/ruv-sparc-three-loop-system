@@ -353,5 +353,5 @@ engineering/coder/bug-fixes/changelog             // Recent fixes
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/customer-support-specialist.md`
+**Deployment**: `~/agents/specialists/business/customer-support-specialist.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

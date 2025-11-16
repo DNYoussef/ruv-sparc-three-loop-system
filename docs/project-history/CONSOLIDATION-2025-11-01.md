@@ -104,7 +104,7 @@ All production-ready skills from `.claude/skills/` including:
 - `swarm-memory-manager`, `queen-coordinator`
 
 #### Additional Specialized Agents (186+)
-All 200 agent definitions from `.claude/agents/` covering:
+All 200 agent definitions from `agents/` covering:
 - SPARC methodology, GitHub integration, Performance analysis
 - Neural AI, Security, CI/CD, Backend/Mobile/ML development
 
@@ -223,13 +223,13 @@ feat: Complete consolidation - All skills, agents, commands centralized + README
 
 CONSOLIDATED:
   - 116 skills (all from .claude/skills/)
-  - 200 agents (all from .claude/agents/)
+  - 200 agents (all from agents/)
   - 149 commands (all from .claude/commands/)
   - Enhanced README with Specialized Capability Areas section
 
 DELETIONS:
   - Removed .claude/skills/ (after verification and backup)
-  - Removed .claude/agents/ (after verification and backup)
+  - Removed agents/ (after verification and backup)
   - Removed .claude/commands/ (after verification and backup)
 
 BACKUP:
@@ -574,7 +574,7 @@ git pull origin main
 
 ### Files
 - ✅ **116 skills** consolidated (100% of .claude/skills/)
-- ✅ **200 agents** consolidated (100% of .claude/agents/)
+- ✅ **200 agents** consolidated (100% of agents/)
 - ✅ **149 commands** consolidated (100% of .claude/commands/)
 - ✅ **465 total files** migrated successfully
 

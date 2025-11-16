@@ -1,6 +1,16 @@
 ---
-name: "Reverse Engineering: Deep Analysis"
-description: "Advanced binary analysis with runtime execution and symbolic path exploration (RE Levels 3-4). Use when need runtime behavior, memory dumps, secret extraction, or input synthesis to reach specific program states. Completes in 3-7 hours with GDB+Angr."
+name: reverse-engineering-deep-analysis
+description: Advanced binary analysis with runtime execution and symbolic path exploration
+  (RE Levels 3-4). Use when need runtime behavior, memory dumps, secret extraction,
+  or input synthesis to reach specific program states. Completes in 3-7 hours with
+  GDB+Angr.
+version: 1.0.0
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # Reverse Engineering: Deep Analysis

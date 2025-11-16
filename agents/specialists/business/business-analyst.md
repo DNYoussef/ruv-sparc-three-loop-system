@@ -342,5 +342,5 @@ product/product-manager/roadmap                     // Product plans
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/specialists/business/business-analyst.md`
+**Deployment**: `~/agents/specialists/business/business-analyst.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

@@ -1,27 +1,38 @@
 ---
 name: api-docs
-description: Generate and maintain comprehensive API documentation using OpenAPI 3.0, Swagger UI, and GraphQL Playground. Use when documenting REST APIs, GraphQL services, or creating API reference materials. Ensures consistent, machine-readable, and developer-friendly documentation.
+description: Generate and maintain comprehensive API documentation using OpenAPI 3.0,
+  Swagger UI, and GraphQL Playground. Use when documenting REST APIs, GraphQL services,
+  or creating API reference materials. Ensures consistent, machine-readable, and developer-friendly
+  documentation.
 tier: gold
 capabilities:
-  - OpenAPI 3.0 specification generation from source code (Flask, FastAPI, Express.js, Django)
-  - Multi-format validation (swagger-cli, openapi-generator-cli, yq, yamllint)
-  - Interactive documentation (Swagger UI, ReDoc)
-  - Markdown and HTML documentation generation
-  - Automated schema-to-example conversion
-  - Code examples in multiple languages (cURL, JavaScript, Python, Go)
+- OpenAPI 3.0 specification generation from source code (Flask, FastAPI, Express.js,
+  Django)
+- Multi-format validation (swagger-cli, openapi-generator-cli, yq, yamllint)
+- Interactive documentation (Swagger UI, ReDoc)
+- Markdown and HTML documentation generation
+- Automated schema-to-example conversion
+- Code examples in multiple languages (cURL, JavaScript, Python, Go)
 resources:
   scripts:
-    - generate_openapi.py (350+ lines, framework auto-detection, route extraction)
-    - validate_spec.sh (400+ lines, multi-tool validation pipeline)
-    - create_docs.py (400+ lines, multiple output formats)
+  - generate_openapi.py (350+ lines, framework auto-detection, route extraction)
+  - validate_spec.sh (400+ lines, multi-tool validation pipeline)
+  - create_docs.py (400+ lines, multiple output formats)
   templates:
-    - openapi-3.0.yaml (complete OpenAPI 3.0 specification template)
-    - endpoint-template.json (reusable endpoint definition with examples)
-    - schema-template.json (comprehensive schema patterns)
+  - openapi-3.0.yaml (complete OpenAPI 3.0 specification template)
+  - endpoint-template.json (reusable endpoint definition with examples)
+  - schema-template.json (comprehensive schema patterns)
   tests:
-    - test-1-openapi-generation.md (12 test cases, framework validation)
-    - test-2-spec-validation.md (12 test cases, compliance checks)
-    - test-3-documentation.md (12 test cases, format validation)
+  - test-1-openapi-generation.md (12 test cases, framework validation)
+  - test-2-spec-validation.md (12 test cases, compliance checks)
+  - test-3-documentation.md (12 test cases, format validation)
+version: 1.0.0
+category: delivery
+tags:
+- delivery
+- development
+- workflow
+author: ruv
 ---
 
 # API Documentation Generator (Gold Tier)

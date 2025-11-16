@@ -1,6 +1,16 @@
 ---
-name: "Reverse Engineering: Quick Triage"
-description: "Fast binary analysis with string reconnaissance and static disassembly (RE Levels 1-2). Use when triaging suspicious binaries, extracting IOCs quickly, or performing initial malware analysis. Completes in ≤2 hours with automated decision gates."
+name: reverse-engineering-quick-triage
+description: "Fast binary analysis with string reconnaissance and static disassembly\
+  \ (RE Levels 1-2). Use when triaging suspicious binaries, extracting IOCs quickly,\
+  \ or performing initial malware analysis. Completes in \u22642 hours with automated\
+  \ decision gates."
+version: 1.0.0
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
 ---
 
 # Reverse Engineering: Quick Triage

@@ -1,0 +1,426 @@
+# Skill Metrics Tracking Template
+# Phase 8: Track V0→V1→V2 revision gains to identify high-impact techniques
+
+skill_name: ""
+version: "1.0.0"
+created_date: ""
+author: ""
+track_used: "quick|expert"
+
+# ============================================================
+# BASELINE METRICS (V0 - Initial Version)
+# ============================================================
+
+baseline_v0:
+  timestamp: ""
+  created_by: ""
+
+  # Core Quality Metrics (0-100%)
+  metrics:
+    factual_accuracy:
+      description: "% of claims that are correct and verifiable"
+      measurement_method: "Count correct claims / total claims × 100"
+      score: 0  # 0-100%
+      examples:
+        correct_claims: []
+        incorrect_claims: []
+
+    completeness:
+      description: "% of required elements present in skill"
+      measurement_method: "Count present elements / required elements × 100"
+      score: 0  # 0-100%
+      required_elements:
+        - "YAML frontmatter with name, description, author"
+        - "Clear trigger keywords"
+        - "Explicit success criteria"
+        - "Error handling instructions"
+        - "At least 2 examples"
+        - "Edge case handling"
+      missing_elements: []
+
+    precision:
+      description: "% of content that is relevant and not redundant"
+      measurement_method: "Count relevant sentences / total sentences × 100"
+      score: 0  # 0-100%
+      irrelevant_content: []
+      redundant_content: []
+
+    actionability:
+      description: "% of instructions with explicit success criteria"
+      measurement_method: "Count instructions with criteria / total instructions × 100"
+      score: 0  # 0-100%
+      instructions_with_criteria: 0
+      instructions_without_criteria: 0
+      ambiguous_instructions: []
+
+  # Aggregate Score
+  aggregate_score:
+    calculation: "(accuracy + completeness + precision + actionability) / 4"
+    score: 0  # 0-100%
+    rating: "poor|fair|good|excellent"  # <60|60-75|75-90|>90
+
+  # Qualitative Assessment
+  qualitative:
+    strengths: []
+    weaknesses: []
+    anti_patterns: []
+    missing_meta_principles: []
+
+# ============================================================
+# REVISION 1 METRICS (V1 - First Improvement)
+# ============================================================
+
+revision_v1:
+  timestamp: ""
+  revised_by: ""
+  revision_techniques_applied: []  # List techniques used (e.g., "CoV Phase 1", "Adversarial Testing")
+
+  # Core Quality Metrics (same as V0)
+  metrics:
+    factual_accuracy:
+      score: 0
+      improvement_from_v0: 0  # Can be negative
+      improvements_made: []
+
+    completeness:
+      score: 0
+      improvement_from_v0: 0
+      elements_added: []
+
+    precision:
+      score: 0
+      improvement_from_v0: 0
+      content_removed: []
+      content_clarified: []
+
+    actionability:
+      score: 0
+      improvement_from_v0: 0
+      criteria_added: []
+
+  # Aggregate Score
+  aggregate_score:
+    score: 0
+    improvement_from_v0: 0
+    rating: "poor|fair|good|excellent"
+
+  # Revision Gain Analysis
+  revision_gains:
+    total_time_spent: ""  # minutes
+    highest_impact_technique: ""
+    techniques_ranked_by_roi:
+      - technique: ""
+        time_cost: ""  # minutes
+        quality_gain: ""  # % points
+        roi: ""  # gain / time
+
+  # Quality Gate Validation
+  quality_gate_status:
+    factual_accuracy_gain:
+      target: ">=30%"
+      actual: 0
+      passed: false
+    completeness_gain:
+      target: ">=40%"
+      actual: 0
+      passed: false
+    precision_gain:
+      target: ">=25%"
+      actual: 0
+      passed: false
+    actionability_gain:
+      target: ">=50%"
+      actual: 0
+      passed: false
+    overall_pass: false
+
+# ============================================================
+# REVISION 2 METRICS (V2 - Second Improvement)
+# ============================================================
+
+revision_v2:
+  timestamp: ""
+  revised_by: ""
+  revision_techniques_applied: []
+
+  # Core Quality Metrics
+  metrics:
+    factual_accuracy:
+      score: 0
+      improvement_from_v1: 0
+      improvement_from_v0: 0
+
+    completeness:
+      score: 0
+      improvement_from_v1: 0
+      improvement_from_v0: 0
+
+    precision:
+      score: 0
+      improvement_from_v1: 0
+      improvement_from_v0: 0
+
+    actionability:
+      score: 0
+      improvement_from_v1: 0
+      improvement_from_v0: 0
+
+  # Aggregate Score
+  aggregate_score:
+    score: 0
+    improvement_from_v1: 0
+    improvement_from_v0: 0
+    rating: "poor|fair|good|excellent"
+
+  # Diminishing Returns Analysis
+  diminishing_returns:
+    v0_to_v1_gain: 0
+    v1_to_v2_gain: 0
+    is_diminishing: false  # true if v1→v2 gain < 50% of v0→v1 gain
+    recommendation: "continue|stop_iterating|focus_on_specific_metrics"
+
+  # Quality Gate Validation (cumulative)
+  quality_gate_status:
+    factual_accuracy_gain:
+      target: ">=30%"
+      actual: 0
+      passed: false
+    completeness_gain:
+      target: ">=40%"
+      actual: 0
+      passed: false
+    precision_gain:
+      target: ">=25%"
+      actual: 0
+      passed: false
+    actionability_gain:
+      target: ">=50%"
+      actual: 0
+      passed: false
+    overall_pass: false
+
+# ============================================================
+# TECHNIQUE EFFECTIVENESS DATABASE
+# ============================================================
+
+technique_effectiveness:
+  description: "Track which techniques deliver highest ROI for future skills"
+
+  techniques_tested:
+    - name: "Chain-of-Verification (CoV)"
+      applied_in: "Phase 1, Phase 5"
+      time_cost: 10  # minutes
+      metrics_improved:
+        factual_accuracy: 0
+        completeness: 0
+      overall_gain: 0
+      roi_score: 0  # gain / time
+
+    - name: "Adversarial Testing"
+      applied_in: "Phase 7a"
+      time_cost: 30  # minutes
+      metrics_improved:
+        completeness: 0  # catches missing error handling
+        actionability: 0  # forces explicit success criteria
+      overall_gain: 0
+      roi_score: 0
+
+    - name: "Multi-Persona Debate"
+      applied_in: "Phase 3"
+      time_cost: 20  # minutes
+      metrics_improved:
+        precision: 0  # removes perspective bias
+        completeness: 0  # surfaces hidden requirements
+      overall_gain: 0
+      roi_score: 0
+
+    - name: "Schema-First Design"
+      applied_in: "Phase 0"
+      time_cost: 10  # minutes
+      metrics_improved:
+        completeness: 0
+        actionability: 0
+      overall_gain: 0
+      roi_score: 0
+
+  # Ranked by ROI
+  ranked_techniques:
+    - rank: 1
+      technique: ""
+      roi_score: 0
+      recommendation: "Always use for skills of this complexity"
+    - rank: 2
+      technique: ""
+      roi_score: 0
+      recommendation: "Use if time permits"
+
+# ============================================================
+# META-PRINCIPLES COVERAGE TRACKING
+# ============================================================
+
+meta_principles_coverage:
+  description: "Track coverage of 10 meta-principles"
+
+  principles:
+    verification_first:
+      v0_score: 0  # 0-10
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    multi_perspective:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    schema_first:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    api_contracts:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    quality_gates:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    evidence_based:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    metrics_tracking:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    adversarial_testing:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    progressive_disclosure:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+    temperature_simulation:
+      v0_score: 0
+      v1_score: 0
+      v2_score: 0
+      evidence: []
+
+  # Aggregate
+  aggregate_coverage:
+    v0_total: 0  # sum / 10
+    v1_total: 0
+    v2_total: 0
+    v0_to_v2_improvement: 0
+
+# ============================================================
+# LESSONS LEARNED & RECOMMENDATIONS
+# ============================================================
+
+lessons_learned:
+  what_worked_well: []
+  what_needs_improvement: []
+  surprising_benefits: []
+  unexpected_challenges: []
+  time_vs_quality_tradeoffs: []
+
+recommendations_for_future:
+  must_use_techniques: []
+  optional_techniques: []
+  avoid_techniques: []
+  skill_type_specific_advice: []
+
+# ============================================================
+# COMPARATIVE BENCHMARKS
+# ============================================================
+
+comparative_benchmarks:
+  description: "Compare against other skills of similar complexity"
+
+  peer_skills:
+    - skill_name: ""
+      complexity: "simple|medium|complex"
+      aggregate_score: 0
+      comparison: "better|similar|worse"
+
+  skill_percentile:
+    description: "Where this skill ranks among all skills"
+    percentile: 0  # 0-100 (higher is better)
+    category: "simple|medium|complex"
+
+# ============================================================
+# AUTOMATED ANALYSIS (Optional)
+# ============================================================
+
+automated_analysis:
+  description: "Run optional validation scripts for objective metrics"
+
+  validation_scripts:
+    - script: "scripts/validate-skill.js"
+      run: false
+      results: ""
+
+    - script: "scripts/count-claims.js"
+      run: false
+      results: ""
+
+    - script: "scripts/check-anti-patterns.js"
+      run: false
+      results: ""
+
+# ============================================================
+# USAGE INSTRUCTIONS
+# ============================================================
+
+usage_instructions:
+  when_to_track: "After Phase 7 validation, before deployment"
+  time_investment: "10-15 minutes per revision"
+  required_revisions: "At least V0→V1 (baseline→improved)"
+  optional_revisions: "V1→V2 if quality gates not met"
+
+  workflow:
+    step_1: "Complete skill V0, fill baseline_v0 metrics"
+    step_2: "Apply improvement techniques, create V1"
+    step_3: "Fill revision_v1 metrics, calculate gains"
+    step_4: "Check quality gates - if failed, apply more techniques for V2"
+    step_5: "Update technique_effectiveness with findings"
+    step_6: "Use ranked_techniques for next skill creation"
+
+  quality_gate_thresholds:
+    factual_accuracy: ">=30% gain from V0"
+    completeness: ">=40% gain from V0"
+    precision: ">=25% gain from V0"
+    actionability: ">=50% gain from V0"
+    note: "All 4 must pass for Quality Gate 8 approval"
+
+  benefits:
+    immediate: "Catches quality issues before deployment"
+    short_term: "Identifies high-ROI techniques for next skill"
+    long_term: "Builds database of technique effectiveness"
+    research: "Validates research predictions (e.g., CoV +42% accuracy)"
+
+# ============================================================
+# EXPORT FOR ANALYSIS
+# ============================================================
+
+export_metadata:
+  last_exported: ""
+  export_format: "yaml|json|csv"
+  export_destination: "docs/metrics/"
+  analysis_tools: ["scripts/analyze-metrics.py", "scripts/visualize-gains.js"]

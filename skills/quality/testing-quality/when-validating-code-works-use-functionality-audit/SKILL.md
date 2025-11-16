@@ -1,27 +1,42 @@
 ---
 name: when-validating-code-works-use-functionality-audit
 type: testing-quality
-description: |
-  Validates that code actually works through sandbox testing, execution verification, and systematic debugging.
-  Use this skill after code generation or modification to ensure functionality is genuine rather than assumed.
-  The skill creates isolated test environments, executes code with realistic inputs, identifies bugs through
-  systematic analysis, and applies best practices to fix issues without breaking existing functionality.
+description: 'Validates that code actually works through sandbox testing, execution
+  verification, and systematic debugging.
+
+  Use this skill after code generation or modification to ensure functionality is
+  genuine rather than assumed.
+
+  The skill creates isolated test environments, executes code with realistic inputs,
+  identifies bugs through
+
+  systematic analysis, and applies best practices to fix issues without breaking existing
+  functionality.
+
+  '
 agents:
-  - tester
-  - coder
-  - reviewer
-  - production-validator
+- tester
+- coder
+- reviewer
+- production-validator
 phases: 5
-memory_pattern: "testing/functionality-audit/phase-{N}/{agent}/{deliverable}"
+memory_pattern: testing/functionality-audit/phase-{N}/{agent}/{deliverable}
 scripts:
-  - pre-task
-  - session-restore
-  - phase-coordination
-  - memory-sync
-  - post-task
+- pre-task
+- session-restore
+- phase-coordination
+- memory-sync
+- post-task
 hooks:
   pre: npx claude-flow hooks pre-task --description "Functionality audit validation"
   post: npx claude-flow hooks post-task --task-id "functionality-audit"
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Functionality Audit - Code Execution Validation

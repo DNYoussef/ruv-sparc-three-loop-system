@@ -1,6 +1,17 @@
 ---
 name: agent-creation
-description: Systematic agent creation using evidence-based prompting principles and 4-phase SOP methodology. Use when creating new specialist agents, refining existing agent prompts, or designing multi-agent systems. Applies Chain-of-Thought, few-shot learning, and role-based prompting. Includes validation scripts, templates, comprehensive tests, and production-ready examples.
+description: Systematic agent creation using evidence-based prompting principles and
+  4-phase SOP methodology. Use when creating new specialist agents, refining existing
+  agent prompts, or designing multi-agent systems. Applies Chain-of-Thought, few-shot
+  learning, and role-based prompting. Includes validation scripts, templates, comprehensive
+  tests, and production-ready examples.
+version: 1.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
 ---
 
 # Agent Creation - Systematic Agent Design

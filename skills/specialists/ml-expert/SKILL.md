@@ -1,3 +1,14 @@
+---
+name: ml-expert
+description: '**Version**: 1.0.0'
+version: 1.0.0
+category: specialists
+tags:
+- specialists
+- domain-expert
+author: ruv
+---
+
 # ML Expert - Machine Learning Implementation Specialist
 
 **Version**: 1.0.0

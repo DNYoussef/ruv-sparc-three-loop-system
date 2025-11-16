@@ -1,3 +1,15 @@
+---
+name: when-gathering-requirements-use-interactive-planner
+description: '```yaml'
+version: 1.0.0
+category: research
+tags:
+- research
+- analysis
+- planning
+author: ruv
+---
+
 # Interactive Requirements Planning SOP
 
 ```yaml

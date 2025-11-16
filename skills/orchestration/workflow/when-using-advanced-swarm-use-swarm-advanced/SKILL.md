@@ -1,29 +1,31 @@
 ---
 name: when-using-advanced-swarm-use-swarm-advanced
-description: Advanced swarm patterns with dynamic topology switching and self-organizing behaviors for complex multi-agent coordination
+description: Advanced swarm patterns with dynamic topology switching and self-organizing
+  behaviors for complex multi-agent coordination
 version: 1.0.0
 tags:
-  - swarm
-  - advanced
-  - coordination
-  - topology
-  - self-organizing
+- swarm
+- advanced
+- coordination
+- topology
+- self-organizing
 category: workflow
 agents:
-  - hierarchical-coordinator
-  - mesh-coordinator
-  - adaptive-coordinator
+- hierarchical-coordinator
+- mesh-coordinator
+- adaptive-coordinator
 complexity: advanced
 estimated_duration: 45-90 minutes
 prerequisites:
-  - Claude Flow installed and configured
-  - Understanding of swarm topologies
-  - Multi-agent coordination experience
+- Claude Flow installed and configured
+- Understanding of swarm topologies
+- Multi-agent coordination experience
 outputs:
-  - Advanced swarm infrastructure
-  - Dynamic topology configuration
-  - Performance metrics
-  - Optimization reports
+- Advanced swarm infrastructure
+- Dynamic topology configuration
+- Performance metrics
+- Optimization reports
+author: ruv
 ---
 
 # Advanced Swarm Coordination SOP

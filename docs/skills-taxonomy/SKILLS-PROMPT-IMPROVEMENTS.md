@@ -216,7 +216,7 @@ PHASE 2: TASK ANALYSIS (For Each Task in Loop 1)
 
 PHASE 3: AGENT SELECTION (86-Agent Registry Matching)
   Step 3.1: Load agent registry
-    Source: .claude/agents/*.yaml (86 agents)
+    Source: agents/*.yaml (86 agents)
     Parse: Extract {name, type, capabilities, specialization_score}
     Cache: In-memory for fast matching
 

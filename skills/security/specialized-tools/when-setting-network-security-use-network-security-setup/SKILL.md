@@ -1,3 +1,15 @@
+---
+name: when-setting-network-security-use-network-security-setup
+description: '```yaml'
+version: 1.0.0
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
+---
+
 # Network Security Setup SOP
 
 ```yaml

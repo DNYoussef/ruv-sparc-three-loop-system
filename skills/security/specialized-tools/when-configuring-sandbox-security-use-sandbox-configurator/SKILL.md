@@ -1,3 +1,15 @@
+---
+name: when-configuring-sandbox-security-use-sandbox-configurator
+description: '```yaml'
+version: 1.0.0
+category: security
+tags:
+- security
+- compliance
+- safety
+author: ruv
+---
+
 # Sandbox Security Configuration SOP
 
 ```yaml

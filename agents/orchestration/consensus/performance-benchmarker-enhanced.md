@@ -795,5 +795,5 @@ infrastructure/cicd-engineer/{task-id}/deployment-config
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/orchestration/consensus/performance-benchmarker.md`
+**Deployment**: `~/agents/orchestration/consensus/performance-benchmarker.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

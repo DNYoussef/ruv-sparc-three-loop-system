@@ -1,29 +1,31 @@
 ---
 name: when-orchestrating-swarm-use-swarm-orchestration
-description: Complex multi-agent swarm orchestration with task decomposition, distributed execution, and result synthesis
+description: Complex multi-agent swarm orchestration with task decomposition, distributed
+  execution, and result synthesis
 version: 1.0.0
 tags:
-  - swarm
-  - orchestration
-  - coordination
-  - task-decomposition
-  - result-synthesis
+- swarm
+- orchestration
+- coordination
+- task-decomposition
+- result-synthesis
 category: workflow
 agents:
-  - task-orchestrator
-  - hierarchical-coordinator
-  - adaptive-coordinator
+- task-orchestrator
+- hierarchical-coordinator
+- adaptive-coordinator
 complexity: advanced
 estimated_duration: 60-120 minutes
 prerequisites:
-  - Claude Flow installed and configured
-  - Understanding of task decomposition
-  - Multi-agent coordination experience
+- Claude Flow installed and configured
+- Understanding of task decomposition
+- Multi-agent coordination experience
 outputs:
-  - Orchestrated swarm execution
-  - Task decomposition tree
-  - Synthesized results
-  - Performance metrics
+- Orchestrated swarm execution
+- Task decomposition tree
+- Synthesized results
+- Performance metrics
+author: ruv
 ---
 
 # Swarm Orchestration SOP

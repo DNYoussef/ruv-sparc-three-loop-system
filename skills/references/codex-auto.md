@@ -97,4 +97,4 @@ Result: All components refactored, tests passing
 
 **Note**: Use your ChatGPT Plus ($20/month) subscription. Recommended model: GPT-5-Codex for agentic tasks.
 
-See `.claude/agents/codex-auto-agent.md` for full details.
+See `agents/codex-auto-agent.md` for full details.

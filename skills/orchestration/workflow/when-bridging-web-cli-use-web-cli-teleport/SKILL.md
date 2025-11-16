@@ -3,26 +3,27 @@ name: when-bridging-web-cli-use-web-cli-teleport
 description: Bridge web interfaces with CLI workflows for seamless bidirectional integration
 version: 1.0.0
 tags:
-  - web
-  - cli
-  - integration
-  - bridge
-  - teleport
+- web
+- cli
+- integration
+- bridge
+- teleport
 category: workflow
 agents:
-  - backend-dev
-  - system-architect
+- backend-dev
+- system-architect
 complexity: advanced
 estimated_duration: 45-90 minutes
 prerequisites:
-  - Claude Flow installed
-  - Web development experience
-  - CLI knowledge
+- Claude Flow installed
+- Web development experience
+- CLI knowledge
 outputs:
-  - Web-CLI bridge
-  - API endpoints
-  - CLI integration
-  - Bidirectional communication
+- Web-CLI bridge
+- API endpoints
+- CLI integration
+- Bidirectional communication
+author: ruv
 ---
 
 # Web-CLI Teleport SOP

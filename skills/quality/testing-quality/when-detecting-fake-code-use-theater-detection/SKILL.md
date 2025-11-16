@@ -1,26 +1,39 @@
 ---
 name: when-detecting-fake-code-use-theater-detection
 type: testing-quality
-description: |
-  Detects non-functional "theater" code that appears complete but doesn't actually work.
-  Use this skill to identify code that looks correct in static analysis but fails during execution,
+description: 'Detects non-functional "theater" code that appears complete but doesn''t
+  actually work.
+
+  Use this skill to identify code that looks correct in static analysis but fails
+  during execution,
+
   preventing fake implementations from reaching production. Scans for suspicious patterns,
+
   validates actual functionality, and reports findings with recommendations.
+
+  '
 agents:
-  - code-analyzer
-  - reviewer
-  - tester
+- code-analyzer
+- reviewer
+- tester
 phases: 5
-memory_pattern: "testing/theater-detection/phase-{N}/{agent}/{deliverable}"
+memory_pattern: testing/theater-detection/phase-{N}/{agent}/{deliverable}
 scripts:
-  - pre-task
-  - codebase-scan
-  - pattern-analysis
-  - execution-validation
-  - post-task
+- pre-task
+- codebase-scan
+- pattern-analysis
+- execution-validation
+- post-task
 hooks:
   pre: npx claude-flow hooks pre-task --description "Theater code detection scan"
   post: npx claude-flow hooks post-task --task-id "theater-detection"
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Theater Code Detection

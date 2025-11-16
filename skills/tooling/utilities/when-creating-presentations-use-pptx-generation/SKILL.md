@@ -1,31 +1,40 @@
 ---
 name: when-creating-presentations-use-pptx-generation
 version: 1.0.0
-description: Enterprise-grade PowerPoint deck generation using evidence-based prompting, workflow enforcement, constraint-based design
+description: Enterprise-grade PowerPoint deck generation using evidence-based prompting,
+  workflow enforcement, constraint-based design
 category: utilities
-tags: [presentation, pptx, slides, enterprise, documentation]
-agents: [coder, researcher]
+tags:
+- presentation
+- pptx
+- slides
+- enterprise
+- documentation
+agents:
+- coder
+- researcher
 difficulty: intermediate
 estimated_duration: 25-40min
 success_criteria:
-  - Presentation generated with proper structure
-  - All slides follow design constraints
-  - Accessibility standards met (WCAG 2.1 AA)
-  - Data visualization effective
+- Presentation generated with proper structure
+- All slides follow design constraints
+- Accessibility standards met (WCAG 2.1 AA)
+- Data visualization effective
 validation_method: accessibility_scan
 dependencies:
-  - claude-flow@alpha
-  - pptxgenjs
-  - html2pptx (optional)
+- claude-flow@alpha
+- pptxgenjs
+- html2pptx (optional)
 outputs:
-  - PowerPoint file (.pptx)
-  - Slide notes
-  - Accessibility report
+- PowerPoint file (.pptx)
+- Slide notes
+- Accessibility report
 triggers:
-  - Need professional presentation
-  - Board deck required
-  - Report generation
-  - Data visualization needed
+- Need professional presentation
+- Board deck required
+- Report generation
+- Data visualization needed
+author: ruv
 ---
 
 # PPTX Generation - Enterprise Presentation Creator

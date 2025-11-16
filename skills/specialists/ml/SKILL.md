@@ -1,33 +1,35 @@
 ---
 name: ml
-description: Machine Learning development workflow with experiment tracking, hyperparameter optimization, and MLOps integration
+description: Machine Learning development workflow with experiment tracking, hyperparameter
+  optimization, and MLOps integration
 tier: gold
 version: 2.0.0
 category: specialized-development
 tags:
-  - machine-learning
-  - mlops
-  - experiment-tracking
-  - hyperparameter-tuning
-  - model-registry
+- machine-learning
+- mlops
+- experiment-tracking
+- hyperparameter-tuning
+- model-registry
 agents:
-  - ml-developer
-  - data-scientist
-  - mlops-engineer
+- ml-developer
+- data-scientist
+- mlops-engineer
 tools:
-  - experiment-tracker
-  - hyperparameter-tuner
-  - model-registry
-  - ml-ops-pipeline
+- experiment-tracker
+- hyperparameter-tuner
+- model-registry
+- ml-ops-pipeline
 dependencies:
-  - python-specialist
-  - testing-quality
-  - functionality-audit
+- python-specialist
+- testing-quality
+- functionality-audit
 prerequisites:
-  - Python 3.8+
-  - ML frameworks (TensorFlow/PyTorch/scikit-learn)
-  - Docker (for MLOps)
-  - Git LFS (for model versioning)
+- Python 3.8+
+- ML frameworks (TensorFlow/PyTorch/scikit-learn)
+- Docker (for MLOps)
+- Git LFS (for model versioning)
+author: ruv
 ---
 
 # ML Development Skill

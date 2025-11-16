@@ -1,8 +1,18 @@
 ---
 name: code-review-assistant
-description: Comprehensive PR review using multi-agent swarm with specialized reviewers for security, performance, style, tests, and documentation. Provides detailed feedback with auto-fix suggestions and merge readiness assessment.
-tags: [review, pr, github, swarm, essential, tier-1]
+description: Comprehensive PR review using multi-agent swarm with specialized reviewers
+  for security, performance, style, tests, and documentation. Provides detailed feedback
+  with auto-fix suggestions and merge readiness assessment.
+tags:
+- review
+- pr
+- github
+- swarm
+- essential
+- tier-1
 version: 1.0.0
+category: quality
+author: ruv
 ---
 
 # Code Review Assistant

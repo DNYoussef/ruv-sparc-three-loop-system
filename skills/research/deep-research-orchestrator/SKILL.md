@@ -1,6 +1,17 @@
 ---
-name: "Deep Research Orchestrator"
-description: "Meta-orchestrator for complete Deep Research SOP lifecycle managing 3 phases, 9 pipelines (A-I), and 3 quality gates. Use when starting new research projects, conducting systematic ML research, or ensuring rigorous scientific methodology from literature review through production deployment. Coordinates all SOP skills and agents for end-to-end research execution."
+name: deep-research-orchestrator
+description: Meta-orchestrator for complete Deep Research SOP lifecycle managing 3
+  phases, 9 pipelines (A-I), and 3 quality gates. Use when starting new research projects,
+  conducting systematic ML research, or ensuring rigorous scientific methodology from
+  literature review through production deployment. Coordinates all SOP skills and
+  agents for end-to-end research execution.
+version: 1.0.0
+category: research
+tags:
+- research
+- analysis
+- planning
+author: ruv
 ---
 
 # Deep Research Orchestrator
@@ -648,7 +659,7 @@ This orchestrator implements the complete Deep Research SOP as specified in:
 - Deep Research SOP Gap Analysis (docs/deep-research-sop-gap-analysis.md)
 - 8 GraphViz Process Diagrams (docs/12fa/graphviz/)
 - P0 Commands Specification (.claude/commands/research/)
-- P0 Agents Specification (.claude/agents/research/)
+- P0 Agents Specification (agents/research/)
 
 ### Academic Standards
 - Gebru et al. (2021): Datasheets for Datasets

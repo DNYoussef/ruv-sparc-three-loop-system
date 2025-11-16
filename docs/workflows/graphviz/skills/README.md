@@ -9,7 +9,7 @@
 This directory contains 6 comprehensive GraphViz diagrams visualizing the enhanced skills ecosystem:
 
 - **106 Total Skills** (62 current + 44 planned)
-- **130 Agents** assigned across skills
+- **203 Agents** assigned across skills
 - **10 MECE Categories** for organization
 - **200+ MCP Tools** integrated
 - **85% → 92% Coverage** with 10 new CRITICAL skills
@@ -54,12 +54,12 @@ dot -Tsvg skills-ecosystem-overview.dot -o skills-ecosystem-overview.svg
 ---
 
 ### 2. `skills-agent-coordination.dot`
-**Skills × Agents Mapping: 106 Skills × 130 Agents**
+**Skills × Agents Mapping: 106 Skills × 203 Agents**
 
 **Purpose:** Show PRIMARY agent assignments and coordination patterns.
 
 **Key Features:**
-- 130 agents grouped by role (Core, Swarm, Specialized, Research SOP)
+- 203 agents grouped by role (Core, Swarm, Specialized, Research SOP)
 - Coordination patterns: Hierarchical, Parallel, Consensus (Byzantine)
 - Agent utilization statistics (avg 1.96 skills/agent)
 - Edge thickness = coordination strength
@@ -317,7 +317,7 @@ dot -Tpdf skills-dependency-graph.dot -o dependencies.pdf
 *Figure 1: Complete skills ecosystem organized by 10 MECE categories*
 
 ![Agent Coordination](skills-agent-coordination.png)
-*Figure 2: 106 skills × 130 agents coordination map*
+*Figure 2: 106 skills × 203 agents coordination map*
 ```
 
 ### Embedding in HTML
@@ -437,7 +437,7 @@ fc-cache -fv
 ### v1.0.0 (2025-11-02)
 - Initial release with 6 comprehensive diagrams
 - 106 skills (62 current + 44 planned)
-- 130 agents from Batch 1-4
+- 203 agents from Batch 1-4
 - 10 MECE categories
 - 200+ MCP tools mapped
 - Coverage analysis: 85% → 92%

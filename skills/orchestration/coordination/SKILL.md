@@ -1,33 +1,37 @@
 ---
 name: coordination
-description: Advanced multi-agent coordination patterns including mesh, hierarchical, and adaptive topologies with state synchronization, consensus mechanisms, and distributed task execution. Use when orchestrating complex multi-agent workflows requiring sophisticated coordination, consensus building, or distributed decision-making.
+description: Advanced multi-agent coordination patterns including mesh, hierarchical,
+  and adaptive topologies with state synchronization, consensus mechanisms, and distributed
+  task execution. Use when orchestrating complex multi-agent workflows requiring sophisticated
+  coordination, consensus building, or distributed decision-making.
 version: 2.0.0
 tier: gold
 tags:
-  - coordination
-  - multi-agent
-  - orchestration
-  - topology
-  - consensus
-  - distributed
+- coordination
+- multi-agent
+- orchestration
+- topology
+- consensus
+- distributed
 category: orchestration
 agents:
-  - hierarchical-coordinator
-  - mesh-coordinator
-  - adaptive-coordinator
-  - collective-intelligence-coordinator
-  - consensus-validator
+- hierarchical-coordinator
+- mesh-coordinator
+- adaptive-coordinator
+- collective-intelligence-coordinator
+- consensus-validator
 complexity: advanced
 estimated_duration: 30-120 minutes
 prerequisites:
-  - Claude Flow MCP installed
-  - Understanding of distributed systems
-  - Multi-agent architecture knowledge
+- Claude Flow MCP installed
+- Understanding of distributed systems
+- Multi-agent architecture knowledge
 outputs:
-  - Coordination topologies
-  - Agent network configurations
-  - Consensus protocols
-  - Distributed execution plans
+- Coordination topologies
+- Agent network configurations
+- Consensus protocols
+- Distributed execution plans
+author: ruv
 ---
 
 # Agent Coordination Skill

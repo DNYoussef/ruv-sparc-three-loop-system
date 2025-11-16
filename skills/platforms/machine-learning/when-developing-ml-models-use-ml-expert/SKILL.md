@@ -3,29 +3,38 @@ name: when-developing-ml-models-use-ml-expert
 version: 1.0.0
 description: Specialized ML model development, training, and deployment workflow
 category: machine-learning
-tags: [ml, training, deployment, model-development, neural-networks]
-agents: [ml-developer, researcher, tester]
+tags:
+- ml
+- training
+- deployment
+- model-development
+- neural-networks
+agents:
+- ml-developer
+- researcher
+- tester
 difficulty: advanced
 estimated_duration: 45-90min
 success_criteria:
-  - Model trained successfully
-  - Validation metrics meet targets
-  - Production deployment ready
-  - Documentation complete
+- Model trained successfully
+- Validation metrics meet targets
+- Production deployment ready
+- Documentation complete
 validation_method: performance_metrics
 dependencies:
-  - claude-flow@alpha
-  - tensorflow/pytorch
-  - flow-nexus (optional for distributed training)
+- claude-flow@alpha
+- tensorflow/pytorch
+- flow-nexus (optional for distributed training)
 outputs:
-  - Trained model file
-  - Training metrics
-  - Evaluation report
-  - Deployment package
+- Trained model file
+- Training metrics
+- Evaluation report
+- Deployment package
 triggers:
-  - New ML model needed
-  - Model training required
-  - Production deployment
+- New ML model needed
+- Model training required
+- Production deployment
+author: ruv
 ---
 
 # ML Expert - Machine Learning Model Development

@@ -1,9 +1,29 @@
 ---
 name: terraform-iac
-description: Terraform infrastructure as code specialist for multi-cloud deployments (AWS/GCP/Azure), state management with remote backends, module development, drift detection, policy as code with Sentinel/OPA, and GitOps workflows. Use when provisioning cloud infrastructure, managing infrastructure state, implementing IaC best practices, or requiring Terraform expertise. Handles workspaces, dynamic blocks, for_each loops, and production-grade Terraform configurations.
+description: Terraform infrastructure as code specialist for multi-cloud deployments
+  (AWS/GCP/Azure), state management with remote backends, module development, drift
+  detection, policy as code with Sentinel/OPA, and GitOps workflows. Use when provisioning
+  cloud infrastructure, managing infrastructure state, implementing IaC best practices,
+  or requiring Terraform expertise. Handles workspaces, dynamic blocks, for_each loops,
+  and production-grade Terraform configurations.
 category: Infrastructure
 complexity: High
-triggers: ["terraform", "iac", "infrastructure as code", "terraform state", "terraform modules", "multi-cloud", "terraform plan", "terraform apply", "hcl"]
+triggers:
+- terraform
+- iac
+- infrastructure as code
+- terraform state
+- terraform modules
+- multi-cloud
+- terraform plan
+- terraform apply
+- hcl
+version: 1.0.0
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # Terraform Infrastructure as Code Specialist

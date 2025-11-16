@@ -1,9 +1,18 @@
 ---
 name: cloud-platforms
-description: Multi-cloud deployment and infrastructure management across AWS, GCP, and Azure. Use when deploying applications to cloud platforms, implementing serverless architectures, or managing cloud infrastructure as code. Supports containers, serverless, and traditional compute.
+description: Multi-cloud deployment and infrastructure management across AWS, GCP,
+  and Azure. Use when deploying applications to cloud platforms, implementing serverless
+  architectures, or managing cloud infrastructure as code. Supports containers, serverless,
+  and traditional compute.
 tier: gold
 version: 2.0.0
 last_updated: 2025-11-02
+category: operations
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # Cloud Platforms - Multi-Cloud Infrastructure ⭐ GOLD TIER

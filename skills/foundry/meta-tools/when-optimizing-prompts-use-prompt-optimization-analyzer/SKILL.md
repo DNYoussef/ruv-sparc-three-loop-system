@@ -1,18 +1,21 @@
 ---
 name: when-optimizing-prompts-use-prompt-optimization-analyzer
 version: 1.0.0
-description: Active diagnostic tool for analyzing prompt quality, detecting anti-patterns, identifying token waste, and providing optimization recommendations
+description: Active diagnostic tool for analyzing prompt quality, detecting anti-patterns,
+  identifying token waste, and providing optimization recommendations
 tags:
-  - meta-tool
-  - prompt-engineering
-  - optimization
-  - analysis
-  - diagnostics
+- meta-tool
+- prompt-engineering
+- optimization
+- analysis
+- diagnostics
 complexity: MEDIUM
 agents_required:
-  - code-analyzer
-  - researcher
+- code-analyzer
+- researcher
 auto_trigger: false
+category: foundry
+author: ruv
 ---
 
 # Prompt Optimization Analyzer

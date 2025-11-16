@@ -1,6 +1,18 @@
 ---
 name: skill-creator-agent
-description: Creates Claude Code skills where each skill is tied to a specialist agent optimized with evidence-based prompting techniques. Use this skill when users need to create reusable skills that leverage specialized agents for consistent high-quality performance. The skill ensures that each created skill spawns an appropriately crafted agent that communicates effectively with the parent Claude Code instance using best practices.
+description: Creates Claude Code skills where each skill is tied to a specialist agent
+  optimized with evidence-based prompting techniques. Use this skill when users need
+  to create reusable skills that leverage specialized agents for consistent high-quality
+  performance. The skill ensures that each created skill spawns an appropriately crafted
+  agent that communicates effectively with the parent Claude Code instance using best
+  practices.
+version: 1.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
 ---
 
 # Skill Creator with Agent Specialization
@@ -632,4 +644,3 @@ To use this skill effectively, provide information about the skill you want to c
 The skill-creator-agent will guide you through designing both the skill layer and the specialist agent using Claude Agent SDK patterns. It will help you establish the communication protocol, create necessary resources including SDK implementations, configure proper agent lifecycle management, implement custom tools if needed, and test the complete integration.
 
 The result is a professional-grade skill that leverages specialist agent expertise through production-ready Claude Agent SDK infrastructure. Skills created this way provide measurably better results than traditional skills for complex domains while maintaining reliability, security, and maintainability.
-

@@ -1,8 +1,15 @@
 ---
 name: sandbox-configurator
-description: Configure Claude Code sandbox security with file system and network isolation boundaries
-tags: [security, sandbox, configuration, network-isolation]
+description: Configure Claude Code sandbox security with file system and network isolation
+  boundaries
+tags:
+- security
+- sandbox
+- configuration
+- network-isolation
 version: 1.0.0
+category: security
+author: ruv
 ---
 
 # Sandbox Configurator

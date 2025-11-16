@@ -1,24 +1,39 @@
 ---
-name: "Gate Validation"
-description: "Validate Deep Research SOP quality gates (Gates 1-3) ensuring rigorous GO/NO-GO decisions based on comprehensive requirement checklists with statistical validation. Use at end of research phases (Foundations→Development→Production) to determine if criteria met for phase transition. Coordinates evaluator agent with ethics-agent, data-steward, and archivist for systematic validation across data quality, baseline replication, novel methods, holistic evaluation, reproducibility, and production readiness. Implements multiple comparison correction (Bonferroni), effect size calculation (Cohen's d), and statistical power analysis (1-β ≥ 0.8)."
-pipeline: "Quality Gates (Gates 1, 2, 3)"
-quality_gate: "All three gates (1, 2, 3)"
-phase: "Phase transitions (1→2→3)"
-agents: "evaluator (lead), ethics-agent, data-steward, archivist"
-time_estimate: "2-4 hours per gate"
+name: gate-validation
+description: "Validate Deep Research SOP quality gates (Gates 1-3) ensuring rigorous\
+  \ GO/NO-GO decisions based on comprehensive requirement checklists with statistical\
+  \ validation. Use at end of research phases (Foundations\u2192Development\u2192\
+  Production) to determine if criteria met for phase transition. Coordinates evaluator\
+  \ agent with ethics-agent, data-steward, and archivist for systematic validation\
+  \ across data quality, baseline replication, novel methods, holistic evaluation,\
+  \ reproducibility, and production readiness. Implements multiple comparison correction\
+  \ (Bonferroni), effect size calculation (Cohen's d), and statistical power analysis\
+  \ (1-\u03B2 \u2265 0.8)."
+pipeline: Quality Gates (Gates 1, 2, 3)
+quality_gate: All three gates (1, 2, 3)
+phase: "Phase transitions (1\u21922\u21923)"
+agents: evaluator (lead), ethics-agent, data-steward, archivist
+time_estimate: 2-4 hours per gate
 keywords:
-  - quality-gate
-  - go-no-go-decision
-  - gate-validation
-  - evaluator-agent
-  - phase-transition
-  - statistical-rigor
-  - multiple-comparison
-  - bonferroni-correction
-  - cohens-d
-  - power-analysis
-  - reproducibility-validation
-  - ethics-review
+- quality-gate
+- go-no-go-decision
+- gate-validation
+- evaluator-agent
+- phase-transition
+- statistical-rigor
+- multiple-comparison
+- bonferroni-correction
+- cohens-d
+- power-analysis
+- reproducibility-validation
+- ethics-review
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
 ---
 
 # Gate Validation

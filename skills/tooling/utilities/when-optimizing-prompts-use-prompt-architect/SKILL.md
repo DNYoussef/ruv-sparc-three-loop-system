@@ -1,31 +1,39 @@
 ---
 name: when-optimizing-prompts-use-prompt-architect
 version: 1.0.0
-description: Comprehensive framework for analyzing, creating, and refining prompts for AI systems using evidence-based techniques
+description: Comprehensive framework for analyzing, creating, and refining prompts
+  for AI systems using evidence-based techniques
 category: utilities
-tags: [prompt-engineering, optimization, ai-systems, llm]
-agents: [researcher, coder]
+tags:
+- prompt-engineering
+- optimization
+- ai-systems
+- llm
+agents:
+- researcher
+- coder
 difficulty: intermediate
 estimated_duration: 20-40min
 success_criteria:
-  - Prompt structure optimized
-  - Anti-patterns eliminated
-  - Evidence-based techniques applied
-  - Effectiveness validated
+- Prompt structure optimized
+- Anti-patterns eliminated
+- Evidence-based techniques applied
+- Effectiveness validated
 validation_method: A/B testing
 dependencies:
-  - claude-flow@alpha
+- claude-flow@alpha
 prerequisites:
-  - Prompt to optimize OR use case defined
+- Prompt to optimize OR use case defined
 outputs:
-  - Optimized prompt
-  - Analysis report
-  - A/B test results
+- Optimized prompt
+- Analysis report
+- A/B test results
 triggers:
-  - Poor AI response quality
-  - Inconsistent outputs
-  - New prompt needed
-  - Prompt refactoring required
+- Poor AI response quality
+- Inconsistent outputs
+- New prompt needed
+- Prompt refactoring required
+author: ruv
 ---
 
 # Prompt Architect - Evidence-Based Prompt Engineering

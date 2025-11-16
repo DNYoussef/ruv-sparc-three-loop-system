@@ -676,5 +676,5 @@ infrastructure/cicd-engineer/{task-id}/pipeline-config
 ---
 
 **Agent Status**: Production-Ready (Enhanced)
-**Deployment**: `~/.claude/agents/orchestration/consensus/security-manager.md`
+**Deployment**: `~/agents/orchestration/consensus/security-manager.md`
 **Documentation**: Complete with commands, MCP tools, integration patterns, and optimization

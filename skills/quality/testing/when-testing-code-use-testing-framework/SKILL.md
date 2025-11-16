@@ -1,3 +1,15 @@
+---
+name: when-testing-code-use-testing-framework
+description: '- **Skill ID**: when-testing-code-use-testing-framework'
+version: 1.0.0
+category: quality
+tags:
+- quality
+- testing
+- validation
+author: ruv
+---
+
 # Testing Framework Skill - Complete SOP
 
 ## Metadata

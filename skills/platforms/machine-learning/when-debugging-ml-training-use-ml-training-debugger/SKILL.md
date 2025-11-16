@@ -1,32 +1,42 @@
 ---
 name: when-debugging-ml-training-use-ml-training-debugger
 version: 1.0.0
-description: Debug ML training issues and optimize performance including loss divergence, overfitting, and slow convergence
+description: Debug ML training issues and optimize performance including loss divergence,
+  overfitting, and slow convergence
 category: machine-learning
-tags: [debugging, ml, training, optimization, troubleshooting]
-agents: [ml-developer, performance-analyzer, coder]
+tags:
+- debugging
+- ml
+- training
+- optimization
+- troubleshooting
+agents:
+- ml-developer
+- performance-analyzer
+- coder
 difficulty: advanced
 estimated_duration: 30-60min
 success_criteria:
-  - Issue diagnosed correctly
-  - Root cause identified
-  - Fix applied successfully
-  - Training convergence restored
+- Issue diagnosed correctly
+- Root cause identified
+- Fix applied successfully
+- Training convergence restored
 validation_method: training_validation
 dependencies:
-  - claude-flow@alpha
-  - tensorflow/pytorch
-  - tensorboard (for visualization)
+- claude-flow@alpha
+- tensorflow/pytorch
+- tensorboard (for visualization)
 outputs:
-  - Diagnostic report
-  - Fixed model/training code
-  - Performance comparison
-  - Optimization recommendations
+- Diagnostic report
+- Fixed model/training code
+- Performance comparison
+- Optimization recommendations
 triggers:
-  - Training loss diverging/NaN
-  - Overfitting detected
-  - Slow convergence
-  - Poor validation performance
+- Training loss diverging/NaN
+- Overfitting detected
+- Slow convergence
+- Poor validation performance
+author: ruv
 ---
 
 # ML Training Debugger - Diagnose and Fix Training Issues

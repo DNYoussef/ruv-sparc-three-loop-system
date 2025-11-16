@@ -1,31 +1,40 @@
 ---
 name: when-optimizing-agent-learning-use-reasoningbank-intelligence
 version: 1.0.0
-description: Implement adaptive learning with ReasoningBank for pattern recognition, strategy optimization, and continuous improvement
+description: Implement adaptive learning with ReasoningBank for pattern recognition,
+  strategy optimization, and continuous improvement
 category: utilities
-tags: [machine-learning, adaptive-learning, pattern-recognition, optimization]
-agents: [safla-neural, ml-developer, performance-analyzer]
+tags:
+- machine-learning
+- adaptive-learning
+- pattern-recognition
+- optimization
+agents:
+- safla-neural
+- ml-developer
+- performance-analyzer
 difficulty: advanced
 estimated_duration: 30-45min
 success_criteria:
-  - Learning system initialized
-  - Patterns captured and analyzed
-  - Performance improvement > 15%
-  - Strategies optimized
+- Learning system initialized
+- Patterns captured and analyzed
+- Performance improvement > 15%
+- Strategies optimized
 validation_method: performance_benchmark
 dependencies:
-  - claude-flow@alpha
-  - reasoningbank
-  - agentdb (optional for 150x faster vector ops)
+- claude-flow@alpha
+- reasoningbank
+- agentdb (optional for 150x faster vector ops)
 outputs:
-  - Trained learning model
-  - Pattern library
-  - Performance metrics
-  - Optimization recommendations
+- Trained learning model
+- Pattern library
+- Performance metrics
+- Optimization recommendations
 triggers:
-  - Need for agent improvement
-  - Repetitive task optimization
-  - Strategy refinement required
+- Need for agent improvement
+- Repetitive task optimization
+- Strategy refinement required
+author: ruv
 ---
 
 # ReasoningBank Intelligence - Adaptive Agent Learning

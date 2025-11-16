@@ -1,6 +1,17 @@
 ---
 name: agent-creator
-description: Creates specialized AI agents with optimized system prompts using the official 4-phase SOP methodology from Desktop .claude-flow, combined with evidence-based prompting techniques and Claude Agent SDK implementation. Use this skill when creating production-ready agents for specific domains, workflows, or tasks requiring consistent high-quality performance with deeply embedded domain knowledge.
+description: Creates specialized AI agents with optimized system prompts using the
+  official 4-phase SOP methodology from Desktop .claude-flow, combined with evidence-based
+  prompting techniques and Claude Agent SDK implementation. Use this skill when creating
+  production-ready agents for specific domains, workflows, or tasks requiring consistent
+  high-quality performance with deeply embedded domain knowledge.
+version: 1.0.0
+category: foundry
+tags:
+- foundry
+- creation
+- meta-tools
+author: ruv
 ---
 
 # Agent Creator - Enhanced with 4-Phase SOP Methodology

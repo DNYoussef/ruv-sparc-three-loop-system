@@ -1,17 +1,20 @@
 ---
 name: when-analyzing-skill-gaps-use-skill-gap-analyzer
 version: 1.0.0
-description: Analyze skill library to identify coverage gaps, redundant overlaps, optimization opportunities, and provide recommendations for skill portfolio improvement
+description: Analyze skill library to identify coverage gaps, redundant overlaps,
+  optimization opportunities, and provide recommendations for skill portfolio improvement
 tags:
-  - meta-tool
-  - skill-management
-  - gap-analysis
-  - portfolio-optimization
+- meta-tool
+- skill-management
+- gap-analysis
+- portfolio-optimization
 complexity: MEDIUM
 agents_required:
-  - researcher
-  - code-analyzer
+- researcher
+- code-analyzer
 auto_trigger: false
+category: foundry
+author: ruv
 ---
 
 # Skill Gap Analyzer

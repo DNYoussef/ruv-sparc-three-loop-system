@@ -1,9 +1,32 @@
 ---
 name: kubernetes-specialist
-description: Kubernetes orchestration expert for Helm chart development, custom operators and CRDs, service mesh (Istio/Linkerd), auto-scaling strategies (HPA/VPA/Cluster Autoscaler), multi-cluster management, and production-grade deployments. Use when deploying containerized applications to K8s, implementing GitOps workflows, optimizing pod scheduling, or requiring Kubernetes best practices. Handles ingress controllers, persistent volumes, network policies, and security contexts.
+description: Kubernetes orchestration expert for Helm chart development, custom operators
+  and CRDs, service mesh (Istio/Linkerd), auto-scaling strategies (HPA/VPA/Cluster
+  Autoscaler), multi-cluster management, and production-grade deployments. Use when
+  deploying containerized applications to K8s, implementing GitOps workflows, optimizing
+  pod scheduling, or requiring Kubernetes best practices. Handles ingress controllers,
+  persistent volumes, network policies, and security contexts.
 category: Cloud Platforms
 complexity: Very High
-triggers: ["kubernetes", "k8s", "helm", "operators", "crd", "istio", "linkerd", "service mesh", "kubectl", "kustomize", "argocd", "flux"]
+triggers:
+- kubernetes
+- k8s
+- helm
+- operators
+- crd
+- istio
+- linkerd
+- service mesh
+- kubectl
+- kustomize
+- argocd
+- flux
+version: 1.0.0
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # Kubernetes Specialist

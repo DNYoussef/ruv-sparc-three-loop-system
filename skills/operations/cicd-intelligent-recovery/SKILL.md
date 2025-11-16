@@ -1,6 +1,17 @@
 ---
 name: cicd-intelligent-recovery
-description: Loop 3 of the Three-Loop Integrated Development System. CI/CD automation with intelligent failure recovery, root cause analysis, and comprehensive quality validation. Receives implementation from Loop 2, feeds failure patterns back to Loop 1. Achieves 100% test success through automated repair and theater validation. v2.0.0 with explicit agent SOPs.
+description: Loop 3 of the Three-Loop Integrated Development System. CI/CD automation
+  with intelligent failure recovery, root cause analysis, and comprehensive quality
+  validation. Receives implementation from Loop 2, feeds failure patterns back to
+  Loop 1. Achieves 100% test success through automated repair and theater validation.
+  v2.0.0 with explicit agent SOPs.
+version: 1.0.0
+category: operations
+tags:
+- operations
+- deployment
+- infrastructure
+author: ruv
 ---
 
 # CI/CD Quality & Debugging Loop (Loop 3)
