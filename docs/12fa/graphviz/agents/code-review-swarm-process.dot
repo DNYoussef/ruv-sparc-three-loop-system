@@ -1,0 +1,72 @@
+digraph CODE_REVIEW_SWARM_AGENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Swarm Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Code Review Swarm Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\n5 Specialist Reviewers"];
+    spawn_reviewers [label="Spawn Specialist Agents\nSecurity, Performance, Style\nTests, Documentation"];
+    
+    start -> load_config -> spawn_reviewers;
+  }
+  
+  subgraph cluster_parallel_review {
+    label="Parallel Review Execution";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    distribute_code [label="Distribute Code\nTo all reviewers", fillcolor=lightgreen];
+    
+    security_review [label="Security Review\nOWASP, vulnerabilities", fillcolor=crimson, fontcolor=white];
+    performance_review [label="Performance Review\nComplexity, bottlenecks", fillcolor=orange];
+    style_review [label="Style Review\nLinting, formatting", fillcolor=purple];
+    test_review [label="Test Review\nCoverage, quality", fillcolor=blue];
+    doc_review [label="Documentation Review\nCompleteness, clarity", fillcolor=yellow];
+    
+    spawn_reviewers -> distribute_code;
+    distribute_code -> security_review;
+    distribute_code -> performance_review;
+    distribute_code -> style_review;
+    distribute_code -> test_review;
+    distribute_code -> doc_review;
+  }
+  
+  subgraph cluster_aggregation {
+    label="Result Aggregation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+    
+    aggregate_findings [label="Aggregate All Findings", fillcolor=lightblue];
+    prioritize_issues [label="Prioritize Issues\nCritical > High > Medium"];
+    generate_auto_fixes [label="Generate Auto-fixes\nFor fixable issues"];
+    create_comprehensive_report [label="Create Comprehensive Report"];
+    
+    security_review -> aggregate_findings;
+    performance_review -> aggregate_findings;
+    style_review -> aggregate_findings;
+    test_review -> aggregate_findings;
+    doc_review -> aggregate_findings;
+    
+    aggregate_findings -> prioritize_issues -> generate_auto_fixes -> create_comprehensive_report;
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_review [label="Store Review Results\nmemory_store", fillcolor=lightblue];
+    log_metrics [label="Log Swarm Metrics\nIssues, time, coverage"];
+    success [label="Swarm Review Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    create_comprehensive_report -> store_review -> log_metrics -> success;
+  }
+}

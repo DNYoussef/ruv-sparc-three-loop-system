@@ -1,0 +1,111 @@
+digraph gemini_media_agent_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Gemini Media Agent - Multimodal Processing Workflow";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Multimodal Input\n(Image/Video/Audio)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Media Processing Phase
+    subgraph cluster_processing {
+        label="Media Processing Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        detect [label="Media Type Detection\n(Auto-detect)"];
+        preprocess [label="Preprocessing\n(Normalization)"];
+        extract [label="Feature Extraction\n(Multi-modal)"];
+    }
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Multimodal Analysis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        image [label="Image Analysis\n(Vision)"];
+        video [label="Video Processing\n(Temporal)"];
+        audio [label="Audio Transcription\n(Speech-to-text)"];
+        understand [label="Multimodal Understanding\n(Cross-modal)"];
+    }
+
+    // Integration Phase
+    subgraph cluster_integration {
+        label="Integration Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        fuse [label="Data Fusion\n(Multi-modal)"];
+        interpret [label="Interpretation\n(Context)"];
+        generate [label="Response Generation\n(Multi-modal aware)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Multimodal", fillcolor="#238636"];
+        feature2 [label="Image Analysis", fillcolor="#238636"];
+        feature3 [label="Video Processing", fillcolor="#238636"];
+        feature4 [label="Audio Transcription", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Multimodal Insights\n+ Structured Data", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> detect;
+    detect -> preprocess;
+    preprocess -> extract;
+
+    extract -> image;
+    extract -> video;
+    extract -> audio;
+
+    image -> understand;
+    video -> understand;
+    audio -> understand;
+
+    understand -> fuse;
+    fuse -> interpret;
+    interpret -> generate;
+
+    generate -> output;
+
+    // Feature connections
+    understand -> feature1 [style=dotted, color="#8b949e"];
+    image -> feature2 [style=dotted, color="#8b949e"];
+    video -> feature3 [style=dotted, color="#8b949e"];
+    audio -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,0 +1,103 @@
+digraph ReverseEngineerBinarySkill {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Skill definition
+    start [label="reverse-engineer-binary\nSkill Activated", fillcolor=lightgreen];
+
+    // Phase 1: Reconnaissance
+    recon_phase [label="PHASE 1: Reconnaissance", fillcolor=lightyellow, shape=box3d];
+    gather_info [label="Gather Binary\nInformation"];
+    identify_target [label="Identify Target\nPlatform"];
+    document_objectives [label="Document RE\nObjectives"];
+
+    // Phase 2: Static Analysis
+    static_phase [label="PHASE 2: Static Analysis", fillcolor=lightyellow, shape=box3d];
+
+    // Parallel static analysis tasks
+    subgraph cluster_static {
+        label="Static Analysis Tasks";
+        style=filled;
+        fillcolor=lightgrey;
+
+        analyze_binary_cmd [label="Execute:\nRE-analyze-binary"];
+        extract_strings_cmd [label="Execute:\nRE-extract-strings"];
+        identify_functions_cmd [label="Execute:\nRE-identify-functions"];
+    }
+
+    // Phase 3: Decompilation
+    decompile_phase [label="PHASE 3: Decompilation", fillcolor=lightyellow, shape=box3d];
+    decompile_cmd [label="Execute:\nRE-decompile"];
+    review_pseudocode [label="Review Generated\nPseudocode"];
+    refine_types [label="Refine Type\nAnnotations"];
+
+    // Phase 4: Dynamic Analysis
+    dynamic_phase [label="PHASE 4: Dynamic Analysis", fillcolor=lightyellow, shape=box3d];
+    trace_execution_cmd [label="Execute:\nRE-trace-execution"];
+    analyze_runtime [label="Analyze Runtime\nBehavior"];
+    identify_algorithms [label="Identify Key\nAlgorithms"];
+
+    // Phase 5: Code Reconstruction
+    reconstruct_phase [label="PHASE 5: Code Reconstruction", fillcolor=lightyellow, shape=box3d];
+    spawn_reconstructor [label="Spawn Agent:\nRE-code-reconstructor"];
+    reconstruct_source [label="Reconstruct Source\nCode"];
+    validate_logic [label="Validate Logic\nEquivalence"];
+
+    // Phase 6: Documentation
+    doc_phase [label="PHASE 6: Documentation", fillcolor=lightyellow, shape=box3d];
+    generate_report_cmd [label="Execute:\nRE-generate-report"];
+    create_diagrams [label="Create Architecture\nDiagrams"];
+    document_findings [label="Document All\nFindings"];
+
+    // Integration points
+    memory_store [label="Store in Memory MCP\n(cross-session persistence)"];
+    coordinate_agents [label="Coordinate with\nMultiple RE Agents"];
+
+    // Output
+    deliverables [label="Deliverables:\n- Source Code\n- Documentation\n- Analysis Report\n- IOCs"];
+    end [label="Reverse Engineering\nComplete", fillcolor=lightcoral];
+
+    // Flow
+    start -> recon_phase;
+    recon_phase -> gather_info;
+    gather_info -> identify_target;
+    identify_target -> document_objectives;
+
+    document_objectives -> static_phase;
+    static_phase -> analyze_binary_cmd;
+    static_phase -> extract_strings_cmd;
+    static_phase -> identify_functions_cmd;
+    analyze_binary_cmd -> decompile_phase;
+    extract_strings_cmd -> decompile_phase;
+    identify_functions_cmd -> decompile_phase;
+
+    decompile_phase -> decompile_cmd;
+    decompile_cmd -> review_pseudocode;
+    review_pseudocode -> refine_types;
+
+    refine_types -> dynamic_phase;
+    dynamic_phase -> trace_execution_cmd;
+    trace_execution_cmd -> analyze_runtime;
+    analyze_runtime -> identify_algorithms;
+
+    identify_algorithms -> reconstruct_phase;
+    reconstruct_phase -> spawn_reconstructor;
+    spawn_reconstructor -> reconstruct_source;
+    reconstruct_source -> validate_logic;
+
+    validate_logic -> doc_phase;
+    doc_phase -> generate_report_cmd;
+    generate_report_cmd -> create_diagrams;
+    create_diagrams -> document_findings;
+
+    document_findings -> memory_store;
+    memory_store -> coordinate_agents;
+    coordinate_agents -> deliverables;
+    deliverables -> end;
+
+    // Metadata
+    label="reverse-engineer-binary Skill - Complete Workflow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

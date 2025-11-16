@@ -1,0 +1,152 @@
+digraph AssessRisksCommand {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Command definition
+    start [label="/assess-risks\\nCommand Activated", fillcolor=lightgreen];
+
+    // Component Selection
+    component_select [label="Select Component:\\ndataset, model, method,\\ndeployment, all", shape=diamond, fillcolor=orange];
+
+    // Phase 1: Risk Domain Assessment
+    domains_phase [label="PHASE 1: Risk Domain Assessment (6 Domains)", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_risk_domains {
+        label="6 Risk Assessment Domains";
+        style=filled;
+        fillcolor=lightgrey;
+
+        ethical_risks [label="Ethical Risks:\\nFairness, Bias,\\nDiscrimination"];
+        safety_risks [label="Safety Risks:\\nHarmful Outputs,\\nAdversarial"];
+        privacy_risks [label="Privacy Risks:\\nData Leakage,\\nRe-identification"];
+        dualuse_risks [label="Dual-Use Risks:\\nMisuse, Weaponization"];
+        repro_risks [label="Reproducibility\\nRisks"];
+        env_risks [label="Environmental\\nRisks"];
+    }
+
+    // Phase 2: Risk Matrix Construction
+    matrix_phase [label="PHASE 2: Risk Matrix Construction", fillcolor=lightyellow, shape=box3d];
+    identify_risks [label="Identify All Risks\\nacross Domains"];
+    classify_severity [label="Classify Severity:\\nCritical/High/Medium/Low"];
+    assess_likelihood [label="Assess Likelihood:\\nHigh/Medium/Low"];
+    create_risk_matrix [label="Create Risk Matrix\\n(Severity × Likelihood)"];
+
+    // Phase 3: Framework Application
+    framework_phase [label="PHASE 3: Framework Application", fillcolor=lightyellow, shape=box3d];
+    select_framework [label="Select Framework:\\nIEEE 7010, NIST AI RMF,\\nISO 42001, DPIA"];
+    apply_framework [label="Apply Framework\\nCriteria"];
+    document_compliance [label="Document\\nCompliance Status"];
+
+    // Phase 4: Mitigation Strategy Development
+    mitigation_phase [label="PHASE 4: Mitigation Strategy Development", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_mitigations {
+        label="Mitigation Strategies by Type";
+        style=filled;
+        fillcolor=lightgrey;
+
+        bias_mitigation [label="Bias: Rebalancing,\\nFairness Constraints"];
+        safety_mitigation [label="Safety: Content Filtering,\\nAdversarial Training"];
+        privacy_mitigation [label="Privacy: Differential Privacy,\\nFederated Learning"];
+        dualuse_mitigation [label="Dual-Use: Access Controls,\\nWatermarking"];
+    }
+
+    evaluate_feasibility [label="Evaluate Mitigation\\nFeasibility"];
+    estimate_residual_risk [label="Estimate Residual\\nRisk After Mitigation"];
+
+    // Phase 5: Quality Gate Integration
+    gate_phase [label="PHASE 5: Quality Gate Integration", fillcolor=lightyellow, shape=box3d];
+    map_to_gates [label="Map Risks to\\nQuality Gates"];
+    determine_blockers [label="Determine Gate\\nBlockers"];
+    generate_gate_guidance [label="Generate Gate\\nApproval Guidance"];
+
+    // Phase 6: Report Generation
+    report_phase [label="PHASE 6: Multi-Report Generation", fillcolor=lightyellow, shape=box3d];
+    generate_risk_assessment [label="Generate Risk\\nAssessment Report"];
+    generate_risk_matrix_csv [label="Generate Risk Matrix\\n(CSV)"];
+    generate_mitigation_plan [label="Generate Mitigation\\nPlan"];
+    generate_ethics_checklist [label="Generate Ethics\\nChecklist"];
+    generate_dpia [label="Generate DPIA\\n(if privacy risks)"];
+
+    // Phase 7: Memory Integration
+    memory_phase [label="PHASE 7: Memory Integration", fillcolor=lightyellow, shape=box3d];
+    store_assessment [label="Store Assessment\\nin Memory MCP"];
+    tag_metadata [label="Tag: SOP, Pipeline-F,\\nrisk-assessment,\\ngate-{N}"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- {component}-risk-assessment.md\\n- {component}-risk-matrix.csv\\n- {component}-mitigation-plan.md\\n- {component}-ethics-checklist.md\\n- Gate approval guidance"];
+    end [label="/assess-risks\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Component Selection
+    start -> component_select;
+
+    // Flow - Risk Domain Assessment
+    component_select -> domains_phase;
+    domains_phase -> ethical_risks;
+    domains_phase -> safety_risks;
+    domains_phase -> privacy_risks;
+    domains_phase -> dualuse_risks;
+    domains_phase -> repro_risks;
+    domains_phase -> env_risks;
+
+    ethical_risks -> matrix_phase;
+    safety_risks -> matrix_phase;
+    privacy_risks -> matrix_phase;
+    dualuse_risks -> matrix_phase;
+    repro_risks -> matrix_phase;
+    env_risks -> matrix_phase;
+
+    // Flow - Risk Matrix Construction
+    matrix_phase -> identify_risks;
+    identify_risks -> classify_severity;
+    classify_severity -> assess_likelihood;
+    assess_likelihood -> create_risk_matrix;
+
+    // Flow - Framework Application
+    create_risk_matrix -> framework_phase;
+    framework_phase -> select_framework;
+    select_framework -> apply_framework;
+    apply_framework -> document_compliance;
+
+    // Flow - Mitigation Strategy
+    document_compliance -> mitigation_phase;
+    mitigation_phase -> bias_mitigation;
+    mitigation_phase -> safety_mitigation;
+    mitigation_phase -> privacy_mitigation;
+    mitigation_phase -> dualuse_mitigation;
+    bias_mitigation -> evaluate_feasibility;
+    safety_mitigation -> evaluate_feasibility;
+    privacy_mitigation -> evaluate_feasibility;
+    dualuse_mitigation -> evaluate_feasibility;
+    evaluate_feasibility -> estimate_residual_risk;
+
+    // Flow - Quality Gate Integration
+    estimate_residual_risk -> gate_phase;
+    gate_phase -> map_to_gates;
+    map_to_gates -> determine_blockers;
+    determine_blockers -> generate_gate_guidance;
+
+    // Flow - Report Generation
+    generate_gate_guidance -> report_phase;
+    report_phase -> generate_risk_assessment;
+    generate_risk_assessment -> generate_risk_matrix_csv;
+    generate_risk_matrix_csv -> generate_mitigation_plan;
+    generate_mitigation_plan -> generate_ethics_checklist;
+    generate_ethics_checklist -> generate_dpia [label="Privacy Risks"];
+    generate_ethics_checklist -> memory_phase [label="No Privacy Risks"];
+    generate_dpia -> memory_phase;
+
+    // Flow - Memory Integration
+    memory_phase -> store_assessment;
+    store_assessment -> tag_metadata;
+    tag_metadata -> deliverables;
+
+    // Flow - Output
+    deliverables -> end;
+
+    // Metadata
+    label="/assess-risks Command - Complete Workflow\\nComprehensive Risk Assessment (6 Domains)\\nPipeline F: Safety & Ethics - All Quality Gates";
+    fontsize=16;
+    fontname="Arial Bold";
+}

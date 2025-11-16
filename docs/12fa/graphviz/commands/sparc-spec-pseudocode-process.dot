@@ -1,0 +1,52 @@
+digraph sparc_spec_pseudocode_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Spec-Pseudocode Command Workflow\nRequirements & Algorithm Design";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:spec-pseudocode", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  gather_context [label="Gather Context\n- User requirements\n- Business goals\n- Constraints", fillcolor="#FFF9C4"];
+
+  clarify [label="Clarify Ambiguities\n- Ask questions\n- Validate assumptions\n- Edge cases", fillcolor="#FFE0B2"];
+
+  functional_spec [label="Functional Specification\n- Features\n- User stories\n- Acceptance criteria", fillcolor="#BBDEFB"];
+
+  technical_spec [label="Technical Specification\n- Data structures\n- Interfaces\n- Dependencies", fillcolor="#C5CAE9"];
+
+  edge_cases [label="Identify Edge Cases\n- Boundary conditions\n- Error scenarios\n- Invalid inputs", fillcolor="#B2DFDB"];
+
+  constraints [label="Define Constraints\n- Performance\n- Scalability\n- Resources", fillcolor="#D1C4E9"];
+
+  pseudocode_algo [label="Generate Pseudocode\n- Algorithm logic\n- Control flow\n- Data transformations", fillcolor="#F0F4C3"];
+
+  pseudocode_struct [label="Design Data Structures\n- Classes/Objects\n- Relationships\n- State management", fillcolor="#FFE0B2"];
+
+  validation [label="Validate Specification\n- Completeness check\n- Consistency check\n- Feasibility check", fillcolor="#BBDEFB"];
+
+  store_memory [label="Store in Memory\nFor architecture phase", fillcolor="#B2DFDB"];
+
+  success [label="Specification Complete\nReady for architecture", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Incomplete\nNeed clarification", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> gather_context;
+  gather_context -> clarify;
+  clarify -> functional_spec;
+  functional_spec -> technical_spec;
+  technical_spec -> edge_cases;
+  edge_cases -> constraints;
+  constraints -> pseudocode_algo;
+  pseudocode_algo -> pseudocode_struct;
+  pseudocode_struct -> validation;
+  validation -> store_memory [label="Valid"];
+  validation -> error [label="Invalid"];
+  error -> clarify [label="Re-clarify"];
+  store_memory -> success;
+}

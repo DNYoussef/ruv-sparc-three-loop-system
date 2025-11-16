@@ -1,0 +1,197 @@
+// Issue Tracker Agent - GitHub Issue Management
+// Auto-triage, assignment, tracking, notification
+digraph issue_tracker_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        tracker_init [label="Issue Tracker\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        github_connect [label="GitHub API\nConnect", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_rules [label="Load Triage\nRules", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_templates [label="Load Issue\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === ISSUE MONITORING ===
+    subgraph cluster_monitor {
+        label="Issue Monitoring";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        webhook_listener [label="Webhook\nListener", fillcolor="#2563eb", fontcolor="#ffffff"];
+        polling_service [label="Polling\nService", fillcolor="#2563eb", fontcolor="#ffffff"];
+        issue_parser [label="Issue\nParser", fillcolor="#2563eb", fontcolor="#ffffff"];
+        event_detector [label="Event\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === AUTO-TRIAGE ===
+    subgraph cluster_triage {
+        label="Auto-Triage System";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        classifier [label="Issue\nClassifier", fillcolor="#059669", fontcolor="#ffffff"];
+        priority_analyzer [label="Priority\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+        label_manager [label="Label\nManager", fillcolor="#059669", fontcolor="#ffffff"];
+        duplicate_detector [label="Duplicate\nDetector", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === ASSIGNMENT ===
+    subgraph cluster_assign {
+        label="Assignment Logic";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        team_matcher [label="Team\nMatcher", fillcolor="#0891b2", fontcolor="#ffffff"];
+        workload_balancer [label="Workload\nBalancer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        expertise_matcher [label="Expertise\nMatcher", fillcolor="#0891b2", fontcolor="#ffffff"];
+        auto_assigner [label="Auto\nAssigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === TRACKING ===
+    subgraph cluster_track {
+        label="Issue Tracking";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        status_monitor [label="Status\nMonitor", fillcolor="#dc2626", fontcolor="#ffffff"];
+        progress_tracker [label="Progress\nTracker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        sla_monitor [label="SLA\nMonitor", fillcolor="#dc2626", fontcolor="#ffffff"];
+        escalation_handler [label="Escalation\nHandler", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === NOTIFICATION ===
+    subgraph cluster_notify {
+        label="Notification System";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        slack_notifier [label="Slack\nNotifier", fillcolor="#8b4789", fontcolor="#ffffff"];
+        email_notifier [label="Email\nNotifier", fillcolor="#8b4789", fontcolor="#ffffff"];
+        github_comment [label="GitHub\nComment", fillcolor="#8b4789", fontcolor="#ffffff"];
+        webhook_sender [label="Webhook\nSender", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === ANALYTICS ===
+    subgraph cluster_analytics {
+        label="Analytics & Reporting";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        metrics_collector [label="Metrics\nCollector", fillcolor="#ef4444", fontcolor="#ffffff"];
+        trend_analyzer [label="Trend\nAnalyzer", fillcolor="#ef4444", fontcolor="#ffffff"];
+        report_generator [label="Report\nGenerator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        dashboard_updater [label="Dashboard\nUpdater", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pr_coord [label="PR Manager\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        project_board_coord [label="Project Board\nSync", fillcolor="#6366f1", fontcolor="#ffffff"];
+        release_coord [label="Release Manager\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    tracker_init -> github_connect [label="Connect"];
+    tracker_init -> load_rules [label="Load"];
+    tracker_init -> load_templates [label="Load"];
+
+    // === MONITORING FLOW ===
+    github_connect -> webhook_listener [label="Setup"];
+    github_connect -> polling_service [label="Start"];
+    webhook_listener -> issue_parser [label="Parse"];
+    polling_service -> issue_parser [label="Parse"];
+    issue_parser -> event_detector [label="Detect"];
+
+    // === TRIAGE FLOW ===
+    event_detector -> classifier [label="Classify"];
+    classifier -> priority_analyzer [label="Analyze"];
+    priority_analyzer -> label_manager [label="Apply Labels"];
+    label_manager -> duplicate_detector [label="Check Duplicates"];
+
+    // === ASSIGNMENT FLOW ===
+    duplicate_detector -> team_matcher [label="Match Team"];
+    team_matcher -> expertise_matcher [label="Match Expertise"];
+    expertise_matcher -> workload_balancer [label="Balance Load"];
+    workload_balancer -> auto_assigner [label="Assign"];
+
+    // === TRACKING FLOW ===
+    auto_assigner -> status_monitor [label="Monitor"];
+    status_monitor -> progress_tracker [label="Track"];
+    progress_tracker -> sla_monitor [label="Check SLA"];
+    sla_monitor -> escalation_handler [label="Escalate if needed"];
+
+    // === NOTIFICATION FLOW ===
+    auto_assigner -> slack_notifier [label="Notify"];
+    auto_assigner -> email_notifier [label="Notify"];
+    auto_assigner -> github_comment [label="Comment"];
+    escalation_handler -> webhook_sender [label="Send Alert"];
+
+    // === ANALYTICS FLOW ===
+    status_monitor -> metrics_collector [label="Collect"];
+    metrics_collector -> trend_analyzer [label="Analyze"];
+    trend_analyzer -> report_generator [label="Generate"];
+    report_generator -> dashboard_updater [label="Update"];
+
+    // === COLLABORATION ===
+    auto_assigner -> pr_coord [label="Link PR"];
+    status_monitor -> project_board_coord [label="Update Board"];
+    escalation_handler -> release_coord [label="Coordinate Release"];
+
+    // === FEEDBACK LOOPS ===
+    duplicate_detector -> github_comment [label="Mark Duplicate", style=dashed];
+    sla_monitor -> escalation_handler [label="SLA Breach", style=dashed, color="#ef4444"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Issue Tracker", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Monitoring", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Triage", fillcolor="#059669", fontcolor="#ffffff"];
+        legend4 [label="Assignment", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend5 [label="Tracking", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend6 [label="Notification", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+}

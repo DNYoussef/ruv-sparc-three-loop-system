@@ -1,0 +1,156 @@
+digraph EthicsAgentProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="ethics-agent\\nActivated", fillcolor=lightgreen];
+
+    // Core Identity
+    identity [label="Core Identity:\\n- Ethics & Safety Specialist\\n- Risk Assessment Expert (IEEE 7010, NIST AI RMF)\\n- Compliance Validator\\n- Required for ALL Gates", shape=ellipse, fillcolor=lightyellow];
+
+    // Gate Selection
+    gate_selector [label="Ethics Review\\nRequested for Gate", fillcolor=orange, shape=diamond];
+
+    // ===== GATE 1 ETHICS WORKFLOW =====
+    gate1_workflow [label="Gate 1 Ethics\\nWorkflow", fillcolor=lightcyan];
+
+    gate1_risk_assessment [label="Run /assess-risks\\n--component dataset"];
+
+    subgraph cluster_gate1_domains {
+        label="Gate 1 Risk Domains";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate1_ethical [label="Ethical Risks:\\nBias, Fairness"];
+        gate1_privacy [label="Privacy Risks:\\nPII, GDPR/HIPAA"];
+        gate1_dualuse [label="Dual-Use Risks:\\nMisuse Potential"];
+    }
+
+    gate1_bias_coordination [label="Coordinate with\\ndata-steward:\\nBias Audit Results"];
+    gate1_ethics_review [label="Complete Ethics\\nReview Form F-F1"];
+    gate1_irb_check [label="Check IRB Approval\\n(if human subjects)"];
+    gate1_validate [label="Run /validate-gate-1\\n--pipeline F"];
+
+    // ===== GATE 2 ETHICS WORKFLOW =====
+    gate2_workflow [label="Gate 2 Ethics\\nWorkflow", fillcolor=lightcyan];
+
+    gate2_risk_assessment [label="Run /assess-risks\\n--component model"];
+
+    subgraph cluster_gate2_domains {
+        label="Gate 2 Risk Domains";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate2_safety [label="Safety Risks:\\nHarmful Outputs"];
+        gate2_fairness [label="Fairness Risks:\\nModel Bias"];
+        gate2_privacy [label="Privacy Risks:\\nData Leakage"];
+    }
+
+    gate2_safety_eval [label="Run /safety-eval\\nAdversarial Testing"];
+    gate2_fairness_check [label="Check Fairness\\nMetrics Acceptable"];
+    gate2_privacy_audit [label="Run /privacy-audit\\nMembership Inference"];
+    gate2_validate [label="Run /validate-gate-2\\n--pipeline F"];
+
+    // ===== GATE 3 ETHICS WORKFLOW =====
+    gate3_workflow [label="Gate 3 Ethics\\nWorkflow", fillcolor=lightcyan];
+
+    gate3_risk_assessment [label="Run /assess-risks\\n--component deployment"];
+
+    subgraph cluster_gate3_domains {
+        label="Gate 3 Risk Domains";
+        style=filled;
+        fillcolor=lightgrey;
+
+        gate3_deployment [label="Deployment Risks:\\nProduction Safety"];
+        gate3_governance [label="Governance Risks:\\nMonitoring, Incident Response"];
+        gate3_compliance [label="Compliance Risks:\\nRegulatory (EU AI Act, FDA)"];
+    }
+
+    gate3_compliance_check [label="Run /compliance-check\\nRegulations"];
+    gate3_monitoring_plan [label="Validate Monitoring\\nPlan Established"];
+    gate3_validate [label="Run /validate-gate-3\\n--pipeline F"];
+
+    // Decision Node
+    ethics_decision [label="Ethics Review\\nDecision", shape=diamond, fillcolor=gold];
+    approve [label="APPROVED:\\nAll Critical Risks\\nMitigated", fillcolor=lightgreen];
+    conditional [label="CONDITIONAL:\\nMinor Risks,\\nMitigations In Progress", fillcolor=lightyellow];
+    reject [label="REJECTED:\\nUnmitigated Critical\\nRisks", fillcolor=lightcoral];
+
+    // Memory & Notification
+    store_review [label="Store Ethics Review\\nin Memory MCP"];
+    notify_evaluator [label="Notify evaluator:\\nEthics Status"];
+    coordinate_archivist [label="Coordinate with\\narchivist:\\nArchive Ethics Docs"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- Ethics Review Form F-F1\\n- Risk Assessment Reports (6 domains)\\n- Safety/Privacy Audit Reports\\n- Compliance Validation\\n- Gate-Specific Checklist"];
+    end [label="ethics-agent\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Start
+    start -> identity;
+    identity -> gate_selector;
+
+    // Gate Selection
+    gate_selector -> gate1_workflow [label="Gate 1"];
+    gate_selector -> gate2_workflow [label="Gate 2"];
+    gate_selector -> gate3_workflow [label="Gate 3"];
+
+    // Gate 1 Flow
+    gate1_workflow -> gate1_risk_assessment;
+    gate1_risk_assessment -> gate1_ethical;
+    gate1_risk_assessment -> gate1_privacy;
+    gate1_risk_assessment -> gate1_dualuse;
+    gate1_ethical -> gate1_bias_coordination;
+    gate1_privacy -> gate1_bias_coordination;
+    gate1_dualuse -> gate1_bias_coordination;
+    gate1_bias_coordination -> gate1_ethics_review;
+    gate1_ethics_review -> gate1_irb_check;
+    gate1_irb_check -> gate1_validate;
+    gate1_validate -> ethics_decision;
+
+    // Gate 2 Flow
+    gate2_workflow -> gate2_risk_assessment;
+    gate2_risk_assessment -> gate2_safety;
+    gate2_risk_assessment -> gate2_fairness;
+    gate2_risk_assessment -> gate2_privacy;
+    gate2_safety -> gate2_safety_eval;
+    gate2_fairness -> gate2_fairness_check;
+    gate2_privacy -> gate2_privacy_audit;
+    gate2_safety_eval -> gate2_validate;
+    gate2_fairness_check -> gate2_validate;
+    gate2_privacy_audit -> gate2_validate;
+    gate2_validate -> ethics_decision;
+
+    // Gate 3 Flow
+    gate3_workflow -> gate3_risk_assessment;
+    gate3_risk_assessment -> gate3_deployment;
+    gate3_risk_assessment -> gate3_governance;
+    gate3_risk_assessment -> gate3_compliance;
+    gate3_deployment -> gate3_compliance_check;
+    gate3_governance -> gate3_monitoring_plan;
+    gate3_compliance -> gate3_compliance_check;
+    gate3_compliance_check -> gate3_monitoring_plan;
+    gate3_monitoring_plan -> gate3_validate;
+    gate3_validate -> ethics_decision;
+
+    // Decision Outcomes
+    ethics_decision -> approve [label="All Critical\\nMitigated"];
+    ethics_decision -> conditional [label="Minor Gaps"];
+    ethics_decision -> reject [label="Unmitigated\\nCritical"];
+
+    // Memory & Notification
+    approve -> store_review;
+    conditional -> store_review;
+    reject -> store_review;
+    store_review -> notify_evaluator;
+    notify_evaluator -> coordinate_archivist;
+    coordinate_archivist -> deliverables;
+
+    // Output
+    deliverables -> end;
+
+    // Metadata
+    label="ethics-agent - Complete Workflow\\nEthics & Safety Review for ALL Quality Gates\\nPipeline F: Safety & Ethics";
+    fontsize=16;
+    fontname="Arial Bold";
+}

@@ -1,0 +1,93 @@
+// SPARC Reviewer Command Workflow
+// Comprehensive code review and quality assessment
+digraph sparc_reviewer_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:reviewer\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        code_loader [label="Code\nLoader", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_review {
+        label="Code Review";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        quality_assessor [label="Quality\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        style_checker [label="Style\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        logic_reviewer [label="Logic\nReviewer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        architecture_reviewer [label="Architecture\nReviewer", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_security {
+        label="Security Audit";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        vulnerability_scanner [label="Vulnerability\nScanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        secret_detector [label="Secret\nDetector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        dependency_auditor [label="Dependency\nAuditor", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_performance {
+        label="Performance Review";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        complexity_analyzer [label="Complexity\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        optimization_checker [label="Optimization\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+        memory_reviewer [label="Memory\nReviewer", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_recommendations {
+        label="Recommendations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        improvement_suggester [label="Improvement\nSuggester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        priority_ranker [label="Priority\nRanker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        action_planner [label="Action\nPlanner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        review_report [label="Review\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        approval_decision [label="Approval\nDecision", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> code_loader;
+    code_loader -> quality_assessor -> style_checker -> logic_reviewer -> architecture_reviewer;
+    architecture_reviewer -> vulnerability_scanner -> secret_detector -> dependency_auditor;
+    dependency_auditor -> complexity_analyzer -> optimization_checker -> memory_reviewer;
+    memory_reviewer -> improvement_suggester -> priority_ranker -> action_planner;
+    action_planner -> review_report -> approval_decision;
+    approval_decision -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    vulnerability_scanner -> approval_decision [label="Block", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Review", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Security", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+}

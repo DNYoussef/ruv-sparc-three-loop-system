@@ -1,0 +1,325 @@
+// Queen Seraphina - Meta-Orchestrator
+// 86-agent registry management with Byzantine consensus
+digraph queen_seraphina {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.8,
+        ranksep=1.2
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION LAYER ===
+    subgraph cluster_init {
+        label="Initialization Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        queen_init [label="Queen Seraphina\nInitialization", fillcolor="#8b4789", fontcolor="#ffffff"];
+        registry_load [label="86-Agent Registry\nLoader", fillcolor="#2d3748", fontcolor="#ffffff"];
+        topology_scan [label="Topology\nScanner", fillcolor="#2d3748", fontcolor="#ffffff"];
+        capability_index [label="Capability\nIndexer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === STRATEGIC LAYER ===
+    subgraph cluster_strategy {
+        label="Strategic Leadership";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        task_analyzer [label="Task Analysis\nEngine", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_assessor [label="Complexity\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        requirement_parser [label="Requirement\nParser", fillcolor="#2563eb", fontcolor="#ffffff"];
+        constraint_validator [label="Constraint\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === AGENT SELECTION LAYER ===
+    subgraph cluster_selection {
+        label="Dynamic Agent Selection";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        skill_matcher [label="Skill Matching\nEngine", fillcolor="#059669", fontcolor="#ffffff"];
+        vector_search [label="Vector Similarity\nSearch", fillcolor="#059669", fontcolor="#ffffff"];
+        load_balancer [label="Load Balancing\nAlgorithm", fillcolor="#059669", fontcolor="#ffffff"];
+        agent_pool [label="Available Agent\nPool (86)", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === AGENT REGISTRY (Selected Agents) ===
+    subgraph cluster_core_agents {
+        label="Core Development Agents";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coder_agent [label="Coder\n55 cmds, 18 MCP", fillcolor="#d97706", fontcolor="#ffffff"];
+        tester_agent [label="Tester\n45 cmds, 18 MCP", fillcolor="#d97706", fontcolor="#ffffff"];
+        planner_agent [label="Planner\nStrategic Planning", fillcolor="#d97706", fontcolor="#ffffff"];
+        reviewer_agent [label="Reviewer\nQuality Assurance", fillcolor="#d97706", fontcolor="#ffffff"];
+        researcher_agent [label="Researcher\nAnalysis & Research", fillcolor="#d97706", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_swarm_agents {
+        label="Swarm Coordination Agents";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        hierarchical_coord [label="Hierarchical\nCoordinator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        mesh_coord [label="Mesh\nCoordinator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        adaptive_coord [label="Adaptive\nCoordinator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        collective_intel [label="Collective\nIntelligence", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        swarm_memory [label="Swarm Memory\nManager", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_consensus_agents {
+        label="Consensus & Distributed Agents";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        byzantine_coord [label="Byzantine\nCoordinator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        raft_manager [label="Raft\nManager", fillcolor="#dc2626", fontcolor="#ffffff"];
+        gossip_coord [label="Gossip\nCoordinator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        consensus_builder [label="Consensus\nBuilder", fillcolor="#dc2626", fontcolor="#ffffff"];
+        quorum_manager [label="Quorum\nManager", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_github_agents {
+        label="GitHub & Repository Agents";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        github_modes [label="GitHub\nModes", fillcolor="#0891b2", fontcolor="#ffffff"];
+        pr_manager [label="PR\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+        code_review_swarm [label="Code Review\nSwarm", fillcolor="#0891b2", fontcolor="#ffffff"];
+        issue_tracker [label="Issue\nTracker", fillcolor="#0891b2", fontcolor="#ffffff"];
+        release_manager [label="Release\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_specialized_agents {
+        label="Specialized Development Agents";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        backend_dev [label="Backend\nDeveloper", fillcolor="#16a34a", fontcolor="#ffffff"];
+        mobile_dev [label="Mobile\nDeveloper", fillcolor="#16a34a", fontcolor="#ffffff"];
+        ml_developer [label="ML\nDeveloper", fillcolor="#16a34a", fontcolor="#ffffff"];
+        cicd_engineer [label="CI/CD\nEngineer", fillcolor="#16a34a", fontcolor="#ffffff"];
+        system_architect [label="System\nArchitect", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    // === BYZANTINE CONSENSUS LAYER ===
+    subgraph cluster_consensus {
+        label="Byzantine Consensus Decision-Making";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        proposal_generator [label="Proposal\nGenerator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        vote_collector [label="Vote\nCollector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        fault_detector [label="Fault\nDetector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        consensus_validator [label="Consensus\nValidator (2f+1)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        decision_executor [label="Decision\nExecutor", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === META-SKILL COMPILATION LAYER ===
+    subgraph cluster_meta_skill {
+        label="META-SKILL Compilation Process";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        skill_analyzer [label="Skill\nAnalyzer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        dependency_mapper [label="Dependency\nMapper", fillcolor="#8b4789", fontcolor="#ffffff"];
+        execution_graph [label="Execution Graph\nBuilder", fillcolor="#8b4789", fontcolor="#ffffff"];
+        resource_allocator [label="Resource\nAllocator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        skill_compiler [label="Skill\nCompiler", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === COORDINATION LAYER ===
+    subgraph cluster_coordination {
+        label="Multi-Agent Coordination";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        task_distributor [label="Task\nDistributor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        status_monitor [label="Status\nMonitor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        conflict_resolver [label="Conflict\nResolver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        progress_tracker [label="Progress\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        quality_validator [label="Quality\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === MEMORY & STATE LAYER ===
+    subgraph cluster_memory {
+        label="Memory & State Management";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        shared_memory [label="Shared Memory\nStore", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        state_sync [label="State\nSynchronizer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        history_tracker [label="History\nTracker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        pattern_learner [label="Pattern\nLearner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        knowledge_base [label="Knowledge\nBase", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === VALIDATION LAYER ===
+    subgraph cluster_validation {
+        label="Validation & Quality Gates";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        output_validator [label="Output\nValidator", fillcolor="#059669", fontcolor="#ffffff"];
+        performance_analyzer [label="Performance\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+        security_scanner [label="Security\nScanner", fillcolor="#059669", fontcolor="#ffffff"];
+        compliance_checker [label="Compliance\nChecker", fillcolor="#059669", fontcolor="#ffffff"];
+        final_approval [label="Final\nApproval", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    queen_init -> registry_load [label="Load"];
+    queen_init -> topology_scan [label="Scan"];
+    queen_init -> capability_index [label="Index"];
+
+    registry_load -> agent_pool [label="86 Agents"];
+    topology_scan -> skill_matcher [label="Topology"];
+    capability_index -> vector_search [label="Capabilities"];
+
+    // === STRATEGIC FLOW ===
+    queen_init -> task_analyzer [label="Analyze Task"];
+    task_analyzer -> complexity_assessor [label="Assess"];
+    task_analyzer -> requirement_parser [label="Parse"];
+    complexity_assessor -> constraint_validator [label="Validate"];
+
+    // === AGENT SELECTION FLOW ===
+    requirement_parser -> skill_matcher [label="Match Skills"];
+    skill_matcher -> vector_search [label="Search"];
+    vector_search -> load_balancer [label="Balance"];
+    load_balancer -> agent_pool [label="Select"];
+
+    // === AGENT ASSIGNMENT ===
+    agent_pool -> coder_agent [label="Assign", style=dashed];
+    agent_pool -> tester_agent [label="Assign", style=dashed];
+    agent_pool -> planner_agent [label="Assign", style=dashed];
+    agent_pool -> reviewer_agent [label="Assign", style=dashed];
+    agent_pool -> researcher_agent [label="Assign", style=dashed];
+
+    agent_pool -> hierarchical_coord [label="Assign", style=dashed];
+    agent_pool -> mesh_coord [label="Assign", style=dashed];
+    agent_pool -> adaptive_coord [label="Assign", style=dashed];
+    agent_pool -> collective_intel [label="Assign", style=dashed];
+    agent_pool -> swarm_memory [label="Assign", style=dashed];
+
+    agent_pool -> byzantine_coord [label="Assign", style=dashed];
+    agent_pool -> raft_manager [label="Assign", style=dashed];
+    agent_pool -> gossip_coord [label="Assign", style=dashed];
+    agent_pool -> consensus_builder [label="Assign", style=dashed];
+    agent_pool -> quorum_manager [label="Assign", style=dashed];
+
+    agent_pool -> github_modes [label="Assign", style=dashed];
+    agent_pool -> pr_manager [label="Assign", style=dashed];
+    agent_pool -> code_review_swarm [label="Assign", style=dashed];
+    agent_pool -> issue_tracker [label="Assign", style=dashed];
+    agent_pool -> release_manager [label="Assign", style=dashed];
+
+    agent_pool -> backend_dev [label="Assign", style=dashed];
+    agent_pool -> mobile_dev [label="Assign", style=dashed];
+    agent_pool -> ml_developer [label="Assign", style=dashed];
+    agent_pool -> cicd_engineer [label="Assign", style=dashed];
+    agent_pool -> system_architect [label="Assign", style=dashed];
+
+    // === BYZANTINE CONSENSUS FLOW ===
+    constraint_validator -> proposal_generator [label="Generate Proposal"];
+    proposal_generator -> vote_collector [label="Collect Votes"];
+    vote_collector -> fault_detector [label="Detect Faults"];
+    fault_detector -> consensus_validator [label="Validate (2f+1)"];
+    consensus_validator -> decision_executor [label="Execute"];
+
+    // === META-SKILL COMPILATION FLOW ===
+    decision_executor -> skill_analyzer [label="Analyze"];
+    skill_analyzer -> dependency_mapper [label="Map"];
+    dependency_mapper -> execution_graph [label="Build Graph"];
+    execution_graph -> resource_allocator [label="Allocate"];
+    resource_allocator -> skill_compiler [label="Compile"];
+
+    // === COORDINATION FLOW ===
+    skill_compiler -> task_distributor [label="Distribute"];
+    task_distributor -> coder_agent [label="Task", style=bold];
+    task_distributor -> tester_agent [label="Task", style=bold];
+    task_distributor -> planner_agent [label="Task", style=bold];
+    task_distributor -> reviewer_agent [label="Task", style=bold];
+    task_distributor -> researcher_agent [label="Task", style=bold];
+
+    coder_agent -> status_monitor [label="Status"];
+    tester_agent -> status_monitor [label="Status"];
+    planner_agent -> status_monitor [label="Status"];
+    reviewer_agent -> status_monitor [label="Status"];
+    researcher_agent -> status_monitor [label="Status"];
+
+    status_monitor -> conflict_resolver [label="Conflicts"];
+    status_monitor -> progress_tracker [label="Progress"];
+    conflict_resolver -> task_distributor [label="Reassign"];
+
+    // === MEMORY COORDINATION ===
+    task_distributor -> shared_memory [label="Store Context"];
+    coder_agent -> shared_memory [label="Write"];
+    tester_agent -> shared_memory [label="Write"];
+    reviewer_agent -> shared_memory [label="Write"];
+    shared_memory -> state_sync [label="Sync"];
+    state_sync -> history_tracker [label="Track"];
+    history_tracker -> pattern_learner [label="Learn"];
+    pattern_learner -> knowledge_base [label="Store"];
+
+    // === VALIDATION FLOW ===
+    progress_tracker -> quality_validator [label="Validate"];
+    quality_validator -> output_validator [label="Validate Output"];
+    output_validator -> performance_analyzer [label="Analyze"];
+    performance_analyzer -> security_scanner [label="Scan"];
+    security_scanner -> compliance_checker [label="Check"];
+    compliance_checker -> final_approval [label="Approve"];
+
+    // === FEEDBACK LOOPS ===
+    final_approval -> queen_init [label="Complete", style=bold, color="#10b981"];
+    conflict_resolver -> proposal_generator [label="Retry", style=dashed, color="#ef4444"];
+    quality_validator -> task_distributor [label="Retry", style=dashed, color="#ef4444"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Queen Seraphina", fillcolor="#8b4789", fontcolor="#ffffff"];
+        legend2 [label="Core Agents", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend3 [label="Swarm Coordination", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend4 [label="Consensus", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend5 [label="GitHub", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend6 [label="Specialized", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+}

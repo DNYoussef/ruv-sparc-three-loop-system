@@ -1,0 +1,235 @@
+digraph CODER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Coder Agent Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\n80 Commands + 40 MCP Tools"];
+    validate_capabilities [label="Validate Capabilities\ncode_generation, refactoring,\noptimization, api_design"];
+    check_deps [label="Check Dependencies\nMemory, Tools, Environment"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // COORDINATION SETUP
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Swarm Coordination Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\ndevelopment/coder/{task-id}/*"];
+    retrieve_requirements [label="Retrieve Requirements\nfrom Planner"];
+    check_coordination [shape=diamond, label="Swarm Mode?"];
+    setup_mcp [label="Setup MCP Tools\nSwarm Init + Sandbox"];
+
+    check_deps -> init_memory;
+    init_memory -> retrieve_requirements;
+    retrieve_requirements -> check_coordination;
+    check_coordination -> setup_mcp [label="Yes"];
+  }
+
+  // =============================================================================
+  // DESIGN PHASE
+  // =============================================================================
+  subgraph cluster_design {
+    label="Design & Planning";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    api_design [label="API Design\n/api-design command", fillcolor=yellow];
+    schema_design [label="Schema Design\n/schema-design command", fillcolor=yellow];
+    architecture_plan [label="Architecture Planning\nSOLID, DRY, KISS principles"];
+    design_decision [shape=diamond, label="Design\nApproved?"];
+
+    setup_mcp -> api_design;
+    check_coordination -> api_design [label="No"];
+    api_design -> schema_design;
+    schema_design -> architecture_plan;
+    architecture_plan -> design_decision;
+  }
+
+  // =============================================================================
+  // TDD IMPLEMENTATION PHASE
+  // =============================================================================
+  subgraph cluster_implementation {
+    label="TDD Implementation (Red-Green-Refactor)";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    write_test [label="Write Test First\n/test-suite-create", fillcolor=lightgreen];
+    test_fails [shape=diamond, label="Test Fails\n(Red)?"];
+    implement_code [label="Implement Code\n/sparc:code", fillcolor=green];
+    test_passes [shape=diamond, label="Test Passes\n(Green)?"];
+    refactor [label="Refactor Code\n/code-format + /lint", fillcolor=lightgreen];
+
+    design_decision -> write_test [label="Yes"];
+    write_test -> test_fails;
+    test_fails -> implement_code [label="Yes"];
+    test_fails -> redesign [label="No (Bad Test)"];
+    implement_code -> test_passes;
+    test_passes -> write_test [label="No"];
+    test_passes -> refactor [label="Yes"];
+  }
+
+  // =============================================================================
+  // SANDBOX TESTING
+  // =============================================================================
+  subgraph cluster_sandbox {
+    label="Sandbox Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    create_sandbox [label="Create Sandbox\nmcp__flow-nexus__sandbox_create", fillcolor=lightblue];
+    execute_sandbox [label="Execute in Sandbox\nmcp__flow-nexus__sandbox_execute"];
+    monitor_execution [label="Monitor Stream\nmcp__flow-nexus__execution_stream_subscribe"];
+    sandbox_result [shape=diamond, label="Execution\nSuccess?"];
+
+    refactor -> create_sandbox;
+    create_sandbox -> execute_sandbox;
+    execute_sandbox -> monitor_execution;
+    monitor_execution -> sandbox_result;
+  }
+
+  // =============================================================================
+  // QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    run_tests [label="Run All Tests\n/test-run + /test-coverage", fillcolor=purple];
+    coverage_check [shape=diamond, label="Coverage\n>80%?"];
+    functionality_audit [label="Functionality Audit\n/functionality-audit --model codex-auto"];
+    audit_result [shape=diamond, label="Audit\nPass?"];
+    performance_test [label="Performance Test\n/performance-test"];
+
+    sandbox_result -> run_tests [label="Yes"];
+    run_tests -> coverage_check;
+    coverage_check -> functionality_audit [label="Yes"];
+    coverage_check -> write_test [label="No"];
+    functionality_audit -> audit_result;
+    audit_result -> performance_test [label="Yes"];
+    audit_result -> implement_code [label="No (Auto-fix)"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    store_implementation [label="Store Implementation\nmemory_store(development/coder/{task-id}/implementation)", fillcolor=lightblue];
+    store_decisions [label="Store Decisions\nmemory_store(development/coder/{task-id}/decisions)"];
+    store_metrics [label="Store Metrics\nmemory_store(development/coder/{task-id}/performance)"];
+    notify_reviewer [label="Notify Reviewer\n/agent-handoff --to reviewer"];
+    check_dependent [shape=diamond, label="Other Agents\nWaiting?"];
+
+    performance_test -> store_implementation;
+    store_implementation -> store_decisions;
+    store_decisions -> store_metrics;
+    store_metrics -> notify_reviewer;
+    notify_reviewer -> check_dependent;
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Completion Metrics\nLines of code, tests, coverage"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Coder Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    check_dependent -> cleanup [label="No"];
+    cleanup -> log_completion;
+    log_completion -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    redesign [label="Redesign Approach", fillcolor=orange];
+    sandbox_error [label="Sandbox Execution Error", fillcolor=orange];
+    adapt_agent [label="Adapt Agent\nmcp__ruv-swarm__daa_agent_adapt", fillcolor=yellow];
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser/Queen"];
+    log_error [label="Log Error Details"];
+    rollback [label="Rollback Changes"];
+    failure [label="Coder Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    sandbox_result -> sandbox_error [label="No"];
+    sandbox_error -> adapt_agent;
+    adapt_agent -> redesign;
+    redesign -> api_design [style=dashed];
+
+    design_decision -> escalate [label="No"];
+    escalate -> log_error;
+    log_error -> rollback;
+    rollback -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_mcp [shape=box, label="MCP Tool", fillcolor=lightblue];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_mcp [style=invis];
+    legend_mcp -> legend_process [style=invis];
+    legend_process -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

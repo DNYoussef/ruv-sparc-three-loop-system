@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-Factor Agents - Graphviz Visual Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        #searchInput {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+        }
+
+        .card-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .type-skill {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .type-agent {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .type-command {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.25rem 0.5rem;
+            background: #f5f5f5;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 10px;
+            color: #999;
+        }
+
+        .no-results h2 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 12-Factor Agents Visual Documentation</h1>
+        <p>Comprehensive Graphviz Workflow Diagrams</p>
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="totalCount">271</div>
+                <div class="stat-label">Total Diagrams</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">73</div>
+                <div class="stat-label">Skills</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">104</div>
+                <div class="stat-label">Agents</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">94</div>
+                <div class="stat-label">Commands</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search diagrams by name, description, or tags...">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="skill">Skills</button>
+                <button class="filter-btn" data-filter="agent">Agents</button>
+                <button class="filter-btn" data-filter="command">Commands</button>
+            </div>
+        </div>
+
+        <div class="grid" id="diagramGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h2>No diagrams found</h2>
+            <p>Try adjusting your search or filters</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample data - in production, this would be loaded from master-catalog.json
+        const diagrams = [
+            // Skills
+            { name: 'agent-creator', type: 'skill', description: '4-phase SOP methodology for creating specialized AI agents', tags: ['core', 'agent-creation', 'sop'], path: 'skills/agent-creator-process.dot' },
+            { name: 'research-driven-planning', type: 'skill', description: 'Loop 1: Research-driven requirements analysis with 5x pre-mortem', tags: ['three-loop', 'research', 'planning'], path: 'skills/research-driven-planning-process.dot' },
+            { name: 'parallel-swarm-implementation', type: 'skill', description: 'Loop 2: META-SKILL with dynamic agent coordination', tags: ['three-loop', 'swarm', 'implementation'], path: 'skills/parallel-swarm-implementation-process.dot' },
+            { name: 'cicd-intelligent-recovery', type: 'skill', description: 'Loop 3: CI/CD with automated failure recovery', tags: ['three-loop', 'cicd', 'recovery'], path: 'skills/cicd-intelligent-recovery-process.dot' },
+
+            // Agents
+            { name: 'coder', type: 'agent', description: 'TDD-focused code implementation with sandbox testing', tags: ['core', 'development', 'tdd'], path: 'agents/coder-process.dot' },
+            { name: 'reviewer', type: 'agent', description: 'Comprehensive code review with security and performance analysis', tags: ['core', 'quality', 'security'], path: 'agents/reviewer-process.dot' },
+            { name: 'tester', type: 'agent', description: 'Multi-layered testing with unit, integration, e2e, and security tests', tags: ['core', 'testing', 'quality'], path: 'agents/tester-process.dot' },
+            { name: 'queen-coordinator', type: 'agent', description: 'Meta-orchestrator for hierarchical hive coordination', tags: ['coordination', 'hive-mind', 'meta'], path: 'agents/queen-coordinator-process.dot' },
+
+            // Commands
+            { name: '/claude-flow-swarm', type: 'command', description: 'Multi-agent swarm coordination for complex tasks', tags: ['core', 'swarm', 'coordination'], path: 'commands/claude-flow-swarm-process.dot' },
+            { name: '/sparc', type: 'command', description: '5-phase SPARC methodology workflow', tags: ['core', 'sparc', 'methodology'], path: 'commands/sparc-process.dot' },
+            { name: '/audit-pipeline', type: 'command', description: 'Complete audit pipeline with theater detection', tags: ['quality', 'audit', 'validation'], path: 'commands/audit-pipeline-process.dot' }
+
+            // Note: In production, load full catalog from master-catalog.json
+        ];
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function renderDiagrams() {
+            const grid = document.getElementById('diagramGrid');
+            const noResults = document.getElementById('noResults');
+
+            let filtered = diagrams;
+
+            // Apply filter
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(d => d.type === currentFilter);
+            }
+
+            // Apply search
+            if (currentSearch) {
+                const search = currentSearch.toLowerCase();
+                filtered = filtered.filter(d =>
+                    d.name.toLowerCase().includes(search) ||
+                    d.description.toLowerCase().includes(search) ||
+                    d.tags.some(tag => tag.toLowerCase().includes(search))
+                );
+            }
+
+            // Update total count
+            document.getElementById('totalCount').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            grid.innerHTML = filtered.map(diagram => `
+                <div class="card" onclick="openDiagram('${diagram.path}')">
+                    <div class="card-header">
+                        <div class="card-title">${diagram.name}</div>
+                        <div class="card-type type-${diagram.type}">${diagram.type}</div>
+                    </div>
+                    <div class="card-description">${diagram.description}</div>
+                    <div class="card-footer">
+                        ${diagram.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openDiagram(path) {
+            // In production, this would open the SVG or navigate to detailed view
+            const svgPath = path.replace('.dot', '.svg');
+            window.open(svgPath, '_blank');
+        }
+
+        // Event listeners
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                renderDiagrams();
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderDiagrams();
+        });
+
+        // Initial render
+        renderDiagrams();
+    </script>
+</body>
+</html>

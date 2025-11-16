@@ -1,0 +1,125 @@
+digraph performance_monitor_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Performance Monitor - Real-Time Monitoring & Alerting";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="System Events\n(Real-time)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Data Collection Phase
+    subgraph cluster_collection {
+        label="Metrics Collection";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        collect [label="Data Collection\n(All sources)"];
+        aggregate [label="Aggregation\n(Time-series)"];
+        normalize [label="Normalization\n(Standard format)"];
+    }
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Performance Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        metrics [label="Metrics Analysis\n(CPU, Memory, etc.)"];
+        trends [label="Trend Analysis\n(Historical)"];
+        anomaly [label="Anomaly Detection\n(Outliers)"];
+    }
+
+    // Alerting Phase
+    subgraph cluster_alerting {
+        label="Alerting System";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        threshold [label="Threshold Checking\n(Limits)"];
+        severity [label="Severity Assessment\n(Critical/Warning)"];
+        notify [label="Notification\n(Alerts)"];
+    }
+
+    // Visualization Phase
+    subgraph cluster_visualization {
+        label="Visualization & Reporting";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        dashboard [label="Dashboard Generation\n(Real-time)"];
+        report [label="Report Generation\n(Periodic)"];
+        insights [label="Insights Extraction\n(Recommendations)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Real-time Monitoring", fillcolor="#238636"];
+        feature2 [label="Metrics Collection", fillcolor="#238636"];
+        feature3 [label="Alerting", fillcolor="#238636"];
+        feature4 [label="Trend Analysis", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Performance Dashboard\n+ Alerts", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> collect;
+    collect -> aggregate;
+    aggregate -> normalize;
+
+    normalize -> metrics;
+    metrics -> trends;
+    trends -> anomaly;
+
+    anomaly -> threshold;
+    threshold -> severity;
+    severity -> notify;
+
+    notify -> dashboard;
+    dashboard -> report;
+    report -> insights;
+
+    insights -> output;
+
+    // Alert path (parallel)
+    severity -> output [label="Critical alerts", color="#f85149"];
+
+    // Feature connections
+    collect -> feature1 [style=dotted, color="#8b949e"];
+    metrics -> feature2 [style=dotted, color="#8b949e"];
+    notify -> feature3 [style=dotted, color="#8b949e"];
+    trends -> feature4 [style=dotted, color="#8b949e"];
+}

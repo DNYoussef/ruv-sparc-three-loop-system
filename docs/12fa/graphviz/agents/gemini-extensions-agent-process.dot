@@ -1,0 +1,109 @@
+digraph gemini_extensions_agent_workflow {
+    // Graph styling
+    rankdir=LR;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Gemini Extensions Agent - Plugin & Integration Management";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Extension Request", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Extension Management Phase
+    subgraph cluster_management {
+        label="Extension Management";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        discover [label="Extension Discovery\n(Available plugins)"];
+        validate [label="Validation\n(Security check)"];
+        install [label="Installation\n(Plugin setup)"];
+    }
+
+    // Integration Phase
+    subgraph cluster_integration {
+        label="Integration Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        configure [label="Configuration\n(Settings)"];
+        connect [label="API Connection\n(Endpoint setup)"];
+        coordinate [label="API Coordination\n(Multi-plugin)"];
+    }
+
+    // Execution Phase
+    subgraph cluster_execution {
+        label="Execution Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        route [label="Request Routing\n(To plugins)"];
+        execute [label="Plugin Execution\n(Call handlers)"];
+        aggregate [label="Response Aggregation\n(Combine results)"];
+    }
+
+    // Key Features (bottom)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Extension System", fillcolor="#238636"];
+        feature2 [label="Plugin Management", fillcolor="#238636"];
+        feature3 [label="API Coordination", fillcolor="#238636"];
+        feature4 [label="Integration Handling", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Integrated Results\n+ Plugin Data", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> discover;
+    discover -> validate;
+    validate -> install;
+
+    install -> configure;
+    configure -> connect;
+    connect -> coordinate;
+
+    coordinate -> route;
+    route -> execute;
+    execute -> aggregate;
+
+    aggregate -> output;
+
+    // Feature connections
+    install -> feature1 [style=dotted, color="#8b949e"];
+    validate -> feature2 [style=dotted, color="#8b949e"];
+    coordinate -> feature3 [style=dotted, color="#8b949e"];
+    connect -> feature4 [style=dotted, color="#8b949e"];
+
+    // Feedback loop
+    execute -> configure [label="Re-configure", style=dashed, color="#f85149"];
+}

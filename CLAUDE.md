@@ -1,626 +1,860 @@
-# Claude Code Configuration - SPARC Development Environment
+# Claude Code Configuration v2.2 - Universal 5-Phase Workflow System
 
-## 🚨 CRITICAL: CONCURRENT EXECUTION & FILE MANAGEMENT
+**Version**: 2.2.0
+**Last Updated**: 2025-11-15
+**Previous Version**: v2.1.0 (2025-11-15)
 
-**ABSOLUTE RULES**:
-1. ALL operations MUST be concurrent/parallel in a single message
-2. **NEVER save working files, text/mds and tests to the root folder**
-3. ALWAYS organize files in appropriate subdirectories
-4. **USE CLAUDE CODE'S TASK TOOL** for spawning agents concurrently, not just MCP
+---
 
-### ⚡ GOLDEN RULE: "1 MESSAGE = ALL RELATED OPERATIONS"
+## 1. UNIVERSAL MESSAGE PROCESSING WORKFLOW (AUTO-EXECUTE ON EVERY REQUEST)
 
-**MANDATORY PATTERNS:**
-- **TodoWrite**: ALWAYS batch ALL todos in ONE call (5-10+ todos minimum)
-- **Task tool (Claude Code)**: ALWAYS spawn ALL agents in ONE message with full instructions
-- **File operations**: ALWAYS batch ALL reads/writes/edits in ONE message
-- **Bash commands**: ALWAYS batch ALL terminal operations in ONE message
-- **Memory operations**: ALWAYS batch ALL memory store/retrieve in ONE message
+**On EVERY user message, execute this 5-phase workflow SEQUENTIALLY:**
 
-### 🎯 CRITICAL: Claude Code Task Tool for Agent Execution
+**intent → prompt → plan → route → execute**
 
-**Claude Code's Task tool is the PRIMARY way to spawn agents:**
-```javascript
-// ✅ CORRECT: Use Claude Code's Task tool for parallel agent execution
-[Single Message]:
-  Task("Research agent", "Analyze requirements and patterns...", "researcher")
-  Task("Coder agent", "Implement core features...", "coder")
-  Task("Tester agent", "Create comprehensive tests...", "tester")
-  Task("Reviewer agent", "Review code quality...", "reviewer")
-  Task("Architect agent", "Design system architecture...", "system-architect")
+---
+
+### Phase 1: Intent Analysis (ALWAYS FIRST)
+**Skill**: `Skill("intent-analyzer")`
+
+**What It Does**:
+- Extract underlying goals using first principles decomposition
+- Identify constraints (explicit + implicit)
+- Determine if intent is clear & actionable
+- Apply probabilistic intent mapping (>80% confidence = proceed)
+- Clarify ambiguous requests with Socratic questions if needed (<80% confidence)
+
+**Output**:
+```json
+{
+  "understood_intent": "What the user actually wants to accomplish",
+  "explicit_constraints": ["stated requirements"],
+  "implicit_constraints": ["inferred requirements"],
+  "confidence": 0.85,
+  "ambiguities": ["areas needing clarification"]
+}
 ```
 
-**MCP tools are ONLY for coordination setup:**
-- `mcp__claude-flow__swarm_init` - Initialize coordination topology
-- `mcp__claude-flow__agent_spawn` - Define agent types for coordination
-- `mcp__claude-flow__task_orchestrate` - Orchestrate high-level workflows
+---
 
-### 📁 File Organization Rules
+### Phase 2: Prompt Optimization (ALWAYS SECOND)
+**Skill**: `Skill("prompt-architect")`
 
-**NEVER save to root folder. Use these directories:**
-- `/src` - Source code files
-- `/tests` - Test files
-- `/docs` - Documentation and markdown files
-- `/config` - Configuration files
-- `/scripts` - Utility scripts
-- `/examples` - Example code
+**What It Does**:
+- Take analyzed intent from Phase 1
+- Apply evidence-based prompting techniques
+- Restructure request for clarity and completeness
+- Add missing context from intent analysis
+- Generate optimized prompt: "If this was the real intent, what should they have asked?"
 
-## Project Overview
+**Input**: Analyzed intent from Phase 1
+**Output**:
+```json
+{
+  "optimized_request": "Restructured request with clarity and context",
+  "added_context": ["missing information now included"],
+  "prompting_patterns": ["self-consistency", "plan-and-solve"],
+  "success_criteria": "Clear definition of done"
+}
+```
 
-This project uses SPARC (Specification, Pseudocode, Architecture, Refinement, Completion) methodology with Claude-Flow orchestration for systematic Test-Driven Development.
+---
 
-## SPARC Commands
+### Phase 3: Strategic Planning (ALWAYS THIRD)
+**Skill**: `Skill("research-driven-planning")` OR `Skill("planner")` (based on complexity)
 
-### Core Commands
-- `npx claude-flow sparc modes` - List available modes
-- `npx claude-flow sparc run <mode> "<task>"` - Execute specific mode
-- `npx claude-flow sparc tdd "<feature>"` - Run complete TDD workflow
-- `npx claude-flow sparc info <mode>` - Get mode details
+**What It Does**:
+- Take optimized request from Phase 2
+- Break down into actionable tasks
+- **Identify dependencies** (what MUST be sequential)
+- **Identify parallelizable tasks** (what CAN run concurrently)
+- Select appropriate playbooks and skills for each task
+- Determine execution order and parallelization strategy
+- Create comprehensive execution plan
 
-### Batchtools Commands
-- `npx claude-flow sparc batch <modes> "<task>"` - Parallel execution
-- `npx claude-flow sparc pipeline "<task>"` - Full pipeline processing
-- `npx claude-flow sparc concurrent <mode> "<tasks-file>"` - Multi-task processing
+**Input**: Optimized request from Phase 2
+**Output**:
+```json
+{
+  "plan": {
+    "sequential_phases": [
+      {
+        "phase": 1,
+        "name": "Foundation Setup",
+        "tasks": [
+          {
+            "task": "Research best practices",
+            "playbook": "research-quick-investigation",
+            "skills": ["gemini-search", "researcher"],
+            "agents": ["researcher"],
+            "prerequisites": [],
+            "can_parallelize": false
+          }
+        ]
+      },
+      {
+        "phase": 2,
+        "name": "Parallel Implementation",
+        "tasks": [
+          {
+            "task": "Build backend API",
+            "playbook": "backend-api-development",
+            "skills": ["backend-dev"],
+            "agents": ["backend-dev"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          },
+          {
+            "task": "Build frontend UI",
+            "playbook": "frontend-development",
+            "skills": ["react-specialist"],
+            "agents": ["coder"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          },
+          {
+            "task": "Setup database schema",
+            "playbook": "database-design",
+            "skills": ["sql-database-specialist"],
+            "agents": ["code-analyzer"],
+            "prerequisites": ["phase 1 complete"],
+            "can_parallelize": true,
+            "parallel_group": "implementation"
+          }
+        ]
+      },
+      {
+        "phase": 3,
+        "name": "Integration & Validation",
+        "tasks": [
+          {
+            "task": "Integration testing",
+            "playbook": "testing-quality",
+            "skills": ["tester"],
+            "agents": ["tester"],
+            "prerequisites": ["phase 2 all tasks complete"],
+            "can_parallelize": false
+          }
+        ]
+      }
+    ]
+  },
+  "execution_strategy": {
+    "total_phases": 3,
+    "sequential_phases": [1, 3],
+    "parallel_phases": [2],
+    "estimated_time": "4-8 hours",
+    "mcp_requirements": ["flow-nexus", "memory-mcp"]
+  },
+  "dependencies": {
+    "phase_1_blocks": ["phase_2", "phase_3"],
+    "phase_2_blocks": ["phase_3"]
+  }
+}
+```
 
-### Build Commands
-- `npm run build` - Build project
-- `npm run test` - Run tests
-- `npm run lint` - Linting
-- `npm run typecheck` - Type checking
+**Key Outputs**:
+- **Sequential Tasks**: Must be done in order (Phase 1 → Phase 2 → Phase 3)
+- **Parallel Tasks**: Can run concurrently within a phase (backend + frontend + database)
+- **Playbooks/Skills**: Specific tools needed for each task
+- **Prerequisites**: What must complete before each task starts
+- **MCP Requirements**: Which MCPs to activate for the workflow
 
-## SPARC Workflow Phases
+---
 
+### Phase 4: Playbook/Skill Routing (ALWAYS FOURTH)
+**Action**: Route each task to optimal playbook/skill
+
+**What It Does**:
+- Take execution plan from Phase 3
+- For each task in the plan, select the best playbook or skill
+- Match task requirements to playbook categories (see Section 3)
+- Consider:
+  - Task complexity (simple feature vs complex multi-loop)
+  - Domain (frontend, backend, ML, security, etc.)
+  - Time constraints (quick vs comprehensive)
+  - MCP availability (which MCPs are active)
+- Output routing decisions for Phase 5
+
+**Input**: Execution plan from Phase 3
+**Output**:
+```json
+{
+  "routing_decisions": [
+    {
+      "phase": 1,
+      "task": "Research Express.js auth best practices",
+      "selected_playbook": "research-quick-investigation",
+      "primary_skill": "gemini-search",
+      "fallback_skill": "researcher",
+      "rationale": "Quick research task, Gemini search optimal for best practices"
+    },
+    {
+      "phase": 2,
+      "parallel_group": "implementation",
+      "tasks": [
+        {
+          "task": "Build backend API",
+          "selected_playbook": "backend-api-development",
+          "primary_skill": "backend-dev",
+          "agents": ["backend-dev"],
+          "rationale": "Backend API development specialist playbook"
+        },
+        {
+          "task": "Database schema design",
+          "selected_playbook": "database-design",
+          "primary_skill": "sql-database-specialist",
+          "agents": ["code-analyzer"],
+          "rationale": "Database specialist with schema design expertise"
+        },
+        {
+          "task": "Auth middleware",
+          "selected_playbook": "simple-feature-implementation",
+          "primary_skill": "sparc-methodology",
+          "agents": ["coder"],
+          "rationale": "Single feature with TDD workflow"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Routing Criteria**:
+
+| Task Type | Route To | When |
+|-----------|----------|------|
+| Simple feature | simple-feature-implementation | <4 hours, single component |
+| Complex feature | three-loop-system (FLAGSHIP) | >4 hours, multi-component, high risk |
+| Quick research | research-quick-investigation | <2 hours, specific question |
+| Deep research | deep-research-sop (FLAGSHIP) | Multi-month, academic rigor |
+| Code quality | comprehensive-review | Audit, security, clarity |
+| Bug fix | smart-bug-fix | Production issue, debugging needed |
+| ML pipeline | ml-pipeline-development | Neural training, experiments |
+| API development | backend-api-development | REST/GraphQL endpoints |
+| Frontend | frontend-development | React/Vue/UI components |
+| Full-stack | feature-dev-complete | End-to-end 12-stage workflow |
+| **Learn codebase** | **codebase-onboarding** | **New developer, unfamiliar codebase** |
+| **Production down** | **emergency-incident-response** | **P0, critical outage, emergency** |
+| **Refactor code** | **refactoring-technical-debt** | **God objects, code smells, cleanup** |
+| **Database migration** | **database-migration** | **Schema changes, DB upgrades** |
+| **Update dependencies** | **dependency-upgrade-audit** | **Security patches, major upgrades** |
+| **Generate docs** | **comprehensive-documentation** | **API docs, architecture, guides** |
+| **Performance issues** | **performance-optimization-deep-dive** | **Slow app, high latency, bottlenecks** |
+| **Add languages** | **i18n-implementation** | **Multi-language, localization** |
+| **Accessibility** | **a11y-compliance** | **WCAG compliance, screen readers** |
+
+**Key Insight**: Routing happens AFTER planning, so we know exact requirements before selecting playbooks.
+
+---
+
+### Phase 5: Execution (ALWAYS FIFTH)
+**Action**: Execute using routed playbooks/skills from Phase 4
+
+**Sequential Execution** (when prerequisites exist):
+```javascript
+// Phase 1 MUST complete before Phase 2
+Skill("gemini-search")
+// Wait for completion, then...
+
+// Phase 2 - Spawn in PARALLEL (single message, Golden Rule)
+[Single Message]:
+  Task("Backend Developer", "Build REST API...", "backend-dev")
+  Task("Frontend Developer", "Build React UI...", "coder")
+  Task("Database Architect", "Design schema...", "code-analyzer")
+  TodoWrite({ todos: [8-10 todos for all parallel work] })
+// Wait for all Phase 2 tasks, then...
+
+// Phase 3 - Sequential again
+Task("Integration Tester", "Test all components...", "tester")
+```
+
+**Parallel Execution** (when no prerequisites):
+```javascript
+// All tasks can run concurrently
+[Single Message]:
+  Task("Agent 1", "Independent task 1...", "researcher")
+  Task("Agent 2", "Independent task 2...", "coder")
+  Task("Agent 3", "Independent task 3...", "reviewer")
+  TodoWrite({ todos: [all tasks listed] })
+```
+
+---
+
+### Workflow Summary
+
+```mermaid
+User Message
+    ↓
+Phase 1: intent-analyzer
+    ├─ Analyze intent
+    ├─ Identify constraints
+    └─ Output: Understood intent (confidence score)
+    ↓
+Phase 2: prompt-architect
+    ├─ Optimize request
+    ├─ Add missing context
+    └─ Output: "What they should have asked"
+    ↓
+Phase 3: planner (research-driven-planning)
+    ├─ Break down into tasks
+    ├─ Identify dependencies (sequential)
+    ├─ Identify parallelizable tasks
+    └─ Output: Execution plan with dependencies
+    ↓
+Phase 4: router (playbook/skill routing)
+    ├─ Match tasks to playbooks (Section 3)
+    ├─ Select optimal skills per task
+    ├─ Choose appropriate agents
+    └─ Output: Routing decisions for each task
+    ↓
+Phase 5: Execute
+    ├─ Use routed playbooks/skills
+    ├─ Sequential phases (prerequisites)
+    ├─ Parallel phases (concurrent agents)
+    └─ Follow Golden Rule (1 MESSAGE = ALL RELATED OPERATIONS)
+```
+
+---
+
+### Execution Rules
+
+**CRITICAL RULES**:
+1. **ALWAYS run all 5 phases** for EVERY user message (no exceptions)
+2. **Phases 1-4 are ALWAYS SEQUENTIAL** (each depends on previous output)
+3. **Phase 5 execution** follows the plan + routing:
+   - Sequential tasks: One message per phase, wait for completion
+   - Parallel tasks: ALL agents in ONE message (Golden Rule)
+   - Use playbooks/skills selected in Phase 4 routing
+4. **Output transparency**: Show plan (Phase 3) + routing (Phase 4) to user before Phase 5
+5. **User approval**: For complex plans (>3 phases or >5 tasks), ask user to confirm before Phase 5
+
+---
+
+### Escape Hatches
+
+**Skip Phases 1-4 only if**:
+- Explicit skill invocation: `Skill("micro-skill-creator")` → Direct to Phase 5
+- Explicit command: `/research:literature-review` → Direct to Phase 5
+- Explicit agent reference: `@agent-creator` → Direct to Phase 5
+- User says "skip planning" or "just do it" → Skip to Phase 5
+
+**Otherwise**: ALWAYS execute all 5 phases sequentially.
+
+---
+
+### Example Walkthrough
+
+**User Message**: "Build a REST API for user management with authentication"
+
+**Phase 1 Output** (intent-analyzer):
+```
+Understood Intent: Build production-grade REST API with:
+- User CRUD operations
+- JWT-based authentication
+- Password hashing
+- Input validation
+Confidence: 92%
+```
+
+**Phase 2 Output** (prompt-architect):
+```
+Optimized Request: "Build a production-ready REST API with Express.js including:
+- User registration, login, CRUD endpoints
+- JWT authentication middleware
+- Bcrypt password hashing
+- Input validation with Joi
+- PostgreSQL database integration
+- Comprehensive test suite
+- API documentation (OpenAPI/Swagger)
+Success Criteria: All endpoints working, 90% test coverage, documented API"
+```
+
+**Phase 3 Output** (planner):
+```
+Plan:
+PHASE 1 (Sequential - Research):
+  - Task: Research Express.js auth best practices
+  - Prerequisites: None
+
+PHASE 2 (Parallel - Implementation):
+  - Task 1: Backend API structure
+  - Task 2: Database schema design
+  - Task 3: Auth middleware
+  - Prerequisites: Phase 1 complete
+  - Can parallelize: YES (all 3 tasks concurrent)
+
+PHASE 3 (Sequential - Testing):
+  - Task: Integration tests
+  - Prerequisites: Phase 2 all tasks complete
+
+PHASE 4 (Sequential - Documentation):
+  - Task: API docs generation
+  - Prerequisites: Phase 3 complete
+
+Execution Strategy:
+- Sequential phases: 1 → 2 → 3 → 4
+- Parallel: Phase 2 only (3 agents concurrently)
+- Total time: 4-6 hours
+- MCPs needed: flow-nexus (research), memory-mcp (state)
+```
+
+**Phase 4 Output** (router):
+```
+Routing Decisions:
+PHASE 1:
+  - Task: Research best practices
+  - Route: Skill("gemini-search") via research-quick-investigation playbook
+  - Agent: researcher
+  - Rationale: Quick research (<2 hours), Gemini optimal for best practices
+
+PHASE 2 (Parallel):
+  - Task 1: Backend API
+    Route: backend-api-development playbook
+    Skills: backend-dev
+    Agent: backend-dev
+    Rationale: Specialist backend development playbook
+
+  - Task 2: Database schema
+    Route: database-design playbook
+    Skills: sql-database-specialist
+    Agent: code-analyzer
+    Rationale: Database specialist with schema expertise
+
+  - Task 3: Auth middleware
+    Route: simple-feature-implementation playbook
+    Skills: sparc-methodology
+    Agent: coder
+    Rationale: Single feature with TDD (SPARC)
+
+PHASE 3:
+  - Task: Integration tests
+  - Route: testing-quality playbook
+  - Skills: tester
+  - Agent: tester
+  - Rationale: Comprehensive testing playbook
+
+PHASE 4:
+  - Task: API documentation
+  - Route: api-documentation-specialist playbook
+  - Skills: api-docs
+  - Agent: api-docs
+  - Rationale: OpenAPI/Swagger specialist
+```
+
+**Phase 5 Execution**:
+```javascript
+// Show plan to user, get approval
+// Then execute:
+
+// Phase 1 (sequential)
+Skill("gemini-search")
+// Wait for completion
+
+// Phase 2 (parallel - ONE message)
+[Single Message]:
+  Task("Backend Developer", "Build Express API structure with routes, controllers, models...", "backend-dev")
+  Task("Database Architect", "Design PostgreSQL schema with users table, indexes, constraints...", "code-analyzer")
+  Task("Auth Developer", "Implement JWT middleware, bcrypt hashing, session management...", "coder")
+  TodoWrite({ todos: [10 todos covering all Phase 2-4 work] })
+// Wait for all Phase 2 tasks
+
+// Phase 3 (sequential)
+Task("Integration Tester", "Write comprehensive tests covering all endpoints, auth flows...", "tester")
+// Wait for completion
+
+// Phase 4 (sequential)
+Task("API Documentor", "Generate OpenAPI/Swagger docs for all endpoints...", "api-docs")
+```
+
+---
+
+**Remember**: This 5-phase workflow is **MANDATORY for EVERY user message** unless explicitly bypassed with skill/command invocation.
+
+**Why 5 Phases vs 4?**
+- **Planning (Phase 3)**: Creates the strategy (WHAT to do, WHEN, dependencies)
+- **Routing (Phase 4)**: Selects the tools (HOW to do it, which playbooks/skills)
+- **Separation of concerns**: Strategy vs tactics, planning vs execution tools
+
+**Best of Both Worlds**:
+- ✅ v2.0 routing intelligence (playbook selection from Section 3)
+- ✅ v2.1 planning intelligence (dependency detection, parallelization)
+- ✅ v2.2 combined power (plan THEN route THEN execute)
+
+---
+
+## 2. EXECUTION RULES (ALWAYS FOLLOW)
+
+### 2.1 Golden Rule: "1 MESSAGE = ALL RELATED OPERATIONS"
+
+**MANDATORY PATTERNS**:
+
+**TodoWrite**: Batch ALL todos (5-10+ minimum)
+- ✅ CORRECT: `TodoWrite({ todos: [8 todos] })`
+- ❌ WRONG: Multiple TodoWrite calls across messages
+
+**Task Tool**: Spawn ALL agents concurrently
+- ✅ CORRECT: `[Task(agent1), Task(agent2), Task(agent3)]` in ONE message
+- ❌ WRONG: Sequential Task calls across messages
+
+**File Operations**: Batch ALL reads/writes/edits
+- ✅ CORRECT: `[Read file1, Read file2, Write file3, Edit file4]` in ONE message
+- ❌ WRONG: Read file, wait, then Write file
+
+**Memory Operations**: Batch ALL store/retrieve
+- ✅ CORRECT: `[memory_store(key1), memory_store(key2), memory_retrieve(key3)]`
+- ❌ WRONG: Sequential memory operations
+
+### 2.2 File Organization
+
+**NEVER save to root folder**. Use proper directories:
+
+| File Type | Directory | Examples |
+|-----------|-----------|----------|
+| Source code | `/src` | `src/app.js`, `src/api/` |
+| Tests | `/tests` | `tests/unit/`, `tests/integration/` |
+| Documentation | `/docs` | `docs/API.md`, `docs/architecture/` |
+| Scripts | `/scripts` | `scripts/deploy.sh`, `scripts/setup/` |
+| Configuration | `/config` | `config/database.yml` |
+
+### 2.3 Agent Usage (203 Total Agents)
+
+**CRITICAL**: ONLY use predefined agents from registry.
+
+**Agent Categories** (counts in parentheses):
+- Core Development (8)
+- Testing & Validation (9)
+- Frontend Development (6)
+- Database & Data (7)
+- Documentation & Knowledge (6)
+- Swarm Coordination (15)
+- Performance & Optimization (5)
+- GitHub & Repository (9)
+- SPARC Methodology (6)
+- Specialized Development (14)
+- Deep Research SOP (4)
+- Infrastructure & Cloud (12)
+- Security & Compliance (8)
+
+**How to Find Agents**:
+```bash
+# List all agents by category
+Read("claude-code-plugins/ruv-sparc-three-loop-system/agents/README.md") | grep "^###"
+
+# Search by capability
+npx claude-flow agents search "database"
+
+# Get agent details
+npx claude-flow agents info "backend-dev"
+```
+
+**DO NOT create new agent types**. Match tasks to existing agents.
+
+---
+
+## 3. PLAYBOOK ROUTER (SELECT BASED ON INTENT)
+
+Match user request keywords to playbook:
+
+### Research & Analysis
+**Triggers**: "analyze", "research", "investigate", "systematic review", "literature", "PRISMA"
+**Skills**: `deep-research-orchestrator`, `literature-synthesis`, `baseline-replication`
+**Agents**: researcher, data-steward, ethics-agent, archivist, evaluator
+
+### Development
+**Triggers**: "build", "implement", "create feature", "develop", "SPARC", "TDD"
+**Skills**: `ai-dev-orchestration`, `sparc-methodology`, `feature-dev-complete`
+**Agents**: planner, system-architect, coder, tester, reviewer
+
+### Code Quality
+**Triggers**: "audit", "review", "validate", "check quality", "detect violations", "clarity"
+**Skills**: `clarity-linter`, `functionality-audit`, `theater-detection-audit`, `code-review-assistant`
+**Agents**: code-analyzer, reviewer, functionality-audit, production-validator
+
+### Infrastructure & Deployment
+**Triggers**: "deploy", "CI/CD", "production", "monitoring", "Kubernetes", "Docker", "cloud"
+**Skills**: `cicd-intelligent-recovery`, `deployment-readiness`, `production-readiness`
+**Agents**: cicd-engineer, kubernetes-specialist, terraform-iac, docker-containerization
+
+### Specialized Domains
+- **ML/AI**: "train model", "neural network", "dataset" → `deep-research-orchestrator`, `machine-learning`
+- **Security**: "pentest", "vulnerability", "threat", "reverse engineer" → `reverse-engineering-quick-triage`, `compliance`
+- **Frontend**: "React", "UI", "components", "accessibility" → `react-specialist`, `frontend-performance-optimizer`
+- **Database**: "schema", "query", "SQL", "optimization" → `sql-database-specialist`, `query-optimization-agent`
+
+### Not Sure?
+**Trigger**: Vague/ambiguous request
+**Action**: Skill("interactive-planner") for multi-select questions
+
+---
+
+## 4. RESOURCE REFERENCE (COMPRESSED)
+
+### 4.1 Skills (122 Total)
+
+**Categories**:
+- Development Lifecycle (15): Planning, architecture, implementation, testing, deployment
+- Code Quality (12): Auditing, validation, optimization, clarity analysis
+- Research (9): Literature review, systematic analysis, synthesis, deep research SOP
+- Infrastructure (8): CI/CD, deployment, monitoring, orchestration
+- Specialized (78): ML, security, frontend, backend, database, cloud, mobile
+
+**Discovery**:
+```bash
+# List all skills
+Glob(".claude/skills/**/SKILL.md") | head -20
+
+# Search by keyword
+npx claude-flow skills search "authentication"
+
+# Get skill details
+npx claude-flow skills info "api-development"
+```
+
+**Auto-Trigger**: Skills activate based on keywords in user request (see Section 3)
+
+### 4.2 Playbooks (29 Total)
+
+**Categories**:
+- Delivery (5): Simple feature, Three-Loop, E2E shipping, bug fix, prototyping
+- Operations (4): Production deployment, CI/CD setup, infrastructure scaling, performance
+- Research (4): Deep Research SOP, quick investigation, planning & architecture, literature review
+- Security (3): Security audit, compliance validation, reverse engineering
+- Quality (3): Quick check, comprehensive review, dogfooding cycle
+- Platform (3): ML pipeline, vector search/RAG, distributed neural training
+- GitHub (3): PR management, release management, multi-repo coordination
+- Specialist (4): Frontend, backend, full-stack, infrastructure as code
+
+**Discovery**:
+```bash
+# List all playbooks
+npx claude-flow playbooks list
+
+# Search by domain
+npx claude-flow playbooks search "machine learning"
+
+# Show playbook structure
+npx claude-flow playbooks info "deep-research-sop"
+```
+
+**Full Documentation**: `C:\Users\17175\claude-code-plugins\ruv-sparc-three-loop-system\docs\ENHANCED-PLAYBOOK-SYSTEM.md`
+
+### 4.3 MCP Tools
+
+**Categories**:
+- **Coordination**: swarm_init, agent_spawn, task_orchestrate
+- **Monitoring**: swarm_status, agent_metrics, task_status
+- **Memory**: memory_store, vector_search (Memory MCP Triple System)
+- **GitHub**: repo_analyze, pr_enhance, code_review
+- **Neural**: neural_train, neural_patterns
+
+**When to Use**:
+- Coordination: Setup before spawning agents with Task tool (optional for complex tasks)
+- Monitoring: Track progress during multi-agent workflows
+- Memory: Cross-session persistence, semantic search (always use tagging protocol)
+- GitHub: Repository operations, PR automation
+- Neural: Agent learning, pattern optimization
+
+**Setup**:
+```bash
+# Required: Claude Flow
+claude mcp add claude-flow npx claude-flow@alpha mcp start
+
+# Optional: Enhanced coordination
+claude mcp add ruv-swarm npx ruv-swarm mcp start
+claude mcp add flow-nexus npx flow-nexus@latest mcp start
+
+# Verify
+claude mcp list
+```
+
+**KEY**: MCP coordinates strategy. Claude Code's Task tool executes actual work.
+
+### 4.4 Memory Tagging Protocol (REQUIRED)
+
+**All Memory MCP writes MUST include**:
+
+```javascript
+const { taggedMemoryStore } = require('./hooks/12fa/memory-mcp-tagging-protocol.js');
+
+// Automatic metadata injection
+taggedMemoryStore('coder', 'Implemented auth feature', {
+  task_id: 'AUTH-123',
+  custom_field: 'value'
+});
+```
+
+**Required Tags**:
+- **WHO**: Agent name, category, capabilities
+- **WHEN**: ISO timestamp, Unix timestamp, readable format
+- **PROJECT**: Project identifier (connascence-analyzer, memory-mcp, claude-flow, etc.)
+- **WHY**: Intent (implementation, bugfix, refactor, testing, documentation, analysis, planning, research)
+
+**Memory Modes**:
+- `execution`: Precise, actionable results (5-10 results)
+- `planning`: Broader exploration (10-15 results)
+- `brainstorming`: Wide ideation (15-20 results)
+
+---
+
+## 5. CRITICAL RULES & EDGE CASES
+
+### 5.1 Absolute Rules
+
+- **NO UNICODE EVER** (critical for Windows compatibility)
+- **NEVER save files to root folder** (use /src, /tests, /docs, /config, /scripts)
+- **ALWAYS batch operations in single message** (concurrent execution)
+- **ONLY use agents from predefined registry** (never create custom types)
+
+### 5.2 SPARC Methodology
+
+When using SPARC approach:
 1. **Specification** - Requirements analysis (`sparc run spec-pseudocode`)
 2. **Pseudocode** - Algorithm design (`sparc run spec-pseudocode`)
 3. **Architecture** - System design (`sparc run architect`)
 4. **Refinement** - TDD implementation (`sparc tdd`)
 5. **Completion** - Integration (`sparc run integration`)
 
-## Code Style & Best Practices
-
-- **Modular Design**: Files under 500 lines
-- **Environment Safety**: Never hardcode secrets
-- **Test-First**: Write tests before implementation
-- **Clean Architecture**: Separate concerns
-- **Documentation**: Keep updated
-
----
-
-## 🎯 SKILL AUTO-TRIGGER REFERENCE
-
-**Purpose**: Auto-invoke skills based on user intent keywords without explicit requests.
-**Location**: All skills in `.claude/skills/` | Full docs via `Skill` tool
-**Memory**: Store trigger patterns in `claude-flow memory` for persistence
-
-### 📋 Trigger Pattern Legend
-
-**Format**: `Skill Name` - Trigger conditions → Action
-**Usage**: When you detect trigger keywords, AUTO-INVOKE the skill via Skill tool
-
----
-
-### 🏗️ Development Lifecycle Skills (Auto-trigger on project init/development)
-
-**Planning & Architecture**
-- `research-driven-planning` - "new feature", "plan", "architecture needed" → Research + 5x pre-mortem + risk mitigation
-- `sparc-methodology` - "implement", "build feature", "create" → 5-phase SPARC (Spec→Code)
-- `interactive-planner` - "not sure", "options?", "what approach" → Multi-select questions for requirements
-- `intent-analyzer` - vague/ambiguous request → Analyze intent + clarify with Socratic questions
-
-**Development**
-- `parallel-swarm-implementation` - "build this", "implement feature" → Multi-agent parallel development
-- `feature-dev-complete` - "complete feature", "end-to-end" → 12-stage workflow (research→deployment)
-- `pair-programming` - "let's code together", "pair with me" → Driver/Navigator/Switch modes with real-time verification
-- `cascade-orchestrator` - "complex workflow", "pipeline" → Sequential/parallel/conditional micro-skill chains
-
-**Code Quality**
-- `functionality-audit` - "does it work?", "validate", AFTER code generation → Sandbox testing + systematic debugging
-- `theater-detection-audit` - "real implementation?", "not theater" → 6-agent Byzantine consensus verification
-- `production-readiness` - "deploy", "production ready" → Complete audit pipeline + deployment checklist
-- `quick-quality-check` - "quick check", "fast validation" → Parallel lint/security/tests (instant feedback)
-- `code-review-assistant` - "review this code", "PR review" → Multi-agent swarm review (security/performance/style)
-
-**Testing & Debugging**
-- `testing-quality` - "write tests", "test coverage" → TDD framework + quality validation
-- `smart-bug-fix` - "bug", "error", "failing" → Intelligent debugging + automated fixes
-- `reverse-engineer-debug` - "understand code", "reverse engineer" → Code comprehension + debugging
-- `ml-training-debugger` - "training failed", "model not converging" → ML-specific debugging
-
-**Self-Improvement & Dogfooding** 🆕
-- `sop-dogfooding-quality-detection` - "analyze code quality", "detect violations", "connascence check" → Phase 1: Run Connascence analysis, store in Memory-MCP with WHO/WHEN/PROJECT/WHY (30-60s)
-- `sop-dogfooding-pattern-retrieval` - "find similar fixes", "pattern search", "past solutions" → Phase 2: Vector search Memory-MCP for patterns, rank & optionally apply (10-30s)
-- `sop-dogfooding-continuous-improvement` - "run improvement cycle", "dogfood", "automated fixes" → Phase 3: Full cycle orchestration with sandbox testing & metrics (60-120s)
-
-**Trigger Patterns:**
-```javascript
-// Quality detection → Auto-spawn code-analyzer + reviewer
-"Check code quality for memory-mcp" → sop-dogfooding-quality-detection
-"Run connascence analysis" → sop-dogfooding-quality-detection
-
-// Pattern retrieval → Auto-spawn code-analyzer + coder
-"Find fixes for God Object" → sop-dogfooding-pattern-retrieval
-"How to fix Parameter Bomb?" → sop-dogfooding-pattern-retrieval
-
-// Full cycle → Auto-spawn hierarchical-coordinator
-"Run dogfooding cycle" → sop-dogfooding-continuous-improvement
-"Improve the MCP servers" → sop-dogfooding-continuous-improvement
-```
-
----
-
-### 🛠️ Specialized Development (Auto-trigger by tech stack)
-
-**Language Specialists** 🆕
-- `python-specialist` - "Python", "FastAPI", "Django", "Flask", "async Python" → Python development, type hints, pytest, performance profiling
-- `typescript-specialist` - "TypeScript", "Nest.js", "Node.js", "npm", "monorepo" → Advanced types, decorators, tooling
-
-**Frontend Specialists** 🆕
-- `react-specialist` - "React 18", "Next.js", "hooks", "Zustand", "React performance" → Modern React, App Router, state management, optimization
-
-**Backend/API**
-- `when-building-backend-api-orchestrate-api-development` - "API", "REST", "GraphQL", "backend" → Full API development workflow
-- `sop-api-development` - "API SOP", "systematic API" → Standardized API development process
-
-**Database Specialists** 🆕
-- `sql-database-specialist` - "PostgreSQL", "MySQL", "SQL optimization", "EXPLAIN", "indexes" → Query tuning, schema design, partitioning
-
-**Mobile**
-- `mobile-dev` - "React Native", "iOS", "Android", "mobile app" → Mobile app development specialist
-
-**Machine Learning**
-- `ml-expert` - "machine learning", "neural network", "train model" → ML development + training
-- `ml-developer` - "ML pipeline", "data science" → ML development specialist
-
-**Documentation**
-- `pptx-generation` - "PowerPoint", "presentation", "slides" → Enterprise PPT generation (html2pptx)
-- `documentation` - "docs", "API docs", "README" → Documentation generation
-
----
-
-### 🔒 Security & Compliance (Auto-trigger for security keywords)
-
-**Security**
-- `network-security-setup` - "network security", "sandbox isolation" → Configure network boundaries
-- `security` - "security audit", "vulnerabilities" → Security scanning + fixes
-- `sop-code-review` - "security review", "secure code" → Systematic security-focused review
-
-**Compliance & Accessibility** 🆕
-- `wcag-accessibility` - "WCAG", "accessibility", "a11y", "screen reader", "ARIA" → WCAG 2.1 AA/AAA compliance, keyboard navigation, axe-core
-
----
-
-### 🎨 Code Creation & Architecture (Auto-trigger for creation tasks)
-
-**Agents & Skills**
-- `agent-creator` - "create agent", "new agent" → 4-phase SOP agent creation with evidence-based prompting
-- `skill-builder` - "create skill", "new skill" → YAML frontmatter + progressive disclosure structure
-- `skill-creator-agent` - "skill with agent" → Skill tied to specialist agent
-- `micro-skill-creator` - "micro-skill", "atomic skill" → Focused single-purpose skills
-- `slash-command-encoder` - "slash command", "/command" → Create .claude/commands/*.md
-
-**Templates & Patterns**
-- `base-template-generator` - "boilerplate", "starter template" → Clean foundational templates
-- `prompt-architect` - "improve prompt", "prompt engineering" → Analyze + optimize prompts
-- `skill-forge` - "complex skill", "advanced skill" → Advanced skill crafting
-
----
-
-### 🔍 Analysis & Optimization (Auto-trigger for analysis requests)
-
-**Performance**
-- `performance-analysis` - "slow", "performance", "bottleneck" → Comprehensive performance analysis
-- `perf-analyzer` - "workflow slow", "optimize" → Bottleneck detection + optimization
-
-**Code Analysis**
-- `style-audit` - "code style", "consistency" → Code style analysis + fixes
-- `verification-quality` - "verify", "validate quality" → Quality verification
-
-**Dependencies**
-- `dependencies` - "dependencies", "imports", "requires" → Dependency analysis + mapping
-
----
-
-### 🐙 GitHub Integration (Auto-trigger on GitHub keywords)
-
-**Core GitHub**
-- `github-code-review` - "review PR", "pull request review" → AI swarm PR review
-- `github-project-management` - "GitHub project", "issue tracking" → Issue + project board automation
-- `github-workflow-automation` - "GitHub Actions", "CI/CD", "workflow" → Intelligent CI/CD pipelines
-- `github-release-management` - "release", "version", "deploy" → Automated versioning + deployment
-- `github-multi-repo` - "multi-repo", "monorepo", "sync repos" → Cross-repo coordination
-
-**Repository**
-- `github-integration` - General GitHub operations → Repository management
-- `sop-product-launch` - "launch product", "release product" → Complete launch workflow
-
----
-
-### 🌐 Multi-Model & External Tools (Auto-trigger by tool mention)
-
-**Gemini**
-- `gemini-search` - "search web", "google", "research online" → Gemini grounded search
-- `gemini-megacontext` - "huge context", "2M tokens", "large doc" → Mega context processing
-- `gemini-media` - "image", "video", "audio" → Multimodal analysis
-- `gemini-extensions` - "Google Workspace", "Google Maps" → Gemini extensions
-
-**Codex**
-- `codex-auto` - "Codex", "auto-execute" → Autonomous coding in sandboxes
-- `codex-reasoning` - "reasoning", "chain of thought" → Advanced reasoning patterns
-
-**Multi-Model**
-- `multi-model` - "compare models", "best model" → Multi-model routing + selection
-
----
-
-### 🧠 Intelligence & Learning (Auto-trigger for learning/memory)
-
-**Memory Systems**
-- `agentdb` - "vector search", "semantic search" → 150x faster AgentDB vector search
-- `agentdb-memory-patterns` - "persistent memory", "session memory" → Memory patterns for stateful agents
-- `agentdb-learning` - "reinforcement learning", "Q-learning", "RL" → 9 RL algorithms for agent learning
-- `agentdb-optimization` - "quantization", "HNSW", "optimize vectors" → 4-32x memory reduction
-- `agentdb-vector-search` - "RAG", "document retrieval" → Semantic search for knowledge bases
-- `agentdb-advanced` - "QUIC sync", "multi-database", "distributed" → Advanced distributed features
-
-**Reasoning**
-- `reasoningbank-intelligence` - "learn from mistakes", "adaptive learning" → Pattern recognition + optimization
-- `reasoningbank-agentdb` - "ReasoningBank", "trajectory tracking" → 46% faster learning + 88% success
-
----
-
-### 🐝 Swarm & Coordination (Auto-trigger for multi-agent tasks)
-
-**Swarm Orchestration**
-- `swarm-orchestration` - "swarm", "multi-agent", "coordinate agents" → Swarm topology + orchestration
-- `swarm-advanced` - "advanced swarm", "complex coordination" → Advanced swarm features
-- `hive-mind-advanced` - "hive mind", "collective intelligence" → Queen-led hierarchical coordination
-- `coordination` - "coordinate", "sync agents" → Agent coordination patterns
-
-**Flow Nexus Cloud**
-- `flow-nexus-platform` - "Flow Nexus", "cloud swarm" → Cloud-based orchestration
-- `flow-nexus-swarm` - "cloud swarm deployment" → Swarm deployment in cloud
-- `flow-nexus-neural` - "distributed neural", "cloud training" → Neural network training in E2B sandboxes
-
----
-
-### 🔧 Utilities & Tools (Auto-trigger by utility need)
-
-**Automation**
-- `hooks-automation` - "automate hooks", "lifecycle events" → Hook integration + automation
-- `workflow` - "workflow", "automation" → Workflow creation + execution
-- `i18n-automation` - "internationalization", "i18n", "translate" → i18n workflow automation
-- `stream-chain` - "streaming", "chain" → Streaming workflows
-
-**Debugging**
-- `debugging` - "debug", "troubleshoot" → Systematic debugging
-- `verification-quality` - "verify", "check quality" → Quality verification
-
-**Meta Tools**
-- `meta-tools` - "meta", "tool creation" → Tool creation tools
-- `specialized-tools` - "specialized tool" → Domain-specific tools
-- `web-cli-teleport` - "CLI tool", "web interface" → CLI↔Web teleportation
-
-**Platform**
-- `platform` - "platform", "infrastructure" → Platform-level operations
-- `sandbox-configurator` - "sandbox config", "E2B setup" → Sandbox configuration
-
----
-
-### 🔬 Deep Research SOP (Auto-trigger for research workflows)
-
-**Quality Gate System - Research Lifecycle Management (4 agents)**
-- `data-steward` - "dataset", "datasheet", "bias audit", "data quality", "DVC", "Quality Gate 1" → Dataset documentation, bias auditing, data versioning, datasheet completion (Form F-C1)
-- `ethics-agent` - "ethics review", "risk assessment", "safety evaluation", "fairness metrics", "privacy audit", "compliance" → Ethics & safety review across all Quality Gates, 6-domain risk assessment (ethical, safety, privacy, dual-use, reproducibility, environmental)
-- `archivist` - "reproducibility", "DOI", "archive artifacts", "model card", "Quality Gate 3" → Artifact archival, version control, reproducibility packaging, DOI assignment, model card creation (Form F-G2)
-- `evaluator` - "Quality Gate", "GO/NO-GO", "gate approval", "gate review" → Final authority for all Quality Gate approvals (Gates 1, 2, 3), multi-agent coordination, requirements validation
-
-**Comprehensive Research Pipeline (9 skills)** 🆕
-- `baseline-replication` - "replicate baseline", "reproduce results", "±1% tolerance", "statistical validation" → Baseline replication with ACM compliance, paired t-tests, effect size calculation
-- `literature-synthesis` - "systematic review", "PRISMA 2020", "gap analysis", "research positioning" → Multi-database literature search, citation management, synthesis
-- `method-development` - "novel algorithm", "ablation studies", "Bonferroni correction", "statistical rigor" → Algorithm design with statistical power analysis, hypothesis testing
-- `holistic-evaluation` - "multi-metric evaluation", "performance + efficiency + robustness", "interpretability" → Comprehensive model evaluation beyond accuracy
-- `deployment-readiness` - "production deployment", "A/B testing", "monitoring", "rollback" → Production ML with canary deployments, observability, incident response
-- `deep-research-orchestrator` - "complete research workflow", "Pipeline F", "multi-agent coordination" → Full research pipeline orchestration from literature review to publication
-- `reproducibility-audit` - "ACM Artifact Evaluation", "Docker validation", "Zenodo archival", "DOI" → Reproducibility verification, artifact badges (Available, Functional, Reproduced, Reusable)
-- `research-publication` - "paper writing", "conference submission", "peer review response", "LaTeX" → Academic paper creation, citation management, submission workflows
-- `gate-validation` - "Quality Gate validation", "GO/NO-GO framework", "requirement checklists" → Phase transition validation for Gates 1-3
-
-**Trigger Patterns:**
-```javascript
-// Dataset onboarding/quality → Auto-spawn data-steward
-"Need to document dataset" → data-steward + /init-datasheet
-"Bias in training data" → data-steward + /bias-audit + ethics-agent
-"Version control for data" → data-steward + /dvc-init
-
-// Ethics/safety review → Auto-spawn ethics-agent
-"Assess risks for model" → ethics-agent + /assess-risks
-"Safety evaluation needed" → ethics-agent + /safety-eval
-"Privacy concerns" → ethics-agent + /privacy-audit
-"Compliance check" → ethics-agent + /compliance-check
-
-// Reproducibility/archival → Auto-spawn archivist
-"Package for reproducibility" → archivist + /create-reproducibility-package
-"Assign DOI to dataset" → archivist + /assign-doi
-"Create model card" → archivist + /init-model-card
-"Test reproducibility" → archivist + /test-reproducibility
-
-// Gate approval/validation → Auto-spawn evaluator
-"Quality Gate 1 review" → evaluator + data-steward + ethics-agent
-"Quality Gate 2 review" → evaluator + ethics-agent + archivist
-"Quality Gate 3 review" → evaluator + archivist + ethics-agent
-"GO/NO-GO decision" → evaluator + /validate-gate-{N}
-```
-
-**SOP Commands (Available to agents):**
-- `/init-datasheet` - Initialize Datasheet for Datasets (Form F-C1, 7 sections, 47 questions, 80%+ completion)
-- `/prisma-init` - Initialize PRISMA 2020 systematic literature review (multi-database search, 3-stage screening)
-- `/assess-risks` - Comprehensive risk assessment across 6 domains (ethical, safety, privacy, dual-use, reproducibility, environmental)
-- `/init-model-card` - Initialize Model Card for Model Reporting (Form F-G2, 9 sections, 90%+ completion)
-
-**Quality Gates:**
-- **Gate 1** (Data & Methods): Literature review complete, Datasheet ≥80%, Bias audit acceptable, Ethics review initiated
-- **Gate 2** (Model & Evaluation): Baseline replicated, Ablations complete, HELM + CheckList passed, Fairness metrics acceptable
-- **Gate 3** (Production & Artifacts): Model Card ≥90%, DOIs assigned, Reproducibility tested, ML Test Score ≥8
-
----
-
-### 🛡️ Reverse Engineering & Binary Analysis (Auto-trigger for malware/security analysis) 🆕
-
-**3 Specialized Levels for Comprehensive Binary Analysis**
-- `reverse-engineering-quick` - "malware triage", "IOC extraction", "strings analysis", "static analysis" → RE Levels 1-2 (≤2 hours): String reconnaissance + disassembly with Ghidra/radare2
-- `reverse-engineering-deep` - "advanced malware", "vulnerability research", "CTF", "symbolic execution" → RE Levels 3-4 (4-8 hours): GDB debugging + Angr symbolic execution for path exploration
-- `reverse-engineering-firmware` - "IoT security", "firmware extraction", "router vulnerabilities", "embedded systems" → RE Level 5 (2-8 hours): binwalk + QEMU + firmadyne for firmware analysis and emulation
-
-**Security Features**: ⚠️ VM/Docker/E2B sandboxing required for all binary execution, comprehensive malware analysis best practices
-
----
-
-### ☁️ Infrastructure & Cloud (Auto-trigger for infrastructure/cloud keywords) 🆕
-
-**Cloud Platforms**
-- `aws-specialist` - "AWS", "Lambda", "ECS", "Fargate", "AWS CDK", "CloudFormation" → AWS deployment, serverless, containers, infrastructure
-- `kubernetes-specialist` - "Kubernetes", "K8s", "Helm", "operators", "Istio", "service mesh" → Container orchestration, production K8s, autoscaling
-
-**Infrastructure as Code**
-- `docker-containerization` - "Docker", "container", "multi-stage build", "BuildKit", "Trivy" → Docker optimization, security scanning, Compose
-- `terraform-iac` - "Terraform", "IaC", "infrastructure as code", "HCL", "state management" → Multi-cloud provisioning, modules, GitOps
-
-**Observability**
-- `opentelemetry-observability` - "OpenTelemetry", "distributed tracing", "observability", "Jaeger", "Zipkin" → Traces, metrics, W3C Trace Context, APM
-
----
-
-### 📊 CI/CD & Recovery (Auto-trigger for deployment/testing)
-
-- `cicd-intelligent-recovery` - "CI/CD", "test failed", "build failed" → Automated failure recovery + root cause analysis
-
----
-
-### 🎯 USAGE PATTERN
-
-```javascript
-// When user says: "I need to build a new API with auth"
-// AUTO-TRIGGER:
-Skill("when-building-backend-api-orchestrate-api-development")
-  → Research best practices (Gemini search)
-  → Architecture design
-  → Parallel swarm implementation
-  → Security audit
-  → Testing
-  → Documentation
-
-// When user says: "This code looks fake, validate it"
-// AUTO-TRIGGER:
-Skill("theater-detection-audit")
-  → 6-agent Byzantine consensus
-  → Sandbox execution testing
-  → Real implementation verification
-```
-
----
-
-### 💾 MEMORY PERSISTENCE
-
-**Store Skill Metadata in Claude-Flow Memory**:
+**Commands**:
 ```bash
-npx claude-flow@alpha memory store \
-  --key "skills/auto-triggers" \
-  --value "$(cat CLAUDE.md | grep -A 200 'SKILL AUTO-TRIGGER')"
-
-npx claude-flow@alpha memory retrieve \
-  --key "skills/auto-triggers"
+npx claude-flow sparc modes                    # List available modes
+npx claude-flow sparc run <mode> "<task>"      # Execute specific mode
+npx claude-flow sparc tdd "<feature>"          # Run complete TDD workflow
+npx claude-flow sparc info <mode>              # Get mode details
 ```
 
-**Benefits**:
-- ✅ Persistent across sessions
-- ✅ Auto-load on startup
-- ✅ Share across terminals
-- ✅ No context window bloat (retrieve only when needed)
-
----
-
-**REMEMBER**: Skills contain full details. This reference just triggers them at the right time!
-
----
-
-## 🚀 Available Agents (131 Total)
-
-**⚠️ CRITICAL AGENT USAGE RULES:**
-
-1. **ALWAYS use agents from the predefined list below**
-2. **NEVER create new agent types on the fly**
-3. **NEVER spawn generic/custom agents not in this registry**
-4. **Agent types are fixed** - use ONLY the specialist types from this list
-5. **Match task requirements to existing agent capabilities** from categories below
-
-**When spawning agents with Task tool:**
-```javascript
-// ✅ CORRECT: Use predefined agent from registry below
-Task("Backend work", "Build REST API...", "backend-dev")  // backend-dev is in registry
-Task("Testing work", "Write tests...", "tester")          // tester is in registry
-
-// ❌ WRONG: Creating new agent types
-Task("Backend work", "Build REST API...", "api-developer")  // NOT in registry!
-Task("Testing work", "Write tests...", "test-engineer")     // NOT in registry!
-```
-
-**How to select agents:**
-1. Read the task requirements
-2. Match requirements to agent categories below
-3. Choose the EXACT agent name from the registry
-4. If unsure, use Core Development agents (coder, reviewer, tester, researcher)
-
----
-
-### Core Development (8 agents)
-`coder`, `coder-enhanced`, `reviewer`, `tester`, `planner`, `researcher`, `api-designer`, `technical-debt-manager`
-
-### Testing & Validation (9 agents) 🆕
-`tdd-london-swarm`, `production-validator`, `e2e-testing-specialist`, `performance-testing-agent`, `security-testing-agent`, `visual-regression-agent`, `contract-testing-agent`, `chaos-engineering-agent`, `audit-pipeline-orchestrator`
-
-### Frontend Development (6 agents) 🆕
-`react-developer`, `vue-developer`, `ui-component-builder`, `css-styling-specialist`, `accessibility-specialist`, `frontend-performance-optimizer`
-
-### Database & Data (7 agents) 🆕
-`database-design-specialist`, `query-optimization-agent`, `database-migration-agent`, `data-pipeline-engineer`, `cache-strategy-agent`, `database-backup-recovery-agent`, `data-ml-model`
-
-### Documentation & Knowledge (6 agents) 🆕
-`api-documentation-specialist`, `developer-documentation-agent`, `knowledge-base-manager`, `technical-writing-agent`, `architecture-diagram-generator`, `docs-api-openapi`
-
-### Swarm Coordination (15 agents)
-`hierarchical-coordinator`, `mesh-coordinator`, `adaptive-coordinator`, `collective-intelligence-coordinator`, `swarm-memory-manager`, `consensus-validator`, `swarm-health-monitor`, and 8 more specialized coordinators
-
-### Consensus & Distributed
-`byzantine-coordinator`, `raft-manager`, `gossip-coordinator`, `consensus-builder`, `crdt-synchronizer`, `quorum-manager`, `security-manager`
-
-### Performance & Optimization
-`perf-analyzer`, `performance-benchmarker`, `task-orchestrator`, `memory-coordinator`, `smart-agent`
-
-### GitHub & Repository
-`github-modes`, `pr-manager`, `code-review-swarm`, `issue-tracker`, `release-manager`, `workflow-automation`, `project-board-sync`, `repo-architect`, `multi-repo-swarm`
-
-### SPARC Methodology
-`sparc-coord`, `sparc-coder`, `specification`, `pseudocode`, `architecture`, `refinement`
-
-### Specialized Development
-`backend-dev`, `mobile-dev`, `ml-developer`, `cicd-engineer`, `api-docs`, `system-architect`, `code-analyzer`, `base-template-generator`
-
-### Testing & Validation
-`tdd-london-swarm`, `production-validator`
-
-### Migration & Planning
-`migration-planner`, `swarm-init`
-
-### Deep Research SOP (Quality Gate System)
-`data-steward`, `ethics-agent`, `archivist`, `evaluator`
-
----
-
-## 🎯 Claude Code vs MCP Tools
-
-### Claude Code Handles ALL EXECUTION:
-- **Task tool**: Spawn and run agents concurrently for actual work
-- File operations (Read, Write, Edit, MultiEdit, Glob, Grep)
-- Code generation and programming
-- Bash commands and system operations
-- Implementation work
-- Project navigation and analysis
-- TodoWrite and task management
-- Git operations
-- Package management
-- Testing and debugging
-
-### MCP Tools ONLY COORDINATE:
-- Swarm initialization (topology setup)
-- Agent type definitions (coordination patterns)
-- Task orchestration (high-level planning)
-- Memory management
-- Neural features
-- Performance tracking
-- GitHub integration
-
-**KEY**: MCP coordinates the strategy, Claude Code's Task tool executes with real agents.
-
-## 🚀 Quick Setup
+### 5.3 Coordination Hooks (Every Agent MUST)
 
 ```bash
-# Add MCP servers (Claude Flow required, others optional)
-claude mcp add claude-flow npx claude-flow@alpha mcp start
-claude mcp add ruv-swarm npx ruv-swarm mcp start  # Optional: Enhanced coordination
-claude mcp add flow-nexus npx flow-nexus@latest mcp start  # Optional: Cloud features
+# Pre-Task
+npx claude-flow hooks pre-task --description "Implement auth middleware"
+npx claude-flow hooks session-restore --session-id "swarm-auth-123"
+
+# During Task
+npx claude-flow hooks post-edit --file "src/auth.js" --memory-key "swarm/coder/auth-123"
+npx claude-flow hooks notify --message "JWT validation complete"
+
+# Post-Task
+npx claude-flow hooks post-task --task-id "AUTH-123"
+npx claude-flow hooks session-end --export-metrics true
 ```
 
-## MCP Tool Categories
+### 5.4 Troubleshooting
 
-### Coordination
-`swarm_init`, `agent_spawn`, `task_orchestrate`
+- **Memory MCP not working?** Check `~/.claude/claude_desktop_config.json`
+- **Connascence Analyzer not working?** Verify server running on port 3000
+- **Agent not found?** Check `claude-code-plugins/ruv-sparc-three-loop-system/agents/` registry with `Read("claude-code-plugins/ruv-sparc-three-loop-system/agents/README.md")`
+- **Skill not triggering?** Verify keyword match in Section 3 (Playbook Router)
+- **Playbook not found?** Run `npx claude-flow playbooks list` to see available
 
-### Monitoring
-`swarm_status`, `agent_list`, `agent_metrics`, `task_status`, `task_results`
+---
 
-### Memory & Neural
-`memory_usage`, `neural_status`, `neural_train`, `neural_patterns`
+## 6. QUICK EXAMPLES
 
-### GitHub Integration
-`github_swarm`, `repo_analyze`, `pr_enhance`, `issue_triage`, `code_review`
-
-### System
-`benchmark_run`, `features_detect`, `swarm_monitor`
-
-### Memory MCP - Persistent Cross-Session Context (PRODUCTION READY)
-**Integrated**: 2025-11-01 | **Status**: GLOBAL ACCESS FOR ALL AGENTS
-
-Memory MCP Triple System provides persistent memory with automatic tagging protocol:
-
-**Configuration**: `C:\Users\17175\AppData\Roaming\Claude\claude_desktop_config.json`
-
-**Available Tools**:
-- `vector_search`: Semantic search with mode-aware context adaptation (5-20 results)
-- `memory_store`: Store information with automatic layer assignment (24h/7d/30d+ retention)
-
-**Key Features**:
-- Triple-layer retention: Short-term (24h), Mid-term (7d), Long-term (30d+)
-- Mode-aware context: 3 interaction modes (Execution/Planning/Brainstorming)
-- 29 detection patterns for automatic mode classification
-- 384-dimensional vector embeddings with HNSW indexing
-- ChromaDB backend with semantic chunking
-
-**Tagging Protocol** (REQUIRED for ALL writes):
-ALL Memory MCP writes must include metadata tags:
-1. **WHO**: Agent name, category, capabilities
-2. **WHEN**: ISO timestamp, Unix timestamp, readable format
-3. **PROJECT**: connascence-analyzer, memory-mcp-triple-system, claude-flow, etc.
-4. **WHY**: Intent (implementation, bugfix, refactor, testing, documentation, analysis, planning, research)
-
-**Implementation**: `C:\Users\17175\hooks\12fa\memory-mcp-tagging-protocol.js`
+### Example 1: Simple Feature Implementation
 
 ```javascript
-const { taggedMemoryStore } = require('./hooks/12fa/memory-mcp-tagging-protocol.js');
+// User: "Build a REST API for user management"
 
-// Auto-tagged memory write
-const tagged = taggedMemoryStore('coder', 'Implemented auth feature', { task_id: 'AUTH-123' });
-// Automatically includes: agent metadata, timestamps, project, intent
+// Step 1: intent-analyzer detects "API development"
+// Step 2: prompt-architect optimizes request
+// Step 3: Route to api-development playbook
+
+[Single Message]:
+  Skill("api-development")
+  Task("Backend Developer", "Build REST API with Express...", "backend-dev")
+  Task("Tester", "Write comprehensive tests...", "tester")
+  Task("Reviewer", "Review security...", "reviewer")
+  TodoWrite({ todos: [
+    {content: "Design API architecture", status: "in_progress"},
+    {content: "Implement endpoints", status: "pending"},
+    {content: "Write tests", status: "pending"},
+    {content: "Security review", status: "pending"},
+    {content: "Deploy to staging", status: "pending"}
+  ]})
+  Write("src/api/users.js")
+  Write("tests/api/users.test.js")
+  Write("docs/API.md")
 ```
 
-**Agent Access**:
-- **ALL 37 agents** have access to Memory MCP
-- Automatic metadata injection via tagging protocol
-- Intent analyzer auto-detects purpose from content
-- Cross-session persistence for all operations
+### Example 2: Deep Research (Academic ML)
 
-**Documentation**: `C:\Users\17175\docs\integration-plans\MCP-INTEGRATION-GUIDE.md`
+```javascript
+// User: "I need to replicate a baseline model for NeurIPS submission"
 
-### Connascence Analyzer - Code Quality & Coupling Detection (PRODUCTION READY)
-**Integrated**: 2025-11-01 | **Status**: CODE QUALITY AGENTS ONLY (14 agents)
+// Step 1: intent-analyzer detects "research", "baseline", "academic"
+// Step 2: prompt-architect structures for deep-research-orchestrator
+// Step 3: Route to Deep Research SOP playbook
 
-Connascence Safety Analyzer detects 7+ violation types including NASA compliance:
+[Single Message]:
+  Skill("deep-research-orchestrator")
+  Task("Data Steward", "Create datasheet, bias audit...", "data-steward")
+  Task("Researcher", "Literature review, PRISMA protocol...", "researcher")
+  Task("Coder", "Implement baseline model...", "coder")
+  Task("Tester", "Validate ±1% tolerance...", "tester")
+  Task("Ethics Agent", "Ethics review for Gate 1...", "ethics-agent")
+  Task("Evaluator", "Quality Gate 1 validation...", "evaluator")
+  TodoWrite({ todos: [
+    {content: "Literature synthesis", status: "in_progress"},
+    {content: "Create datasheet", status: "pending"},
+    {content: "Replicate baseline", status: "pending"},
+    {content: "Ethics review", status: "pending"},
+    {content: "Gate 1 validation", status: "pending"}
+  ]})
+```
 
-**Configuration**: `C:\Users\17175\AppData\Roaming\Claude\claude_desktop_config.json`
+### Example 3: Code Quality Audit
 
-**Available Tools**:
-- `analyze_file`: Analyze single file for connascence violations and code quality
-- `analyze_workspace`: Analyze entire workspace with pattern detection
-- `health_check`: Verify analyzer server status
+```javascript
+// User: "Audit code quality for clarity violations"
+
+// Step 1: intent-analyzer detects "audit", "code quality", "clarity"
+// Step 2: prompt-architect structures for clarity-linter
+// Step 3: Route to clarity-linter skill
+
+[Single Message]:
+  Skill("clarity-linter")
+  Task("Code Analyzer", "Run connascence analysis...", "code-analyzer")
+  Task("Reviewer", "Evaluate rubric violations...", "reviewer")
+  Task("Coder", "Generate fix patterns...", "coder")
+  TodoWrite({ todos: [
+    {content: "Collect metrics", status: "in_progress"},
+    {content: "Evaluate rubric", status: "pending"},
+    {content: "Generate fixes", status: "pending"}
+  ]})
+```
+
+---
+
+## 7. ADVANCED FEATURES
+
+### 7.1 Three-Loop System (Flagship)
+
+**When**: Complex features requiring research → implementation → validation
+
+**Loop 1**: `research-driven-planning` (2-4 hours)
+- 5x pre-mortem cycles
+- Multi-agent consensus
+- >97% planning accuracy
+
+**Loop 2**: `parallel-swarm-implementation` (4-8 hours)
+- 6-10 agents in parallel
+- Theater detection
+- Byzantine consensus
+
+**Loop 3**: `cicd-intelligent-recovery` (1-2 hours)
+- Automated testing
+- Root cause analysis
+- 100% recovery rate
+
+**Total Time**: 8-14 hours
+**Success Rate**: >97% planning accuracy, 100% test recovery
+
+### 7.2 Connascence Analyzer (Production Ready)
+
+**Status**: CODE QUALITY AGENTS ONLY (14 agents)
 
 **Detection Capabilities**:
 1. God Objects (26 methods vs 15 threshold)
@@ -629,205 +863,74 @@ Connascence Safety Analyzer detects 7+ violation types including NASA compliance
 4. Deep Nesting (8 levels vs 4 NASA limit)
 5. Long Functions (72 lines vs 50 threshold)
 6. Magic Literals/CoM (hardcoded ports, timeouts)
-7. Configuration values, duplicate code, security violations
 
-**Performance**: 7 violations detected in 0.018 seconds
+**Agent Access**: coder, reviewer, tester, code-analyzer, functionality-audit, theater-detection-audit, production-validator, sparc-coder, analyst, backend-dev, mobile-dev, ml-developer, base-template-generator, code-review-swarm
 
-**Agent Access** (14 Code Quality Agents ONLY):
-- coder, reviewer, tester, code-analyzer
-- functionality-audit, theater-detection-audit, production-validator
-- sparc-coder, analyst, backend-dev, mobile-dev
-- ml-developer, base-template-generator, code-review-swarm
+**Usage**: Skills auto-invoke when needed. Manual: `mcp__connascence-analyzer__analyze_workspace`
 
-**Planning agents do NOT have access** (prevents non-code agents from using code analysis tools)
+### 7.3 Dogfooding Cycle (Self-Improvement)
 
-**Documentation**: `C:\Users\17175\docs\integration-plans\MCP-INTEGRATION-GUIDE.md`
+**Phase 1**: `sop-dogfooding-quality-detection` (30-60s)
+- Run Connascence analysis
+- Detect violations
+- Store in Memory MCP with WHO/WHEN/PROJECT/WHY
 
-### Flow-Nexus MCP Tools (Optional Advanced Features)
-Flow-Nexus extends MCP capabilities with 70+ cloud-based orchestration tools:
+**Phase 2**: `sop-dogfooding-pattern-retrieval` (10-30s)
+- Vector search Memory MCP for similar violations
+- Rank proven fixes
+- Optionally apply fixes
 
-**Key MCP Tool Categories:**
-- **Swarm & Agents**: `swarm_init`, `swarm_scale`, `agent_spawn`, `task_orchestrate`
-- **Sandboxes**: `sandbox_create`, `sandbox_execute`, `sandbox_upload` (cloud execution)
-- **Templates**: `template_list`, `template_deploy` (pre-built project templates)
-- **Neural AI**: `neural_train`, `neural_patterns`, `seraphina_chat` (AI assistant)
-- **GitHub**: `github_repo_analyze`, `github_pr_manage` (repository management)
-- **Real-time**: `execution_stream_subscribe`, `realtime_subscribe` (live monitoring)
-- **Storage**: `storage_upload`, `storage_list` (cloud file management)
+**Phase 3**: `sop-dogfooding-continuous-improvement` (60-120s)
+- Full cycle orchestration
+- Sandbox testing
+- Metrics tracking
 
-**Authentication Required:**
-- Register: `mcp__flow-nexus__user_register` or `npx flow-nexus@latest register`
-- Login: `mcp__flow-nexus__user_login` or `npx flow-nexus@latest login`
-- Access 70+ specialized MCP tools for advanced orchestration
-
-## 🚀 Agent Execution Flow with Claude Code
-
-### The Correct Pattern:
-
-1. **Optional**: Use MCP tools to set up coordination topology
-2. **REQUIRED**: Use Claude Code's Task tool to spawn agents that do actual work
-3. **REQUIRED**: Each agent runs hooks for coordination
-4. **REQUIRED**: Batch all operations in single messages
-
-### Example Full-Stack Development:
-
-```javascript
-// Single message with all agent spawning via Claude Code's Task tool
-[Parallel Agent Execution]:
-  Task("Backend Developer", "Build REST API with Express. Use hooks for coordination.", "backend-dev")
-  Task("Frontend Developer", "Create React UI. Coordinate with backend via memory.", "coder")
-  Task("Database Architect", "Design PostgreSQL schema. Store schema in memory.", "code-analyzer")
-  Task("Test Engineer", "Write Jest tests. Check memory for API contracts.", "tester")
-  Task("DevOps Engineer", "Setup Docker and CI/CD. Document in memory.", "cicd-engineer")
-  Task("Security Auditor", "Review authentication. Report findings via hooks.", "reviewer")
-
-  // All todos batched together
-  TodoWrite { todos: [...8-10 todos...] }
-
-  // All file operations together
-  Write "backend/server.js"
-  Write "frontend/App.jsx"
-  Write "database/schema.sql"
-```
-
-## 📋 Agent Coordination Protocol
-
-### Every Agent Spawned via Task Tool MUST:
-
-**1️⃣ BEFORE Work:**
-```bash
-npx claude-flow@alpha hooks pre-task --description "[task]"
-npx claude-flow@alpha hooks session-restore --session-id "swarm-[id]"
-```
-
-**2️⃣ DURING Work:**
-```bash
-npx claude-flow@alpha hooks post-edit --file "[file]" --memory-key "swarm/[agent]/[step]"
-npx claude-flow@alpha hooks notify --message "[what was done]"
-```
-
-**3️⃣ AFTER Work:**
-```bash
-npx claude-flow@alpha hooks post-task --task-id "[task]"
-npx claude-flow@alpha hooks session-end --export-metrics true
-```
-
-## 🎯 Concurrent Execution Examples
-
-### ✅ CORRECT WORKFLOW: MCP Coordinates, Claude Code Executes
-
-```javascript
-// Step 1: MCP tools set up coordination (optional, for complex tasks)
-[Single Message - Coordination Setup]:
-  mcp__claude-flow__swarm_init { topology: "mesh", maxAgents: 6 }
-  mcp__claude-flow__agent_spawn { type: "researcher" }
-  mcp__claude-flow__agent_spawn { type: "coder" }
-  mcp__claude-flow__agent_spawn { type: "tester" }
-
-// Step 2: Claude Code Task tool spawns ACTUAL agents that do the work
-[Single Message - Parallel Agent Execution]:
-  // Claude Code's Task tool spawns real agents concurrently
-  Task("Research agent", "Analyze API requirements and best practices. Check memory for prior decisions.", "researcher")
-  Task("Coder agent", "Implement REST endpoints with authentication. Coordinate via hooks.", "coder")
-  Task("Database agent", "Design and implement database schema. Store decisions in memory.", "code-analyzer")
-  Task("Tester agent", "Create comprehensive test suite with 90% coverage.", "tester")
-  Task("Reviewer agent", "Review code quality and security. Document findings.", "reviewer")
-
-  // Batch ALL todos in ONE call
-  TodoWrite { todos: [
-    {id: "1", content: "Research API patterns", status: "in_progress", priority: "high"},
-    {id: "2", content: "Design database schema", status: "in_progress", priority: "high"},
-    {id: "3", content: "Implement authentication", status: "pending", priority: "high"},
-    {id: "4", content: "Build REST endpoints", status: "pending", priority: "high"},
-    {id: "5", content: "Write unit tests", status: "pending", priority: "medium"},
-    {id: "6", content: "Integration tests", status: "pending", priority: "medium"},
-    {id: "7", content: "API documentation", status: "pending", priority: "low"},
-    {id: "8", content: "Performance optimization", status: "pending", priority: "low"}
-  ]}
-
-  // Parallel file operations
-  Bash "mkdir -p app/{src,tests,docs,config}"
-  Write "app/package.json"
-  Write "app/src/server.js"
-  Write "app/tests/server.test.js"
-  Write "app/docs/API.md"
-```
-
-### ❌ WRONG (Multiple Messages):
-```javascript
-Message 1: mcp__claude-flow__swarm_init
-Message 2: Task("agent 1")
-Message 3: TodoWrite { todos: [single todo] }
-Message 4: Write "file.js"
-// This breaks parallel coordination!
-```
-
-## Performance Benefits
-
-- **84.8% SWE-Bench solve rate**
-- **32.3% token reduction**
-- **2.8-4.4x speed improvement**
-- **27+ neural models**
-
-## Hooks Integration
-
-### Pre-Operation
-- Auto-assign agents by file type
-- Validate commands for safety
-- Prepare resources automatically
-- Optimize topology by complexity
-- Cache searches
-
-### Post-Operation
-- Auto-format code
-- Train neural patterns
-- Update memory
-- Analyze performance
-- Track token usage
-
-### Session Management
-- Generate summaries
-- Persist state
-- Track metrics
-- Restore context
-- Export workflows
-
-## Advanced Features (v2.0.0)
-
-- 🚀 Automatic Topology Selection
-- ⚡ Parallel Execution (2.8-4.4x speed)
-- 🧠 Neural Training
-- 📊 Bottleneck Analysis
-- 🤖 Smart Auto-Spawning
-- 🛡️ Self-Healing Workflows
-- 💾 Cross-Session Memory
-- 🔗 GitHub Integration
-
-## Integration Tips
-
-1. Start with basic swarm init
-2. Scale agents gradually
-3. Use memory for context
-4. Monitor progress regularly
-5. Train patterns from success
-6. Enable hooks automation
-7. Use GitHub tools first
-
-## Support
-
-- Documentation: https://github.com/ruvnet/claude-flow
-- Issues: https://github.com/ruvnet/claude-flow/issues
-- Flow-Nexus Platform: https://flow-nexus.ruv.io (registration required for cloud features)
+**Triggers**: "analyze code quality", "run improvement cycle", "dogfood"
 
 ---
 
-Remember: **Claude Flow coordinates, Claude Code creates!**
+## 8. CHANGELOG
+
+### v2.0.0 (2025-11-14)
+- ✅ Migrated to playbook-first workflow system
+- ✅ Removed redundant skill/agent/command catalogs (now in skills themselves)
+- ✅ Added intent-analyzer bootstrap (auto-triggers on first message)
+- ✅ Implemented reference system (queries instead of lists)
+- ✅ Reduced from 2000+ lines to ~300 lines (85% reduction)
+- ✅ Added 29 playbook router with keyword matching
+- ✅ Compressed resource reference (categories + discovery commands)
+- ✅ Added Quick Examples section
+
+### v1.0.0 (Deprecated)
+- ❌ Monolithic 2000+ line file with redundant lists
+- ❌ Skills/agents/commands duplicated from their source files
+- ❌ No auto-triggering intent detection
+- ❌ Cognitive overload from exhaustive catalogs
+- **Backup**: CLAUDE.md.v1.0-backup-20251114
 
 ---
 
-# important-instruction-reminders
-Do what has been asked; nothing more, nothing less.
-NEVER create files unless they're absolutely necessary for achieving your goal.
-ALWAYS prefer editing an existing file to creating a new one.
-NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
-Never save working files, text/mds and tests to the root folder.
+## 9. SUPPORT & DOCUMENTATION
+
+**Full Playbook Documentation**:
+- `C:\Users\17175\claude-code-plugins\ruv-sparc-three-loop-system\docs\ENHANCED-PLAYBOOK-SYSTEM.md`
+
+**Skill Inventory**:
+- `C:\Users\17175\claude-code-plugins\ruv-sparc-three-loop-system\docs\SKILLS-INVENTORY.md`
+
+**Agent Registry**:
+- `C:\Users\17175\.claude\agents\README.md`
+
+**Deep Research SOP**:
+- `claude-code-plugins/ruv-sparc-three-loop-system/agents/research/deep-research-orchestrator.md`
+
+**Claude Flow Documentation**:
+- https://github.com/ruvnet/claude-flow
+- https://github.com/ruvnet/claude-flow/issues
+
+**Flow-Nexus Platform** (cloud features, requires authentication):
+- https://flow-nexus.ruv.io
+
+---
+
+**Remember**: **Intent-first, playbook-second, skills execute**. Let the system route you to the right workflow!

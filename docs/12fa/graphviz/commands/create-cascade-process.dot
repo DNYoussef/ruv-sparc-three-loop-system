@@ -1,0 +1,62 @@
+digraph create_cascade_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Create-Cascade Command Workflow\nWorkflow Orchestration with Multi-Skill Coordination";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/create-cascade", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  define_workflow [label="Define Workflow\n- Objective\n- Phases\n- Dependencies", fillcolor="#FFF9C4"];
+
+  identify_skills [label="Identify Required Skills\n- Micro-skills\n- Specialist agents\n- Capabilities", fillcolor="#FFE0B2"];
+
+  design_topology [label="Design Execution Topology\n- Sequential\n- Parallel\n- Conditional\n- Mixed", fillcolor="#BBDEFB"];
+
+  map_dependencies [label="Map Dependencies\n- Skill order\n- Data flow\n- Resource sharing", fillcolor="#C5CAE9"];
+
+  setup_sequential [label="Setup Sequential Steps\nOrdered execution", fillcolor="#B2DFDB"];
+
+  setup_parallel [label="Setup Parallel Steps\nConcurrent execution", fillcolor="#D1C4E9"];
+
+  add_conditionals [label="Add Conditional Branching\n- Decision points\n- Error paths\n- Alternative routes", fillcolor="#F0F4C3"];
+
+  configure_sandbox [label="Configure Codex Sandbox\n- Iteration environment\n- Testing space\n- Resource limits", fillcolor="#FFE0B2"];
+
+  add_coordination [label="Add Coordination Logic\n- State management\n- Event handling\n- Synchronization", fillcolor="#BBDEFB"];
+
+  add_error_recovery [label="Add Error Recovery\n- Retry logic\n- Fallbacks\n- Rollback", fillcolor="#B2DFDB"];
+
+  test_cascade [label="Test Cascade\n- Dry run\n- Validate flow\n- Check dependencies", fillcolor="#D1C4E9"];
+
+  optimize [label="Optimize Cascade\n- Parallel opportunities\n- Resource efficiency\n- Performance", fillcolor="#F0F4C3"];
+
+  document_cascade [label="Document Cascade\n- Workflow diagram\n- Skill mapping\n- Usage guide", fillcolor="#FFE0B2"];
+
+  register_cascade [label="Register Cascade\nAdd to cascade registry", fillcolor="#BBDEFB"];
+
+  success [label="Cascade Created\nReady for execution", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> define_workflow;
+  define_workflow -> identify_skills;
+  identify_skills -> design_topology;
+  design_topology -> map_dependencies;
+  map_dependencies -> setup_sequential;
+  setup_sequential -> setup_parallel;
+  setup_parallel -> add_conditionals;
+  add_conditionals -> configure_sandbox;
+  configure_sandbox -> add_coordination;
+  add_coordination -> add_error_recovery;
+  add_error_recovery -> test_cascade;
+  test_cascade -> optimize [label="Passed"];
+  test_cascade -> map_dependencies [label="Failed", style=dashed, color=red];
+  optimize -> document_cascade;
+  document_cascade -> register_cascade;
+  register_cascade -> success;
+}

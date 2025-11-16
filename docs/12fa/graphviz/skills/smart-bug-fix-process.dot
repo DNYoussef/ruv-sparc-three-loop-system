@@ -1,0 +1,34 @@
+digraph SMART_BUG_FIX_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="smart-bug-fix\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_bug [label="Load Bug Report\nStacktrace, Context"];
+  reproduce [label="Reproduce Bug\nSandbox Execution", fillcolor=purple];
+  decision_reproduce [shape=diamond, label="Reproduced?"];
+
+  root_cause_analysis [label="Root Cause Analysis\nTrace Backwards", fillcolor=orange];
+  identify_cause [label="Identify Exact Cause\nLine, Logic, Data", fillcolor=orange];
+
+  generate_fix [label="Generate Fix\nBest Practices", fillcolor=lightgreen];
+  apply_fix [label="Apply Fix to Code", fillcolor=lightgreen];
+  test_fix [label="Test Fix\nVerify Resolution", fillcolor=green];
+  decision_fixed [shape=diamond, label="Bug Fixed?"];
+
+  memory_store [label="Store Fix Pattern\nLearn for Future", fillcolor=lightblue];
+  success [label="Bug Fixed", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  failure [label="Fix Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+
+  start -> load_bug -> reproduce -> decision_reproduce;
+  decision_reproduce -> root_cause_analysis [label="Yes"];
+  decision_reproduce -> failure [label="Cannot Reproduce"];
+
+  root_cause_analysis -> identify_cause;
+  identify_cause -> generate_fix;
+  generate_fix -> apply_fix;
+  apply_fix -> test_fix;
+  test_fix -> decision_fixed;
+  decision_fixed -> memory_store [label="Yes"];
+  decision_fixed -> generate_fix [label="No", style=dashed];
+  memory_store -> success;
+}

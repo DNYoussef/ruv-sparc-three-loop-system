@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "generated": "2025-11-01T00:00:00Z",
+    "version": "3.1.0",
+    "total_diagrams": 286,
+    "phase_1_custom": 30,
+    "phase_2_template": 241,
+    "phase_3_reverse_engineering": 15,
+    "coverage": "104%",
+    "quality_compliance": "100%"
+  },
+  "summary": {
+    "skills": {
+      "total": 76,
+      "phase_1": 10,
+      "phase_2": 63,
+      "phase_3_re": 3,
+      "coverage": "100%"
+    },
+    "agents": {
+      "total": 109,
+      "phase_1": 10,
+      "phase_2": 94,
+      "phase_3_re": 5,
+      "coverage": "100%"
+    },
+    "commands": {
+      "total": 101,
+      "phase_1": 10,
+      "phase_2": 84,
+      "phase_3_re": 7,
+      "coverage": "103%"
+    }
+  },
+  "reverse_engineering_suite": {
+    "description": "Complete reverse engineering workflow components",
+    "total_components": 15,
+    "commands": {
+      "count": 7,
+      "list": [
+        "RE-analyze-binary",
+        "RE-decompile",
+        "RE-trace-execution",
+        "RE-extract-strings",
+        "RE-identify-functions",
+        "RE-patch-binary",
+        "RE-generate-report"
+      ]
+    },
+    "agents": {
+      "count": 5,
+      "list": [
+        "RE-binary-analyst",
+        "RE-decompiler",
+        "RE-malware-analyst",
+        "RE-vulnerability-hunter",
+        "RE-code-reconstructor"
+      ]
+    },
+    "skills": {
+      "count": 3,
+      "list": [
+        "reverse-engineer-binary",
+        "malware-analysis",
+        "vulnerability-research"
+      ]
+    }
+  },
+  "directory_structure": {
+    "base_path": "C:\Users\17175\docs\12fa\graphviz",
+    "skills": {
+      "path": "skills/",
+      "count": 76,
+      "pattern": "*-process.dot",
+      "re_components": 3
+    },
+    "agents": {
+      "path": "agents/",
+      "count": 109,
+      "pattern": "*-process.dot",
+      "re_components": 5
+    },
+    "commands": {
+      "path": "commands/",
+      "count": 101,
+      "pattern": "*-process.dot",
+      "re_components": 7
+    }
+  }
+}

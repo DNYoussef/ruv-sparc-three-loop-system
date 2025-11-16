@@ -1,0 +1,789 @@
+{
+  "metadata": {
+    "project": "Ruv-Sparc UI Dashboard System",
+    "loop": 1,
+    "phase": "planning",
+    "created": "2025-01-08",
+    "complexity": "HIGH",
+    "estimated_duration": "6 weeks (Loop 2 parallel implementation)",
+    "total_tasks": 42,
+    "methodology": "Three-Loop SPARC with META-SKILL agent selection"
+  },
+  "success_criteria": {
+    "functional": "All 40 functional requirements (FR1.1-FR4.6) implemented",
+    "quality": "Test coverage ≥90%, Lighthouse ≥90, Zero critical CVEs",
+    "integration": "schedule_config.yml sync, Memory MCP queries, hooks WebSocket",
+    "deployment": "Docker Compose single-command deployment, startup-master.ps1 working",
+    "performance": "API P99 <200ms, WebSocket <100ms, Calendar render <500ms"
+  },
+  "phases": [
+    {
+      "phase": "P1_Foundation",
+      "week": 1,
+      "description": "Project foundation, infrastructure, database schema",
+      "tasks": [
+        {
+          "id": "T001",
+          "title": "Initialize project structure and monorepo",
+          "description": "Create directory structure (frontend/, backend/, docker/, docs/), initialize Git, setup package.json/pyproject.toml, configure TypeScript/ESLint/Prettier",
+          "agent": "coder",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": [],
+          "deliverables": ["Project scaffold", "Build configs", "Linting rules"],
+          "success_criteria": "npm run build and pytest work without errors"
+        },
+        {
+          "id": "T002",
+          "title": "Setup Docker Compose infrastructure",
+          "description": "Create docker-compose.yml with PostgreSQL 15, Redis 7, backend (FastAPI), frontend (Nginx). Configure volumes, networks, health checks. Create .env.example template.",
+          "agent": "cicd-engineer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 6,
+          "dependencies": ["T001"],
+          "deliverables": ["docker-compose.yml", "Dockerfiles", ".env.example"],
+          "success_criteria": "docker-compose up starts all services with green health checks",
+          "research_context": {
+            "security": "NIST SP 800-190 container hardening, non-root users, secrets management",
+            "evidence": "academic-research-security.json"
+          }
+        },
+        {
+          "id": "T003",
+          "title": "Design and implement PostgreSQL database schema",
+          "description": "Create Alembic migrations for tables: scheduled_tasks, projects, tasks, agents. Implement indexes (scheduled_time, status, project_tag). Setup connection pooling (pool_size=10, max_overflow=20).",
+          "agent": "database-design-specialist",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T002"],
+          "deliverables": ["Alembic migrations", "SQLAlchemy models", "Database seeding script"],
+          "success_criteria": "Migrations run successfully, seed data populates, indexes created",
+          "research_context": {
+            "security": "PostgreSQL SSL verify-full mode, parameterized queries, connection pooling security",
+            "evidence": "academic-research-security.json"
+          }
+        },
+        {
+          "id": "T004",
+          "title": "Setup FastAPI backend structure with security",
+          "description": "Initialize FastAPI app with CORS, rate limiting (slowapi), structured logging, health endpoint. Configure Uvicorn with multiple workers. Implement JWT token validation (future-ready).",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T003"],
+          "deliverables": ["FastAPI app scaffold", "CORS config", "Rate limiting", "Health endpoint"],
+          "success_criteria": "GET /health returns 200, rate limiting works, CORS configured",
+          "research_context": {
+            "technology": "FastAPI native WebSocket (80% confidence), upgrade to 0.121.0+ for CVE-2024-47874",
+            "security": "OWASP API Security Top 10 2023, rate limiting 100 req/min",
+            "evidence": "github-security-audit.json, academic-research-security.json"
+          },
+          "critical_actions": [
+            "IMMEDIATE: pip install --upgrade fastapi==0.121.0+ starlette (CVE-2024-47874 patch)"
+          ]
+        },
+        {
+          "id": "T005",
+          "title": "Initialize React frontend with Vite and TypeScript",
+          "description": "Create React 18 app with Vite, configure TypeScript strict mode, setup Tailwind CSS, install Zustand for state management. Configure ESLint, Prettier, path aliases.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 6,
+          "dependencies": ["T001"],
+          "deliverables": ["Vite config", "Tailwind setup", "TypeScript tsconfig", "Basic routing"],
+          "success_criteria": "npm run dev starts dev server, Tailwind classes work, TypeScript compiles",
+          "research_context": {
+            "technology": "Zustand state management (90% confidence, 4/5 consensus)",
+            "security": "Verify package name is 'zustand' NOT 'zustand.js' (typosquatting risk)",
+            "evidence": "web-research-realtime.json, github-security-audit.json"
+          },
+          "critical_actions": [
+            "VERIFY: npm install zustand (NOT zustand.js - malicious package exists)"
+          ]
+        },
+        {
+          "id": "T006",
+          "title": "Implement CI/CD pipeline with security scanning",
+          "description": "Create GitHub Actions workflow for: lint, test, build, Docker image scan (Trivy), OWASP dependency check, deploy preview. Configure branch protection rules.",
+          "agent": "cicd-engineer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T001", "T004", "T005"],
+          "deliverables": [".github/workflows/ci.yml", "Trivy config", "Test reports"],
+          "success_criteria": "Pipeline runs on PR, Trivy scans images, tests pass, coverage ≥90%",
+          "research_context": {
+            "security": "Container image scanning (Trivy), OWASP dependency check",
+            "evidence": "academic-research-security.json"
+          }
+        }
+      ],
+      "exit_criteria": {
+        "infrastructure": "Docker Compose runs all services",
+        "database": "Schema migrations applied, seed data loaded",
+        "backend": "FastAPI health endpoint responding",
+        "frontend": "React dev server running",
+        "cicd": "GitHub Actions pipeline green"
+      }
+    },
+    {
+      "phase": "P2_Calendar_UI",
+      "week": 2,
+      "description": "Calendar scheduling interface with DayPilot Lite integration",
+      "tasks": [
+        {
+          "id": "T007",
+          "title": "Integrate DayPilot Lite React with accessibility",
+          "description": "Install @daypilot/daypilot-lite-react (Apache 2.0), implement week/month views, configure drag-and-drop events. Implement WCAG 2.1 AA compliance (keyboard navigation, ARIA labels, screen reader support).",
+          "agent": "react-developer",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T005"],
+          "deliverables": ["Calendar component", "DayPilot integration", "WCAG compliance"],
+          "success_criteria": "Calendar renders with week/month views, keyboard accessible, axe-core passes",
+          "research_context": {
+            "technology": "DayPilot Lite React (75% confidence, React 19 support)",
+            "security": "WCAG 2.1 AA compliance required (legal ADA/Section 508)",
+            "evidence": "web-research-calendar.json, academic-research-security.json"
+          },
+          "critical_actions": [
+            "BEFORE PRODUCTION: Implement manual WCAG 2.1 AA (DayPilot doesn't include by default)",
+            "TEST: axe-core scan, manual screen reader testing (NVDA/JAWS)"
+          ]
+        },
+        {
+          "id": "T008",
+          "title": "Build scheduled task creation form",
+          "description": "Create modal/drawer form: prompt (textarea), skill/agent dropdown (86 agents from CLAUDE.md), recurrence selector (once/daily/weekly/cron), priority, project tag. Integrate with Zustand state.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T007"],
+          "deliverables": ["Task creation form", "86-agent dropdown", "Recurrence selector"],
+          "success_criteria": "Form validates inputs, agent dropdown populates from CLAUDE.md, cron validator works"
+        },
+        {
+          "id": "T009",
+          "title": "Implement backend API for scheduled tasks (CRUD)",
+          "description": "Create FastAPI endpoints: POST /api/schedule (create), GET /api/schedule (list), PUT /api/schedule/{id} (update), DELETE /api/schedule/{id} (delete). Implement OWASP API1:2023 authorization checks, input validation (Pydantic).",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 10,
+          "dependencies": ["T004", "T003"],
+          "deliverables": ["CRUD endpoints", "Pydantic schemas", "Authorization checks"],
+          "success_criteria": "All CRUD operations work, Pydantic validates inputs, rate limiting enforced",
+          "research_context": {
+            "security": "OWASP API1:2023 Broken Object Level Authorization (40% of attacks), input validation",
+            "evidence": "academic-research-security.json"
+          },
+          "critical_actions": [
+            "BEFORE API DEPLOYMENT: Implement OWASP API1:2023 authorization checks (user can only access their tasks)"
+          ]
+        },
+        {
+          "id": "T010",
+          "title": "Integrate with schedule_config.yml (bi-directional sync)",
+          "description": "Implement YAML parser: read schedule_config.yml on startup → populate PostgreSQL. On task create/update → write to YAML + PostgreSQL. Implement file locking to prevent corruption. Create backup mechanism.",
+          "agent": "backend-dev",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T009"],
+          "deliverables": ["YAML sync logic", "File locking", "Backup on modify"],
+          "success_criteria": "YAML reads correctly, writes don't corrupt file, backups created before modify",
+          "risk_mitigation": {
+            "risk": "YAML corruption breaks existing automation",
+            "severity": "CRITICAL",
+            "mitigation": "1) Validate YAML before write (PyYAML safe_load), 2) Create backup before modify, 3) Implement rollback on write failure, 4) File locking (fcntl on Unix, msvcrt on Windows)"
+          }
+        },
+        {
+          "id": "T011",
+          "title": "Integrate with Windows Task Scheduler",
+          "description": "Implement task creation via run_scheduled_skill.ps1 wrapper. On POST /api/schedule, trigger PowerShell script to create Windows Task. Handle admin privilege requirements gracefully.",
+          "agent": "backend-dev",
+          "complexity": "HIGH",
+          "estimated_hours": 10,
+          "dependencies": ["T010"],
+          "deliverables": ["PowerShell integration", "Admin privilege handling", "Error recovery"],
+          "success_criteria": "Tasks created in Windows Task Scheduler, executes at scheduled time via run_scheduled_skill.ps1",
+          "risk_mitigation": {
+            "risk": "Requires admin privileges on some Windows systems",
+            "severity": "MEDIUM",
+            "mitigation": "1) Check privileges before task creation, 2) Provide clear user instructions, 3) Fallback to manual task creation instructions"
+          }
+        },
+        {
+          "id": "T012",
+          "title": "Implement task execution result capture",
+          "description": "Modify hooks/12fa/post-task.hook.js to capture execution results. Store in Memory MCP with WHO/WHEN/PROJECT/WHY tags. Update PostgreSQL scheduled_tasks status (completed/failed). Send WebSocket notification.",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T011"],
+          "deliverables": ["Hook modification", "Memory MCP integration", "Status updates"],
+          "success_criteria": "Task execution updates database status, stores in Memory MCP, sends WebSocket update",
+          "integration_constraint": "Must use WHO/WHEN/PROJECT/WHY tagging protocol for Memory MCP"
+        }
+      ],
+      "exit_criteria": {
+        "calendar": "Week/month views working, drag-and-drop functional, WCAG 2.1 AA compliant",
+        "forms": "Task creation form validates and submits",
+        "backend": "CRUD API endpoints working with authorization",
+        "integration": "schedule_config.yml sync working, Windows Tasks created",
+        "execution": "Tasks execute at scheduled time, results captured"
+      }
+    },
+    {
+      "phase": "P3_Project_Dashboard",
+      "week": 3,
+      "description": "Project management Kanban board with Memory MCP integration",
+      "tasks": [
+        {
+          "id": "T013",
+          "title": "Implement Memory MCP query service for projects",
+          "description": "Create backend service to query mcp__memory-mcp__vector_search for all PROJECT tags. Extract unique projects, tasks, assigned agents (WHO tags), status inference (WHY tags). Cache in Redis for performance.",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 10,
+          "dependencies": ["T004"],
+          "deliverables": ["Memory MCP query service", "Redis caching", "Project extraction logic"],
+          "success_criteria": "Queries Memory MCP successfully, returns projects with tasks/agents, Redis caching reduces latency",
+          "integration_constraint": "Must maintain <200ms query time (existing Memory MCP capability)"
+        },
+        {
+          "id": "T014",
+          "title": "Build Kanban board UI with dnd-kit",
+          "description": "Install dnd-kit (5.37M downloads/week, WCAG 2.1 AA compliant). Create 4 columns: Backlog, In Progress, Review, Done. Implement drag-and-drop with keyboard navigation and screen reader support.",
+          "agent": "react-developer",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T005"],
+          "deliverables": ["Kanban board component", "dnd-kit integration", "Accessibility compliance"],
+          "success_criteria": "Drag-and-drop works with mouse and keyboard, axe-core passes, screen reader announces moves",
+          "research_context": {
+            "technology": "dnd-kit (95% confidence, 5/5 UNANIMOUS consensus)",
+            "security": "Built-in WCAG 2.1 AA compliance, keyboard navigation, screen reader support",
+            "evidence": "web-research-realtime.json, github-quality-analysis.json"
+          },
+          "critical_actions": [
+            "DO NOT use react-beautiful-dnd (DEPRECATED August 2025, archival April 30, 2025)"
+          ]
+        },
+        {
+          "id": "T015",
+          "title": "Implement project sidebar and task cards",
+          "description": "Create project list sidebar with status indicators (active/paused/completed). Build task cards showing: title, assigned agent, Three-Loop phase (Loop 1/2/3), Quality Gate, test coverage progress bar.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T014"],
+          "deliverables": ["Project sidebar", "Task cards", "Status indicators"],
+          "success_criteria": "Projects load from backend, cards display all metadata, visual indicators work"
+        },
+        {
+          "id": "T016",
+          "title": "Build task detail modal with activity timeline",
+          "description": "Create modal showing: task details, assigned agent, Three-Loop phase, Quality Gate status, test coverage, duration tracking, activity timeline (from Memory MCP + hooks logs).",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T015"],
+          "deliverables": ["Task detail modal", "Activity timeline", "Metrics display"],
+          "success_criteria": "Modal displays all task metadata, activity timeline loads from Memory MCP"
+        },
+        {
+          "id": "T017",
+          "title": "Implement backend API for project/task management",
+          "description": "Create FastAPI endpoints: GET /api/projects (list), GET /api/projects/{id}/tasks (tasks), PUT /api/tasks/{id}/column (move task). Update PostgreSQL, sync with Memory MCP.",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T013", "T003"],
+          "deliverables": ["Project API", "Task API", "Column update logic"],
+          "success_criteria": "API returns projects from Memory MCP, task moves update PostgreSQL + Memory MCP"
+        },
+        {
+          "id": "T018",
+          "title": "Implement data sync on startup and polling",
+          "description": "On backend startup: query Memory MCP → populate PostgreSQL cache. Implement periodic sync (every 5 minutes) to refresh project data. Handle Memory MCP query failures gracefully.",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 6,
+          "dependencies": ["T017"],
+          "deliverables": ["Startup sync script", "Periodic sync job", "Error handling"],
+          "success_criteria": "PostgreSQL syncs with Memory MCP on startup, periodic sync updates data"
+        }
+      ],
+      "exit_criteria": {
+        "memory_integration": "Memory MCP queries working, projects/tasks extracted",
+        "kanban": "Drag-and-drop working with accessibility compliance",
+        "ui": "Project sidebar, task cards, detail modal functional",
+        "backend": "API endpoints returning project/task data",
+        "sync": "Startup and periodic sync working"
+      }
+    },
+    {
+      "phase": "P4_Agent_Monitor",
+      "week": 4,
+      "description": "Real-time agent transparency dashboard with WebSocket",
+      "tasks": [
+        {
+          "id": "T019",
+          "title": "Modify hooks/12fa/monitoring-dashboard.js for WebSocket",
+          "description": "Add WebSocket client to monitoring-dashboard.js. Emit events: PreToolUse (agent started), PostToolUse (operation completed), SessionStart (task started), SessionEnd (task completed). Include correlation IDs from correlation-id-manager.js.",
+          "agent": "backend-dev",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T004"],
+          "deliverables": ["Modified monitoring-dashboard.js", "WebSocket emission logic"],
+          "success_criteria": "Hooks emit WebSocket events with correlation IDs, no breaking changes to existing functionality",
+          "risk_mitigation": {
+            "risk": "Modifying existing hooks may break functionality",
+            "severity": "HIGH",
+            "mitigation": "1) Create backup of monitoring-dashboard.js, 2) Add WebSocket as non-blocking (try/catch), 3) Comprehensive testing before deployment, 4) Rollback plan ready"
+          }
+        },
+        {
+          "id": "T020",
+          "title": "Implement FastAPI WebSocket server",
+          "description": "Create WebSocket endpoint /ws/agent-activity. Maintain connection pool, broadcast agent events to all clients. Implement reconnection logic, heartbeat/ping-pong, rate limiting (prevent DoS).",
+          "agent": "backend-dev",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T019"],
+          "deliverables": ["WebSocket endpoint", "Connection pool", "Reconnection logic"],
+          "success_criteria": "WebSocket connections stable, messages broadcast <100ms, reconnection works, rate limiting prevents abuse",
+          "research_context": {
+            "technology": "FastAPI native WebSocket (80% confidence), handles 45-50k connections per instance",
+            "security": "WSS protocol (TLS), token auth during handshake, origin validation, rate limiting",
+            "evidence": "web-research-realtime.json, academic-research-security.json"
+          },
+          "critical_actions": [
+            "PRODUCTION: Use WSS (WebSocket Secure) with TLS/SSL",
+            "SECURITY: Token-based auth during WebSocket handshake",
+            "SECURITY: Origin validation to prevent CSWH attacks"
+          ]
+        },
+        {
+          "id": "T021",
+          "title": "Build agent registry display (86 agents)",
+          "description": "Parse CLAUDE.md to extract 86-agent registry. Create grid/list UI with status badges (Active/Idle/Error/Inactive). Implement filtering by category (Core Dev, Testing, etc.) and search.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T005"],
+          "deliverables": ["Agent registry parser", "Grid UI", "Filtering/search"],
+          "success_criteria": "86 agents display correctly, filtering works, search finds agents by name/capabilities",
+          "integration_constraint": "Must match CLAUDE.md exactly (automated sync required)"
+        },
+        {
+          "id": "T022",
+          "title": "Implement React Flow workflow visualization",
+          "description": "Install React Flow (2.1M downloads/week). Build node-based graph for Three-Loop workflows: Loop 1 (research) → Byzantine consensus → Quality Gate 1 → Loop 2 (implement) → Loop 3 (CI/CD). Highlight active agents.",
+          "agent": "react-developer",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T021"],
+          "deliverables": ["React Flow integration", "Workflow graph", "Node highlighting"],
+          "success_criteria": "Workflow visualizes correctly, nodes update in real-time via WebSocket, 60 FPS with 100+ nodes",
+          "research_context": {
+            "technology": "React Flow (95% confidence, 4/5 consensus), 60 FPS with 100+ nodes achievable",
+            "evidence": "web-research-realtime.json, github-quality-analysis.json"
+          }
+        },
+        {
+          "id": "T023",
+          "title": "Build skills usage timeline",
+          "description": "Create chronological timeline showing skill invocations: timestamp, skill name, Three-Loop phase. Query Memory MCP for historical skill usage with WHY='skill-execution' filter.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 6,
+          "dependencies": ["T022"],
+          "deliverables": ["Timeline component", "Memory MCP query"],
+          "success_criteria": "Timeline displays skill usage chronologically, filters by date range"
+        },
+        {
+          "id": "T024",
+          "title": "Implement real-time activity log with WebSocket",
+          "description": "Create scrollable activity log receiving WebSocket events. Display: [timestamp] [status] [agent]: [operation]. Implement auto-scroll, pause-on-hover, search/filter.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T020"],
+          "deliverables": ["Activity log component", "WebSocket integration", "Search/filter"],
+          "success_criteria": "Activity log updates in real-time (<100ms), auto-scroll works, search/filter functional"
+        },
+        {
+          "id": "T025",
+          "title": "Implement WebSocket client with reconnection",
+          "description": "Create useWebSocket React hook with: auto-reconnect on disconnect, exponential backoff (1s, 2s, 4s, 8s), heartbeat/ping-pong, connection status indicator, error handling.",
+          "agent": "react-developer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 6,
+          "dependencies": ["T020"],
+          "deliverables": ["useWebSocket hook", "Reconnection logic", "Status indicator"],
+          "success_criteria": "WebSocket reconnects automatically, backoff prevents spam, status indicator shows connected/disconnected"
+        }
+      ],
+      "exit_criteria": {
+        "hooks": "monitoring-dashboard.js emits WebSocket events without breaking existing functionality",
+        "websocket": "FastAPI WebSocket server handles connections, broadcasts messages <100ms",
+        "agent_registry": "86 agents display with filtering/search",
+        "workflow_viz": "React Flow shows Three-Loop workflow with real-time updates",
+        "activity_log": "Real-time log displays agent operations via WebSocket"
+      }
+    },
+    {
+      "phase": "P5_Startup_Automation",
+      "week": 5,
+      "description": "Docker deployment and Windows startup automation",
+      "tasks": [
+        {
+          "id": "T026",
+          "title": "Create production Docker Compose configuration",
+          "description": "Create docker-compose.prod.yml with: PostgreSQL with persistent volumes, Redis with persistence, backend (Uvicorn + Gunicorn multi-worker), frontend (Nginx production build). Configure resource limits, health checks, restart policies.",
+          "agent": "cicd-engineer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T002"],
+          "deliverables": ["docker-compose.prod.yml", "Production Dockerfiles", "Volume configs"],
+          "success_criteria": "Production compose starts all services, health checks pass, volumes persist data"
+        },
+        {
+          "id": "T027",
+          "title": "Implement startup-master.ps1 script",
+          "description": "Create PowerShell script: 1) Start Docker containers, 2) Wait for health checks, 3) Sync schedule_config.yml → PostgreSQL, 4) Sync Memory MCP → PostgreSQL, 5) Open browser to http://localhost:3000. Handle errors gracefully with retries.",
+          "agent": "cicd-engineer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T026"],
+          "deliverables": ["startup-master.ps1", "Health check logic", "Error handling"],
+          "success_criteria": "Script starts all services, syncs data, opens browser, handles failures with clear messages"
+        },
+        {
+          "id": "T028",
+          "title": "Configure Windows Task Scheduler for auto-start",
+          "description": "Create setup-autostart.ps1 that creates Windows Task to run startup-master.ps1 on user login. Handle admin privileges, provide manual instructions if needed.",
+          "agent": "cicd-engineer",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": ["T027"],
+          "deliverables": ["setup-autostart.ps1", "Windows Task XML", "Manual instructions"],
+          "success_criteria": "Windows Task created, startup-master.ps1 runs on login, manual fallback documented"
+        },
+        {
+          "id": "T029",
+          "title": "Implement environment variable management",
+          "description": "Create .env.example with all required vars: DATABASE_URL, REDIS_URL, MEMORY_MCP_URL, SCHEDULE_CONFIG_PATH, HOOKS_PATH. Document each variable. Implement validation on startup.",
+          "agent": "cicd-engineer",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": ["T026"],
+          "deliverables": [".env.example", "Env validation script", "Documentation"],
+          "success_criteria": "All required env vars documented, validation catches missing vars before startup"
+        },
+        {
+          "id": "T030",
+          "title": "Create database backup and restore scripts",
+          "description": "Create backup-db.ps1 (pg_dump to timestamped file) and restore-db.ps1 (pg_restore from backup). Integrate with startup script for disaster recovery.",
+          "agent": "cicd-engineer",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": ["T003"],
+          "deliverables": ["backup-db.ps1", "restore-db.ps1", "Backup schedule docs"],
+          "success_criteria": "Backup creates valid dump, restore successfully recovers data"
+        }
+      ],
+      "exit_criteria": {
+        "docker": "Production Docker Compose starts all services with health checks",
+        "startup": "startup-master.ps1 launches system successfully",
+        "autostart": "Windows Task Scheduler runs on login",
+        "env": "Environment variables documented and validated",
+        "backup": "Database backup/restore scripts working"
+      }
+    },
+    {
+      "phase": "P6_Testing_Polish",
+      "week": 6,
+      "description": "Comprehensive testing, security hardening, performance optimization",
+      "tasks": [
+        {
+          "id": "T031",
+          "title": "Write comprehensive frontend tests (Jest + Testing Library)",
+          "description": "Unit tests for all components (Calendar, Kanban, Agent Monitor). Integration tests for Zustand stores, WebSocket handling. Target ≥90% coverage. Mock API calls, WebSocket events.",
+          "agent": "tester",
+          "complexity": "HIGH",
+          "estimated_hours": 16,
+          "dependencies": ["T007", "T014", "T022"],
+          "deliverables": ["Jest test suites", "Coverage reports", "Mock factories"],
+          "success_criteria": "Test coverage ≥90%, all tests pass, CI/CD integrates tests"
+        },
+        {
+          "id": "T032",
+          "title": "Write comprehensive backend tests (pytest)",
+          "description": "Unit tests for all FastAPI endpoints, SQLAlchemy models. Integration tests for Memory MCP queries, WebSocket server, schedule_config.yml sync. Target ≥90% coverage.",
+          "agent": "tester",
+          "complexity": "HIGH",
+          "estimated_hours": 16,
+          "dependencies": ["T009", "T017", "T020"],
+          "deliverables": ["pytest test suites", "Coverage reports", "Fixtures"],
+          "success_criteria": "Test coverage ≥90%, all tests pass, async tests work correctly"
+        },
+        {
+          "id": "T033",
+          "title": "E2E testing with Playwright",
+          "description": "Create E2E tests for critical user flows: 1) Schedule task via calendar, 2) Move task in Kanban board, 3) Monitor agent activity in real-time. Run in CI/CD pipeline.",
+          "agent": "e2e-testing-specialist",
+          "complexity": "MEDIUM",
+          "estimated_hours": 12,
+          "dependencies": ["T031", "T032"],
+          "deliverables": ["Playwright test suites", "CI/CD integration", "Screenshots on failure"],
+          "success_criteria": "All 3 critical flows pass, tests run in CI/CD, failures produce screenshots"
+        },
+        {
+          "id": "T034",
+          "title": "Security audit and penetration testing",
+          "description": "Run OWASP ZAP scan against API. Test for: XSS, SQL injection, CSRF, CORS misconfiguration, rate limiting bypass, WebSocket security. Fix all critical/high vulnerabilities.",
+          "agent": "security-testing-agent",
+          "complexity": "HIGH",
+          "estimated_hours": 12,
+          "dependencies": ["T031", "T032"],
+          "deliverables": ["OWASP ZAP report", "Vulnerability fixes", "Remediation docs"],
+          "success_criteria": "Zero critical/high vulnerabilities, all OWASP API Top 10 2023 risks mitigated",
+          "research_context": {
+            "security": "OWASP API Security Top 10 2023, OWASP ZAP automated scanning",
+            "evidence": "academic-research-security.json"
+          }
+        },
+        {
+          "id": "T035",
+          "title": "Accessibility audit and remediation",
+          "description": "Run axe-core automated scan. Manual testing with NVDA/JAWS screen readers. Test keyboard navigation (Tab, Enter, Esc, Arrow keys). Fix all WCAG 2.1 AA violations.",
+          "agent": "accessibility-specialist",
+          "complexity": "MEDIUM",
+          "estimated_hours": 12,
+          "dependencies": ["T007", "T014", "T022"],
+          "deliverables": ["axe-core reports", "Screen reader test notes", "Fixes for violations"],
+          "success_criteria": "Zero WCAG 2.1 AA violations, keyboard navigation works, screen readers announce correctly",
+          "research_context": {
+            "security": "WCAG 2.1 AA compliance required (ADA, Section 508, European Accessibility Act 2025)",
+            "evidence": "academic-research-security.json"
+          },
+          "critical_actions": [
+            "LEGAL REQUIREMENT: WCAG 2.1 AA compliance before production deployment"
+          ]
+        },
+        {
+          "id": "T036",
+          "title": "Performance optimization and Lighthouse audit",
+          "description": "Run Lighthouse audit. Optimize: bundle size (<500KB gzipped), image loading (lazy load), API response times (<200ms P99), WebSocket latency (<100ms), calendar rendering (<500ms). Target Lighthouse ≥90.",
+          "agent": "frontend-performance-optimizer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 12,
+          "dependencies": ["T031", "T032"],
+          "deliverables": ["Lighthouse reports", "Bundle analysis", "Performance optimizations"],
+          "success_criteria": "Lighthouse ≥90 (all categories), bundle <500KB, API P99 <200ms, WebSocket <100ms"
+        },
+        {
+          "id": "T037",
+          "title": "Load testing with k6/Locust",
+          "description": "Create load test scenarios: 1) 100+ concurrent WebSocket connections, 2) 1000+ calendar events rendering, 3) 100+ projects in Kanban board. Identify performance bottlenecks, optimize if needed.",
+          "agent": "performance-testing-agent",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T036"],
+          "deliverables": ["k6/Locust scripts", "Load test reports", "Bottleneck analysis"],
+          "success_criteria": "100 WebSockets without degradation, 1000 events render <500ms, 100 projects load smoothly"
+        },
+        {
+          "id": "T038",
+          "title": "Documentation: README, API docs, architecture diagrams",
+          "description": "Write comprehensive README.md with: installation, configuration, usage, troubleshooting. Generate OpenAPI/Swagger docs for API. Create architecture diagrams (C4 model). Document deployment process.",
+          "agent": "developer-documentation-agent",
+          "complexity": "MEDIUM",
+          "estimated_hours": 12,
+          "dependencies": ["T001"],
+          "deliverables": ["README.md", "OpenAPI docs", "Architecture diagrams", "Deployment guide"],
+          "success_criteria": "Docs cover all setup steps, API docs auto-generated, diagrams visualize system"
+        },
+        {
+          "id": "T039",
+          "title": "User acceptance testing (UAT)",
+          "description": "Run all acceptance testing scenarios from SPEC.md: AT1 (Calendar scheduling), AT2 (Project tracking), AT3 (Real-time agent monitoring), AT4 (Automatic startup). Validate all success criteria.",
+          "agent": "production-validator",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T031", "T032", "T033"],
+          "deliverables": ["UAT test results", "Success criteria validation"],
+          "success_criteria": "All 4 acceptance tests pass, all success criteria from SPEC.md validated"
+        },
+        {
+          "id": "T040",
+          "title": "Production readiness checklist",
+          "description": "Validate all production requirements: 1) All tests passing (≥90% coverage), 2) Zero critical CVEs, 3) Lighthouse ≥90, 4) WCAG 2.1 AA compliance, 5) Docker Compose working, 6) startup-master.ps1 working, 7) Documentation complete.",
+          "agent": "production-validator",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": ["T039"],
+          "deliverables": ["Production checklist", "Deployment sign-off"],
+          "success_criteria": "All checklist items pass, sign-off for production deployment",
+          "gate_validation": "Quality Gate 3 equivalent - production readiness validation"
+        },
+        {
+          "id": "T041",
+          "title": "Create release notes and changelog",
+          "description": "Generate v1.0.0 release notes with: features list, known limitations, migration guide (if applicable), breaking changes, contributors. Follow semantic versioning (SemVer 2.0.0).",
+          "agent": "developer-documentation-agent",
+          "complexity": "LOW",
+          "estimated_hours": 4,
+          "dependencies": ["T040"],
+          "deliverables": ["CHANGELOG.md", "Release notes", "GitHub release draft"],
+          "success_criteria": "Release notes complete, changelog follows Keep a Changelog format"
+        },
+        {
+          "id": "T042",
+          "title": "Deploy to production and monitor",
+          "description": "Deploy via docker-compose.prod.yml. Monitor for 24 hours: application logs, error rates, performance metrics, WebSocket connection stability. Create incident response plan.",
+          "agent": "cicd-engineer",
+          "complexity": "MEDIUM",
+          "estimated_hours": 8,
+          "dependencies": ["T041"],
+          "deliverables": ["Deployment logs", "24-hour monitoring report", "Incident response plan"],
+          "success_criteria": "Zero critical errors in 24 hours, performance metrics within targets, WebSocket stable"
+        }
+      ],
+      "exit_criteria": {
+        "testing": "Test coverage ≥90% (frontend + backend), E2E tests passing",
+        "security": "Zero critical/high CVEs, OWASP API Top 10 2023 mitigated",
+        "accessibility": "Zero WCAG 2.1 AA violations, keyboard + screen reader working",
+        "performance": "Lighthouse ≥90, load tests pass",
+        "documentation": "README complete, API docs generated, architecture diagrams created",
+        "uat": "All 4 acceptance tests pass",
+        "deployment": "Production deployed, 24-hour monitoring complete"
+      }
+    }
+  ],
+  "dependencies": {
+    "critical_path": ["T001", "T002", "T003", "T004", "T009", "T010", "T011", "T012", "T031", "T032", "T040", "T042"],
+    "parallel_opportunities": {
+      "week_1": ["T001", "T002", "T003", "T004", "T005", "T006"],
+      "week_2": ["T007", "T008", "T009"],
+      "week_3": ["T013", "T014", "T015", "T016", "T017"],
+      "week_4": ["T019", "T020", "T021", "T022", "T023", "T024", "T025"],
+      "week_5": ["T026", "T027", "T028", "T029", "T030"],
+      "week_6": ["T031", "T032", "T033", "T034", "T035", "T036", "T037", "T038"]
+    }
+  },
+  "risk_registry": {
+    "critical_risks": [
+      {
+        "id": "R001",
+        "risk": "schedule_config.yml corruption breaks existing automation",
+        "severity": "CRITICAL",
+        "probability": "MEDIUM",
+        "impact": "HIGH",
+        "mitigation": "1) Validate YAML before write (PyYAML safe_load), 2) Create backup before modify, 3) Implement rollback on write failure, 4) File locking (fcntl on Unix, msvcrt on Windows)",
+        "task": "T010"
+      },
+      {
+        "id": "R002",
+        "risk": "FastAPI CVE-2024-47874 (CVSS 8.7) allows DoS attacks",
+        "severity": "CRITICAL",
+        "probability": "HIGH (unpatched)",
+        "impact": "CRITICAL",
+        "mitigation": "IMMEDIATE: pip install --upgrade fastapi==0.121.0+ starlette (same-day patch released)",
+        "task": "T004"
+      },
+      {
+        "id": "R003",
+        "risk": "Typosquatting: zustand.js malicious package instead of zustand",
+        "severity": "CRITICAL",
+        "probability": "LOW (with verification)",
+        "impact": "CRITICAL",
+        "mitigation": "VERIFY: npm install zustand (NOT zustand.js) - check package.json before install",
+        "task": "T005"
+      },
+      {
+        "id": "R004",
+        "risk": "WCAG 2.1 AA non-compliance leads to legal liability (ADA lawsuits)",
+        "severity": "HIGH",
+        "probability": "HIGH (without implementation)",
+        "impact": "HIGH",
+        "mitigation": "1) DayPilot requires manual WCAG implementation, 2) dnd-kit has built-in compliance, 3) axe-core automated scan + manual screen reader testing required",
+        "task": "T007, T014, T035"
+      }
+    ],
+    "high_risks": [
+      {
+        "id": "R005",
+        "risk": "Modifying monitoring-dashboard.js breaks existing hooks functionality",
+        "severity": "HIGH",
+        "probability": "MEDIUM",
+        "impact": "HIGH",
+        "mitigation": "1) Create backup before modification, 2) Add WebSocket as non-blocking (try/catch), 3) Comprehensive testing, 4) Rollback plan ready",
+        "task": "T019"
+      },
+      {
+        "id": "R006",
+        "risk": "react-beautiful-dnd deprecated (archival April 30, 2025)",
+        "severity": "HIGH",
+        "probability": "CERTAIN (if used)",
+        "impact": "HIGH",
+        "mitigation": "DO NOT USE react-beautiful-dnd - use dnd-kit instead (95% confidence, 5/5 consensus)",
+        "task": "T014"
+      },
+      {
+        "id": "R007",
+        "risk": "OWASP API1:2023 Broken Object Level Authorization (40% of attacks)",
+        "severity": "HIGH",
+        "probability": "HIGH (without checks)",
+        "impact": "HIGH",
+        "mitigation": "Implement authorization checks on all API endpoints - verify user can only access their own tasks/projects",
+        "task": "T009, T017"
+      }
+    ],
+    "medium_risks": [
+      {
+        "id": "R008",
+        "risk": "Windows Task Scheduler requires admin privileges on some systems",
+        "severity": "MEDIUM",
+        "probability": "MEDIUM",
+        "impact": "MEDIUM",
+        "mitigation": "1) Check privileges before task creation, 2) Provide clear user instructions, 3) Fallback to manual task creation instructions",
+        "task": "T011"
+      },
+      {
+        "id": "R009",
+        "risk": "Memory MCP queries slow with 1000+ projects",
+        "severity": "MEDIUM",
+        "probability": "MEDIUM",
+        "impact": "MEDIUM",
+        "mitigation": "1) Redis caching for frequently accessed data, 2) Pagination for large result sets, 3) Maintain <200ms query time requirement",
+        "task": "T013"
+      },
+      {
+        "id": "R010",
+        "risk": "Docker Compose multi-service orchestration fails on first run",
+        "severity": "MEDIUM",
+        "probability": "MEDIUM",
+        "impact": "MEDIUM",
+        "mitigation": "1) Comprehensive health checks, 2) Detailed error messages, 3) Extensive documentation, 4) Startup script with retries and error handling",
+        "tasks": ["T002", "T026", "T027"]
+      }
+    ]
+  },
+  "agent_assignments": {
+    "coder": ["T001"],
+    "cicd-engineer": ["T002", "T006", "T026", "T027", "T028", "T029", "T030", "T042"],
+    "database-design-specialist": ["T003"],
+    "backend-dev": ["T004", "T009", "T010", "T011", "T012", "T013", "T017", "T018", "T019", "T020"],
+    "react-developer": ["T005", "T007", "T008", "T014", "T015", "T016", "T021", "T022", "T023", "T024", "T025"],
+    "tester": ["T031", "T032"],
+    "e2e-testing-specialist": ["T033"],
+    "security-testing-agent": ["T034"],
+    "accessibility-specialist": ["T035"],
+    "frontend-performance-optimizer": ["T036"],
+    "performance-testing-agent": ["T037"],
+    "developer-documentation-agent": ["T038", "T041"],
+    "production-validator": ["T039", "T040"]
+  }
+}

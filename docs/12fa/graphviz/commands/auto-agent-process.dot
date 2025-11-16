@@ -1,0 +1,51 @@
+digraph AUTO_AGENT_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // Command invocation
+  invoke [label="User Invokes\n/auto-agent", shape=ellipse, fillcolor=lightblue];
+  parse_task [label="Parse Task\nDescription", fillcolor=lightblue];
+
+  // Analysis
+  analyze_keywords [label="Analyze\nKeywords", fillcolor=purple];
+  detect_intent [label="Detect\nIntent", fillcolor=purple];
+  calc_complexity [label="Calculate\nComplexity", fillcolor=purple];
+
+  // Agent selection
+  match_capabilities [label="Match Agent\nCapabilities", fillcolor=lightgreen, style="filled,bold"];
+  select_type [shape=diamond, label="Agent\nType?"];
+
+  // Spawning
+  spawn_researcher [label="Spawn\nResearcher", fillcolor=lightgreen];
+  spawn_coder [label="Spawn\nCoder", fillcolor=lightgreen];
+  spawn_tester [label="Spawn\nTester", fillcolor=lightgreen];
+  spawn_reviewer [label="Spawn\nReviewer", fillcolor=lightgreen];
+  spawn_analyzer [label="Spawn\nAnalyzer", fillcolor=lightgreen];
+
+  // Execution
+  assign_task [label="Assign Task\nto Agent", fillcolor=lightblue];
+  success [label="Agent\nSpawned", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  // Connections
+  invoke -> parse_task;
+  parse_task -> analyze_keywords;
+  analyze_keywords -> detect_intent;
+  detect_intent -> calc_complexity;
+  calc_complexity -> match_capabilities;
+  match_capabilities -> select_type;
+
+  select_type -> spawn_researcher [label="Research"];
+  select_type -> spawn_coder [label="Code"];
+  select_type -> spawn_tester [label="Test"];
+  select_type -> spawn_reviewer [label="Review"];
+  select_type -> spawn_analyzer [label="Analyze"];
+
+  spawn_researcher -> assign_task;
+  spawn_coder -> assign_task;
+  spawn_tester -> assign_task;
+  spawn_reviewer -> assign_task;
+  spawn_analyzer -> assign_task;
+
+  assign_task -> success;
+}

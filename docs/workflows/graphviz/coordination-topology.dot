@@ -1,0 +1,233 @@
+/**
+ * Coordination Topology Visualization
+ * Command: /coordination-visualize
+ * Phase: 2 (Memory & State)
+ */
+
+digraph coordination_topology {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    splines=true;
+
+    node [fontname="Arial", fontsize=11, style="rounded,filled", margin=0.15];
+    edge [fontname="Arial", fontsize=9];
+
+    label=<<B>Coordination Topology Patterns</B><BR/>Mesh • Hierarchical • Ring • Star>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Mesh Topology
+    subgraph cluster_mesh {
+        label="Mesh Topology (Full Connectivity)";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        m1 [label="Agent 1", shape=circle, fillcolor="#90caf9"];
+        m2 [label="Agent 2", shape=circle, fillcolor="#90caf9"];
+        m3 [label="Agent 3", shape=circle, fillcolor="#90caf9"];
+        m4 [label="Agent 4", shape=circle, fillcolor="#90caf9"];
+        m5 [label="Agent 5", shape=circle, fillcolor="#90caf9"];
+
+        // Full mesh connectivity
+        m1 -> m2 [dir=both, color="#2196f3"];
+        m1 -> m3 [dir=both, color="#2196f3"];
+        m1 -> m4 [dir=both, color="#2196f3"];
+        m1 -> m5 [dir=both, color="#2196f3"];
+        m2 -> m3 [dir=both, color="#2196f3"];
+        m2 -> m4 [dir=both, color="#2196f3"];
+        m2 -> m5 [dir=both, color="#2196f3"];
+        m3 -> m4 [dir=both, color="#2196f3"];
+        m3 -> m5 [dir=both, color="#2196f3"];
+        m4 -> m5 [dir=both, color="#2196f3"];
+
+        mesh_props [label=<
+            <B>Properties:</B><BR/>
+            • Full connectivity<BR/>
+            • No single point of failure<BR/>
+            • High redundancy<BR/>
+            • Complex coordination<BR/>
+            • Best for: Consensus
+        >, shape=note, fillcolor="#bbdefb"];
+    }
+
+    // Subgraph: Hierarchical Topology
+    subgraph cluster_hierarchical {
+        label="Hierarchical Topology (Tree Structure)";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        h1 [label="Queen/\nCoordinator", shape=doubleoctagon, fillcolor="#ab47bc", penwidth=2];
+        h2 [label="Manager 1", shape=octagon, fillcolor="#ce93d8"];
+        h3 [label="Manager 2", shape=octagon, fillcolor="#ce93d8"];
+        h4 [label="Worker 1", shape=circle, fillcolor="#e1bee7"];
+        h5 [label="Worker 2", shape=circle, fillcolor="#e1bee7"];
+        h6 [label="Worker 3", shape=circle, fillcolor="#e1bee7"];
+        h7 [label="Worker 4", shape=circle, fillcolor="#e1bee7"];
+
+        // Hierarchical connections
+        h1 -> h2 [color="#9c27b0", penwidth=2];
+        h1 -> h3 [color="#9c27b0", penwidth=2];
+        h2 -> h4 [color="#ba68c8"];
+        h2 -> h5 [color="#ba68c8"];
+        h3 -> h6 [color="#ba68c8"];
+        h3 -> h7 [color="#ba68c8"];
+
+        hier_props [label=<
+            <B>Properties:</B><BR/>
+            • Clear authority<BR/>
+            • Efficient delegation<BR/>
+            • Scalable structure<BR/>
+            • Single point of failure<BR/>
+            • Best for: Large teams
+        >, shape=note, fillcolor="#e1bee7"];
+    }
+
+    // Subgraph: Ring Topology
+    subgraph cluster_ring {
+        label="Ring Topology (Circular Flow)";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        r1 [label="Agent 1", shape=circle, fillcolor="#ffcc80"];
+        r2 [label="Agent 2", shape=circle, fillcolor="#ffcc80"];
+        r3 [label="Agent 3", shape=circle, fillcolor="#ffcc80"];
+        r4 [label="Agent 4", shape=circle, fillcolor="#ffcc80"];
+        r5 [label="Agent 5", shape=circle, fillcolor="#ffcc80"];
+        r6 [label="Agent 6", shape=circle, fillcolor="#ffcc80"];
+
+        // Ring connections
+        r1 -> r2 [color="#ff9800", penwidth=2];
+        r2 -> r3 [color="#ff9800", penwidth=2];
+        r3 -> r4 [color="#ff9800", penwidth=2];
+        r4 -> r5 [color="#ff9800", penwidth=2];
+        r5 -> r6 [color="#ff9800", penwidth=2];
+        r6 -> r1 [color="#ff9800", penwidth=2];
+
+        ring_props [label=<
+            <B>Properties:</B><BR/>
+            • Token passing<BR/>
+            • Ordered execution<BR/>
+            • Fair resource sharing<BR/>
+            • Moderate redundancy<BR/>
+            • Best for: Pipelines
+        >, shape=note, fillcolor="#ffe0b2"];
+    }
+
+    // Subgraph: Star Topology
+    subgraph cluster_star {
+        label="Star Topology (Centralized Hub)";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        s_hub [label="Central\nHub", shape=star, fillcolor="#4caf50", penwidth=3];
+        s1 [label="Agent 1", shape=circle, fillcolor="#a5d6a7"];
+        s2 [label="Agent 2", shape=circle, fillcolor="#a5d6a7"];
+        s3 [label="Agent 3", shape=circle, fillcolor="#a5d6a7"];
+        s4 [label="Agent 4", shape=circle, fillcolor="#a5d6a7"];
+        s5 [label="Agent 5", shape=circle, fillcolor="#a5d6a7"];
+        s6 [label="Agent 6", shape=circle, fillcolor="#a5d6a7"];
+
+        // Star connections
+        s_hub -> s1 [dir=both, color="#66bb6a", penwidth=2];
+        s_hub -> s2 [dir=both, color="#66bb6a", penwidth=2];
+        s_hub -> s3 [dir=both, color="#66bb6a", penwidth=2];
+        s_hub -> s4 [dir=both, color="#66bb6a", penwidth=2];
+        s_hub -> s5 [dir=both, color="#66bb6a", penwidth=2];
+        s_hub -> s6 [dir=both, color="#66bb6a", penwidth=2];
+
+        star_props [label=<
+            <B>Properties:</B><BR/>
+            • Simple coordination<BR/>
+            • Easy to add/remove<BR/>
+            • Hub bottleneck<BR/>
+            • Single point of failure<BR/>
+            • Best for: Small teams
+        >, shape=note, fillcolor="#c8e6c9"];
+    }
+
+    // Comparison Matrix
+    subgraph cluster_comparison {
+        label="Topology Comparison";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        comp_matrix [label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR>
+                    <TD><B>Topology</B></TD>
+                    <TD><B>Fault Tolerance</B></TD>
+                    <TD><B>Scalability</B></TD>
+                    <TD><B>Complexity</B></TD>
+                    <TD><B>Performance</B></TD>
+                </TR>
+                <TR>
+                    <TD>Mesh</TD>
+                    <TD BGCOLOR="#4caf50">Excellent</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                    <TD BGCOLOR="#f44336">High</TD>
+                    <TD BGCOLOR="#4caf50">High</TD>
+                </TR>
+                <TR>
+                    <TD>Hierarchical</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                    <TD BGCOLOR="#4caf50">Excellent</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                    <TD BGCOLOR="#4caf50">High</TD>
+                </TR>
+                <TR>
+                    <TD>Ring</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                    <TD BGCOLOR="#4caf50">Good</TD>
+                    <TD BGCOLOR="#4caf50">Low</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                </TR>
+                <TR>
+                    <TD>Star</TD>
+                    <TD BGCOLOR="#f44336">Poor</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                    <TD BGCOLOR="#4caf50">Low</TD>
+                    <TD BGCOLOR="#ff9800">Medium</TD>
+                </TR>
+            </TABLE>
+        >, shape=plaintext];
+    }
+
+    // Use Case Recommendations
+    subgraph cluster_usecases {
+        label="Use Case Recommendations";
+        style="rounded,filled";
+        color="#fce4ec";
+        fillcolor="#fce4ec";
+
+        uc_consensus [label="Consensus/\nVoting", shape=box, fillcolor="#f8bbd0"];
+        uc_large [label="Large Teams/\nEnterprises", shape=box, fillcolor="#f8bbd0"];
+        uc_pipeline [label="Pipeline/\nWorkflow", shape=box, fillcolor="#f8bbd0"];
+        uc_simple [label="Simple\nCoordination", shape=box, fillcolor="#f8bbd0"];
+
+        uc_consensus -> m1 [style=dashed, color="#e91e63", label="Mesh"];
+        uc_large -> h1 [style=dashed, color="#e91e63", label="Hierarchical"];
+        uc_pipeline -> r1 [style=dashed, color="#e91e63", label="Ring"];
+        uc_simple -> s_hub [style=dashed, color="#e91e63", label="Star"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Mesh", shape=box, fillcolor="#90caf9"];
+        leg2 [label="Hierarchical", shape=box, fillcolor="#ce93d8"];
+        leg3 [label="Ring", shape=box, fillcolor="#ffcc80"];
+        leg4 [label="Star", shape=box, fillcolor="#a5d6a7"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+    }
+}

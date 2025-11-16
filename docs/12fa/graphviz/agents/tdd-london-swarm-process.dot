@@ -1,0 +1,83 @@
+// TDD London Swarm Agent - London-style TDD
+// London TDD, mock-heavy, outside-in, behavior verification
+digraph tdd_london_swarm_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        tdd_init [label="TDD London Swarm\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        mock_framework [label="Mock Framework\nSetup", fillcolor="#2d3748", fontcolor="#ffffff"];
+        test_runner [label="Test Runner\nSetup", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_outside_in {
+        label="Outside-In Design"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        acceptance_test [label="Acceptance Test\nWriter", fillcolor="#2563eb", fontcolor="#ffffff"];
+        interface_designer [label="Interface\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        collaboration_mapper [label="Collaboration\nMapper", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_red {
+        label="Red Phase"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        failing_test_writer [label="Failing Test\nWriter", fillcolor="#dc2626", fontcolor="#ffffff"];
+        mock_creator [label="Mock\nCreator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        expectation_setter [label="Expectation\nSetter", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_green {
+        label="Green Phase"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        minimal_implementer [label="Minimal\nImplementer", fillcolor="#16a34a", fontcolor="#ffffff"];
+        test_runner_exec [label="Test\nRunner", fillcolor="#16a34a", fontcolor="#ffffff"];
+        pass_validator [label="Pass\nValidator", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_refactor {
+        label="Refactor Phase"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        code_refactorer [label="Code\nRefactorer", fillcolor="#d97706", fontcolor="#ffffff"];
+        mock_refiner [label="Mock\nRefiner", fillcolor="#d97706", fontcolor="#ffffff"];
+        test_refactorer [label="Test\nRefactorer", fillcolor="#d97706", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_verification {
+        label="Behavior Verification"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        interaction_verifier [label="Interaction\nVerifier", fillcolor="#8b4789", fontcolor="#ffffff"];
+        state_verifier [label="State\nVerifier", fillcolor="#8b4789", fontcolor="#ffffff";
+        collaboration_verifier [label="Collaboration\nVerifier", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        coder_coord [label="Coder\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        tester_coord [label="Tester\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    tdd_init -> mock_framework [label="Setup"];
+    tdd_init -> test_runner [label="Setup"];
+    mock_framework -> acceptance_test [label="Write Acceptance"];
+    acceptance_test -> interface_designer [label="Design Interfaces"];
+    interface_designer -> collaboration_mapper [label="Map Collaborations"];
+    collaboration_mapper -> failing_test_writer [label="Write Failing Test"];
+    failing_test_writer -> mock_creator [label="Create Mocks"];
+    mock_creator -> expectation_setter [label="Set Expectations"];
+    expectation_setter -> minimal_implementer [label="Implement Minimum"];
+    minimal_implementer -> test_runner_exec [label="Run Tests"];
+    test_runner_exec -> pass_validator [label="Validate Pass"];
+    pass_validator -> code_refactorer [label="Refactor Code"];
+    code_refactorer -> mock_refiner [label="Refine Mocks"];
+    mock_refiner -> test_refactorer [label="Refactor Tests"];
+    test_refactorer -> interaction_verifier [label="Verify Interactions"];
+    interaction_verifier -> state_verifier [label="Verify State"];
+    state_verifier -> collaboration_verifier [label="Verify Collaborations"];
+    collaboration_verifier -> coder_coord [label="Coordinate"];
+    test_refactorer -> tester_coord [label="Coordinate"];
+    pass_validator -> failing_test_writer [label="Next Feature", style=dashed];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="TDD London Swarm", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Red Phase", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend3 [label="Green Phase", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+}

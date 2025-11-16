@@ -1,0 +1,72 @@
+digraph sparc_code_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Code Command Workflow\nAuto-Coder Implementation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:code", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  retrieve_spec [label="Retrieve Specification\nFrom memory/context", fillcolor="#FFF9C4"];
+
+  retrieve_arch [label="Retrieve Architecture\nDesign patterns & structure", fillcolor="#FFE0B2"];
+
+  design_first [label="Design First\n- Interfaces\n- Contracts\n- Data structures", fillcolor="#BBDEFB"];
+
+  tdd_check [label="TDD Mode?", fillcolor="#C5CAE9", shape=diamond];
+
+  // TDD path
+  write_tests [label="Write Tests First\nUnit & integration tests", fillcolor="#B2DFDB"];
+  run_tests_red [label="Run Tests\nExpect failures (Red)", fillcolor="#F44336", fontcolor=white];
+
+  // Implementation
+  implement [label="Implement Code\n- Clean code\n- SOLID principles\n- Best practices", fillcolor="#BBDEFB"];
+
+  run_tests_green [label="Run Tests\nExpect success (Green)", fillcolor="#4CAF50", fontcolor=white];
+
+  refactor [label="Refactor\n- DRY\n- KISS\n- Optimize", fillcolor="#FFE0B2"];
+
+  // Code quality
+  format_code [label="Format Code\nStyle & linting", fillcolor="#F0F4C3"];
+
+  add_docs [label="Add Documentation\n- JSDoc/TSDoc\n- Comments\n- Examples", fillcolor="#F0F4C3"];
+
+  security_check [label="Security Check\n- Input validation\n- No secrets\n- SQL injection", fillcolor="#C5CAE9"];
+
+  store_memory [label="Store in Memory\nFor integration phase", fillcolor="#B2DFDB"];
+
+  success [label="Code Complete\nReady for review", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Error\nIterate", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> retrieve_spec;
+  retrieve_spec -> retrieve_arch;
+  retrieve_arch -> design_first;
+  design_first -> tdd_check;
+
+  // TDD path
+  tdd_check -> write_tests [label="Yes"];
+  write_tests -> run_tests_red;
+  run_tests_red -> implement;
+
+  // Non-TDD path
+  tdd_check -> implement [label="No"];
+
+  // Implementation to testing
+  implement -> run_tests_green;
+  run_tests_green -> refactor [label="Passed"];
+  run_tests_green -> error [label="Failed"];
+  error -> implement [label="Fix & retry"];
+
+  refactor -> format_code;
+  format_code -> add_docs;
+  add_docs -> security_check;
+  security_check -> store_memory [label="Passed"];
+  security_check -> error [label="Failed"];
+  store_memory -> success;
+}

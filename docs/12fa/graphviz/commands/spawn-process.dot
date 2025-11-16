@@ -1,0 +1,19 @@
+digraph SPAWN {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/spawn", shape=ellipse, fillcolor=lightblue];
+  specify_type [label="Specify Agent\nType", fillcolor=lightblue];
+  validate_type [shape=diamond, label="Valid\nType?"];
+  type_error [shape=octagon, fillcolor=crimson, label="Invalid Type"];
+  assign_capabilities [label="Assign\nCapabilities", fillcolor=lightgreen];
+  integrate_topology [label="Integrate with\nTopology", fillcolor=purple];
+  spawn_agent [label="Spawn\nAgent", fillcolor=lightgreen, style="filled,bold"];
+  register_agent [label="Register\nAgent", fillcolor=lightblue];
+  success [label="Agent Spawned", shape=doublecircle, fillcolor=green];
+
+  invoke -> specify_type -> validate_type;
+  validate_type -> type_error [label="No"];
+  validate_type -> assign_capabilities [label="Yes"];
+  assign_capabilities -> integrate_topology -> spawn_agent -> register_agent -> success;
+}

@@ -1,0 +1,355 @@
+digraph FunctionalityAudit {
+    // Graph configuration
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.7;
+    ranksep=0.9;
+    fontname="Arial";
+    fontsize=12;
+
+    // Style definitions
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Color scheme
+    node [fillcolor=lightblue, shape=box];
+
+    // Start/End nodes
+    start [label="Functionality\nAudit Request", shape=ellipse, fillcolor=lightgreen];
+    end_genuine [label="Genuine\nFunctionality", shape=doubleoctagon, fillcolor=lightgreen];
+    end_theater [label="Theater\nDetected", shape=doubleoctagon, fillcolor=red];
+
+    // Initial Assessment
+    subgraph cluster_intake {
+        label="Initial Assessment";
+        style=filled;
+        fillcolor=lightyellow;
+
+        parse_code [label="Parse Code\nSubmission"];
+        identify_claims [label="Identify\nFunctionality Claims"];
+        classify_features [label="Classify\nFeatures"];
+        assess_risk [label="Risk\nAssessment", shape=diamond, fillcolor=yellow];
+
+        parse_code -> identify_claims;
+        identify_claims -> classify_features;
+        classify_features -> assess_risk;
+    }
+
+    // Theater Detection
+    subgraph cluster_theater_detection {
+        label="Theater Detection Phase";
+        style=filled;
+        fillcolor=mistyrose;
+
+        check_stubs [label="Check for\nStubs/Mocks"];
+        check_hardcoded [label="Check Hardcoded\nReturns"];
+        check_conditions [label="Check False\nConditions"];
+        check_unreachable [label="Check Unreachable\nCode"];
+        static_analysis [label="Static Code\nAnalysis"];
+        theater_score [label="Theater\nProbability Score", shape=diamond, fillcolor=yellow];
+        theater_findings [label="Theater\nFindings", shape=note, fillcolor=orange];
+
+        check_stubs -> check_hardcoded;
+        check_hardcoded -> check_conditions;
+        check_conditions -> check_unreachable;
+        check_unreachable -> static_analysis;
+        static_analysis -> theater_score;
+        theater_score -> theater_findings [label="High Risk"];
+    }
+
+    // Sandbox Environment Setup
+    subgraph cluster_sandbox {
+        label="Isolated Sandbox Environment";
+        style=filled;
+        fillcolor=lightcyan;
+
+        create_sandbox [label="Create E2B\nSandbox", shape=cylinder, fillcolor=orange];
+        install_deps [label="Install\nDependencies"];
+        setup_environment [label="Setup\nEnvironment"];
+        configure_isolation [label="Configure\nIsolation"];
+        validate_sandbox [label="Validate\nSandbox Ready", shape=diamond, fillcolor=yellow];
+        sandbox_ready [label="Sandbox\nReady", shape=note];
+
+        create_sandbox -> install_deps;
+        install_deps -> setup_environment;
+        setup_environment -> configure_isolation;
+        configure_isolation -> validate_sandbox;
+        validate_sandbox -> sandbox_ready [label="Pass"];
+        validate_sandbox -> install_deps [label="Retry", color=orange];
+    }
+
+    // Test Case Generation
+    subgraph cluster_test_generation {
+        label="Test Case Generation";
+        style=filled;
+        fillcolor=lavender;
+
+        analyze_api [label="Analyze\nAPI Surface"];
+        identify_inputs [label="Identify\nInput Types"];
+        generate_unit_tests [label="Generate\nUnit Tests"];
+        generate_integration_tests [label="Generate\nIntegration Tests"];
+        generate_edge_cases [label="Generate\nEdge Cases"];
+        generate_error_cases [label="Generate\nError Cases"];
+        realistic_data [label="Generate\nRealistic Data"];
+        test_suite_ready [label="Test Suite\nReady", shape=note];
+
+        analyze_api -> identify_inputs;
+        identify_inputs -> generate_unit_tests;
+        generate_unit_tests -> generate_integration_tests;
+        generate_integration_tests -> generate_edge_cases;
+        generate_edge_cases -> generate_error_cases;
+        generate_error_cases -> realistic_data;
+        realistic_data -> test_suite_ready;
+    }
+
+    // Execution Verification
+    subgraph cluster_execution {
+        label="Execution Verification";
+        style=filled;
+        fillcolor=honeydew;
+
+        execute_tests [label="Execute Tests\nin Sandbox", shape=hexagon];
+        monitor_execution [label="Monitor\nExecution"];
+        capture_output [label="Capture\nOutput"];
+        capture_logs [label="Capture\nLogs"];
+        measure_performance [label="Measure\nPerformance"];
+        track_resources [label="Track Resource\nUsage"];
+        execution_data [label="Execution\nData", shape=note];
+
+        execute_tests -> monitor_execution;
+        monitor_execution -> capture_output;
+        capture_output -> capture_logs;
+        capture_logs -> measure_performance;
+        measure_performance -> track_resources;
+        track_resources -> execution_data;
+    }
+
+    // Reality Validation
+    subgraph cluster_reality_validation {
+        label="Reality vs Theater Validation";
+        style=filled;
+        fillcolor=wheat;
+
+        verify_outputs [label="Verify Output\nVariability"];
+        check_side_effects [label="Check Side\nEffects"];
+        validate_state [label="Validate State\nChanges"];
+        test_persistence [label="Test\nPersistence"];
+        check_determinism [label="Check\nDeterminism"];
+        validate_boundaries [label="Validate\nBoundaries"];
+        reality_score [label="Reality\nValidation Score", shape=diamond, fillcolor=yellow];
+
+        verify_outputs -> check_side_effects;
+        check_side_effects -> validate_state;
+        validate_state -> test_persistence;
+        test_persistence -> check_determinism;
+        check_determinism -> validate_boundaries;
+        validate_boundaries -> reality_score;
+    }
+
+    // Systematic Debugging
+    subgraph cluster_debugging {
+        label="Systematic Debugging";
+        style=filled;
+        fillcolor=lightsteelblue;
+
+        identify_failures [label="Identify\nFailure Points"];
+        categorize_bugs [label="Categorize\nBugs", shape=diamond, fillcolor=yellow];
+        logic_errors [label="Logic\nErrors"];
+        runtime_errors [label="Runtime\nErrors"];
+        integration_errors [label="Integration\nErrors"];
+        performance_issues [label="Performance\nIssues"];
+        trace_root_cause [label="Trace Root\nCause"];
+        bug_report [label="Bug\nReport", shape=note];
+
+        identify_failures -> categorize_bugs;
+        categorize_bugs -> logic_errors [label="Logic"];
+        categorize_bugs -> runtime_errors [label="Runtime"];
+        categorize_bugs -> integration_errors [label="Integration"];
+        categorize_bugs -> performance_issues [label="Performance"];
+        logic_errors -> trace_root_cause;
+        runtime_errors -> trace_root_cause;
+        integration_errors -> trace_root_cause;
+        performance_issues -> trace_root_cause;
+        trace_root_cause -> bug_report;
+    }
+
+    // Best Practices Application
+    subgraph cluster_best_practices {
+        label="Best Practices Application";
+        style=filled;
+        fillcolor=palegreen;
+
+        analyze_patterns [label="Analyze Code\nPatterns"];
+        check_solid [label="Check SOLID\nPrinciples"];
+        check_security [label="Security Best\nPractices"];
+        check_error_handling [label="Error Handling\nPatterns"];
+        check_testing [label="Testing\nPatterns"];
+        check_docs [label="Documentation\nStandards"];
+        best_practices_score [label="Best Practices\nScore", shape=note];
+
+        analyze_patterns -> check_solid;
+        check_solid -> check_security;
+        check_security -> check_error_handling;
+        check_error_handling -> check_testing;
+        check_testing -> check_docs;
+        check_docs -> best_practices_score;
+    }
+
+    // Auto-fix Generation
+    subgraph cluster_autofix {
+        label="Automated Fix Generation";
+        style=filled;
+        fillcolor=lightgreen;
+
+        prioritize_fixes [label="Prioritize\nFixes", shape=diamond, fillcolor=yellow];
+        generate_fixes [label="Generate\nFix Code"];
+        validate_fixes [label="Validate\nFix Logic"];
+        test_fixes [label="Test Fixes\nin Sandbox", shape=hexagon];
+        fix_validation [label="Fix Works?", shape=diamond, fillcolor=yellow];
+        apply_fixes [label="Apply\nFixes"];
+        retest_all [label="Retest Full\nSuite", shape=hexagon];
+        fix_result [label="Fix\nResults", shape=note];
+
+        prioritize_fixes -> generate_fixes;
+        generate_fixes -> validate_fixes;
+        validate_fixes -> test_fixes;
+        test_fixes -> fix_validation;
+        fix_validation -> apply_fixes [label="Pass"];
+        fix_validation -> generate_fixes [label="Fail", color=red];
+        apply_fixes -> retest_all;
+        retest_all -> fix_result;
+    }
+
+    // Verification Gates
+    subgraph cluster_gates {
+        label="Verification Gates";
+        style=filled;
+        fillcolor=lemonchiffon;
+
+        gate_theater [label="Theater Gate", shape=diamond, fillcolor=yellow];
+        gate_execution [label="Execution Gate", shape=diamond, fillcolor=yellow];
+        gate_functionality [label="Functionality Gate", shape=diamond, fillcolor=yellow];
+        gate_quality [label="Quality Gate", shape=diamond, fillcolor=yellow];
+
+        gate_theater -> gate_execution [label="No Theater"];
+        gate_execution -> gate_functionality [label="Executes"];
+        gate_functionality -> gate_quality [label="Works"];
+    }
+
+    // Final Assessment
+    subgraph cluster_assessment {
+        label="Final Assessment";
+        style=filled;
+        fillcolor=aliceblue;
+
+        calculate_confidence [label="Calculate\nConfidence Score"];
+        assess_reliability [label="Assess\nReliability"];
+        assess_completeness [label="Assess\nCompleteness"];
+        generate_metrics [label="Generate\nMetrics"];
+        final_verdict [label="Final\nVerdict", shape=diamond, fillcolor=yellow];
+        genuine_report [label="Genuine\nFunctionality Report", shape=note, fillcolor=lightgreen];
+        theater_report [label="Theater\nDetected Report", shape=note, fillcolor=red];
+        partial_report [label="Partial\nFunctionality Report", shape=note, fillcolor=yellow];
+
+        calculate_confidence -> assess_reliability;
+        assess_reliability -> assess_completeness;
+        assess_completeness -> generate_metrics;
+        generate_metrics -> final_verdict;
+        final_verdict -> genuine_report [label="High Confidence"];
+        final_verdict -> theater_report [label="Theater Detected"];
+        final_verdict -> partial_report [label="Partial"];
+    }
+
+    // Error Handling & Recovery
+    subgraph cluster_error {
+        label="Error Handling & Recovery";
+        style=filled;
+        fillcolor=mistyrose;
+
+        error_detect [label="Error\nDetection", shape=octagon, fillcolor=red];
+        sandbox_error [label="Sandbox\nError?", shape=diamond, fillcolor=yellow];
+        test_error [label="Test\nError?", shape=diamond, fillcolor=yellow];
+        fix_error [label="Fix\nError?", shape=diamond, fillcolor=yellow];
+        retry_operation [label="Retry\nOperation"];
+        escalate [label="Escalate to\nManual Review", shape=octagon, fillcolor=orange];
+
+        error_detect -> sandbox_error;
+        sandbox_error -> retry_operation [label="Yes"];
+        sandbox_error -> test_error [label="No"];
+        test_error -> retry_operation [label="Yes"];
+        test_error -> fix_error [label="No"];
+        fix_error -> escalate [label="Yes"];
+        fix_error -> retry_operation [label="No"];
+    }
+
+    // Memory & Learning
+    memory_store [label="Memory Store\n(Audit History)", shape=cylinder, fillcolor=lightgray];
+    pattern_learning [label="Pattern\nLearning DB", shape=cylinder, fillcolor=lightgray];
+
+    // Main workflow
+    start -> parse_code;
+    assess_risk -> check_stubs;
+    assess_risk -> create_sandbox;
+
+    theater_score -> gate_theater [label="Low Risk"];
+    theater_findings -> gate_theater [label="High Risk"];
+
+    gate_theater -> end_theater [label="Theater Detected", color=red];
+    gate_theater -> analyze_api [label="Proceed"];
+
+    sandbox_ready -> execute_tests;
+    test_suite_ready -> execute_tests;
+
+    execution_data -> verify_outputs;
+
+    reality_score -> gate_execution [label="High Reality"];
+    reality_score -> identify_failures [label="Low Reality"];
+
+    gate_execution -> analyze_patterns [label="Pass"];
+    gate_execution -> identify_failures [label="Fail"];
+
+    bug_report -> prioritize_fixes;
+    fix_result -> gate_functionality;
+
+    best_practices_score -> gate_quality;
+
+    gate_functionality -> calculate_confidence [label="Pass"];
+    gate_quality -> calculate_confidence [label="Pass"];
+
+    genuine_report -> end_genuine;
+    theater_report -> end_theater;
+    partial_report -> prioritize_fixes [label="Fix Issues"];
+
+    // Memory connections
+    execution_data -> memory_store [style=dashed, color=blue];
+    bug_report -> memory_store [style=dashed, color=blue];
+    genuine_report -> memory_store [style=dashed, color=blue];
+    theater_report -> memory_store [style=dashed, color=blue];
+
+    // Pattern learning
+    theater_findings -> pattern_learning [style=dashed, color=purple];
+    reality_score -> pattern_learning [style=dashed, color=purple];
+    best_practices_score -> pattern_learning [style=dashed, color=purple];
+
+    // Error routing
+    create_sandbox -> error_detect [label="Sandbox Fail", color=red, style=dashed];
+    execute_tests -> error_detect [label="Execution Fail", color=red, style=dashed];
+    test_fixes -> error_detect [label="Fix Fail", color=red, style=dashed];
+
+    retry_operation -> create_sandbox [label="Retry Sandbox", color=orange];
+    retry_operation -> execute_tests [label="Retry Execution", color=orange];
+    escalate -> end_theater [label="Cannot Verify", color=red];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor=white;
+
+        legend_gate [label="Verification Gate", shape=diamond, fillcolor=yellow];
+        legend_test [label="Test Execution", shape=hexagon];
+        legend_error [label="Error State", shape=octagon, fillcolor=red];
+        legend_service [label="External Service", shape=cylinder, fillcolor=orange];
+        legend_output [label="Output/Report", shape=note];
+    }
+}

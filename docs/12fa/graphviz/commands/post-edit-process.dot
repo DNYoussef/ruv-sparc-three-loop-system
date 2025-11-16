@@ -1,0 +1,91 @@
+// Post-Edit Command Workflow
+// Post-edit hooks for formatting and validation
+digraph post_edit_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/post-edit\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        change_detector [label="Change\nDetector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_formatting {
+        label="Auto-Formatting";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        code_formatter [label="Code\nFormatter", fillcolor="#2563eb", fontcolor="#ffffff"];
+        import_organizer [label="Import\nOrganizer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        whitespace_cleaner [label="Whitespace\nCleaner", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        syntax_checker [label="Syntax\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+        linter [label="Linter", fillcolor="#10b981", fontcolor="#ffffff"];
+        type_checker [label="Type\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_memory {
+        label="Memory Storage";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        memory_storer [label="Memory\nStorer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        pattern_recorder [label="Pattern\nRecorder", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        neural_trainer [label="Neural\nTrainer", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_commit {
+        label="Auto-Commit (Optional)";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        git_stager [label="Git\nStager", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        commit_creator [label="Commit\nCreator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        formatted_file [label="Formatted\nFile", fillcolor="#059669", fontcolor="#ffffff"];
+        validation_log [label="Validation\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> change_detector;
+    change_detector -> code_formatter -> import_organizer -> whitespace_cleaner;
+    whitespace_cleaner -> syntax_checker -> linter -> type_checker;
+    type_checker -> memory_storer -> pattern_recorder -> neural_trainer;
+    neural_trainer -> git_stager -> commit_creator;
+    commit_creator -> formatted_file -> validation_log;
+    validation_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    linter -> code_formatter [label="Fix Issues", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Formatting", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Validation", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

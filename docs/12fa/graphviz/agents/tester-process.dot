@@ -1,0 +1,296 @@
+digraph TESTER_AGENT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Tester Agent Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Agent Configuration\n45 Commands + 18 MCP Tools"];
+    validate_capabilities [label="Validate Capabilities\nunit, integration, e2e,\nperformance, security testing"];
+    check_deps [label="Check Dependencies\nTest Frameworks, Memory"];
+
+    start -> load_config;
+    load_config -> validate_capabilities;
+    validate_capabilities -> check_deps;
+  }
+
+  // =============================================================================
+  // COORDINATION SETUP
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Test Coordination Setup";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    init_memory [label="Initialize Memory Namespace\ntesting/tester/{task-id}/*"];
+    retrieve_implementation [label="Retrieve Implementation\nfrom Coder"];
+    retrieve_requirements [label="Retrieve Requirements\nfrom Planner"];
+    analyze_test_strategy [label="Analyze Test Strategy\nTest Pyramid approach"];
+
+    check_deps -> init_memory;
+    init_memory -> retrieve_implementation;
+    retrieve_implementation -> retrieve_requirements;
+    retrieve_requirements -> analyze_test_strategy;
+  }
+
+  // =============================================================================
+  // UNIT TESTING
+  // =============================================================================
+  subgraph cluster_unit {
+    label="Unit Testing Phase";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    plan_unit_tests [label="Plan Unit Tests\nTest each function/method", fillcolor=lightgreen];
+    write_unit_tests [label="Write Unit Tests\n/test-unit", fillcolor=green];
+    run_unit_tests [label="Run Unit Tests\n/test-run --unit"];
+    unit_coverage [label="Check Coverage\n/test-coverage"];
+    unit_result [shape=diamond, label="Unit Tests\nPass?"];
+    unit_coverage_check [shape=diamond, label="Coverage\n>90%?"];
+
+    analyze_test_strategy -> plan_unit_tests;
+    plan_unit_tests -> write_unit_tests;
+    write_unit_tests -> run_unit_tests;
+    run_unit_tests -> unit_result;
+    unit_result -> unit_coverage [label="Yes"];
+    unit_result -> debug_unit [label="No"];
+    unit_coverage -> unit_coverage_check;
+    unit_coverage_check -> write_unit_tests [label="No"];
+  }
+
+  // =============================================================================
+  // INTEGRATION TESTING
+  // =============================================================================
+  subgraph cluster_integration {
+    label="Integration Testing Phase";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    plan_integration_tests [label="Plan Integration Tests\nTest component interactions", fillcolor=lightblue];
+    write_integration_tests [label="Write Integration Tests\n/test-integration"];
+    setup_test_db [label="Setup Test Database\n& Dependencies"];
+    run_integration_tests [label="Run Integration Tests"];
+    integration_result [shape=diamond, label="Integration\nTests Pass?"];
+
+    unit_coverage_check -> plan_integration_tests [label="Yes"];
+    plan_integration_tests -> write_integration_tests;
+    write_integration_tests -> setup_test_db;
+    setup_test_db -> run_integration_tests;
+    run_integration_tests -> integration_result;
+    integration_result -> debug_integration [label="No"];
+  }
+
+  // =============================================================================
+  // E2E TESTING
+  // =============================================================================
+  subgraph cluster_e2e {
+    label="End-to-End Testing Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    plan_e2e_tests [label="Plan E2E Tests\nUser workflows & scenarios", fillcolor=purple];
+    write_e2e_tests [label="Write E2E Tests\n/test-e2e"];
+    setup_e2e_env [label="Setup E2E Environment\nBrowser, API, Database"];
+    run_e2e_tests [label="Run E2E Tests"];
+    e2e_result [shape=diamond, label="E2E Tests\nPass?"];
+
+    integration_result -> plan_e2e_tests [label="Yes"];
+    plan_e2e_tests -> write_e2e_tests;
+    write_e2e_tests -> setup_e2e_env;
+    setup_e2e_env -> run_e2e_tests;
+    run_e2e_tests -> e2e_result;
+    e2e_result -> debug_e2e [label="No"];
+  }
+
+  // =============================================================================
+  // PERFORMANCE TESTING
+  // =============================================================================
+  subgraph cluster_performance {
+    label="Performance Testing Phase";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    plan_performance_tests [label="Plan Performance Tests\nLoad, stress, endurance", fillcolor=yellow];
+    setup_load_test [label="Setup Load Testing\nConcurrent users, requests"];
+    run_performance_tests [label="Run Performance Tests\n/performance-test"];
+    analyze_metrics [label="Analyze Metrics\nResponse time, throughput"];
+    performance_result [shape=diamond, label="Performance\nAcceptable?"];
+
+    e2e_result -> plan_performance_tests [label="Yes"];
+    plan_performance_tests -> setup_load_test;
+    setup_load_test -> run_performance_tests;
+    run_performance_tests -> analyze_metrics;
+    analyze_metrics -> performance_result;
+    performance_result -> optimize_performance [label="No"];
+  }
+
+  // =============================================================================
+  // SECURITY TESTING
+  // =============================================================================
+  subgraph cluster_security {
+    label="Security Testing Phase";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    plan_security_tests [label="Plan Security Tests\nAuthentication, Authorization", fillcolor=crimson, fontcolor=white];
+    test_auth [label="Test Authentication\nLogin, JWT, Sessions"];
+    test_authorization [label="Test Authorization\nRoles, Permissions"];
+    test_injection [label="Test Injection\nSQL, XSS, CSRF"];
+    test_encryption [label="Test Encryption\nData at rest, in transit"];
+    security_result [shape=diamond, label="Security\nTests Pass?"];
+
+    performance_result -> plan_security_tests [label="Yes"];
+    plan_security_tests -> test_auth;
+    test_auth -> test_authorization;
+    test_authorization -> test_injection;
+    test_injection -> test_encryption;
+    test_encryption -> security_result;
+    security_result -> document_security_issues [label="No"];
+  }
+
+  // =============================================================================
+  // EDGE CASE TESTING
+  // =============================================================================
+  subgraph cluster_edge_cases {
+    label="Edge Case & Error Testing";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    identify_edge_cases [label="Identify Edge Cases\nBoundary values, nulls", fillcolor=purple];
+    test_error_handling [label="Test Error Handling\nExceptions, validation"];
+    test_boundary_conditions [label="Test Boundary Conditions\nMin, max, empty, overflow"];
+    test_race_conditions [label="Test Race Conditions\nConcurrency issues"];
+    edge_case_result [shape=diamond, label="Edge Cases\nHandled?"];
+
+    security_result -> identify_edge_cases [label="Yes"];
+    identify_edge_cases -> test_error_handling;
+    test_error_handling -> test_boundary_conditions;
+    test_boundary_conditions -> test_race_conditions;
+    test_race_conditions -> edge_case_result;
+    edge_case_result -> document_edge_case_issues [label="No"];
+  }
+
+  // =============================================================================
+  // COORDINATION OUTPUT
+  // =============================================================================
+  subgraph cluster_output {
+    label="Agent Coordination Output";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    aggregate_results [label="Aggregate Test Results"];
+    calculate_coverage [label="Calculate Total Coverage"];
+    store_test_results [label="Store Test Results\nmemory_store(testing/tester/{task-id}/results)", fillcolor=lightblue];
+    check_pass_criteria [shape=diamond, label="All Tests\nPass?"];
+    notify_reviewer [label="Notify Reviewer\n/communicate-notify"];
+    notify_coder [label="Notify Coder\n/agent-handoff --to coder"];
+
+    edge_case_result -> aggregate_results [label="Yes"];
+    aggregate_results -> calculate_coverage;
+    calculate_coverage -> store_test_results;
+    store_test_results -> check_pass_criteria;
+    check_pass_criteria -> notify_reviewer [label="Yes"];
+    check_pass_criteria -> notify_coder [label="No"];
+  }
+
+  // =============================================================================
+  // COMPLETION
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Test Environment", fillcolor=lightgreen];
+    generate_report [label="Generate Test Report\nCoverage, results, metrics"];
+    log_metrics [label="Log Test Metrics"];
+    neural_train [label="Train Neural Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Testing Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+
+    notify_reviewer -> cleanup;
+    cleanup -> generate_report;
+    generate_report -> log_metrics;
+    log_metrics -> neural_train;
+    neural_train -> success;
+  }
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Debugging";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    debug_unit [label="Debug Unit Test Failures", fillcolor=orange];
+    debug_integration [label="Debug Integration Failures", fillcolor=orange];
+    debug_e2e [label="Debug E2E Failures", fillcolor=orange];
+    optimize_performance [label="Performance Optimization Needed", fillcolor=orange];
+    document_security_issues [label="Document Security Issues", fillcolor=red, fontcolor=white];
+    document_edge_case_issues [label="Document Edge Case Issues", fillcolor=orange];
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nCoder/User"];
+    log_error [label="Log Error Details"];
+    failure [label="Testing Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+
+    debug_unit -> write_unit_tests [style=dashed];
+    debug_integration -> write_integration_tests [style=dashed];
+    debug_e2e -> write_e2e_tests [style=dashed];
+    optimize_performance -> escalate;
+    document_security_issues -> escalate;
+    document_edge_case_issues -> escalate;
+
+    escalate -> log_error;
+    log_error -> failure;
+  }
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_command [shape=box, label="/command", fillcolor=yellow];
+    legend_critical [shape=box, label="Critical", fillcolor=red, fontcolor=white];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_warn [shape=box, label="Warning", fillcolor=orange];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_command [style=invis];
+    legend_command -> legend_critical [style=invis];
+    legend_critical -> legend_process [style=invis];
+    legend_process -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

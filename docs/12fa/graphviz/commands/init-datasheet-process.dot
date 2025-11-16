@@ -1,0 +1,114 @@
+digraph InitDatasheetCommand {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Command definition
+    start [label="/init-datasheet\\nCommand Activated", fillcolor=lightgreen];
+
+    // Phase 1: Validation & Setup
+    validation_phase [label="PHASE 1: Validation & Setup", fillcolor=lightyellow, shape=box3d];
+    validate_dataset [label="Validate Dataset\\nExists"];
+    check_existing [label="Check for Existing\\nDatasheet"];
+    select_template [label="Select Template\\n(full/minimal/medical)"];
+    init_metadata [label="Initialize Metadata\\n(name, version, date)"];
+
+    // Phase 2: Section Population
+    population_phase [label="PHASE 2: Section Population (7 Sections)", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_sections {
+        label="47 Questions Across 7 Sections";
+        style=filled;
+        fillcolor=lightgrey;
+
+        section_motivation [label="Section 1:\\nMotivation (4q)"];
+        section_composition [label="Section 2:\\nComposition (12q)"];
+        section_collection [label="Section 3:\\nCollection (9q)"];
+        section_preprocessing [label="Section 4:\\nPreprocessing (6q)"];
+        section_uses [label="Section 5:\\nUses (6q)"];
+        section_distribution [label="Section 6:\\nDistribution (6q)"];
+        section_maintenance [label="Section 7:\\nMaintenance (4q)"];
+    }
+
+    // Phase 3: Interactive Mode (Optional)
+    interactive_phase [label="PHASE 3: Interactive Questionnaire", fillcolor=lightyellow, shape=box3d];
+    launch_questionnaire [label="Launch Interactive\\nQuestion Flow"];
+    capture_responses [label="Capture Structured\\nResponses"];
+    validate_completeness [label="Validate Question\\nCoverage"];
+
+    // Phase 4: Quality Validation
+    quality_phase [label="PHASE 4: Quality Validation", fillcolor=lightyellow, shape=box3d];
+    check_completion [label="Check Completion Rate\\n(≥80% required)"];
+    validate_critical_fields [label="Validate Critical\\nFields Populated"];
+    check_bias_audit [label="Check Bias Audit\\nReferenced"];
+    check_ethical_review [label="Check Ethical\\nReview Status"];
+
+    // Phase 5: Multi-Format Generation
+    generation_phase [label="PHASE 5: Multi-Format Generation", fillcolor=lightyellow, shape=box3d];
+    generate_markdown [label="Generate Markdown\\nDatasheet"];
+    generate_json [label="Generate JSON\\n(Machine-Readable)"];
+    generate_yaml [label="Generate YAML\\nMetadata"];
+    generate_validation_report [label="Generate Validation\\nReport"];
+
+    // Phase 6: Memory Integration
+    memory_phase [label="PHASE 6: Memory Integration", fillcolor=lightyellow, shape=box3d];
+    store_memory [label="Store in Memory MCP\\nkey: sop/datasheets/{name}"];
+    tag_metadata [label="Tag: SOP, Pipeline-C,\\nForm-F-C1, gate-1"];
+
+    // Output & Completion
+    deliverables [label="Deliverables:\\n- {name}-datasheet.md (80%+ complete)\\n- {name}-datasheet.json\\n- {name}-metadata.yaml\\n- {name}-validation-report.md"];
+    end [label="/init-datasheet\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Validation & Setup
+    start -> validation_phase;
+    validation_phase -> validate_dataset;
+    validate_dataset -> check_existing;
+    check_existing -> select_template;
+    select_template -> init_metadata;
+
+    // Flow - Section Population
+    init_metadata -> population_phase;
+    population_phase -> section_motivation;
+    section_motivation -> section_composition;
+    section_composition -> section_collection;
+    section_collection -> section_preprocessing;
+    section_preprocessing -> section_uses;
+    section_uses -> section_distribution;
+    section_distribution -> section_maintenance;
+
+    // Flow - Interactive (Optional)
+    section_maintenance -> interactive_phase [label="--interactive"];
+    section_maintenance -> quality_phase [label="Default"];
+    interactive_phase -> launch_questionnaire;
+    launch_questionnaire -> capture_responses;
+    capture_responses -> validate_completeness;
+    validate_completeness -> quality_phase;
+
+    // Flow - Quality Validation
+    quality_phase -> check_completion;
+    check_completion -> validate_critical_fields;
+    validate_critical_fields -> check_bias_audit;
+    check_bias_audit -> check_ethical_review;
+
+    // Flow - Multi-Format Generation
+    check_ethical_review -> generation_phase;
+    generation_phase -> generate_markdown;
+    generate_markdown -> generate_json;
+    generate_json -> generate_yaml;
+    generate_yaml -> generate_validation_report;
+
+    // Flow - Memory Integration
+    generate_validation_report -> memory_phase [label="--store-memory"];
+    generate_validation_report -> deliverables [label="Skip Memory"];
+    memory_phase -> store_memory;
+    store_memory -> tag_metadata;
+    tag_metadata -> deliverables;
+
+    // Flow - Output
+    deliverables -> end;
+
+    // Metadata
+    label="/init-datasheet Command - Complete Workflow\\nForm F-C1 (Datasheet for Datasets)\\nQuality Gate 1 Requirement";
+    fontsize=16;
+    fontname="Arial Bold";
+}

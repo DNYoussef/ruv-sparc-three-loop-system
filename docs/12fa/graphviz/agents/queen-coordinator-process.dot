@@ -1,0 +1,100 @@
+// Queen Coordinator Agent - Strategic Leader Coordinating Swarm
+// Strategic leadership, 86-agent registry, dynamic agent selection, Byzantine consensus
+digraph queen_coordinator_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        queen_init [label="Queen Seraphina\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        agent_registry [label="86-Agent\nRegistry", fillcolor="#2d3748", fontcolor="#ffffff"];
+        strategy_library [label="Strategy\nLibrary", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_strategic {
+        label="Strategic Planning"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        goal_analyzer [label="Goal\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_assessor [label="Complexity\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        strategy_designer [label="Strategy\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        resource_planner [label="Resource\nPlanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_agent_selection {
+        label="Dynamic Agent Selection"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        capability_matcher [label="Capability\nMatcher", fillcolor="#059669", fontcolor="#ffffff"];
+        workload_analyzer [label="Workload\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+        optimal_selector [label="Optimal Agent\nSelector", fillcolor="#059669", fontcolor="#ffffff"];
+        team_composer [label="Team\nComposer", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_orchestration {
+        label="Swarm Orchestration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        task_distributor [label="Task\nDistributor", fillcolor="#0891b2", fontcolor="#ffffff"];
+        coordination_manager [label="Coordination\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+        progress_monitor [label="Progress\nMonitor", fillcolor="#0891b2", fontcolor="#ffffff"];
+        bottleneck_resolver [label="Bottleneck\nResolver", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_consensus {
+        label="Byzantine Consensus"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        proposal_aggregator [label="Proposal\nAggregator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        vote_collector [label="Vote\nCollector", fillcolor="#dc2626", fontcolor="#ffffff"];
+        consensus_calculator [label="Consensus\nCalculator (2/3)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        decision_executor [label="Decision\nExecutor", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_adaptation {
+        label="Adaptive Intelligence"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        pattern_learner [label="Pattern\nLearner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        strategy_optimizer [label="Strategy\nOptimizer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        agent_performance_tracker [label="Agent Performance\nTracker", fillcolor="#8b4789", fontcolor="#ffffff"];
+        swarm_evolver [label="Swarm\nEvolver", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_coordination_hive {
+        label="Hive Mind Coordination"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        scout_coord [label="Scout Explorer\nCoordination", fillcolor="#ef4444", fontcolor="#ffffff"];
+        worker_coord [label="Worker Specialist\nCoordination", fillcolor="#ef4444", fontcolor="#ffffff"];
+        memory_coord [label="Swarm Memory\nCoordination", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        all_agents_coord [label="All 86 Agents\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    queen_init -> agent_registry [label="Load 86 Agents"];
+    queen_init -> strategy_library [label="Load"];
+    agent_registry -> goal_analyzer [label="Analyze Goal"];
+    goal_analyzer -> complexity_assessor [label="Assess Complexity"];
+    complexity_assessor -> strategy_designer [label="Design Strategy"];
+    strategy_designer -> resource_planner [label="Plan Resources"];
+    resource_planner -> capability_matcher [label="Match Capabilities"];
+    capability_matcher -> workload_analyzer [label="Analyze Workload"];
+    workload_analyzer -> optimal_selector [label="Select Optimal"];
+    optimal_selector -> team_composer [label="Compose Team"];
+    team_composer -> task_distributor [label="Distribute Tasks"];
+    task_distributor -> coordination_manager [label="Coordinate"];
+    coordination_manager -> progress_monitor [label="Monitor"];
+    progress_monitor -> bottleneck_resolver [label="Resolve"];
+    bottleneck_resolver -> proposal_aggregator [label="Aggregate Proposals"];
+    proposal_aggregator -> vote_collector [label="Collect Votes"];
+    vote_collector -> consensus_calculator [label="Calculate (2/3)"];
+    consensus_calculator -> decision_executor [label="Execute"];
+    decision_executor -> pattern_learner [label="Learn Patterns"];
+    pattern_learner -> strategy_optimizer [label="Optimize"];
+    strategy_optimizer -> agent_performance_tracker [label="Track Performance"];
+    agent_performance_tracker -> swarm_evolver [label="Evolve Swarm"];
+    coordination_manager -> scout_coord [label="Coordinate Scouts"];
+    task_distributor -> worker_coord [label="Coordinate Workers"];
+    progress_monitor -> memory_coord [label="Coordinate Memory"];
+    swarm_evolver -> all_agents_coord [label="Coordinate All"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Queen Seraphina", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Strategic Planning", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Agent Selection", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+}

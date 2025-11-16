@@ -1,0 +1,232 @@
+digraph SecurityScanning {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Security Audit Workflow</b><br/>Dependency Audit → SAST/DAST → Container Scanning → Report>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Security Scanning Legend";
+        style=filled;
+        color="#e9ecef";
+
+        legend_critical [label="Critical Severity", shape=box, fillcolor="#dc3545"];
+        legend_high [label="High Severity", shape=box, fillcolor="#fd7e14"];
+        legend_medium [label="Medium Severity", shape=box, fillcolor="#ffc107"];
+        legend_low [label="Low Severity", shape=box, fillcolor="#28a745"];
+
+        legend_critical -> legend_high -> legend_medium -> legend_low [style=invis];
+    }
+
+    // Start
+    start [label="Security Scan\nTriggered", shape=oval, fillcolor="#d4edda"];
+
+    // Dependency Scanning
+    subgraph cluster_dependency {
+        label="Phase 1: Dependency Vulnerability Scanning";
+        style=filled;
+        color="#cfe2ff";
+
+        dep_inventory [label="Inventory\nSBOM Generation", shape=box, fillcolor="#b6d7ff"];
+        dep_npm_audit [label="npm audit\nNode.js Deps", shape=box, fillcolor="#b6d7ff"];
+        dep_snyk [label="Snyk Scan\nVulnerability DB", shape=box, fillcolor="#b6d7ff"];
+        dep_owasp [label="OWASP Dependency\nCheck", shape=box, fillcolor="#b6d7ff"];
+        dep_license [label="License Check\nCompliance", shape=box, fillcolor="#b6d7ff"];
+        dep_outdated [label="Outdated Packages\nUpdate Check", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    dep_severity [label="Critical/High\nVulns?", shape=diamond, fillcolor="#fff3cd"];
+    dep_auto_fix [label="Auto-Fix\nAvailable?", shape=diamond, fillcolor="#fff3cd"];
+    dep_apply_fix [label="Apply Auto-Fix\nnpm audit fix", shape=box, fillcolor="#d4edda"];
+
+    // SAST (Static Analysis)
+    subgraph cluster_sast {
+        label="Phase 2: SAST (Static Application Security Testing)";
+        style=filled;
+        color="#f8d7da";
+
+        sast_codeql [label="CodeQL\nGitHub Security", shape=box, fillcolor="#f5c6cb"];
+        sast_semgrep [label="Semgrep\nRule-based", shape=box, fillcolor="#f5c6cb"];
+        sast_sonarqube [label="SonarQube\nCode Quality", shape=box, fillcolor="#f5c6cb"];
+        sast_eslint_sec [label="ESLint Security\nPlugin", shape=box, fillcolor="#f5c6cb"];
+        sast_bandit [label="Bandit\nPython Security", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    sast_findings [label="SAST\nFindings?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Secret Scanning
+    subgraph cluster_secrets {
+        label="Phase 3: Secret & Credential Scanning";
+        style=filled;
+        color="#dc3545";
+
+        secret_gitleaks [label="Gitleaks\nGit History", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        secret_trufflehog [label="TruffleHog\nEntropy Detection", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        secret_github [label="GitHub Secret\nScanning", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        secret_env [label="Environment Vars\nHardcoded Check", shape=box, fillcolor="#dc3545", fontcolor="white"];
+    }
+
+    secret_found [label="Secrets\nFound?", shape=diamond, fillcolor="#fff3cd"];
+    secret_rotate [label="Rotate Secrets\nImmediate Action", shape=box, fillcolor="#dc3545", fontcolor="white"];
+
+    // Container/Image Scanning
+    subgraph cluster_container {
+        label="Phase 4: Container & Image Scanning";
+        style=filled;
+        color="#d1e7dd";
+
+        container_trivy [label="Trivy Scan\nVulnerabilities", shape=box, fillcolor="#a3cfbb"];
+        container_aqua [label="Aqua Security\nRuntime Protection", shape=box, fillcolor="#a3cfbb"];
+        container_clair [label="Clair\nStatic Analysis", shape=box, fillcolor="#a3cfbb"];
+        container_baseline [label="Baseline Check\nCIS Benchmarks", shape=box, fillcolor="#a3cfbb"];
+        container_malware [label="Malware Scan\nClamAV", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    container_severity [label="Container\nIssues?", shape=diamond, fillcolor="#fff3cd"];
+
+    // DAST (Dynamic Analysis)
+    subgraph cluster_dast {
+        label="Phase 5: DAST (Dynamic Application Security Testing)";
+        style=filled;
+        color="#e7d1e7";
+
+        dast_owasp_zap [label="OWASP ZAP\nWeb App Scan", shape=box, fillcolor="#d4b5d4"];
+        dast_burp [label="Burp Suite\nAPI Security", shape=box, fillcolor="#d4b5d4"];
+        dast_sqlmap [label="SQLMap\nInjection Test", shape=box, fillcolor="#d4b5d4"];
+        dast_xss [label="XSS Scanner\nCross-Site Script", shape=box, fillcolor="#d4b5d4"];
+        dast_csrf [label="CSRF Check\nToken Validation", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    dast_vulns [label="Runtime\nVulns?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Compliance Checks
+    subgraph cluster_compliance {
+        label="Phase 6: Compliance & Policy Checks";
+        style=filled;
+        color="#fff3cd";
+
+        comp_cis [label="CIS Benchmarks\nConfig Hardening", shape=box, fillcolor="#ffeeba"];
+        comp_pci [label="PCI-DSS\nPayment Security", shape=box, fillcolor="#ffeeba"];
+        comp_hipaa [label="HIPAA\nHealthcare Data", shape=box, fillcolor="#ffeeba"];
+        comp_gdpr [label="GDPR\nData Privacy", shape=box, fillcolor="#ffeeba"];
+        comp_policy [label="Custom Policies\nOrg Standards", shape=box, fillcolor="#ffeeba"];
+    }
+
+    comp_passed [label="Compliant?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Reporting & Remediation
+    subgraph cluster_reporting {
+        label="Phase 7: Reporting & Remediation";
+        style=filled;
+        color="#e9ecef";
+
+        report_aggregate [label="Aggregate Results\nAll Scanners", shape=box, fillcolor="#dee2e6"];
+        report_dedupe [label="Deduplicate\nFindings", shape=box, fillcolor="#dee2e6"];
+        report_prioritize [label="Prioritize by\nCVSS Score", shape=box, fillcolor="#dee2e6"];
+        report_jira [label="Create Tickets\nJira/GitHub Issues", shape=box, fillcolor="#dee2e6"];
+        report_dashboard [label="Security Dashboard\nMetrics/Trends", shape=box, fillcolor="#dee2e6"];
+        report_sarif [label="SARIF Export\nStandard Format", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Artifacts
+    vuln_report [label="Vulnerability Report\nJSON/SARIF", shape=cylinder, fillcolor="#f8d7da"];
+    sbom [label="SBOM\nCycloneDX/SPDX", shape=cylinder, fillcolor="#f8d7da"];
+    remediation_plan [label="Remediation Plan\nAction Items", shape=cylinder, fillcolor="#f8d7da"];
+
+    // Decision: Block or Warn
+    block_decision [label="Block\nDeployment?", shape=diamond, fillcolor="#fff3cd"];
+
+    // End States
+    blocked [label="Deployment\nBLOCKED", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+    warning [label="Deployment\nWARNING", shape=oval, fillcolor="#ffc107"];
+    passed [label="Security\nPASSED", shape=oval, fillcolor="#28a745", fontcolor="white"];
+
+    // Workflow Connections
+    start -> dep_inventory;
+
+    // Dependency scanning flow
+    dep_inventory -> dep_npm_audit;
+    dep_npm_audit -> dep_snyk;
+    dep_snyk -> dep_owasp;
+    dep_owasp -> dep_license;
+    dep_license -> dep_outdated;
+    dep_outdated -> dep_severity;
+
+    dep_severity -> dep_auto_fix [label="Critical/High", color="red"];
+    dep_severity -> sast_codeql [label="Low/None", color="green"];
+
+    dep_auto_fix -> dep_apply_fix [label="Yes", color="green"];
+    dep_auto_fix -> sast_codeql [label="No - Manual", color="orange"];
+    dep_apply_fix -> sast_codeql;
+
+    // SAST flow
+    sast_codeql -> sast_semgrep;
+    sast_semgrep -> sast_sonarqube;
+    sast_sonarqube -> sast_eslint_sec;
+    sast_eslint_sec -> sast_bandit;
+    sast_bandit -> sast_findings;
+
+    sast_findings -> secret_gitleaks [label="Continue", color="blue"];
+
+    // Secret scanning flow
+    secret_gitleaks -> secret_trufflehog;
+    secret_trufflehog -> secret_github;
+    secret_github -> secret_env;
+    secret_env -> secret_found;
+
+    secret_found -> secret_rotate [label="Secrets Found!", color="red"];
+    secret_found -> container_trivy [label="No Secrets", color="green"];
+    secret_rotate -> blocked;
+
+    // Container scanning flow
+    container_trivy -> container_aqua;
+    container_aqua -> container_clair;
+    container_clair -> container_baseline;
+    container_baseline -> container_malware;
+    container_malware -> container_severity;
+
+    container_severity -> dast_owasp_zap [label="Continue", color="blue"];
+
+    // DAST flow
+    dast_owasp_zap -> dast_burp;
+    dast_burp -> dast_sqlmap;
+    dast_sqlmap -> dast_xss;
+    dast_xss -> dast_csrf;
+    dast_csrf -> dast_vulns;
+
+    dast_vulns -> comp_cis [label="Continue", color="blue"];
+
+    // Compliance flow
+    comp_cis -> comp_pci;
+    comp_pci -> comp_hipaa;
+    comp_hipaa -> comp_gdpr;
+    comp_gdpr -> comp_policy;
+    comp_policy -> comp_passed;
+
+    comp_passed -> report_aggregate [label="Compliant", color="green"];
+    comp_passed -> report_aggregate [label="Non-Compliant", color="red"];
+
+    // Reporting flow
+    report_aggregate -> report_dedupe;
+    report_dedupe -> report_prioritize;
+    report_prioritize -> report_jira;
+    report_jira -> report_dashboard;
+    report_dashboard -> report_sarif;
+    report_sarif -> vuln_report;
+    vuln_report -> sbom;
+    sbom -> remediation_plan;
+    remediation_plan -> block_decision;
+
+    // Final decision
+    block_decision -> blocked [label="Critical + 0 Fix", color="red"];
+    block_decision -> warning [label="High + Fix Available", color="orange"];
+    block_decision -> passed [label="Low/Medium Only", color="green"];
+}

@@ -1,0 +1,102 @@
+// SPARC Workflow Manager Command Workflow
+// Process orchestration and automation
+digraph sparc_workflow_manager_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:workflow-manager\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        workflow_parser [label="Workflow\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_design {
+        label="Workflow Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        step_definer [label="Step\nDefiner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_resolver [label="Dependency\nResolver", fillcolor="#2563eb", fontcolor="#ffffff"];
+        condition_builder [label="Condition\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        loop_handler [label="Loop\nHandler", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_orchestration {
+        label="Process Orchestration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        workflow_engine [label="Workflow\nEngine", fillcolor="#10b981", fontcolor="#ffffff"];
+        parallel_executor [label="Parallel\nExecutor", fillcolor="#10b981", fontcolor="#ffffff"];
+        sequential_executor [label="Sequential\nExecutor", fillcolor="#10b981", fontcolor="#ffffff"];
+        conditional_router [label="Conditional\nRouter", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_automation {
+        label="Automation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        trigger_manager [label="Trigger\nManager", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        schedule_engine [label="Schedule\nEngine", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        event_listener [label="Event\nListener", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        retry_controller [label="Retry\nController", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_monitoring {
+        label="Monitoring";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        progress_tracker [label="Progress\nTracker", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        failure_handler [label="Failure\nHandler", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        metrics_collector [label="Metrics\nCollector", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        workflow_result [label="Workflow\nResult", fillcolor="#059669", fontcolor="#ffffff"];
+        execution_log [label="Execution\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> workflow_parser;
+    workflow_parser -> step_definer -> dependency_resolver -> condition_builder -> loop_handler;
+    loop_handler -> workflow_engine -> parallel_executor;
+    workflow_engine -> sequential_executor;
+    workflow_engine -> conditional_router;
+    parallel_executor -> trigger_manager;
+    sequential_executor -> trigger_manager;
+    conditional_router -> trigger_manager;
+    trigger_manager -> schedule_engine -> event_listener -> retry_controller;
+    retry_controller -> progress_tracker -> failure_handler -> metrics_collector;
+    metrics_collector -> workflow_result -> execution_log;
+    execution_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    failure_handler -> retry_controller [label="Retry", style=dashed, color="#ef4444"];
+    failure_handler -> workflow_result [label="Failed", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Design", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Orchestration", fillcolor="#10b981", fontcolor="#ffffff"];
+        legend4 [label="Automation", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+}

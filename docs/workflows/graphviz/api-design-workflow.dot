@@ -1,0 +1,211 @@
+/**
+ * API Design Methodology Workflow
+ * Command: /api-design
+ * Phase: 3 (Development Enhancement)
+ */
+
+digraph api_design {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>API Design Workflow</B><BR/>OpenAPI → Validation → Testing → Documentation>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Requirements Analysis
+    subgraph cluster_requirements {
+        label="Requirements Analysis";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="API Design\nRequest", shape=box, fillcolor="#bbdefb", penwidth=2];
+        gather_reqs [label="Gather\nRequirements", shape=box, fillcolor="#90caf9"];
+        identify_resources [label="Identify\nResources", shape=box, fillcolor="#64b5f6"];
+        define_operations [label="Define\nOperations", shape=box, fillcolor="#42a5f5"];
+        auth_strategy [label="Authentication\nStrategy", shape=box, fillcolor="#2196f3"];
+        data_models [label="Data Models\n(Schemas)", shape=box, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: OpenAPI Specification
+    subgraph cluster_openapi {
+        label="OpenAPI Specification";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        openapi_start [label="Generate\nOpenAPI Spec", shape=box, fillcolor="#e1bee7"];
+        version [label="API Version\n(3.0/3.1)", shape=diamond, fillcolor="#ce93d8"];
+        define_paths [label="Define\nPaths", shape=box, fillcolor="#ba68c8"];
+        define_schemas [label="Define\nSchemas", shape=box, fillcolor="#ab47bc"];
+        define_security [label="Define Security\nSchemes", shape=box, fillcolor="#9c27b0"];
+        define_responses [label="Define\nResponses", shape=box, fillcolor="#8e24aa"];
+        define_params [label="Define\nParameters", shape=box, fillcolor="#7b1fa2"];
+        add_examples [label="Add\nExamples", shape=box, fillcolor="#6a1b9a"];
+    }
+
+    // Subgraph: Validation
+    subgraph cluster_validation {
+        label="Validation & Testing";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        validate_spec [label="Validate\nOpenAPI Spec", shape=box, fillcolor="#ffe0b2"];
+        spec_valid [label="Valid?", shape=diamond, fillcolor="#ffcc80"];
+        fix_errors [label="Fix\nErrors", shape=box, fillcolor="#ffb74d"];
+
+        generate_mock [label="Generate Mock\nServer", shape=box, fillcolor="#ffa726"];
+        contract_testing [label="Contract\nTesting", shape=box, fillcolor="#ff9800"];
+        security_audit [label="Security\nAudit", shape=box, fillcolor="#fb8c00"];
+
+        api_linting [label="API\nLinting", shape=box, fillcolor="#f57c00"];
+        style_check [label="Style\nCheck", shape=box, fillcolor="#ef6c00"];
+        best_practices [label="Best Practices\nCheck", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: Implementation
+    subgraph cluster_implementation {
+        label="Implementation";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        code_generation [label="Code\nGeneration?", shape=diamond, fillcolor="#c8e6c9"];
+        gen_server [label="Generate\nServer Stubs", shape=box, fillcolor="#a5d6a7"];
+        gen_client [label="Generate\nClient SDKs", shape=box, fillcolor="#81c784"];
+        manual_impl [label="Manual\nImplementation", shape=box, fillcolor="#66bb6a"];
+
+        implement_endpoints [label="Implement\nEndpoints", shape=box, fillcolor="#4caf50"];
+        add_middleware [label="Add\nMiddleware", shape=box, fillcolor="#43a047"];
+        error_handling [label="Error\nHandling", shape=box, fillcolor="#388e3c"];
+        rate_limiting [label="Rate\nLimiting", shape=box, fillcolor="#2e7d32"];
+        logging [label="Logging &\nMonitoring", shape=box, fillcolor="#1b5e20"];
+    }
+
+    // Subgraph: Testing
+    subgraph cluster_testing {
+        label="Comprehensive Testing";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        unit_tests [label="Unit\nTests", shape=box, fillcolor="#fff59d"];
+        integration_tests [label="Integration\nTests", shape=box, fillcolor="#fff176"];
+        e2e_tests [label="E2E\nTests", shape=box, fillcolor="#ffee58"];
+        load_tests [label="Load\nTests", shape=box, fillcolor="#ffeb3b"];
+        security_tests [label="Security\nTests", shape=box, fillcolor="#fdd835"];
+
+        all_tests_pass [label="All Tests\nPass?", shape=diamond, fillcolor="#f9a825"];
+        fix_tests [label="Fix\nIssues", shape=box, fillcolor="#f57f17"];
+    }
+
+    // Subgraph: Documentation
+    subgraph cluster_documentation {
+        label="Documentation & Deployment";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        generate_docs [label="Generate\nDocumentation", shape=box, fillcolor="#ffcdd2"];
+        api_portal [label="API Developer\nPortal", shape=box, fillcolor="#ef9a9a"];
+        interactive_docs [label="Interactive\nDocs (Swagger)", shape=box, fillcolor="#e57373"];
+
+        versioning [label="API\nVersioning", shape=box, fillcolor="#ef5350"];
+        changelog [label="Changelog", shape=box, fillcolor="#f44336"];
+
+        deploy_staging [label="Deploy to\nStaging", shape=box, fillcolor="#e53935"];
+        deploy_prod [label="Deploy to\nProduction", shape=box, fillcolor="#c62828"];
+
+        monitoring [label="Monitor\nUsage", shape=box, fillcolor="#b71c1c"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Requirements", shape=box, fillcolor="#2196f3"];
+        leg2 [label="OpenAPI", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Validation", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Implementation", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Testing", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Documentation", shape=box, fillcolor="#f44336"];
+
+        leg1 -> leg2 -> leg3 -> leg4 -> leg5 -> leg6 [style=invis];
+    }
+
+    // Requirements flow
+    start -> gather_reqs;
+    gather_reqs -> identify_resources;
+    identify_resources -> define_operations;
+    define_operations -> auth_strategy;
+    auth_strategy -> data_models;
+
+    // OpenAPI flow
+    data_models -> openapi_start;
+    openapi_start -> version;
+    version -> define_paths;
+    define_paths -> define_schemas;
+    define_schemas -> define_security;
+    define_security -> define_responses;
+    define_responses -> define_params;
+    define_params -> add_examples;
+
+    // Validation flow
+    add_examples -> validate_spec;
+    validate_spec -> spec_valid;
+    spec_valid -> fix_errors [label="invalid"];
+    fix_errors -> validate_spec;
+    spec_valid -> generate_mock [label="valid"];
+    generate_mock -> contract_testing;
+    contract_testing -> security_audit;
+    security_audit -> api_linting;
+    api_linting -> style_check;
+    style_check -> best_practices;
+
+    // Implementation flow
+    best_practices -> code_generation;
+    code_generation -> gen_server [label="yes"];
+    code_generation -> manual_impl [label="no"];
+    gen_server -> gen_client;
+    gen_client -> implement_endpoints;
+    manual_impl -> implement_endpoints;
+    implement_endpoints -> add_middleware;
+    add_middleware -> error_handling;
+    error_handling -> rate_limiting;
+    rate_limiting -> logging;
+
+    // Testing flow
+    logging -> unit_tests;
+    logging -> integration_tests;
+    logging -> e2e_tests;
+    logging -> load_tests;
+    logging -> security_tests;
+
+    unit_tests -> all_tests_pass;
+    integration_tests -> all_tests_pass;
+    e2e_tests -> all_tests_pass;
+    load_tests -> all_tests_pass;
+    security_tests -> all_tests_pass;
+
+    all_tests_pass -> fix_tests [label="no"];
+    fix_tests -> unit_tests;
+    all_tests_pass -> generate_docs [label="yes"];
+
+    // Documentation flow
+    generate_docs -> api_portal;
+    generate_docs -> interactive_docs;
+    api_portal -> versioning;
+    interactive_docs -> versioning;
+    versioning -> changelog;
+    changelog -> deploy_staging;
+    deploy_staging -> deploy_prod;
+    deploy_prod -> monitoring;
+}

@@ -1,0 +1,122 @@
+digraph GEMINI_EXTENSIONS_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Gemini Extensions Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Gemini Extensions Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Extension Config"];
+    validate_input [label="Validate Extension Type"];
+    check_deps [label="Check Gemini API"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Extension Integration Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    select_extension [label="Select Gemini Extension\n(Workspace, Gmail, etc.)", fillcolor=purple];
+    configure_extension [label="Configure Extension", fillcolor=purple];
+    execute_extension [label="Execute Extension Action", fillcolor=purple];
+    extension_check [shape=diamond, label="Extension\nSuccessful?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Extension Error"];
+    retry_logic [label="Retry Execution", fillcolor=yellow];
+  }
+
+  check_secrets -> select_extension [label="Pass"];
+  select_extension -> configure_extension -> execute_extension;
+  execute_extension -> extension_check;
+  extension_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> execute_extension [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Extension Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Extension Results", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  extension_check -> memory_store [label="Yes"];
+  memory_store -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Results\nValid?"];
+    verify_integration [label="Verify Integration", fillcolor=lightgreen];
+    integration_check [shape=diamond, label="Integration\nWorking?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> verify_integration [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  verify_integration -> integration_check;
+  integration_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    format_results [label="Format Results", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="Extension Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  integration_check -> format_results [label="Yes"];
+  format_results -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Extension Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

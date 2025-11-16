@@ -1,0 +1,380 @@
+digraph SPARC_DEBUG {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="/sparc:debug - Debugger Mode";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:debug", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n(error, context, logs)", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+    syntax_error [shape=octagon, fillcolor=crimson, label="Syntax Error\nShow Usage"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // ERROR COLLECTION
+  // =============================================================================
+  subgraph cluster_collection {
+    label="Error & Context Collection";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    capture_error [label="Capture Error\nMessage", fillcolor=lightyellow];
+    capture_stacktrace [label="Capture Stack\nTrace", fillcolor=lightyellow];
+    collect_logs [label="Collect Application\nLogs", fillcolor=lightyellow];
+    gather_context [label="Gather Execution\nContext", fillcolor=lightyellow];
+    capture_environment [label="Capture Environment\nState", fillcolor=lightyellow];
+
+    data_sufficient [shape=diamond, label="Sufficient\nData?"];
+    request_more_data [label="Request Additional\nLogs/Context", fillcolor=orange];
+  }
+
+  validate_syntax -> capture_error [label="Yes"];
+  capture_error -> capture_stacktrace;
+  capture_stacktrace -> collect_logs;
+  collect_logs -> gather_context;
+  gather_context -> capture_environment;
+  capture_environment -> data_sufficient;
+
+  data_sufficient -> request_more_data [label="No"];
+  request_more_data -> collect_logs [style=dashed];
+
+  // =============================================================================
+  // ERROR CLASSIFICATION
+  // =============================================================================
+  subgraph cluster_classification {
+    label="Error Classification";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    analyze_error_type [label="Analyze Error\nType", fillcolor=purple];
+    classify_category [shape=diamond, label="Error\nCategory?"];
+
+    syntax_bug [label="Syntax Error\nDetected", fillcolor=plum];
+    runtime_bug [label="Runtime Error\nDetected", fillcolor=plum];
+    logic_bug [label="Logic Error\nDetected", fillcolor=plum];
+    integration_bug [label="Integration Error\nDetected", fillcolor=plum];
+    performance_bug [label="Performance Issue\nDetected", fillcolor=plum];
+  }
+
+  data_sufficient -> analyze_error_type [label="Yes"];
+  analyze_error_type -> classify_category;
+
+  classify_category -> syntax_bug [label="Syntax"];
+  classify_category -> runtime_bug [label="Runtime"];
+  classify_category -> logic_bug [label="Logic"];
+  classify_category -> integration_bug [label="Integration"];
+  classify_category -> performance_bug [label="Performance"];
+
+  // =============================================================================
+  // STACK TRACE ANALYSIS
+  // =============================================================================
+  subgraph cluster_stacktrace {
+    label="Stack Trace Analysis";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    parse_stacktrace [label="Parse Stack\nTrace", fillcolor=lightblue];
+    identify_origin [label="Identify Error\nOrigin", fillcolor=lightblue];
+    trace_call_chain [label="Trace Call\nChain", fillcolor=lightblue];
+    identify_suspect_functions [label="Identify Suspect\nFunctions", fillcolor=lightblue];
+    locate_source_lines [label="Locate Source\nCode Lines", fillcolor=lightblue];
+  }
+
+  syntax_bug -> parse_stacktrace;
+  runtime_bug -> parse_stacktrace;
+  logic_bug -> parse_stacktrace;
+  integration_bug -> parse_stacktrace;
+  performance_bug -> parse_stacktrace;
+
+  parse_stacktrace -> identify_origin;
+  identify_origin -> trace_call_chain;
+  trace_call_chain -> identify_suspect_functions;
+  identify_suspect_functions -> locate_source_lines;
+
+  // =============================================================================
+  // CODE INSPECTION
+  // =============================================================================
+  subgraph cluster_inspection {
+    label="Code Inspection";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF0E8";
+
+    read_suspect_code [label="Read Suspect\nCode", fillcolor=lightyellow];
+    analyze_variables [label="Analyze Variable\nStates", fillcolor=lightyellow];
+    check_null_references [label="Check Null/Undefined\nReferences", fillcolor=lightyellow];
+    analyze_conditions [label="Analyze Conditional\nLogic", fillcolor=lightyellow];
+    check_data_flow [label="Check Data\nFlow", fillcolor=lightyellow];
+    inspect_dependencies [label="Inspect External\nDependencies", fillcolor=lightyellow];
+  }
+
+  locate_source_lines -> read_suspect_code;
+  read_suspect_code -> analyze_variables;
+  analyze_variables -> check_null_references;
+  check_null_references -> analyze_conditions;
+  analyze_conditions -> check_data_flow;
+  check_data_flow -> inspect_dependencies;
+
+  // =============================================================================
+  // ROOT CAUSE ANALYSIS
+  // =============================================================================
+  subgraph cluster_root_cause {
+    label="Root Cause Analysis";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    hypothesize_causes [label="Hypothesize Possible\nCauses", fillcolor=lightcoral];
+    test_hypothesis [label="Test Each\nHypothesis", fillcolor=lightcoral];
+    eliminate_impossible [label="Eliminate Impossible\nCauses", fillcolor=lightcoral];
+    narrow_down [label="Narrow Down to\nRoot Cause", fillcolor=lightcoral];
+    verify_root_cause [shape=diamond, label="Root Cause\nConfirmed?"];
+
+    refine_hypothesis [label="Refine Hypothesis\nSet", fillcolor=orange];
+    root_cause_found [label="Root Cause\nIdentified", fillcolor=green, style="filled,bold"];
+  }
+
+  inspect_dependencies -> hypothesize_causes;
+  hypothesize_causes -> test_hypothesis;
+  test_hypothesis -> eliminate_impossible;
+  eliminate_impossible -> narrow_down;
+  narrow_down -> verify_root_cause;
+
+  verify_root_cause -> refine_hypothesis [label="No"];
+  verify_root_cause -> root_cause_found [label="Yes"];
+
+  refine_hypothesis -> hypothesize_causes [style=dashed];
+
+  // =============================================================================
+  // IMPACT ANALYSIS
+  // =============================================================================
+  subgraph cluster_impact {
+    label="Impact Analysis";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    assess_severity [label="Assess Bug\nSeverity", fillcolor=lightgreen];
+    identify_affected_components [label="Identify Affected\nComponents", fillcolor=lightgreen];
+    check_side_effects [label="Check Side\nEffects", fillcolor=lightgreen];
+    estimate_blast_radius [label="Estimate Blast\nRadius", fillcolor=lightgreen];
+
+    critical_bug [shape=diamond, label="Critical\nBug?"];
+    flag_urgent [label="Flag as\nUrgent", fillcolor=crimson];
+  }
+
+  root_cause_found -> assess_severity;
+  assess_severity -> identify_affected_components;
+  identify_affected_components -> check_side_effects;
+  check_side_effects -> estimate_blast_radius;
+  estimate_blast_radius -> critical_bug;
+
+  critical_bug -> flag_urgent [label="Yes"];
+
+  // =============================================================================
+  // FIX STRATEGY DEVELOPMENT
+  // =============================================================================
+  subgraph cluster_fix_strategy {
+    label="Fix Strategy Development";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    brainstorm_solutions [label="Brainstorm Fix\nSolutions", fillcolor=lightblue];
+    evaluate_approaches [label="Evaluate Fix\nApproaches", fillcolor=lightblue];
+    consider_tradeoffs [label="Consider\nTrade-offs", fillcolor=lightblue];
+    select_best_fix [label="Select Best\nFix", fillcolor=lightblue];
+    plan_implementation [label="Plan Fix\nImplementation", fillcolor=lightblue];
+  }
+
+  critical_bug -> brainstorm_solutions [label="No"];
+  flag_urgent -> brainstorm_solutions;
+
+  brainstorm_solutions -> evaluate_approaches;
+  evaluate_approaches -> consider_tradeoffs;
+  consider_tradeoffs -> select_best_fix;
+  select_best_fix -> plan_implementation;
+
+  // =============================================================================
+  // FIX RECOMMENDATIONS
+  // =============================================================================
+  subgraph cluster_recommendations {
+    label="Fix Recommendations";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    generate_code_fix [label="Generate Code\nFix", fillcolor=plum];
+    add_error_handling [label="Add Error\nHandling", fillcolor=plum];
+    suggest_refactoring [label="Suggest\nRefactoring", fillcolor=plum];
+    recommend_tests [label="Recommend Additional\nTests", fillcolor=plum];
+    document_fix [label="Document Fix\nRationale", fillcolor=plum];
+  }
+
+  plan_implementation -> generate_code_fix;
+  generate_code_fix -> add_error_handling;
+  add_error_handling -> suggest_refactoring;
+  suggest_refactoring -> recommend_tests;
+  recommend_tests -> document_fix;
+
+  // =============================================================================
+  // PREVENTION RECOMMENDATIONS
+  // =============================================================================
+  subgraph cluster_prevention {
+    label="Prevention Recommendations";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    identify_pattern [label="Identify Bug\nPattern", fillcolor=lightgreen];
+    suggest_linter_rules [label="Suggest Linter\nRules", fillcolor=lightgreen];
+    recommend_type_checking [label="Recommend Type\nChecking", fillcolor=lightgreen];
+    suggest_guardrails [label="Suggest Code\nGuardrails", fillcolor=lightgreen];
+    recommend_monitoring [label="Recommend Runtime\nMonitoring", fillcolor=lightgreen];
+  }
+
+  document_fix -> identify_pattern;
+  identify_pattern -> suggest_linter_rules;
+  suggest_linter_rules -> recommend_type_checking;
+  recommend_type_checking -> suggest_guardrails;
+  suggest_guardrails -> recommend_monitoring;
+
+  // =============================================================================
+  // DEBUGGING REPORT
+  // =============================================================================
+  subgraph cluster_report {
+    label="Debugging Report Generation";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    create_report [label="Create Debug\nReport", fillcolor=lightyellow];
+    add_error_summary [label="Add Error\nSummary", fillcolor=lightyellow];
+    add_root_cause [label="Add Root Cause\nAnalysis", fillcolor=lightyellow];
+    add_fix_steps [label="Add Fix\nSteps", fillcolor=lightyellow];
+    add_code_snippets [label="Add Code\nSnippets", fillcolor=lightyellow];
+    add_prevention_tips [label="Add Prevention\nTips", fillcolor=lightyellow];
+
+    save_report [label="Save Debug\nReport", fillcolor=lightyellow];
+  }
+
+  recommend_monitoring -> create_report;
+  create_report -> add_error_summary;
+  add_error_summary -> add_root_cause;
+  add_root_cause -> add_fix_steps;
+  add_fix_steps -> add_code_snippets;
+  add_code_snippets -> add_prevention_tips;
+  add_prevention_tips -> save_report;
+
+  // =============================================================================
+  // VALIDATION
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Fix Validation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    apply_fix [label="Apply Suggested\nFix", fillcolor=lightblue];
+    run_tests [label="Run Test\nSuite", fillcolor=lightblue];
+    verify_fix [shape=diamond, label="Bug\nFixed?"];
+
+    fix_failed [label="Fix Did Not\nResolve Issue", fillcolor=orange];
+    fix_succeeded [label="Bug Successfully\nFixed", fillcolor=green];
+  }
+
+  save_report -> apply_fix;
+  apply_fix -> run_tests;
+  run_tests -> verify_fix;
+
+  verify_fix -> fix_failed [label="No"];
+  verify_fix -> fix_succeeded [label="Yes"];
+
+  fix_failed -> brainstorm_solutions [style=dashed];
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    update_changelog [label="Update\nChangelog", fillcolor=lightgreen];
+    close_issue [label="Close Related\nIssue", fillcolor=lightgreen];
+    notify_team [label="Notify Development\nTeam", fillcolor=lightgreen];
+
+    success [label="Debugging\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  fix_succeeded -> update_changelog;
+  update_changelog -> close_issue;
+  close_issue -> notify_team;
+  notify_team -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_debug_error [shape=diamond, label="Debug Error\nType?"];
+    retry_analysis [label="Retry Analysis\nwith More Data", fillcolor=yellow];
+
+    log_error [label="Log Debug\nFailure", fillcolor=orange];
+    escalate_human [label="Escalate to\nHuman Developer", fillcolor=orange];
+    failure [label="Debug\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+
+  classify_debug_error -> retry_analysis [label="Insufficient Data"];
+  classify_debug_error -> log_error [label="Cannot Determine"];
+
+  retry_analysis -> capture_error [style=dashed];
+
+  log_error -> escalate_human;
+  escalate_human -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Issue"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_warn [style=invis];
+    legend_warn -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

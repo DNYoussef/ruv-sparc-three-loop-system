@@ -1,0 +1,24 @@
+digraph GITHUB_CODE_REVIEW_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="github-code-review\nInvoked", shape=ellipse, fillcolor=lightblue];
+  fetch_pr [label="Fetch PR via gh CLI\ngh pr view", fillcolor=lightblue];
+  validate [label="Validate PR Context\nFiles, CI Status"];
+
+  spawn_swarm [label="Spawn Multi-Agent Swarm\nruv-swarm coordination", fillcolor=purple];
+  parallel_analysis [label="Parallel Analysis\nSecurity, Performance, Quality", fillcolor=purple];
+
+  post_comments [label="Post Intelligent Comments\ngh pr review", fillcolor=lightgreen];
+  update_status [label="Update PR Status\nApprove/Request Changes", fillcolor=lightgreen];
+
+  memory_store [label="Store Review Data\nGitHub API", fillcolor=lightblue];
+  success [label="GitHub Review Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  start -> fetch_pr -> validate -> spawn_swarm;
+  spawn_swarm -> parallel_analysis;
+  parallel_analysis -> post_comments;
+  post_comments -> update_status;
+  update_status -> memory_store;
+  memory_store -> success;
+}

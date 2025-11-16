@@ -1,0 +1,575 @@
+digraph SPARC_ORCHESTRATOR {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /sparc";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--mode <mode>\n--task <description>\n--full-pipeline", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--mode [spec|code|test|security|deploy|etc.]\n--task <description>\n--full-pipeline (run all phases)"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // AUTHENTICATION & AUTHORIZATION
+  // =============================================================================
+  subgraph cluster_auth {
+    label="Authentication & Authorization";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_auth [shape=diamond, label="User\nAuthenticated?"];
+    check_mcp [shape=diamond, label="SPARC System\nAvailable?"];
+    check_permissions [shape=diamond, label="Has SPARC\nPermissions?"];
+
+    auth_failed [shape=octagon, fillcolor=crimson,
+                 label="Authentication\nFailed"];
+    sparc_failed [shape=octagon, fillcolor=crimson,
+                  label="SPARC System\nNot Available"];
+    permission_denied [shape=octagon, fillcolor=crimson,
+                       label="Permission\nDenied"];
+  }
+
+  validate_syntax -> check_auth [label="Yes"];
+
+  check_auth -> auth_failed [label="No"];
+  check_auth -> check_mcp [label="Yes"];
+
+  check_mcp -> sparc_failed [label="No"];
+  check_mcp -> check_permissions [label="Yes"];
+
+  check_permissions -> permission_denied [label="No"];
+
+  // =============================================================================
+  // MODE SELECTION
+  // =============================================================================
+  subgraph cluster_mode_selection {
+    label="Mode Selection";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    detect_mode [shape=diamond, label="Mode\nSpecified?"];
+
+    analyze_task [label="Analyze Task\nComplexity", fillcolor=purple];
+    recommend_mode [label="Recommend\nOptimal Mode", fillcolor=purple];
+
+    user_confirm [shape=hexagon, fillcolor=yellow,
+                  label="User Confirms\nMode?"];
+
+    mode_router [shape=diamond, label="Route to\nMode", style="filled,bold", fillcolor=purple];
+  }
+
+  check_permissions -> detect_mode [label="Yes"];
+
+  detect_mode -> mode_router [label="Yes"];
+  detect_mode -> analyze_task [label="No"];
+
+  analyze_task -> recommend_mode;
+  recommend_mode -> user_confirm;
+
+  user_confirm -> mode_router [label="Yes"];
+  user_confirm -> analyze_task [label="No", style=dashed];
+
+  // =============================================================================
+  // PHASE 1: SPECIFICATION (spec-pseudocode)
+  // =============================================================================
+  subgraph cluster_specification {
+    label="Phase 1: Specification & Pseudocode";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    spec_start [label="Start Specification\nMode", fillcolor=lightblue];
+
+    gather_requirements [label="Gather\nRequirements", fillcolor=lightblue];
+    analyze_requirements [label="Analyze Functional\nRequirements", fillcolor=lightblue];
+    identify_constraints [label="Identify\nConstraints", fillcolor=lightblue];
+
+    define_interfaces [label="Define\nInterfaces", fillcolor=lightblue];
+    design_algorithms [label="Design\nAlgorithms", fillcolor=lightblue];
+    write_pseudocode [label="Write\nPseudocode", fillcolor=lightblue, style="filled,bold"];
+
+    validate_spec [shape=diamond, label="Specification\nComplete?"];
+
+    spec_incomplete [shape=octagon, fillcolor=orange,
+                     label="Specification\nIncomplete"];
+
+    store_spec [label="Store Specification\nin Memory", fillcolor=lightblue];
+  }
+
+  mode_router -> spec_start [label="spec-pseudocode"];
+
+  spec_start -> gather_requirements;
+  gather_requirements -> analyze_requirements;
+  analyze_requirements -> identify_constraints;
+
+  identify_constraints -> define_interfaces;
+  define_interfaces -> design_algorithms;
+  design_algorithms -> write_pseudocode;
+
+  write_pseudocode -> validate_spec;
+
+  validate_spec -> spec_incomplete [label="No"];
+  spec_incomplete -> gather_requirements [style=dashed];
+
+  validate_spec -> store_spec [label="Yes"];
+
+  // =============================================================================
+  // PHASE 2: ARCHITECTURE
+  // =============================================================================
+  subgraph cluster_architecture {
+    label="Phase 2: Architecture";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    arch_start [label="Start Architecture\nMode", fillcolor=lightgreen];
+
+    retrieve_spec [label="Retrieve\nSpecification", fillcolor=lightgreen];
+
+    design_components [label="Design\nComponents", fillcolor=lightgreen];
+    define_patterns [label="Define Design\nPatterns", fillcolor=lightgreen];
+    design_data_models [label="Design Data\nModels", fillcolor=lightgreen];
+
+    define_apis [label="Define\nAPIs", fillcolor=lightgreen];
+    plan_integration [label="Plan\nIntegration", fillcolor=lightgreen];
+    document_architecture [label="Document\nArchitecture", fillcolor=lightgreen, style="filled,bold"];
+
+    validate_arch [shape=diamond, label="Architecture\nValid?"];
+
+    arch_invalid [shape=octagon, fillcolor=orange,
+                  label="Architecture\nInvalid"];
+
+    store_arch [label="Store Architecture\nin Memory", fillcolor=lightgreen];
+  }
+
+  mode_router -> arch_start [label="architect"];
+  store_spec -> arch_start [label="Pipeline"];
+
+  arch_start -> retrieve_spec;
+  retrieve_spec -> design_components;
+
+  design_components -> define_patterns;
+  define_patterns -> design_data_models;
+  design_data_models -> define_apis;
+
+  define_apis -> plan_integration;
+  plan_integration -> document_architecture;
+
+  document_architecture -> validate_arch;
+
+  validate_arch -> arch_invalid [label="No"];
+  arch_invalid -> design_components [style=dashed];
+
+  validate_arch -> store_arch [label="Yes"];
+
+  // =============================================================================
+  // PHASE 3: IMPLEMENTATION (code)
+  // =============================================================================
+  subgraph cluster_implementation {
+    label="Phase 3: Implementation (TDD)";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    code_start [label="Start Auto-Coder\nMode", fillcolor=lightpurple];
+
+    retrieve_arch [label="Retrieve\nArchitecture", fillcolor=lightpurple];
+
+    setup_project [label="Setup Project\nStructure", fillcolor=lightpurple];
+    configure_dependencies [label="Configure\nDependencies", fillcolor=lightpurple];
+
+    write_tests_first [label="Write Tests\nFirst (TDD)", fillcolor=lightpurple, style="filled,bold"];
+    implement_code [label="Implement\nCode", fillcolor=lightpurple, style="filled,bold"];
+
+    run_tests [label="Run\nTests", fillcolor=lightpurple];
+
+    tests_pass [shape=diamond, label="Tests\nPass?"];
+
+    debug_code [label="Debug and\nFix Code", fillcolor=yellow];
+
+    refactor_code [label="Refactor\nCode", fillcolor=lightpurple];
+
+    validate_implementation [shape=diamond, label="Implementation\nComplete?"];
+
+    impl_incomplete [shape=octagon, fillcolor=orange,
+                     label="Implementation\nIncomplete"];
+
+    store_code [label="Store Implementation\nin Memory", fillcolor=lightpurple];
+  }
+
+  mode_router -> code_start [label="code"];
+  store_arch -> code_start [label="Pipeline"];
+
+  code_start -> retrieve_arch;
+  retrieve_arch -> setup_project;
+
+  setup_project -> configure_dependencies;
+  configure_dependencies -> write_tests_first;
+  write_tests_first -> implement_code;
+
+  implement_code -> run_tests;
+  run_tests -> tests_pass;
+
+  tests_pass -> debug_code [label="No"];
+  debug_code -> implement_code [style=dashed];
+
+  tests_pass -> refactor_code [label="Yes"];
+  refactor_code -> validate_implementation;
+
+  validate_implementation -> impl_incomplete [label="No"];
+  impl_incomplete -> write_tests_first [style=dashed];
+
+  validate_implementation -> store_code [label="Yes"];
+
+  // =============================================================================
+  // PHASE 4: SECURITY & QUALITY (security-review)
+  // =============================================================================
+  subgraph cluster_security {
+    label="Phase 4: Security & Quality Review";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    security_start [label="Start Security\nReview", fillcolor=yellow];
+
+    retrieve_code [label="Retrieve\nImplementation", fillcolor=yellow];
+
+    static_analysis [label="Static Code\nAnalysis", fillcolor=yellow];
+    dependency_scan [label="Dependency\nVulnerability Scan", fillcolor=yellow];
+    secret_scan [label="Secret\nDetection", fillcolor=yellow];
+
+    security_audit [label="Security\nAudit", fillcolor=yellow, style="filled,bold"];
+
+    vulnerabilities_found [shape=diamond, label="Vulnerabilities\nFound?"];
+
+    severity_check [shape=diamond, label="Severity?"];
+
+    critical_vulns [shape=octagon, fillcolor=red,
+                    label="Critical\nVulnerabilities\nMUST FIX"];
+
+    medium_vulns [shape=octagon, fillcolor=orange,
+                  label="Medium\nVulnerabilities\nShould Fix"];
+
+    apply_fixes [label="Apply Security\nFixes", fillcolor=yellow];
+    rerun_tests [label="Rerun Tests\nAfter Fixes", fillcolor=yellow];
+
+    generate_report [label="Generate Security\nReport", fillcolor=yellow];
+
+    store_security [label="Store Security\nReport", fillcolor=yellow];
+  }
+
+  mode_router -> security_start [label="security-review"];
+  store_code -> security_start [label="Pipeline"];
+
+  security_start -> retrieve_code;
+  retrieve_code -> static_analysis;
+
+  static_analysis -> dependency_scan;
+  dependency_scan -> secret_scan;
+  secret_scan -> security_audit;
+
+  security_audit -> vulnerabilities_found;
+
+  vulnerabilities_found -> severity_check [label="Yes"];
+  vulnerabilities_found -> generate_report [label="No"];
+
+  severity_check -> critical_vulns [label="Critical"];
+  severity_check -> medium_vulns [label="Medium"];
+  severity_check -> apply_fixes [label="Low"];
+
+  critical_vulns -> apply_fixes;
+  medium_vulns -> apply_fixes;
+
+  apply_fixes -> rerun_tests;
+  rerun_tests -> security_audit [style=dashed];
+
+  generate_report -> store_security;
+
+  // =============================================================================
+  // PHASE 5: DEPLOYMENT & MONITORING (deploy + post-deployment)
+  // =============================================================================
+  subgraph cluster_deployment {
+    label="Phase 5: Deployment & Monitoring";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    deploy_start [label="Start Deployment\nMode", fillcolor=lightblue];
+
+    retrieve_artifacts [label="Retrieve Build\nArtifacts", fillcolor=lightblue];
+
+    validate_environment [label="Validate\nEnvironment", fillcolor=lightblue];
+    build_containers [label="Build\nContainers", fillcolor=lightblue];
+
+    deployment_strategy [shape=diamond, label="Deployment\nStrategy?"];
+
+    blue_green [label="Blue-Green\nDeployment", fillcolor=lightblue];
+    canary [label="Canary\nDeployment", fillcolor=lightblue];
+    rolling [label="Rolling\nDeployment", fillcolor=lightblue];
+
+    deploy_application [label="Deploy\nApplication", fillcolor=lightblue, style="filled,bold"];
+
+    health_check [label="Health\nCheck", fillcolor=lightblue];
+
+    deployment_healthy [shape=diamond, label="Deployment\nHealthy?"];
+
+    rollback [shape=octagon, fillcolor=orange,
+              label="Rollback\nDeployment"];
+
+    setup_monitoring [label="Setup\nMonitoring", fillcolor=lightblue];
+    configure_alerts [label="Configure\nAlerts", fillcolor=lightblue];
+
+    monitor_logs [label="Monitor Logs\nand Metrics", fillcolor=lightblue];
+
+    deployment_success [label="Deployment\nSuccessful", fillcolor=lightgreen];
+  }
+
+  mode_router -> deploy_start [label="devops"];
+  store_security -> deploy_start [label="Pipeline"];
+
+  deploy_start -> retrieve_artifacts;
+  retrieve_artifacts -> validate_environment;
+
+  validate_environment -> build_containers;
+  build_containers -> deployment_strategy;
+
+  deployment_strategy -> blue_green [label="blue-green"];
+  deployment_strategy -> canary [label="canary"];
+  deployment_strategy -> rolling [label="rolling"];
+
+  blue_green -> deploy_application;
+  canary -> deploy_application;
+  rolling -> deploy_application;
+
+  deploy_application -> health_check;
+  health_check -> deployment_healthy;
+
+  deployment_healthy -> rollback [label="No"];
+  rollback -> deploy_start [style=dashed];
+
+  deployment_healthy -> setup_monitoring [label="Yes"];
+  setup_monitoring -> configure_alerts;
+  configure_alerts -> monitor_logs;
+
+  monitor_logs -> deployment_success;
+
+  // =============================================================================
+  // INTEGRATION MODE
+  // =============================================================================
+  subgraph cluster_integration {
+    label="Integration Mode";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    integration_start [label="Start Integration\nMode", fillcolor=lightgreen];
+
+    retrieve_all [label="Retrieve All\nComponents", fillcolor=lightgreen];
+    merge_components [label="Merge\nComponents", fillcolor=lightgreen];
+
+    resolve_conflicts [label="Resolve\nConflicts", fillcolor=lightgreen];
+
+    integration_tests [label="Run Integration\nTests", fillcolor=lightgreen, style="filled,bold"];
+
+    e2e_tests [label="Run End-to-End\nTests", fillcolor=lightgreen, style="filled,bold"];
+
+    all_tests_pass [shape=diamond, label="All Tests\nPass?"];
+
+    integration_failed [shape=octagon, fillcolor=orange,
+                        label="Integration\nFailed"];
+
+    validate_system [label="Validate Complete\nSystem", fillcolor=lightgreen];
+
+    integration_success [label="Integration\nSuccessful", fillcolor=lightgreen];
+  }
+
+  mode_router -> integration_start [label="integration"];
+  deployment_success -> integration_start [label="Pipeline"];
+
+  integration_start -> retrieve_all;
+  retrieve_all -> merge_components;
+  merge_components -> resolve_conflicts;
+
+  resolve_conflicts -> integration_tests;
+  integration_tests -> e2e_tests;
+  e2e_tests -> all_tests_pass;
+
+  all_tests_pass -> integration_failed [label="No"];
+  integration_failed -> resolve_conflicts [style=dashed];
+
+  all_tests_pass -> validate_system [label="Yes"];
+  validate_system -> integration_success;
+
+  // =============================================================================
+  // OUTPUT & REPORTING
+  // =============================================================================
+  subgraph cluster_output {
+    label="Output & Reporting";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    aggregate_outputs [label="Aggregate\nOutputs", fillcolor=lightpurple];
+    generate_summary [label="Generate\nSummary Report", fillcolor=lightpurple, style="filled,bold"];
+
+    include_metrics [label="Include\nMetrics", fillcolor=lightpurple];
+    include_artifacts [label="Include\nArtifacts", fillcolor=lightpurple];
+
+    format_report [label="Format\nReport", fillcolor=lightpurple];
+    display_report [label="Display\nReport", fillcolor=lightpurple];
+  }
+
+  // All phases converge to output
+  store_spec -> aggregate_outputs [label="Single Mode"];
+  store_arch -> aggregate_outputs [label="Single Mode"];
+  store_code -> aggregate_outputs [label="Single Mode"];
+  store_security -> aggregate_outputs [label="Single Mode"];
+  deployment_success -> aggregate_outputs [label="Single Mode"];
+  integration_success -> aggregate_outputs [label="Full Pipeline"];
+
+  aggregate_outputs -> generate_summary;
+  generate_summary -> include_metrics;
+  include_metrics -> include_artifacts;
+  include_artifacts -> format_report;
+  format_report -> display_report;
+
+  // =============================================================================
+  // LOGGING & METRICS
+  // =============================================================================
+  subgraph cluster_logging {
+    label="Logging & Metrics";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    log_execution [label="Log SPARC\nExecution", fillcolor=yellow];
+    record_phase_metrics [label="Record Phase\nMetrics", fillcolor=yellow];
+    record_quality_metrics [label="Record Quality\nMetrics", fillcolor=yellow];
+
+    check_telemetry [shape=diamond, label="Telemetry\nEnabled?"];
+
+    send_telemetry [label="Send Telemetry\nData", fillcolor=yellow];
+  }
+
+  display_report -> log_execution;
+
+  log_execution -> record_phase_metrics;
+  record_phase_metrics -> record_quality_metrics;
+  record_quality_metrics -> check_telemetry;
+
+  check_telemetry -> send_telemetry [label="Yes"];
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_temp [label="Cleanup Temp\nFiles", fillcolor=lightgreen];
+    persist_outputs [label="Persist\nOutputs", fillcolor=lightgreen];
+    return_status [label="Return Exit\nCode", fillcolor=lightgreen];
+    success [label="SPARC Command\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  check_telemetry -> cleanup_temp [label="No"];
+  send_telemetry -> cleanup_temp;
+
+  cleanup_temp -> persist_outputs;
+  persist_outputs -> return_status;
+  return_status -> success;
+
+  // =============================================================================
+  // ERROR HANDLING & RECOVERY
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+
+    retry_phase [label="Retry\nPhase", fillcolor=yellow];
+    fallback_mode [label="Fallback to\nSimpler Mode", fillcolor=yellow];
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    cleanup_after_error [label="Cleanup After\nError", fillcolor=orange];
+    failure [label="Command\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Route all errors to classification
+  syntax_error -> log_error;
+  auth_failed -> log_error;
+  sparc_failed -> log_error;
+  permission_denied -> log_error;
+  spec_incomplete -> classify_error;
+  arch_invalid -> classify_error;
+  impl_incomplete -> classify_error;
+  critical_vulns -> classify_error;
+  rollback -> classify_error;
+  integration_failed -> classify_error;
+
+  // Error classification and recovery
+  classify_error -> retry_phase [label="Transient"];
+  classify_error -> fallback_mode [label="Recoverable"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_phase -> mode_router [label="Retry", style=dashed];
+  fallback_mode -> mode_router [label="Fallback", style=dashed];
+
+  log_error -> cleanup_after_error;
+  cleanup_after_error -> escalate;
+  escalate -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

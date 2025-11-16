@@ -1,0 +1,216 @@
+// Repo Architect Agent - Repository Architecture
+// Monorepo support, branch strategy, folder structure, architecture design
+digraph repo_architect_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        architect_init [label="Repo Architect\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        repo_scanner [label="Repository\nScanner", fillcolor="#2d3748", fontcolor="#ffffff"];
+        pattern_library [label="Pattern\nLibrary", fillcolor="#2d3748", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nDatabase", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === REPOSITORY ANALYSIS ===
+    subgraph cluster_analysis {
+        label="Repository Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        structure_analyzer [label="Structure\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_mapper [label="Dependency\nMapper", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_detector [label="Complexity\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        antipattern_finder [label="Anti-Pattern\nFinder", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === ARCHITECTURE DESIGN ===
+    subgraph cluster_design {
+        label="Architecture Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        monorepo_designer [label="Monorepo\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        workspace_planner [label="Workspace\nPlanner", fillcolor="#059669", fontcolor="#ffffff"];
+        module_organizer [label="Module\nOrganizer", fillcolor="#059669", fontcolor="#ffffff"];
+        boundary_definer [label="Boundary\nDefiner", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === BRANCH STRATEGY ===
+    subgraph cluster_branch {
+        label="Branch Strategy";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        gitflow_designer [label="GitFlow\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        trunk_based_designer [label="Trunk-Based\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        feature_branch_planner [label="Feature Branch\nPlanner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        release_branch_manager [label="Release Branch\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === FOLDER STRUCTURE ===
+    subgraph cluster_folder {
+        label="Folder Structure";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        src_organizer [label="Source Code\nOrganizer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_organizer [label="Test\nOrganizer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        config_organizer [label="Config\nOrganizer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        docs_organizer [label="Documentation\nOrganizer", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === SCALABILITY ===
+    subgraph cluster_scale {
+        label="Scalability Planning";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        growth_planner [label="Growth\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        migration_strategist [label="Migration\nStrategist", fillcolor="#8b4789", fontcolor="#ffffff"];
+        split_analyzer [label="Monorepo Split\nAnalyzer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        merge_planner [label="Multi-Repo Merge\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === TOOLING SETUP ===
+    subgraph cluster_tooling {
+        label="Tooling & Automation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        build_tool_config [label="Build Tool\nConfigurator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        linter_setup [label="Linter\nSetup", fillcolor="#ef4444", fontcolor="#ffffff"];
+        ci_pipeline_designer [label="CI Pipeline\nDesigner", fillcolor="#ef4444", fontcolor="#ffffff"];
+        hook_configurator [label="Git Hook\nConfigurator", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === DOCUMENTATION ===
+    subgraph cluster_docs {
+        label="Documentation Generation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        readme_generator [label="README\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        contributing_guide [label="Contributing\nGuide", fillcolor="#10b981", fontcolor="#ffffff"];
+        architecture_doc [label="Architecture\nDocumentation", fillcolor="#10b981", fontcolor="#ffffff"];
+        diagram_generator [label="Diagram\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        system_architect_coord [label="System Architect\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        multi_repo_coord [label="Multi-Repo Swarm\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        workflow_coord [label="Workflow Automation\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    architect_init -> repo_scanner [label="Scan"];
+    architect_init -> pattern_library [label="Load"];
+    architect_init -> best_practices [label="Load"];
+
+    // === ANALYSIS FLOW ===
+    repo_scanner -> structure_analyzer [label="Analyze Structure"];
+    structure_analyzer -> dependency_mapper [label="Map Dependencies"];
+    dependency_mapper -> complexity_detector [label="Detect Complexity"];
+    complexity_detector -> antipattern_finder [label="Find Anti-Patterns"];
+
+    // === DESIGN FLOW ===
+    antipattern_finder -> monorepo_designer [label="Design Monorepo"];
+    monorepo_designer -> workspace_planner [label="Plan Workspaces"];
+    workspace_planner -> module_organizer [label="Organize Modules"];
+    module_organizer -> boundary_definer [label="Define Boundaries"];
+
+    // === BRANCH STRATEGY FLOW ===
+    boundary_definer -> gitflow_designer [label="GitFlow Option"];
+    boundary_definer -> trunk_based_designer [label="Trunk-Based Option"];
+    gitflow_designer -> feature_branch_planner [label="Plan Features"];
+    trunk_based_designer -> feature_branch_planner [label="Plan Features"];
+    feature_branch_planner -> release_branch_manager [label="Manage Releases"];
+
+    // === FOLDER STRUCTURE FLOW ===
+    module_organizer -> src_organizer [label="Organize Source"];
+    src_organizer -> test_organizer [label="Organize Tests"];
+    test_organizer -> config_organizer [label="Organize Config"];
+    config_organizer -> docs_organizer [label="Organize Docs"];
+
+    // === SCALABILITY FLOW ===
+    boundary_definer -> growth_planner [label="Plan Growth"];
+    growth_planner -> migration_strategist [label="Plan Migration"];
+    migration_strategist -> split_analyzer [label="Analyze Split"];
+    migration_strategist -> merge_planner [label="Plan Merge"];
+
+    // === TOOLING FLOW ===
+    docs_organizer -> build_tool_config [label="Configure Build"];
+    build_tool_config -> linter_setup [label="Setup Linters"];
+    linter_setup -> ci_pipeline_designer [label="Design CI"];
+    ci_pipeline_designer -> hook_configurator [label="Configure Hooks"];
+
+    // === DOCUMENTATION FLOW ===
+    hook_configurator -> readme_generator [label="Generate README"];
+    readme_generator -> contributing_guide [label="Generate Guide"];
+    contributing_guide -> architecture_doc [label="Document Architecture"];
+    architecture_doc -> diagram_generator [label="Generate Diagrams"];
+
+    // === COLLABORATION ===
+    boundary_definer -> system_architect_coord [label="Coordinate Architecture"];
+    merge_planner -> multi_repo_coord [label="Coordinate Multi-Repo"];
+    ci_pipeline_designer -> workflow_coord [label="Coordinate Workflows"];
+
+    // === FEEDBACK LOOPS ===
+    antipattern_finder -> monorepo_designer [label="Redesign Needed", style=dashed, color="#ef4444"];
+    complexity_detector -> module_organizer [label="Simplify", style=dashed];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Repo Architect", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Design", fillcolor="#059669", fontcolor="#ffffff"];
+        legend4 [label="Branch Strategy", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend5 [label="Folder Structure", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend6 [label="Scalability", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+}

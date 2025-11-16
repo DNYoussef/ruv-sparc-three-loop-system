@@ -1,0 +1,99 @@
+// Refinement Agent - SPARC Refinement Phase
+// Code refinement, optimization, refactoring, quality improvement
+digraph refinement_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        refine_init [label="Refinement Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        sparc_phase [label="SPARC Phase 4\nRefinement", fillcolor="#2d3748", fontcolor="#ffffff"];
+        refactoring_patterns [label="Refactoring\nPatterns", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Code Analysis";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        quality_analyzer [label="Quality\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        smell_detector [label="Code Smell\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        duplication_finder [label="Duplication\nFinder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        complexity_measurer [label="Complexity\nMeasurer", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_refactor {
+        label="Refactoring";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        extract_method [label="Extract\nMethod", fillcolor="#059669", fontcolor="#ffffff"];
+        rename_refactor [label="Rename\nRefactor", fillcolor="#059669", fontcolor="#ffffff"];
+        move_method [label="Move\nMethod", fillcolor="#059669", fontcolor="#ffffff"];
+        simplify_conditional [label="Simplify\nConditional", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_optimize {
+        label="Optimization";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        performance_optimizer [label="Performance\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        memory_optimizer [label="Memory\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        algorithm_optimizer [label="Algorithm\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        cache_optimizer [label="Cache\nOptimizer", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_quality {
+        label="Quality Improvement";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        readability_improver [label="Readability\nImprover", fillcolor="#dc2626", fontcolor="#ffffff"];
+        naming_improver [label="Naming\nImprover", fillcolor="#dc2626", fontcolor="#ffffff"];
+        documentation_enhancer [label="Documentation\nEnhancer", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_improver [label="Test\nImprover", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        regression_tester [label="Regression\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        performance_validator [label="Performance\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        quality_gate [label="Quality\nGate", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        coder_coord [label="Coder\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        tester_coord [label="Tester\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        reviewer_coord [label="Reviewer\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    refine_init -> sparc_phase [label="Enter Phase 4"];
+    refine_init -> refactoring_patterns [label="Load"];
+    sparc_phase -> coder_coord [label="Receive Code"];
+    coder_coord -> quality_analyzer [label="Analyze"];
+    quality_analyzer -> smell_detector [label="Detect Smells"];
+    smell_detector -> duplication_finder [label="Find Duplicates"];
+    duplication_finder -> complexity_measurer [label="Measure Complexity"];
+    complexity_measurer -> extract_method [label="Extract"];
+    extract_method -> rename_refactor [label="Rename"];
+    rename_refactor -> move_method [label="Move"];
+    move_method -> simplify_conditional [label="Simplify"];
+    simplify_conditional -> performance_optimizer [label="Optimize Performance"];
+    performance_optimizer -> memory_optimizer [label="Optimize Memory"];
+    memory_optimizer -> algorithm_optimizer [label="Optimize Algorithm"];
+    algorithm_optimizer -> cache_optimizer [label="Optimize Cache"];
+    cache_optimizer -> readability_improver [label="Improve Readability"];
+    readability_improver -> naming_improver [label="Improve Naming"];
+    naming_improver -> documentation_enhancer [label="Enhance Docs"];
+    documentation_enhancer -> test_improver [label="Improve Tests"];
+    test_improver -> regression_tester [label="Run Regression"];
+    regression_tester -> performance_validator [label="Validate Performance"];
+    performance_validator -> quality_gate [label="Quality Gate"];
+    quality_gate -> reviewer_coord [label="Handoff"];
+    test_improver -> tester_coord [label="Coordinate Tests"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Refinement Agent", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Refactoring", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+}

@@ -1,0 +1,42 @@
+{
+  "summary": {
+    "violations": 1,
+    "warnings": 2,
+    "total_loc": 87,
+    "estimated_savings": 72
+  },
+  "violations": [
+    {
+      "file": "C:\\Users\\17175\\analyzer\\example_usage.py",
+      "line": 98,
+      "name": "main",
+      "loc": 87,
+      "total_lines": 130,
+      "complexity": 2,
+      "responsibilities": 1,
+      "category": "VIOLATION (>60)"
+    }
+  ],
+  "warnings": [
+    {
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\linter.py",
+      "line": 38,
+      "name": "analyze_file",
+      "loc": 59,
+      "total_lines": 86,
+      "complexity": 18,
+      "responsibilities": 1,
+      "category": "WARNING (40-60)"
+    },
+    {
+      "file": "C:\\Users\\17175\\analyzer\\clarity_linter\\detectors\\clarity011_mega_function.py",
+      "line": 172,
+      "name": "_find_split_points",
+      "loc": 52,
+      "total_lines": 89,
+      "complexity": 16,
+      "responsibilities": 1,
+      "category": "WARNING (40-60)"
+    }
+  ]
+}

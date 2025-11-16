@@ -1,0 +1,94 @@
+// SPARC Researcher Command Workflow
+// Comprehensive research and investigation
+digraph sparc_researcher_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:researcher\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        topic_analyzer [label="Topic\nAnalyzer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_investigation {
+        label="Investigation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        source_finder [label="Source\nFinder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        literature_reviewer [label="Literature\nReviewer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        data_collector [label="Data\nCollector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        expert_consulter [label="Expert\nConsulter", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Comprehensive Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_analyzer [label="Pattern\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        trend_identifier [label="Trend\nIdentifier", fillcolor="#10b981", fontcolor="#ffffff"];
+        gap_analyzer [label="Gap\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        synthesis_engine [label="Synthesis\nEngine", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        fact_checker [label="Fact\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        source_validator [label="Source\nValidator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        bias_detector [label="Bias\nDetector", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_reporting {
+        label="Reporting";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        report_writer [label="Report\nWriter", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        citation_manager [label="Citation\nManager", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        visualization_creator [label="Visualization\nCreator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        research_report [label="Research\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        evidence_base [label="Evidence\nBase", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> topic_analyzer;
+    topic_analyzer -> source_finder -> literature_reviewer -> data_collector -> expert_consulter;
+    expert_consulter -> pattern_analyzer -> trend_identifier -> gap_analyzer -> synthesis_engine;
+    synthesis_engine -> fact_checker -> source_validator -> bias_detector;
+    bias_detector -> report_writer -> citation_manager -> visualization_creator;
+    visualization_creator -> research_report -> evidence_base;
+    evidence_base -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    fact_checker -> data_collector [label="Verify", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Investigation", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Analysis", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

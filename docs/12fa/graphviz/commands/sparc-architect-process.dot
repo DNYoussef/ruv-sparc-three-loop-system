@@ -1,0 +1,80 @@
+// SPARC Architect Command Workflow
+// System design and architecture patterns
+digraph sparc_architect_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:architect\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        requirement_parser [label="Requirement\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_design {
+        label="System Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        component_designer [label="Component\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        layer_architect [label="Layer\nArchitect", fillcolor="#2563eb", fontcolor="#ffffff"];
+        interface_designer [label="Interface\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        data_architect [label="Data\nArchitect", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_patterns {
+        label="Architecture Patterns";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pattern_selector [label="Pattern\nSelector", fillcolor="#10b981", fontcolor="#ffffff"];
+        microservices_designer [label="Microservices\nDesigner", fillcolor="#10b981", fontcolor="#ffffff"];
+        event_architect [label="Event-Driven\nArchitect", fillcolor="#10b981", fontcolor="#ffffff"];
+        clean_arch_applier [label="Clean Architecture\nApplier", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_scalability {
+        label="Scalability Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        load_planner [label="Load\nPlanner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        caching_designer [label="Caching\nDesigner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        distribution_architect [label="Distribution\nArchitect", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        architecture_doc [label="Architecture\nDocument", fillcolor="#059669", fontcolor="#ffffff"];
+        component_diagram [label="Component\nDiagram", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> requirement_parser;
+    requirement_parser -> component_designer -> layer_architect -> interface_designer -> data_architect;
+    data_architect -> pattern_selector -> microservices_designer -> event_architect -> clean_arch_applier;
+    clean_arch_applier -> load_planner -> caching_designer -> distribution_architect;
+    distribution_architect -> architecture_doc -> component_diagram;
+    component_diagram -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Design", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Patterns", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

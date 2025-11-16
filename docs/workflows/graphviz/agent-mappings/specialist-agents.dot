@@ -1,0 +1,411 @@
+// Specialist Agent Focus
+// Highlights highly specialized agents and their unique command sets
+// Shows commands exclusive to specialists
+
+digraph SpecialistAgents {
+    // Graph settings
+    graph [
+        rankdir=LR,
+        splines=polyline,
+        overlap=false,
+        nodesep=1.2,
+        ranksep=2.5,
+        fontname="Arial",
+        fontsize=14,
+        label="Specialist Agent Focus\nUnique Command Sets & Exclusive Capabilities",
+        labelloc=t,
+        bgcolor="#F5F5F5"
+    ];
+
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // ========== SPECIALIST CATEGORY 1: Reverse Engineering & Analysis ==========
+    subgraph cluster_re_agents {
+        label="Reverse Engineering Specialists";
+        style=filled;
+        color="#E8EAF6";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#3F51B5", fontcolor=white, width=2.5];
+
+        // Note: These are conceptual RE agents based on typical SPARC patterns
+        re_binary [label="Binary RE Agent\n(Not in current list)", style="filled,dashed"];
+        re_protocol [label="Protocol RE Agent\n(Not in current list)", style="filled,dashed"];
+        re_malware [label="Malware RE Agent\n(Not in current list)", style="filled,dashed"];
+    }
+
+    // ========== SPECIALIST CATEGORY 2: Machine Learning & Data Science ==========
+    subgraph cluster_ml_specialists {
+        label="ML & Data Science Specialists";
+        style=filled;
+        color="#E8F5E9";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#4CAF50", fontcolor=white, width=2.5];
+        ml_developer [label="ML Developer\n(Neural Networks)"];
+        ml_optimizer [label="ML Optimizer\n(Hyperparameter)", style="filled,dashed"];
+        data_pipeline [label="Data Pipeline Agent\n(ETL)", style="filled,dashed"];
+    }
+
+    // ========== SPECIALIST CATEGORY 3: Security & Cryptography ==========
+    subgraph cluster_security {
+        label="Security & Cryptography Specialists";
+        style=filled;
+        color="#FCE4EC";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#E91E63", fontcolor=white, width=2.5];
+        security_mgr [label="Security Manager\n(Audit & Compliance)"];
+        crypto_agent [label="Cryptography Agent\n(Encryption)", style="filled,dashed"];
+        pentest_agent [label="Penetration Tester\n(Vulnerability)", style="filled,dashed"];
+    }
+
+    // ========== SPECIALIST CATEGORY 4: Consensus & Distributed Systems ==========
+    subgraph cluster_distributed {
+        label="Distributed Systems Specialists";
+        style=filled;
+        color="#FFF3E0";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#FF9800", fontcolor=white, width=2.5];
+        byzantine_coord [label="Byzantine Coordinator\n(Fault Tolerance)"];
+        raft_manager [label="Raft Manager\n(Leader Election)"];
+        gossip_coord [label="Gossip Coordinator\n(P2P Propagation)"];
+        crdt_sync [label="CRDT Synchronizer\n(Conflict-Free)"];
+        quorum_manager [label="Quorum Manager\n(Consensus)"];
+    }
+
+    // ========== SPECIALIST CATEGORY 5: Performance & Optimization ==========
+    subgraph cluster_performance {
+        label="Performance & Optimization Specialists";
+        style=filled;
+        color="#E0F2F1";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#009688", fontcolor=white, width=2.5];
+        perf_analyzer [label="Performance Analyzer\n(Profiling)"];
+        perf_benchmarker [label="Performance Benchmarker\n(Load Testing)"];
+        cache_optimizer [label="Cache Optimizer\n(Memcache)", style="filled,dashed"];
+    }
+
+    // ========== SPECIALIST CATEGORY 6: DevOps & Infrastructure ==========
+    subgraph cluster_devops {
+        label="DevOps & Infrastructure Specialists";
+        style=filled;
+        color="#FFF9C4";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#FBC02D", fontcolor=black, width=2.5];
+        cicd_engineer [label="CI/CD Engineer\n(Pipeline Automation)"];
+        container_mgr [label="Container Manager\n(Docker/K8s)", style="filled,dashed"];
+        infra_as_code [label="IaC Agent\n(Terraform)", style="filled,dashed"];
+    }
+
+    // ========== SPECIALIST CATEGORY 7: Multi-Repository & Architecture ==========
+    subgraph cluster_repo_arch {
+        label="Repository & Architecture Specialists";
+        style=filled;
+        color="#F3E5F5";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#9C27B0", fontcolor=white, width=2.5];
+        multi_repo_swarm [label="Multi-Repo Swarm\n(Cross-Repo Sync)"];
+        repo_architect [label="Repository Architect\n(Structure Design)"];
+        migration_planner [label="Migration Planner\n(Codebase Migration)"];
+    }
+
+    // ========== SPECIALIST CATEGORY 8: SPARC Methodology ==========
+    subgraph cluster_sparc_special {
+        label="SPARC Methodology Specialists";
+        style=filled;
+        color="#E1F5FE";
+        fontsize=12;
+
+        node [shape=box, fillcolor="#03A9F4", fontcolor=white, width=2.5];
+        specification [label="Specification Agent\n(Requirements)"];
+        pseudocode [label="Pseudocode Agent\n(Algorithm Design)"];
+        architecture [label="Architecture Agent\n(System Design)"];
+        refinement [label="Refinement Agent\n(Optimization)"];
+    }
+
+    // ========== UNIQUE/EXCLUSIVE COMMANDS ==========
+
+    // ML Specialist Commands
+    subgraph cluster_ml_commands {
+        label="ML-Exclusive Commands";
+        style=filled;
+        color="#C8E6C9";
+
+        node [shape=ellipse, fillcolor="#66BB6A", fontcolor=white];
+        ml_train [label="/ml-train", style="filled,dashed"];
+        ml_validate [label="/ml-validate", style="filled,dashed"];
+        ml_deploy [label="/ml-deploy", style="filled,dashed"];
+        json_format [label="/json-format\n(Data Models)"];
+    }
+
+    // Security Specialist Commands
+    subgraph cluster_security_commands {
+        label="Security-Exclusive Commands";
+        style=filled;
+        color="#FFCCBC";
+
+        node [shape=ellipse, fillcolor="#FF7043", fontcolor=white];
+        security_scan [label="/security-scan", style="filled,dashed"];
+        vulnerability_check [label="/vulnerability-check", style="filled,dashed"];
+        test_validate [label="/test-validate\n(Security Validation)"];
+        comm_alert [label="/communicate-alert\n(Security Alerts)"];
+    }
+
+    // Consensus Specialist Commands
+    subgraph cluster_consensus_commands {
+        label="Consensus-Specific Commands";
+        style=filled;
+        color="#FFE0B2";
+
+        node [shape=ellipse, fillcolor="#FFB74D", fontcolor=white];
+        agent_coord [label="/agent-coordinate\n(Consensus Protocol)"];
+        mem_persist [label="/memory-persist\n(State Sync)"];
+        consensus_vote [label="/consensus-vote", style="filled,dashed"];
+    }
+
+    // Performance Specialist Commands
+    subgraph cluster_perf_commands {
+        label="Performance-Exclusive Commands";
+        style=filled;
+        color="#B2DFDB";
+
+        node [shape=ellipse, fillcolor="#26A69A", fontcolor=white];
+        perf_profile [label="/perf-profile", style="filled,dashed"];
+        benchmark_run [label="/benchmark-run", style="filled,dashed"];
+        mem_usage [label="/memory-usage", style="filled,dashed"];
+        comm_report [label="/communicate-report\n(Perf Metrics)"];
+    }
+
+    // DevOps Specialist Commands
+    subgraph cluster_devops_commands {
+        label="DevOps-Exclusive Commands";
+        style=filled;
+        color="#FFF59D";
+
+        node [shape=ellipse, fillcolor="#FDD835", fontcolor=black];
+        yaml_format [label="/yaml-format\n(K8s/Docker Compose)"];
+        docker_build [label="/docker-build", style="filled,dashed"];
+        deploy_prod [label="/deploy-production", style="filled,dashed"];
+    }
+
+    // Repository Specialist Commands
+    subgraph cluster_repo_commands {
+        label="Repo Architecture Commands";
+        style=filled;
+        color="#E1BEE7";
+
+        node [shape=ellipse, fillcolor="#AB47BC", fontcolor=white];
+        glob_search [label="/glob-search\n(Structure Analysis)"];
+        git_multi_sync [label="/git-multi-sync", style="filled,dashed"];
+        repo_analyze [label="/repo-analyze", style="filled,dashed"];
+    }
+
+    // SPARC Specialist Commands
+    subgraph cluster_sparc_commands {
+        label="SPARC Methodology Commands";
+        style=filled;
+        color="#BBDEFB";
+
+        node [shape=ellipse, fillcolor="#42A5F5", fontcolor=white];
+        markdown_gen [label="/markdown-gen\n(Specification)"];
+        spec_validate [label="/spec-validate", style="filled,dashed"];
+        arch_diagram [label="/arch-diagram", style="filled,dashed"];
+    }
+
+    // ========== AGENT-TO-COMMAND RELATIONSHIPS ==========
+
+    // ML Specialists
+    ml_developer -> json_format [penwidth=2, color="#4CAF50"];
+    ml_developer -> ml_train [penwidth=2, color="#4CAF50", style=dashed];
+    ml_developer -> ml_validate [penwidth=2, color="#4CAF50", style=dashed];
+
+    // Security Specialists
+    security_mgr -> test_validate [penwidth=2, color="#E91E63"];
+    security_mgr -> comm_alert [penwidth=2, color="#E91E63"];
+    security_mgr -> security_scan [penwidth=2, color="#E91E63", style=dashed];
+    security_mgr -> vulnerability_check [penwidth=2, color="#E91E63", style=dashed];
+
+    // Consensus Specialists
+    byzantine_coord -> agent_coord [penwidth=3, color="#FF9800"];
+    byzantine_coord -> mem_persist [penwidth=2, color="#FF9800"];
+    byzantine_coord -> consensus_vote [penwidth=2, color="#FF9800", style=dashed];
+
+    raft_manager -> agent_coord [penwidth=3, color="#FF9800"];
+    raft_manager -> mem_persist [penwidth=2, color="#FF9800"];
+
+    gossip_coord -> agent_coord [penwidth=3, color="#FF9800"];
+
+    crdt_sync -> mem_persist [penwidth=3, color="#FF9800"];
+
+    quorum_manager -> agent_coord [penwidth=3, color="#FF9800"];
+    quorum_manager -> consensus_vote [penwidth=2, color="#FF9800", style=dashed];
+
+    // Performance Specialists
+    perf_analyzer -> comm_report [penwidth=2, color="#009688"];
+    perf_analyzer -> perf_profile [penwidth=2, color="#009688", style=dashed];
+
+    perf_benchmarker -> benchmark_run [penwidth=3, color="#009688", style=dashed];
+    perf_benchmarker -> mem_usage [penwidth=2, color="#009688", style=dashed];
+
+    // DevOps Specialists
+    cicd_engineer -> yaml_format [penwidth=3, color="#FBC02D"];
+    cicd_engineer -> docker_build [penwidth=2, color="#FBC02D", style=dashed];
+    cicd_engineer -> deploy_prod [penwidth=2, color="#FBC02D", style=dashed];
+
+    // Repository Specialists
+    multi_repo_swarm -> git_multi_sync [penwidth=3, color="#9C27B0", style=dashed];
+
+    repo_architect -> glob_search [penwidth=3, color="#9C27B0"];
+    repo_architect -> repo_analyze [penwidth=2, color="#9C27B0", style=dashed];
+
+    migration_planner -> glob_search [penwidth=2, color="#9C27B0"];
+
+    // SPARC Specialists
+    specification -> markdown_gen [penwidth=3, color="#03A9F4"];
+    specification -> spec_validate [penwidth=2, color="#03A9F4", style=dashed];
+
+    pseudocode -> markdown_gen [penwidth=2, color="#03A9F4"];
+
+    architecture -> markdown_gen [penwidth=2, color="#03A9F4"];
+    architecture -> arch_diagram [penwidth=2, color="#03A9F4", style=dashed];
+
+    refinement -> arch_diagram [penwidth=1, color="#03A9F4", style=dashed];
+
+    // ========== EXCLUSIVITY ANALYSIS ==========
+    subgraph cluster_exclusivity {
+        label="Command Exclusivity Analysis";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        exclusivity_table [
+            shape=plaintext,
+            fontsize=10,
+            label=<
+                <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="6">
+                    <TR>
+                        <TD BGCOLOR="#263238"><FONT COLOR="white"><B>Specialist Type</B></FONT></TD>
+                        <TD BGCOLOR="#263238"><FONT COLOR="white"><B>Unique Cmds</B></FONT></TD>
+                        <TD BGCOLOR="#263238"><FONT COLOR="white"><B>Shared Cmds</B></FONT></TD>
+                        <TD BGCOLOR="#263238"><FONT COLOR="white"><B>Exclusivity</B></FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">ML & Data Science</TD>
+                        <TD>3</TD>
+                        <TD>1</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">75%</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Security & Crypto</TD>
+                        <TD>2</TD>
+                        <TD>2</TD>
+                        <TD BGCOLOR="#FBC02D">50%</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Consensus Systems</TD>
+                        <TD>1</TD>
+                        <TD>2</TD>
+                        <TD BGCOLOR="#FF9800">33%</TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Performance</TD>
+                        <TD>3</TD>
+                        <TD>1</TD>
+                        <TD BGCOLOR="#4CAF50"><FONT COLOR="white">75%</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">DevOps & Infra</TD>
+                        <TD>2</TD>
+                        <TD>1</TD>
+                        <TD BGCOLOR="#66BB6A"><FONT COLOR="white">67%</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Repo Architecture</TD>
+                        <TD>2</TD>
+                        <TD>1</TD>
+                        <TD BGCOLOR="#66BB6A"><FONT COLOR="white">67%</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">SPARC Methodology</TD>
+                        <TD>2</TD>
+                        <TD>1</TD>
+                        <TD BGCOLOR="#66BB6A"><FONT COLOR="white">67%</FONT></TD>
+                    </TR>
+                    <TR>
+                        <TD ALIGN="LEFT">Reverse Engineering</TD>
+                        <TD>5+</TD>
+                        <TD>2</TD>
+                        <TD BGCOLOR="#2E7D32"><FONT COLOR="white">71%+</FONT></TD>
+                    </TR>
+                </TABLE>
+            >
+        ];
+    }
+
+    // Statistics and insights
+    subgraph cluster_insights {
+        label="Specialist Insights";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        node [shape=note, fontsize=10];
+
+        specialist_stats [
+            label="Specialist Command Statistics:\n\n• 8 specialist categories identified\n• 18+ exclusive commands (dashed lines)\n• Avg 67% command exclusivity\n• ML & Performance: highest exclusivity (75%)\n• Consensus: lowest exclusivity (33%)\n  → Heavy reliance on shared coordination\n\nLegend:\nSolid line = Existing command\nDashed line = Conceptual/proposed command\nDashed box = Conceptual agent (not yet implemented)",
+            fillcolor="#E3F2FD",
+            fontcolor=black
+        ];
+
+        unique_capabilities [
+            label="Unique Specialist Capabilities:\n\n1. ML Developer: Neural net training & validation\n2. Security Manager: Vulnerability scanning & compliance\n3. Byzantine Coord: Fault-tolerant consensus\n4. Performance Analyzer: Profiling & bottleneck detection\n5. CI/CD Engineer: YAML-based pipeline automation\n6. Multi-Repo Swarm: Cross-repository synchronization\n7. SPARC Agents: Methodology-driven development\n8. RE Agents: Binary/protocol reverse engineering",
+            fillcolor="#FFF9C4",
+            fontcolor=black
+        ];
+
+        recommendations [
+            label="Recommendations:\n\n• Implement ML training commands (/ml-train)\n• Add security scanning suite (/security-scan)\n• Create consensus voting protocol (/consensus-vote)\n• Build performance profiling tools (/perf-profile)\n• Develop RE-specific commands for binary analysis\n• Consider cross-specialist command sharing\n  for consensus + security integration",
+            fillcolor="#FFCCBC",
+            fontcolor=black
+        ];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Visual Legend";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        legend_agents [
+            shape=box,
+            fillcolor="#546E7A",
+            fontcolor=white,
+            label="Agent\n(Specialist)"
+        ];
+
+        legend_cmd_existing [
+            shape=ellipse,
+            fillcolor="#78909C",
+            fontcolor=white,
+            label="Existing\nCommand"
+        ];
+
+        legend_cmd_proposed [
+            shape=ellipse,
+            fillcolor="#78909C",
+            fontcolor=white,
+            style="filled,dashed",
+            label="Proposed\nCommand"
+        ];
+
+        legend_agents -> legend_cmd_existing [label="uses", penwidth=2];
+        legend_agents -> legend_cmd_proposed [label="needs", penwidth=2, style=dashed];
+    }
+}

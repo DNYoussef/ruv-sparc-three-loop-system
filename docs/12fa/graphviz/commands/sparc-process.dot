@@ -1,0 +1,89 @@
+digraph sparc_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC Command Workflow\n5-Phase Development Methodology";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  mode_select [label="Select SPARC Mode\n- full workflow\n- specific phase\n- TDD mode", fillcolor="#FFF9C4", shape=diamond];
+
+  // Phase 1: Specification
+  phase1 [label="Phase 1: Specification\nRequirements analysis", fillcolor="#FFE0B2"];
+  spec_agent [label="Spawn Spec Agent\n/sparc:spec-pseudocode", fillcolor="#BBDEFB"];
+  requirements [label="Generate Requirements\n- Functional specs\n- Edge cases\n- Constraints", fillcolor="#B2DFDB"];
+
+  // Phase 2: Pseudocode
+  phase2 [label="Phase 2: Pseudocode\nAlgorithm design", fillcolor="#FFE0B2"];
+  pseudocode [label="Generate Pseudocode\n- Data structures\n- Control flow\n- Logic design", fillcolor="#B2DFDB"];
+
+  // Phase 3: Architecture
+  phase3 [label="Phase 3: Architecture\nSystem design", fillcolor="#FFE0B2"];
+  arch_agent [label="Spawn Architect Agent\n/sparc:architect", fillcolor="#BBDEFB"];
+  architecture [label="Design Architecture\n- Components\n- Interfaces\n- Patterns", fillcolor="#B2DFDB"];
+
+  // Phase 4: Refinement (TDD)
+  phase4 [label="Phase 4: Refinement\nTDD implementation", fillcolor="#FFE0B2"];
+  tdd_cycle [label="TDD Cycle\nRed → Green → Refactor", fillcolor="#C5CAE9"];
+  code_agent [label="Spawn Coder Agent\n/sparc:code", fillcolor="#BBDEFB"];
+  implementation [label="Implementation\nClean, tested code", fillcolor="#B2DFDB"];
+
+  // Phase 5: Completion
+  phase5 [label="Phase 5: Completion\nIntegration & validation", fillcolor="#FFE0B2"];
+  integration_agent [label="Spawn Integration Agent\n/sparc:integration", fillcolor="#BBDEFB"];
+  integration [label="System Integration\n- Component merging\n- E2E testing\n- Validation", fillcolor="#B2DFDB"];
+
+  // Security review
+  security_review [label="Security Review\n/sparc:security-review", fillcolor="#F44336", fontcolor=white];
+
+  // Deployment monitoring
+  deployment [label="Deployment Ready\n/sparc:post-deployment", fillcolor="#4CAF50", fontcolor=white];
+
+  success [label="SPARC Complete\nProduction ready", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Error\nReturn to phase", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> mode_select;
+  mode_select -> phase1 [label="Full workflow"];
+
+  // Phase 1
+  phase1 -> spec_agent;
+  spec_agent -> requirements;
+  requirements -> phase2;
+
+  // Phase 2
+  phase2 -> pseudocode;
+  pseudocode -> phase3;
+
+  // Phase 3
+  phase3 -> arch_agent;
+  arch_agent -> architecture;
+  architecture -> phase4;
+
+  // Phase 4
+  phase4 -> tdd_cycle;
+  tdd_cycle -> code_agent;
+  code_agent -> implementation;
+  implementation -> phase5;
+  implementation -> error [label="Failed", style=dashed, color=red];
+  error -> phase4 [label="Retry"];
+
+  // Phase 5
+  phase5 -> integration_agent;
+  integration_agent -> integration;
+  integration -> security_review;
+  security_review -> deployment [label="Passed"];
+  security_review -> error [label="Failed", style=dashed, color=red];
+  deployment -> success;
+
+  // Direct phase access
+  mode_select -> spec_agent [label="Spec only", style=dashed];
+  mode_select -> code_agent [label="Code only", style=dashed];
+  mode_select -> integration_agent [label="Integration only", style=dashed];
+}

@@ -1,0 +1,69 @@
+digraph audit_pipeline_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Audit-Pipeline Command Workflow\nComprehensive Quality Validation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/audit-pipeline", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Stage 1: Theater Detection
+  theater_stage [label="Stage 1: Theater Detection\n0% tolerance for fake code", fillcolor="#F44336", fontcolor=white];
+  theater_check [label="Theater Check\n- Mock detection\n- Fake implementation\n- TODO comments\n- Empty functions", fillcolor="#FFF9C4"];
+  theater_result [label="Theater Found?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  // Stage 2: Functionality Audit
+  functionality_stage [label="Stage 2: Functionality Audit\nSandbox execution testing", fillcolor="#FFE0B2"];
+  sandbox_test [label="Sandbox Testing\n- Real execution\n- Edge cases\n- Error handling\n- Integration", fillcolor="#BBDEFB"];
+  functionality_result [label="All Tests Pass?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  // Stage 3: Style Audit
+  style_stage [label="Stage 3: Style Audit\nCode quality & formatting", fillcolor="#C5CAE9"];
+  style_check [label="Style Checks\n- Linting\n- Formatting\n- Best practices\n- Documentation", fillcolor="#B2DFDB"];
+
+  // Stage 4: Security Audit
+  security_stage [label="Stage 4: Security Audit\nVulnerability scanning", fillcolor="#D1C4E9"];
+  security_scan [label="Security Scan\n- Secrets check\n- Dependency audit\n- OWASP top 10\n- Penetration test", fillcolor="#F44336", fontcolor=white];
+
+  // Stage 5: Performance Audit
+  performance_stage [label="Stage 5: Performance Audit\nBenchmarking & profiling", fillcolor="#F0F4C3"];
+  performance_test [label="Performance Test\n- Load testing\n- Memory profiling\n- Response times\n- Resource usage", fillcolor="#FFE0B2"];
+
+  // Stage 6: Comprehensive Report
+  generate_report [label="Generate Report\n- All audit results\n- Pass/Fail status\n- Recommendations\n- Action items", fillcolor="#BBDEFB"];
+
+  all_passed [label="All Audits Passed?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  success [label="Audit Complete\nProduction ready", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  failed [label="Audit Failed\nFix issues", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> theater_stage;
+  theater_stage -> theater_check;
+  theater_check -> theater_result;
+  theater_result -> failed [label="Yes - BLOCK", color=red, penwidth=2];
+  theater_result -> functionality_stage [label="No"];
+
+  functionality_stage -> sandbox_test;
+  sandbox_test -> functionality_result;
+  functionality_result -> style_stage [label="Yes"];
+  functionality_result -> failed [label="No"];
+
+  style_stage -> style_check;
+  style_check -> security_stage;
+
+  security_stage -> security_scan;
+  security_scan -> performance_stage;
+
+  performance_stage -> performance_test;
+  performance_test -> generate_report;
+
+  generate_report -> all_passed;
+  all_passed -> success [label="Yes"];
+  all_passed -> failed [label="No"];
+}

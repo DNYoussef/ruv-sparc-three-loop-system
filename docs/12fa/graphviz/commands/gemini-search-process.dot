@@ -1,0 +1,52 @@
+digraph gemini_search_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Gemini-Search Command Workflow\nReal-Time Web Search & Information Synthesis";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/gemini-search", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  parse_query [label="Parse Search Query\n- Keywords\n- Intent\n- Scope", fillcolor="#FFF9C4"];
+
+  formulate_search [label="Formulate Search\n- Search terms\n- Filters\n- Time range", fillcolor="#FFE0B2"];
+
+  execute_search [label="Execute Web Search\nReal-time query", fillcolor="#BBDEFB"];
+
+  fetch_results [label="Fetch Results\n- Top results\n- Snippets\n- Sources", fillcolor="#C5CAE9"];
+
+  filter_quality [label="Filter for Quality\n- Credibility\n- Relevance\n- Recency", fillcolor="#B2DFDB"];
+
+  extract_info [label="Extract Information\n- Key facts\n- Data points\n- Quotes", fillcolor="#D1C4E9"];
+
+  cross_reference [label="Cross-Reference\n- Verify facts\n- Check consistency\n- Identify conflicts", fillcolor="#F0F4C3"];
+
+  synthesize [label="Synthesize Information\n- Combine sources\n- Identify patterns\n- Draw conclusions", fillcolor="#FFE0B2"];
+
+  fact_check [label="Fact Check\n- Verify claims\n- Check sources\n- Validate data", fillcolor="#BBDEFB"];
+
+  generate_summary [label="Generate Summary\n- Key findings\n- Source citations\n- Confidence level", fillcolor="#B2DFDB"];
+
+  format_response [label="Format Response\n- Structured output\n- Citations\n- References", fillcolor="#D1C4E9"];
+
+  success [label="Search Complete\nInformation synthesized", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> parse_query;
+  parse_query -> formulate_search;
+  formulate_search -> execute_search;
+  execute_search -> fetch_results;
+  fetch_results -> filter_quality;
+  filter_quality -> extract_info;
+  extract_info -> cross_reference;
+  cross_reference -> synthesize;
+  synthesize -> fact_check;
+  fact_check -> generate_summary;
+  generate_summary -> format_response;
+  format_response -> success;
+}

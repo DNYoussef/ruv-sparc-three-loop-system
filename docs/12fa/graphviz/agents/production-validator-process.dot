@@ -1,0 +1,93 @@
+// Production Validator Agent - Production Readiness Validation
+// Production checks, health validation, smoke tests, deployment gates
+digraph production_validator_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        validator_init [label="Production Validator\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        checklist_loader [label="Validation Checklist\nLoader", fillcolor="#2d3748", fontcolor="#ffffff"];
+        criteria_config [label="Acceptance Criteria\nConfig", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_health {
+        label="Health Checks"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        endpoint_health [label="Endpoint Health\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        database_health [label="Database Health\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        service_health [label="Service Health\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_health [label="Dependency Health\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_smoke {
+        label="Smoke Tests"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        critical_path_tester [label="Critical Path\nTester", fillcolor="#059669", fontcolor="#ffffff"];
+        integration_tester [label="Integration\nTester", fillcolor="#059669", fontcolor="#ffffff"];
+        api_tester [label="API\nTester", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_performance {
+        label="Performance Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        response_time_checker [label="Response Time\nChecker", fillcolor="#0891b2", fontcolor="#ffffff"];
+        throughput_validator [label="Throughput\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        resource_monitor [label="Resource\nMonitor", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_security {
+        label="Security Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        ssl_validator [label="SSL/TLS\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        auth_validator [label="Auth\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        vulnerability_scanner [label="Vulnerability\nScanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_config {
+        label="Configuration Validation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        env_validator [label="Environment\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        secret_validator [label="Secret\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        config_validator [label="Config\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_gate {
+        label="Deployment Gate"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        gate_decision [label="Gate Decision\nEngine", fillcolor="#ef4444", fontcolor="#ffffff"];
+        rollback_trigger [label="Rollback\nTrigger", fillcolor="#ef4444", fontcolor="#ffffff"];
+        approval_gate [label="Approval\nGate", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        release_coord [label="Release Manager\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        cicd_coord [label="CI/CD\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    validator_init -> checklist_loader [label="Load"];
+    validator_init -> criteria_config [label="Load"];
+    checklist_loader -> endpoint_health [label="Check Endpoints"];
+    endpoint_health -> database_health [label="Check Database"];
+    database_health -> service_health [label="Check Services"];
+    service_health -> dependency_health [label="Check Dependencies"];
+    dependency_health -> critical_path_tester [label="Test Critical Paths"];
+    critical_path_tester -> integration_tester [label="Test Integration"];
+    integration_tester -> api_tester [label="Test APIs"];
+    api_tester -> response_time_checker [label="Check Response Time"];
+    response_time_checker -> throughput_validator [label="Validate Throughput"];
+    throughput_validator -> resource_monitor [label="Monitor Resources"];
+    resource_monitor -> ssl_validator [label="Validate SSL"];
+    ssl_validator -> auth_validator [label="Validate Auth"];
+    auth_validator -> vulnerability_scanner [label="Scan Vulnerabilities"];
+    vulnerability_scanner -> env_validator [label="Validate Env"];
+    env_validator -> secret_validator [label="Validate Secrets"];
+    secret_validator -> config_validator [label="Validate Config"];
+    config_validator -> gate_decision [label="Decision"];
+    gate_decision -> rollback_trigger [label="Fail: Rollback", style=dashed, color="#ef4444"];
+    gate_decision -> approval_gate [label="Pass: Approve"];
+    approval_gate -> release_coord [label="Coordinate Release"];
+    gate_decision -> cicd_coord [label="Coordinate CI/CD"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Production Validator", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Health Checks", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

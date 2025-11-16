@@ -1,0 +1,51 @@
+digraph SELF_HEALING_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // Command invocation
+  invoke [label="User Invokes\n/self-healing", shape=ellipse, fillcolor=lightblue];
+
+  // Error detection
+  monitor [label="Monitor\nWorkflows", fillcolor=lightblue];
+  detect_error [shape=diamond, label="Error\nDetected?"];
+  classify_error [label="Classify\nError Type", fillcolor=purple];
+
+  // Recovery strategies
+  select_strategy [shape=diamond, label="Recovery\nStrategy?"];
+  retry_task [label="Retry\nTask", fillcolor=lightgreen];
+  spawn_backup [label="Spawn Backup\nAgent", fillcolor=lightgreen];
+  redistribute_work [label="Redistribute\nWork", fillcolor=lightgreen];
+  rollback [label="Rollback to\nLast Known Good", fillcolor=yellow];
+
+  // Validation
+  validate_recovery [shape=diamond, label="Recovery\nSuccessful?"];
+  escalate [shape=octagon, fillcolor=orange, label="Escalate to\nUser"];
+
+  // Success
+  log_recovery [label="Log Recovery\nMetrics", fillcolor=lightgreen];
+  success [label="Self-Healing\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  // Connections
+  invoke -> monitor;
+  monitor -> detect_error;
+  detect_error -> classify_error [label="Yes"];
+  detect_error -> success [label="No"];
+
+  classify_error -> select_strategy;
+  select_strategy -> retry_task [label="Transient"];
+  select_strategy -> spawn_backup [label="Agent Failure"];
+  select_strategy -> redistribute_work [label="Overload"];
+  select_strategy -> rollback [label="Data Corruption"];
+
+  retry_task -> validate_recovery;
+  spawn_backup -> validate_recovery;
+  redistribute_work -> validate_recovery;
+  rollback -> validate_recovery;
+
+  validate_recovery -> escalate [label="No"];
+  validate_recovery -> log_recovery [label="Yes"];
+
+  escalate -> log_recovery [style=dashed];
+  log_recovery -> success;
+}

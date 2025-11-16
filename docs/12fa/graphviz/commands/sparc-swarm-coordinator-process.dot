@@ -1,0 +1,100 @@
+// SPARC Swarm Coordinator Command Workflow
+// Multi-agent swarm coordination
+digraph sparc_swarm_coordinator_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:swarm-coordinator\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        task_analyzer [label="Task\nAnalyzer", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_topology {
+        label="Topology Selection";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        topology_selector [label="Topology\nSelector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        hierarchical_builder [label="Hierarchical\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        mesh_builder [label="Mesh\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        adaptive_builder [label="Adaptive\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_agents {
+        label="Agent Management";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        agent_spawner [label="Agent\nSpawner", fillcolor="#10b981", fontcolor="#ffffff"];
+        capability_matcher [label="Capability\nMatcher", fillcolor="#10b981", fontcolor="#ffffff"];
+        load_balancer [label="Load\nBalancer", fillcolor="#10b981", fontcolor="#ffffff"];
+        health_monitor [label="Health\nMonitor", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_orchestration {
+        label="Task Orchestration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        task_distributor [label="Task\nDistributor", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        execution_coordinator [label="Execution\nCoordinator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        result_aggregator [label="Result\nAggregator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        consensus_builder [label="Consensus\nBuilder", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_monitoring {
+        label="Monitoring";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        performance_tracker [label="Performance\nTracker", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        bottleneck_detector [label="Bottleneck\nDetector", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        failure_handler [label="Failure\nHandler", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coordinated_result [label="Coordinated\nResult", fillcolor="#059669", fontcolor="#ffffff"];
+        swarm_metrics [label="Swarm\nMetrics", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> task_analyzer;
+    task_analyzer -> topology_selector -> hierarchical_builder;
+    topology_selector -> mesh_builder;
+    topology_selector -> adaptive_builder;
+    hierarchical_builder -> agent_spawner;
+    mesh_builder -> agent_spawner;
+    adaptive_builder -> agent_spawner;
+    agent_spawner -> capability_matcher -> load_balancer -> health_monitor;
+    health_monitor -> task_distributor -> execution_coordinator -> result_aggregator -> consensus_builder;
+    consensus_builder -> performance_tracker -> bottleneck_detector -> failure_handler;
+    failure_handler -> coordinated_result -> swarm_metrics;
+    swarm_metrics -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    failure_handler -> task_distributor [label="Redistribute", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Topology", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Agents", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

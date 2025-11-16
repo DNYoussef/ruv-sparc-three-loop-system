@@ -1,0 +1,157 @@
+digraph flow_nexus_swarm_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Swarm Agent Workflow\nAgent ID: agent-082 | Category: Flow-Nexus Integration\nPurpose: Cloud swarm coordination integration";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Swarm Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Swarm Active", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Swarm Initialization
+    subgraph cluster_init {
+        label="Phase 1: Swarm Initialization";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        init1 [label="Define Topology\n(mesh/hierarchical/\nring/star)", shape=box, fillcolor="#ffecb3"];
+        init2 [label="Set Max Agents\n(1-100)", shape=box, fillcolor="#ffecb3"];
+        init3 [label="Select Strategy\n(balanced/specialized/\nadaptive)", shape=box, fillcolor="#ffecb3"];
+        init4 [label="Authenticate with\nFlow Nexus", shape=box, fillcolor="#ffecb3"];
+        init5 [label="Initialize Cloud\nSwarm", shape=box, fillcolor="#ffecb3"];
+
+        init1 -> init2 -> init3 -> init4 -> init5;
+    }
+
+    // Phase 2: Agent Spawning
+    subgraph cluster_spawn {
+        label="Phase 2: Agent Spawning";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        spawn1 [label="Select Agent Type\n(researcher/coder/\nanalyst/optimizer/\ncoordinator)", shape=box, fillcolor="#bbdefb"];
+        spawn2 [label="Define\nCapabilities", shape=box, fillcolor="#bbdefb"];
+        spawn3 [label="Assign Custom\nName (optional)", shape=box, fillcolor="#bbdefb"];
+        spawn4 [label="Deploy Agent in\nCloud", shape=box, fillcolor="#bbdefb"];
+        spawn5 [label="Verify Agent\nStatus", shape=box, fillcolor="#bbdefb"];
+
+        spawn1 -> spawn2 -> spawn3 -> spawn4 -> spawn5;
+    }
+
+    // Phase 3: Topology Configuration
+    subgraph cluster_topology {
+        label="Phase 3: Topology Configuration";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        topo1 [label="Mesh Topology:\nPeer-to-peer\nconnections", shape=box, fillcolor="#e1bee7"];
+        topo2 [label="Hierarchical:\nTree structure", shape=box, fillcolor="#e1bee7"];
+        topo3 [label="Ring Topology:\nCircular connections", shape=box, fillcolor="#e1bee7"];
+        topo4 [label="Star Topology:\nCentralized hub", shape=box, fillcolor="#e1bee7"];
+    }
+
+    // Phase 4: Task Orchestration
+    subgraph cluster_orchestration {
+        label="Phase 4: Task Orchestration";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        orch1 [label="Define Task\nDescription", shape=box, fillcolor="#f8bbd0"];
+        orch2 [label="Set Priority\n(low/medium/high/\ncritical)", shape=box, fillcolor="#f8bbd0"];
+        orch3 [label="Choose Strategy\n(parallel/sequential/\nadaptive)", shape=box, fillcolor="#f8bbd0"];
+        orch4 [label="Set Max Agents\nfor Task", shape=box, fillcolor="#f8bbd0"];
+        orch5 [label="Distribute Task\nto Swarm", shape=box, fillcolor="#f8bbd0"];
+
+        orch1 -> orch2 -> orch3 -> orch4 -> orch5;
+    }
+
+    // Phase 5: Monitoring & Management
+    subgraph cluster_monitoring {
+        label="Phase 5: Monitoring & Management";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        mon1 [label="Swarm Status\nMonitoring", shape=box, fillcolor="#b2dfdb"];
+        mon2 [label="Agent List &\nMetrics", shape=box, fillcolor="#b2dfdb"];
+        mon3 [label="Task Progress\nTracking", shape=box, fillcolor="#b2dfdb"];
+        mon4 [label="Performance\nBenchmarking", shape=box, fillcolor="#b2dfdb"];
+        mon5 [label="Scale Up/Down", shape=box, fillcolor="#b2dfdb"];
+
+        mon1 -> mon2 -> mon3 -> mon4 -> mon5;
+    }
+
+    // Phase 6: Template-Based Deployment
+    subgraph cluster_templates {
+        label="Phase 6: Template-Based Deployment";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        temp1 [label="List Available\nTemplates", shape=box, fillcolor="#fff59d"];
+        temp2 [label="Select Template\n(quickstart/specialized/\nenterprise)", shape=box, fillcolor="#fff59d"];
+        temp3 [label="Configure\nOverrides", shape=box, fillcolor="#fff59d"];
+        temp4 [label="Deploy from\nTemplate", shape=box, fillcolor="#fff59d"];
+        temp5 [label="Verify Deployment", shape=box, fillcolor="#fff59d"];
+
+        temp1 -> temp2 -> temp3 -> temp4 -> temp5;
+    }
+
+    // Decision nodes
+    topology_choice [label="Select\nTopology", shape=diamond, fillcolor="#c8e6c9", color="#388e3c", penwidth=2];
+    scale_check [label="Need to\nScale?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> init1 [label="Initialize"];
+    init5 -> topology_choice [label="Swarm Created"];
+
+    topology_choice -> topo1 [label="Mesh"];
+    topology_choice -> topo2 [label="Hierarchical"];
+    topology_choice -> topo3 [label="Ring"];
+    topology_choice -> topo4 [label="Star"];
+
+    topo1 -> spawn1;
+    topo2 -> spawn1;
+    topo3 -> spawn1;
+    topo4 -> spawn1;
+
+    spawn5 -> orch1 [label="Agents Ready"];
+    orch5 -> mon1 [label="Tasks\nDistributed"];
+
+    mon5 -> scale_check [label="Monitor\nLoad"];
+    scale_check -> mon5 [label="Yes - Adjust", style=dashed, color="#ff9800"];
+    scale_check -> end [label="No - Stable"];
+
+    // Template path (alternative)
+    start -> temp1 [label="Use Template", style=dashed, color="#2196f3"];
+    temp5 -> spawn1 [label="Template\nDeployed"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Cloud Swarm Coordination\n• Distributed Agents\n• Multiple Topologies\n• Dynamic Scaling\n• Template Deployment\n• Real-time Monitoring", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    mcp_tools [label="MCP Tools:\n• swarm_init\n• agent_spawn\n• task_orchestrate\n• swarm_status\n• swarm_scale\n• swarm_templates_list", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Topologies info
+    topo_info [label="Topologies:\n• Mesh: Peer-to-peer\n• Hierarchical: Tree\n• Ring: Circular\n• Star: Centralized", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-swarm\nPriority: High\nComplexity: Very High\nGraphviz Priority: 82", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

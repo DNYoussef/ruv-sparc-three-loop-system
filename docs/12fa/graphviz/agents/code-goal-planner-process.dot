@@ -1,0 +1,126 @@
+digraph code_goal_planner_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Code Goal Planner - Implementation Planning & Tracking";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Feature Request\n(Code goal)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Goal Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        understand [label="Requirement Understanding\n(What to build)"];
+        scope [label="Scope Definition\n(Boundaries)"];
+        complexity [label="Complexity Assessment\n(Effort estimation)"];
+    }
+
+    // Breakdown Phase
+    subgraph cluster_breakdown {
+        label="Task Breakdown";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        decompose [label="Task Decomposition\n(Sub-tasks)"];
+        dependencies [label="Dependency Mapping\n(Order)"];
+        estimates [label="Time Estimation\n(Each task)"];
+    }
+
+    // Milestone Phase
+    subgraph cluster_milestones {
+        label="Milestone Setting";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        milestones [label="Milestone Definition\n(Key checkpoints)"];
+        criteria [label="Acceptance Criteria\n(Done definition)"];
+        schedule [label="Schedule Planning\n(Timeline)"];
+    }
+
+    // Tracking Phase
+    subgraph cluster_tracking {
+        label="Progress Tracking";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        monitor [label="Progress Monitoring\n(Real-time)"];
+        update [label="Status Updates\n(Task completion)"];
+        adjust [label="Plan Adjustment\n(Re-prioritize)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Code Goal Planning", fillcolor="#238636"];
+        feature2 [label="Task Breakdown", fillcolor="#238636"];
+        feature3 [label="Milestone Tracking", fillcolor="#238636"];
+        feature4 [label="Progress Monitoring", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Implementation Plan\n+ Tracking Dashboard", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> understand;
+    understand -> scope;
+    scope -> complexity;
+
+    complexity -> decompose;
+    decompose -> dependencies;
+    dependencies -> estimates;
+
+    estimates -> milestones;
+    milestones -> criteria;
+    criteria -> schedule;
+
+    schedule -> monitor;
+    monitor -> update;
+    update -> adjust;
+
+    adjust -> output;
+
+    // Feedback loops
+    adjust -> decompose [label="Re-plan if needed", style=dashed, color="#f85149"];
+    monitor -> schedule [label="Update schedule", style=dashed, color="#238636"];
+
+    // Feature connections
+    understand -> feature1 [style=dotted, color="#8b949e"];
+    decompose -> feature2 [style=dotted, color="#8b949e"];
+    milestones -> feature3 [style=dotted, color="#8b949e"];
+    monitor -> feature4 [style=dotted, color="#8b949e"];
+}

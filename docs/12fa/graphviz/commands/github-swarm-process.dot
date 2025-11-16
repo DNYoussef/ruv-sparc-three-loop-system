@@ -1,0 +1,24 @@
+digraph GITHUB_SWARM {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/github-swarm", shape=ellipse, fillcolor=lightblue];
+  auth_github [label="Authenticate\nGitHub", fillcolor=lightblue];
+  select_operation [shape=diamond, label="Operation\nType?"];
+  pr_operation [label="PR\nOperations", fillcolor=lightgreen];
+  issue_operation [label="Issue\nOperations", fillcolor=lightgreen];
+  repo_operation [label="Repository\nOperations", fillcolor=lightgreen];
+  init_swarm [label="Initialize GitHub\nSwarm", fillcolor=purple, style="filled,bold"];
+  spawn_specialists [label="Spawn Specialist\nAgents", fillcolor=lightpurple];
+  execute_operations [label="Execute\nOperations", fillcolor=lightgreen];
+  success [label="GitHub Swarm Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> auth_github -> select_operation;
+  select_operation -> pr_operation [label="PR"];
+  select_operation -> issue_operation [label="Issue"];
+  select_operation -> repo_operation [label="Repo"];
+  pr_operation -> init_swarm;
+  issue_operation -> init_swarm;
+  repo_operation -> init_swarm;
+  init_swarm -> spawn_specialists -> execute_operations -> success;
+}

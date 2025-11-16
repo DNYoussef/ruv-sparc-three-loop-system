@@ -1,0 +1,54 @@
+digraph SMART_AGENTS_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // Command invocation
+  invoke [label="User Invokes\n/smart-agents", shape=ellipse, fillcolor=lightblue];
+
+  // Task analysis
+  analyze_task [label="Analyze Task\nComplexity", fillcolor=purple];
+  extract_features [label="Extract Task\nFeatures", fillcolor=purple];
+
+  // Intelligent routing
+  neural_predict [label="Neural Pattern\nMatching", fillcolor=lightpurple, style="filled,bold"];
+  select_agents [label="Select Optimal\nAgents", fillcolor=purple];
+
+  // Auto-spawning
+  spawn_researcher [label="Spawn\nResearcher", fillcolor=lightgreen];
+  spawn_coder [label="Spawn\nCoder", fillcolor=lightgreen];
+  spawn_tester [label="Spawn\nTester", fillcolor=lightgreen];
+  spawn_reviewer [label="Spawn\nReviewer", fillcolor=lightgreen];
+
+  // Coordination
+  setup_topology [label="Setup Optimal\nTopology", fillcolor=lightblue];
+  distribute_work [label="Distribute\nWork", fillcolor=lightblue];
+
+  // Learning
+  monitor_performance [label="Monitor Agent\nPerformance", fillcolor=yellow];
+  update_patterns [label="Update Neural\nPatterns", fillcolor=yellow];
+
+  // Success
+  success [label="Smart Agents\nDeployed", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  // Connections
+  invoke -> analyze_task;
+  analyze_task -> extract_features;
+  extract_features -> neural_predict;
+  neural_predict -> select_agents;
+
+  select_agents -> spawn_researcher;
+  select_agents -> spawn_coder;
+  select_agents -> spawn_tester;
+  select_agents -> spawn_reviewer;
+
+  spawn_researcher -> setup_topology;
+  spawn_coder -> setup_topology;
+  spawn_tester -> setup_topology;
+  spawn_reviewer -> setup_topology;
+
+  setup_topology -> distribute_work;
+  distribute_work -> monitor_performance;
+  monitor_performance -> update_patterns;
+  update_patterns -> success;
+}

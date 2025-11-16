@@ -1,0 +1,299 @@
+[
+  {
+    "name": "flask",
+    "path": "C:\\Users\\17175\\AppData\\Local\\Temp\\tmpbhzwah34\\flask\\src",
+    "total_files": 24,
+    "total_violations": 19,
+    "violations_per_file": 0.79,
+    "analysis_time_seconds": 0.33,
+    "by_rule": {
+      "CLARITY001": 19
+    },
+    "top_violations": [
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\cli.py",
+        "line": 788,
+        "message": "Thin helper function '__init__' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 587"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\cli.py",
+        "line": 657,
+        "message": "Thin helper function 'make_context' (10 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 676"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\config.py",
+        "line": 94,
+        "message": "Thin helper function '__init__' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 99"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\config.py",
+        "line": 366,
+        "message": "Thin helper function '__repr__' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 367"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\ctx.py",
+        "line": 398,
+        "message": "Thin helper function 'match_request' (6 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 430"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\sessions.py",
+        "line": 74,
+        "message": "Thin helper function '__init__' (5 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 82"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\sessions.py",
+        "line": 84,
+        "message": "Thin helper function '__getitem__' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 86"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\sessions.py",
+        "line": 92,
+        "message": "Thin helper function 'setdefault' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 94"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\sessions.py",
+        "line": 216,
+        "message": "Thin helper function 'get_cookie_secure' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 357"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "flask\\templating.py",
+        "line": 57,
+        "message": "Thin helper function '__init__' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 48"
+      }
+    ],
+    "rule_distribution": {
+      "CLARITY001": {
+        "count": 19,
+        "percentage": 100.0
+      }
+    }
+  },
+  {
+    "name": "requests",
+    "path": "C:\\Users\\17175\\AppData\\Local\\Temp\\tmpbhzwah34\\requests\\src",
+    "total_files": 18,
+    "total_violations": 15,
+    "violations_per_file": 0.83,
+    "analysis_time_seconds": 0.2,
+    "by_rule": {
+      "CLARITY001": 15
+    },
+    "top_violations": [
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\adapters.py",
+        "line": 62,
+        "message": "Thin helper function 'SOCKSProxyManager' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 258"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\auth.py",
+        "line": 116,
+        "message": "Thin helper function 'init_per_thread_state' (7 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 287"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\cookies.py",
+        "line": 46,
+        "message": "Thin helper function 'get_origin_req_host' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 96"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\cookies.py",
+        "line": 69,
+        "message": "Thin helper function 'is_unverifiable' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 92"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\cookies.py",
+        "line": 87,
+        "message": "Thin helper function 'get_new_headers' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 148"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\cookies.py",
+        "line": 120,
+        "message": "Thin helper function 'getheaders' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 121"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\cookies.py",
+        "line": 435,
+        "message": "Thin helper function 'get_policy' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 431"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\help.py",
+        "line": 128,
+        "message": "Thin helper function 'main' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 134"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\models.py",
+        "line": 351,
+        "message": "Thin helper function 'prepare' (12 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 298"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "requests\\models.py",
+        "line": 382,
+        "message": "Thin helper function 'copy' (9 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 386"
+      }
+    ],
+    "rule_distribution": {
+      "CLARITY001": {
+        "count": 15,
+        "percentage": 100.0
+      }
+    }
+  },
+  {
+    "name": "click",
+    "path": "C:\\Users\\17175\\AppData\\Local\\Temp\\tmpbhzwah34\\click\\src",
+    "total_files": 17,
+    "total_violations": 27,
+    "violations_per_file": 1.59,
+    "analysis_time_seconds": 0.43,
+    "by_rule": {
+      "CLARITY001": 27
+    },
+    "top_violations": [
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\core.py",
+        "line": 93,
+        "message": "Thin helper function 'batch' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 3198"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\core.py",
+        "line": 481,
+        "message": "Thin helper function '__exit__' (7 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 635"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\core.py",
+        "line": 1046,
+        "message": "Thin helper function 'get_help_option_names' (5 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 1062"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\core.py",
+        "line": 3360,
+        "message": "Thin helper function 'add_to_parser' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 1085"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\core.py",
+        "line": 3357,
+        "message": "Thin helper function 'get_error_hint' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 2856"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\decorators.py",
+        "line": 373,
+        "message": "Thin helper function 'decorator' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 253"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\formatting.py",
+        "line": 24,
+        "message": "Thin helper function 'iter_rows' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 231"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\formatting.py",
+        "line": 185,
+        "message": "Thin helper function 'write_heading' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 262"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\formatting.py",
+        "line": 189,
+        "message": "Thin helper function 'write_paragraph' (2 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 261"
+      },
+      {
+        "rule_id": "CLARITY001",
+        "severity": "WARNING",
+        "file": "click\\testing.py",
+        "line": 43,
+        "message": "Thin helper function 'read1' (1 LOC) called from single location",
+        "suggestion": "Inline function into caller at line 44"
+      }
+    ],
+    "rule_distribution": {
+      "CLARITY001": {
+        "count": 27,
+        "percentage": 100.0
+      }
+    }
+  }
+]

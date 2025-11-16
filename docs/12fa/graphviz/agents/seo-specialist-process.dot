@@ -1,0 +1,144 @@
+digraph seo_specialist_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="SEO Specialist Agent Workflow\nAgent ID: agent-077 | Category: Business\nPurpose: SEO optimization and digital marketing";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Request Received", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="SEO Optimization\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Keyword Research
+    subgraph cluster_keyword_research {
+        label="Phase 1: Keyword Research";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        kr1 [label="Identify Target\nKeywords", shape=box, fillcolor="#ffecb3"];
+        kr2 [label="Analyze Search\nVolume", shape=box, fillcolor="#ffecb3"];
+        kr3 [label="Competitive\nAnalysis", shape=box, fillcolor="#ffecb3"];
+        kr4 [label="Long-tail Keyword\nDiscovery", shape=box, fillcolor="#ffecb3"];
+
+        kr1 -> kr2 -> kr3 -> kr4;
+    }
+
+    // Phase 2: On-Page Optimization
+    subgraph cluster_onpage {
+        label="Phase 2: On-Page Optimization";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        op1 [label="Meta Tags\nOptimization", shape=box, fillcolor="#bbdefb"];
+        op2 [label="Content\nOptimization", shape=box, fillcolor="#bbdefb"];
+        op3 [label="Header Structure\n(H1-H6)", shape=box, fillcolor="#bbdefb"];
+        op4 [label="Internal Linking", shape=box, fillcolor="#bbdefb"];
+        op5 [label="Image Alt Text", shape=box, fillcolor="#bbdefb"];
+
+        op1 -> op2 -> op3 -> op4 -> op5;
+    }
+
+    // Phase 3: Technical SEO
+    subgraph cluster_technical {
+        label="Phase 3: Technical SEO";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        ts1 [label="Site Speed\nOptimization", shape=box, fillcolor="#e1bee7"];
+        ts2 [label="Mobile\nResponsiveness", shape=box, fillcolor="#e1bee7"];
+        ts3 [label="XML Sitemap", shape=box, fillcolor="#e1bee7"];
+        ts4 [label="Robots.txt\nConfiguration", shape=box, fillcolor="#e1bee7"];
+        ts5 [label="Schema Markup", shape=box, fillcolor="#e1bee7"];
+
+        ts1 -> ts2 -> ts3 -> ts4 -> ts5;
+    }
+
+    // Phase 4: Content Strategy
+    subgraph cluster_content {
+        label="Phase 4: Content Strategy";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        cs1 [label="Content Gap\nAnalysis", shape=box, fillcolor="#f8bbd0"];
+        cs2 [label="Content Calendar", shape=box, fillcolor="#f8bbd0"];
+        cs3 [label="SEO-Optimized\nContent Creation", shape=box, fillcolor="#f8bbd0"];
+        cs4 [label="Content Refresh", shape=box, fillcolor="#f8bbd0"];
+
+        cs1 -> cs2 -> cs3 -> cs4;
+    }
+
+    // Phase 5: Link Building
+    subgraph cluster_linkbuilding {
+        label="Phase 5: Link Building";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        lb1 [label="Backlink Analysis", shape=box, fillcolor="#b2dfdb"];
+        lb2 [label="Outreach Strategy", shape=box, fillcolor="#b2dfdb"];
+        lb3 [label="Guest Posting", shape=box, fillcolor="#b2dfdb"];
+        lb4 [label="Link Quality\nAssessment", shape=box, fillcolor="#b2dfdb"];
+
+        lb1 -> lb2 -> lb3 -> lb4;
+    }
+
+    // Phase 6: Analytics & Reporting
+    subgraph cluster_analytics {
+        label="Phase 6: Analytics & Reporting";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        ar1 [label="Google Analytics\nSetup", shape=box, fillcolor="#fff59d"];
+        ar2 [label="Search Console\nMonitoring", shape=box, fillcolor="#fff59d"];
+        ar3 [label="Rank Tracking", shape=box, fillcolor="#fff59d"];
+        ar4 [label="Traffic Analysis", shape=box, fillcolor="#fff59d"];
+        ar5 [label="ROI Reporting", shape=box, fillcolor="#fff59d"];
+
+        ar1 -> ar2 -> ar3 -> ar4 -> ar5;
+    }
+
+    // Decision nodes
+    quality_check [label="SEO Quality\nCheck", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    ranking_check [label="Ranking\nImproved?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> kr1 [label="Begin SEO\nAnalysis"];
+    kr4 -> op1 [label="Keywords\nIdentified"];
+    op5 -> ts1 [label="On-Page\nComplete"];
+    ts5 -> cs1 [label="Technical\nOptimized"];
+    cs4 -> lb1 [label="Content\nStrategy Set"];
+    lb4 -> ar1 [label="Links\nBuilt"];
+
+    ar5 -> quality_check [label="Generate\nReports"];
+    quality_check -> ranking_check [label="Pass"];
+    quality_check -> op1 [label="Issues Found", style=dashed, color="#f44336"];
+
+    ranking_check -> end [label="Yes"];
+    ranking_check -> cs1 [label="No - Refine\nStrategy", style=dashed, color="#ff9800"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Keyword Research\n• On-Page Optimization\n• Technical SEO\n• Content Strategy\n• Link Building\n• Analytics & Reporting", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Tools & Integration
+    tools [label="Tools:\n• Google Analytics\n• Search Console\n• SEMrush/Ahrefs\n• Screaming Frog\n• Schema.org", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: seo-specialist\nPriority: Medium\nComplexity: Medium\nGraphviz Priority: 77", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

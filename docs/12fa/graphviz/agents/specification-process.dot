@@ -1,0 +1,215 @@
+// Specification Agent - SPARC Specification Phase
+// Requirements analysis, use cases, acceptance criteria, specification
+digraph specification_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        spec_init [label="Specification Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        sparc_phase [label="SPARC Phase 1\nSpecification", fillcolor="#2d3748", fontcolor="#ffffff"];
+        template_loader [label="Specification\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+        validation_rules [label="Validation\nRules", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === REQUIREMENTS GATHERING ===
+    subgraph cluster_requirements {
+        label="Requirements Gathering";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        stakeholder_interview [label="Stakeholder\nInterview", fillcolor="#2563eb", fontcolor="#ffffff"];
+        requirement_elicitor [label="Requirement\nElicitor", fillcolor="#2563eb", fontcolor="#ffffff"];
+        constraint_identifier [label="Constraint\nIdentifier", fillcolor="#2563eb", fontcolor="#ffffff"];
+        assumption_documenter [label="Assumption\nDocumenter", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === REQUIREMENTS ANALYSIS ===
+    subgraph cluster_analysis {
+        label="Requirements Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        functional_analyzer [label="Functional\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+        non_functional_analyzer [label="Non-Functional\nAnalyzer", fillcolor="#059669", fontcolor="#ffffff"];
+        priority_ranker [label="Priority\nRanker", fillcolor="#059669", fontcolor="#ffffff"];
+        dependency_mapper [label="Dependency\nMapper", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === USE CASE DESIGN ===
+    subgraph cluster_usecase {
+        label="Use Case Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        actor_identifier [label="Actor\nIdentifier", fillcolor="#0891b2", fontcolor="#ffffff"];
+        scenario_writer [label="Scenario\nWriter", fillcolor="#0891b2", fontcolor="#ffffff"];
+        flow_designer [label="Flow\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        exception_handler [label="Exception\nHandler", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === ACCEPTANCE CRITERIA ===
+    subgraph cluster_acceptance {
+        label="Acceptance Criteria";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        criteria_writer [label="Criteria\nWriter", fillcolor="#dc2626", fontcolor="#ffffff"];
+        testability_validator [label="Testability\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        measurability_checker [label="Measurability\nChecker", fillcolor="#dc2626", fontcolor="#ffffff"];
+        completeness_validator [label="Completeness\nValidator", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === USER STORIES ===
+    subgraph cluster_stories {
+        label="User Story Creation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        story_writer [label="Story\nWriter", fillcolor="#8b4789", fontcolor="#ffffff"];
+        epic_organizer [label="Epic\nOrganizer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        task_breaker [label="Task\nBreaker", fillcolor="#8b4789", fontcolor="#ffffff"];
+        estimation_helper [label="Estimation\nHelper", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === SPECIFICATION DOCUMENT ===
+    subgraph cluster_document {
+        label="Specification Documentation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        spec_writer [label="Specification\nWriter", fillcolor="#ef4444", fontcolor="#ffffff"];
+        diagram_generator [label="Diagram\nGenerator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        glossary_builder [label="Glossary\nBuilder", fillcolor="#ef4444", fontcolor="#ffffff"];
+        index_generator [label="Index\nGenerator", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === VALIDATION ===
+    subgraph cluster_validation {
+        label="Specification Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        consistency_checker [label="Consistency\nChecker", fillcolor="#10b981", fontcolor="#ffffff"];
+        ambiguity_detector [label="Ambiguity\nDetector", fillcolor="#10b981", fontcolor="#ffffff"];
+        conflict_resolver [label="Conflict\nResolver", fillcolor="#10b981", fontcolor="#ffffff"];
+        traceability_validator [label="Traceability\nValidator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pseudocode_coord [label="Pseudocode Agent\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        architect_coord [label="Architecture Agent\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        planner_coord [label="Planner Agent\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    spec_init -> sparc_phase [label="Enter SPARC Phase 1"];
+    spec_init -> template_loader [label="Load"];
+    spec_init -> validation_rules [label="Load"];
+
+    // === REQUIREMENTS FLOW ===
+    sparc_phase -> stakeholder_interview [label="Interview"];
+    stakeholder_interview -> requirement_elicitor [label="Elicit"];
+    requirement_elicitor -> constraint_identifier [label="Identify Constraints"];
+    constraint_identifier -> assumption_documenter [label="Document Assumptions"];
+
+    // === ANALYSIS FLOW ===
+    assumption_documenter -> functional_analyzer [label="Analyze Functional"];
+    functional_analyzer -> non_functional_analyzer [label="Analyze Non-Functional"];
+    non_functional_analyzer -> priority_ranker [label="Rank Priority"];
+    priority_ranker -> dependency_mapper [label="Map Dependencies"];
+
+    // === USE CASE FLOW ===
+    dependency_mapper -> actor_identifier [label="Identify Actors"];
+    actor_identifier -> scenario_writer [label="Write Scenarios"];
+    scenario_writer -> flow_designer [label="Design Flows"];
+    flow_designer -> exception_handler [label="Handle Exceptions"];
+
+    // === ACCEPTANCE CRITERIA FLOW ===
+    exception_handler -> criteria_writer [label="Write Criteria"];
+    criteria_writer -> testability_validator [label="Validate Testability"];
+    testability_validator -> measurability_checker [label="Check Measurability"];
+    measurability_checker -> completeness_validator [label="Validate Completeness"];
+
+    // === USER STORY FLOW ===
+    completeness_validator -> story_writer [label="Write Stories"];
+    story_writer -> epic_organizer [label="Organize Epics"];
+    epic_organizer -> task_breaker [label="Break Tasks"];
+    task_breaker -> estimation_helper [label="Estimate"];
+
+    // === DOCUMENTATION FLOW ===
+    estimation_helper -> spec_writer [label="Write Specification"];
+    spec_writer -> diagram_generator [label="Generate Diagrams"];
+    diagram_generator -> glossary_builder [label="Build Glossary"];
+    glossary_builder -> index_generator [label="Generate Index"];
+
+    // === VALIDATION FLOW ===
+    index_generator -> consistency_checker [label="Check Consistency"];
+    consistency_checker -> ambiguity_detector [label="Detect Ambiguity"];
+    ambiguity_detector -> conflict_resolver [label="Resolve Conflicts"];
+    conflict_resolver -> traceability_validator [label="Validate Traceability"];
+
+    // === COLLABORATION ===
+    traceability_validator -> pseudocode_coord [label="Handoff to Pseudocode"];
+    dependency_mapper -> architect_coord [label="Coordinate Architecture"];
+    task_breaker -> planner_coord [label="Coordinate Planning"];
+
+    // === FEEDBACK LOOPS ===
+    ambiguity_detector -> requirement_elicitor [label="Clarify Requirements", style=dashed, color="#ef4444"];
+    conflict_resolver -> stakeholder_interview [label="Re-Interview", style=dashed];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Specification Agent", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Requirements", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Analysis", fillcolor="#059669", fontcolor="#ffffff"];
+        legend4 [label="Use Cases", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend5 [label="Acceptance Criteria", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend6 [label="Validation", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

@@ -1,0 +1,55 @@
+digraph quick_check_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Quick-Check Command Workflow\nLightning-Fast Quality Validation";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/quick-check", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Parallel execution
+  parallel [label="Parallel Execution\n4 concurrent checks", fillcolor="#FFF9C4"];
+
+  theater_check [label="Theater Check\n- Mock detection\n- Fake code\n- TODOs", fillcolor="#F44336", fontcolor=white];
+
+  lint_check [label="Linting\n- Style issues\n- Code smells\n- Formatting", fillcolor="#FFE0B2"];
+
+  security_scan [label="Security Scan\n- Secrets check\n- Known vulnerabilities\n- Basic OWASP", fillcolor="#BBDEFB"];
+
+  basic_tests [label="Basic Tests\n- Unit tests\n- Smoke tests\n- Quick validation", fillcolor="#C5CAE9"];
+
+  aggregate [label="Aggregate Results\nCombine all checks", fillcolor="#B2DFDB"];
+
+  theater_found [label="Theater Detected?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  critical_issues [label="Critical Issues?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  generate_report [label="Generate Quick Report\n- Status summary\n- Issues found\n- Quick fixes", fillcolor="#D1C4E9"];
+
+  success [label="Quick Check Passed\nNo critical issues", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  blocked [label="BLOCKED\nCritical issues found", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+  warnings [label="Warnings Only\nNon-critical issues", shape=ellipse, fillcolor="#FFC107", fontcolor=black];
+
+  // Main flow
+  start -> parallel;
+  parallel -> theater_check;
+  parallel -> lint_check;
+  parallel -> security_scan;
+  parallel -> basic_tests;
+  theater_check -> aggregate;
+  lint_check -> aggregate;
+  security_scan -> aggregate;
+  basic_tests -> aggregate;
+  aggregate -> theater_found;
+  theater_found -> blocked [label="Yes - BLOCK", color=red, penwidth=2];
+  theater_found -> critical_issues [label="No"];
+  critical_issues -> blocked [label="Yes"];
+  critical_issues -> generate_report [label="No"];
+  generate_report -> success [label="Clean"];
+  generate_report -> warnings [label="Warnings"];
+}

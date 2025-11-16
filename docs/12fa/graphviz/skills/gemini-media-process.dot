@@ -1,0 +1,121 @@
+digraph GEMINI_MEDIA_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Gemini Media Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Gemini Media Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Media Config"];
+    validate_input [label="Validate Media Request"];
+    check_deps [label="Check Gemini API\n(Imagen/Veo)"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Media Generation Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    generate_media [label="Generate Media\n(Imagen/Veo)", fillcolor=purple];
+    validate_output [label="Validate Generated Media", fillcolor=purple];
+    refine_media [label="Refine if Needed", fillcolor=purple];
+    media_check [shape=diamond, label="Media\nSatisfactory?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Generation Error"];
+    retry_logic [label="Retry Generation", fillcolor=yellow];
+  }
+
+  check_secrets -> generate_media [label="Pass"];
+  generate_media -> validate_output -> refine_media -> media_check;
+  media_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> generate_media [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Media Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Media Assets", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  media_check -> memory_store [label="Yes"];
+  memory_store -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    quality_check [shape=diamond, label="Quality\nAcceptable?"];
+    verify_format [label="Verify Format & Size", fillcolor=lightgreen];
+    format_check [shape=diamond, label="Format\nValid?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> quality_check;
+  quality_check -> verify_format [label="Yes"];
+  quality_check -> quality_gate_fail [label="No"];
+  verify_format -> format_check;
+  format_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    save_media [label="Save Media to Storage", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="Media Generated", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  format_check -> save_media [label="Yes"];
+  save_media -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Media Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

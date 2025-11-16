@@ -1,0 +1,138 @@
+digraph analyze_code_quality_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Analyze Code Quality Agent Workflow\nAgent ID: agent-094 | Category: Analysis\nPurpose: Code quality analysis and assessment";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Code Quality\nAnalysis Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Quality Report\nGenerated", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Code Collection
+    subgraph cluster_collection {
+        label="Phase 1: Code Collection";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        c1 [label="Scan Codebase", shape=box, fillcolor="#ffecb3"];
+        c2 [label="Identify Files", shape=box, fillcolor="#ffecb3"];
+        c3 [label="Parse Source Code", shape=box, fillcolor="#ffecb3"];
+        c4 [label="Build AST", shape=box, fillcolor="#ffecb3"];
+
+        c1 -> c2 -> c3 -> c4;
+    }
+
+    // Phase 2: Static Analysis
+    subgraph cluster_static {
+        label="Phase 2: Static Analysis";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        s1 [label="Complexity\nAnalysis", shape=box, fillcolor="#bbdefb"];
+        s2 [label="Code Duplication\nDetection", shape=box, fillcolor="#bbdefb"];
+        s3 [label="Dead Code\nIdentification", shape=box, fillcolor="#bbdefb"];
+        s4 [label="Type Safety\nCheck", shape=box, fillcolor="#bbdefb"];
+
+        s1 -> s2 -> s3 -> s4;
+    }
+
+    // Phase 3: Metrics Calculation
+    subgraph cluster_metrics {
+        label="Phase 3: Metrics Calculation";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        m1 [label="Cyclomatic\nComplexity", shape=box, fillcolor="#e1bee7"];
+        m2 [label="Maintainability\nIndex", shape=box, fillcolor="#e1bee7"];
+        m3 [label="Code Coverage", shape=box, fillcolor="#e1bee7"];
+        m4 [label="Lines of Code\nMetrics", shape=box, fillcolor="#e1bee7"];
+        m5 [label="Dependency\nAnalysis", shape=box, fillcolor="#e1bee7"];
+
+        m1 -> m2 -> m3 -> m4 -> m5;
+    }
+
+    // Phase 4: Standards Compliance
+    subgraph cluster_standards {
+        label="Phase 4: Standards Compliance";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        std1 [label="Coding Standards\nCheck", shape=box, fillcolor="#f8bbd0"];
+        std2 [label="Style Guide\nValidation", shape=box, fillcolor="#f8bbd0"];
+        std3 [label="Best Practices\nReview", shape=box, fillcolor="#f8bbd0"];
+        std4 [label="Pattern\nCompliance", shape=box, fillcolor="#f8bbd0"];
+
+        std1 -> std2 -> std3 -> std4;
+    }
+
+    // Phase 5: Quality Scoring
+    subgraph cluster_scoring {
+        label="Phase 5: Quality Scoring";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        q1 [label="Calculate\nQuality Score", shape=box, fillcolor="#b2dfdb"];
+        q2 [label="Identify Critical\nIssues", shape=box, fillcolor="#b2dfdb"];
+        q3 [label="Prioritize\nImprovements", shape=box, fillcolor="#b2dfdb"];
+        q4 [label="Generate\nRatings", shape=box, fillcolor="#b2dfdb"];
+
+        q1 -> q2 -> q3 -> q4;
+    }
+
+    // Phase 6: Reporting
+    subgraph cluster_reporting {
+        label="Phase 6: Comprehensive Reporting";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        r1 [label="Generate Quality\nReport", shape=box, fillcolor="#fff59d"];
+        r2 [label="Create\nVisualizations", shape=box, fillcolor="#fff59d"];
+        r3 [label="List\nRecommendations", shape=box, fillcolor="#fff59d"];
+        r4 [label="Export Results", shape=box, fillcolor="#fff59d"];
+
+        r1 -> r2 -> r3 -> r4;
+    }
+
+    // Decisions
+    threshold [label="Quality\nThreshold Met?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> c1;
+    c4 -> s1;
+    s4 -> m1;
+    m5 -> std1;
+    std4 -> q1;
+    q4 -> threshold;
+
+    threshold -> r1 [label="Yes"];
+    threshold -> q3 [label="No - Critical", style=dashed, color="#f44336"];
+
+    r4 -> end;
+
+    // Capabilities
+    capabilities [label="Key Capabilities:\n• Quality Metrics\n• Standard Compliance\n• Quality Scoring\n• Comprehensive Analysis\n• Refactoring Suggestions\n• Automated Reporting", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Metrics analyzed
+    metrics [label="Quality Metrics:\n• Cyclomatic Complexity\n• Maintainability Index\n• Code Coverage\n• Duplication Rate\n• Dependency Count", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: analyze-code-quality\nPriority: High\nComplexity: High\nGraphviz Priority: 94", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

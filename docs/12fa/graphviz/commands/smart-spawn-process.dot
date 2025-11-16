@@ -1,0 +1,17 @@
+digraph SMART_SPAWN {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/smart-spawn", shape=ellipse, fillcolor=lightblue];
+  analyze_context [label="Analyze Context", fillcolor=purple];
+  check_existing [shape=diamond, label="Agents\nExist?"];
+  select_capabilities [label="Select Required\nCapabilities", fillcolor=lightgreen];
+  spawn_agents [label="Spawn\nAgents", fillcolor=lightgreen, style="filled,bold"];
+  integrate_topology [label="Integrate with\nTopology", fillcolor=lightblue];
+  success [label="Agents Spawned", shape=doublecircle, fillcolor=green];
+
+  invoke -> analyze_context -> check_existing;
+  check_existing -> success [label="Yes"];
+  check_existing -> select_capabilities [label="No"];
+  select_capabilities -> spawn_agents -> integrate_topology -> success;
+}

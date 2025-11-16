@@ -1,0 +1,124 @@
+digraph goal_planner_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Goal Planner - Strategic Planning & Objective Setting";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="High-Level Objective", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Goal Analysis Phase
+    subgraph cluster_analysis {
+        label="Goal Analysis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        clarify [label="Objective Clarification\n(What to achieve)"];
+        decompose [label="Goal Decomposition\n(Sub-goals)"];
+        prioritize [label="Prioritization\n(Importance)"];
+    }
+
+    // Strategic Planning Phase
+    subgraph cluster_planning {
+        label="Strategic Planning Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        strategy [label="Strategy Development\n(How to achieve)"];
+        milestones [label="Milestone Setting\n(Checkpoints)"];
+        dependencies [label="Dependency Analysis\n(Prerequisites)"];
+        timeline [label="Timeline Planning\n(Schedule)"];
+    }
+
+    // Success Metrics Phase
+    subgraph cluster_metrics {
+        label="Success Metrics Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        define [label="Metrics Definition\n(KPIs)"];
+        measure [label="Measurement Plan\n(How to track)"];
+        validate [label="Validation Criteria\n(Success definition)"];
+    }
+
+    // Execution Planning
+    subgraph cluster_execution {
+        label="Execution Planning";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        tasks [label="Task Breakdown\n(Actionable items)"];
+        resources [label="Resource Allocation\n(What's needed)"];
+        risks [label="Risk Assessment\n(Mitigation)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Goal Decomposition", fillcolor="#238636"];
+        feature2 [label="Strategic Planning", fillcolor="#238636"];
+        feature3 [label="Success Metrics", fillcolor="#238636"];
+        feature4 [label="Objective Setting", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Strategic Plan\n+ Roadmap", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> clarify;
+    clarify -> decompose;
+    decompose -> prioritize;
+
+    prioritize -> strategy;
+    strategy -> milestones;
+    milestones -> dependencies;
+    dependencies -> timeline;
+
+    timeline -> define;
+    define -> measure;
+    measure -> validate;
+
+    validate -> tasks;
+    tasks -> resources;
+    resources -> risks;
+
+    risks -> output;
+
+    // Feature connections
+    decompose -> feature1 [style=dotted, color="#8b949e"];
+    strategy -> feature2 [style=dotted, color="#8b949e"];
+    define -> feature3 [style=dotted, color="#8b949e"];
+    clarify -> feature4 [style=dotted, color="#8b949e"];
+}

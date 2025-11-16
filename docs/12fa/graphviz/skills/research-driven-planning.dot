@@ -1,0 +1,301 @@
+// Research-Driven Planning (Loop 1)
+// 6-agent research phase + 8-agent pre-mortem with Byzantine consensus
+// 85-95% failure prevention through iterative risk mitigation
+
+digraph research_driven_planning {
+  rankdir=TB;
+  bgcolor="#f8f9fa";
+  fontname="Arial";
+  fontsize=12;
+  node [fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    labelloc="b";
+    style=filled;
+    color="#e9ecef";
+
+    legend_consensus [label="Consensus\nVoting", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+    legend_research [label="Research\nAgent", shape=component, style=filled, fillcolor="#b3e5fc"];
+    legend_gate [label="Quality\nGate", shape=octagon, style=filled, fillcolor="#f8d7da"];
+    legend_iteration [label="Iterative\nProcess", shape=doublecircle, style=filled, fillcolor="#ffccbc"];
+
+    legend_consensus -> legend_research -> legend_gate -> legend_iteration [style=invis];
+  }
+
+  start [label="Loop 1: Planning Start\n(User Requirements)", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Initial requirements analysis
+  subgraph cluster_requirements {
+    label="1. Requirements Analysis";
+    style=filled;
+    color="#e3f2fd";
+
+    capture_reqs [label="Capture user\nrequirements", shape=box, style=filled, fillcolor="#cce5ff"];
+    decompose [label="Decompose into\ncore objectives", shape=box, style=filled, fillcolor="#cce5ff"];
+    identify_constraints [label="Identify constraints\nand boundaries", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    req_memory [label="Requirements\nMemory", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // 6-agent research phase
+  subgraph cluster_research {
+    label="2. 6-Agent Research Phase (Parallel)";
+    style=filled;
+    color="#e8f5e9";
+
+    research_tech [label="Agent 1:\nTechnology\nResearch", shape=component, style=filled, fillcolor="#b3e5fc"];
+    research_patterns [label="Agent 2:\nPattern\nAnalysis", shape=component, style=filled, fillcolor="#b3e5fc"];
+    research_risks [label="Agent 3:\nRisk\nIdentification", shape=component, style=filled, fillcolor="#b3e5fc"];
+    research_best [label="Agent 4:\nBest Practices\nResearch", shape=component, style=filled, fillcolor="#b3e5fc"];
+    research_arch [label="Agent 5:\nArchitecture\nOptions", shape=component, style=filled, fillcolor="#b3e5fc"];
+    research_deps [label="Agent 6:\nDependency\nAnalysis", shape=component, style=filled, fillcolor="#b3e5fc"];
+
+    aggregate_research [label="Aggregate research\nfindings", shape=box, style=filled, fillcolor="#cce5ff"];
+    research_db [label="Research\nKnowledge Base", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Technology selection with Gemini
+  subgraph cluster_tech_selection {
+    label="3. Evidence-Based Technology Selection";
+    style=filled;
+    color="#fff3e0";
+
+    gemini_search [label="Gemini Search:\nCurrent best practices", shape=box, style=filled, fillcolor="#cce5ff"];
+    compare_options [label="Compare technology\noptions", shape=box, style=filled, fillcolor="#cce5ff"];
+    evaluate_fit [label="Evaluate fit with\nrequirements", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    tech_decision [label="Technology\nselection clear?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+    document_rationale [label="Document selection\nrationale", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    tech_choices [label="Technology\nChoices", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Initial plan creation
+  subgraph cluster_plan {
+    label="4. Initial Plan Creation";
+    style=filled;
+    color="#f3e5f5";
+
+    create_architecture [label="Create high-level\narchitecture", shape=box, style=filled, fillcolor="#cce5ff"];
+    break_tasks [label="Break into\ntask graph", shape=box, style=filled, fillcolor="#cce5ff"];
+    identify_deps [label="Identify task\ndependencies", shape=box, style=filled, fillcolor="#cce5ff"];
+    estimate_effort [label="Estimate effort\nand timeline", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    draft_plan [label="Draft Plan\nv0.1", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Pre-mortem iteration counter
+  iteration_count [label="Pre-mortem\nIteration: 1/5", shape=doublecircle, style=filled, fillcolor="#ffccbc"];
+
+  // 8-agent pre-mortem (repeated 5x)
+  subgraph cluster_premortem {
+    label="5. 8-Agent Pre-Mortem Analysis (5x Iterations)";
+    style=filled;
+    color="#ffebee";
+
+    premortem_failure [label="Agent 1:\nImagine project\nfailed catastrophically", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_technical [label="Agent 2:\nTechnical failure\nmodes", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_integration [label="Agent 3:\nIntegration\nfailure risks", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_timeline [label="Agent 4:\nTimeline failure\nscenarios", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_assumptions [label="Agent 5:\nHidden assumptions\nbreaking", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_dependencies [label="Agent 6:\nDependency\nfailure chains", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_edge [label="Agent 7:\nEdge cases and\nexceptions", shape=component, style=filled, fillcolor="#ffcdd2"];
+    premortem_security [label="Agent 8:\nSecurity vulnerability\nscenarios", shape=component, style=filled, fillcolor="#ffcdd2"];
+
+    collect_risks [label="Collect all identified\nfailure scenarios", shape=box, style=filled, fillcolor="#cce5ff"];
+    risk_db [label="Risk Database\n(cumulative)", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Risk prioritization
+  subgraph cluster_risk_priority {
+    label="6. Risk Prioritization & Mitigation";
+    style=filled;
+    color="#fff9c4";
+
+    score_risks [label="Score risks:\nImpact × Likelihood", shape=box, style=filled, fillcolor="#cce5ff"];
+    rank_risks [label="Rank by severity\nand probability", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    critical_risks [label="Critical risks\n(>8.0 score)?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    design_mitigations [label="Design mitigation\nstrategies", shape=box, style=filled, fillcolor="#cce5ff"];
+    update_plan [label="Update plan with\nmitigations", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    mitigation_log [label="Mitigation\nStrategies", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Byzantine consensus validation
+  subgraph cluster_consensus {
+    label="7. Byzantine Consensus Validation";
+    style=filled;
+    color="#e1f5fe";
+
+    consensus_round [label="Consensus Round:\nMulti-agent voting", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    vote_completeness [label="Vote: Plan\ncompleteness", shape=box, style=filled, fillcolor="#cce5ff"];
+    vote_feasibility [label="Vote: Technical\nfeasibility", shape=box, style=filled, fillcolor="#cce5ff"];
+    vote_risk [label="Vote: Risk\nmitigation adequacy", shape=box, style=filled, fillcolor="#cce5ff"];
+    vote_clarity [label="Vote: Clarity and\nactionability", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    calculate_consensus [label="Calculate consensus\nscore (>67% required)", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    consensus_reached [label="Consensus\n≥67%?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+
+    consensus_log [label="Consensus\nVoting Record", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Iteration decision
+  iteration_gate [label="Pre-mortem\niteration < 5?", shape=diamond, style=filled, fillcolor="#fff3cd"];
+  increment_iteration [label="Increment iteration\ncounter", shape=box, style=filled, fillcolor="#cce5ff"];
+
+  // Failure confidence calculation
+  subgraph cluster_confidence {
+    label="8. Failure Confidence Assessment";
+    style=filled;
+    color="#f1f8e9";
+
+    calculate_confidence [label="Calculate failure\nconfidence metric", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    confidence_acceptable [label="Failure confidence\n<3%?", shape=octagon, style=filled, fillcolor="#f8d7da"];
+
+    confidence_report [label="Confidence\nAnalysis", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Final plan validation
+  subgraph cluster_validation {
+    label="9. Final Plan Validation & Documentation";
+    style=filled;
+    color="#e8eaf6";
+
+    document_plan [label="Document complete\nplan with rationale", shape=box, style=filled, fillcolor="#cce5ff"];
+    document_risks [label="Document all risks\nand mitigations", shape=box, style=filled, fillcolor="#cce5ff"];
+    document_tech [label="Document technology\nchoices", shape=box, style=filled, fillcolor="#cce5ff"];
+    create_handoff [label="Create handoff\npackage for Loop 2", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    final_plan [label="Validated Plan\n(Loop 1 Output)", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  end [label="Loop 1 Complete\n(Pass to Loop 2)", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Feedback from Loop 3
+  loop3_feedback [label="Feedback from\nLoop 3 (CI/CD)", shape=box, style=filled, fillcolor="#ffe0b2", style="dashed,filled"];
+
+  // Main flow
+  start -> capture_reqs;
+  capture_reqs -> req_memory [style=dashed, label="store"];
+  capture_reqs -> decompose;
+  decompose -> identify_constraints;
+  identify_constraints -> research_tech;
+
+  // Research phase (parallel)
+  identify_constraints -> research_patterns;
+  identify_constraints -> research_risks;
+  identify_constraints -> research_best;
+  identify_constraints -> research_arch;
+  identify_constraints -> research_deps;
+
+  research_tech -> aggregate_research;
+  research_patterns -> aggregate_research;
+  research_risks -> aggregate_research;
+  research_best -> aggregate_research;
+  research_arch -> aggregate_research;
+  research_deps -> aggregate_research;
+
+  aggregate_research -> research_db [style=dashed, label="store"];
+  aggregate_research -> gemini_search;
+
+  // Technology selection
+  gemini_search -> compare_options;
+  compare_options -> evaluate_fit;
+  evaluate_fit -> tech_decision;
+
+  tech_decision -> document_rationale [label="Yes"];
+  tech_decision -> gemini_search [label="No\nMore research", style=dashed, color=orange];
+
+  document_rationale -> tech_choices [style=dashed, label="store"];
+  document_rationale -> create_architecture;
+
+  // Plan creation
+  create_architecture -> break_tasks;
+  break_tasks -> identify_deps;
+  identify_deps -> estimate_effort;
+  estimate_effort -> draft_plan [style=dashed, label="store"];
+  estimate_effort -> iteration_count;
+
+  // Pre-mortem cycle
+  iteration_count -> premortem_failure;
+  iteration_count -> premortem_technical;
+  iteration_count -> premortem_integration;
+  iteration_count -> premortem_timeline;
+  iteration_count -> premortem_assumptions;
+  iteration_count -> premortem_dependencies;
+  iteration_count -> premortem_edge;
+  iteration_count -> premortem_security;
+
+  premortem_failure -> collect_risks;
+  premortem_technical -> collect_risks;
+  premortem_integration -> collect_risks;
+  premortem_timeline -> collect_risks;
+  premortem_assumptions -> collect_risks;
+  premortem_dependencies -> collect_risks;
+  premortem_edge -> collect_risks;
+  premortem_security -> collect_risks;
+
+  collect_risks -> risk_db [style=dashed, label="append"];
+  collect_risks -> score_risks;
+
+  // Risk mitigation
+  score_risks -> rank_risks;
+  rank_risks -> critical_risks;
+
+  critical_risks -> design_mitigations [label="Yes"];
+  design_mitigations -> mitigation_log [style=dashed, label="store"];
+  design_mitigations -> update_plan;
+  update_plan -> draft_plan [style=dashed, label="update"];
+
+  critical_risks -> consensus_round [label="No"];
+  update_plan -> consensus_round;
+
+  // Consensus validation
+  consensus_round -> vote_completeness;
+  vote_completeness -> vote_feasibility;
+  vote_feasibility -> vote_risk;
+  vote_risk -> vote_clarity;
+  vote_clarity -> calculate_consensus;
+
+  calculate_consensus -> consensus_log [style=dashed, label="record"];
+  calculate_consensus -> consensus_reached;
+
+  consensus_reached -> iteration_gate [label="Yes"];
+  consensus_reached -> design_mitigations [label="No\nRefine", style=dashed, color=red];
+
+  // Iteration logic
+  iteration_gate -> increment_iteration [label="Yes\nMore iterations"];
+  increment_iteration -> iteration_count [label="Loop back", style=dashed, color=blue];
+
+  iteration_gate -> calculate_confidence [label="No\n5 iterations done"];
+
+  // Confidence check
+  calculate_confidence -> confidence_report [style=dashed, label="store"];
+  calculate_confidence -> confidence_acceptable;
+
+  confidence_acceptable -> document_plan [label="Yes\n(<3% failure risk)"];
+  confidence_acceptable -> premortem_failure [label="No\nAdditional cycle", style=dashed, color=red];
+
+  // Final documentation
+  document_plan -> document_risks;
+  document_risks -> document_tech;
+  document_tech -> create_handoff;
+  create_handoff -> final_plan [style=dashed, label="persist"];
+  create_handoff -> end;
+
+  // Feedback loop from Loop 3
+  loop3_feedback -> capture_reqs [label="Update requirements", style=dashed, color=purple];
+  loop3_feedback -> risk_db [label="Update risks", style=dashed, color=purple];
+
+  // Key metrics
+  metrics [label="Key Metrics:\n• 6 parallel research agents\n• 8 pre-mortem agents per cycle\n• 5 iteration cycles\n• Byzantine consensus (67% threshold)\n• 85-95% failure prevention\n• <3% failure confidence target", shape=note, style=filled, fillcolor="#fff9c4"];
+  end -> metrics [style=dashed, color=blue];
+}

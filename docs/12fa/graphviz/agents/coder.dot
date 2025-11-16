@@ -1,0 +1,313 @@
+// Coder Agent - Core Developer
+// 55 commands, 18 MCP tools, TDD workflow integration
+digraph coder_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coder_init [label="Coder Agent\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        load_commands [label="Load 55\nCommands", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_mcp [label="Load 18\nMCP Tools", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_config [label="Load\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === COMMAND CATEGORIES ===
+    subgraph cluster_commands {
+        label="Command Categories (55 Total)";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        file_ops [label="File Operations\n(8 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        git_ops [label="Git Operations\n(10 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        comm_coord [label="Communication\n(8 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        memory_state [label="Memory & State\n(6 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        testing [label="Testing\n(6 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        utilities [label="Utilities\n(7 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+        specialist [label="Specialist\n(10 commands)", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === MCP TOOLS ===
+    subgraph cluster_mcp {
+        label="MCP Tools (18 Total)";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        swarm_coord [label="Swarm Coordination\n(6 tools)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        task_mgmt [label="Task Management\n(3 tools)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        performance [label="Performance\n(3 tools)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        neural [label="Neural & Learning\n(3 tools)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        daa [label="DAA Init\n(3 tools)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === SPECIFICATION ANALYSIS ===
+    subgraph cluster_spec {
+        label="Specification Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        spec_parser [label="Specification\nParser", fillcolor="#059669", fontcolor="#ffffff"];
+        requirement_validator [label="Requirement\nValidator", fillcolor="#059669", fontcolor="#ffffff"];
+        component_breaker [label="Component\nBreaker", fillcolor="#059669", fontcolor="#ffffff"];
+        completeness_check [label="Completeness\nCheck", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === PLANNING & ARCHITECTURE ===
+    subgraph cluster_planning {
+        label="Planning & Architecture";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        structure_designer [label="Code Structure\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        pattern_selector [label="Pattern\nSelector", fillcolor="#0891b2", fontcolor="#ffffff"];
+        phase_planner [label="Implementation\nPhase Planner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        scalability_analyzer [label="Scalability\nAnalyzer", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === TDD WORKFLOW ===
+    subgraph cluster_tdd {
+        label="TDD Workflow Integration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        test_writer [label="Test Writer\n(Test First)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        test_runner [label="Test Runner\n(Red)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        impl_writer [label="Implementation\nWriter (Green)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        refactorer [label="Refactorer\n(Refactor)", fillcolor="#d97706", fontcolor="#ffffff"];
+        coverage_validator [label="Coverage Validator\n(>90%)", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === SOLID PRINCIPLES ===
+    subgraph cluster_solid {
+        label="SOLID Principles Enforcement";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        srp_enforcer [label="Single Responsibility\nEnforcer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        ocp_validator [label="Open/Closed\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+        lsp_checker [label="Liskov Substitution\nChecker", fillcolor="#8b4789", fontcolor="#ffffff"];
+        isp_analyzer [label="Interface Segregation\nAnalyzer", fillcolor="#8b4789", fontcolor="#ffffff"];
+        dip_validator [label="Dependency Inversion\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === ERROR HANDLING ===
+    subgraph cluster_error {
+        label="Error Handling Patterns";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        exception_handler [label="Exception\nHandler", fillcolor="#ef4444", fontcolor="#ffffff"];
+        error_recovery [label="Error Recovery\nStrategy", fillcolor="#ef4444", fontcolor="#ffffff"];
+        logging_system [label="Logging\nSystem", fillcolor="#ef4444", fontcolor="#ffffff"];
+        validation_layer [label="Input Validation\nLayer", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === PERFORMANCE OPTIMIZATION ===
+    subgraph cluster_performance {
+        label="Performance Optimization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        complexity_analyzer [label="Complexity\nAnalyzer", fillcolor="#10b981", fontcolor="#ffffff"];
+        memory_profiler [label="Memory\nProfiler", fillcolor="#10b981", fontcolor="#ffffff"];
+        cache_optimizer [label="Cache\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        async_coordinator [label="Async/Await\nCoordinator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === CODE QUALITY ===
+    subgraph cluster_quality {
+        label="Code Quality Standards";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        linter [label="ESLint/TSLint\nRunner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        formatter [label="Code\nFormatter", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        type_checker [label="TypeScript\nType Checker", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        security_scanner [label="Security\nScanner", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        doc_generator [label="Documentation\nGenerator", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        tester_coord [label="Tester\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        reviewer_coord [label="Reviewer\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        planner_coord [label="Planner\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        architect_coord [label="Architect\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === MEMORY COORDINATION ===
+    subgraph cluster_memory {
+        label="Memory & State Management";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        memory_store [label="Memory Store\n(patterns)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        memory_retrieve [label="Memory Retrieve\n(reuse)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        pattern_cache [label="Pattern\nCache", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        code_templates [label="Code Template\nLibrary", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === OUTPUT VALIDATION ===
+    subgraph cluster_output {
+        label="Output Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        compilation_check [label="Compilation\nCheck", fillcolor="#059669", fontcolor="#ffffff"];
+        test_pass_check [label="Test Pass\nCheck (>90%)", fillcolor="#059669", fontcolor="#ffffff"];
+        lint_check [label="Lint & Style\nCheck", fillcolor="#059669", fontcolor="#ffffff"];
+        security_check [label="Security\nCheck", fillcolor="#059669", fontcolor="#ffffff"];
+        doc_check [label="Documentation\nCheck", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    coder_init -> load_commands [label="Load"];
+    coder_init -> load_mcp [label="Load"];
+    coder_init -> load_config [label="Load"];
+
+    load_commands -> file_ops [label="File Ops"];
+    load_commands -> git_ops [label="Git Ops"];
+    load_commands -> comm_coord [label="Communication"];
+    load_commands -> memory_state [label="Memory"];
+    load_commands -> testing [label="Testing"];
+    load_commands -> utilities [label="Utils"];
+    load_commands -> specialist [label="Specialist"];
+
+    load_mcp -> swarm_coord [label="Swarm"];
+    load_mcp -> task_mgmt [label="Tasks"];
+    load_mcp -> performance [label="Performance"];
+    load_mcp -> neural [label="Neural"];
+    load_mcp -> daa [label="DAA"];
+
+    // === SPECIFICATION FLOW ===
+    coder_init -> spec_parser [label="Receive Spec"];
+    spec_parser -> requirement_validator [label="Validate"];
+    requirement_validator -> component_breaker [label="Break Down"];
+    component_breaker -> completeness_check [label="Check"];
+
+    // === PLANNING FLOW ===
+    completeness_check -> structure_designer [label="Design"];
+    structure_designer -> pattern_selector [label="Select Patterns"];
+    pattern_selector -> phase_planner [label="Plan Phases"];
+    phase_planner -> scalability_analyzer [label="Analyze"];
+
+    // === TDD CYCLE ===
+    scalability_analyzer -> test_writer [label="Write Tests First"];
+    test_writer -> test_runner [label="Run (Red)"];
+    test_runner -> impl_writer [label="Implement (Green)"];
+    impl_writer -> test_runner [label="Run Again"];
+    test_runner -> refactorer [label="Refactor"];
+    refactorer -> coverage_validator [label="Validate >90%"];
+    coverage_validator -> test_writer [label="Next Feature", style=dashed];
+
+    // === SOLID ENFORCEMENT ===
+    impl_writer -> srp_enforcer [label="Check SRP"];
+    srp_enforcer -> ocp_validator [label="Check OCP"];
+    ocp_validator -> lsp_checker [label="Check LSP"];
+    lsp_checker -> isp_analyzer [label="Check ISP"];
+    isp_analyzer -> dip_validator [label="Check DIP"];
+
+    // === ERROR HANDLING ===
+    dip_validator -> exception_handler [label="Add Error Handling"];
+    exception_handler -> error_recovery [label="Recovery"];
+    error_recovery -> logging_system [label="Logging"];
+    logging_system -> validation_layer [label="Validation"];
+
+    // === PERFORMANCE OPTIMIZATION ===
+    validation_layer -> complexity_analyzer [label="Analyze Complexity"];
+    complexity_analyzer -> memory_profiler [label="Profile Memory"];
+    memory_profiler -> cache_optimizer [label="Optimize Cache"];
+    cache_optimizer -> async_coordinator [label="Coordinate Async"];
+
+    // === QUALITY CHECKS ===
+    async_coordinator -> linter [label="Lint"];
+    linter -> formatter [label="Format"];
+    formatter -> type_checker [label="Type Check"];
+    type_checker -> security_scanner [label="Security Scan"];
+    security_scanner -> doc_generator [label="Generate Docs"];
+
+    // === COLLABORATION ===
+    doc_generator -> tester_coord [label="Send to Tester"];
+    tester_coord -> reviewer_coord [label="Send to Reviewer"];
+    tester_coord -> memory_store [label="Store Patterns"];
+
+    planner_coord -> spec_parser [label="Receive Tasks"];
+    architect_coord -> structure_designer [label="Align Architecture"];
+
+    // === MEMORY OPERATIONS ===
+    memory_store -> pattern_cache [label="Cache"];
+    memory_store -> code_templates [label="Template"];
+    memory_retrieve -> pattern_cache [label="Retrieve"];
+    code_templates -> impl_writer [label="Reuse"];
+
+    // === OUTPUT VALIDATION ===
+    reviewer_coord -> compilation_check [label="Validate"];
+    compilation_check -> test_pass_check [label="Check Tests"];
+    test_pass_check -> lint_check [label="Check Lint"];
+    lint_check -> security_check [label="Check Security"];
+    security_check -> doc_check [label="Check Docs"];
+    doc_check -> coder_init [label="Complete", style=bold, color="#10b981"];
+
+    // === FEEDBACK LOOPS ===
+    test_pass_check -> test_writer [label="Coverage <90%", style=dashed, color="#ef4444"];
+    security_check -> exception_handler [label="Security Issue", style=dashed, color="#ef4444"];
+    lint_check -> formatter [label="Style Issue", style=dashed, color="#ef4444"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Coder Agent", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Commands", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="MCP Tools", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend4 [label="TDD (Red)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend5 [label="TDD (Green)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        legend6 [label="Quality", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+}

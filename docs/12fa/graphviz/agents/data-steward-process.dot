@@ -1,0 +1,142 @@
+digraph DataStewardAgent {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="data-steward Agent\\nActivated", fillcolor=lightgreen];
+
+    // Core Identity
+    identity [label="Core Identity:\\n- Dataset Documentation Expert\\n- Bias Auditing Specialist\\n- Data Versioning (DVC)\\n- Quality Gate 1 Owner", shape=ellipse, fillcolor=lightyellow];
+
+    // Primary Workflow
+    workflow_start [label="Dataset Onboarding\\nWorkflow", fillcolor=orange];
+
+    // Phase 1: Dataset Assessment
+    assessment_phase [label="PHASE 1: Dataset Assessment", fillcolor=lightyellow, shape=box3d];
+    inventory_dataset [label="Run /data-inventory\\nCatalog Dataset"];
+    assess_size_format [label="Assess Size, Format,\\nIntegrity"];
+    identify_protected_groups [label="Identify Protected\\nGroups (if any)"];
+
+    // Phase 2: Documentation
+    documentation_phase [label="PHASE 2: Documentation", fillcolor=lightyellow, shape=box3d];
+    init_datasheet [label="Run /init-datasheet\\n(Form F-C1)"];
+    populate_7_sections [label="Populate 7 Sections\\n(47 Questions)"];
+    validate_completion [label="Validate Completion\\n≥80% Required"];
+
+    // Phase 3: Bias Auditing
+    bias_phase [label="PHASE 3: Bias Auditing", fillcolor=lightyellow, shape=box3d];
+    run_bias_audit [label="Run /bias-audit\\nProtected Groups"];
+
+    subgraph cluster_fairness_metrics {
+        label="Compute Fairness Metrics";
+        style=filled;
+        fillcolor=lightgrey;
+
+        compute_dpd [label="Demographic Parity\\nDifference (DPD)"];
+        compute_eod [label="Equalized Odds\\nDifference (EOD)"];
+        compute_dir [label="Disparate Impact\\nRatio (DIR)"];
+    }
+
+    assess_bias_severity [label="Assess Bias Severity:\\nDPD <0.1, EOD <0.15"];
+    recommend_mitigation [label="Recommend Mitigation\\nif Thresholds Exceeded"];
+
+    // Phase 4: Data Splits
+    splits_phase [label="PHASE 4: Data Splits", fillcolor=lightyellow, shape=box3d];
+    run_data_split [label="Run /data-split\\nStratified"];
+    validate_no_leakage [label="Validate No Leakage\\n(entity, temporal)"];
+    document_splits [label="Document Splits\\nin Datasheet"];
+
+    // Phase 5: DVC Versioning
+    dvc_phase [label="PHASE 5: DVC Versioning", fillcolor=lightyellow, shape=box3d];
+    run_dvc_init [label="Run /dvc-init\\nTrack Dataset"];
+    configure_remote [label="Configure Remote\\n(S3/GCS/Azure)"];
+    tag_version [label="Tag Version:\\ndataset-v1.0"];
+
+    // Phase 6: Ethical Review Coordination
+    ethics_phase [label="PHASE 6: Ethics Coordination", fillcolor=lightyellow, shape=box3d];
+    check_sensitive_data [label="Check for Sensitive\\nData (PII, medical)"];
+    delegate_ethics [label="Delegate to\\nethics-agent"];
+    await_ethics_review [label="Await Ethics\\nReview Completion"];
+
+    // Phase 7: Quality Gate 1 Validation
+    gate1_phase [label="PHASE 7: Gate 1 Validation", fillcolor=lightyellow, shape=box3d];
+    run_validate_gate1 [label="Run /validate-gate-1\\nPipeline C"];
+    check_requirements [label="Check Requirements:\\n- Datasheet ≥80%\\n- Bias Audit Complete\\n- Splits Validated\\n- Ethics Initiated"];
+    generate_checklist [label="Generate Gate 1\\nChecklist"];
+
+    // Phase 8: Memory & Notification
+    memory_phase [label="PHASE 8: Memory & Notification", fillcolor=lightyellow, shape=box3d];
+    store_memory [label="Store in Memory MCP:\\nsop/datasheets/{name}"];
+    notify_evaluator [label="Notify evaluator:\\nGate 1 Ready"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- Datasheet (Form F-C1)\\n- Bias Audit Report\\n- Data Splits (indices.json)\\n- DVC Configuration\\n- Gate 1 Checklist"];
+    end [label="data-steward\\nComplete", fillcolor=lightcoral];
+
+    // Flow
+    start -> identity;
+    identity -> workflow_start;
+
+    // Assessment
+    workflow_start -> assessment_phase;
+    assessment_phase -> inventory_dataset;
+    inventory_dataset -> assess_size_format;
+    assess_size_format -> identify_protected_groups;
+
+    // Documentation
+    identify_protected_groups -> documentation_phase;
+    documentation_phase -> init_datasheet;
+    init_datasheet -> populate_7_sections;
+    populate_7_sections -> validate_completion;
+
+    // Bias Auditing
+    validate_completion -> bias_phase;
+    bias_phase -> run_bias_audit;
+    run_bias_audit -> compute_dpd;
+    run_bias_audit -> compute_eod;
+    run_bias_audit -> compute_dir;
+    compute_dpd -> assess_bias_severity;
+    compute_eod -> assess_bias_severity;
+    compute_dir -> assess_bias_severity;
+    assess_bias_severity -> recommend_mitigation;
+
+    // Data Splits
+    recommend_mitigation -> splits_phase;
+    splits_phase -> run_data_split;
+    run_data_split -> validate_no_leakage;
+    validate_no_leakage -> document_splits;
+
+    // DVC Versioning
+    document_splits -> dvc_phase;
+    dvc_phase -> run_dvc_init;
+    run_dvc_init -> configure_remote;
+    configure_remote -> tag_version;
+
+    // Ethics Coordination
+    tag_version -> ethics_phase;
+    ethics_phase -> check_sensitive_data;
+    check_sensitive_data -> delegate_ethics [label="Sensitive"];
+    check_sensitive_data -> gate1_phase [label="Not Sensitive"];
+    delegate_ethics -> await_ethics_review;
+    await_ethics_review -> gate1_phase;
+
+    // Gate 1 Validation
+    gate1_phase -> run_validate_gate1;
+    run_validate_gate1 -> check_requirements;
+    check_requirements -> generate_checklist;
+
+    // Memory & Notification
+    generate_checklist -> memory_phase;
+    memory_phase -> store_memory;
+    store_memory -> notify_evaluator;
+    notify_evaluator -> deliverables;
+
+    // Output
+    deliverables -> end;
+
+    // Metadata
+    label="data-steward Agent - Complete Workflow\\nQuality Gate 1 Data Requirements\\nPipeline C: Data-Centric Build";
+    fontsize=16;
+    fontname="Arial Bold";
+}

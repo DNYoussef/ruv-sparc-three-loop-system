@@ -1,0 +1,384 @@
+// Complete Agent-Command Network
+// Bipartite graph showing all agents and their command assignments
+// Color-coded by MECE domain with clustered grouping
+
+digraph AgentCommandNetwork {
+    // Graph settings
+    graph [
+        rankdir=LR,
+        splines=true,
+        overlap=false,
+        nodesep=0.8,
+        ranksep=2.0,
+        fontname="Arial",
+        fontsize=14,
+        label="Complete Agent-Command Network\nAgent-to-Command Assignments by Domain",
+        labelloc=t
+    ];
+
+    node [fontname="Arial", fontsize=11, style=filled];
+    edge [fontname="Arial", fontsize=9, color="#555555"];
+
+    // Agent nodes (left side) - grouped by domain
+    subgraph cluster_core_dev {
+        label="Core Development";
+        style=filled;
+        color="#E8F4F8";
+
+        node [shape=box, fillcolor="#4A90E2", fontcolor=white];
+        coder; reviewer; tester; planner; researcher;
+    }
+
+    subgraph cluster_swarm {
+        label="Swarm Coordination";
+        style=filled;
+        color="#FFF4E6";
+
+        node [shape=box, fillcolor="#F5A623", fontcolor=white];
+        hierarchical_coord [label="hierarchical-coordinator"];
+        mesh_coord [label="mesh-coordinator"];
+        adaptive_coord [label="adaptive-coordinator"];
+        collective_intel [label="collective-intelligence-coordinator"];
+        swarm_mem [label="swarm-memory-manager"];
+    }
+
+    subgraph cluster_consensus {
+        label="Consensus & Distributed";
+        style=filled;
+        color="#F0E6FF";
+
+        node [shape=box, fillcolor="#7B68EE", fontcolor=white];
+        byzantine_coord [label="byzantine-coordinator"];
+        raft_mgr [label="raft-manager"];
+        gossip_coord [label="gossip-coordinator"];
+        consensus_build [label="consensus-builder"];
+        crdt_sync [label="crdt-synchronizer"];
+        quorum_mgr [label="quorum-manager"];
+        security_mgr [label="security-manager"];
+    }
+
+    subgraph cluster_performance {
+        label="Performance & Optimization";
+        style=filled;
+        color="#E6F7E6";
+
+        node [shape=box, fillcolor="#50C878", fontcolor=white];
+        perf_analyzer [label="perf-analyzer"];
+        perf_bench [label="performance-benchmarker"];
+        task_orch [label="task-orchestrator"];
+        mem_coord [label="memory-coordinator"];
+        smart_agent [label="smart-agent"];
+    }
+
+    subgraph cluster_github {
+        label="GitHub & Repository";
+        style=filled;
+        color="#FFE6E6";
+
+        node [shape=box, fillcolor="#E85D75", fontcolor=white];
+        github_modes [label="github-modes"];
+        pr_mgr [label="pr-manager"];
+        code_review_swarm [label="code-review-swarm"];
+        issue_tracker [label="issue-tracker"];
+        release_mgr [label="release-manager"];
+        workflow_auto [label="workflow-automation"];
+        project_board [label="project-board-sync"];
+        repo_arch [label="repo-architect"];
+        multi_repo [label="multi-repo-swarm"];
+    }
+
+    subgraph cluster_sparc {
+        label="SPARC Methodology";
+        style=filled;
+        color="#FFF0E6";
+
+        node [shape=box, fillcolor="#FF9F40", fontcolor=white];
+        sparc_coord [label="sparc-coord"];
+        sparc_coder [label="sparc-coder"];
+        specification; pseudocode; architecture; refinement;
+    }
+
+    subgraph cluster_specialized {
+        label="Specialized Development";
+        style=filled;
+        color="#E6F3FF";
+
+        node [shape=box, fillcolor="#5DADE2", fontcolor=white];
+        backend_dev [label="backend-dev"];
+        mobile_dev [label="mobile-dev"];
+        ml_dev [label="ml-developer"];
+        cicd_eng [label="cicd-engineer"];
+        api_docs [label="api-docs"];
+        sys_arch [label="system-architect"];
+        code_analyzer [label="code-analyzer"];
+        base_template [label="base-template-generator"];
+    }
+
+    subgraph cluster_testing {
+        label="Testing & Validation";
+        style=filled;
+        color="#E6FFE6";
+
+        node [shape=box, fillcolor="#27AE60", fontcolor=white];
+        tdd_london [label="tdd-london-swarm"];
+        prod_validator [label="production-validator"];
+    }
+
+    subgraph cluster_migration {
+        label="Migration & Planning";
+        style=filled;
+        color="#FFE6F0";
+
+        node [shape=box, fillcolor="#E74C3C", fontcolor=white];
+        migration_plan [label="migration-planner"];
+        swarm_init [label="swarm-init"];
+    }
+
+    // Command nodes (right side) - grouped by category
+    {rank=same;
+        subgraph cluster_file_ops {
+            label="File Operations";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#AED6F1", fontcolor=black];
+            file_read [label="/file-read"];
+            file_write [label="/file-write"];
+            file_edit [label="/file-edit"];
+            file_delete [label="/file-delete"];
+            file_move [label="/file-move"];
+            glob_search [label="/glob-search"];
+            grep_search [label="/grep-search"];
+            file_list [label="/file-list"];
+        }
+    }
+
+    {rank=same;
+        subgraph cluster_git_ops {
+            label="Git Operations";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#FAD7A0", fontcolor=black];
+            git_status [label="/git-status"];
+            git_diff [label="/git-diff"];
+            git_add [label="/git-add"];
+            git_commit [label="/git-commit"];
+            git_push [label="/git-push"];
+            git_pull [label="/git-pull"];
+            git_branch [label="/git-branch"];
+            git_checkout [label="/git-checkout"];
+            git_merge [label="/git-merge"];
+            git_log [label="/git-log"];
+        }
+    }
+
+    {rank=same;
+        subgraph cluster_communication {
+            label="Communication & Coordination";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#D7BDE2", fontcolor=black];
+            comm_notify [label="/communicate-notify"];
+            comm_report [label="/communicate-report"];
+            comm_log [label="/communicate-log"];
+            comm_alert [label="/communicate-alert"];
+            comm_slack [label="/communicate-slack"];
+            agent_delegate [label="/agent-delegate"];
+            agent_coord [label="/agent-coordinate"];
+            agent_handoff [label="/agent-handoff"];
+        }
+    }
+
+    {rank=same;
+        subgraph cluster_memory {
+            label="Memory & State";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#A9DFBF", fontcolor=black];
+            mem_store [label="/memory-store"];
+            mem_retrieve [label="/memory-retrieve"];
+            mem_search [label="/memory-search"];
+            mem_persist [label="/memory-persist"];
+            mem_clear [label="/memory-clear"];
+            mem_list [label="/memory-list"];
+        }
+    }
+
+    {rank=same;
+        subgraph cluster_testing_cmds {
+            label="Testing & Validation";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#F9E79F", fontcolor=black];
+            test_run [label="/test-run"];
+            test_coverage [label="/test-coverage"];
+            test_validate [label="/test-validate"];
+            test_unit [label="/test-unit"];
+            test_integration [label="/test-integration"];
+            test_e2e [label="/test-e2e"];
+        }
+    }
+
+    {rank=same;
+        subgraph cluster_utilities {
+            label="Utilities";
+            style=filled;
+            color="#F8F9FA";
+
+            node [shape=ellipse, fillcolor="#FADBD8", fontcolor=black];
+            markdown_gen [label="/markdown-gen"];
+            json_format [label="/json-format"];
+            yaml_format [label="/yaml-format"];
+            code_format [label="/code-format"];
+            lint [label="/lint"];
+            timestamp [label="/timestamp"];
+            uuid_gen [label="/uuid-gen"];
+        }
+    }
+
+    // Core Development Agents - Universal Commands
+    coder -> {file_read file_write file_edit file_delete glob_search grep_search} [color="#4A90E2"];
+    coder -> {git_status git_diff git_add git_commit git_push} [color="#4A90E2"];
+    coder -> {comm_notify comm_report agent_delegate} [color="#4A90E2"];
+    coder -> {mem_store mem_retrieve test_run code_format lint} [color="#4A90E2"];
+
+    reviewer -> {file_read grep_search git_diff} [color="#4A90E2"];
+    reviewer -> {comm_report comm_alert agent_coord} [color="#4A90E2"];
+    reviewer -> {mem_retrieve mem_search lint} [color="#4A90E2"];
+
+    tester -> {file_read file_write glob_search} [color="#4A90E2"];
+    tester -> {git_status test_run test_coverage test_unit test_integration test_e2e} [color="#4A90E2"];
+    tester -> {comm_notify mem_store} [color="#4A90E2"];
+
+    planner -> {file_read glob_search grep_search} [color="#4A90E2"];
+    planner -> {markdown_gen json_format comm_report} [color="#4A90E2"];
+    planner -> {mem_store mem_retrieve mem_search agent_delegate} [color="#4A90E2"];
+
+    researcher -> {file_read grep_search mem_search} [color="#4A90E2"];
+    researcher -> {markdown_gen comm_report} [color="#4A90E2"];
+
+    // Swarm Coordination - Coordination + Memory commands
+    hierarchical_coord -> {agent_delegate agent_coord agent_handoff} [color="#F5A623"];
+    hierarchical_coord -> {mem_store mem_retrieve mem_search comm_notify} [color="#F5A623"];
+
+    mesh_coord -> {agent_coord agent_handoff comm_notify} [color="#F5A623"];
+    mesh_coord -> {mem_store mem_retrieve} [color="#F5A623"];
+
+    adaptive_coord -> {agent_delegate agent_coord mem_store mem_search} [color="#F5A623"];
+
+    collective_intel -> {mem_store mem_retrieve mem_search agent_coord} [color="#F5A623"];
+
+    swarm_mem -> {mem_store mem_retrieve mem_search mem_persist mem_clear mem_list} [color="#F5A623"];
+
+    // Consensus & Distributed - Coordination + Verification
+    byzantine_coord -> {agent_coord mem_store mem_retrieve test_validate} [color="#7B68EE"];
+
+    raft_mgr -> {agent_coord mem_store mem_persist comm_alert} [color="#7B68EE"];
+
+    gossip_coord -> {agent_coord comm_notify mem_store} [color="#7B68EE"];
+
+    consensus_build -> {agent_coord mem_retrieve test_validate} [color="#7B68EE"];
+
+    crdt_sync -> {mem_store mem_retrieve mem_persist} [color="#7B68EE"];
+
+    quorum_mgr -> {agent_coord mem_store comm_alert} [color="#7B68EE"];
+
+    security_mgr -> {file_read grep_search lint test_validate comm_alert} [color="#7B68EE"];
+
+    // Performance & Optimization
+    perf_analyzer -> {file_read grep_search test_run mem_store comm_report} [color="#50C878"];
+
+    perf_bench -> {test_run test_validate mem_store comm_report} [color="#50C878"];
+
+    task_orch -> {agent_delegate agent_coord mem_store timestamp} [color="#50C878"];
+
+    mem_coord -> {mem_store mem_retrieve mem_search mem_persist mem_clear} [color="#50C878"];
+
+    smart_agent -> {agent_delegate mem_store mem_retrieve file_read} [color="#50C878"];
+
+    // GitHub & Repository
+    github_modes -> {git_status git_diff git_add git_commit git_push git_pull git_branch} [color="#E85D75"];
+    github_modes -> {file_read grep_search comm_notify} [color="#E85D75"];
+
+    pr_mgr -> {git_diff git_branch git_merge comm_notify comm_report} [color="#E85D75"];
+
+    code_review_swarm -> {file_read git_diff grep_search lint comm_report} [color="#E85D75"];
+
+    issue_tracker -> {file_read git_log comm_notify markdown_gen} [color="#E85D75"];
+
+    release_mgr -> {git_tag git_push git_log markdown_gen comm_notify} [color="#E85D75"];
+
+    workflow_auto -> {git_status file_write test_run comm_alert} [color="#E85D75"];
+
+    project_board -> {file_read markdown_gen comm_notify} [color="#E85D75"];
+
+    repo_arch -> {file_list glob_search grep_search markdown_gen} [color="#E85D75"];
+
+    multi_repo -> {git_status git_pull git_push agent_coord} [color="#E85D75"];
+
+    // SPARC Methodology
+    sparc_coord -> {agent_delegate mem_store comm_report} [color="#FF9F40"];
+
+    sparc_coder -> {file_write file_edit git_commit test_run code_format} [color="#FF9F40"];
+
+    specification -> {file_read markdown_gen mem_store} [color="#FF9F40"];
+
+    pseudocode -> {file_write markdown_gen mem_store} [color="#FF9F40"];
+
+    architecture -> {markdown_gen mem_store comm_report} [color="#FF9F40"];
+
+    refinement -> {file_edit test_run git_diff} [color="#FF9F40"];
+
+    // Specialized Development
+    backend_dev -> {file_write file_edit git_commit test_run code_format lint} [color="#5DADE2"];
+
+    mobile_dev -> {file_write file_edit git_commit test_run lint} [color="#5DADE2"];
+
+    ml_dev -> {file_write test_run mem_store json_format} [color="#5DADE2"];
+
+    cicd_eng -> {file_write yaml_format test_run git_status} [color="#5DADE2"];
+
+    api_docs -> {file_read markdown_gen json_format} [color="#5DADE2"];
+
+    sys_arch -> {file_read markdown_gen comm_report} [color="#5DADE2"];
+
+    code_analyzer -> {file_read grep_search lint comm_report} [color="#5DADE2"];
+
+    base_template -> {file_write file_list code_format} [color="#5DADE2"];
+
+    // Testing & Validation
+    tdd_london -> {test_unit test_integration file_write git_commit} [color="#27AE60"];
+
+    prod_validator -> {test_run test_coverage test_validate lint comm_alert} [color="#27AE60"];
+
+    // Migration & Planning
+    migration_plan -> {file_read grep_search markdown_gen comm_report} [color="#E74C3C"];
+
+    swarm_init -> {agent_spawn mem_store comm_notify} [color="#E74C3C"];
+
+    // Add missing nodes referenced
+    git_tag [label="/git-tag", shape=ellipse, fillcolor="#FAD7A0", fontcolor=black];
+    agent_spawn [label="/agent-spawn", shape=ellipse, fillcolor="#D7BDE2", fontcolor=black];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=12;
+
+        legend_core [label="Core Development", shape=box, fillcolor="#4A90E2", fontcolor=white];
+        legend_swarm [label="Swarm Coordination", shape=box, fillcolor="#F5A623", fontcolor=white];
+        legend_consensus [label="Consensus/Distributed", shape=box, fillcolor="#7B68EE", fontcolor=white];
+        legend_perf [label="Performance", shape=box, fillcolor="#50C878", fontcolor=white];
+        legend_github [label="GitHub", shape=box, fillcolor="#E85D75", fontcolor=white];
+        legend_sparc [label="SPARC", shape=box, fillcolor="#FF9F40", fontcolor=white];
+        legend_spec [label="Specialized Dev", shape=box, fillcolor="#5DADE2", fontcolor=white];
+
+        legend_core -> legend_swarm -> legend_consensus -> legend_perf -> legend_github -> legend_sparc -> legend_spec [style=invis];
+    }
+}

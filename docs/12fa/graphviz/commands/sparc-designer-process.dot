@@ -1,0 +1,90 @@
+// SPARC Designer Command Workflow
+// UI/UX design and prototyping
+digraph sparc_designer_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/sparc:designer\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        requirement_parser [label="Requirement\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_research {
+        label="Design Research";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        user_research [label="User\nResearch", fillcolor="#2563eb", fontcolor="#ffffff"];
+        persona_builder [label="Persona\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        competitor_analysis [label="Competitor\nAnalysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_design {
+        label="UI Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        wireframe_creator [label="Wireframe\nCreator", fillcolor="#10b981", fontcolor="#ffffff"];
+        visual_designer [label="Visual\nDesigner", fillcolor="#10b981", fontcolor="#ffffff"];
+        component_designer [label="Component\nDesigner", fillcolor="#10b981", fontcolor="#ffffff"];
+        responsive_designer [label="Responsive\nDesigner", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_ux {
+        label="UX Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        user_flow_designer [label="User Flow\nDesigner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        interaction_designer [label="Interaction\nDesigner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        accessibility_checker [label="Accessibility\nChecker", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_prototype {
+        label="Prototyping";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        prototype_builder [label="Prototype\nBuilder", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        interactive_tester [label="Interactive\nTester", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        design_system [label="Design\nSystem", fillcolor="#059669", fontcolor="#ffffff"];
+        prototype [label="Interactive\nPrototype", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> requirement_parser;
+    requirement_parser -> user_research -> persona_builder -> competitor_analysis;
+    competitor_analysis -> wireframe_creator -> visual_designer -> component_designer -> responsive_designer;
+    responsive_designer -> user_flow_designer -> interaction_designer -> accessibility_checker;
+    accessibility_checker -> prototype_builder -> interactive_tester;
+    interactive_tester -> design_system -> prototype;
+    prototype -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="SPARC", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Research", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="UI Design", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

@@ -1,0 +1,251 @@
+digraph ReleaseAutomation {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>GitHub Release Automation Workflow</b><br/>Version → Build → Test → Release → Deploy → Monitor>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Release Types";
+        style=filled;
+        color="#e9ecef";
+
+        legend_major [label="Major (v2.0.0)\nBreaking Changes", shape=box, fillcolor="#dc3545", fontcolor="white"];
+        legend_minor [label="Minor (v1.1.0)\nNew Features", shape=box, fillcolor="#28a745", fontcolor="white"];
+        legend_patch [label="Patch (v1.0.1)\nBug Fixes", shape=box, fillcolor="#ffc107"];
+
+        legend_major -> legend_minor -> legend_patch [style=invis];
+    }
+
+    // Start
+    start [label="Release\nInitiated", shape=oval, fillcolor="#d4edda"];
+
+    // Version Planning
+    subgraph cluster_version {
+        label="Phase 1: Version Planning";
+        style=filled;
+        color="#cfe2ff";
+
+        version_analyze [label="Analyze Changes\nCommit Messages", shape=box, fillcolor="#b6d7ff"];
+        version_type [label="Determine Type\nMajor/Minor/Patch", shape=box, fillcolor="#b6d7ff"];
+        version_number [label="Compute Version\nSemVer", shape=box, fillcolor="#b6d7ff"];
+        version_changelog [label="Generate Changelog\nConventional Commits", shape=box, fillcolor="#b6d7ff"];
+        version_review [label="Review Plan\nApproval", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    version_approved [label="Approved?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Pre-Release Validation
+    subgraph cluster_validation {
+        label="Phase 2: Pre-Release Validation";
+        style=filled;
+        color="#d1e7dd";
+
+        validate_tests [label="Run Full Test Suite\nRegression Tests", shape=box, fillcolor="#a3cfbb"];
+        validate_security [label="Security Scan\nVulnerability Check", shape=box, fillcolor="#a3cfbb"];
+        validate_lint [label="Lint & Format\nCode Quality", shape=box, fillcolor="#a3cfbb"];
+        validate_build [label="Test Build\nNo Errors", shape=box, fillcolor="#a3cfbb"];
+        validate_docs [label="Update Docs\nREADME/API Docs", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    validation_passed [label="All Checks\nPassed?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Build & Package
+    subgraph cluster_build {
+        label="Phase 3: Build & Package";
+        style=filled;
+        color="#e7d1e7";
+
+        build_compile [label="Compile Source\nProduction Build", shape=box, fillcolor="#d4b5d4"];
+        build_optimize [label="Optimize\nMinify/Tree-shake", shape=box, fillcolor="#d4b5d4"];
+        build_assets [label="Bundle Assets\nImages/Fonts/CSS", shape=box, fillcolor="#d4b5d4"];
+        build_docker [label="Build Docker Image\nMulti-stage Build", shape=box, fillcolor="#d4b5d4"];
+        build_sign [label="Sign Artifacts\nGPG/Code Signing", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Release Creation
+    subgraph cluster_release {
+        label="Phase 4: GitHub Release Creation";
+        style=filled;
+        color="#fff3cd";
+
+        release_tag [label="Create Git Tag\nv{version}", shape=box, fillcolor="#ffeeba"];
+        release_push_tag [label="Push Tag\nRemote", shape=box, fillcolor="#ffeeba"];
+        release_draft [label="Create Draft Release\nGitHub API", shape=box, fillcolor="#ffeeba"];
+        release_notes [label="Generate Release Notes\nAuto-generated", shape=box, fillcolor="#ffeeba"];
+        release_attach [label="Attach Artifacts\nBinaries/Archives", shape=box, fillcolor="#ffeeba"];
+        release_publish [label="Publish Release\nPublic", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Package Registry
+    subgraph cluster_registry {
+        label="Phase 5: Package Registry Publishing";
+        style=filled;
+        color="#cfe2ff";
+
+        registry_npm [label="Publish to npm\nnpm publish", shape=box, fillcolor="#b6d7ff"];
+        registry_docker [label="Push Docker Image\nDocker Hub/ECR", shape=box, fillcolor="#b6d7ff"];
+        registry_github [label="GitHub Packages\nNuGet/Maven", shape=box, fillcolor="#b6d7ff"];
+        registry_verify [label="Verify Publication\nDownload Test", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    registry_success [label="Published\nSuccessfully?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Deployment
+    subgraph cluster_deployment {
+        label="Phase 6: Automated Deployment";
+        style=filled;
+        color="#d1e7dd"];
+
+        deploy_staging [label="Deploy to Staging\nPre-production", shape=box, fillcolor="#a3cfbb"];
+        deploy_smoke [label="Smoke Tests\nStaging", shape=box, fillcolor="#a3cfbb"];
+        deploy_approval [label="Production Approval\nRelease Manager", shape=box, fillcolor="#a3cfbb"];
+        deploy_production [label="Deploy to Production\nCanary/Blue-Green", shape=box, fillcolor="#a3cfbb"];
+        deploy_verify [label="Verify Deployment\nHealth Checks", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    deploy_healthy [label="Production\nHealthy?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Post-Release Monitoring
+    subgraph cluster_monitoring {
+        label="Phase 7: Post-Release Monitoring";
+        style=filled;
+        color="#e7d1e7";
+
+        monitor_metrics [label="Monitor Metrics\nError Rate/Latency", shape=box, fillcolor="#d4b5d4"];
+        monitor_logs [label="Watch Logs\nError Patterns", shape=box, fillcolor="#d4b5d4"];
+        monitor_alerts [label="Alert Tracking\nPagerDuty/Slack", shape=box, fillcolor="#d4b5d4"];
+        monitor_feedback [label="User Feedback\nSupport Tickets", shape=box, fillcolor="#d4b5d4"];
+        monitor_analytics [label="Analytics\nUsage Patterns", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    monitoring_stable [label="System\nStable?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Communication
+    subgraph cluster_communication {
+        label="Phase 8: Release Communication";
+        style=filled;
+        color="#fff3cd";
+
+        comm_blog [label="Blog Post\nRelease Announcement", shape=box, fillcolor="#ffeeba"];
+        comm_social [label="Social Media\nTwitter/LinkedIn", shape=box, fillcolor="#ffeeba"];
+        comm_email [label="Email Newsletter\nSubscribers", shape=box, fillcolor="#ffeeba"];
+        comm_docs [label="Update Docs\nChangelog/Migration", shape=box, fillcolor="#ffeeba"];
+        comm_support [label="Notify Support\nNew Features", shape=box, fillcolor="#ffeeba"];
+    }
+
+    // Rollback Plan
+    subgraph cluster_rollback {
+        label="Emergency Rollback";
+        style=filled;
+        color="#f8d7da";
+
+        rollback_trigger [label="Trigger Rollback\nCritical Issue", shape=box, fillcolor="#f5c6cb"];
+        rollback_previous [label="Revert to Previous\nLast Stable", shape=box, fillcolor="#f5c6cb"];
+        rollback_notify [label="Notify Stakeholders\nIncident Alert", shape=box, fillcolor="#f5c6cb"];
+        rollback_postmortem [label="Post-Mortem\nRoot Cause", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    // Artifacts
+    release_artifacts [label="Release Artifacts\nBinaries/Archives", shape=cylinder, fillcolor="#f8d7da"];
+    changelog_file [label="CHANGELOG.md\nVersion History", shape=cylinder, fillcolor="#f8d7da"];
+    docker_image [label="Docker Image\nv{version}", shape=cylinder, fillcolor="#f8d7da"];
+    npm_package [label="npm Package\nv{version}", shape=cylinder, fillcolor="#f8d7da"];
+
+    // End States
+    success [label="Release\nSuccessful", shape=oval, fillcolor="#d4edda"];
+    failed [label="Release\nFailed", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+    rollback_complete [label="Rollback\nComplete", shape=oval, fillcolor="#ffc107"];
+
+    // Workflow Connections
+    start -> version_analyze;
+
+    // Version Planning
+    version_analyze -> version_type;
+    version_type -> version_number;
+    version_number -> version_changelog;
+    version_changelog -> version_review;
+    version_review -> version_approved;
+
+    version_approved -> validate_tests [label="Approved", color="green"];
+    version_approved -> failed [label="Rejected", color="red"];
+
+    // Validation
+    validate_tests -> validate_security;
+    validate_security -> validate_lint;
+    validate_lint -> validate_build;
+    validate_build -> validate_docs;
+    validate_docs -> validation_passed;
+
+    validation_passed -> build_compile [label="Pass", color="green"];
+    validation_passed -> failed [label="Fail", color="red"];
+
+    // Build
+    build_compile -> build_optimize;
+    build_optimize -> build_assets;
+    build_assets -> build_docker;
+    build_docker -> build_sign;
+    build_sign -> release_artifacts;
+    release_artifacts -> release_tag;
+
+    // Release
+    release_tag -> release_push_tag;
+    release_push_tag -> release_draft;
+    release_draft -> release_notes;
+    release_notes -> changelog_file;
+    changelog_file -> release_attach;
+    release_attach -> release_publish;
+    release_publish -> registry_npm;
+
+    // Registry
+    registry_npm -> npm_package;
+    npm_package -> registry_docker;
+    registry_docker -> docker_image;
+    docker_image -> registry_github;
+    registry_github -> registry_verify;
+    registry_verify -> registry_success;
+
+    registry_success -> deploy_staging [label="Success", color="green"];
+    registry_success -> failed [label="Failed", color="red"];
+
+    // Deployment
+    deploy_staging -> deploy_smoke;
+    deploy_smoke -> deploy_approval;
+    deploy_approval -> deploy_production;
+    deploy_production -> deploy_verify;
+    deploy_verify -> deploy_healthy;
+
+    deploy_healthy -> monitor_metrics [label="Healthy", color="green"];
+    deploy_healthy -> rollback_trigger [label="Unhealthy", color="red"];
+
+    // Monitoring
+    monitor_metrics -> monitor_logs;
+    monitor_logs -> monitor_alerts;
+    monitor_alerts -> monitor_feedback;
+    monitor_feedback -> monitor_analytics;
+    monitor_analytics -> monitoring_stable;
+
+    monitoring_stable -> comm_blog [label="Stable", color="green"];
+    monitoring_stable -> rollback_trigger [label="Issues Detected", color="red"];
+
+    // Communication
+    comm_blog -> comm_social;
+    comm_social -> comm_email;
+    comm_email -> comm_docs;
+    comm_docs -> comm_support;
+    comm_support -> success;
+
+    // Rollback
+    rollback_trigger -> rollback_previous;
+    rollback_previous -> rollback_notify;
+    rollback_notify -> rollback_postmortem;
+    rollback_postmortem -> rollback_complete;
+}

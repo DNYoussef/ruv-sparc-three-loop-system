@@ -1,0 +1,25 @@
+digraph PR_ENHANCE {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/pr-enhance", shape=ellipse, fillcolor=lightblue];
+  fetch_pr [label="Fetch PR\nDetails", fillcolor=lightblue];
+  analyze_changes [label="Analyze\nChanges", fillcolor=purple];
+  check_tests [shape=diamond, label="Tests\nExist?"];
+  generate_tests [label="Generate\nTests", fillcolor=yellow];
+  check_docs [shape=diamond, label="Docs\nUpdated?"];
+  generate_docs [label="Generate\nDocumentation", fillcolor=yellow];
+  improve_code [label="Suggest Code\nImprovements", fillcolor=lightgreen, style="filled,bold"];
+  add_labels [label="Add\nLabels", fillcolor=lightblue];
+  update_description [label="Update PR\nDescription", fillcolor=lightblue];
+  success [label="PR Enhanced", shape=doublecircle, fillcolor=green];
+
+  invoke -> fetch_pr -> analyze_changes -> check_tests;
+  check_tests -> generate_tests [label="No"];
+  check_tests -> check_docs [label="Yes"];
+  generate_tests -> check_docs;
+  check_docs -> generate_docs [label="No"];
+  check_docs -> improve_code [label="Yes"];
+  generate_docs -> improve_code;
+  improve_code -> add_labels -> update_description -> success;
+}

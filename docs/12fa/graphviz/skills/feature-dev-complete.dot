@@ -1,0 +1,256 @@
+digraph FeatureDevComplete {
+    // Graph configuration
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.6;
+    ranksep=0.8;
+    fontname="Arial";
+    fontsize=12;
+
+    // Style definitions
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Color scheme
+    node [fillcolor=lightblue, shape=box];
+
+    // Start/End nodes
+    start [label="Feature Development\nRequest", shape=ellipse, fillcolor=lightgreen];
+    end [label="Feature\nDeployed", shape=doubleoctagon, fillcolor=lightgreen];
+
+    // Stage 1: Research Phase
+    subgraph cluster_research {
+        label="Stage 1-2: Research & Discovery";
+        style=filled;
+        fillcolor=lightyellow;
+
+        gemini_search [label="Gemini Search\nBest Practices", shape=component, fillcolor=orange];
+        analyze_requirements [label="Analyze\nRequirements", shape=box];
+        identify_patterns [label="Identify\nDesign Patterns"];
+        assess_risks [label="Risk\nAssessment", shape=diamond, fillcolor=yellow];
+        research_output [label="Research\nReport", shape=note];
+
+        gemini_search -> analyze_requirements;
+        analyze_requirements -> identify_patterns;
+        identify_patterns -> assess_risks;
+        assess_risks -> research_output;
+    }
+
+    // Stage 3: Architecture Design
+    subgraph cluster_architecture {
+        label="Stage 3-4: Architecture Design";
+        style=filled;
+        fillcolor=lightcyan;
+
+        design_system [label="System\nArchitecture", shape=component];
+        component_design [label="Component\nDesign"];
+        api_design [label="API\nSpecification"];
+        data_model [label="Data Model\nDesign"];
+        validation_gate_1 [label="Architecture\nReview", shape=diamond, fillcolor=yellow];
+        arch_approved [label="Design\nApproved", shape=note];
+
+        design_system -> component_design;
+        component_design -> api_design;
+        api_design -> data_model;
+        data_model -> validation_gate_1;
+        validation_gate_1 -> arch_approved [label="Pass"];
+        validation_gate_1 -> design_system [label="Revise", color=red];
+    }
+
+    // Stage 5: Codex Prototyping
+    subgraph cluster_prototype {
+        label="Stage 5-6: Codex Prototyping";
+        style=filled;
+        fillcolor=lavender;
+
+        codex_sandbox [label="Codex Sandbox\nInitialize", shape=cylinder, fillcolor=orange];
+        rapid_prototype [label="Rapid\nPrototype"];
+        test_prototype [label="Prototype\nTesting"];
+        gather_feedback [label="Feedback\nCollection"];
+        prototype_validation [label="Prototype\nValidation", shape=diamond, fillcolor=yellow];
+        prototype_approved [label="Prototype\nApproved", shape=note];
+
+        codex_sandbox -> rapid_prototype;
+        rapid_prototype -> test_prototype;
+        test_prototype -> gather_feedback;
+        gather_feedback -> prototype_validation;
+        prototype_validation -> prototype_approved [label="Pass"];
+        prototype_validation -> rapid_prototype [label="Iterate", color=orange];
+    }
+
+    // Stage 7: Implementation
+    subgraph cluster_implementation {
+        label="Stage 7-8: Core Implementation";
+        style=filled;
+        fillcolor=lightgreen;
+
+        spawn_coder [label="Spawn\nCoder Agent", shape=component, fillcolor=orange];
+        implement_core [label="Core Feature\nImplementation"];
+        implement_tests [label="Test\nImplementation"];
+        code_review [label="Code\nReview"];
+        unit_tests [label="Unit Tests\nExecution", shape=hexagon];
+        validation_gate_2 [label="Code Quality\nGate", shape=diamond, fillcolor=yellow];
+        code_approved [label="Code\nApproved", shape=note];
+
+        spawn_coder -> implement_core;
+        implement_core -> implement_tests;
+        implement_tests -> code_review;
+        code_review -> unit_tests;
+        unit_tests -> validation_gate_2;
+        validation_gate_2 -> code_approved [label="Pass"];
+        validation_gate_2 -> implement_core [label="Fix Issues", color=red];
+    }
+
+    // Stage 9: Comprehensive Testing
+    subgraph cluster_testing {
+        label="Stage 9-10: Comprehensive Testing";
+        style=filled;
+        fillcolor=mistyrose;
+
+        integration_tests [label="Integration\nTests", shape=hexagon];
+        e2e_tests [label="End-to-End\nTests", shape=hexagon];
+        performance_tests [label="Performance\nTests", shape=hexagon];
+        security_scan [label="Security\nScan", shape=hexagon];
+        test_coverage [label="Coverage\nAnalysis"];
+        validation_gate_3 [label="Testing\nGate", shape=diamond, fillcolor=yellow];
+        tests_passed [label="All Tests\nPassed", shape=note];
+
+        integration_tests -> e2e_tests;
+        e2e_tests -> performance_tests;
+        performance_tests -> security_scan;
+        security_scan -> test_coverage;
+        test_coverage -> validation_gate_3;
+        validation_gate_3 -> tests_passed [label="Pass"];
+        validation_gate_3 -> integration_tests [label="Fix Failures", color=red];
+    }
+
+    // Stage 11: Documentation
+    subgraph cluster_documentation {
+        label="Stage 11: Documentation Generation";
+        style=filled;
+        fillcolor=lemonchiffon;
+
+        api_docs [label="API\nDocumentation"];
+        user_guide [label="User\nGuide"];
+        developer_docs [label="Developer\nDocumentation"];
+        changelog [label="Changelog\nUpdate"];
+        doc_review [label="Documentation\nReview", shape=diamond, fillcolor=yellow];
+        docs_complete [label="Docs\nComplete", shape=note];
+
+        api_docs -> user_guide;
+        user_guide -> developer_docs;
+        developer_docs -> changelog;
+        changelog -> doc_review;
+        doc_review -> docs_complete [label="Pass"];
+        doc_review -> api_docs [label="Revise", color=orange];
+    }
+
+    // Stage 12: Deployment Preparation
+    subgraph cluster_deployment {
+        label="Stage 12: Deployment Pipeline";
+        style=filled;
+        fillcolor=palegreen;
+
+        build_pipeline [label="Build\nPipeline", shape=component];
+        staging_deploy [label="Deploy to\nStaging"];
+        smoke_tests [label="Smoke\nTests", shape=hexagon];
+        production_ready [label="Production\nReadiness Check", shape=diamond, fillcolor=yellow];
+        rollback_plan [label="Rollback\nPlan"];
+        deploy_production [label="Deploy to\nProduction"];
+
+        build_pipeline -> staging_deploy;
+        staging_deploy -> smoke_tests;
+        smoke_tests -> production_ready;
+        production_ready -> rollback_plan [label="Pass"];
+        rollback_plan -> deploy_production;
+        production_ready -> staging_deploy [label="Issues Found", color=red];
+    }
+
+    // Error Handling & Recovery
+    subgraph cluster_error_handling {
+        label="Error Handling & Recovery";
+        style=filled;
+        fillcolor=mistyrose;
+
+        error_detection [label="Error\nDetection", shape=octagon, fillcolor=red];
+        root_cause [label="Root Cause\nAnalysis"];
+        auto_fix [label="Automated\nFix Attempt"];
+        manual_intervention [label="Manual\nIntervention Required", shape=octagon, fillcolor=orange];
+        rollback [label="Rollback\nProcedure"];
+
+        error_detection -> root_cause;
+        root_cause -> auto_fix;
+        auto_fix -> manual_intervention [label="Cannot Auto-Fix"];
+        auto_fix -> rollback [label="Fix Failed"];
+    }
+
+    // Cross-skill coordination
+    subgraph cluster_coordination {
+        label="Agent Coordination";
+        style=dashed;
+        fillcolor=white;
+
+        researcher [label="Researcher\nAgent", shape=component, fillcolor=orange];
+        coder [label="Coder\nAgent", shape=component, fillcolor=orange];
+        tester [label="Tester\nAgent", shape=component, fillcolor=orange];
+        reviewer [label="Reviewer\nAgent", shape=component, fillcolor=orange];
+        deployer [label="DevOps\nAgent", shape=component, fillcolor=orange];
+
+        researcher -> coder [style=dashed, label="Research\nFindings"];
+        coder -> reviewer [style=dashed, label="Code for\nReview"];
+        coder -> tester [style=dashed, label="Code to\nTest"];
+        tester -> reviewer [style=dashed, label="Test\nResults"];
+        reviewer -> deployer [style=dashed, label="Approved\nCode"];
+    }
+
+    // Memory & State Management
+    memory_store [label="Memory Store\n(Cross-Stage Context)", shape=cylinder, fillcolor=lightgray];
+
+    // Main workflow connections
+    start -> gemini_search;
+    research_output -> design_system;
+    arch_approved -> codex_sandbox;
+    prototype_approved -> spawn_coder;
+    code_approved -> integration_tests;
+    tests_passed -> api_docs;
+    docs_complete -> build_pipeline;
+    deploy_production -> end;
+
+    // Memory connections
+    research_output -> memory_store [style=dashed, color=blue];
+    arch_approved -> memory_store [style=dashed, color=blue];
+    prototype_approved -> memory_store [style=dashed, color=blue];
+    code_approved -> memory_store [style=dashed, color=blue];
+    tests_passed -> memory_store [style=dashed, color=blue];
+    docs_complete -> memory_store [style=dashed, color=blue];
+
+    // Error routing
+    validation_gate_1 -> error_detection [label="Critical Error", color=red, style=dashed];
+    validation_gate_2 -> error_detection [label="Critical Error", color=red, style=dashed];
+    validation_gate_3 -> error_detection [label="Critical Error", color=red, style=dashed];
+    production_ready -> error_detection [label="Critical Error", color=red, style=dashed];
+
+    // Recovery paths
+    manual_intervention -> design_system [label="Restart from\nArchitecture", color=red, style=dashed];
+    rollback -> staging_deploy [label="Rollback to\nStaging", color=red, style=dashed];
+
+    // Coordination with agents
+    gemini_search -> researcher [style=dashed];
+    spawn_coder -> coder [style=dashed];
+    integration_tests -> tester [style=dashed];
+    code_review -> reviewer [style=dashed];
+    deploy_production -> deployer [style=dashed];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor=white;
+
+        legend_validation [label="Validation Gate", shape=diamond, fillcolor=yellow];
+        legend_agent [label="Agent/Service", shape=component, fillcolor=orange];
+        legend_test [label="Test Phase", shape=hexagon];
+        legend_error [label="Error State", shape=octagon, fillcolor=red];
+        legend_output [label="Output/Artifact", shape=note];
+    }
+}

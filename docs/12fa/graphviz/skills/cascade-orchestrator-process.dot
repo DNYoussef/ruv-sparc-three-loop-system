@@ -1,0 +1,263 @@
+digraph CASCADE_ORCHESTRATOR_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Cascade Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="cascade-orchestrator Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Workflow Definition\nSequential, Parallel, Conditional"];
+    validate_input [label="Validate Cascade Structure\nDependencies"];
+    check_deps [label="Check Micro-Skill Availability\nCodex Sandbox"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE: CASCADE PATTERNS
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Cascade Execution Patterns";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    detect_pattern [label="Detect Cascade Pattern\nSequential, Parallel, Conditional", fillcolor=purple];
+    decision_pattern [shape=diamond, label="Which\nPattern?"];
+
+    // Sequential Pattern
+    seq_step1 [label="Sequential Step 1\nExecute Micro-Skill", fillcolor=lightblue];
+    seq_step2 [label="Sequential Step 2\nPass Output to Next", fillcolor=lightblue];
+    seq_step3 [label="Sequential Step 3\nContinue Chain", fillcolor=lightblue];
+
+    // Parallel Pattern
+    par_spawn [label="Parallel Spawn\nMultiple Micro-Skills", fillcolor=lightgreen];
+    par_execute [label="Parallel Execution\nConcurrent Processing", fillcolor=lightgreen];
+    par_merge [label="Merge Results\nAggregate Outputs", fillcolor=lightgreen];
+
+    // Conditional Pattern
+    cond_eval [label="Conditional Evaluation\nCheck Condition", fillcolor=yellow];
+    cond_branch [shape=diamond, label="Condition\nMet?"];
+    cond_branch_a [label="Branch A: Execute Skill A", fillcolor=yellow];
+    cond_branch_b [label="Branch B: Execute Skill B", fillcolor=yellow];
+
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Execution Error"];
+    retry_logic [label="Retry with Different Pattern", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> detect_pattern [label="Pass"];
+
+  // Pattern detection
+  detect_pattern -> decision_pattern;
+
+  // Sequential flow
+  decision_pattern -> seq_step1 [label="Sequential"];
+  seq_step1 -> seq_step2;
+  seq_step2 -> seq_step3;
+
+  // Parallel flow
+  decision_pattern -> par_spawn [label="Parallel"];
+  par_spawn -> par_execute;
+  par_execute -> par_merge;
+
+  // Conditional flow
+  decision_pattern -> cond_eval [label="Conditional"];
+  cond_eval -> cond_branch;
+  cond_branch -> cond_branch_a [label="Yes"];
+  cond_branch -> cond_branch_b [label="No"];
+
+  // Error handling
+  seq_step3 -> execution_error [label="Fail"];
+  par_merge -> execution_error [label="Fail"];
+  cond_branch_a -> execution_error [label="Fail"];
+  cond_branch_b -> execution_error [label="Fail"];
+  execution_error -> retry_logic;
+  retry_logic -> detect_pattern [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  // =============================================================================
+  // MULTI-MODEL ROUTING
+  // =============================================================================
+  subgraph cluster_multimodel {
+    label="Multi-Model Routing";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    route_decision [shape=diamond, label="Which Model?"];
+    gemini_route [label="Gemini 2M Context\nMegacontext Analysis", fillcolor=cyan];
+    codex_route [label="Codex Sandbox\nRapid Prototyping", fillcolor=cyan];
+    claude_route [label="Claude Sonnet 4\nCore Orchestration", fillcolor=cyan];
+
+    merge_outputs [label="Merge Model Outputs\nConsensus Building", fillcolor=cyan];
+  }
+
+  // Connect execution to multi-model
+  seq_step3 -> route_decision [label="Success"];
+  par_merge -> route_decision [label="Success"];
+  cond_branch_a -> route_decision [label="Success"];
+  cond_branch_b -> route_decision [label="Success"];
+
+  // Multi-model routing
+  route_decision -> gemini_route [label="Gemini"];
+  route_decision -> codex_route [label="Codex"];
+  route_decision -> claude_route [label="Claude"];
+
+  gemini_route -> merge_outputs;
+  codex_route -> merge_outputs;
+  claude_route -> merge_outputs;
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Memory & Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Cascade Results\nin Memory", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator\nCascade Complete", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Dependent\nCascades?"];
+  }
+
+  // Connect multi-model to coordination
+  merge_outputs -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Cascade Output\nValid?"];
+    run_tests [label="Run Integration Tests\nEnd-to-End Validation", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources\nTerminate Micro-Skills", fillcolor=lightgreen];
+    log_completion [label="Log Cascade Metrics\nExecution Time, Pattern Used"];
+    success [label="Cascade Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Cascade\nRevert Changes", fillcolor=orange];
+    failure [label="Cascade Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_start [shape=ellipse, label="Entry Point", fillcolor=lightblue];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_process [shape=box, label="Process", fillcolor=purple];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_start -> legend_decision [style=invis];
+    legend_decision -> legend_process [style=invis];
+    legend_process -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

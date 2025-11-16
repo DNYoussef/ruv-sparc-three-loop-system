@@ -1,0 +1,201 @@
+digraph FLOW_NEXUS_PLATFORM_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Platform\nOperations"];
+    check_deps [label="Check Flow Nexus\nAuth"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Platform Management";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    authenticate [label="Authenticate\nUser", fillcolor=purple];
+    decision_1 [shape=diamond, label="Auth\nSuccess?"];
+
+    manage_sandboxes [label="Manage Sandbox\nLifecycle", fillcolor=purple];
+    decision_2 [shape=diamond, label="Sandboxes\nReady?"];
+
+    deploy_apps [label="Deploy\nApplications", fillcolor=purple];
+    decision_3 [shape=diamond, label="Deploy\nSuccess?"];
+
+    process_payments [label="Process Payment\nTransactions", fillcolor=purple];
+    decision_4 [shape=diamond, label="Payment\nValid?"];
+
+    handle_challenges [label="Handle User\nChallenges", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Platform Error"];
+    retry_logic [label="Retry Operation", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> authenticate [label="Pass"];
+
+  // Execution flow
+  authenticate -> decision_1;
+  decision_1 -> manage_sandboxes [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  manage_sandboxes -> decision_2;
+  decision_2 -> deploy_apps [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  deploy_apps -> decision_3;
+  decision_3 -> process_payments [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  process_payments -> decision_4;
+  decision_4 -> handle_challenges [label="Yes"];
+  decision_4 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> authenticate [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Platform Down"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Platform\nState", fillcolor=lightblue];
+    notify_coordinator [label="Notify Operation\nStatus", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Other Operations\nWaiting?"];
+  }
+
+  // Connect execution to coordination
+  handle_challenges -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Operations\nSuccessful?"];
+    run_tests [label="Test Platform\nIntegrity", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Health Check\nPass?"];
+
+    verify_deployment [label="Verify App\nDeployments", fillcolor=lightgreen];
+    deploy_check [shape=diamond, label="Apps\nRunning?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> verify_deployment [label="Pass"];
+  test_results -> quality_gate_fail [label="Fail"];
+
+  verify_deployment -> deploy_check;
+  deploy_check -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Platform\nMetrics"];
+    success [label="Skill Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  deploy_check -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Skill Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

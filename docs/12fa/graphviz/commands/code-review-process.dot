@@ -1,0 +1,29 @@
+digraph CODE_REVIEW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/code-review", shape=ellipse, fillcolor=lightblue];
+  init_swarm [label="Initialize Review\nSwarm", fillcolor=purple, style="filled,bold"];
+  spawn_security [label="Security\nReviewer", fillcolor=lightgreen];
+  spawn_performance [label="Performance\nReviewer", fillcolor=lightgreen];
+  spawn_style [label="Style\nReviewer", fillcolor=lightgreen];
+  parallel_review [label="Parallel\nReview", fillcolor=lightpurple];
+  consensus [label="Byzantine\nConsensus", fillcolor=yellow];
+  aggregate_findings [label="Aggregate\nFindings", fillcolor=lightblue];
+  check_severity [shape=diamond, label="Critical\nIssues?"];
+  generate_fixes [label="Generate\nFixes", fillcolor=lightgreen];
+  create_report [label="Create\nReport", fillcolor=lightblue];
+  success [label="Review Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> init_swarm;
+  init_swarm -> spawn_security;
+  init_swarm -> spawn_performance;
+  init_swarm -> spawn_style;
+  spawn_security -> parallel_review;
+  spawn_performance -> parallel_review;
+  spawn_style -> parallel_review;
+  parallel_review -> consensus -> aggregate_findings -> check_severity;
+  check_severity -> generate_fixes [label="Yes"];
+  check_severity -> create_report [label="No"];
+  generate_fixes -> create_report -> success;
+}

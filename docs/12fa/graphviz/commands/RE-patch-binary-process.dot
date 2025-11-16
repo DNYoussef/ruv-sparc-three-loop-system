@@ -1,0 +1,48 @@
+digraph REPatchBinaryProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-patch-binary\nCommand Start", fillcolor=lightgreen];
+    backup_original [label="Create Backup\nof Original"];
+    load_binary [label="Load Binary File"];
+    locate_target [label="Locate Target\nOffset/Function"];
+    verify_location [label="Verify Target\nLocation"];
+    prepare_patch [label="Prepare Patch\nData"];
+    validate_patch [label="Validate Patch\nSize & Alignment"];
+    apply_patch [label="Apply Binary\nPatch"];
+    fix_checksums [label="Fix Checksums\n& Signatures"];
+    update_headers [label="Update Binary\nHeaders"];
+    verify_integrity [label="Verify Binary\nIntegrity"];
+    test_patch [label="Test Patched\nBinary"];
+    rollback [label="Rollback if\nFailed", fillcolor=pink];
+    save_patched [label="Save Patched\nBinary"];
+    generate_diff [label="Generate Patch\nDiff"];
+    log_changes [label="Log Patch\nChanges"];
+    end [label="Patching Complete", fillcolor=lightcoral];
+
+    // Flow
+    start -> backup_original;
+    backup_original -> load_binary;
+    load_binary -> locate_target;
+    locate_target -> verify_location;
+    verify_location -> prepare_patch;
+    prepare_patch -> validate_patch;
+    validate_patch -> apply_patch;
+    apply_patch -> fix_checksums;
+    fix_checksums -> update_headers;
+    update_headers -> verify_integrity;
+    verify_integrity -> test_patch;
+    test_patch -> save_patched [label="Success"];
+    test_patch -> rollback [label="Failed"];
+    rollback -> end;
+    save_patched -> generate_diff;
+    generate_diff -> log_changes;
+    log_changes -> end;
+
+    // Metadata
+    label="RE-patch-binary Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

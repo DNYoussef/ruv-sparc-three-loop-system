@@ -1,0 +1,378 @@
+digraph SPARC_SECURITY_REVIEW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="/sparc:security-review - Security Reviewer";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:security-review", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n(target, scope, depth)", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+    syntax_error [shape=octagon, fillcolor=crimson, label="Syntax Error\nShow Usage"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // PRE-EXECUTION VALIDATION
+  // =============================================================================
+  subgraph cluster_pre_execution {
+    label="Pre-Execution Setup";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    check_target [shape=diamond, label="Target Code\nExists?"];
+    check_tools [shape=diamond, label="Security Tools\nAvailable?"];
+    load_rules [label="Load Security\nRules & Policies", fillcolor=lightyellow];
+
+    target_error [shape=octagon, fillcolor=orange, label="Target Not\nFound"];
+    tools_error [shape=octagon, fillcolor=orange, label="Missing Security\nTools"];
+  }
+
+  validate_syntax -> check_target [label="Yes"];
+  check_target -> target_error [label="No"];
+  check_target -> check_tools [label="Yes"];
+  check_tools -> tools_error [label="No"];
+  check_tools -> load_rules [label="Yes"];
+
+  // =============================================================================
+  // STATIC SECURITY ANALYSIS
+  // =============================================================================
+  subgraph cluster_static_analysis {
+    label="Static Security Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    static_scan_init [label="Initialize Static\nAnalysis", fillcolor=purple];
+    scan_secrets [label="Scan for Hardcoded\nSecrets", fillcolor=purple];
+    scan_injection [label="Check SQL/Command\nInjection Vectors", fillcolor=purple];
+    scan_xss [label="Check XSS\nVulnerabilities", fillcolor=purple];
+    scan_auth [label="Analyze Authentication\nImplementation", fillcolor=purple];
+    scan_crypto [label="Check Cryptography\nUsage", fillcolor=purple];
+    scan_deps [label="Scan Dependency\nVulnerabilities", fillcolor=purple];
+
+    static_results [shape=diamond, label="Vulnerabilities\nFound?"];
+    log_static_issues [label="Log Static\nFindings", fillcolor=orange];
+  }
+
+  load_rules -> static_scan_init;
+  static_scan_init -> scan_secrets;
+  scan_secrets -> scan_injection;
+  scan_injection -> scan_xss;
+  scan_xss -> scan_auth;
+  scan_auth -> scan_crypto;
+  scan_crypto -> scan_deps;
+  scan_deps -> static_results;
+
+  static_results -> log_static_issues [label="Yes"];
+
+  // =============================================================================
+  // DYNAMIC SECURITY TESTING
+  // =============================================================================
+  subgraph cluster_dynamic_testing {
+    label="Dynamic Security Testing";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    dynamic_init [label="Initialize Dynamic\nTesting", fillcolor=lightblue];
+    setup_sandbox [label="Setup Isolated\nTest Environment", fillcolor=lightblue];
+    run_fuzzing [label="Run Fuzz\nTesting", fillcolor=lightblue];
+    test_auth_bypass [label="Test Authentication\nBypass", fillcolor=lightblue];
+    test_csrf [label="Test CSRF\nProtection", fillcolor=lightblue];
+    test_rate_limiting [label="Test Rate\nLimiting", fillcolor=lightblue];
+    test_error_handling [label="Test Error\nDisclosure", fillcolor=lightblue];
+
+    dynamic_results [shape=diamond, label="Security Issues\nFound?"];
+    log_dynamic_issues [label="Log Dynamic\nFindings", fillcolor=orange];
+  }
+
+  static_results -> dynamic_init [label="No"];
+  log_static_issues -> dynamic_init;
+
+  dynamic_init -> setup_sandbox;
+  setup_sandbox -> run_fuzzing;
+  run_fuzzing -> test_auth_bypass;
+  test_auth_bypass -> test_csrf;
+  test_csrf -> test_rate_limiting;
+  test_rate_limiting -> test_error_handling;
+  test_error_handling -> dynamic_results;
+
+  dynamic_results -> log_dynamic_issues [label="Yes"];
+
+  // =============================================================================
+  // PENETRATION TESTING
+  // =============================================================================
+  subgraph cluster_penetration {
+    label="Penetration Testing";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    pentest_init [label="Initialize Penetration\nTesting", fillcolor=lightcoral];
+    test_privesc [label="Test Privilege\nEscalation", fillcolor=lightcoral];
+    test_data_exposure [label="Test Sensitive Data\nExposure", fillcolor=lightcoral];
+    test_session_mgmt [label="Test Session\nManagement", fillcolor=lightcoral];
+    test_access_control [label="Test Access\nControl Flaws", fillcolor=lightcoral];
+    test_broken_auth [label="Test Broken\nAuthentication", fillcolor=lightcoral];
+
+    pentest_results [shape=diamond, label="Critical Issues\nFound?"];
+    log_pentest_issues [label="Log Penetration\nFindings", fillcolor=crimson];
+  }
+
+  dynamic_results -> pentest_init [label="No"];
+  log_dynamic_issues -> pentest_init;
+
+  pentest_init -> test_privesc;
+  test_privesc -> test_data_exposure;
+  test_data_exposure -> test_session_mgmt;
+  test_session_mgmt -> test_access_control;
+  test_access_control -> test_broken_auth;
+  test_broken_auth -> pentest_results;
+
+  pentest_results -> log_pentest_issues [label="Yes"];
+
+  // =============================================================================
+  // COMPLIANCE VALIDATION
+  // =============================================================================
+  subgraph cluster_compliance {
+    label="Compliance Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    compliance_init [label="Initialize Compliance\nChecks", fillcolor=lightgreen];
+    check_owasp [label="Validate OWASP\nTop 10", fillcolor=lightgreen];
+    check_gdpr [label="Check GDPR\nCompliance", fillcolor=lightgreen];
+    check_pci [label="Check PCI-DSS\n(if applicable)", fillcolor=lightgreen];
+    check_soc2 [label="Check SOC2\nControls", fillcolor=lightgreen];
+    check_best_practices [label="Validate Security\nBest Practices", fillcolor=lightgreen];
+
+    compliance_results [shape=diamond, label="Compliance\nPassed?"];
+    log_compliance_issues [label="Log Compliance\nGaps", fillcolor=orange];
+  }
+
+  pentest_results -> compliance_init [label="No"];
+  log_pentest_issues -> compliance_init;
+
+  compliance_init -> check_owasp;
+  check_owasp -> check_gdpr;
+  check_gdpr -> check_pci;
+  check_pci -> check_soc2;
+  check_soc2 -> check_best_practices;
+  check_best_practices -> compliance_results;
+
+  compliance_results -> log_compliance_issues [label="No"];
+
+  // =============================================================================
+  // VULNERABILITY CLASSIFICATION
+  // =============================================================================
+  subgraph cluster_classification {
+    label="Vulnerability Classification";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF0E8";
+
+    classify_init [label="Classify All\nFindings", fillcolor=lightyellow];
+    assign_severity [label="Assign CVSS\nScores", fillcolor=lightyellow];
+    prioritize [label="Prioritize by\nRisk", fillcolor=lightyellow];
+    group_by_type [label="Group by\nVulnerability Type", fillcolor=lightyellow];
+
+    has_critical [shape=diamond, label="Critical\nVulnerabilities?"];
+    flag_blockers [label="Flag Production\nBlockers", fillcolor=crimson];
+  }
+
+  compliance_results -> classify_init [label="Yes"];
+  log_compliance_issues -> classify_init;
+
+  classify_init -> assign_severity;
+  assign_severity -> prioritize;
+  prioritize -> group_by_type;
+  group_by_type -> has_critical;
+
+  has_critical -> flag_blockers [label="Yes"];
+
+  // =============================================================================
+  // REMEDIATION RECOMMENDATIONS
+  // =============================================================================
+  subgraph cluster_remediation {
+    label="Remediation & Recommendations";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    generate_fixes [label="Generate Fix\nRecommendations", fillcolor=lightblue];
+    create_tickets [label="Create Security\nTickets", fillcolor=lightblue];
+    suggest_patches [label="Suggest Code\nPatches", fillcolor=lightblue];
+    document_mitigations [label="Document\nMitigations", fillcolor=lightblue];
+    create_timeline [label="Create Remediation\nTimeline", fillcolor=lightblue];
+  }
+
+  has_critical -> generate_fixes [label="No"];
+  flag_blockers -> generate_fixes;
+
+  generate_fixes -> create_tickets;
+  create_tickets -> suggest_patches;
+  suggest_patches -> document_mitigations;
+  document_mitigations -> create_timeline;
+
+  // =============================================================================
+  // REPORT GENERATION
+  // =============================================================================
+  subgraph cluster_reporting {
+    label="Security Report Generation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    generate_report [label="Generate Security\nReport", fillcolor=plum];
+    add_executive_summary [label="Add Executive\nSummary", fillcolor=plum];
+    add_technical_details [label="Add Technical\nDetails", fillcolor=plum];
+    add_evidence [label="Add Evidence &\nScreenshots", fillcolor=plum];
+    add_metrics [label="Add Security\nMetrics", fillcolor=plum];
+    format_report [label="Format Report\n(HTML/PDF)", fillcolor=plum];
+
+    save_report [label="Save Security\nReport", fillcolor=plum];
+  }
+
+  create_timeline -> generate_report;
+  generate_report -> add_executive_summary;
+  add_executive_summary -> add_technical_details;
+  add_technical_details -> add_evidence;
+  add_evidence -> add_metrics;
+  add_metrics -> format_report;
+  format_report -> save_report;
+
+  // =============================================================================
+  // QUALITY GATE DECISION
+  // =============================================================================
+  subgraph cluster_quality_gate {
+    label="Quality Gate Decision";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    gate_check [shape=diamond, label="Pass Quality\nGate?", fillcolor=gold, style="filled,bold"];
+    gate_passed [label="Security Gate\nPASSED", fillcolor=green, shape=octagon];
+    gate_failed [label="Security Gate\nFAILED", fillcolor=crimson, shape=octagon];
+
+    block_deployment [label="Block Production\nDeployment", fillcolor=crimson];
+    allow_deployment [label="Allow Production\nDeployment", fillcolor=green];
+  }
+
+  save_report -> gate_check;
+
+  gate_check -> gate_passed [label="Yes\n(No Critical Issues)"];
+  gate_check -> gate_failed [label="No\n(Critical Issues)"];
+
+  gate_passed -> allow_deployment;
+  gate_failed -> block_deployment;
+
+  // =============================================================================
+  // NOTIFICATION & ALERTS
+  // =============================================================================
+  subgraph cluster_notifications {
+    label="Notifications & Alerts";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    notify_team [label="Notify Security\nTeam", fillcolor=lightyellow];
+    notify_devs [label="Notify Development\nTeam", fillcolor=lightyellow];
+    send_critical_alerts [label="Send Critical\nAlerts", fillcolor=orange];
+    update_dashboard [label="Update Security\nDashboard", fillcolor=lightyellow];
+  }
+
+  allow_deployment -> notify_team;
+  block_deployment -> notify_team;
+
+  notify_team -> notify_devs;
+  notify_devs -> send_critical_alerts;
+  send_critical_alerts -> update_dashboard;
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_sandbox [label="Cleanup Test\nEnvironment", fillcolor=lightgreen];
+    archive_logs [label="Archive Security\nLogs", fillcolor=lightgreen];
+    update_metrics [label="Update Security\nMetrics", fillcolor=lightgreen];
+
+    success [label="Security Review\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  update_dashboard -> cleanup_sandbox;
+  cleanup_sandbox -> archive_logs;
+  archive_logs -> update_metrics;
+  update_metrics -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+    retry_scan [label="Retry Security\nScan", fillcolor=yellow];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    notify_error [label="Notify Admin\nof Failure", fillcolor=orange];
+    failure [label="Security Review\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+  target_error -> log_error;
+  tools_error -> classify_error;
+
+  classify_error -> retry_scan [label="Transient"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_scan -> check_tools [style=dashed];
+
+  log_error -> notify_error;
+  notify_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_critical [shape=octagon, fillcolor=crimson, label="Critical Gate"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_critical [style=invis];
+    legend_critical -> legend_warn [style=invis];
+    legend_warn -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

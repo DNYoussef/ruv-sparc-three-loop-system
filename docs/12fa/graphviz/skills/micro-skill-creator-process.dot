@@ -1,0 +1,25 @@
+digraph MICRO_SKILL_CREATOR_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="micro-skill-creator\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_req [label="Load Skill Requirements\nAtomic Focus"];
+  validate [label="Validate Atomic Scope"];
+  
+  analyze [label="Analyze Single Responsibility\nUnix Philosophy", fillcolor=purple];
+  design_agent [label="Design Specialist Agent\nEvidence-Based Prompting", fillcolor=purple];
+  create_skill [label="Create Skill Definition\nComposable Interface", fillcolor=purple];
+  test_skill [label="Test Skill\nFunctionality Audit", fillcolor=purple];
+  
+  decision [shape=diamond, label="Skill Valid?"];
+  
+  memory_store [label="Store Micro-Skill", fillcolor=lightblue];
+  success [label="Micro-Skill Created", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  failure [label="Creation Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  
+  start -> load_req -> validate -> analyze;
+  analyze -> design_agent -> create_skill -> test_skill -> decision;
+  decision -> memory_store [label="Yes"];
+  decision -> failure [label="No"];
+  memory_store -> success;
+}

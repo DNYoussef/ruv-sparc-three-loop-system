@@ -1,0 +1,599 @@
+digraph CLAUDE_FLOW_MEMORY {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /claude-flow-memory";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/claude-flow-memory", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--action [store|retrieve|search|clear]\n--key <namespace/key>\n--value <data>", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--action [store|retrieve|search|clear|list]\n--key <namespace/category/name>\n--value <json_data>"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // AUTHENTICATION & AUTHORIZATION
+  // =============================================================================
+  subgraph cluster_auth {
+    label="Authentication & Authorization";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_auth [shape=diamond, label="User\nAuthenticated?"];
+    check_mcp [shape=diamond, label="MCP Server\nConnected?"];
+    check_permissions [shape=diamond, label="Has Memory\nPermissions?"];
+
+    auth_failed [shape=octagon, fillcolor=crimson,
+                 label="Authentication\nFailed"];
+    mcp_failed [shape=octagon, fillcolor=crimson,
+                label="MCP Server\nNot Connected"];
+    permission_denied [shape=octagon, fillcolor=crimson,
+                       label="Permission\nDenied"];
+  }
+
+  validate_syntax -> check_auth [label="Yes"];
+
+  check_auth -> auth_failed [label="No"];
+  check_auth -> check_mcp [label="Yes"];
+
+  check_mcp -> mcp_failed [label="No"];
+  check_mcp -> check_permissions [label="Yes"];
+
+  check_permissions -> permission_denied [label="No"];
+
+  // =============================================================================
+  // PRE-EXECUTION VALIDATION
+  // =============================================================================
+  subgraph cluster_pre_execution {
+    label="Pre-Execution Validation";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    validate_action [shape=diamond, label="Action\nValid?"];
+    validate_namespace [shape=diamond, label="Namespace\nFormat Valid?"];
+    validate_key [shape=diamond, label="Key\nFormat Valid?"];
+    validate_value [shape=diamond, label="Value\nValid JSON?"];
+
+    action_error [shape=octagon, fillcolor=orange,
+                  label="Invalid Action\nMust be: store, retrieve, search, clear, list"];
+    namespace_error [shape=octagon, fillcolor=orange,
+                     label="Invalid Namespace\nFormat: agent-type/category/name"];
+    key_error [shape=octagon, fillcolor=orange,
+               label="Invalid Key\nMust be non-empty string"];
+    value_error [shape=octagon, fillcolor=orange,
+                 label="Invalid Value\nMust be valid JSON"];
+  }
+
+  check_permissions -> validate_action [label="Yes"];
+
+  validate_action -> action_error [label="No"];
+  validate_action -> validate_namespace [label="Yes"];
+
+  validate_namespace -> namespace_error [label="No"];
+  validate_namespace -> validate_key [label="Yes"];
+
+  validate_key -> key_error [label="No"];
+  validate_key -> validate_value [label="Yes"];
+
+  validate_value -> value_error [label="No"];
+
+  // =============================================================================
+  // ACTION ROUTING
+  // =============================================================================
+  subgraph cluster_routing {
+    label="Action Routing";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    route_action [shape=diamond, label="Action\nType?", style="filled,bold", fillcolor=purple];
+  }
+
+  validate_value -> route_action [label="Yes"];
+
+  // =============================================================================
+  // STORE OPERATION
+  // =============================================================================
+  subgraph cluster_store {
+    label="Store Operation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    parse_key [label="Parse Key\nComponents", fillcolor=lightblue];
+    check_existing [shape=diamond, label="Key\nExists?"];
+
+    prepare_crdt [label="Prepare CRDT\nOperation", fillcolor=lightblue];
+    create_timestamp [label="Create\nTimestamp", fillcolor=lightblue];
+    create_version [label="Create\nVersion Vector", fillcolor=lightblue];
+
+    merge_strategy [shape=diamond, label="Conflict\nDetected?"];
+
+    lww_merge [label="Last-Write-Wins\nMerge", fillcolor=lightblue];
+    vector_merge [label="Vector Clock\nMerge", fillcolor=lightblue];
+    custom_merge [label="Custom\nMerge Strategy", fillcolor=lightblue];
+
+    store_data [label="Store Data\nin CRDT", fillcolor=lightblue, style="filled,bold"];
+    replicate [label="Replicate to\nOther Agents", fillcolor=lightblue];
+
+    store_success [label="Store\nSuccessful", fillcolor=lightgreen];
+  }
+
+  route_action -> parse_key [label="store"];
+
+  parse_key -> check_existing;
+
+  check_existing -> prepare_crdt [label="No"];
+  check_existing -> merge_strategy [label="Yes"];
+
+  prepare_crdt -> create_timestamp;
+  create_timestamp -> create_version;
+  create_version -> store_data;
+
+  merge_strategy -> lww_merge [label="LWW"];
+  merge_strategy -> vector_merge [label="Vector"];
+  merge_strategy -> custom_merge [label="Custom"];
+
+  lww_merge -> store_data;
+  vector_merge -> store_data;
+  custom_merge -> store_data;
+
+  store_data -> replicate;
+  replicate -> store_success;
+
+  // =============================================================================
+  // RETRIEVE OPERATION
+  // =============================================================================
+  subgraph cluster_retrieve {
+    label="Retrieve Operation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    parse_retrieve_key [label="Parse Key\nComponents", fillcolor=lightgreen];
+    lookup_key [label="Lookup Key\nin CRDT", fillcolor=lightgreen];
+
+    check_found [shape=diamond, label="Key\nFound?"];
+
+    not_found [shape=octagon, fillcolor=orange,
+               label="Key Not Found"];
+
+    fetch_metadata [label="Fetch\nMetadata", fillcolor=lightgreen];
+    fetch_value [label="Fetch\nValue", fillcolor=lightgreen];
+
+    check_consistency [shape=diamond, label="Consistency\nCheck?"];
+
+    verify_consistency [label="Verify Data\nConsistency", fillcolor=lightgreen];
+
+    format_retrieve [label="Format\nOutput", fillcolor=lightgreen, style="filled,bold"];
+
+    retrieve_success [label="Retrieve\nSuccessful", fillcolor=lightgreen];
+  }
+
+  route_action -> parse_retrieve_key [label="retrieve"];
+
+  parse_retrieve_key -> lookup_key;
+  lookup_key -> check_found;
+
+  check_found -> not_found [label="No"];
+  check_found -> fetch_metadata [label="Yes"];
+
+  fetch_metadata -> fetch_value;
+  fetch_value -> check_consistency;
+
+  check_consistency -> verify_consistency [label="Yes"];
+  check_consistency -> format_retrieve [label="No"];
+
+  verify_consistency -> format_retrieve;
+  format_retrieve -> retrieve_success;
+
+  // =============================================================================
+  // SEARCH OPERATION
+  // =============================================================================
+  subgraph cluster_search {
+    label="Search Operation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    parse_pattern [label="Parse Search\nPattern", fillcolor=lightpurple];
+    parse_query [label="Parse Search\nQuery", fillcolor=lightpurple];
+
+    search_type [shape=diamond, label="Search\nType?"];
+
+    namespace_search [label="Namespace\nSearch", fillcolor=lightpurple];
+    prefix_search [label="Prefix\nSearch", fillcolor=lightpurple];
+    full_text_search [label="Full-Text\nSearch", fillcolor=lightpurple];
+    semantic_search [label="Semantic\nVector Search", fillcolor=lightpurple];
+
+    filter_results [label="Filter\nResults", fillcolor=lightpurple];
+    rank_results [label="Rank by\nRelevance", fillcolor=lightpurple];
+
+    limit_results [shape=diamond, label="Apply\nLimit?"];
+
+    apply_limit [label="Apply Result\nLimit", fillcolor=lightpurple];
+
+    format_search [label="Format Search\nResults", fillcolor=lightpurple, style="filled,bold"];
+
+    search_success [label="Search\nSuccessful", fillcolor=lightgreen];
+  }
+
+  route_action -> parse_pattern [label="search"];
+
+  parse_pattern -> parse_query;
+  parse_query -> search_type;
+
+  search_type -> namespace_search [label="namespace"];
+  search_type -> prefix_search [label="prefix"];
+  search_type -> full_text_search [label="text"];
+  search_type -> semantic_search [label="semantic"];
+
+  namespace_search -> filter_results;
+  prefix_search -> filter_results;
+  full_text_search -> filter_results;
+  semantic_search -> filter_results;
+
+  filter_results -> rank_results;
+  rank_results -> limit_results;
+
+  limit_results -> apply_limit [label="Yes"];
+  limit_results -> format_search [label="No"];
+
+  apply_limit -> format_search;
+  format_search -> search_success;
+
+  // =============================================================================
+  // CLEAR OPERATION
+  // =============================================================================
+  subgraph cluster_clear {
+    label="Clear Operation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    parse_clear_pattern [label="Parse Clear\nPattern", fillcolor=yellow];
+
+    confirm_clear [shape=diamond, label="Confirmation\nRequired?"];
+
+    prompt_confirm [shape=hexagon, fillcolor=yellow,
+                    label="Prompt User\nConfirmation"];
+
+    user_confirmed [shape=diamond, label="User\nConfirmed?"];
+
+    clear_cancelled [label="Clear Operation\nCancelled", fillcolor=orange];
+
+    list_affected [label="List Affected\nKeys", fillcolor=yellow];
+    delete_keys [label="Delete Matching\nKeys", fillcolor=yellow];
+
+    tombstone [shape=diamond, label="Use\nTombstones?"];
+
+    create_tombstones [label="Create\nTombstones", fillcolor=yellow];
+    hard_delete [label="Hard\nDelete", fillcolor=red];
+
+    replicate_clear [label="Replicate Clear\nOperation", fillcolor=yellow];
+
+    clear_success [label="Clear\nSuccessful", fillcolor=lightgreen];
+  }
+
+  route_action -> parse_clear_pattern [label="clear"];
+
+  parse_clear_pattern -> confirm_clear;
+
+  confirm_clear -> prompt_confirm [label="Yes"];
+  confirm_clear -> list_affected [label="No"];
+
+  prompt_confirm -> user_confirmed;
+
+  user_confirmed -> clear_cancelled [label="No"];
+  user_confirmed -> list_affected [label="Yes"];
+
+  list_affected -> delete_keys;
+  delete_keys -> tombstone;
+
+  tombstone -> create_tombstones [label="Yes"];
+  tombstone -> hard_delete [label="No"];
+
+  create_tombstones -> replicate_clear;
+  hard_delete -> replicate_clear;
+
+  replicate_clear -> clear_success;
+
+  // =============================================================================
+  // LIST OPERATION
+  // =============================================================================
+  subgraph cluster_list {
+    label="List Operation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    fetch_all_keys [label="Fetch All\nKeys", fillcolor=lightblue];
+
+    group_by [shape=diamond, label="Group\nBy?"];
+
+    group_namespace [label="Group by\nNamespace", fillcolor=lightblue];
+    group_agent [label="Group by\nAgent Type", fillcolor=lightblue];
+    no_grouping [label="No Grouping\n(Flat List)", fillcolor=lightblue];
+
+    sort_keys [label="Sort Keys\nAlphabetically", fillcolor=lightblue];
+
+    include_metadata [shape=diamond, label="Include\nMetadata?"];
+
+    add_metadata [label="Add Size,\nTimestamp, etc.", fillcolor=lightblue];
+
+    format_list [label="Format List\nOutput", fillcolor=lightblue, style="filled,bold"];
+
+    list_success [label="List\nSuccessful", fillcolor=lightgreen];
+  }
+
+  route_action -> fetch_all_keys [label="list"];
+
+  fetch_all_keys -> group_by;
+
+  group_by -> group_namespace [label="namespace"];
+  group_by -> group_agent [label="agent"];
+  group_by -> no_grouping [label="none"];
+
+  group_namespace -> sort_keys;
+  group_agent -> sort_keys;
+  no_grouping -> sort_keys;
+
+  sort_keys -> include_metadata;
+
+  include_metadata -> add_metadata [label="Yes"];
+  include_metadata -> format_list [label="No"];
+
+  add_metadata -> format_list;
+  format_list -> list_success;
+
+  // =============================================================================
+  // NAMESPACE MANAGEMENT
+  // =============================================================================
+  subgraph cluster_namespace {
+    label="Namespace Management";
+    style="filled,rounded,dashed";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    validate_ns [label="Validate\nNamespace", fillcolor=lightpurple];
+    create_ns [label="Create Namespace\nif Missing", fillcolor=lightpurple];
+
+    check_isolation [shape=diamond, label="Namespace\nIsolation?"];
+
+    enforce_isolation [label="Enforce Agent\nIsolation", fillcolor=lightpurple];
+    allow_shared [label="Allow Shared\nNamespace", fillcolor=lightpurple];
+
+    register_ns [label="Register\nNamespace", fillcolor=lightpurple];
+  }
+
+  // Namespace validation happens for all operations
+  parse_key -> validate_ns [style=dotted];
+  parse_retrieve_key -> validate_ns [style=dotted];
+  parse_pattern -> validate_ns [style=dotted];
+
+  validate_ns -> create_ns;
+  create_ns -> check_isolation;
+
+  check_isolation -> enforce_isolation [label="Yes"];
+  check_isolation -> allow_shared [label="No"];
+
+  enforce_isolation -> register_ns;
+  allow_shared -> register_ns;
+
+  register_ns -> prepare_crdt [style=dotted];
+  register_ns -> lookup_key [style=dotted];
+  register_ns -> search_type [style=dotted];
+
+  // =============================================================================
+  // CONFLICT RESOLUTION
+  // =============================================================================
+  subgraph cluster_conflict {
+    label="Conflict Resolution";
+    style="filled,rounded,dashed";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    detect_conflict [label="Detect\nConflict", fillcolor=yellow];
+
+    resolution_strategy [shape=diamond, label="Resolution\nStrategy?"];
+
+    lww_resolve [label="Last-Write-Wins\n(Timestamp)", fillcolor=yellow];
+    vector_resolve [label="Vector Clock\nResolution", fillcolor=yellow];
+    semantic_resolve [label="Semantic\nMerge", fillcolor=yellow];
+    manual_resolve [shape=hexagon, fillcolor=yellow,
+                    label="Manual\nResolution"];
+
+    apply_resolution [label="Apply\nResolution", fillcolor=yellow];
+    log_conflict [label="Log Conflict\nResolution", fillcolor=orange];
+  }
+
+  // Conflict detection during store
+  merge_strategy -> detect_conflict [style=dotted];
+
+  detect_conflict -> resolution_strategy;
+
+  resolution_strategy -> lww_resolve [label="LWW"];
+  resolution_strategy -> vector_resolve [label="Vector"];
+  resolution_strategy -> semantic_resolve [label="Semantic"];
+  resolution_strategy -> manual_resolve [label="Manual"];
+
+  lww_resolve -> apply_resolution;
+  vector_resolve -> apply_resolution;
+  semantic_resolve -> apply_resolution;
+  manual_resolve -> apply_resolution;
+
+  apply_resolution -> log_conflict;
+  log_conflict -> store_data [style=dotted];
+
+  // =============================================================================
+  // OUTPUT & REPORTING
+  // =============================================================================
+  subgraph cluster_output {
+    label="Output & Reporting";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    aggregate_results [label="Aggregate\nResults", fillcolor=lightgreen];
+
+    output_format [shape=diamond, label="Output\nFormat?"];
+
+    json_output [label="JSON\nOutput", fillcolor=lightgreen];
+    text_output [label="Text\nOutput", fillcolor=lightgreen];
+    table_output [label="Table\nOutput", fillcolor=lightgreen];
+
+    display_output [label="Display\nOutput", fillcolor=lightgreen, style="filled,bold"];
+  }
+
+  // All operations converge to output
+  store_success -> aggregate_results;
+  retrieve_success -> aggregate_results;
+  search_success -> aggregate_results;
+  clear_success -> aggregate_results;
+  list_success -> aggregate_results;
+
+  aggregate_results -> output_format;
+
+  output_format -> json_output [label="json"];
+  output_format -> text_output [label="text"];
+  output_format -> table_output [label="table"];
+
+  json_output -> display_output;
+  text_output -> display_output;
+  table_output -> display_output;
+
+  // =============================================================================
+  // LOGGING & METRICS
+  // =============================================================================
+  subgraph cluster_logging {
+    label="Logging & Metrics";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    log_operation [label="Log Memory\nOperation", fillcolor=yellow];
+    record_metrics [label="Record Access\nMetrics", fillcolor=yellow];
+
+    check_telemetry [shape=diamond, label="Telemetry\nEnabled?"];
+
+    send_telemetry [label="Send Telemetry\nData", fillcolor=yellow];
+  }
+
+  display_output -> log_operation;
+
+  log_operation -> record_metrics;
+  record_metrics -> check_telemetry;
+
+  check_telemetry -> send_telemetry [label="Yes"];
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    sync_state [label="Sync Final\nState", fillcolor=lightgreen];
+    close_connections [label="Close\nConnections", fillcolor=lightgreen];
+    return_status [label="Return Exit\nCode", fillcolor=lightgreen];
+    success [label="Memory Command\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  check_telemetry -> sync_state [label="No"];
+  send_telemetry -> sync_state;
+
+  sync_state -> close_connections;
+  close_connections -> return_status;
+  return_status -> success;
+
+  // =============================================================================
+  // ERROR HANDLING & RECOVERY
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+
+    retry_operation [label="Retry\nOperation", fillcolor=yellow];
+    rollback [label="Rollback\nChanges", fillcolor=yellow];
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    cleanup_after_error [label="Cleanup After\nError", fillcolor=orange];
+    failure [label="Command\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Route all errors to classification
+  syntax_error -> log_error;
+  auth_failed -> log_error;
+  mcp_failed -> log_error;
+  permission_denied -> log_error;
+  action_error -> classify_error;
+  namespace_error -> classify_error;
+  key_error -> classify_error;
+  value_error -> classify_error;
+  not_found -> classify_error;
+
+  // Error classification and recovery
+  classify_error -> retry_operation [label="Transient"];
+  classify_error -> rollback [label="Conflict"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_operation -> route_action [label="Retry", style=dashed];
+  rollback -> log_operation [label="Rollback Complete", style=dashed];
+
+  log_error -> cleanup_after_error;
+  cleanup_after_error -> escalate;
+  escalate -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

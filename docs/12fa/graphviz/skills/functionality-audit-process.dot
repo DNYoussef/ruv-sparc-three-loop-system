@@ -1,0 +1,114 @@
+digraph FUNCTIONALITY_AUDIT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Initialization";
+    style="filled,rounded";
+    bgcolor="#E8F4F8";
+
+    start [label="functionality-audit\nInvoked", shape=ellipse, fillcolor=lightblue];
+    load_code [label="Load Code to Audit"];
+    check_sandbox [label="Check Sandbox Availability\nCodex/E2B"];
+
+    start -> load_code -> check_sandbox;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets?"];
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED"];
+
+    check_sandbox -> check_policy;
+    check_policy -> check_secrets [label="Pass"];
+    check_policy -> policy_violation [label="Fail"];
+  }
+
+  subgraph cluster_execution {
+    label="Reality Validation Execution";
+    style="filled,rounded";
+    bgcolor="#F0E8F8";
+
+    create_sandbox [label="Create Isolated Sandbox\nFresh Environment", fillcolor=purple];
+    install_deps [label="Install Dependencies\nRealistic Setup", fillcolor=purple];
+    execute_code [label="Execute Code\nRealistic Inputs", fillcolor=purple];
+    capture_output [label="Capture Actual Output\nSTDOUT, STDERR, Exit Code", fillcolor=purple];
+    decision_exec [shape=diamond, label="Execution\nSuccessful?"];
+
+    debug_failure [label="Systematic Debugging\nTrace Analysis", fillcolor=orange];
+    apply_fix [label="Apply Best-Practice Fix\nNo Shortcuts", fillcolor=orange];
+    retest [label="Re-test After Fix", fillcolor=orange];
+    decision_retest [shape=diamond, label="Fixed?"];
+
+    check_secrets -> create_sandbox [label="Pass"];
+    create_sandbox -> install_deps;
+    install_deps -> execute_code;
+    execute_code -> capture_output;
+    capture_output -> decision_exec;
+    decision_exec -> debug_failure [label="No"];
+    debug_failure -> apply_fix;
+    apply_fix -> retest;
+    retest -> decision_retest;
+    decision_retest -> capture_output [label="No", style=dashed];
+  }
+
+  subgraph cluster_validation_checks {
+    label="Validation Checks";
+    style="filled,rounded";
+    bgcolor="#E8F8E8";
+
+    check_output [label="Validate Output\nAgainst Expected", fillcolor=lightgreen];
+    check_side_effects [label="Check Side Effects\nFiles, State, Network", fillcolor=lightgreen];
+    decision_valid [shape=diamond, label="Genuinely\nWorks?"];
+
+    decision_exec -> check_output [label="Yes"];
+    decision_retest -> check_output [label="Yes"];
+    check_output -> check_side_effects;
+    check_side_effects -> decision_valid;
+  }
+
+  subgraph cluster_coordination {
+    label="Coordination";
+    style="filled,rounded";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Audit Results\nReal vs Theater", fillcolor=lightblue];
+    notify [label="Notify cicd-intelligent-recovery", fillcolor=lightblue];
+
+    decision_valid -> memory_store [label="Yes"];
+    memory_store -> notify;
+  }
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Sandbox", fillcolor=lightgreen];
+    log_metrics [label="Log Metrics\nSuccess Rate, Fixes Applied"];
+    success [label="Audit Complete\nCode Validated", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    failure [label="Audit Failed\nTheater Detected", shape=doublecircle, fillcolor=red, style="filled,bold"];
+
+    notify -> cleanup;
+    cleanup -> log_metrics;
+    log_metrics -> success;
+    decision_valid -> failure [label="No (Theater)"];
+  }
+
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate"];
+    log_error [label="Log Error", fillcolor=orange];
+
+    policy_violation -> log_error;
+    log_error -> escalate;
+    escalate -> failure;
+  }
+}

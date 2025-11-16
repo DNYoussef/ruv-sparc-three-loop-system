@@ -1,0 +1,80 @@
+// Pre-Edit Command Workflow
+// Pre-edit hooks for file operations
+digraph pre_edit_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/pre-edit\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        file_parser [label="File\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_validation {
+        label="Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        permission_checker [label="Permission\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        syntax_validator [label="Syntax\nValidator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        lock_checker [label="Lock\nChecker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_backup {
+        label="Backup Operations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        backup_creator [label="Backup\nCreator", fillcolor="#10b981", fontcolor="#ffffff"];
+        version_tracker [label="Version\nTracker", fillcolor="#10b981", fontcolor="#ffffff"];
+        checkpoint_saver [label="Checkpoint\nSaver", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_preparation {
+        label="Preparation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        agent_assigner [label="Agent\nAssigner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        formatter_loader [label="Formatter\nLoader", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        linter_loader [label="Linter\nLoader", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        ready_signal [label="Ready\nSignal", fillcolor="#059669", fontcolor="#ffffff"];
+        backup_reference [label="Backup\nReference", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> file_parser;
+    file_parser -> permission_checker -> syntax_validator -> lock_checker;
+    lock_checker -> backup_creator -> version_tracker -> checkpoint_saver;
+    checkpoint_saver -> agent_assigner -> formatter_loader -> linter_loader;
+    linter_loader -> ready_signal -> backup_reference;
+    backup_reference -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    permission_checker -> cmd_trigger [label="Denied", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Validation", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Backup", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

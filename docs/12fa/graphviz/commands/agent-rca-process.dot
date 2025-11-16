@@ -1,0 +1,78 @@
+digraph agent_rca_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Agent-RCA Command Workflow\nRoot Cause Analysis with Multi-Agent Consensus";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/agent-rca", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  describe_failure [label="Describe Failure\n- Symptoms\n- Error messages\n- Impact\n- Timeline", fillcolor="#FFF9C4"];
+
+  spawn_agents [label="Spawn 7 RCA Agents\n- System analyst\n- Network analyst\n- Data analyst\n- Security analyst\n- Code analyst\n- Infrastructure analyst\n- Integration analyst", fillcolor="#FFE0B2"];
+
+  parallel_investigation [label="Parallel Investigation\nEach agent investigates", fillcolor="#BBDEFB"];
+
+  agent1 [label="System Analysis\n- Resource usage\n- Process states\n- System logs", fillcolor="#C5CAE9"];
+
+  agent2 [label="Network Analysis\n- Connection states\n- Latency\n- Packet loss", fillcolor="#C5CAE9"];
+
+  agent3 [label="Data Analysis\n- Data integrity\n- Schema issues\n- Query performance", fillcolor="#C5CAE9"];
+
+  agent4 [label="Security Analysis\n- Access logs\n- Auth failures\n- Vulnerabilities", fillcolor="#C5CAE9"];
+
+  agent5 [label="Code Analysis\n- Stack traces\n- Logic errors\n- Recent changes", fillcolor="#C5CAE9"];
+
+  agent6 [label="Infrastructure Analysis\n- Config issues\n- Deployment state\n- Dependencies", fillcolor="#C5CAE9"];
+
+  agent7 [label="Integration Analysis\n- API failures\n- Service health\n- Message queues", fillcolor="#C5CAE9"];
+
+  collect_findings [label="Collect Findings\nAggregate all analyses", fillcolor="#B2DFDB"];
+
+  byzantine_consensus [label="Byzantine Consensus\n≥5/7 agreement required", fillcolor="#D1C4E9"];
+
+  consensus_reached [label="Consensus Reached?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  identify_root_cause [label="Identify Root Cause\nConsensus-based conclusion", fillcolor="#F0F4C3"];
+
+  recommend_solution [label="Recommend Solution\n- Immediate fix\n- Long-term prevention\n- Monitoring improvements", fillcolor="#FFE0B2"];
+
+  validate_solution [label="Validate Solution\nVerify fix resolves issue", fillcolor="#BBDEFB"];
+
+  generate_report [label="Generate RCA Report\n- Root cause\n- Contributing factors\n- Solution\n- Prevention", fillcolor="#B2DFDB"];
+
+  success [label="RCA Complete\nRoot cause identified", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  no_consensus [label="No Consensus\nRequire human review", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> describe_failure;
+  describe_failure -> spawn_agents;
+  spawn_agents -> parallel_investigation;
+  parallel_investigation -> agent1;
+  parallel_investigation -> agent2;
+  parallel_investigation -> agent3;
+  parallel_investigation -> agent4;
+  parallel_investigation -> agent5;
+  parallel_investigation -> agent6;
+  parallel_investigation -> agent7;
+  agent1 -> collect_findings;
+  agent2 -> collect_findings;
+  agent3 -> collect_findings;
+  agent4 -> collect_findings;
+  agent5 -> collect_findings;
+  agent6 -> collect_findings;
+  agent7 -> collect_findings;
+  collect_findings -> byzantine_consensus;
+  byzantine_consensus -> consensus_reached;
+  consensus_reached -> identify_root_cause [label="Yes"];
+  consensus_reached -> no_consensus [label="No"];
+  identify_root_cause -> recommend_solution;
+  recommend_solution -> validate_solution;
+  validate_solution -> generate_report;
+  generate_report -> success;
+}

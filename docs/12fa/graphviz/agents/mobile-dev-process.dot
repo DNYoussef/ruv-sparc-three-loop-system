@@ -1,0 +1,83 @@
+// Mobile Developer Agent - React Native Development
+// React Native, cross-platform, mobile UI, native modules
+digraph mobile_dev_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        mobile_init [label="Mobile Developer\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        rn_setup [label="React Native\nSetup", fillcolor="#2d3748", fontcolor="#ffffff"];
+        platform_config [label="Platform\nConfiguration", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_ui {
+        label="UI Development"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        component_builder [label="Component\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        layout_designer [label="Layout\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        style_manager [label="Style\nManager", fillcolor="#2563eb", fontcolor="#ffffff"];
+        animation_creator [label="Animation\nCreator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_navigation {
+        label="Navigation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        nav_configurator [label="Navigation\nConfigurator", fillcolor="#059669", fontcolor="#ffffff"];
+        screen_manager [label="Screen\nManager", fillcolor="#059669", fontcolor="#ffffff"];
+        deep_link_handler [label="Deep Link\nHandler", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_state {
+        label="State Management"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        redux_setup [label="Redux\nSetup", fillcolor="#0891b2", fontcolor="#ffffff"];
+        context_manager [label="Context\nManager", fillcolor="#0891b2", fontcolor="#ffffff"];
+        persist_handler [label="Persistence\nHandler", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_native {
+        label="Native Modules"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        bridge_creator [label="Native Bridge\nCreator", fillcolor="#dc2626", fontcolor="#ffffff"];
+        ios_module [label="iOS\nModule", fillcolor="#dc2626", fontcolor="#ffffff"];
+        android_module [label="Android\nModule", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_testing {
+        label="Testing"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        unit_tester [label="Unit\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        component_tester [label="Component\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        e2e_tester [label="E2E\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        designer_coord [label="Designer\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    mobile_init -> rn_setup [label="Setup RN"];
+    mobile_init -> platform_config [label="Configure"];
+    rn_setup -> component_builder [label="Build Components"];
+    component_builder -> layout_designer [label="Design Layout"];
+    layout_designer -> style_manager [label="Style"];
+    style_manager -> animation_creator [label="Animate"];
+    animation_creator -> nav_configurator [label="Configure Nav"];
+    nav_configurator -> screen_manager [label="Manage Screens"];
+    screen_manager -> deep_link_handler [label="Handle Links"];
+    deep_link_handler -> redux_setup [label="Setup State"];
+    redux_setup -> context_manager [label="Context"];
+    context_manager -> persist_handler [label="Persist"];
+    platform_config -> bridge_creator [label="Create Bridge"];
+    bridge_creator -> ios_module [label="iOS"];
+    bridge_creator -> android_module [label="Android"];
+    persist_handler -> unit_tester [label="Unit Test"];
+    unit_tester -> component_tester [label="Component Test"];
+    component_tester -> e2e_tester [label="E2E Test"];
+    e2e_tester -> backend_coord [label="Integrate"];
+    layout_designer -> designer_coord [label="Coordinate"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Mobile Developer", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="UI Development", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

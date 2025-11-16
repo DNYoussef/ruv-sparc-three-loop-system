@@ -1,0 +1,126 @@
+digraph HOOKS_AUTOMATION_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Hooks Automation Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Hooks Automation Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Hook Configuration"];
+    validate_input [label="Validate Hook Types"];
+    check_deps [label="Check Claude Flow CLI"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Hooks Execution Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    pre_task_hooks [label="Execute Pre-Task Hooks\n(Auto-assign, Cache)", fillcolor=purple];
+    post_edit_hooks [label="Execute Post-Edit Hooks\n(Format, Train)", fillcolor=purple];
+    post_task_hooks [label="Execute Post-Task Hooks\n(Log, Analyze)", fillcolor=purple];
+    session_hooks [label="Execute Session Hooks\n(Save, Restore)", fillcolor=purple];
+    hooks_check [shape=diamond, label="All Hooks\nExecuted?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Hook Error"];
+    retry_logic [label="Retry Hook", fillcolor=yellow];
+  }
+
+  check_secrets -> pre_task_hooks [label="Pass"];
+  pre_task_hooks -> post_edit_hooks -> post_task_hooks -> session_hooks;
+  session_hooks -> hooks_check;
+  hooks_check -> execution_error [label="No"];
+  execution_error -> retry_logic -> pre_task_hooks [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Max Retries"];
+
+  subgraph cluster_coordination {
+    label="Hook Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Hook Results\nin Memory", fillcolor=lightblue];
+    train_patterns [label="Train Neural Patterns", fillcolor=lightblue];
+    update_cache [label="Update Cache", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  hooks_check -> memory_store [label="Yes"];
+  memory_store -> train_patterns -> update_cache -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Hooks\nSuccessful?"];
+    verify_formatting [label="Verify Auto-Formatting", fillcolor=lightgreen];
+    format_check [shape=diamond, label="Formatting\nApplied?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> verify_formatting [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  verify_formatting -> format_check;
+  format_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    export_session [label="Export Session State", fillcolor=lightgreen];
+    persist_learnings [label="Persist Learned Patterns", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Hook Metrics"];
+    success [label="Hooks Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  format_check -> export_session [label="Yes"];
+  export_session -> persist_learnings -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Hooks Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> rollback -> failure;
+}

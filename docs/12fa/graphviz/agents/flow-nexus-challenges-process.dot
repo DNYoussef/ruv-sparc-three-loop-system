@@ -1,0 +1,141 @@
+digraph flow_nexus_challenges_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Challenges Agent Workflow\nAgent ID: agent-089 | Category: Flow-Nexus Integration\nPurpose: Gamification and challenge system";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Challenge System\nAccess", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Challenge\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Browse Challenges
+    subgraph cluster_browse {
+        label="Phase 1: Browse Challenges";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        b1 [label="List Available\nChallenges", shape=box, fillcolor="#ffecb3"];
+        b2 [label="Filter by Difficulty\n(beginner/intermediate/\nadvanced/expert)", shape=box, fillcolor="#ffecb3"];
+        b3 [label="Filter by Category", shape=box, fillcolor="#ffecb3"];
+        b4 [label="Check Status\n(active/completed/\nlocked)", shape=box, fillcolor="#ffecb3"];
+
+        b1 -> b2 -> b3 -> b4;
+    }
+
+    // Phase 2: Challenge Details
+    subgraph cluster_details {
+        label="Phase 2: Challenge Details";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        d1 [label="Get Challenge\nDescription", shape=box, fillcolor="#bbdefb"];
+        d2 [label="View Requirements", shape=box, fillcolor="#bbdefb"];
+        d3 [label="Check Rewards", shape=box, fillcolor="#bbdefb"];
+        d4 [label="View Test Cases", shape=box, fillcolor="#bbdefb"];
+
+        d1 -> d2 -> d3 -> d4;
+    }
+
+    // Phase 3: Solution Submission
+    subgraph cluster_submit {
+        label="Phase 3: Solution Submission";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        s1 [label="Write Solution\nCode", shape=box, fillcolor="#e1bee7"];
+        s2 [label="Select Language", shape=box, fillcolor="#e1bee7"];
+        s3 [label="Run Local Tests", shape=box, fillcolor="#e1bee7"];
+        s4 [label="Submit Solution", shape=box, fillcolor="#e1bee7"];
+        s5 [label="Track Execution\nTime", shape=box, fillcolor="#e1bee7"];
+
+        s1 -> s2 -> s3 -> s4 -> s5;
+    }
+
+    // Phase 4: Solution Validation
+    subgraph cluster_validation {
+        label="Phase 4: Solution Validation";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        v1 [label="Run Test Cases", shape=box, fillcolor="#f8bbd0"];
+        v2 [label="Check Correctness", shape=box, fillcolor="#f8bbd0"];
+        v3 [label="Measure Performance", shape=box, fillcolor="#f8bbd0"];
+        v4 [label="Calculate Score", shape=box, fillcolor="#f8bbd0"];
+
+        v1 -> v2 -> v3 -> v4;
+    }
+
+    // Phase 5: Gamification
+    subgraph cluster_gamification {
+        label="Phase 5: Gamification & Rewards";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        g1 [label="Award rUv Credits", shape=box, fillcolor="#b2dfdb"];
+        g2 [label="Update Leaderboard", shape=box, fillcolor="#b2dfdb"];
+        g3 [label="Unlock Achievement", shape=box, fillcolor="#b2dfdb"];
+        g4 [label="Mark Challenge\nComplete", shape=box, fillcolor="#b2dfdb"];
+
+        g1 -> g2 -> g3 -> g4;
+    }
+
+    // Phase 6: Leaderboards & Achievements
+    subgraph cluster_leaderboard {
+        label="Phase 6: Leaderboards & Achievements";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        l1 [label="View Global\nLeaderboard", shape=box, fillcolor="#fff59d"];
+        l2 [label="View Weekly/\nMonthly Rankings", shape=box, fillcolor="#fff59d"];
+        l3 [label="View Challenge-\nSpecific Ranking", shape=box, fillcolor="#fff59d"];
+        l4 [label="List User\nAchievements", shape=box, fillcolor="#fff59d"];
+
+        l1 -> l2 -> l3 -> l4;
+    }
+
+    // Decisions
+    passed [label="All Tests\nPassed?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> b1;
+    b4 -> d1;
+    d4 -> s1;
+    s5 -> v1;
+    v4 -> passed;
+
+    passed -> g1 [label="Yes"];
+    passed -> s3 [label="No - Fix", style=dashed, color="#f44336"];
+
+    g4 -> l1;
+    l4 -> end;
+
+    // Capabilities
+    capabilities [label="Key Capabilities:\n• Challenge System\n• Solution Validation\n• Gamification\n• Leaderboards\n• Achievements\n• rUv Rewards", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    tools [label="MCP Tools:\n• challenges_list\n• challenge_get\n• challenge_submit\n• app_store_complete_challenge\n• leaderboard_get\n• achievements_list\n• app_store_earn_ruv", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Difficulty levels
+    difficulty [label="Difficulty Levels:\n• Beginner\n• Intermediate\n• Advanced\n• Expert", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-challenges\nPriority: Low\nComplexity: Medium\nGraphviz Priority: 89", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

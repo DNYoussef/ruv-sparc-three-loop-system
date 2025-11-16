@@ -1,0 +1,101 @@
+// System Architect Agent - System Architecture Design
+// Scalable design, distributed systems, architecture patterns, cloud-native
+digraph system_architect_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        architect_init [label="System Architect\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        pattern_library [label="Architecture\nPattern Library", fillcolor="#2d3748", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nDatabase", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Requirements Analysis"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        requirement_analyzer [label="Requirement\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        nfr_analyzer [label="NFR\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        scale_estimator [label="Scale\nEstimator", fillcolor="#2563eb", fontcolor="#ffffff"];
+        constraint_identifier [label="Constraint\nIdentifier", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_design {
+        label="Architecture Design"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        pattern_selector [label="Pattern\nSelector", fillcolor="#059669", fontcolor="#ffffff"];
+        component_designer [label="Component\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        layer_designer [label="Layer\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        integration_designer [label="Integration\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_distributed {
+        label="Distributed Systems"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        microservices_designer [label="Microservices\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        service_mesh_planner [label="Service Mesh\nPlanner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        api_gateway_designer [label="API Gateway\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        message_queue_planner [label="Message Queue\nPlanner", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_scalability {
+        label="Scalability Planning"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        horizontal_scaler [label="Horizontal\nScaling", fillcolor="#dc2626", fontcolor="#ffffff"];
+        load_balancer_designer [label="Load Balancer\nDesigner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        caching_strategist [label="Caching\nStrategist", fillcolor="#dc2626", fontcolor="#ffffff"];
+        db_sharding_planner [label="DB Sharding\nPlanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_resilience {
+        label="Resilience & Reliability"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        fault_tolerance_designer [label="Fault Tolerance\nDesigner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        circuit_breaker_planner [label="Circuit Breaker\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        retry_strategy_designer [label="Retry Strategy\nDesigner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        disaster_recovery_planner [label="Disaster Recovery\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_documentation {
+        label="Documentation"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        adr_writer [label="ADR\nWriter", fillcolor="#ef4444", fontcolor="#ffffff"];
+        diagram_generator [label="C4 Diagram\nGenerator", fillcolor="#ef4444", fontcolor="#ffffff"];
+        tech_stack_documenter [label="Tech Stack\nDocumenter", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        devops_coord [label="DevOps\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    architect_init -> pattern_library [label="Load"];
+    architect_init -> best_practices [label="Load"];
+    pattern_library -> requirement_analyzer [label="Analyze"];
+    requirement_analyzer -> nfr_analyzer [label="Analyze NFRs"];
+    nfr_analyzer -> scale_estimator [label="Estimate Scale"];
+    scale_estimator -> constraint_identifier [label="Identify Constraints"];
+    constraint_identifier -> pattern_selector [label="Select Patterns"];
+    pattern_selector -> component_designer [label="Design Components"];
+    component_designer -> layer_designer [label="Design Layers"];
+    layer_designer -> integration_designer [label="Design Integration"];
+    integration_designer -> microservices_designer [label="Design Microservices"];
+    microservices_designer -> service_mesh_planner [label="Plan Service Mesh"];
+    service_mesh_planner -> api_gateway_designer [label="Design Gateway"];
+    api_gateway_designer -> message_queue_planner [label="Plan Queue"];
+    message_queue_planner -> horizontal_scaler [label="Plan Scaling"];
+    horizontal_scaler -> load_balancer_designer [label="Design LB"];
+    load_balancer_designer -> caching_strategist [label="Cache Strategy"];
+    caching_strategist -> db_sharding_planner [label="Plan Sharding"];
+    db_sharding_planner -> fault_tolerance_designer [label="Design FT"];
+    fault_tolerance_designer -> circuit_breaker_planner [label="Plan CB"];
+    circuit_breaker_planner -> retry_strategy_designer [label="Design Retry"];
+    retry_strategy_designer -> disaster_recovery_planner [label="Plan DR"];
+    disaster_recovery_planner -> adr_writer [label="Write ADRs"];
+    adr_writer -> diagram_generator [label="Generate Diagrams"];
+    diagram_generator -> tech_stack_documenter [label="Document Stack"];
+    component_designer -> backend_coord [label="Coordinate"];
+    service_mesh_planner -> devops_coord [label="Coordinate"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="System Architect", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

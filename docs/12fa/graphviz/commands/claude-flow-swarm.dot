@@ -1,0 +1,474 @@
+digraph CLAUDE_FLOW_SWARM {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /claude-flow-swarm";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/claude-flow-swarm", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--topology\n--task\n--agents", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--topology [mesh|hierarchical|ring|star]\n--task <description>\n--agents <count>"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // AUTHENTICATION & AUTHORIZATION
+  // =============================================================================
+  subgraph cluster_auth {
+    label="Authentication & Authorization";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_auth [shape=diamond, label="User\nAuthenticated?"];
+    check_mcp [shape=diamond, label="MCP Server\nConnected?"];
+    check_permissions [shape=diamond, label="Has Swarm\nPermissions?"];
+
+    auth_failed [shape=octagon, fillcolor=crimson,
+                 label="Authentication\nFailed"];
+    mcp_failed [shape=octagon, fillcolor=crimson,
+                label="MCP Server\nNot Connected\nRun: claude mcp add"];
+    permission_denied [shape=octagon, fillcolor=crimson,
+                       label="Permission\nDenied"];
+  }
+
+  validate_syntax -> check_auth [label="Yes"];
+
+  check_auth -> auth_failed [label="No"];
+  check_auth -> check_mcp [label="Yes"];
+
+  check_mcp -> mcp_failed [label="No"];
+  check_mcp -> check_permissions [label="Yes"];
+
+  check_permissions -> permission_denied [label="No"];
+
+  // =============================================================================
+  // PRE-EXECUTION VALIDATION
+  // =============================================================================
+  subgraph cluster_pre_execution {
+    label="Pre-Execution Validation";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    validate_topology [shape=diamond, label="Topology\nValid?"];
+    validate_agent_count [shape=diamond, label="Agent Count\n1-100?"];
+    validate_resources [shape=diamond, label="System Resources\nAvailable?"];
+    check_existing_swarm [shape=diamond, label="Existing\nSwarm?"];
+
+    topology_error [shape=octagon, fillcolor=orange,
+                    label="Invalid Topology\nMust be: mesh, hierarchical, ring, or star"];
+    agent_error [shape=octagon, fillcolor=orange,
+                 label="Invalid Agent Count\nMust be 1-100"];
+    resource_error [shape=octagon, fillcolor=orange,
+                    label="Insufficient\nResources"];
+  }
+
+  check_permissions -> validate_topology [label="Yes"];
+
+  validate_topology -> topology_error [label="No"];
+  validate_topology -> validate_agent_count [label="Yes"];
+
+  validate_agent_count -> agent_error [label="No"];
+  validate_agent_count -> validate_resources [label="Yes"];
+
+  validate_resources -> resource_error [label="No"];
+  validate_resources -> check_existing_swarm [label="Yes"];
+
+  // =============================================================================
+  // TOPOLOGY INITIALIZATION
+  // =============================================================================
+  subgraph cluster_topology {
+    label="Topology Initialization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    destroy_existing [label="Destroy\nExisting Swarm", fillcolor=orange];
+    select_topology [shape=diamond, label="Topology\nType?"];
+
+    init_mesh [label="Initialize Mesh\nTopology\n(Peer-to-Peer)", fillcolor=purple];
+    init_hierarchical [label="Initialize Hierarchical\nTopology\n(Tree Structure)", fillcolor=purple];
+    init_ring [label="Initialize Ring\nTopology\n(Circular)", fillcolor=purple];
+    init_star [label="Initialize Star\nTopology\n(Central Hub)", fillcolor=purple];
+
+    configure_topology [label="Configure\nTopology Settings", fillcolor=purple, style="filled,bold"];
+  }
+
+  check_existing_swarm -> destroy_existing [label="Yes"];
+  check_existing_swarm -> select_topology [label="No"];
+  destroy_existing -> select_topology;
+
+  select_topology -> init_mesh [label="mesh"];
+  select_topology -> init_hierarchical [label="hierarchical"];
+  select_topology -> init_ring [label="ring"];
+  select_topology -> init_star [label="star"];
+
+  init_mesh -> configure_topology;
+  init_hierarchical -> configure_topology;
+  init_ring -> configure_topology;
+  init_star -> configure_topology;
+
+  // =============================================================================
+  // AGENT SPAWNING
+  // =============================================================================
+  subgraph cluster_agent_spawning {
+    label="Agent Spawning";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    determine_strategy [shape=diamond, label="Distribution\nStrategy?"];
+
+    balanced_spawn [label="Balanced Distribution\n(Equal Capabilities)", fillcolor=lightblue];
+    specialized_spawn [label="Specialized Distribution\n(Role-Based)", fillcolor=lightblue];
+    adaptive_spawn [label="Adaptive Distribution\n(Load-Based)", fillcolor=lightblue];
+
+    spawn_agents [label="Spawn Agents\nConcurrently", fillcolor=lightblue, style="filled,bold"];
+    assign_ids [label="Assign Agent IDs\nand Roles", fillcolor=lightblue];
+    establish_connections [label="Establish\nAgent Connections", fillcolor=lightblue];
+
+    verify_agents [shape=diamond, label="All Agents\nSpawned?"];
+    spawn_failed [shape=octagon, fillcolor=orange,
+                  label="Agent Spawning\nFailed"];
+  }
+
+  configure_topology -> determine_strategy;
+
+  determine_strategy -> balanced_spawn [label="balanced"];
+  determine_strategy -> specialized_spawn [label="specialized"];
+  determine_strategy -> adaptive_spawn [label="adaptive"];
+
+  balanced_spawn -> spawn_agents;
+  specialized_spawn -> spawn_agents;
+  adaptive_spawn -> spawn_agents;
+
+  spawn_agents -> assign_ids;
+  assign_ids -> establish_connections;
+  establish_connections -> verify_agents;
+
+  verify_agents -> spawn_failed [label="No"];
+
+  // =============================================================================
+  // TASK ORCHESTRATION
+  // =============================================================================
+  subgraph cluster_orchestration {
+    label="Task Orchestration";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    parse_task [label="Parse Task\nDescription", fillcolor=lightgreen];
+    decompose_task [label="Decompose into\nSub-Tasks", fillcolor=lightgreen];
+
+    determine_execution [shape=diamond, label="Execution\nStrategy?"];
+
+    parallel_exec [label="Parallel Execution\n(All at Once)", fillcolor=lightgreen];
+    sequential_exec [label="Sequential Execution\n(One by One)", fillcolor=lightgreen];
+    adaptive_exec [label="Adaptive Execution\n(Dynamic)", fillcolor=lightgreen];
+
+    assign_tasks [label="Assign Tasks\nto Agents", fillcolor=lightgreen, style="filled,bold"];
+    monitor_progress [label="Monitor Task\nProgress", fillcolor=lightgreen];
+
+    check_completion [shape=diamond, label="All Tasks\nComplete?"];
+  }
+
+  verify_agents -> parse_task [label="Yes"];
+
+  parse_task -> decompose_task;
+  decompose_task -> determine_execution;
+
+  determine_execution -> parallel_exec [label="parallel"];
+  determine_execution -> sequential_exec [label="sequential"];
+  determine_execution -> adaptive_exec [label="adaptive"];
+
+  parallel_exec -> assign_tasks;
+  sequential_exec -> assign_tasks;
+  adaptive_exec -> assign_tasks;
+
+  assign_tasks -> monitor_progress;
+  monitor_progress -> check_completion;
+
+  check_completion -> monitor_progress [label="No", style=dashed];
+
+  // =============================================================================
+  // DISTRIBUTED COORDINATION
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Distributed Coordination";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    init_memory [label="Initialize\nCRDT Memory", fillcolor=lightpurple];
+    setup_channels [label="Setup Communication\nChannels", fillcolor=lightpurple];
+    enable_consensus [label="Enable Consensus\nMechanism", fillcolor=lightpurple];
+
+    share_state [label="Share Agent\nState", fillcolor=lightpurple];
+    synchronize [label="Synchronize\nMemory", fillcolor=lightpurple];
+    resolve_conflicts [label="Resolve\nConflicts", fillcolor=lightpurple];
+
+    check_consensus [shape=diamond, label="Consensus\nReached?"];
+    consensus_failed [shape=octagon, fillcolor=orange,
+                      label="Consensus\nFailed"];
+  }
+
+  assign_tasks -> init_memory;
+
+  init_memory -> setup_channels;
+  setup_channels -> enable_consensus;
+  enable_consensus -> share_state;
+
+  share_state -> synchronize;
+  synchronize -> resolve_conflicts;
+  resolve_conflicts -> check_consensus;
+
+  check_consensus -> consensus_failed [label="No"];
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_results {
+    label="Result Aggregation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    collect_results [label="Collect Agent\nResults", fillcolor=lightblue];
+    validate_results [label="Validate\nResults", fillcolor=lightblue];
+
+    merge_strategy [shape=diamond, label="Merge\nStrategy?"];
+
+    simple_merge [label="Simple Merge\n(Concatenate)", fillcolor=lightblue];
+    consensus_merge [label="Consensus Merge\n(Vote)", fillcolor=lightblue];
+    weighted_merge [label="Weighted Merge\n(Priority)", fillcolor=lightblue];
+
+    format_output [label="Format Output\n(JSON/Text)", fillcolor=lightblue, style="filled,bold"];
+  }
+
+  check_completion -> collect_results [label="Yes"];
+  check_consensus -> collect_results [label="Yes"];
+
+  collect_results -> validate_results;
+  validate_results -> merge_strategy;
+
+  merge_strategy -> simple_merge [label="simple"];
+  merge_strategy -> consensus_merge [label="consensus"];
+  merge_strategy -> weighted_merge [label="weighted"];
+
+  simple_merge -> format_output;
+  consensus_merge -> format_output;
+  weighted_merge -> format_output;
+
+  // =============================================================================
+  // OUTPUT & SIDE EFFECTS
+  // =============================================================================
+  subgraph cluster_output {
+    label="Output & Side Effects";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    display_results [label="Display\nResults", fillcolor=lightgreen];
+
+    store_memory [shape=diamond, label="Store in\nMemory?"];
+    persist_state [shape=diamond, label="Persist\nState?"];
+
+    write_memory [label="Write to\nCRDT Memory", fillcolor=lightgreen];
+    save_state [label="Save Swarm\nState", fillcolor=lightgreen];
+
+    generate_metrics [label="Generate\nMetrics Report", fillcolor=lightgreen];
+  }
+
+  format_output -> display_results;
+
+  display_results -> store_memory;
+
+  store_memory -> write_memory [label="Yes"];
+  store_memory -> persist_state [label="No"];
+  write_memory -> persist_state;
+
+  persist_state -> save_state [label="Yes"];
+  persist_state -> generate_metrics [label="No"];
+  save_state -> generate_metrics;
+
+  // =============================================================================
+  // LOGGING & METRICS
+  // =============================================================================
+  subgraph cluster_logging {
+    label="Logging & Metrics";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    log_swarm_creation [label="Log Swarm\nCreation", fillcolor=yellow];
+    log_agent_spawns [label="Log Agent\nSpawns", fillcolor=yellow];
+    log_task_execution [label="Log Task\nExecution", fillcolor=yellow];
+
+    record_performance [label="Record Performance\nMetrics", fillcolor=yellow];
+    record_resource_usage [label="Record Resource\nUsage", fillcolor=yellow];
+
+    check_telemetry [shape=diamond, label="Telemetry\nEnabled?"];
+    send_telemetry [label="Send Telemetry\nData", fillcolor=yellow];
+  }
+
+  generate_metrics -> log_swarm_creation;
+
+  log_swarm_creation -> log_agent_spawns;
+  log_agent_spawns -> log_task_execution;
+  log_task_execution -> record_performance;
+
+  record_performance -> record_resource_usage;
+  record_resource_usage -> check_telemetry;
+
+  check_telemetry -> send_telemetry [label="Yes"];
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    keep_swarm [shape=diamond, label="Keep Swarm\nAlive?"];
+
+    cleanup_agents [label="Cleanup Agent\nResources", fillcolor=lightgreen];
+    close_channels [label="Close Communication\nChannels", fillcolor=lightgreen];
+    destroy_swarm [label="Destroy\nSwarm", fillcolor=lightgreen];
+
+    return_status [label="Return Exit\nCode", fillcolor=lightgreen];
+    success [label="Swarm Command\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  check_telemetry -> keep_swarm [label="No"];
+  send_telemetry -> keep_swarm;
+
+  keep_swarm -> return_status [label="Yes"];
+  keep_swarm -> cleanup_agents [label="No"];
+
+  cleanup_agents -> close_channels;
+  close_channels -> destroy_swarm;
+  destroy_swarm -> return_status;
+
+  return_status -> success;
+
+  // =============================================================================
+  // ERROR HANDLING & RECOVERY
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+
+    retry_spawn [label="Retry Agent\nSpawning", fillcolor=yellow];
+    retry_connection [label="Retry\nConnection", fillcolor=yellow];
+    fallback_topology [label="Fallback to\nSimpler Topology", fillcolor=yellow];
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to\nUser"];
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    cleanup_after_error [label="Cleanup After\nError", fillcolor=orange];
+    failure [label="Command\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Route all errors to classification
+  syntax_error -> log_error;
+  auth_failed -> log_error;
+  mcp_failed -> log_error;
+  permission_denied -> log_error;
+  topology_error -> classify_error;
+  agent_error -> classify_error;
+  resource_error -> classify_error;
+  spawn_failed -> classify_error;
+  consensus_failed -> classify_error;
+
+  // Error classification and recovery
+  classify_error -> retry_spawn [label="Agent Spawn"];
+  classify_error -> retry_connection [label="Connection"];
+  classify_error -> fallback_topology [label="Topology"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_spawn -> spawn_agents [label="Retry", style=dashed];
+  retry_connection -> establish_connections [label="Retry", style=dashed];
+  fallback_topology -> init_mesh [label="Fallback to Mesh", style=dashed];
+
+  log_error -> cleanup_after_error;
+  cleanup_after_error -> escalate;
+  escalate -> failure;
+
+  // =============================================================================
+  // HOOKS INTEGRATION
+  // =============================================================================
+  subgraph cluster_hooks {
+    label="Hooks Integration";
+    style="filled,rounded,dashed";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    pre_swarm_hook [label="Run Pre-Swarm\nHooks", fillcolor=lightblue];
+    post_swarm_hook [label="Run Post-Swarm\nHooks", fillcolor=lightblue];
+
+    session_restore [label="Session Restore\nHook", fillcolor=lightblue];
+    memory_sync [label="Memory Sync\nHook", fillcolor=lightblue];
+
+    neural_training [label="Neural Training\nHook", fillcolor=lightblue];
+  }
+
+  // Hooks integration points
+  configure_topology -> pre_swarm_hook [style=dotted];
+  pre_swarm_hook -> session_restore [style=dotted];
+  session_restore -> spawn_agents [style=dotted];
+
+  format_output -> post_swarm_hook [style=dotted];
+  post_swarm_hook -> memory_sync [style=dotted];
+  memory_sync -> neural_training [style=dotted];
+  neural_training -> display_results [style=dotted];
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_block [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_block [style=invis];
+    legend_block -> legend_warn [style=invis];
+    legend_warn -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

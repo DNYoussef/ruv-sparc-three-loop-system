@@ -1,0 +1,33 @@
+digraph PPTX_GENERATION_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="pptx-generation\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_req [label="Load Content Requirements\nBoard Deck, Report, Analysis"];
+  validate [label="Validate Scope\n30+ Slides Supported"];
+
+  design_structure [label="Design Slide Structure\nSpatial Layout Optimization", fillcolor=purple];
+  gather_data [label="Gather Data from Sources\nMulti-Source Integration", fillcolor=purple];
+
+  html_generation [label="Generate HTML Slides\nhtml2pptx Workflow", fillcolor=cyan];
+  constraint_based_design [label="Apply Constraint-Based Design\nAccessibility Compliance", fillcolor=cyan];
+
+  convert_to_pptx [label="Convert HTML to PPTX\nEnterprise-Grade Quality", fillcolor=lightgreen];
+  validation_gate [label="Validation Gate\nQuality Check", fillcolor=orange];
+  decision [shape=diamond, label="Quality\nAcceptable?"];
+
+  memory_store [label="Store Presentation\nWith Metadata", fillcolor=lightblue];
+  success [label="Presentation Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  failure [label="Generation Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+
+  start -> load_req -> validate -> design_structure;
+  design_structure -> gather_data;
+  gather_data -> html_generation;
+  html_generation -> constraint_based_design;
+  constraint_based_design -> convert_to_pptx;
+  convert_to_pptx -> validation_gate;
+  validation_gate -> decision;
+  decision -> memory_store [label="Yes"];
+  decision -> failure [label="No"];
+  memory_store -> success;
+}

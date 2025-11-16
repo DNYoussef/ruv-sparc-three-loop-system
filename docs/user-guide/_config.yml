@@ -1,0 +1,82 @@
+# GitHub Pages Configuration for rUv SPARC UI Dashboard Documentation
+
+# Site settings
+title: rUv SPARC UI Dashboard Documentation
+description: Comprehensive user documentation for the rUv SPARC UI Dashboard - task management, project boards, AI agents, and workflow automation
+author: rUv SPARC Team
+email: support@ruv-sparc.io
+
+# Build settings
+theme: jekyll-theme-cayman
+markdown: kramdown
+highlighter: rouge
+
+# Repository
+repository: yourusername/ruv-sparc-ui-dashboard
+github_username: yourusername
+
+# Social links
+twitter_username: ruvSPARC
+discord_url: https://discord.gg/ruv-sparc
+
+# Navigation
+navigation:
+  - title: Installation
+    url: /INSTALL
+  - title: User Guide
+    url: /USER_GUIDE
+  - title: API Reference
+    url: /API_GUIDE
+  - title: Troubleshooting
+    url: /TROUBLESHOOTING
+  - title: FAQ
+    url: /FAQ
+  - title: Video Tutorials
+    url: /VIDEO_TUTORIALS
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - README.md
+
+# Include
+include:
+  - _pages
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+      show_downloads: true
+
+# SEO settings
+seo:
+  name: rUv SPARC UI Dashboard
+  links:
+    - https://github.com/yourusername/ruv-sparc-ui-dashboard
+    - https://twitter.com/ruvSPARC

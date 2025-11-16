@@ -1,0 +1,353 @@
+// Tester Agent - QA Specialist
+// 45 commands, 18 MCP tools, comprehensive testing strategies
+digraph tester_agent {
+    // Graph attributes
+    graph [
+        rankdir=TB,
+        bgcolor="#0a0e1a",
+        fontname="Arial",
+        fontsize=12,
+        splines=ortho,
+        nodesep=0.6,
+        ranksep=1.0
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=10,
+        margin=0.2
+    ];
+
+    edge [
+        fontname="Arial",
+        fontsize=9,
+        color="#4a90e2"
+    ];
+
+    // === INITIALIZATION ===
+    subgraph cluster_init {
+        label="Agent Initialization";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        tester_init [label="Tester Agent\nInitialize", fillcolor="#16a34a", fontcolor="#ffffff"];
+        load_commands [label="Load 45\nCommands", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_mcp [label="Load 18\nMCP Tools", fillcolor="#2d3748", fontcolor="#ffffff"];
+        load_frameworks [label="Load Test\nFrameworks", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    // === TEST STRATEGY DESIGN ===
+    subgraph cluster_strategy {
+        label="Test Strategy Design";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        strategy_designer [label="Strategy\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pyramid_builder [label="Test Pyramid\nBuilder", fillcolor="#2563eb", fontcolor="#ffffff"];
+        coverage_planner [label="Coverage\nPlanner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        data_manager [label="Test Data\nManager", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    // === TEST PYRAMID ===
+    subgraph cluster_pyramid {
+        label="Test Pyramid (Unit → Integration → E2E)";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        unit_tests [label="Unit Tests\n(70% Coverage)", fillcolor="#10b981", fontcolor="#ffffff"];
+        integration_tests [label="Integration Tests\n(20% Coverage)", fillcolor="#0891b2", fontcolor="#ffffff"];
+        e2e_tests [label="E2E Tests\n(10% Coverage)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === UNIT TESTING ===
+    subgraph cluster_unit {
+        label="Unit Test Implementation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        unit_designer [label="Unit Test\nDesigner", fillcolor="#10b981", fontcolor="#ffffff"];
+        mock_creator [label="Mock/Stub\nCreator", fillcolor="#10b981", fontcolor="#ffffff"];
+        assertion_builder [label="Assertion\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+        edge_case_finder [label="Edge Case\nFinder", fillcolor="#10b981", fontcolor="#ffffff"];
+        unit_runner [label="Unit Test\nRunner", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    // === INTEGRATION TESTING ===
+    subgraph cluster_integration {
+        label="Integration Test Implementation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        integration_designer [label="Integration Test\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        component_tester [label="Component\nInteraction Tester", fillcolor="#0891b2", fontcolor="#ffffff"];
+        api_contract_tester [label="API Contract\nTester", fillcolor="#0891b2", fontcolor="#ffffff"];
+        data_flow_validator [label="Data Flow\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        integration_runner [label="Integration Test\nRunner", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === E2E TESTING ===
+    subgraph cluster_e2e {
+        label="End-to-End Test Implementation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        e2e_designer [label="E2E Test\nDesigner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        user_journey_mapper [label="User Journey\nMapper", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        browser_automation [label="Browser\nAutomation", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        accessibility_tester [label="Accessibility\nTester (WCAG)", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        e2e_runner [label="E2E Test\nRunner", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    // === PROPERTY-BASED TESTING ===
+    subgraph cluster_property {
+        label="Property-Based Testing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        property_designer [label="Property\nDesigner", fillcolor="#d97706", fontcolor="#ffffff"];
+        generator_builder [label="Data Generator\nBuilder", fillcolor="#d97706", fontcolor="#ffffff"];
+        invariant_checker [label="Invariant\nChecker", fillcolor="#d97706", fontcolor="#ffffff"];
+        shrinking_engine [label="Shrinking\nEngine", fillcolor="#d97706", fontcolor="#ffffff"];
+    }
+
+    // === CONTRACT TESTING ===
+    subgraph cluster_contract {
+        label="Contract Testing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        contract_designer [label="Contract\nDesigner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        provider_tester [label="Provider\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        consumer_tester [label="Consumer\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+        schema_validator [label="Schema\nValidator", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    // === PERFORMANCE TESTING ===
+    subgraph cluster_performance {
+        label="Performance Testing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        load_tester [label="Load\nTester", fillcolor="#ef4444", fontcolor="#ffffff"];
+        stress_tester [label="Stress\nTester", fillcolor="#ef4444", fontcolor="#ffffff"];
+        regression_tester [label="Performance\nRegression Tester", fillcolor="#ef4444", fontcolor="#ffffff"];
+        resource_monitor [label="Resource\nMonitor", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    // === SECURITY TESTING ===
+    subgraph cluster_security {
+        label="Security Testing";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        vuln_scanner [label="Vulnerability\nScanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        penetration_tester [label="Penetration\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+        auth_tester [label="Authentication\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+        injection_tester [label="Injection\nTester", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    // === COVERAGE ANALYSIS ===
+    subgraph cluster_coverage {
+        label="Coverage Analysis (>80% Target)";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        line_coverage [label="Line Coverage\n(≥90%)", fillcolor="#059669", fontcolor="#ffffff"];
+        branch_coverage [label="Branch Coverage\n(≥85%)", fillcolor="#059669", fontcolor="#ffffff"];
+        function_coverage [label="Function Coverage\n(≥95%)", fillcolor="#059669", fontcolor="#ffffff"];
+        statement_coverage [label="Statement Coverage\n(≥90%)", fillcolor="#059669", fontcolor="#ffffff"];
+        coverage_reporter [label="Coverage\nReporter", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    // === QUALITY GATES ===
+    subgraph cluster_gates {
+        label="Quality Gates & Validation";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        gate_unit [label="Unit Test Gate\n(≥90%)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        gate_integration [label="Integration Gate\n(All Pass)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        gate_contract [label="Contract Gate\n(Valid Schemas)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        gate_performance [label="Performance Gate\n(Benchmarks Met)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        gate_security [label="Security Gate\n(No Critical)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        gate_accessibility [label="Accessibility Gate\n(WCAG)", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+
+    // === COLLABORATION ===
+    subgraph cluster_collab {
+        label="Agent Collaboration";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        coder_coord [label="Coder\nCoordination (TDD)", fillcolor="#6366f1", fontcolor="#ffffff"];
+        reviewer_coord [label="Reviewer\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        security_coord [label="Security Agent\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        architect_coord [label="Architect\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    // === AUTOMATION & CI/CD ===
+    subgraph cluster_cicd {
+        label="Test Automation & CI/CD";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        pre_commit [label="Pre-commit\nTests", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        pr_tests [label="Pull Request\nTests", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        integration_pipeline [label="Integration\nPipeline", fillcolor="#f59e0b", fontcolor="#ffffff"];
+        deployment_tests [label="Deployment\nTests", fillcolor="#f59e0b", fontcolor="#ffffff"];
+    }
+
+    // === REPORTING ===
+    subgraph cluster_reporting {
+        label="Test Reporting & Metrics";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        result_aggregator [label="Result\nAggregator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        metrics_calculator [label="Metrics\nCalculator", fillcolor="#0891b2", fontcolor="#ffffff"];
+        trend_analyzer [label="Trend\nAnalyzer", fillcolor="#0891b2", fontcolor="#ffffff"];
+        report_generator [label="Report\nGenerator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    // === INITIALIZATION FLOW ===
+    tester_init -> load_commands [label="Load"];
+    tester_init -> load_mcp [label="Load"];
+    tester_init -> load_frameworks [label="Load"];
+
+    // === STRATEGY FLOW ===
+    tester_init -> strategy_designer [label="Design Strategy"];
+    strategy_designer -> pyramid_builder [label="Build Pyramid"];
+    pyramid_builder -> coverage_planner [label="Plan Coverage"];
+    coverage_planner -> data_manager [label="Manage Data"];
+
+    // === PYRAMID STRUCTURE ===
+    pyramid_builder -> unit_tests [label="70%"];
+    pyramid_builder -> integration_tests [label="20%"];
+    pyramid_builder -> e2e_tests [label="10%"];
+
+    // === UNIT TEST FLOW ===
+    unit_tests -> unit_designer [label="Design"];
+    unit_designer -> mock_creator [label="Create Mocks"];
+    mock_creator -> assertion_builder [label="Build Assertions"];
+    assertion_builder -> edge_case_finder [label="Find Edge Cases"];
+    edge_case_finder -> unit_runner [label="Run"];
+
+    // === INTEGRATION TEST FLOW ===
+    integration_tests -> integration_designer [label="Design"];
+    integration_designer -> component_tester [label="Test Components"];
+    component_tester -> api_contract_tester [label="Test Contracts"];
+    api_contract_tester -> data_flow_validator [label="Validate Flow"];
+    data_flow_validator -> integration_runner [label="Run"];
+
+    // === E2E TEST FLOW ===
+    e2e_tests -> e2e_designer [label="Design"];
+    e2e_designer -> user_journey_mapper [label="Map Journeys"];
+    user_journey_mapper -> browser_automation [label="Automate"];
+    browser_automation -> accessibility_tester [label="Test A11y"];
+    accessibility_tester -> e2e_runner [label="Run"];
+
+    // === PROPERTY-BASED FLOW ===
+    unit_designer -> property_designer [label="Property Tests"];
+    property_designer -> generator_builder [label="Build Generators"];
+    generator_builder -> invariant_checker [label="Check Invariants"];
+    invariant_checker -> shrinking_engine [label="Shrink Failures"];
+
+    // === CONTRACT TEST FLOW ===
+    integration_designer -> contract_designer [label="Contract Tests"];
+    contract_designer -> provider_tester [label="Test Provider"];
+    provider_tester -> consumer_tester [label="Test Consumer"];
+    consumer_tester -> schema_validator [label="Validate Schema"];
+
+    // === PERFORMANCE TEST FLOW ===
+    e2e_runner -> load_tester [label="Load Test"];
+    load_tester -> stress_tester [label="Stress Test"];
+    stress_tester -> regression_tester [label="Regression Test"];
+    regression_tester -> resource_monitor [label="Monitor Resources"];
+
+    // === SECURITY TEST FLOW ===
+    schema_validator -> vuln_scanner [label="Scan Vulnerabilities"];
+    vuln_scanner -> penetration_tester [label="Penetration Test"];
+    penetration_tester -> auth_tester [label="Test Auth"];
+    auth_tester -> injection_tester [label="Test Injection"];
+
+    // === COVERAGE FLOW ===
+    unit_runner -> line_coverage [label="Calculate"];
+    integration_runner -> branch_coverage [label="Calculate"];
+    e2e_runner -> function_coverage [label="Calculate"];
+    shrinking_engine -> statement_coverage [label="Calculate"];
+
+    line_coverage -> coverage_reporter [label="Report"];
+    branch_coverage -> coverage_reporter [label="Report"];
+    function_coverage -> coverage_reporter [label="Report"];
+    statement_coverage -> coverage_reporter [label="Report"];
+
+    // === QUALITY GATES FLOW ===
+    coverage_reporter -> gate_unit [label="Validate ≥90%"];
+    integration_runner -> gate_integration [label="Validate All Pass"];
+    schema_validator -> gate_contract [label="Validate Schemas"];
+    resource_monitor -> gate_performance [label="Validate Benchmarks"];
+    injection_tester -> gate_security [label="Validate No Critical"];
+    accessibility_tester -> gate_accessibility [label="Validate WCAG"];
+
+    // === COLLABORATION FLOW ===
+    gate_unit -> coder_coord [label="TDD Feedback"];
+    gate_integration -> reviewer_coord [label="Review Feedback"];
+    gate_security -> security_coord [label="Security Feedback"];
+    gate_contract -> architect_coord [label="Architecture Feedback"];
+
+    // === CI/CD FLOW ===
+    tester_init -> pre_commit [label="Pre-commit Hook"];
+    pre_commit -> pr_tests [label="PR Trigger"];
+    pr_tests -> integration_pipeline [label="Integration"];
+    integration_pipeline -> deployment_tests [label="Deployment"];
+
+    // === REPORTING FLOW ===
+    gate_unit -> result_aggregator [label="Aggregate"];
+    gate_integration -> result_aggregator [label="Aggregate"];
+    gate_contract -> result_aggregator [label="Aggregate"];
+    gate_performance -> result_aggregator [label="Aggregate"];
+    gate_security -> result_aggregator [label="Aggregate"];
+    gate_accessibility -> result_aggregator [label="Aggregate"];
+
+    result_aggregator -> metrics_calculator [label="Calculate"];
+    metrics_calculator -> trend_analyzer [label="Analyze"];
+    trend_analyzer -> report_generator [label="Generate"];
+    report_generator -> tester_init [label="Complete", style=bold, color="#10b981"];
+
+    // === FEEDBACK LOOPS ===
+    gate_unit -> unit_designer [label="Coverage <90%", style=dashed, color="#ef4444"];
+    gate_security -> vuln_scanner [label="Security Issue", style=dashed, color="#ef4444"];
+    gate_performance -> load_tester [label="Benchmark Failed", style=dashed, color="#ef4444"];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Tester Agent", fillcolor="#16a34a", fontcolor="#ffffff"];
+        legend2 [label="Unit Tests", fillcolor="#10b981", fontcolor="#ffffff"];
+        legend3 [label="Integration", fillcolor="#0891b2", fontcolor="#ffffff"];
+        legend4 [label="E2E Tests", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        legend5 [label="Property-Based", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend6 [label="Security", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+}

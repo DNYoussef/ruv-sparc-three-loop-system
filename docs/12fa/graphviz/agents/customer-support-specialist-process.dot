@@ -1,0 +1,169 @@
+digraph customer_support_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Customer Support Specialist Agent Workflow\nAgent ID: agent-080 | Category: Business\nPurpose: Customer support and service";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Support Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Issue Resolved", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Ticket Intake
+    subgraph cluster_intake {
+        label="Phase 1: Ticket Intake & Triage";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        i1 [label="Ticket Creation", shape=box, fillcolor="#ffecb3"];
+        i2 [label="Customer Info\nCapture", shape=box, fillcolor="#ffecb3"];
+        i3 [label="Issue\nCategorization", shape=box, fillcolor="#ffecb3"];
+        i4 [label="Priority\nAssignment", shape=box, fillcolor="#ffecb3"];
+        i5 [label="Auto-Response\nSent", shape=box, fillcolor="#ffecb3"];
+
+        i1 -> i2 -> i3 -> i4 -> i5;
+    }
+
+    // Phase 2: Issue Assessment
+    subgraph cluster_assessment {
+        label="Phase 2: Issue Assessment";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        a1 [label="Review Ticket\nDetails", shape=box, fillcolor="#bbdefb"];
+        a2 [label="Check Customer\nHistory", shape=box, fillcolor="#bbdefb"];
+        a3 [label="Search Knowledge\nBase", shape=box, fillcolor="#bbdefb"];
+        a4 [label="Identify Root\nCause", shape=box, fillcolor="#bbdefb"];
+        a5 [label="Determine\nSolution Path", shape=box, fillcolor="#bbdefb"];
+
+        a1 -> a2 -> a3 -> a4 -> a5;
+    }
+
+    // Decision: Issue Complexity
+    complexity [label="Issue\nComplexity?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Phase 3A: Simple Resolution
+    subgraph cluster_simple {
+        label="Phase 3A: Simple Resolution";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        sr1 [label="Apply Standard\nSolution", shape=box, fillcolor="#e1bee7"];
+        sr2 [label="Send Resolution\nEmail", shape=box, fillcolor="#e1bee7"];
+        sr3 [label="Update Ticket", shape=box, fillcolor="#e1bee7"];
+
+        sr1 -> sr2 -> sr3;
+    }
+
+    // Phase 3B: Complex Resolution
+    subgraph cluster_complex {
+        label="Phase 3B: Complex Resolution";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        cr1 [label="Escalate to\nSpecialist", shape=box, fillcolor="#f8bbd0"];
+        cr2 [label="Collaborative\nTroubleshooting", shape=box, fillcolor="#f8bbd0"];
+        cr3 [label="Custom Solution\nDevelopment", shape=box, fillcolor="#f8bbd0"];
+        cr4 [label="Implementation\n& Testing", shape=box, fillcolor="#f8bbd0"];
+        cr5 [label="Document Solution", shape=box, fillcolor="#f8bbd0"];
+
+        cr1 -> cr2 -> cr3 -> cr4 -> cr5;
+    }
+
+    // Phase 4: Communication
+    subgraph cluster_communication {
+        label="Phase 4: Customer Communication";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        com1 [label="Status Updates", shape=box, fillcolor="#b2dfdb"];
+        com2 [label="Solution\nExplanation", shape=box, fillcolor="#b2dfdb"];
+        com3 [label="Follow-up\nInstructions", shape=box, fillcolor="#b2dfdb"];
+        com4 [label="Request\nFeedback", shape=box, fillcolor="#b2dfdb"];
+
+        com1 -> com2 -> com3 -> com4;
+    }
+
+    // Phase 5: Knowledge Management
+    subgraph cluster_knowledge {
+        label="Phase 5: Knowledge Management";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        km1 [label="Update KB\nArticle", shape=box, fillcolor="#fff59d"];
+        km2 [label="Tag Common\nIssues", shape=box, fillcolor="#fff59d"];
+        km3 [label="Create FAQ\nEntry", shape=box, fillcolor="#fff59d"];
+        km4 [label="Share with Team", shape=box, fillcolor="#fff59d"];
+
+        km1 -> km2 -> km3 -> km4;
+    }
+
+    // Phase 6: Follow-up & Closure
+    subgraph cluster_closure {
+        label="Phase 6: Follow-up & Closure";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        fc1 [label="Verify Resolution", shape=box, fillcolor="#b3e5fc"];
+        fc2 [label="Customer\nSatisfaction Survey", shape=box, fillcolor="#b3e5fc"];
+        fc3 [label="Close Ticket", shape=box, fillcolor="#b3e5fc"];
+        fc4 [label="Generate\nReport", shape=box, fillcolor="#b3e5fc"];
+
+        fc1 -> fc2 -> fc3 -> fc4;
+    }
+
+    // Decision nodes
+    resolved [label="Issue\nResolved?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    satisfied [label="Customer\nSatisfied?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> i1 [label="Incoming\nRequest"];
+    i5 -> a1 [label="Ticket\nCreated"];
+    a5 -> complexity [label="Assessment\nComplete"];
+
+    complexity -> sr1 [label="Simple"];
+    complexity -> cr1 [label="Complex"];
+
+    sr3 -> com1;
+    cr5 -> com1;
+
+    com4 -> resolved [label="Solution\nProvided"];
+    resolved -> fc1 [label="Yes"];
+    resolved -> a1 [label="No - Re-assess", style=dashed, color="#f44336"];
+
+    fc1 -> satisfied [label="Check\nSatisfaction"];
+    satisfied -> km1 [label="Yes"];
+    satisfied -> a4 [label="No - Improve", style=dashed, color="#ff9800"];
+
+    km4 -> fc3 [label="Knowledge\nUpdated"];
+    fc4 -> end [label="Complete"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Ticket Management\n• Issue Resolution\n• Customer Communication\n• Knowledge Base Management\n• Escalation Handling\n• Satisfaction Tracking", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Tools & Systems
+    tools [label="Systems:\n• Zendesk/Freshdesk\n• CRM Integration\n• Knowledge Base\n• Live Chat\n• Email Support", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: customer-support-specialist\nPriority: Medium\nComplexity: Medium\nGraphviz Priority: 80", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

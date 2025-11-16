@@ -1,0 +1,167 @@
+digraph cicd_github_enhanced_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="CI/CD GitHub Enhanced Agent Workflow (v2.0.0)\nAgent ID: agent-099 | Category: Specialized Development\nPurpose: Advanced CI/CD pipelines with intelligent recovery";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="CI/CD Pipeline\nTriggered", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Deployed to\nProduction", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Intelligent Pipeline Setup
+    subgraph cluster_setup {
+        label="Phase 1: Intelligent Pipeline Setup";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        s1 [label="GitHub Actions\nConfiguration", shape=box, fillcolor="#ffecb3"];
+        s2 [label="Multi-Environment\nSetup (dev/stage/prod)", shape=box, fillcolor="#ffecb3"];
+        s3 [label="Secret Management", shape=box, fillcolor="#ffecb3"];
+        s4 [label="Dependency\nCaching", shape=box, fillcolor="#ffecb3"];
+
+        s1 -> s2 -> s3 -> s4;
+    }
+
+    // Phase 2: Build & Test
+    subgraph cluster_build {
+        label="Phase 2: Build & Test";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        b1 [label="Parallel Build\nJobs", shape=box, fillcolor="#bbdefb"];
+        b2 [label="Unit Tests\n(90%+ coverage)", shape=box, fillcolor="#bbdefb"];
+        b3 [label="Integration Tests", shape=box, fillcolor="#bbdefb"];
+        b4 [label="E2E Tests", shape=box, fillcolor="#bbdefb"];
+        b5 [label="Performance Tests", shape=box, fillcolor="#bbdefb"];
+
+        b1 -> b2 -> b3 -> b4 -> b5;
+    }
+
+    // Phase 3: Quality & Security
+    subgraph cluster_quality {
+        label="Phase 3: Quality & Security Gates";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        q1 [label="Code Quality\nScan (SonarQube)", shape=box, fillcolor="#e1bee7"];
+        q2 [label="Security Scan\n(Snyk/Trivy)", shape=box, fillcolor="#e1bee7"];
+        q3 [label="Dependency Audit", shape=box, fillcolor="#e1bee7"];
+        q4 [label="License Compliance", shape=box, fillcolor="#e1bee7"];
+        q5 [label="Container Scanning", shape=box, fillcolor="#e1bee7"];
+
+        q1 -> q2 -> q3 -> q4 -> q5;
+    }
+
+    // Phase 4: Intelligent Recovery
+    subgraph cluster_recovery {
+        label="Phase 4: Intelligent Failure Recovery";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        r1 [label="Failure Detection", shape=box, fillcolor="#f8bbd0"];
+        r2 [label="Root Cause\nAnalysis", shape=box, fillcolor="#f8bbd0"];
+        r3 [label="Automated Repair", shape=box, fillcolor="#f8bbd0"];
+        r4 [label="Retry with Fix", shape=box, fillcolor="#f8bbd0"];
+        r5 [label="Escalate if\nUnresolved", shape=box, fillcolor="#f8bbd0"];
+
+        r1 -> r2 -> r3 -> r4 -> r5;
+    }
+
+    // Phase 5: Deployment Strategies
+    subgraph cluster_deployment {
+        label="Phase 5: Advanced Deployment Strategies";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        dep1 [label="Blue-Green\nDeployment", shape=box, fillcolor="#b2dfdb"];
+        dep2 [label="Canary Release", shape=box, fillcolor="#b2dfdb"];
+        dep3 [label="Rolling Update", shape=box, fillcolor="#b2dfdb"];
+        dep4 [label="Feature Flags", shape=box, fillcolor="#b2dfdb"];
+
+        dep1 -> dep2 -> dep3 -> dep4;
+    }
+
+    // Phase 6: Monitoring & Rollback
+    subgraph cluster_monitoring {
+        label="Phase 6: Monitoring & Automated Rollback";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        mon1 [label="Deployment Health\nChecks", shape=box, fillcolor="#fff59d"];
+        mon2 [label="Error Rate\nMonitoring", shape=box, fillcolor="#fff59d"];
+        mon3 [label="Performance\nMetrics", shape=box, fillcolor="#fff59d"];
+        mon4 [label="Automated Rollback\nTrigger", shape=box, fillcolor="#fff59d"];
+
+        mon1 -> mon2 -> mon3 -> mon4;
+    }
+
+    // Phase 7: Notifications & Reporting
+    subgraph cluster_reporting {
+        label="Phase 7: Notifications & Reporting";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        rep1 [label="Slack/Teams\nNotifications", shape=box, fillcolor="#b3e5fc"];
+        rep2 [label="Deployment\nSummary", shape=box, fillcolor="#b3e5fc"];
+        rep3 [label="Change Log\nGeneration", shape=box, fillcolor="#b3e5fc"];
+        rep4 [label="GitHub Release\nCreation", shape=box, fillcolor="#b3e5fc"];
+
+        rep1 -> rep2 -> rep3 -> rep4;
+    }
+
+    // Decisions
+    build_success [label="Build &\nTests Pass?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    quality_gates [label="Quality Gates\nPass?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    deployment_healthy [label="Deployment\nHealthy?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> s1;
+    s4 -> b1;
+    b5 -> build_success;
+
+    build_success -> q1 [label="Yes"];
+    build_success -> r1 [label="No", style="bold", color="#d32f2f"];
+
+    r5 -> q1 [label="Fixed"];
+
+    q5 -> quality_gates;
+    quality_gates -> dep1 [label="Pass"];
+    quality_gates -> r1 [label="Fail", style=dashed, color="#f44336"];
+
+    dep4 -> mon1;
+    mon4 -> deployment_healthy;
+
+    deployment_healthy -> rep1 [label="Yes"];
+    deployment_healthy -> dep1 [label="No - Rollback", style="bold", color="#ff9800"];
+
+    rep4 -> end;
+
+    // V2.0 enhancements
+    enhancements [label="v2.0.0 Enhancements:\n• Intelligent Recovery\n• Advanced Deployment\n• Automated Rollback\n• Quality Gates\n• Multi-Environment\n• 100% Success Rate", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Deployment strategies
+    strategies [label="Deployment:\n• Blue-Green\n• Canary\n• Rolling Update\n• Feature Flags", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: cicd-github-enhanced\nPriority: High\nComplexity: Very High\nVersion: 2.0.0\nGraphviz Priority: 99", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

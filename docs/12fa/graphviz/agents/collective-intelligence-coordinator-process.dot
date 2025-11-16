@@ -1,0 +1,77 @@
+digraph COLLECTIVE_INTELLIGENCE_COORDINATOR_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_init {
+    label="Agent Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+    
+    start [label="Collective Intelligence\nCoordinator Spawned", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Configuration\nHive Mind System"];
+    validate_caps [label="Validate Capabilities\nconsensus_building, knowledge_aggregation\ncollective_decision, swarm_intelligence"];
+    
+    start -> load_config -> validate_caps;
+  }
+  
+  subgraph cluster_knowledge_aggregation {
+    label="Knowledge Aggregation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+    
+    collect_agent_knowledge [label="Collect Agent Knowledge\nFrom all swarm members", fillcolor=purple];
+    aggregate_experiences [label="Aggregate Experiences\nPattern recognition"];
+    build_collective_memory [label="Build Collective Memory\nShared knowledge base"];
+    identify_patterns [label="Identify Patterns\nEmergent intelligence"];
+    
+    validate_caps -> collect_agent_knowledge;
+    collect_agent_knowledge -> aggregate_experiences -> build_collective_memory -> identify_patterns;
+  }
+  
+  subgraph cluster_consensus {
+    label="Consensus Building";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+    
+    propose_solutions [label="Agents Propose Solutions\nDistributed ideation", fillcolor=lightblue];
+    byzantine_voting [label="Byzantine Voting\n2/3 majority consensus"];
+    resolve_conflicts [label="Resolve Conflicts\nMediation protocol"];
+    finalize_decision [label="Finalize Decision\nCollective agreement"];
+    
+    identify_patterns -> propose_solutions;
+    propose_solutions -> byzantine_voting -> resolve_conflicts -> finalize_decision;
+  }
+  
+  subgraph cluster_swarm_intelligence {
+    label="Swarm Intelligence";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    distribute_tasks [label="Distribute Tasks\nSwarm optimization", fillcolor=lightgreen];
+    execute_collectively [label="Execute Collectively\nCoordinated action"];
+    share_findings [label="Share Findings\nReal-time knowledge transfer"];
+    adapt_strategy [label="Adapt Strategy\nCollective learning"];
+    
+    finalize_decision -> distribute_tasks;
+    distribute_tasks -> execute_collectively -> share_findings -> adapt_strategy;
+  }
+  
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+    
+    store_collective_knowledge [label="Store Collective Knowledge\nmemory_store", fillcolor=lightblue];
+    log_consensus_metrics [label="Log Consensus Metrics"];
+    neural_train [label="Train Collective Patterns\nmcp__ruv-swarm__neural_train"];
+    success [label="Collective Intelligence Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+    
+    adapt_strategy -> store_collective_knowledge;
+    store_collective_knowledge -> log_consensus_metrics -> neural_train -> success;
+  }
+}

@@ -1,0 +1,54 @@
+digraph sparc_ask_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:Ask Command Workflow\nTask Formulation & Clarification";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:ask", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  receive_request [label="Receive User Request\nRaw task description", fillcolor="#FFF9C4"];
+
+  analyze_intent [label="Analyze Intent\n- Primary goal\n- Success criteria\n- Constraints", fillcolor="#FFE0B2"];
+
+  ambiguity_check [label="Ambiguities Found?", fillcolor="#C5CAE9", shape=diamond];
+
+  ask_questions [label="Ask Clarifying Questions\n- Scope boundaries\n- Requirements\n- Assumptions\n- Preferences", fillcolor="#BBDEFB"];
+
+  receive_answers [label="Receive Answers\nUser clarification", fillcolor="#B2DFDB"];
+
+  define_scope [label="Define Scope\n- In scope\n- Out of scope\n- Future considerations", fillcolor="#D1C4E9"];
+
+  identify_agent [label="Identify Target Agent\n- Spec writer\n- Coder\n- Architect\n- Other specialist", fillcolor="#F0F4C3"];
+
+  formulate_task [label="Formulate Task\n- Clear objective\n- Acceptance criteria\n- Context & constraints", fillcolor="#FFE0B2"];
+
+  validate_task [label="Validate with User\nConfirm understanding", fillcolor="#BBDEFB"];
+
+  confirmed [label="Task Confirmed?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_task [label="Delegate to Agent\nRoute to appropriate mode", fillcolor="#B2DFDB"];
+
+  success [label="Task Formulated\nAgent assigned", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> receive_request;
+  receive_request -> analyze_intent;
+  analyze_intent -> ambiguity_check;
+  ambiguity_check -> ask_questions [label="Yes"];
+  ambiguity_check -> define_scope [label="No"];
+  ask_questions -> receive_answers;
+  receive_answers -> analyze_intent;
+  define_scope -> identify_agent;
+  identify_agent -> formulate_task;
+  formulate_task -> validate_task;
+  validate_task -> confirmed;
+  confirmed -> delegate_task [label="Yes"];
+  confirmed -> ask_questions [label="No"];
+  delegate_task -> success;
+}

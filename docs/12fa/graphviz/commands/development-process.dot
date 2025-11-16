@@ -1,0 +1,93 @@
+// Development Command Workflow
+// Development workflow orchestration
+digraph development_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/development\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        feature_parser [label="Feature\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_planning {
+        label="Planning Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        requirement_analyzer [label="Requirement\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        architecture_designer [label="Architecture\nDesigner", fillcolor="#2563eb", fontcolor="#ffffff"];
+        task_breaker [label="Task\nBreaker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_tdd {
+        label="TDD Workflow";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        test_writer [label="Test Writer\n(Red)", fillcolor="#dc2626", fontcolor="#ffffff"];
+        implementation [label="Implementation\n(Green)", fillcolor="#16a34a", fontcolor="#ffffff"];
+        refactorer [label="Refactorer\n(Refactor)", fillcolor="#d97706", fontcolor="#ffffff"];
+        coverage_check [label="Coverage Check\n(>90%)", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_testing {
+        label="Testing Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        unit_tester [label="Unit\nTester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        integration_tester [label="Integration\nTester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        e2e_tester [label="E2E\nTester", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_deployment {
+        label="Deployment Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        build_pipeline [label="Build\nPipeline", fillcolor="#10b981", fontcolor="#ffffff"];
+        staging_deploy [label="Staging\nDeploy", fillcolor="#10b981", fontcolor="#ffffff"];
+        prod_deploy [label="Production\nDeploy", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        deployed_feature [label="Deployed\nFeature", fillcolor="#059669", fontcolor="#ffffff"];
+        workflow_report [label="Workflow\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> feature_parser;
+    feature_parser -> requirement_analyzer -> architecture_designer -> task_breaker;
+    task_breaker -> test_writer -> implementation -> refactorer -> coverage_check;
+    coverage_check -> unit_tester -> integration_tester -> e2e_tester;
+    e2e_tester -> build_pipeline -> staging_deploy -> prod_deploy;
+    prod_deploy -> deployed_feature -> workflow_report;
+    workflow_report -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    coverage_check -> test_writer [label="<90%", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="TDD Red", fillcolor="#dc2626", fontcolor="#ffffff"];
+        legend3 [label="TDD Green", fillcolor="#16a34a", fontcolor="#ffffff"];
+    }
+}

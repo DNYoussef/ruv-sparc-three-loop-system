@@ -1,0 +1,128 @@
+digraph GITHUB_RELEASE_MANAGEMENT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  subgraph cluster_initialization {
+    label="Release Management Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Release Mgmt Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Release Config"];
+    validate_input [label="Validate Version & Branch"];
+    check_deps [label="Check gh CLI & Git"];
+
+    start -> load_spec -> validate_input -> check_deps;
+  }
+
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson, label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  subgraph cluster_execution {
+    label="Release Orchestration Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    version_bump [label="Version Bump & Changelog", fillcolor=purple];
+    run_tests [label="Run Test Suite", fillcolor=purple];
+    tests_check [shape=diamond, label="Tests Pass?"];
+    create_release [label="Create GitHub Release", fillcolor=purple];
+    deploy [label="Deploy Release", fillcolor=purple];
+    deploy_check [shape=diamond, label="Deploy\nSuccessful?"];
+
+    execution_error [shape=octagon, fillcolor=orange, label="Release Error"];
+    rollback_release [label="Rollback Release", fillcolor=crimson];
+  }
+
+  check_secrets -> version_bump [label="Pass"];
+  version_bump -> run_tests;
+  run_tests -> tests_check;
+  tests_check -> create_release [label="Pass"];
+  tests_check -> execution_error [label="Fail"];
+  create_release -> deploy;
+  deploy -> deploy_check;
+  deploy_check -> execution_error [label="No"];
+  execution_error -> rollback_release -> escalate;
+
+  subgraph cluster_coordination {
+    label="Release Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Release State", fillcolor=lightblue];
+    track_deployment [label="Track Deployment Status", fillcolor=lightblue];
+    notify_coordinator [label="Notify Team", fillcolor=lightblue];
+  }
+
+  deploy_check -> memory_store [label="Yes"];
+  memory_store -> track_deployment -> notify_coordinator;
+
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Release\nHealthy?"];
+    smoke_tests [label="Run Smoke Tests", fillcolor=lightgreen];
+    smoke_check [shape=diamond, label="Smoke Tests\nPass?"];
+    quality_gate_fail [shape=octagon, fillcolor=orange, label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> smoke_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+  smoke_tests -> smoke_check;
+  smoke_check -> quality_gate_fail [label="No"];
+
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_notes [label="Generate Release Notes", fillcolor=lightgreen];
+    announce [label="Announce Release", fillcolor=lightgreen];
+    cleanup [label="Cleanup Resources", fillcolor=lightgreen];
+    log_completion [label="Log Metrics"];
+    success [label="Release Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  smoke_check -> generate_notes [label="Yes"];
+  generate_notes -> announce -> cleanup -> log_completion -> success;
+
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow, label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    failure [label="Release Failed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+  log_error -> failure;
+}

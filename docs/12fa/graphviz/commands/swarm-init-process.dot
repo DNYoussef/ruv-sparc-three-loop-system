@@ -1,0 +1,26 @@
+digraph SWARM_INIT {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/swarm-init", shape=ellipse, fillcolor=lightblue];
+  select_topology [shape=diamond, label="Topology\nType?"];
+  mesh_topology [label="Mesh\nTopology", fillcolor=lightgreen];
+  hierarchical_topology [label="Hierarchical\nTopology", fillcolor=lightgreen];
+  ring_topology [label="Ring\nTopology", fillcolor=lightgreen];
+  star_topology [label="Star\nTopology", fillcolor=lightgreen];
+  select_strategy [label="Select Distribution\nStrategy", fillcolor=purple];
+  set_max_agents [label="Set Max\nAgents", fillcolor=lightblue];
+  init_coordination [label="Initialize\nCoordination", fillcolor=lightpurple, style="filled,bold"];
+  success [label="Swarm Initialized", shape=doublecircle, fillcolor=green];
+
+  invoke -> select_topology;
+  select_topology -> mesh_topology [label="mesh"];
+  select_topology -> hierarchical_topology [label="hierarchical"];
+  select_topology -> ring_topology [label="ring"];
+  select_topology -> star_topology [label="star"];
+  mesh_topology -> select_strategy;
+  hierarchical_topology -> select_strategy;
+  ring_topology -> select_strategy;
+  star_topology -> select_strategy;
+  select_strategy -> set_max_agents -> init_coordination -> success;
+}

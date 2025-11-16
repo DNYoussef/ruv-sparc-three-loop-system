@@ -1,0 +1,373 @@
+digraph CodeReviewAssistant {
+    // Graph configuration
+    rankdir=TB;
+    splines=ortho;
+    nodesep=0.7;
+    ranksep=0.9;
+    fontname="Arial";
+    fontsize=12;
+
+    // Style definitions
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Color scheme
+    node [fillcolor=lightblue, shape=box];
+
+    // Start/End nodes
+    start [label="Code Review\nRequest", shape=ellipse, fillcolor=lightgreen];
+    end [label="Review\nComplete", shape=doubleoctagon, fillcolor=lightgreen];
+
+    // Review Request Processing
+    subgraph cluster_intake {
+        label="Review Request Processing";
+        style=filled;
+        fillcolor=lightyellow;
+
+        parse_request [label="Parse Review\nRequest"];
+        identify_scope [label="Identify\nScope"];
+        classify_changes [label="Classify\nChanges"];
+        estimate_complexity [label="Estimate\nComplexity", shape=diamond, fillcolor=yellow];
+        select_reviewers [label="Select\nReviewer Agents"];
+
+        parse_request -> identify_scope;
+        identify_scope -> classify_changes;
+        classify_changes -> estimate_complexity;
+        estimate_complexity -> select_reviewers [label="Simple"];
+        estimate_complexity -> select_reviewers [label="Complex"];
+    }
+
+    // Security Reviewer Agent
+    subgraph cluster_security {
+        label="Security Reviewer Agent";
+        style=filled;
+        fillcolor=mistyrose;
+
+        security_init [label="Security Agent\nInitialize", shape=component, fillcolor=orange];
+        auth_check [label="Authentication\nCheck"];
+        authorization_check [label="Authorization\nCheck"];
+        input_validation [label="Input\nValidation"];
+        sql_injection [label="SQL Injection\nScan"];
+        xss_check [label="XSS\nVulnerability"];
+        secrets_scan [label="Secrets\nDetection"];
+        crypto_review [label="Cryptography\nReview"];
+        security_findings [label="Security\nFindings", shape=note];
+        security_autofix [label="Generate\nAuto-fixes", shape=hexagon, fillcolor=lightgreen];
+
+        security_init -> auth_check;
+        auth_check -> authorization_check;
+        authorization_check -> input_validation;
+        input_validation -> sql_injection;
+        sql_injection -> xss_check;
+        xss_check -> secrets_scan;
+        secrets_scan -> crypto_review;
+        crypto_review -> security_findings;
+        security_findings -> security_autofix [label="Fixable Issues"];
+    }
+
+    // Performance Reviewer Agent
+    subgraph cluster_performance {
+        label="Performance Reviewer Agent";
+        style=filled;
+        fillcolor=lightcyan;
+
+        perf_init [label="Performance Agent\nInitialize", shape=component, fillcolor=orange];
+        complexity_analysis [label="Time Complexity\nAnalysis"];
+        memory_analysis [label="Memory Usage\nAnalysis"];
+        db_query_review [label="Database Query\nOptimization"];
+        algorithm_review [label="Algorithm\nEfficiency"];
+        caching_check [label="Caching\nOpportunities"];
+        async_review [label="Async/Await\nPatterns"];
+        perf_findings [label="Performance\nFindings", shape=note];
+        perf_autofix [label="Generate\nOptimizations", shape=hexagon, fillcolor=lightgreen];
+
+        perf_init -> complexity_analysis;
+        complexity_analysis -> memory_analysis;
+        memory_analysis -> db_query_review;
+        db_query_review -> algorithm_review;
+        algorithm_review -> caching_check;
+        caching_check -> async_review;
+        async_review -> perf_findings;
+        perf_findings -> perf_autofix [label="Auto-fixable"];
+    }
+
+    // Style Reviewer Agent
+    subgraph cluster_style {
+        label="Style Reviewer Agent";
+        style=filled;
+        fillcolor=lavender;
+
+        style_init [label="Style Agent\nInitialize", shape=component, fillcolor=orange];
+        lint_check [label="Linting\nCheck"];
+        formatting_check [label="Code\nFormatting"];
+        naming_convention [label="Naming\nConventions"];
+        code_structure [label="Code\nStructure"];
+        readability [label="Readability\nAnalysis"];
+        maintainability [label="Maintainability\nScore"];
+        style_findings [label="Style\nFindings", shape=note];
+        style_autofix [label="Auto-format\nCode", shape=hexagon, fillcolor=lightgreen];
+
+        style_init -> lint_check;
+        lint_check -> formatting_check;
+        formatting_check -> naming_convention;
+        naming_convention -> code_structure;
+        code_structure -> readability;
+        readability -> maintainability;
+        maintainability -> style_findings;
+        style_findings -> style_autofix [label="Auto-fixable"];
+    }
+
+    // Test Reviewer Agent
+    subgraph cluster_tests {
+        label="Test Reviewer Agent";
+        style=filled;
+        fillcolor=lightgreen;
+
+        test_init [label="Test Agent\nInitialize", shape=component, fillcolor=orange];
+        coverage_check [label="Test Coverage\nAnalysis"];
+        test_quality [label="Test Quality\nReview"];
+        assertion_review [label="Assertion\nAdequacy"];
+        edge_case_check [label="Edge Case\nCoverage"];
+        mock_review [label="Mock/Stub\nReview"];
+        test_structure [label="Test Structure\nAnalysis"];
+        test_findings [label="Test\nFindings", shape=note];
+        test_autofix [label="Generate\nMissing Tests", shape=hexagon, fillcolor=lightgreen];
+
+        test_init -> coverage_check;
+        coverage_check -> test_quality;
+        test_quality -> assertion_review;
+        assertion_review -> edge_case_check;
+        edge_case_check -> mock_review;
+        mock_review -> test_structure;
+        test_structure -> test_findings;
+        test_findings -> test_autofix [label="Can Generate"];
+    }
+
+    // Documentation Reviewer Agent
+    subgraph cluster_docs {
+        label="Documentation Reviewer Agent";
+        style=filled;
+        fillcolor=lemonchiffon;
+
+        docs_init [label="Docs Agent\nInitialize", shape=component, fillcolor=orange];
+        api_docs_check [label="API Docs\nCompleteness"];
+        comment_review [label="Code Comments\nQuality"];
+        readme_check [label="README\nUpdate Check"];
+        changelog_check [label="Changelog\nUpdate"];
+        inline_docs [label="Inline\nDocumentation"];
+        example_check [label="Usage Examples\nCheck"];
+        docs_findings [label="Documentation\nFindings", shape=note];
+        docs_autofix [label="Generate\nDocumentation", shape=hexagon, fillcolor=lightgreen];
+
+        docs_init -> api_docs_check;
+        api_docs_check -> comment_review;
+        comment_review -> readme_check;
+        readme_check -> changelog_check;
+        changelog_check -> inline_docs;
+        inline_docs -> example_check;
+        example_check -> docs_findings;
+        docs_findings -> docs_autofix [label="Can Generate"];
+    }
+
+    // Parallel Review Coordination
+    subgraph cluster_coordination {
+        label="Parallel Review Coordination";
+        style=filled;
+        fillcolor=wheat;
+
+        coordinator [label="Review\nCoordinator", shape=component, fillcolor=orange];
+        spawn_agents [label="Spawn All\nReview Agents"];
+        monitor_progress [label="Monitor\nAgent Progress"];
+        collect_findings [label="Collect All\nFindings"];
+        aggregate_results [label="Aggregate\nResults"];
+
+        coordinator -> spawn_agents;
+        spawn_agents -> monitor_progress;
+        monitor_progress -> collect_findings;
+        collect_findings -> aggregate_results;
+    }
+
+    // Auto-fix Synthesis
+    subgraph cluster_autofix {
+        label="Auto-fix Synthesis";
+        style=filled;
+        fillcolor=palegreen;
+
+        merge_fixes [label="Merge\nAuto-fixes"];
+        resolve_conflicts [label="Resolve Fix\nConflicts", shape=diamond, fillcolor=yellow];
+        validate_fixes [label="Validate\nFix Safety"];
+        generate_patch [label="Generate\nPatch File"];
+        test_fixes [label="Test\nAuto-fixes", shape=hexagon];
+        fix_validation [label="Fix Validation\nGate", shape=diamond, fillcolor=yellow];
+
+        merge_fixes -> resolve_conflicts;
+        resolve_conflicts -> validate_fixes [label="No Conflicts"];
+        resolve_conflicts -> merge_fixes [label="Manual Resolution", color=orange];
+        validate_fixes -> generate_patch;
+        generate_patch -> test_fixes;
+        test_fixes -> fix_validation;
+        fix_validation -> generate_patch [label="Tests Fail", color=red];
+    }
+
+    // Findings Analysis
+    subgraph cluster_analysis {
+        label="Findings Analysis";
+        style=filled;
+        fillcolor=lightsteelblue;
+
+        categorize [label="Categorize\nIssues"];
+        prioritize [label="Prioritize by\nSeverity", shape=diamond, fillcolor=yellow];
+        critical_issues [label="Critical\nIssues", fillcolor=red];
+        major_issues [label="Major\nIssues", fillcolor=orange];
+        minor_issues [label="Minor\nIssues", fillcolor=yellow];
+        suggestions [label="Suggestions", fillcolor=lightgreen];
+
+        categorize -> prioritize;
+        prioritize -> critical_issues [label="Critical"];
+        prioritize -> major_issues [label="Major"];
+        prioritize -> minor_issues [label="Minor"];
+        prioritize -> suggestions [label="Info"];
+    }
+
+    // Merge Readiness Assessment
+    subgraph cluster_merge_ready {
+        label="Merge Readiness Assessment";
+        style=filled;
+        fillcolor=honeydew;
+
+        check_blockers [label="Check\nBlockers", shape=diamond, fillcolor=yellow];
+        security_gate [label="Security\nApproved?", shape=diamond, fillcolor=yellow];
+        perf_gate [label="Performance\nAcceptable?", shape=diamond, fillcolor=yellow];
+        test_gate [label="Tests\nAdequate?", shape=diamond, fillcolor=yellow];
+        docs_gate [label="Docs\nComplete?", shape=diamond, fillcolor=yellow];
+        calculate_score [label="Calculate\nMerge Score"];
+        merge_decision [label="Merge\nDecision", shape=diamond, fillcolor=yellow];
+        approve_merge [label="Approve\nMerge", fillcolor=lightgreen];
+        block_merge [label="Block\nMerge", fillcolor=red];
+        conditional_merge [label="Conditional\nApproval", fillcolor=yellow];
+
+        check_blockers -> security_gate;
+        security_gate -> perf_gate [label="Pass"];
+        perf_gate -> test_gate [label="Pass"];
+        test_gate -> docs_gate [label="Pass"];
+        docs_gate -> calculate_score [label="Pass"];
+        calculate_score -> merge_decision;
+        merge_decision -> approve_merge [label="Score >= 90"];
+        merge_decision -> conditional_merge [label="Score 70-89"];
+        merge_decision -> block_merge [label="Score < 70"];
+
+        security_gate -> block_merge [label="Fail", color=red];
+        perf_gate -> conditional_merge [label="Minor Issues", color=orange];
+        test_gate -> conditional_merge [label="Needs Work", color=orange];
+    }
+
+    // Report Generation
+    subgraph cluster_report {
+        label="Report Generation";
+        style=filled;
+        fillcolor=aliceblue;
+
+        format_report [label="Format\nReport"];
+        add_metrics [label="Add\nMetrics"];
+        include_fixes [label="Include\nAuto-fixes"];
+        generate_summary [label="Generate\nExecutive Summary"];
+        create_checklist [label="Create Action\nChecklist"];
+        final_report [label="Final Review\nReport", shape=note];
+
+        format_report -> add_metrics;
+        add_metrics -> include_fixes;
+        include_fixes -> generate_summary;
+        generate_summary -> create_checklist;
+        create_checklist -> final_report;
+    }
+
+    // Error Handling
+    subgraph cluster_error {
+        label="Error Handling";
+        style=filled;
+        fillcolor=mistyrose;
+
+        error_detect [label="Error\nDetection", shape=octagon, fillcolor=red];
+        retry_review [label="Retry\nReview"];
+        fallback_mode [label="Fallback to\nBasic Review"];
+        manual_review [label="Request Manual\nReview", shape=octagon, fillcolor=orange];
+
+        error_detect -> retry_review;
+        retry_review -> fallback_mode [label="Retry Failed"];
+        fallback_mode -> manual_review [label="Still Failing"];
+    }
+
+    // Memory & Context
+    memory_store [label="Memory Store\n(Review History)", shape=cylinder, fillcolor=lightgray];
+    review_patterns [label="Review Pattern\nLearning", shape=cylinder, fillcolor=lightgray];
+
+    // Main workflow
+    start -> parse_request;
+    select_reviewers -> coordinator;
+    coordinator -> spawn_agents;
+
+    // Agent spawning
+    spawn_agents -> security_init [style=dashed];
+    spawn_agents -> perf_init [style=dashed];
+    spawn_agents -> style_init [style=dashed];
+    spawn_agents -> test_init [style=dashed];
+    spawn_agents -> docs_init [style=dashed];
+
+    // Findings collection
+    security_findings -> aggregate_results [style=dashed, color=blue];
+    perf_findings -> aggregate_results [style=dashed, color=blue];
+    style_findings -> aggregate_results [style=dashed, color=blue];
+    test_findings -> aggregate_results [style=dashed, color=blue];
+    docs_findings -> aggregate_results [style=dashed, color=blue];
+
+    // Auto-fix collection
+    security_autofix -> merge_fixes [style=dashed, color=green];
+    perf_autofix -> merge_fixes [style=dashed, color=green];
+    style_autofix -> merge_fixes [style=dashed, color=green];
+    test_autofix -> merge_fixes [style=dashed, color=green];
+    docs_autofix -> merge_fixes [style=dashed, color=green];
+
+    // Flow continuation
+    aggregate_results -> categorize;
+    categorize -> format_report;
+
+    fix_validation -> include_fixes [label="Pass"];
+
+    critical_issues -> check_blockers;
+    major_issues -> check_blockers;
+    minor_issues -> check_blockers;
+    suggestions -> check_blockers;
+
+    approve_merge -> final_report;
+    conditional_merge -> final_report;
+    block_merge -> final_report;
+
+    final_report -> end;
+
+    // Memory connections
+    aggregate_results -> memory_store [style=dashed, color=blue];
+    final_report -> memory_store [style=dashed, color=blue];
+    categorize -> review_patterns [style=dashed, color=purple];
+
+    // Error routing
+    security_init -> error_detect [label="Agent Error", color=red, style=dashed];
+    perf_init -> error_detect [label="Agent Error", color=red, style=dashed];
+    style_init -> error_detect [label="Agent Error", color=red, style=dashed];
+    test_init -> error_detect [label="Agent Error", color=red, style=dashed];
+    docs_init -> error_detect [label="Agent Error", color=red, style=dashed];
+
+    manual_review -> end [label="Escalated", color=orange];
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        fillcolor=white;
+
+        legend_agent [label="Agent", shape=component, fillcolor=orange];
+        legend_decision [label="Decision Point", shape=diamond, fillcolor=yellow];
+        legend_autofix [label="Auto-fix Action", shape=hexagon, fillcolor=lightgreen];
+        legend_error [label="Error State", shape=octagon, fillcolor=red];
+        legend_output [label="Output", shape=note];
+    }
+}

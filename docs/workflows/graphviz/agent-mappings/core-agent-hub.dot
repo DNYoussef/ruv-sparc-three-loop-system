@@ -1,0 +1,265 @@
+// Core Agent Command Hub
+// Focus on 15-20 most important core agents and their command assignments
+// Highlights commands used by multiple agents
+
+digraph CoreAgentHub {
+    // Graph settings
+    graph [
+        rankdir=TB,
+        splines=ortho,
+        overlap=false,
+        nodesep=1.0,
+        ranksep=1.5,
+        fontname="Arial",
+        fontsize=14,
+        label="Core Agent Command Hub\nMost Frequently Used Commands by Core Agents",
+        labelloc=t,
+        bgcolor="#FAFAFA"
+    ];
+
+    node [fontname="Arial", fontsize=11, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Core agents (top tier)
+    subgraph cluster_core_agents {
+        label="Core Development Agents (Top Tier)";
+        style=filled;
+        color="#E3F2FD";
+        fontsize=13;
+
+        node [shape=box, fillcolor="#1976D2", fontcolor=white, width=2.0, height=0.8];
+        coder [label="Coder\n(Primary)"];
+        reviewer [label="Reviewer\n(Quality)"];
+        tester [label="Tester\n(Validation)"];
+        planner [label="Planner\n(Strategy)"];
+        researcher [label="Researcher\n(Analysis)"];
+    }
+
+    // Essential coordination agents
+    subgraph cluster_coord_agents {
+        label="Coordination & Orchestration Agents";
+        style=filled;
+        color="#FFF3E0";
+        fontsize=13;
+
+        node [shape=box, fillcolor="#EF6C00", fontcolor=white, width=2.0, height=0.8];
+        task_orch [label="Task Orchestrator\n(Workflow)"];
+        hierarchical [label="Hierarchical Coord\n(Management)"];
+        adaptive [label="Adaptive Coord\n(Dynamic)"];
+        mem_coord [label="Memory Coord\n(State)"];
+    }
+
+    // Specialized high-value agents
+    subgraph cluster_specialized {
+        label="High-Value Specialized Agents";
+        style=filled;
+        color="#F3E5F5";
+        fontsize=13;
+
+        node [shape=box, fillcolor="#7B1FA2", fontcolor=white, width=2.0, height=0.8];
+        backend [label="Backend Dev\n(API/Server)"];
+        code_analyzer [label="Code Analyzer\n(Quality)"];
+        sparc_coder [label="SPARC Coder\n(TDD)"];
+        github_modes [label="GitHub Modes\n(VCS)"];
+        cicd [label="CI/CD Engineer\n(Automation)"];
+        prod_validator [label="Production Validator\n(Deploy)"];
+    }
+
+    // Command nodes - categorized by usage frequency
+    subgraph cluster_critical_commands {
+        label="Critical Commands (Used by 10+ agents)";
+        style=filled;
+        color="#E8F5E9";
+        fontsize=12;
+
+        node [shape=ellipse, fillcolor="#2E7D32", fontcolor=white, width=1.8];
+        file_read [label="/file-read\n★★★★★"];
+        mem_store [label="/memory-store\n★★★★★"];
+        mem_retrieve [label="/memory-retrieve\n★★★★★"];
+        comm_notify [label="/communicate-notify\n★★★★"];
+        agent_delegate [label="/agent-delegate\n★★★★"];
+    }
+
+    subgraph cluster_high_usage {
+        label="High-Usage Commands (Used by 5-9 agents)";
+        style=filled;
+        color="#FFF9C4";
+        fontsize=12;
+
+        node [shape=ellipse, fillcolor="#F9A825", fontcolor=black, width=1.8];
+        file_write [label="/file-write\n★★★★"];
+        file_edit [label="/file-edit\n★★★★"];
+        grep_search [label="/grep-search\n★★★"];
+        git_status [label="/git-status\n★★★"];
+        git_commit [label="/git-commit\n★★★"];
+        test_run [label="/test-run\n★★★"];
+        comm_report [label="/communicate-report\n★★★"];
+        mem_search [label="/memory-search\n★★★"];
+    }
+
+    subgraph cluster_moderate_usage {
+        label="Moderate-Usage Commands (Used by 2-4 agents)";
+        style=filled;
+        color="#E1F5FE";
+        fontsize=12;
+
+        node [shape=ellipse, fillcolor="#0277BD", fontcolor=white, width=1.6];
+        git_diff [label="/git-diff\n★★"];
+        git_push [label="/git-push\n★★"];
+        agent_coord [label="/agent-coordinate\n★★"];
+        code_format [label="/code-format\n★★"];
+        lint [label="/lint\n★★"];
+        test_validate [label="/test-validate\n★★"];
+        markdown_gen [label="/markdown-gen\n★★"];
+        json_format [label="/json-format\n★"];
+    }
+
+    subgraph cluster_specialized_cmds {
+        label="Specialized Commands";
+        style=filled;
+        color="#FCE4EC";
+        fontsize=12;
+
+        node [shape=ellipse, fillcolor="#C2185B", fontcolor=white, width=1.6];
+        test_unit [label="/test-unit"];
+        test_coverage [label="/test-coverage"];
+        yaml_format [label="/yaml-format"];
+        git_branch [label="/git-branch"];
+        glob_search [label="/glob-search"];
+    }
+
+    // Edges - Core Development Agents
+    // Coder (heaviest usage)
+    coder -> file_read [penwidth=3, color="#1976D2"];
+    coder -> file_write [penwidth=3, color="#1976D2"];
+    coder -> file_edit [penwidth=3, color="#1976D2"];
+    coder -> mem_store [penwidth=3, color="#1976D2"];
+    coder -> mem_retrieve [penwidth=2, color="#1976D2"];
+    coder -> git_status [penwidth=2, color="#1976D2"];
+    coder -> git_commit [penwidth=2, color="#1976D2"];
+    coder -> comm_notify [penwidth=2, color="#1976D2"];
+    coder -> agent_delegate [penwidth=2, color="#1976D2"];
+    coder -> code_format [penwidth=1, color="#1976D2"];
+    coder -> lint [penwidth=1, color="#1976D2"];
+    coder -> test_run [penwidth=1, color="#1976D2"];
+
+    // Reviewer
+    reviewer -> file_read [penwidth=3, color="#1976D2"];
+    reviewer -> grep_search [penwidth=2, color="#1976D2"];
+    reviewer -> git_diff [penwidth=2, color="#1976D2"];
+    reviewer -> lint [penwidth=2, color="#1976D2"];
+    reviewer -> comm_report [penwidth=2, color="#1976D2"];
+    reviewer -> mem_retrieve [penwidth=1, color="#1976D2"];
+    reviewer -> mem_search [penwidth=1, color="#1976D2"];
+
+    // Tester
+    tester -> file_read [penwidth=2, color="#1976D2"];
+    tester -> test_run [penwidth=3, color="#1976D2"];
+    tester -> test_unit [penwidth=2, color="#1976D2"];
+    tester -> test_coverage [penwidth=2, color="#1976D2"];
+    tester -> git_status [penwidth=1, color="#1976D2"];
+    tester -> comm_notify [penwidth=1, color="#1976D2"];
+    tester -> mem_store [penwidth=1, color="#1976D2"];
+
+    // Planner
+    planner -> file_read [penwidth=2, color="#1976D2"];
+    planner -> mem_store [penwidth=2, color="#1976D2"];
+    planner -> mem_retrieve [penwidth=2, color="#1976D2"];
+    planner -> mem_search [penwidth=2, color="#1976D2"];
+    planner -> agent_delegate [penwidth=2, color="#1976D2"];
+    planner -> markdown_gen [penwidth=1, color="#1976D2"];
+    planner -> comm_report [penwidth=1, color="#1976D2"];
+
+    // Researcher
+    researcher -> file_read [penwidth=2, color="#1976D2"];
+    researcher -> grep_search [penwidth=2, color="#1976D2"];
+    researcher -> mem_search [penwidth=2, color="#1976D2"];
+    researcher -> markdown_gen [penwidth=1, color="#1976D2"];
+    researcher -> comm_report [penwidth=1, color="#1976D2"];
+
+    // Coordination Agents
+    task_orch -> agent_delegate [penwidth=3, color="#EF6C00"];
+    task_orch -> agent_coord [penwidth=3, color="#EF6C00"];
+    task_orch -> mem_store [penwidth=2, color="#EF6C00"];
+    task_orch -> comm_notify [penwidth=2, color="#EF6C00"];
+
+    hierarchical -> agent_delegate [penwidth=2, color="#EF6C00"];
+    hierarchical -> agent_coord [penwidth=2, color="#EF6C00"];
+    hierarchical -> mem_store [penwidth=2, color="#EF6C00"];
+    hierarchical -> mem_retrieve [penwidth=2, color="#EF6C00"];
+
+    adaptive -> agent_delegate [penwidth=2, color="#EF6C00"];
+    adaptive -> agent_coord [penwidth=2, color="#EF6C00"];
+    adaptive -> mem_store [penwidth=2, color="#EF6C00"];
+    adaptive -> mem_search [penwidth=2, color="#EF6C00"];
+
+    mem_coord -> mem_store [penwidth=3, color="#EF6C00"];
+    mem_coord -> mem_retrieve [penwidth=3, color="#EF6C00"];
+    mem_coord -> mem_search [penwidth=2, color="#EF6C00"];
+
+    // Specialized Agents
+    backend -> file_write [penwidth=2, color="#7B1FA2"];
+    backend -> file_edit [penwidth=2, color="#7B1FA2"];
+    backend -> git_commit [penwidth=2, color="#7B1FA2"];
+    backend -> test_run [penwidth=2, color="#7B1FA2"];
+    backend -> code_format [penwidth=1, color="#7B1FA2"];
+    backend -> lint [penwidth=1, color="#7B1FA2"];
+
+    code_analyzer -> file_read [penwidth=2, color="#7B1FA2"];
+    code_analyzer -> grep_search [penwidth=2, color="#7B1FA2"];
+    code_analyzer -> lint [penwidth=3, color="#7B1FA2"];
+    code_analyzer -> comm_report [penwidth=2, color="#7B1FA2"];
+
+    sparc_coder -> file_write [penwidth=2, color="#7B1FA2"];
+    sparc_coder -> file_edit [penwidth=2, color="#7B1FA2"];
+    sparc_coder -> git_commit [penwidth=2, color="#7B1FA2"];
+    sparc_coder -> test_run [penwidth=2, color="#7B1FA2"];
+    sparc_coder -> code_format [penwidth=2, color="#7B1FA2"];
+
+    github_modes -> git_status [penwidth=2, color="#7B1FA2"];
+    github_modes -> git_diff [penwidth=2, color="#7B1FA2"];
+    github_modes -> git_commit [penwidth=2, color="#7B1FA2"];
+    github_modes -> git_push [penwidth=2, color="#7B1FA2"];
+    github_modes -> git_branch [penwidth=1, color="#7B1FA2"];
+
+    cicd -> yaml_format [penwidth=2, color="#7B1FA2"];
+    cicd -> test_run [penwidth=2, color="#7B1FA2"];
+    cicd -> git_status [penwidth=1, color="#7B1FA2"];
+    cicd -> file_write [penwidth=1, color="#7B1FA2"];
+
+    prod_validator -> test_run [penwidth=2, color="#7B1FA2"];
+    prod_validator -> test_coverage [penwidth=2, color="#7B1FA2"];
+    prod_validator -> test_validate [penwidth=2, color="#7B1FA2"];
+    prod_validator -> lint [penwidth=2, color="#7B1FA2"];
+
+    // Legend and statistics
+    subgraph cluster_legend {
+        label="Legend & Key Insights";
+        style=filled;
+        color="#FFFFFF";
+        fontsize=11;
+
+        node [shape=note, fontsize=10];
+
+        stats [
+            label="Command Usage Statistics:\n\n★★★★★ Critical (10+ agents)\n★★★★ High (7-9 agents)\n★★★ Moderate (5-6 agents)\n★★ Low (2-4 agents)\n★ Specialized (1 agent)\n\nLine Thickness = Usage Frequency\nColor = Agent Domain",
+            fillcolor="#FFFFCC",
+            fontcolor=black
+        ];
+
+        insights [
+            label="Key Insights:\n\n• file-read: Universal (15 agents)\n• memory-store: Core coordination (12 agents)\n• git-commit: Development critical (8 agents)\n• test-run: Quality essential (7 agents)\n• agent-delegate: Orchestration key (6 agents)",
+            fillcolor="#E6F7FF",
+            fontcolor=black
+        ];
+    }
+
+    // Notes on command overlap
+    overlap_note [
+        shape=note,
+        label="High Overlap Commands:\n\nfile-read, memory-store, memory-retrieve\nare used by nearly ALL core agents.\n\nThis indicates critical infrastructure\ncommands that enable agent coordination.",
+        fillcolor="#FFE6E6",
+        fontcolor=black,
+        fontsize=10
+    ];
+}

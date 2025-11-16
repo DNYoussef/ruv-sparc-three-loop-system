@@ -1,0 +1,47 @@
+digraph REIdentifyFunctionsProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-identify-functions\nCommand Start", fillcolor=lightgreen];
+    disassemble_code [label="Disassemble Code\nSections"];
+    detect_prologues [label="Detect Function\nPrologues"];
+    detect_epilogues [label="Detect Function\nEpilogues"];
+    analyze_call_graph [label="Analyze Call\nGraph"];
+    identify_entry_points [label="Identify Entry\nPoints"];
+    detect_recursion [label="Detect Recursive\nCalls"];
+    classify_functions [label="Classify Functions\n(Lib/Custom)"];
+    match_signatures [label="Match Known\nSignatures (FLIRT)"];
+    analyze_parameters [label="Analyze Function\nParameters"];
+    infer_return_types [label="Infer Return\nTypes"];
+    detect_inlining [label="Detect Inlined\nFunctions"];
+    name_functions [label="Auto-Name\nFunctions"];
+    calculate_complexity [label="Calculate Cyclomatic\nComplexity"];
+    generate_xrefs [label="Generate Cross\nReferences"];
+    export_functions [label="Export Function\nList"];
+    end [label="Identification Complete", fillcolor=lightcoral];
+
+    // Flow
+    start -> disassemble_code;
+    disassemble_code -> detect_prologues;
+    detect_prologues -> detect_epilogues;
+    detect_epilogues -> analyze_call_graph;
+    analyze_call_graph -> identify_entry_points;
+    identify_entry_points -> detect_recursion;
+    detect_recursion -> classify_functions;
+    classify_functions -> match_signatures;
+    match_signatures -> analyze_parameters;
+    analyze_parameters -> infer_return_types;
+    infer_return_types -> detect_inlining;
+    detect_inlining -> name_functions;
+    name_functions -> calculate_complexity;
+    calculate_complexity -> generate_xrefs;
+    generate_xrefs -> export_functions;
+    export_functions -> end;
+
+    // Metadata
+    label="RE-identify-functions Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

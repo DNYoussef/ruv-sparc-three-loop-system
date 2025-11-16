@@ -1,0 +1,98 @@
+digraph RECodeReconstructorAgent {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="RE-code-reconstructor\nAgent Activated", fillcolor=lightgreen];
+
+    // Initial analysis
+    analyze_target [label="Analyze Target\nBinary"];
+    identify_language [label="Identify Source\nLanguage (C/C++/Rust)"];
+    detect_framework [label="Detect Framework\n/Library Usage"];
+
+    // Symbol recovery
+    symbol_recovery [label="Symbol Recovery\nPhase", fillcolor=lightyellow];
+    recover_debug_symbols [label="Recover Debug\nSymbols (if any)"];
+    reconstruct_names [label="Reconstruct Function\n& Variable Names"];
+    identify_classes [label="Identify Class\nStructures (OOP)"];
+    map_vtables [label="Map Virtual\nTables"];
+
+    // Type reconstruction
+    type_reconstruction [label="Type Reconstruction\nPhase", fillcolor=lightyellow];
+    infer_primitive_types [label="Infer Primitive\nTypes"];
+    reconstruct_structs [label="Reconstruct Struct\nDefinitions"];
+    identify_pointers [label="Identify Pointer\nRelationships"];
+    recover_arrays [label="Recover Array\nDimensions"];
+
+    // Control flow reconstruction
+    control_flow [label="Control Flow\nReconstruction", fillcolor=lightyellow];
+    identify_loops [label="Identify Loop\nStructures"];
+    reconstruct_conditionals [label="Reconstruct If/Else\nStatements"];
+    detect_switch_cases [label="Detect Switch/Case\nStatements"];
+    identify_exceptions [label="Identify Exception\nHandling"];
+
+    // High-level code generation
+    code_generation [label="Code Generation\nPhase", fillcolor=lightyellow];
+    generate_headers [label="Generate Header\nFiles (.h)"];
+    generate_implementation [label="Generate Implementation\nFiles (.c/.cpp)"];
+    add_comments [label="Add Explanatory\nComments"];
+    format_code [label="Format Code\n(clang-format)"];
+
+    // Validation
+    validation [label="Code Validation\nPhase", fillcolor=lightyellow];
+    compile_test [label="Test Compilation\nof Reconstructed Code"];
+    compare_behavior [label="Compare Behavior\nwith Original"];
+    fix_issues [label="Fix Compilation\nIssues"];
+
+    // Integration
+    memory_coordination [label="Store Code in\nMemory MCP"];
+    export_project [label="Export Complete\nProject"];
+    generate_makefile [label="Generate Makefile\n/CMakeLists.txt"];
+
+    end [label="Code Reconstruction\nComplete", fillcolor=lightcoral];
+
+    // Flow
+    start -> analyze_target;
+    analyze_target -> identify_language;
+    identify_language -> detect_framework;
+
+    detect_framework -> symbol_recovery;
+    symbol_recovery -> recover_debug_symbols;
+    recover_debug_symbols -> reconstruct_names;
+    reconstruct_names -> identify_classes;
+    identify_classes -> map_vtables;
+
+    map_vtables -> type_reconstruction;
+    type_reconstruction -> infer_primitive_types;
+    infer_primitive_types -> reconstruct_structs;
+    reconstruct_structs -> identify_pointers;
+    identify_pointers -> recover_arrays;
+
+    recover_arrays -> control_flow;
+    control_flow -> identify_loops;
+    identify_loops -> reconstruct_conditionals;
+    reconstruct_conditionals -> detect_switch_cases;
+    detect_switch_cases -> identify_exceptions;
+
+    identify_exceptions -> code_generation;
+    code_generation -> generate_headers;
+    generate_headers -> generate_implementation;
+    generate_implementation -> add_comments;
+    add_comments -> format_code;
+
+    format_code -> validation;
+    validation -> compile_test;
+    compile_test -> compare_behavior;
+    compare_behavior -> fix_issues;
+
+    fix_issues -> memory_coordination;
+    memory_coordination -> export_project;
+    export_project -> generate_makefile;
+    generate_makefile -> end;
+
+    // Metadata
+    label="RE-code-reconstructor Agent Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

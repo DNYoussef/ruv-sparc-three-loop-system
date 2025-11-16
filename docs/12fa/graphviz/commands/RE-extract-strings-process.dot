@@ -1,0 +1,47 @@
+digraph REExtractStringsProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Process nodes
+    start [label="RE-extract-strings\nCommand Start", fillcolor=lightgreen];
+    load_binary [label="Load Binary File"];
+    scan_sections [label="Scan All Sections\n(.text, .data, .rodata)"];
+    extract_ascii [label="Extract ASCII\nStrings"];
+    extract_unicode [label="Extract Unicode\nStrings (UTF-16)"];
+    extract_utf8 [label="Extract UTF-8\nStrings"];
+    filter_strings [label="Filter by Length\n(Min 4 chars)"];
+    classify_strings [label="Classify Strings\n(URLs, Paths, Keys)"];
+    detect_encoding [label="Detect String\nEncodings"];
+    identify_patterns [label="Identify Patterns\n(IP, Email, Crypto)"];
+    cross_reference [label="Cross-Reference\nwith Code"];
+    decode_obfuscated [label="Decode Obfuscated\nStrings"];
+    rank_interesting [label="Rank by\nInterest Level"];
+    generate_report [label="Generate String\nAnalysis Report"];
+    export_data [label="Export to JSON/CSV"];
+    end [label="Extraction Complete", fillcolor=lightcoral];
+
+    // Flow
+    start -> load_binary;
+    load_binary -> scan_sections;
+    scan_sections -> extract_ascii;
+    scan_sections -> extract_unicode;
+    scan_sections -> extract_utf8;
+    extract_ascii -> filter_strings;
+    extract_unicode -> filter_strings;
+    extract_utf8 -> filter_strings;
+    filter_strings -> classify_strings;
+    classify_strings -> detect_encoding;
+    detect_encoding -> identify_patterns;
+    identify_patterns -> cross_reference;
+    cross_reference -> decode_obfuscated;
+    decode_obfuscated -> rank_interesting;
+    rank_interesting -> generate_report;
+    generate_report -> export_data;
+    export_data -> end;
+
+    // Metadata
+    label="RE-extract-strings Command Process Flow";
+    fontsize=16;
+    fontname="Arial Bold";
+}

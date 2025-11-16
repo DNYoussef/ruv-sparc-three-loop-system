@@ -1,0 +1,304 @@
+digraph REVIEW_PR_COMMAND {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="Command Invocation: /review-pr";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/review-pr", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n--pr <number>\n--repo <name>\n--auto-fix", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+
+    syntax_error [shape=octagon, fillcolor=crimson,
+                  label="Syntax Error\nShow Usage:\n--pr <number> (required)\n--repo <name> (optional)\n--auto-fix (enable auto-fix)"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // AUTHENTICATION & AUTHORIZATION
+  // =============================================================================
+  subgraph cluster_auth {
+    label="Authentication & Authorization";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_auth [shape=diamond, label="GitHub\nAuthenticated?"];
+    check_pr_access [shape=diamond, label="PR Access\nPermissions?"];
+
+    auth_failed [shape=octagon, fillcolor=crimson,
+                 label="Authentication\nFailed"];
+    access_denied [shape=octagon, fillcolor=crimson,
+                   label="PR Access\nDenied"];
+  }
+
+  validate_syntax -> check_auth [label="Yes"];
+
+  check_auth -> auth_failed [label="No"];
+  check_auth -> check_pr_access [label="Yes"];
+
+  check_pr_access -> access_denied [label="No"];
+
+  // =============================================================================
+  // PR RETRIEVAL
+  // =============================================================================
+  subgraph cluster_pr_retrieval {
+    label="PR Retrieval & Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    fetch_pr [label="Fetch PR\nMetadata", fillcolor=purple];
+    fetch_files [label="Fetch Changed\nFiles", fillcolor=purple];
+    fetch_diff [label="Fetch\nDiff", fillcolor=purple];
+    analyze_complexity [label="Analyze PR\nComplexity", fillcolor=purple];
+
+    complexity_check [shape=diamond, label="Complexity\nLevel?"];
+  }
+
+  check_pr_access -> fetch_pr [label="Yes"];
+
+  fetch_pr -> fetch_files;
+  fetch_files -> fetch_diff;
+  fetch_diff -> analyze_complexity;
+
+  analyze_complexity -> complexity_check;
+
+  // =============================================================================
+  // SWARM INITIALIZATION
+  // =============================================================================
+  subgraph cluster_swarm_init {
+    label="Swarm Initialization";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    init_swarm [label="Initialize\nReview Swarm", fillcolor=lightblue];
+    select_topology [label="Select Topology\n(mesh)", fillcolor=lightblue];
+
+    spawn_security [label="Spawn Security\nReviewer", fillcolor=lightblue];
+    spawn_performance [label="Spawn Performance\nReviewer", fillcolor=lightblue];
+    spawn_style [label="Spawn Style\nReviewer", fillcolor=lightblue];
+    spawn_tests [label="Spawn Test\nReviewer", fillcolor=lightblue];
+    spawn_docs [label="Spawn Docs\nReviewer", fillcolor=lightblue];
+
+    swarm_ready [label="Swarm Ready\n5 Agents", fillcolor=lightgreen, style="filled,bold"];
+  }
+
+  complexity_check -> init_swarm [label="Any"];
+
+  init_swarm -> select_topology;
+  select_topology -> spawn_security;
+
+  spawn_security -> spawn_performance;
+  spawn_performance -> spawn_style;
+  spawn_style -> spawn_tests;
+  spawn_tests -> spawn_docs;
+
+  spawn_docs -> swarm_ready;
+
+  // =============================================================================
+  // PARALLEL REVIEW EXECUTION
+  // =============================================================================
+  subgraph cluster_parallel_review {
+    label="Parallel Review Execution";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    distribute_tasks [label="Distribute Files\nto Agents", fillcolor=lightgreen];
+
+    security_review [label="Security Review\n• Vulnerabilities\n• Auth/Auth\n• Input validation", fillcolor=lightgreen];
+    performance_review [label="Performance Review\n• Bottlenecks\n• Memory leaks\n• Query optimization", fillcolor=lightgreen];
+    style_review [label="Style Review\n• Code formatting\n• Best practices\n• Consistency", fillcolor=lightgreen];
+    test_review [label="Test Review\n• Coverage\n• Test quality\n• Edge cases", fillcolor=lightgreen];
+    docs_review [label="Docs Review\n• Completeness\n• Clarity\n• Examples", fillcolor=lightgreen];
+
+    collect_results [label="Collect Review\nResults", fillcolor=lightgreen, style="filled,bold"];
+  }
+
+  swarm_ready -> distribute_tasks;
+
+  distribute_tasks -> security_review;
+  distribute_tasks -> performance_review;
+  distribute_tasks -> style_review;
+  distribute_tasks -> test_review;
+  distribute_tasks -> docs_review;
+
+  security_review -> collect_results;
+  performance_review -> collect_results;
+  style_review -> collect_results;
+  test_review -> collect_results;
+  docs_review -> collect_results;
+
+  // =============================================================================
+  // CONSENSUS & AGGREGATION
+  // =============================================================================
+  subgraph cluster_consensus {
+    label="Consensus & Aggregation";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    analyze_findings [label="Analyze\nFindings", fillcolor=lightpurple];
+    categorize_issues [label="Categorize\nIssues", fillcolor=lightpurple];
+
+    severity_check [shape=diamond, label="Critical\nIssues?"];
+
+    critical_issues [shape=octagon, fillcolor=red,
+                     label="Critical Issues\nFound\nMUST FIX"];
+
+    generate_suggestions [label="Generate Fix\nSuggestions", fillcolor=lightpurple];
+
+    auto_fix_check [shape=diamond, label="Auto-fix\nEnabled?"];
+  }
+
+  collect_results -> analyze_findings;
+  analyze_findings -> categorize_issues;
+  categorize_issues -> severity_check;
+
+  severity_check -> critical_issues [label="Yes"];
+  severity_check -> generate_suggestions [label="No"];
+
+  critical_issues -> generate_suggestions;
+
+  generate_suggestions -> auto_fix_check;
+
+  // =============================================================================
+  // AUTO-FIX EXECUTION
+  // =============================================================================
+  subgraph cluster_auto_fix {
+    label="Auto-Fix Execution";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    apply_auto_fixes [label="Apply Auto\nFixes", fillcolor=yellow];
+    run_tests_after_fix [label="Run Tests\nAfter Fixes", fillcolor=yellow];
+
+    tests_pass [shape=diamond, label="Tests\nPass?"];
+
+    revert_fixes [shape=octagon, fillcolor=orange,
+                  label="Revert\nFixes"];
+
+    commit_fixes [label="Commit\nFixes", fillcolor=yellow];
+  }
+
+  auto_fix_check -> apply_auto_fixes [label="Yes"];
+
+  apply_auto_fixes -> run_tests_after_fix;
+  run_tests_after_fix -> tests_pass;
+
+  tests_pass -> revert_fixes [label="No"];
+  revert_fixes -> generate_suggestions [style=dashed];
+
+  tests_pass -> commit_fixes [label="Yes"];
+
+  // =============================================================================
+  // REPORT GENERATION
+  // =============================================================================
+  subgraph cluster_report {
+    label="Report Generation";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    create_report [label="Create Review\nReport", fillcolor=lightblue, style="filled,bold"];
+    include_metrics [label="Include\nMetrics", fillcolor=lightblue];
+
+    calc_merge_readiness [label="Calculate Merge\nReadiness Score", fillcolor=lightblue];
+
+    merge_ready [shape=diamond, label="Ready to\nMerge?"];
+
+    approve_pr [label="Approve PR", fillcolor=lightgreen];
+    request_changes [label="Request\nChanges", fillcolor=orange];
+
+    post_comment [label="Post Review\nComment", fillcolor=lightblue];
+  }
+
+  auto_fix_check -> create_report [label="No"];
+  commit_fixes -> create_report;
+
+  create_report -> include_metrics;
+  include_metrics -> calc_merge_readiness;
+
+  calc_merge_readiness -> merge_ready;
+
+  merge_ready -> approve_pr [label="Yes\nScore ≥ 80%"];
+  merge_ready -> request_changes [label="No\nScore < 80%"];
+
+  approve_pr -> post_comment;
+  request_changes -> post_comment;
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_swarm [label="Cleanup\nSwarm", fillcolor=lightgreen];
+    store_results [label="Store Results\nin Memory", fillcolor=lightgreen];
+    success [label="Review\nComplete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  post_comment -> cleanup_swarm;
+  cleanup_swarm -> store_results;
+  store_results -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    log_error [label="Log Error\nDetails", fillcolor=orange];
+    failure [label="Review\nFailed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+  auth_failed -> log_error;
+  access_denied -> log_error;
+
+  log_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_blocker [shape=octagon, fillcolor=crimson, label="Blocker"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_blocker [style=invis];
+    legend_blocker -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

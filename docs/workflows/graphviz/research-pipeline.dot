@@ -1,0 +1,285 @@
+/**
+ * Research Workflow Pipeline
+ * Command: /research-literature, /research-experiment, /research-analysis, /research-paper
+ * Phase: 4 (Integration & Research)
+ */
+
+digraph research_pipeline {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Research Pipeline Workflow</B><BR/>Literature → Experiment → Analysis → Publication>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Research Planning
+    subgraph cluster_planning {
+        label="Research Planning";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="Research\nQuestion", shape=box, fillcolor="#bbdefb", penwidth=2];
+        hypothesis [label="Formulate\nHypothesis", shape=box, fillcolor="#90caf9"];
+        objectives [label="Research\nObjectives", shape=box, fillcolor="#64b5f6"];
+        methodology [label="Methodology\nDesign", shape=box, fillcolor="#42a5f5"];
+        ethics [label="Ethics\nApproval", shape=diamond, fillcolor="#2196f3"];
+        funding [label="Funding\nProposal", shape=box, fillcolor="#1e88e5"];
+    }
+
+    // Subgraph: Literature Review
+    subgraph cluster_literature {
+        label="Literature Review";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        lit_start [label="Literature\nReview", shape=box, fillcolor="#e1bee7", penwidth=2];
+        search_db [label="Search\nDatabases", shape=box, fillcolor="#ce93d8"];
+        scholar [label="Google Scholar\nPubMed, IEEE", shape=box, fillcolor="#ba68c8"];
+        screening [label="Title/Abstract\nScreening", shape=box, fillcolor="#ab47bc"];
+        full_text [label="Full-Text\nReview", shape=box, fillcolor="#9c27b0"];
+        extraction [label="Data\nExtraction", shape=box, fillcolor="#8e24aa"];
+        synthesis [label="Evidence\nSynthesis", shape=box, fillcolor="#7b1fa2"];
+        gap_analysis [label="Gap\nAnalysis", shape=box, fillcolor="#6a1b9a"];
+        lit_report [label="Literature\nReport", shape=box, fillcolor="#4a148c"];
+    }
+
+    // Subgraph: Experimental Design
+    subgraph cluster_experiment {
+        label="Experimental Design";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        exp_design [label="Experimental\nDesign", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        variables [label="Define\nVariables", shape=box, fillcolor="#ffcc80"];
+        control_group [label="Control\nGroup", shape=box, fillcolor="#ffb74d"];
+        treatment_group [label="Treatment\nGroup", shape=box, fillcolor="#ffa726"];
+        sample_size [label="Sample Size\nCalculation", shape=box, fillcolor="#ff9800"];
+        randomization [label="Randomization\nProtocol", shape=box, fillcolor="#fb8c00"];
+        instruments [label="Measurement\nInstruments", shape=box, fillcolor="#f57c00"];
+        pilot_study [label="Pilot\nStudy", shape=box, fillcolor="#ef6c00"];
+    }
+
+    // Subgraph: Data Collection
+    subgraph cluster_collection {
+        label="Data Collection";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        collect_start [label="Data\nCollection", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        recruitment [label="Participant\nRecruitment", shape=box, fillcolor="#a5d6a7"];
+        consent [label="Informed\nConsent", shape=box, fillcolor="#81c784"];
+        baseline [label="Baseline\nMeasurements", shape=box, fillcolor="#66bb6a"];
+        intervention [label="Intervention", shape=box, fillcolor="#4caf50"];
+        followup [label="Follow-up\nMeasurements", shape=box, fillcolor="#43a047"];
+        quality_check [label="Quality\nControl", shape=box, fillcolor="#388e3c"];
+        data_storage [label="Secure Data\nStorage", shape=box, fillcolor="#2e7d32"];
+    }
+
+    // Subgraph: Data Analysis
+    subgraph cluster_analysis {
+        label="Data Analysis";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        analysis_start [label="Data\nAnalysis", shape=box, fillcolor="#fff59d", penwidth=2];
+        cleaning [label="Data\nCleaning", shape=box, fillcolor="#fff176"];
+        normalization [label="Normalization", shape=box, fillcolor="#ffee58"];
+        descriptive [label="Descriptive\nStatistics", shape=box, fillcolor="#ffeb3b"];
+        inferential [label="Inferential\nStatistics", shape=box, fillcolor="#fdd835"];
+        regression [label="Regression\nAnalysis", shape=box, fillcolor="#f9a825"];
+        ml_models [label="Machine Learning\nModels", shape=box, fillcolor="#f57f17"];
+        visualization [label="Data\nVisualization", shape=box, fillcolor="#ff6f00"];
+        interpretation [label="Results\nInterpretation", shape=box, fillcolor="#e65100"];
+    }
+
+    // Subgraph: Validation
+    subgraph cluster_validation {
+        label="Validation & Verification";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        val_start [label="Validation", shape=box, fillcolor="#ffcdd2", penwidth=2];
+        reproducibility [label="Reproducibility\nCheck", shape=box, fillcolor="#ef9a9a"];
+        cross_validation [label="Cross-\nValidation", shape=box, fillcolor="#e57373"];
+        sensitivity [label="Sensitivity\nAnalysis", shape=box, fillcolor="#ef5350"];
+        peer_review_int [label="Internal Peer\nReview", shape=box, fillcolor="#f44336"];
+        replication [label="Independent\nReplication", shape=box, fillcolor="#e53935"];
+        validation_report [label="Validation\nReport", shape=box, fillcolor="#c62828"];
+    }
+
+    // Subgraph: Paper Writing
+    subgraph cluster_writing {
+        label="Paper Writing";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        paper_start [label="Paper\nWriting", shape=box, fillcolor="#b3e5fc", penwidth=2];
+        abstract [label="Abstract", shape=box, fillcolor="#81d4fa"];
+        introduction [label="Introduction", shape=box, fillcolor="#4fc3f7"];
+        methods [label="Methods", shape=box, fillcolor="#29b6f6"];
+        results [label="Results", shape=box, fillcolor="#03a9f4"];
+        discussion [label="Discussion", shape=box, fillcolor="#039be5"];
+        conclusion [label="Conclusion", shape=box, fillcolor="#0288d1"];
+        references [label="References", shape=box, fillcolor="#0277bd"];
+        supplementary [label="Supplementary\nMaterial", shape=box, fillcolor="#01579b"];
+    }
+
+    // Subgraph: Publication
+    subgraph cluster_publication {
+        label="Publication Process";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        pub_start [label="Publication\nProcess", shape=box, fillcolor="#e1bee7", penwidth=2];
+        journal_select [label="Journal\nSelection", shape=box, fillcolor="#ce93d8"];
+        submission [label="Manuscript\nSubmission", shape=box, fillcolor="#ba68c8"];
+        peer_review [label="Peer\nReview", shape=diamond, fillcolor="#ab47bc"];
+        revisions [label="Revisions", shape=box, fillcolor="#9c27b0"];
+        acceptance [label="Acceptance?", shape=diamond, fillcolor="#8e24aa"];
+        proofs [label="Proofs\nReview", shape=box, fillcolor="#7b1fa2"];
+        publication [label="Publication", shape=box, fillcolor="#6a1b9a", penwidth=2];
+        preprint [label="Preprint\nServer", shape=box, fillcolor="#4a148c"];
+    }
+
+    // Subgraph: Dissemination
+    subgraph cluster_dissemination {
+        label="Dissemination";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        dissem_start [label="Dissemination", shape=box, fillcolor="#fff59d", penwidth=2];
+        conference [label="Conference\nPresentation", shape=box, fillcolor="#fff176"];
+        poster [label="Poster\nSession", shape=box, fillcolor="#ffee58"];
+        seminar [label="Seminar/\nWebinar", shape=box, fillcolor="#ffeb3b"];
+        press_release [label="Press\nRelease", shape=box, fillcolor="#fdd835"];
+        social_media [label="Social Media", shape=box, fillcolor="#f9a825"];
+        data_repository [label="Data\nRepository", shape=box, fillcolor="#f57f17"];
+        open_access [label="Open\nAccess", shape=box, fillcolor="#ff6f00"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Planning", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Literature", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Experiment", shape=box, fillcolor="#ff9800"];
+        leg4 [label="Collection", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Analysis", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Validation", shape=box, fillcolor="#f44336"];
+        leg7 [label="Writing", shape=box, fillcolor="#03a9f4"];
+        leg8 [label="Publication", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7; leg8;}
+    }
+
+    // Planning flow
+    start -> hypothesis;
+    hypothesis -> objectives;
+    objectives -> methodology;
+    methodology -> ethics;
+    ethics -> funding [label="approved"];
+    ethics -> methodology [label="revision needed", color=red];
+
+    // Literature review
+    funding -> lit_start;
+    lit_start -> search_db;
+    search_db -> scholar;
+    scholar -> screening;
+    screening -> full_text;
+    full_text -> extraction;
+    extraction -> synthesis;
+    synthesis -> gap_analysis;
+    gap_analysis -> lit_report;
+
+    // Experimental design
+    lit_report -> exp_design;
+    exp_design -> variables;
+    variables -> control_group;
+    control_group -> treatment_group;
+    treatment_group -> sample_size;
+    sample_size -> randomization;
+    randomization -> instruments;
+    instruments -> pilot_study;
+
+    // Data collection
+    pilot_study -> collect_start;
+    collect_start -> recruitment;
+    recruitment -> consent;
+    consent -> baseline;
+    baseline -> intervention;
+    intervention -> followup;
+    followup -> quality_check;
+    quality_check -> data_storage;
+
+    // Data analysis
+    data_storage -> analysis_start;
+    analysis_start -> cleaning;
+    cleaning -> normalization;
+    normalization -> descriptive;
+    descriptive -> inferential;
+    inferential -> regression;
+    regression -> ml_models;
+    ml_models -> visualization;
+    visualization -> interpretation;
+
+    // Validation
+    interpretation -> val_start;
+    val_start -> reproducibility;
+    reproducibility -> cross_validation;
+    cross_validation -> sensitivity;
+    sensitivity -> peer_review_int;
+    peer_review_int -> replication;
+    replication -> validation_report;
+
+    // Paper writing
+    validation_report -> paper_start;
+    paper_start -> abstract;
+    abstract -> introduction;
+    introduction -> methods;
+    methods -> results;
+    results -> discussion;
+    discussion -> conclusion;
+    conclusion -> references;
+    references -> supplementary;
+
+    // Publication
+    supplementary -> pub_start;
+    pub_start -> journal_select;
+    journal_select -> submission;
+    submission -> peer_review;
+    peer_review -> revisions [label="revise"];
+    peer_review -> acceptance [label="reviewed"];
+    revisions -> submission;
+    acceptance -> proofs [label="accepted"];
+    acceptance -> journal_select [label="rejected"];
+    proofs -> publication;
+    submission -> preprint [style=dashed];
+
+    // Dissemination
+    publication -> dissem_start;
+    dissem_start -> conference;
+    dissem_start -> poster;
+    dissem_start -> seminar;
+    dissem_start -> press_release;
+    dissem_start -> social_media;
+    dissem_start -> data_repository;
+    dissem_start -> open_access;
+}

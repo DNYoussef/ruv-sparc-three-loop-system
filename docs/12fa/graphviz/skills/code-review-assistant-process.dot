@@ -1,0 +1,41 @@
+digraph CODE_REVIEW_ASSISTANT_WORKFLOW {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  start [label="code-review-assistant\nInvoked", shape=ellipse, fillcolor=lightblue];
+  load_pr [label="Load Pull Request\nDiff, Files, Context"];
+  spawn_swarm [label="Spawn 5-Agent Review Swarm\nSecurity, Performance, Style\nTests, Documentation", fillcolor=purple];
+
+  parallel_review [label="Parallel Review Execution", fillcolor=purple];
+
+  security_review [label="Security Reviewer\nVulnerabilities, Auth", fillcolor=orange];
+  performance_review [label="Performance Reviewer\nComplexity, Optimization", fillcolor=green];
+  style_review [label="Style Reviewer\nStandards, Readability", fillcolor=blue];
+  test_review [label="Test Reviewer\nCoverage, Quality", fillcolor=cyan];
+  docs_review [label="Documentation Reviewer\nCompleteness, Clarity", fillcolor=yellow];
+
+  collect_feedback [label="Collect All Feedback", fillcolor=lightblue];
+  generate_auto_fixes [label="Generate Auto-Fix\nSuggestions", fillcolor=lightgreen];
+  assess_merge_readiness [label="Assess Merge Readiness\nApprove/Request Changes", fillcolor=lightgreen];
+
+  memory_store [label="Store Review Results", fillcolor=lightblue];
+  success [label="Review Complete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  start -> load_pr -> spawn_swarm -> parallel_review;
+  parallel_review -> security_review;
+  parallel_review -> performance_review;
+  parallel_review -> style_review;
+  parallel_review -> test_review;
+  parallel_review -> docs_review;
+
+  security_review -> collect_feedback;
+  performance_review -> collect_feedback;
+  style_review -> collect_feedback;
+  test_review -> collect_feedback;
+  docs_review -> collect_feedback;
+
+  collect_feedback -> generate_auto_fixes;
+  generate_auto_fixes -> assess_merge_readiness;
+  assess_merge_readiness -> memory_store;
+  memory_store -> success;
+}

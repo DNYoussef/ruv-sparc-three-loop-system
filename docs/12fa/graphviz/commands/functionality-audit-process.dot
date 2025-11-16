@@ -1,0 +1,61 @@
+digraph functionality_audit_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Functionality-Audit Command Workflow\nSandbox Testing & Execution Verification";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/functionality-audit", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  identify_endpoints [label="Identify Test Targets\n- Functions\n- API endpoints\n- Components\n- Modules", fillcolor="#FFF9C4"];
+
+  create_sandbox [label="Create Sandbox\n- Isolated environment\n- Clean dependencies\n- Test data", fillcolor="#FFE0B2"];
+
+  generate_tests [label="Generate Test Cases\n- Happy path\n- Edge cases\n- Error scenarios\n- Integration tests", fillcolor="#BBDEFB"];
+
+  execute_tests [label="Execute in Sandbox\n- Real execution\n- Capture outputs\n- Monitor behavior", fillcolor="#C5CAE9"];
+
+  validate_outputs [label="Validate Outputs\n- Expected results\n- Side effects\n- State changes", fillcolor="#B2DFDB"];
+
+  test_edge_cases [label="Test Edge Cases\n- Boundary values\n- Null/undefined\n- Invalid inputs", fillcolor="#D1C4E9"];
+
+  test_errors [label="Test Error Handling\n- Exception handling\n- Error messages\n- Recovery", fillcolor="#F0F4C3"];
+
+  integration_test [label="Integration Testing\n- Component interactions\n- Data flow\n- Dependencies", fillcolor="#FFE0B2"];
+
+  detect_bugs [label="Detect Bugs\n- Failed assertions\n- Unexpected behavior\n- Crashes", fillcolor="#F44336", fontcolor=white];
+
+  bugs_found [label="Bugs Found?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  auto_fix [label="Attempt Auto-Fix\n- Common patterns\n- Simple fixes\n- Retry tests", fillcolor="#BBDEFB"];
+
+  fixed [label="Auto-Fix Successful?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  generate_report [label="Generate Report\n- Test results\n- Bug details\n- Fix recommendations", fillcolor="#B2DFDB"];
+
+  success [label="Functionality Verified\nAll tests passing", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  failed [label="Functionality Issues\nManual fix required", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> identify_endpoints;
+  identify_endpoints -> create_sandbox;
+  create_sandbox -> generate_tests;
+  generate_tests -> execute_tests;
+  execute_tests -> validate_outputs;
+  validate_outputs -> test_edge_cases;
+  test_edge_cases -> test_errors;
+  test_errors -> integration_test;
+  integration_test -> detect_bugs;
+  detect_bugs -> bugs_found;
+  bugs_found -> auto_fix [label="Yes"];
+  bugs_found -> success [label="No"];
+  auto_fix -> fixed;
+  fixed -> success [label="Yes"];
+  fixed -> generate_report [label="No"];
+  generate_report -> failed;
+}

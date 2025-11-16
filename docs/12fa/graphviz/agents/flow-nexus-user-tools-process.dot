@@ -1,0 +1,144 @@
+digraph flow_nexus_user_tools_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus User Tools Agent Workflow\nAgent ID: agent-090 | Category: Flow-Nexus Integration\nPurpose: User utilities and helper functions";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="User Tools\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Tool Action\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: System Health
+    subgraph cluster_health {
+        label="Phase 1: System Health Monitoring";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        h1 [label="Check System\nHealth", shape=box, fillcolor="#ffecb3"];
+        h2 [label="Database Status", shape=box, fillcolor="#ffecb3"];
+        h3 [label="API Status", shape=box, fillcolor="#ffecb3"];
+        h4 [label="Service Uptime", shape=box, fillcolor="#ffecb3"];
+
+        h1 -> h2 -> h3 -> h4;
+    }
+
+    // Phase 2: Audit & Logging
+    subgraph cluster_audit {
+        label="Phase 2: Audit & Logging";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        a1 [label="Access Audit Log", shape=box, fillcolor="#bbdefb"];
+        a2 [label="Filter by User", shape=box, fillcolor="#bbdefb"];
+        a3 [label="Filter by Action", shape=box, fillcolor="#bbdefb"];
+        a4 [label="Export Audit Trail", shape=box, fillcolor="#bbdefb"];
+
+        a1 -> a2 -> a3 -> a4;
+    }
+
+    // Phase 3: Market Data
+    subgraph cluster_market {
+        label="Phase 3: Market Data & Analytics";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        m1 [label="Get Market\nStatistics", shape=box, fillcolor="#e1bee7"];
+        m2 [label="View Trending\nTemplates", shape=box, fillcolor="#e1bee7"];
+        m3 [label="Popular\nChallenges", shape=box, fillcolor="#e1bee7"];
+        m4 [label="User Growth\nTrends", shape=box, fillcolor="#e1bee7"];
+
+        m1 -> m2 -> m3 -> m4;
+    }
+
+    // Phase 4: Seraphina Chat
+    subgraph cluster_seraphina {
+        label="Phase 4: Queen Seraphina Chat";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        q1 [label="Send Message to\nSeraphina", shape=box, fillcolor="#f8bbd0"];
+        q2 [label="Provide Conversation\nHistory", shape=box, fillcolor="#f8bbd0"];
+        q3 [label="Enable Tool Usage\n(optional)", shape=box, fillcolor="#f8bbd0"];
+        q4 [label="Receive AI\nGuidance", shape=box, fillcolor="#f8bbd0"];
+
+        q1 -> q2 -> q3 -> q4;
+    }
+
+    // Phase 5: Storage Management
+    subgraph cluster_storage {
+        label="Phase 5: Storage Management";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        st1 [label="Upload Files to\nStorage", shape=box, fillcolor="#b2dfdb"];
+        st2 [label="List Stored Files", shape=box, fillcolor="#b2dfdb"];
+        st3 [label="Get Public URL", shape=box, fillcolor="#b2dfdb"];
+        st4 [label="Delete Files", shape=box, fillcolor="#b2dfdb"];
+
+        st1 -> st2 -> st3 -> st4;
+    }
+
+    // Phase 6: Real-time Features
+    subgraph cluster_realtime {
+        label="Phase 6: Real-time Features";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        rt1 [label="Subscribe to\nDB Changes", shape=box, fillcolor="#fff59d"];
+        rt2 [label="Monitor Execution\nStreams", shape=box, fillcolor="#fff59d"];
+        rt3 [label="List Active\nSubscriptions", shape=box, fillcolor="#fff59d"];
+        rt4 [label="Unsubscribe", shape=box, fillcolor="#fff59d"];
+
+        rt1 -> rt2 -> rt3 -> rt4;
+    }
+
+    // Parallel tool selection
+    tool_select [label="Select Tool\nCategory", shape=parallelogram, fillcolor="#c8e6c9", color="#388e3c", penwidth=2];
+
+    // Flow
+    start -> tool_select;
+
+    tool_select -> h1 [label="Health"];
+    tool_select -> a1 [label="Audit"];
+    tool_select -> m1 [label="Market"];
+    tool_select -> q1 [label="Seraphina"];
+    tool_select -> st1 [label="Storage"];
+    tool_select -> rt1 [label="Real-time"];
+
+    h4 -> end;
+    a4 -> end;
+    m4 -> end;
+    q4 -> end;
+    st4 -> end;
+    rt4 -> end;
+
+    // Capabilities
+    capabilities [label="Key Capabilities:\n• System Monitoring\n• Audit Logging\n• Market Analytics\n• AI Chat (Seraphina)\n• Storage Management\n• Real-time Subscriptions", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    tools [label="MCP Tools:\n• system_health\n• audit_log\n• market_data\n• seraphina_chat\n• storage_upload/list/delete\n• realtime_subscribe\n• execution_stream_subscribe", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Features
+    features [label="Features:\n• System health checks\n• Comprehensive audit trail\n• Market insights\n• AI-powered guidance\n• Cloud storage\n• Real-time updates", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-user-tools\nPriority: Medium\nComplexity: Medium\nGraphviz Priority: 90", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

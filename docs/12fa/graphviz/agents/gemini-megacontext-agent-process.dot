@@ -1,0 +1,108 @@
+digraph gemini_megacontext_agent_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Gemini Megacontext Agent - 2M Context Window Analysis";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Large Codebase\n(Multiple repos)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Context Loading Phase
+    subgraph cluster_loading {
+        label="Context Loading Phase (2M tokens)";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        scan [label="Codebase Scanning\n(All files)"];
+        load [label="Context Loading\n(2M window)"];
+        index [label="Indexing\n(Structure mapping)"];
+    }
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Comprehensive Analysis Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        analyze [label="Full Analysis\n(Complete codebase)"];
+        patterns [label="Pattern Detection\n(Cross-file)"];
+        dependencies [label="Dependency Analysis\n(Complete graph)"];
+        relationships [label="Relationship Mapping\n(All connections)"];
+    }
+
+    // Review Phase
+    subgraph cluster_review {
+        label="Comprehensive Review Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        quality [label="Quality Assessment\n(Full context)"];
+        security [label="Security Review\n(Complete surface)"];
+        performance [label="Performance Analysis\n(System-wide)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="2M Context Window", fillcolor="#238636"];
+        feature2 [label="Full Codebase Analysis", fillcolor="#238636"];
+        feature3 [label="Comprehensive Review", fillcolor="#238636"];
+        feature4 [label="Pattern Detection", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Complete Analysis Report\n+ Insights", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> scan;
+    scan -> load;
+    load -> index;
+
+    index -> analyze;
+    analyze -> patterns;
+    patterns -> dependencies;
+    dependencies -> relationships;
+
+    relationships -> quality;
+    quality -> security;
+    security -> performance;
+
+    performance -> output;
+
+    // Feature connections
+    load -> feature1 [style=dotted, color="#8b949e"];
+    analyze -> feature2 [style=dotted, color="#8b949e"];
+    quality -> feature3 [style=dotted, color="#8b949e"];
+    patterns -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,0 +1,179 @@
+digraph flow_nexus_workflow_process {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Flow Nexus Workflow Agent\nAgent ID: agent-085 | Category: Flow-Nexus Integration\nPurpose: Event-driven workflow orchestration";
+    labelloc=t;
+    compound=true;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End nodes
+    start [label="Workflow Request", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Workflow\nComplete", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+
+    // Phase 1: Workflow Design
+    subgraph cluster_design {
+        label="Phase 1: Workflow Design";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        design1 [label="Define Workflow\nName", shape=box, fillcolor="#ffecb3"];
+        design2 [label="Add Workflow\nSteps", shape=box, fillcolor="#ffecb3"];
+        design3 [label="Configure Event\nTriggers", shape=box, fillcolor="#ffecb3"];
+        design4 [label="Set Priority\n(0-10)", shape=box, fillcolor="#ffecb3"];
+        design5 [label="Add Metadata", shape=box, fillcolor="#ffecb3"];
+
+        design1 -> design2 -> design3 -> design4 -> design5;
+    }
+
+    // Phase 2: Step Configuration
+    subgraph cluster_steps {
+        label="Phase 2: Step Configuration";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        step1 [label="Assign Agents\nto Steps", shape=box, fillcolor="#bbdefb"];
+        step2 [label="Define Step\nDependencies", shape=box, fillcolor="#bbdefb"];
+        step3 [label="Set Step\nParameters", shape=box, fillcolor="#bbdefb"];
+        step4 [label="Configure\nConditions", shape=box, fillcolor="#bbdefb"];
+        step5 [label="Set Error\nHandling", shape=box, fillcolor="#bbdefb"];
+
+        step1 -> step2 -> step3 -> step4 -> step5;
+    }
+
+    // Phase 3: Event-Driven Setup
+    subgraph cluster_events {
+        label="Phase 3: Event-Driven Setup";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        event1 [label="Define Event\nTypes", shape=box, fillcolor="#e1bee7"];
+        event2 [label="Setup Message\nQueue", shape=box, fillcolor="#e1bee7"];
+        event3 [label="Configure\nWebhooks", shape=box, fillcolor="#e1bee7"];
+        event4 [label="Enable Async\nExecution", shape=box, fillcolor="#e1bee7"];
+        event5 [label="Setup Event\nListeners", shape=box, fillcolor="#e1bee7"];
+
+        event1 -> event2 -> event3 -> event4 -> event5;
+    }
+
+    // Phase 4: Execution
+    subgraph cluster_execution {
+        label="Phase 4: Workflow Execution";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        exec1 [label="Prepare Input\nData", shape=box, fillcolor="#f8bbd0"];
+        exec2 [label="Start Workflow\nExecution", shape=box, fillcolor="#f8bbd0"];
+        exec3 [label="Execute Steps\nin Order", shape=box, fillcolor="#f8bbd0"];
+        exec4 [label="Handle Step\nTransitions", shape=box, fillcolor="#f8bbd0"];
+        exec5 [label="Process\nCallbacks", shape=box, fillcolor="#f8bbd0"];
+
+        exec1 -> exec2 -> exec3 -> exec4 -> exec5;
+    }
+
+    // Phase 5: Agent Assignment
+    subgraph cluster_agents {
+        label="Phase 5: Optimal Agent Assignment";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        agent1 [label="Analyze Task\nRequirements", shape=box, fillcolor="#b2dfdb"];
+        agent2 [label="Vector Similarity\nMatching", shape=box, fillcolor="#b2dfdb"];
+        agent3 [label="Select Optimal\nAgent Type", shape=box, fillcolor="#b2dfdb"];
+        agent4 [label="Assign Agent\nto Task", shape=box, fillcolor="#b2dfdb"];
+        agent5 [label="Verify Agent\nAvailability", shape=box, fillcolor="#b2dfdb"];
+
+        agent1 -> agent2 -> agent3 -> agent4 -> agent5;
+    }
+
+    // Phase 6: Monitoring & Status
+    subgraph cluster_monitoring {
+        label="Phase 6: Monitoring & Status";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        mon1 [label="Track Workflow\nStatus", shape=box, fillcolor="#fff59d"];
+        mon2 [label="Monitor Step\nProgress", shape=box, fillcolor="#fff59d"];
+        mon3 [label="Collect Performance\nMetrics", shape=box, fillcolor="#fff59d"];
+        mon4 [label="Check Message\nQueue Status", shape=box, fillcolor="#fff59d"];
+        mon5 [label="Generate Audit\nTrail", shape=box, fillcolor="#fff59d"];
+
+        mon1 -> mon2 -> mon3 -> mon4 -> mon5;
+    }
+
+    // Phase 7: Workflow Management
+    subgraph cluster_management {
+        label="Phase 7: Workflow Management";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        mgmt1 [label="List Workflows", shape=box, fillcolor="#b3e5fc"];
+        mgmt2 [label="Filter by Status", shape=box, fillcolor="#b3e5fc"];
+        mgmt3 [label="Pause/Resume\nWorkflow", shape=box, fillcolor="#b3e5fc"];
+        mgmt4 [label="Cancel Workflow", shape=box, fillcolor="#b3e5fc"];
+        mgmt5 [label="Archive Completed", shape=box, fillcolor="#b3e5fc"];
+
+        mgmt1 -> mgmt2 -> mgmt3 -> mgmt4 -> mgmt5;
+    }
+
+    // Decision nodes
+    async_mode [label="Async\nExecution?", shape=diamond, fillcolor="#c8e6c9", color="#388e3c", penwidth=2];
+    step_success [label="Step\nSuccessful?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+    workflow_complete [label="Workflow\nComplete?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow connections
+    start -> design1 [label="Create\nWorkflow"];
+    design5 -> step1 [label="Workflow\nDefined"];
+    step5 -> event1 [label="Steps\nConfigured"];
+    event5 -> exec1 [label="Events\nSetup"];
+
+    exec2 -> async_mode [label="Execute"];
+    async_mode -> exec3 [label="Yes - Queue"];
+    async_mode -> exec3 [label="No - Direct"];
+
+    exec3 -> agent1 [label="Assign\nAgents"];
+    agent5 -> exec4 [label="Agents\nReady"];
+
+    exec4 -> step_success [label="Check\nResult"];
+    step_success -> exec5 [label="Yes"];
+    step_success -> exec4 [label="No - Retry", style=dashed, color="#f44336"];
+
+    exec5 -> workflow_complete [label="Check\nProgress"];
+    workflow_complete -> mon1 [label="More Steps", style=dashed, color="#ff9800"];
+    workflow_complete -> mon1 [label="Complete"];
+
+    // Parallel monitoring
+    exec2 -> mon1 [style=dotted, color="#757575", label="Live Monitor"];
+
+    mon5 -> end [label="Audit Trail\nGenerated"];
+
+    // Capabilities legend
+    capabilities [label="Key Capabilities:\n• Event-Driven Workflows\n• Async Execution\n• Agent Assignment\n• Message Queue\n• Audit Trail\n• Real-time Monitoring", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // MCP Tools
+    mcp_tools [label="MCP Tools:\n• workflow_create\n• workflow_execute\n• workflow_status\n• workflow_list\n• workflow_agent_assign\n• workflow_queue_status\n• workflow_audit_trail", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Execution modes
+    exec_modes [label="Execution:\n• Synchronous\n• Asynchronous\n• Event-driven\n• Message queue", shape=note, fillcolor="#fff3e0", color="#f57c00", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: flow-nexus-workflow\nPriority: High\nComplexity: Very High\nGraphviz Priority: 85", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

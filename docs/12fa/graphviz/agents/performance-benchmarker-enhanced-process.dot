@@ -1,0 +1,160 @@
+digraph performance_benchmarker_enhanced_workflow {
+    // Graph properties
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=14;
+    label="Performance Benchmarker Enhanced Agent Workflow (v2.0.0)\nAgent ID: agent-097 | Category: Performance-Optimization\nPurpose: Advanced metrics and predictive performance";
+    labelloc=t;
+
+    // Node styling
+    node [fontname="Arial", fontsize=11, style="filled"];
+
+    // Start/End
+    start [label="Benchmark\nRequest", shape=oval, fillcolor="#e8f5e9", color="#4caf50", penwidth=2];
+    end [label="Benchmark\nComplete", shape=oval, fillcolor="#e8f9fa", color="#4caf50", penwidth=2];
+
+    // Phase 1: Baseline Establishment
+    subgraph cluster_baseline {
+        label="Phase 1: Baseline Establishment";
+        style=filled;
+        fillcolor="#fff3e0";
+        color="#ff9800";
+        penwidth=2;
+
+        b1 [label="Collect Current\nMetrics", shape=box, fillcolor="#ffecb3"];
+        b2 [label="Historical Data\nAnalysis", shape=box, fillcolor="#ffecb3"];
+        b3 [label="Establish\nBaseline", shape=box, fillcolor="#ffecb3"];
+        b4 [label="Set Performance\nTargets", shape=box, fillcolor="#ffecb3"];
+
+        b1 -> b2 -> b3 -> b4;
+    }
+
+    // Phase 2: Advanced Benchmarking
+    subgraph cluster_benchmarking {
+        label="Phase 2: Advanced Benchmarking";
+        style=filled;
+        fillcolor="#e3f2fd";
+        color="#2196f3";
+        penwidth=2;
+
+        bench1 [label="CPU Profiling", shape=box, fillcolor="#bbdefb"];
+        bench2 [label="Memory Analysis", shape=box, fillcolor="#bbdefb"];
+        bench3 [label="I/O Performance", shape=box, fillcolor="#bbdefb"];
+        bench4 [label="Network Latency", shape=box, fillcolor="#bbdefb"];
+        bench5 [label="Database Query\nPerformance", shape=box, fillcolor="#bbdefb"];
+
+        bench1 -> bench2 -> bench3 -> bench4 -> bench5;
+    }
+
+    // Phase 3: Load Testing
+    subgraph cluster_load {
+        label="Phase 3: Load Testing";
+        style=filled;
+        fillcolor="#f3e5f5";
+        color="#9c27b0";
+        penwidth=2;
+
+        load1 [label="Stress Testing", shape=box, fillcolor="#e1bee7"];
+        load2 [label="Spike Testing", shape=box, fillcolor="#e1bee7"];
+        load3 [label="Endurance Testing", shape=box, fillcolor="#e1bee7"];
+        load4 [label="Scalability\nTesting", shape=box, fillcolor="#e1bee7"];
+
+        load1 -> load2 -> load3 -> load4;
+    }
+
+    // Phase 4: Detailed Metrics Collection
+    subgraph cluster_metrics {
+        label="Phase 4: Detailed Metrics Collection";
+        style=filled;
+        fillcolor="#fce4ec";
+        color="#e91e63";
+        penwidth=2;
+
+        met1 [label="Response Time\nP50/P95/P99", shape=box, fillcolor="#f8bbd0"];
+        met2 [label="Throughput\nMeasurement", shape=box, fillcolor="#f8bbd0"];
+        met3 [label="Error Rate\nTracking", shape=box, fillcolor="#f8bbd0"];
+        met4 [label="Resource\nUtilization", shape=box, fillcolor="#f8bbd0"];
+        met5 [label="Concurrent User\nHandling", shape=box, fillcolor="#f8bbd0"];
+
+        met1 -> met2 -> met3 -> met4 -> met5;
+    }
+
+    // Phase 5: Trend Analysis & Prediction
+    subgraph cluster_trend {
+        label="Phase 5: Trend Analysis & Prediction";
+        style=filled;
+        fillcolor="#e0f2f1";
+        color="#009688";
+        penwidth=2;
+
+        trend1 [label="Time-Series\nAnalysis", shape=box, fillcolor="#b2dfdb"];
+        trend2 [label="Regression\nDetection", shape=box, fillcolor="#b2dfdb"];
+        trend3 [label="Performance\nForecasting", shape=box, fillcolor="#b2dfdb"];
+        trend4 [label="Capacity\nPlanning", shape=box, fillcolor="#b2dfdb"];
+
+        trend1 -> trend2 -> trend3 -> trend4;
+    }
+
+    // Phase 6: Optimization Recommendations
+    subgraph cluster_optimization {
+        label="Phase 6: Optimization Recommendations";
+        style=filled;
+        fillcolor="#fff9c4";
+        color="#fbc02d";
+        penwidth=2;
+
+        opt1 [label="Bottleneck\nIdentification", shape=box, fillcolor="#fff59d"];
+        opt2 [label="Optimization\nStrategies", shape=box, fillcolor="#fff59d"];
+        opt3 [label="ROI Analysis", shape=box, fillcolor="#fff59d"];
+        opt4 [label="Implementation\nPriority", shape=box, fillcolor="#fff59d"];
+
+        opt1 -> opt2 -> opt3 -> opt4;
+    }
+
+    // Phase 7: Reporting & Visualization
+    subgraph cluster_reporting {
+        label="Phase 7: Reporting & Visualization";
+        style=filled;
+        fillcolor="#e1f5fe";
+        color="#0288d1";
+        penwidth=2;
+
+        rep1 [label="Generate\nDashboards", shape=box, fillcolor="#b3e5fc"];
+        rep2 [label="Performance\nGraphs", shape=box, fillcolor="#b3e5fc"];
+        rep3 [label="Comparison\nReports", shape=box, fillcolor="#b3e5fc"];
+        rep4 [label="Export Results", shape=box, fillcolor="#b3e5fc"];
+
+        rep1 -> rep2 -> rep3 -> rep4;
+    }
+
+    // Decisions
+    regression [label="Performance\nRegression?", shape=diamond, fillcolor="#ff5252", color="#d32f2f", penwidth=2];
+    targets_met [label="Targets\nMet?", shape=diamond, fillcolor="#ffeb3b", color="#f57f17", penwidth=2];
+
+    // Flow
+    start -> b1;
+    b4 -> bench1;
+    bench5 -> load1;
+    load4 -> met1;
+    met5 -> trend1;
+
+    trend4 -> regression;
+    regression -> opt1 [label="Yes - Critical", style="bold", color="#d32f2f"];
+    regression -> targets_met [label="No"];
+
+    targets_met -> rep1 [label="Yes"];
+    targets_met -> opt1 [label="No", style=dashed, color="#ff9800"];
+
+    opt4 -> rep1;
+    rep4 -> end;
+
+    // V2.0 enhancements
+    enhancements [label="v2.0.0 Enhancements:\n• Advanced Metrics\n• Trend Analysis\n• Predictive Performance\n• Regression Detection\n• Capacity Planning\n• ROI Analysis", shape=note, fillcolor="#e8eaf6", color="#3f51b5", fontsize=10];
+
+    // Metrics tracked
+    metrics [label="Key Metrics:\n• P50/P95/P99 latency\n• Throughput (req/s)\n• Error rates\n• Resource utilization\n• Concurrent users", shape=note, fillcolor="#ede7f6", color="#673ab7", fontsize=10];
+
+    // Metadata
+    metadata [label="Agent: performance-benchmarker-enhanced\nPriority: High\nComplexity: Very High\nVersion: 2.0.0\nGraphviz Priority: 97", shape=note, fillcolor="#f5f5f5", color="#9e9e9e", fontsize=9];
+}

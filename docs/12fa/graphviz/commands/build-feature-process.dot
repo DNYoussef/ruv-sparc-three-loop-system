@@ -1,0 +1,79 @@
+digraph build_feature_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Build-Feature Command Workflow\nComplete Feature Development Lifecycle";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/build-feature", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Phase 1: Research
+  research_phase [label="Phase 1: Research\n/gemini-search for best practices", fillcolor="#FFF9C4"];
+  research_patterns [label="Research Patterns\n- Industry standards\n- Similar implementations\n- Best practices", fillcolor="#FFE0B2"];
+
+  // Phase 2: Planning
+  planning_phase [label="Phase 2: Planning\n/sparc:spec-pseudocode", fillcolor="#BBDEFB"];
+  requirements [label="Define Requirements\n- Functional specs\n- Acceptance criteria\n- Edge cases", fillcolor="#C5CAE9"];
+
+  // Phase 3: Architecture
+  architecture_phase [label="Phase 3: Architecture\n/sparc:architect", fillcolor="#B2DFDB"];
+  design_system [label="Design System\n- Components\n- Data flow\n- Interfaces", fillcolor="#D1C4E9"];
+
+  // Phase 4: Implementation (TDD)
+  implementation_phase [label="Phase 4: Implementation\n/sparc:code (TDD)", fillcolor="#F0F4C3"];
+  tdd_cycle [label="TDD Cycle\nRed → Green → Refactor", fillcolor="#FFE0B2"];
+
+  // Phase 5: Testing
+  testing_phase [label="Phase 5: Testing\n/functionality-audit", fillcolor="#BBDEFB"];
+  comprehensive_tests [label="Comprehensive Testing\n- Unit tests\n- Integration tests\n- E2E tests", fillcolor="#B2DFDB"];
+
+  // Phase 6: Quality
+  quality_phase [label="Phase 6: Quality\n/audit-pipeline", fillcolor="#D1C4E9"];
+  quality_gates [label="Quality Gates\n- Theater detection\n- Security scan\n- Performance", fillcolor="#F0F4C3"];
+
+  // Phase 7: Documentation
+  docs_phase [label="Phase 7: Documentation\n/sparc:docs-writer", fillcolor="#FFE0B2"];
+  generate_docs [label="Generate Documentation\n- API docs\n- User guide\n- Examples", fillcolor="#BBDEFB"];
+
+  // Phase 8: Review
+  review_phase [label="Phase 8: Review\n/review-pr", fillcolor="#B2DFDB"];
+  code_review [label="Code Review\n- Quality check\n- Security review\n- Best practices", fillcolor="#D1C4E9"];
+
+  // Phase 9: Deployment
+  deployment_phase [label="Phase 9: Deployment\n/sparc:devops", fillcolor="#F0F4C3"];
+  deploy [label="Deploy Feature\n- Staging first\n- Production deployment\n- Monitoring", fillcolor="#FFE0B2"];
+
+  success [label="Feature Complete\nDeployed to production", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  error [label="Phase Failed\nReturn to phase", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> research_phase;
+  research_phase -> research_patterns;
+  research_patterns -> planning_phase;
+  planning_phase -> requirements;
+  requirements -> architecture_phase;
+  architecture_phase -> design_system;
+  design_system -> implementation_phase;
+  implementation_phase -> tdd_cycle;
+  tdd_cycle -> testing_phase;
+  testing_phase -> comprehensive_tests;
+  comprehensive_tests -> quality_phase [label="Passed"];
+  comprehensive_tests -> error [label="Failed"];
+  quality_phase -> quality_gates;
+  quality_gates -> docs_phase [label="Passed"];
+  quality_gates -> error [label="Failed"];
+  docs_phase -> generate_docs;
+  generate_docs -> review_phase;
+  review_phase -> code_review;
+  code_review -> deployment_phase [label="Approved"];
+  code_review -> error [label="Rejected"];
+  deployment_phase -> deploy;
+  deploy -> success [label="Deployed"];
+  deploy -> error [label="Failed"];
+  error -> implementation_phase [label="Fix"];
+}

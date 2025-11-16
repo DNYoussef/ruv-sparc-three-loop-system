@@ -1,0 +1,83 @@
+// Research Command Workflow
+// Research workflow orchestration
+digraph research_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/research\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        topic_parser [label="Topic\nParser", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_investigation {
+        label="Investigation Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        literature_review [label="Literature\nReview", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_analysis [label="Pattern\nAnalysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nIdentification", fillcolor="#2563eb", fontcolor="#ffffff"];
+        technology_scan [label="Technology\nScan", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_synthesis {
+        label="Synthesis Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        data_aggregator [label="Data\nAggregator", fillcolor="#10b981", fontcolor="#ffffff"];
+        insight_extractor [label="Insight\nExtractor", fillcolor="#10b981", fontcolor="#ffffff"];
+        recommendation_builder [label="Recommendation\nBuilder", fillcolor="#10b981", fontcolor="#ffffff"];
+        evidence_validator [label="Evidence\nValidator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_reporting {
+        label="Reporting Phase";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        report_writer [label="Report\nWriter", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        citation_formatter [label="Citation\nFormatter", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        summary_generator [label="Summary\nGenerator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        visual_creator [label="Visual\nCreator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        research_report [label="Research\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        recommendations [label="Action\nRecommendations", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> topic_parser;
+    topic_parser -> literature_review -> pattern_analysis -> best_practices -> technology_scan;
+    technology_scan -> data_aggregator -> insight_extractor -> recommendation_builder -> evidence_validator;
+    evidence_validator -> report_writer -> citation_formatter -> summary_generator -> visual_creator;
+    visual_creator -> research_report -> recommendations;
+    recommendations -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    evidence_validator -> literature_review [label="More Data", style=dashed, color="#ef4444"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Investigation", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Synthesis", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

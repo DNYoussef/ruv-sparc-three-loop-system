@@ -1,0 +1,27 @@
+digraph SWARM_MONITOR {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/swarm-monitor", shape=ellipse, fillcolor=lightblue];
+  set_interval [label="Set Monitoring\nInterval", fillcolor=lightblue];
+  start_monitoring [label="Start Real-time\nMonitoring", fillcolor=purple, style="filled,bold"];
+  collect_agent_status [label="Collect Agent\nStatus", fillcolor=lightgreen];
+  track_performance [label="Track\nPerformance", fillcolor=lightgreen];
+  detect_anomalies [label="Detect\nAnomalies", fillcolor=yellow];
+  check_anomalies [shape=diamond, label="Anomalies\nDetected?"];
+  alert_user [label="Alert\nUser", fillcolor=orange];
+  update_dashboard [label="Update Real-time\nDashboard", fillcolor=lightpurple];
+  check_continue [shape=diamond, label="Continue\nMonitoring?"];
+  stop_monitoring [label="Stop\nMonitoring", fillcolor=lightblue];
+  success [label="Monitoring Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> set_interval -> start_monitoring -> collect_agent_status;
+  collect_agent_status -> track_performance -> detect_anomalies -> check_anomalies;
+  check_anomalies -> alert_user [label="Yes"];
+  check_anomalies -> update_dashboard [label="No"];
+  alert_user -> update_dashboard;
+  update_dashboard -> check_continue;
+  check_continue -> collect_agent_status [label="Yes", style=dashed];
+  check_continue -> stop_monitoring [label="No"];
+  stop_monitoring -> success;
+}

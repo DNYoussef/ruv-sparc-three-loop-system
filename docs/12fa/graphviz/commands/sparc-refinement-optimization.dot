@@ -1,0 +1,419 @@
+digraph SPARC_REFINEMENT_OPTIMIZATION {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // COMMAND INVOCATION
+  // =============================================================================
+  subgraph cluster_invocation {
+    label="/sparc:refinement-optimization-mode - Optimizer";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    invoke [label="User Invokes\n/sparc:refinement-optimization", shape=ellipse, fillcolor=lightblue];
+    parse_args [label="Parse Arguments\n(target, scope, metrics)", fillcolor=lightblue];
+    validate_syntax [shape=diamond, label="Syntax\nValid?"];
+    syntax_error [shape=octagon, fillcolor=crimson, label="Syntax Error\nShow Usage"];
+  }
+
+  invoke -> parse_args;
+  parse_args -> validate_syntax;
+  validate_syntax -> syntax_error [label="No"];
+
+  // =============================================================================
+  // BASELINE ANALYSIS
+  // =============================================================================
+  subgraph cluster_baseline {
+    label="Baseline Measurement";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    load_codebase [label="Load Target\nCodebase", fillcolor=lightyellow];
+    measure_performance [label="Measure Current\nPerformance", fillcolor=lightyellow];
+    analyze_metrics [label="Analyze Current\nMetrics", fillcolor=lightyellow];
+    identify_bottlenecks [label="Identify\nBottlenecks", fillcolor=lightyellow];
+    establish_baseline [label="Establish\nBaseline", fillcolor=lightyellow];
+
+    baseline_valid [shape=diamond, label="Baseline\nValid?"];
+    baseline_error [label="Baseline\nIncomplete", fillcolor=orange];
+  }
+
+  validate_syntax -> load_codebase [label="Yes"];
+  load_codebase -> measure_performance;
+  measure_performance -> analyze_metrics;
+  analyze_metrics -> identify_bottlenecks;
+  identify_bottlenecks -> establish_baseline;
+  establish_baseline -> baseline_valid;
+
+  baseline_valid -> baseline_error [label="No"];
+  baseline_error -> measure_performance [style=dashed];
+
+  // =============================================================================
+  // CODE QUALITY ANALYSIS
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Code Quality Analysis";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    analyze_complexity [label="Analyze Cyclomatic\nComplexity", fillcolor=purple];
+    check_duplication [label="Check Code\nDuplication", fillcolor=purple];
+    analyze_coupling [label="Analyze Module\nCoupling", fillcolor=purple];
+    check_cohesion [label="Check Module\nCohesion", fillcolor=purple];
+    analyze_maintainability [label="Analyze\nMaintainability Index", fillcolor=purple];
+    identify_code_smells [label="Identify Code\nSmells", fillcolor=purple];
+
+    quality_issues [shape=diamond, label="Quality\nIssues Found?"];
+    log_quality_issues [label="Log Quality\nIssues", fillcolor=orange];
+  }
+
+  baseline_valid -> analyze_complexity [label="Yes"];
+
+  analyze_complexity -> check_duplication;
+  check_duplication -> analyze_coupling;
+  analyze_coupling -> check_cohesion;
+  check_cohesion -> analyze_maintainability;
+  analyze_maintainability -> identify_code_smells;
+  identify_code_smells -> quality_issues;
+
+  quality_issues -> log_quality_issues [label="Yes"];
+
+  // =============================================================================
+  // PERFORMANCE ANALYSIS
+  // =============================================================================
+  subgraph cluster_performance {
+    label="Performance Profiling";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    profile_execution [label="Profile Execution\nTime", fillcolor=lightblue];
+    analyze_memory [label="Analyze Memory\nUsage", fillcolor=lightblue];
+    check_io_operations [label="Check I/O\nOperations", fillcolor=lightblue];
+    analyze_db_queries [label="Analyze Database\nQueries", fillcolor=lightblue];
+    check_network_calls [label="Check Network\nCalls", fillcolor=lightblue];
+    identify_hot_paths [label="Identify Hot\nPaths", fillcolor=lightblue];
+
+    perf_issues [shape=diamond, label="Performance\nIssues?"];
+    log_perf_issues [label="Log Performance\nIssues", fillcolor=orange];
+  }
+
+  quality_issues -> profile_execution [label="No"];
+  log_quality_issues -> profile_execution;
+
+  profile_execution -> analyze_memory;
+  analyze_memory -> check_io_operations;
+  check_io_operations -> analyze_db_queries;
+  analyze_db_queries -> check_network_calls;
+  check_network_calls -> identify_hot_paths;
+  identify_hot_paths -> perf_issues;
+
+  perf_issues -> log_perf_issues [label="Yes"];
+
+  // =============================================================================
+  // TECHNICAL DEBT ASSESSMENT
+  // =============================================================================
+  subgraph cluster_technical_debt {
+    label="Technical Debt Assessment";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF0E8";
+
+    identify_outdated_deps [label="Identify Outdated\nDependencies", fillcolor=lightyellow];
+    check_deprecated_apis [label="Check Deprecated\nAPIs", fillcolor=lightyellow];
+    analyze_test_coverage [label="Analyze Test\nCoverage Gaps", fillcolor=lightyellow];
+    identify_todos [label="Identify TODO/FIXME\nComments", fillcolor=lightyellow];
+    check_documentation [label="Check Documentation\nGaps", fillcolor=lightyellow];
+    calculate_debt_ratio [label="Calculate Technical\nDebt Ratio", fillcolor=lightyellow];
+
+    high_debt [shape=diamond, label="High Technical\nDebt?"];
+    flag_debt [label="Flag High-Priority\nDebt", fillcolor=crimson];
+  }
+
+  perf_issues -> identify_outdated_deps [label="No"];
+  log_perf_issues -> identify_outdated_deps;
+
+  identify_outdated_deps -> check_deprecated_apis;
+  check_deprecated_apis -> analyze_test_coverage;
+  analyze_test_coverage -> identify_todos;
+  identify_todos -> check_documentation;
+  check_documentation -> calculate_debt_ratio;
+  calculate_debt_ratio -> high_debt;
+
+  high_debt -> flag_debt [label="Yes"];
+
+  // =============================================================================
+  // REFACTORING STRATEGY
+  // =============================================================================
+  subgraph cluster_refactoring {
+    label="Refactoring Strategy";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    prioritize_issues [label="Prioritize Issues\nby Impact", fillcolor=lightgreen];
+    plan_refactoring [label="Plan Refactoring\nStrategy", fillcolor=lightgreen];
+    identify_patterns [label="Identify Applicable\nPatterns", fillcolor=lightgreen];
+    plan_extraction [label="Plan Method/Class\nExtractions", fillcolor=lightgreen];
+    plan_simplification [label="Plan Logic\nSimplification", fillcolor=lightgreen];
+    estimate_effort [label="Estimate Refactoring\nEffort", fillcolor=lightgreen];
+  }
+
+  high_debt -> prioritize_issues [label="No"];
+  flag_debt -> prioritize_issues;
+
+  prioritize_issues -> plan_refactoring;
+  plan_refactoring -> identify_patterns;
+  identify_patterns -> plan_extraction;
+  plan_extraction -> plan_simplification;
+  plan_simplification -> estimate_effort;
+
+  // =============================================================================
+  // CODE REFACTORING EXECUTION
+  // =============================================================================
+  subgraph cluster_refactor_exec {
+    label="Refactoring Execution";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    refactor_complex [label="Refactor Complex\nMethods", fillcolor=plum];
+    extract_duplicates [label="Extract Duplicate\nCode", fillcolor=plum];
+    improve_naming [label="Improve Variable/Function\nNaming", fillcolor=plum];
+    simplify_conditions [label="Simplify Conditional\nLogic", fillcolor=plum];
+    reduce_nesting [label="Reduce Nesting\nDepth", fillcolor=plum];
+    apply_patterns [label="Apply Design\nPatterns", fillcolor=plum];
+
+    run_tests_after [label="Run Test Suite", fillcolor=plum];
+    tests_pass [shape=diamond, label="All Tests\nPass?"];
+    revert_changes [label="Revert Breaking\nChanges", fillcolor=orange];
+  }
+
+  estimate_effort -> refactor_complex;
+  refactor_complex -> extract_duplicates;
+  extract_duplicates -> improve_naming;
+  improve_naming -> simplify_conditions;
+  simplify_conditions -> reduce_nesting;
+  reduce_nesting -> apply_patterns;
+  apply_patterns -> run_tests_after;
+  run_tests_after -> tests_pass;
+
+  tests_pass -> revert_changes [label="No"];
+  revert_changes -> refactor_complex [style=dashed];
+
+  // =============================================================================
+  // PERFORMANCE OPTIMIZATION
+  // =============================================================================
+  subgraph cluster_perf_opt {
+    label="Performance Optimization";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0FF";
+
+    optimize_algorithms [label="Optimize\nAlgorithms", fillcolor=lightblue];
+    add_caching [label="Add Caching\nLayers", fillcolor=lightblue];
+    optimize_queries [label="Optimize Database\nQueries", fillcolor=lightblue];
+    reduce_allocations [label="Reduce Memory\nAllocations", fillcolor=lightblue];
+    parallelize_operations [label="Parallelize\nOperations", fillcolor=lightblue];
+    optimize_io [label="Optimize I/O\nOperations", fillcolor=lightblue];
+
+    benchmark_changes [label="Benchmark\nChanges", fillcolor=lightblue];
+    perf_improved [shape=diamond, label="Performance\nImproved?"];
+    document_optimization [label="Document\nOptimizations", fillcolor=lightgreen];
+  }
+
+  tests_pass -> optimize_algorithms [label="Yes"];
+
+  optimize_algorithms -> add_caching;
+  add_caching -> optimize_queries;
+  optimize_queries -> reduce_allocations;
+  reduce_allocations -> parallelize_operations;
+  parallelize_operations -> optimize_io;
+  optimize_io -> benchmark_changes;
+  benchmark_changes -> perf_improved;
+
+  perf_improved -> document_optimization [label="Yes"];
+  perf_improved -> optimize_algorithms [label="No", style=dashed];
+
+  // =============================================================================
+  // FILE SIZE ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_file_size {
+    label="File Size Enforcement";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    check_file_sizes [label="Check File\nSizes", fillcolor=lightcoral];
+    identify_large_files [shape=diamond, label="Files > 500\nLines?"];
+    split_large_files [label="Split Large\nFiles", fillcolor=lightcoral];
+    extract_modules [label="Extract Reusable\nModules", fillcolor=lightcoral];
+    reorganize_structure [label="Reorganize File\nStructure", fillcolor=lightcoral];
+
+    validate_splits [label="Validate Split\nFiles", fillcolor=lightcoral];
+    splits_valid [shape=diamond, label="Splits\nValid?"];
+  }
+
+  document_optimization -> check_file_sizes;
+  check_file_sizes -> identify_large_files;
+
+  identify_large_files -> split_large_files [label="Yes"];
+  identify_large_files -> validate_splits [label="No"];
+
+  split_large_files -> extract_modules;
+  extract_modules -> reorganize_structure;
+  reorganize_structure -> validate_splits;
+
+  validate_splits -> splits_valid;
+  splits_valid -> split_large_files [label="No", style=dashed];
+
+  // =============================================================================
+  // DEPENDENCY OPTIMIZATION
+  // =============================================================================
+  subgraph cluster_dependencies {
+    label="Dependency Optimization";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    update_dependencies [label="Update Outdated\nDependencies", fillcolor=lightgreen];
+    remove_unused [label="Remove Unused\nDependencies", fillcolor=lightgreen];
+    consolidate_versions [label="Consolidate Dependency\nVersions", fillcolor=lightgreen];
+    check_vulnerabilities [label="Check Security\nVulnerabilities", fillcolor=lightgreen];
+    optimize_bundle [label="Optimize Bundle\nSize", fillcolor=lightgreen];
+  }
+
+  splits_valid -> update_dependencies [label="Yes"];
+
+  update_dependencies -> remove_unused;
+  remove_unused -> consolidate_versions;
+  consolidate_versions -> check_vulnerabilities;
+  check_vulnerabilities -> optimize_bundle;
+
+  // =============================================================================
+  // QUALITY METRICS VALIDATION
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Quality Metrics Validation";
+    style="filled,rounded";
+    color="yellow";
+    bgcolor="#FFFCE8";
+
+    remeasure_metrics [label="Re-measure\nMetrics", fillcolor=lightyellow];
+    compare_baseline [label="Compare to\nBaseline", fillcolor=lightyellow];
+    calculate_improvement [label="Calculate\nImprovement %", fillcolor=lightyellow];
+    validate_quality_gates [shape=diamond, label="Quality Gates\nPassed?"];
+
+    gates_passed [label="All Gates\nPASSED", fillcolor=green, shape=octagon];
+    gates_failed [label="Some Gates\nFAILED", fillcolor=orange, shape=octagon];
+  }
+
+  optimize_bundle -> remeasure_metrics;
+  remeasure_metrics -> compare_baseline;
+  compare_baseline -> calculate_improvement;
+  calculate_improvement -> validate_quality_gates;
+
+  validate_quality_gates -> gates_passed [label="Yes"];
+  validate_quality_gates -> gates_failed [label="No"];
+
+  // =============================================================================
+  // REPORTING
+  // =============================================================================
+  subgraph cluster_reporting {
+    label="Optimization Report";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8F0FF";
+
+    generate_report [label="Generate Optimization\nReport", fillcolor=plum];
+    add_metrics [label="Add Before/After\nMetrics", fillcolor=plum];
+    document_changes [label="Document All\nChanges", fillcolor=plum];
+    add_recommendations [label="Add Future\nRecommendations", fillcolor=plum];
+    save_report [label="Save Optimization\nReport", fillcolor=plum];
+  }
+
+  gates_passed -> generate_report;
+  gates_failed -> generate_report;
+
+  generate_report -> add_metrics;
+  add_metrics -> document_changes;
+  document_changes -> add_recommendations;
+  add_recommendations -> save_report;
+
+  // =============================================================================
+  // CLEANUP & COMPLETION
+  // =============================================================================
+  subgraph cluster_cleanup {
+    label="Cleanup & Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_temp [label="Cleanup Temporary\nFiles", fillcolor=lightgreen];
+    update_docs [label="Update Project\nDocumentation", fillcolor=lightgreen];
+    notify_team [label="Notify Development\nTeam", fillcolor=lightgreen];
+
+    success [label="Optimization\nComplete", shape=doublecircle, fillcolor=green, style="filled,bold"];
+  }
+
+  save_report -> cleanup_temp;
+  cleanup_temp -> update_docs;
+  update_docs -> notify_team;
+  notify_team -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    classify_error [shape=diamond, label="Error\nType?"];
+    retry_optimization [label="Retry\nOptimization", fillcolor=yellow];
+
+    log_error [label="Log Optimization\nError", fillcolor=orange];
+    notify_error [label="Notify Admin\nof Failure", fillcolor=orange];
+    failure [label="Optimization\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  syntax_error -> log_error;
+
+  classify_error -> retry_optimization [label="Transient"];
+  classify_error -> log_error [label="Fatal"];
+
+  retry_optimization -> refactor_complex [style=dashed];
+
+  log_error -> notify_error;
+  notify_error -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_entry [shape=ellipse, fillcolor=lightblue, label="Entry"];
+    legend_process [shape=box, fillcolor=purple, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_gate [shape=octagon, fillcolor=green, label="Quality Gate"];
+    legend_warn [shape=octagon, fillcolor=orange, label="Warning"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+    legend_failure [shape=doublecircle, fillcolor=red, label="Failure"];
+
+    legend_entry -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_gate [style=invis];
+    legend_gate -> legend_warn [style=invis];
+    legend_warn -> legend_success [style=invis];
+    legend_success -> legend_failure [style=invis];
+  }
+}

@@ -1,0 +1,25 @@
+digraph TASK_ORCHESTRATE {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/task-orchestrate", shape=ellipse, fillcolor=lightblue];
+  parse_task [label="Parse Task\nDescription", fillcolor=lightblue];
+  set_priority [shape=diamond, label="Priority\nLevel?"];
+  select_strategy [shape=diamond, label="Execution\nStrategy?"];
+  parallel_exec [label="Parallel\nExecution", fillcolor=lightgreen, style="filled,bold"];
+  sequential_exec [label="Sequential\nExecution", fillcolor=lightgreen];
+  adaptive_exec [label="Adaptive\nExecution", fillcolor=lightpurple];
+  distribute_agents [label="Distribute to\nAgents", fillcolor=lightblue];
+  monitor_execution [label="Monitor\nExecution", fillcolor=yellow];
+  collect_results [label="Collect\nResults", fillcolor=lightgreen];
+  success [label="Task Orchestrated", shape=doublecircle, fillcolor=green];
+
+  invoke -> parse_task -> set_priority -> select_strategy;
+  select_strategy -> parallel_exec [label="parallel"];
+  select_strategy -> sequential_exec [label="sequential"];
+  select_strategy -> adaptive_exec [label="adaptive"];
+  parallel_exec -> distribute_agents;
+  sequential_exec -> distribute_agents;
+  adaptive_exec -> distribute_agents;
+  distribute_agents -> monitor_execution -> collect_results -> success;
+}

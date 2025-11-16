@@ -1,0 +1,80 @@
+// Token Efficiency Command Workflow
+// Token usage efficiency analysis
+digraph token_efficiency_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/token-efficiency\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        scope_selector [label="Scope\nSelector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Token Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        usage_tracker [label="Usage\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        pattern_analyzer [label="Pattern\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        waste_detector [label="Waste\nDetector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        efficiency_calculator [label="Efficiency\nCalculator", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_optimization {
+        label="Optimization Analysis";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        prompt_optimizer [label="Prompt\nOptimizer", fillcolor="#10b981", fontcolor="#ffffff"];
+        context_reducer [label="Context\nReducer", fillcolor="#10b981", fontcolor="#ffffff"];
+        redundancy_eliminator [label="Redundancy\nEliminator", fillcolor="#10b981", fontcolor="#ffffff"];
+        cost_estimator [label="Cost\nEstimator", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_recommendations {
+        label="Recommendations";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        strategy_builder [label="Strategy\nBuilder", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        savings_calculator [label="Savings\nCalculator", fillcolor="#7c3aed", fontcolor="#ffffff"];
+        implementation_guide [label="Implementation\nGuide", fillcolor="#7c3aed", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        efficiency_report [label="Efficiency\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        optimization_plan [label="Optimization\nPlan", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> scope_selector;
+    scope_selector -> usage_tracker -> pattern_analyzer -> waste_detector -> efficiency_calculator;
+    efficiency_calculator -> prompt_optimizer -> context_reducer -> redundancy_eliminator -> cost_estimator;
+    cost_estimator -> strategy_builder -> savings_calculator -> implementation_guide;
+    implementation_guide -> efficiency_report -> optimization_plan;
+    optimization_plan -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Optimization", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+}

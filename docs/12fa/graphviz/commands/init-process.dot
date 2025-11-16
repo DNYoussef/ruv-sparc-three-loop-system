@@ -1,0 +1,19 @@
+digraph INIT {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/init", shape=ellipse, fillcolor=lightblue];
+  check_existing [shape=diamond, label="System\nInitialized?"];
+  cleanup_existing [label="Cleanup\nExisting", fillcolor=yellow];
+  setup_memory [label="Setup Memory\nSystem", fillcolor=lightblue];
+  select_topology [label="Select Default\nTopology", fillcolor=purple];
+  register_agents [label="Register Agent\nTypes", fillcolor=lightgreen];
+  init_neural [label="Initialize Neural\nPatterns", fillcolor=lightpurple];
+  success [label="System Initialized", shape=doublecircle, fillcolor=green, style="filled,bold"];
+
+  invoke -> check_existing;
+  check_existing -> cleanup_existing [label="Yes"];
+  check_existing -> setup_memory [label="No"];
+  cleanup_existing -> setup_memory;
+  setup_memory -> select_topology -> register_agents -> init_neural -> success;
+}

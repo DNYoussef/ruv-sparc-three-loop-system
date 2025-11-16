@@ -1,0 +1,256 @@
+/**
+ * Enhanced Testing Orchestration Workflow
+ * Command: /test-unit, /test-integration, /test-e2e, /test-load
+ * Phase: 3 (Development Enhancement)
+ */
+
+digraph testing_workflow {
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+
+    node [fontname="Arial", fontsize=12, style="rounded,filled", margin=0.2];
+    edge [fontname="Arial", fontsize=10];
+
+    label=<<B>Comprehensive Testing Workflow</B><BR/>Unit → Integration → E2E → Load → Security>;
+    labelloc=t;
+    fontsize=16;
+
+    // Subgraph: Test Planning
+    subgraph cluster_planning {
+        label="Test Planning";
+        style="rounded,filled";
+        color="#e3f2fd";
+        fillcolor="#e3f2fd";
+
+        start [label="Testing\nRequest", shape=box, fillcolor="#bbdefb", penwidth=2];
+        test_strategy [label="Define Test\nStrategy", shape=box, fillcolor="#90caf9"];
+        coverage_goals [label="Coverage\nGoals", shape=box, fillcolor="#64b5f6"];
+        test_pyramid [label="Test\nPyramid", shape=box, fillcolor="#42a5f5"];
+        ci_integration [label="CI\nIntegration", shape=box, fillcolor="#2196f3"];
+    }
+
+    // Subgraph: Unit Testing
+    subgraph cluster_unit {
+        label="Unit Testing";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        unit_start [label="Unit Test\nSuite", shape=box, fillcolor="#e1bee7", penwidth=2];
+        test_framework [label="Framework\n(Jest/Vitest)", shape=box, fillcolor="#ce93d8"];
+        pure_functions [label="Pure\nFunctions", shape=box, fillcolor="#ba68c8"];
+        mocking [label="Mocking &\nStubbing", shape=box, fillcolor="#ab47bc"];
+        snapshot_tests [label="Snapshot\nTests", shape=box, fillcolor="#9c27b0"];
+        edge_cases [label="Edge Cases &\nBoundaries", shape=box, fillcolor="#8e24aa"];
+        unit_coverage [label="Unit Test\nCoverage", shape=diamond, fillcolor="#7b1fa2"];
+        unit_pass [label="All Tests\nPass?", shape=diamond, fillcolor="#6a1b9a"];
+    }
+
+    // Subgraph: Integration Testing
+    subgraph cluster_integration {
+        label="Integration Testing";
+        style="rounded,filled";
+        color="#fff3e0";
+        fillcolor="#fff3e0";
+
+        integration_start [label="Integration\nTest Suite", shape=box, fillcolor="#ffe0b2", penwidth=2];
+        api_tests [label="API\nTests", shape=box, fillcolor="#ffcc80"];
+        database_tests [label="Database\nTests", shape=box, fillcolor="#ffb74d"];
+        service_tests [label="Service\nIntegration", shape=box, fillcolor="#ffa726"];
+        contract_tests [label="Contract\nTests", shape=box, fillcolor="#ff9800"];
+        message_queue [label="Message Queue\nTests", shape=box, fillcolor="#fb8c00"];
+        integration_coverage [label="Integration\nCoverage", shape=diamond, fillcolor="#f57c00"];
+        integration_pass [label="All Tests\nPass?", shape=diamond, fillcolor="#ef6c00"];
+    }
+
+    // Subgraph: E2E Testing
+    subgraph cluster_e2e {
+        label="End-to-End Testing";
+        style="rounded,filled";
+        color="#e8f5e9";
+        fillcolor="#e8f5e9";
+
+        e2e_start [label="E2E Test\nSuite", shape=box, fillcolor="#c8e6c9", penwidth=2];
+        e2e_framework [label="Framework\n(Playwright/Cypress)", shape=box, fillcolor="#a5d6a7"];
+        user_flows [label="Critical User\nFlows", shape=box, fillcolor="#81c784"];
+        browser_testing [label="Cross-Browser\nTesting", shape=box, fillcolor="#66bb6a"];
+        visual_regression [label="Visual\nRegression", shape=box, fillcolor="#4caf50"];
+        accessibility [label="Accessibility\nTests", shape=box, fillcolor="#43a047"];
+        e2e_coverage [label="E2E\nCoverage", shape=diamond, fillcolor="#388e3c"];
+        e2e_pass [label="All Tests\nPass?", shape=diamond, fillcolor="#2e7d32"];
+    }
+
+    // Subgraph: Performance & Load Testing
+    subgraph cluster_load {
+        label="Performance & Load Testing";
+        style="rounded,filled";
+        color="#fff9c4";
+        fillcolor="#fff9c4";
+
+        load_start [label="Load Test\nSuite", shape=box, fillcolor="#fff59d", penwidth=2];
+        load_framework [label="Framework\n(k6/Artillery)", shape=box, fillcolor="#fff176"];
+        baseline_perf [label="Baseline\nPerformance", shape=box, fillcolor="#ffee58"];
+        ramp_up [label="Ramp-up\nTesting", shape=box, fillcolor="#ffeb3b"];
+        stress_test [label="Stress\nTesting", shape=box, fillcolor="#fdd835"];
+        spike_test [label="Spike\nTesting", shape=box, fillcolor="#f9a825"];
+        soak_test [label="Soak\nTesting", shape=box, fillcolor="#f57f17"];
+        load_metrics [label="Performance\nMetrics", shape=diamond, fillcolor="#f57f17"];
+        load_pass [label="Meets SLA?", shape=diamond, fillcolor="#ff6f00"];
+    }
+
+    // Subgraph: Security Testing
+    subgraph cluster_security {
+        label="Security Testing";
+        style="rounded,filled";
+        color="#ffebee";
+        fillcolor="#ffebee";
+
+        security_start [label="Security Test\nSuite", shape=box, fillcolor="#ffcdd2", penwidth=2];
+        dependency_scan [label="Dependency\nScan", shape=box, fillcolor="#ef9a9a"];
+        sast [label="SAST\n(Static Analysis)", shape=box, fillcolor="#e57373"];
+        dast [label="DAST\n(Dynamic Analysis)", shape=box, fillcolor="#ef5350"];
+        penetration [label="Penetration\nTesting", shape=box, fillcolor="#f44336"];
+        vulnerability_scan [label="Vulnerability\nScan", shape=box, fillcolor="#e53935"];
+        security_report [label="Security\nReport", shape=diamond, fillcolor="#c62828"];
+        security_pass [label="No Critical\nIssues?", shape=diamond, fillcolor="#b71c1c"];
+    }
+
+    // Subgraph: Test Reporting
+    subgraph cluster_reporting {
+        label="Test Reporting & Analysis";
+        style="rounded,filled";
+        color="#e1f5fe";
+        fillcolor="#e1f5fe";
+
+        aggregate_results [label="Aggregate\nResults", shape=box, fillcolor="#b3e5fc"];
+        coverage_report [label="Coverage\nReport", shape=box, fillcolor="#81d4fa"];
+        test_metrics [label="Test\nMetrics", shape=box, fillcolor="#4fc3f7"];
+        trend_analysis [label="Trend\nAnalysis", shape=box, fillcolor="#29b6f6"];
+        failure_analysis [label="Failure\nAnalysis", shape=box, fillcolor="#03a9f4"];
+        quality_gate [label="Quality\nGate", shape=diamond, fillcolor="#039be5"];
+        publish_report [label="Publish\nReport", shape=box, fillcolor="#0288d1"];
+    }
+
+    // Subgraph: Test Maintenance
+    subgraph cluster_maintenance {
+        label="Test Maintenance";
+        style="rounded,filled";
+        color="#f3e5f5";
+        fillcolor="#f3e5f5";
+
+        flaky_tests [label="Detect Flaky\nTests", shape=box, fillcolor="#e1bee7"];
+        fix_flaky [label="Fix Flaky\nTests", shape=box, fillcolor="#ce93d8"];
+        update_tests [label="Update\nTests", shape=box, fillcolor="#ba68c8"];
+        refactor_tests [label="Refactor\nTests", shape=box, fillcolor="#ab47bc"];
+        test_data [label="Test Data\nManagement", shape=box, fillcolor="#9c27b0"];
+    }
+
+    // Legend
+    subgraph cluster_legend {
+        label="Legend";
+        style="rounded,filled";
+        color="#fafafa";
+        fillcolor="#fafafa";
+
+        leg1 [label="Planning", shape=box, fillcolor="#2196f3"];
+        leg2 [label="Unit", shape=box, fillcolor="#ab47bc"];
+        leg3 [label="Integration", shape=box, fillcolor="#ff9800"];
+        leg4 [label="E2E", shape=box, fillcolor="#4caf50"];
+        leg5 [label="Load", shape=box, fillcolor="#ffeb3b"];
+        leg6 [label="Security", shape=box, fillcolor="#f44336"];
+        leg7 [label="Reporting", shape=box, fillcolor="#03a9f4"];
+        leg8 [label="Maintenance", shape=box, fillcolor="#ab47bc"];
+
+        {rank=same; leg1; leg2; leg3; leg4;}
+        {rank=same; leg5; leg6; leg7; leg8;}
+    }
+
+    // Planning flow
+    start -> test_strategy;
+    test_strategy -> coverage_goals;
+    coverage_goals -> test_pyramid;
+    test_pyramid -> ci_integration;
+
+    // Unit testing flow
+    ci_integration -> unit_start;
+    unit_start -> test_framework;
+    test_framework -> pure_functions;
+    pure_functions -> mocking;
+    mocking -> snapshot_tests;
+    snapshot_tests -> edge_cases;
+    edge_cases -> unit_coverage;
+    unit_coverage -> unit_pass [label=">80%"];
+    unit_coverage -> unit_start [label="<80%", color=red];
+
+    // Integration testing flow
+    unit_pass -> integration_start [label="pass"];
+    unit_pass -> unit_start [label="fail", color=red];
+    integration_start -> api_tests;
+    integration_start -> database_tests;
+    integration_start -> service_tests;
+    integration_start -> contract_tests;
+    integration_start -> message_queue;
+    api_tests -> integration_coverage;
+    database_tests -> integration_coverage;
+    service_tests -> integration_coverage;
+    contract_tests -> integration_coverage;
+    message_queue -> integration_coverage;
+    integration_coverage -> integration_pass;
+
+    // E2E testing flow
+    integration_pass -> e2e_start [label="pass"];
+    integration_pass -> integration_start [label="fail", color=red];
+    e2e_start -> e2e_framework;
+    e2e_framework -> user_flows;
+    user_flows -> browser_testing;
+    browser_testing -> visual_regression;
+    visual_regression -> accessibility;
+    accessibility -> e2e_coverage;
+    e2e_coverage -> e2e_pass;
+
+    // Load testing flow
+    e2e_pass -> load_start [label="pass"];
+    e2e_pass -> e2e_start [label="fail", color=red];
+    load_start -> load_framework;
+    load_framework -> baseline_perf;
+    baseline_perf -> ramp_up;
+    ramp_up -> stress_test;
+    stress_test -> spike_test;
+    spike_test -> soak_test;
+    soak_test -> load_metrics;
+    load_metrics -> load_pass;
+
+    // Security testing flow
+    load_pass -> security_start [label="pass"];
+    load_pass -> load_start [label="fail", color=red];
+    security_start -> dependency_scan;
+    security_start -> sast;
+    security_start -> dast;
+    security_start -> penetration;
+    security_start -> vulnerability_scan;
+    dependency_scan -> security_report;
+    sast -> security_report;
+    dast -> security_report;
+    penetration -> security_report;
+    vulnerability_scan -> security_report;
+    security_report -> security_pass;
+
+    // Reporting flow
+    security_pass -> aggregate_results [label="pass"];
+    security_pass -> security_start [label="fail", color=red];
+    aggregate_results -> coverage_report;
+    coverage_report -> test_metrics;
+    test_metrics -> trend_analysis;
+    trend_analysis -> failure_analysis;
+    failure_analysis -> quality_gate;
+    quality_gate -> publish_report [label="pass"];
+    quality_gate -> flaky_tests [label="fail", color=red];
+
+    // Maintenance flow
+    publish_report -> flaky_tests [style=dashed];
+    flaky_tests -> fix_flaky;
+    fix_flaky -> update_tests;
+    update_tests -> refactor_tests;
+    refactor_tests -> test_data;
+}

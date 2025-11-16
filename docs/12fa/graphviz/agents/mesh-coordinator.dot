@@ -1,0 +1,436 @@
+digraph MESH_COORDINATOR {
+  // Layout configuration for peer-to-peer mesh
+  rankdir=LR;
+  node [shape=box, style="rounded,filled"];
+  compound=true;
+  overlap=false;
+
+  // =============================================================================
+  // COORDINATOR INITIALIZATION
+  // =============================================================================
+  subgraph cluster_init {
+    label="Mesh Coordinator Initialization";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8FF";
+
+    spawn_mesh [label="Spawn Mesh\nCoordinator", shape=ellipse, fillcolor=lightblue];
+    load_config [label="Load Mesh\nConfiguration", fillcolor=lightblue];
+    validate_12fa [shape=diamond, label="12-FA\nCompliant?"];
+    init_mesh [label="Initialize Mesh\nTopology", fillcolor=lightblue];
+    calc_connectivity [label="Calculate Full\nConnectivity", fillcolor=lightblue];
+
+    spawn_mesh -> load_config;
+    load_config -> validate_12fa;
+    validate_12fa -> init_mesh [label="Pass"];
+    validate_12fa -> spawn_blocked [label="Fail"];
+    init_mesh -> calc_connectivity;
+  }
+
+  spawn_blocked [shape=octagon, fillcolor=crimson, label="BLOCKED\nSpawn Denied"];
+
+  // =============================================================================
+  // PEER NETWORK SETUP
+  // =============================================================================
+  subgraph cluster_peer_setup {
+    label="Peer Network Establishment";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8FFE8";
+
+    define_peers [label="Define Peer\nNodes", fillcolor=lightgreen];
+    establish_connections [label="Establish Peer\nConnections", fillcolor=lightgreen];
+    verify_connectivity [label="Verify Full\nConnectivity", fillcolor=lightgreen];
+    connectivity_check [shape=diamond, label="All Peers\nConnected?"];
+    retry_connections [label="Retry Failed\nConnections", fillcolor=yellow];
+    init_crdt [label="Initialize CRDT\nSync", fillcolor=lightgreen];
+  }
+
+  calc_connectivity -> define_peers;
+  define_peers -> establish_connections;
+  establish_connections -> verify_connectivity;
+  verify_connectivity -> connectivity_check;
+  connectivity_check -> init_crdt [label="Yes"];
+  connectivity_check -> retry_connections [label="No"];
+  retry_connections -> establish_connections [style=dashed];
+
+  // =============================================================================
+  // PEER NODE NETWORK (MESH TOPOLOGY)
+  // =============================================================================
+  subgraph cluster_mesh_network {
+    label="Fully Connected Mesh Network";
+    style="filled,rounded,bold";
+    color="blue";
+    bgcolor="#D0E8FF";
+    layout=circo;
+
+    peer_1 [label="Peer 1\n(Backend)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+    peer_2 [label="Peer 2\n(Frontend)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+    peer_3 [label="Peer 3\n(Database)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+    peer_4 [label="Peer 4\n(Testing)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+    peer_5 [label="Peer 5\n(DevOps)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+    peer_6 [label="Peer 6\n(Security)",
+            fillcolor=skyblue,
+            style="filled,bold",
+            penwidth=2];
+
+    // Full mesh connectivity (bidirectional)
+    peer_1 -> peer_2 [dir=both, label="Sync", penwidth=1.5];
+    peer_1 -> peer_3 [dir=both, label="Sync", penwidth=1.5];
+    peer_1 -> peer_4 [dir=both, label="Sync", penwidth=1.5];
+    peer_1 -> peer_5 [dir=both, label="Sync", penwidth=1.5];
+    peer_1 -> peer_6 [dir=both, label="Sync", penwidth=1.5];
+
+    peer_2 -> peer_3 [dir=both, label="Sync", penwidth=1.5];
+    peer_2 -> peer_4 [dir=both, label="Sync", penwidth=1.5];
+    peer_2 -> peer_5 [dir=both, label="Sync", penwidth=1.5];
+    peer_2 -> peer_6 [dir=both, label="Sync", penwidth=1.5];
+
+    peer_3 -> peer_4 [dir=both, label="Sync", penwidth=1.5];
+    peer_3 -> peer_5 [dir=both, label="Sync", penwidth=1.5];
+    peer_3 -> peer_6 [dir=both, label="Sync", penwidth=1.5];
+
+    peer_4 -> peer_5 [dir=both, label="Sync", penwidth=1.5];
+    peer_4 -> peer_6 [dir=both, label="Sync", penwidth=1.5];
+
+    peer_5 -> peer_6 [dir=both, label="Sync", penwidth=1.5];
+  }
+
+  init_crdt -> peer_1;
+
+  // =============================================================================
+  // CRDT SYNCHRONIZATION
+  // =============================================================================
+  subgraph cluster_crdt {
+    label="CRDT Conflict-Free Synchronization";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    crdt_init [label="Initialize CRDT\nData Structures", fillcolor=purple];
+    crdt_update [label="Peer Updates\nLocal CRDT", fillcolor=purple];
+    crdt_broadcast [label="Broadcast CRDT\nChanges", fillcolor=purple];
+    crdt_merge [label="Merge Remote\nCRDT Updates", fillcolor=purple];
+    crdt_convergence [shape=diamond, label="Convergence\nReached?"];
+    crdt_reconcile [label="Reconcile\nDivergence", fillcolor=yellow];
+    crdt_consistent [label="Eventually\nConsistent State", fillcolor=purple];
+  }
+
+  peer_1 -> crdt_init [ltail=cluster_mesh_network];
+  crdt_init -> crdt_update;
+  crdt_update -> crdt_broadcast;
+  crdt_broadcast -> crdt_merge;
+  crdt_merge -> crdt_convergence;
+  crdt_convergence -> crdt_reconcile [label="No"];
+  crdt_convergence -> crdt_consistent [label="Yes"];
+  crdt_reconcile -> crdt_merge [style=dashed];
+
+  // =============================================================================
+  // DISTRIBUTED CONSENSUS
+  // =============================================================================
+  subgraph cluster_consensus {
+    label="Distributed Consensus Protocol";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    propose_change [label="Peer Proposes\nChange", fillcolor=orange];
+    broadcast_proposal [label="Broadcast\nProposal", fillcolor=orange];
+    peer_voting [label="All Peers\nVote", fillcolor=orange];
+    collect_votes [label="Collect Peer\nVotes", fillcolor=orange];
+    consensus_check [shape=diamond, label="Consensus\nReached?"];
+    apply_change [label="Apply Accepted\nChange", fillcolor=orange];
+    reject_change [label="Reject\nProposal", fillcolor=yellow];
+  }
+
+  crdt_consistent -> propose_change;
+  propose_change -> broadcast_proposal;
+  broadcast_proposal -> peer_voting;
+  peer_voting -> collect_votes;
+  collect_votes -> consensus_check;
+  consensus_check -> apply_change [label="Yes (Majority)"];
+  consensus_check -> reject_change [label="No"];
+  reject_change -> propose_change [style=dashed, label="Retry"];
+
+  // =============================================================================
+  // PARALLEL TASK EXECUTION
+  // =============================================================================
+  subgraph cluster_task_execution {
+    label="Parallel Peer Task Execution";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    distribute_tasks [label="Distribute Tasks\nto Peers", fillcolor=cyan];
+
+    peer1_task [label="Peer 1\nExecutes Task", fillcolor=lightcyan];
+    peer2_task [label="Peer 2\nExecutes Task", fillcolor=lightcyan];
+    peer3_task [label="Peer 3\nExecutes Task", fillcolor=lightcyan];
+    peer4_task [label="Peer 4\nExecutes Task", fillcolor=lightcyan];
+    peer5_task [label="Peer 5\nExecutes Task", fillcolor=lightcyan];
+    peer6_task [label="Peer 6\nExecutes Task", fillcolor=lightcyan];
+
+    sync_results [label="Sync Results\nAcross Mesh", fillcolor=cyan];
+  }
+
+  apply_change -> distribute_tasks;
+  distribute_tasks -> peer1_task;
+  distribute_tasks -> peer2_task;
+  distribute_tasks -> peer3_task;
+  distribute_tasks -> peer4_task;
+  distribute_tasks -> peer5_task;
+  distribute_tasks -> peer6_task;
+
+  peer1_task -> sync_results;
+  peer2_task -> sync_results;
+  peer3_task -> sync_results;
+  peer4_task -> sync_results;
+  peer5_task -> sync_results;
+  peer6_task -> sync_results;
+
+  // =============================================================================
+  // FAULT TOLERANCE & RECOVERY
+  // =============================================================================
+  subgraph cluster_fault_tolerance {
+    label="Fault Tolerance Patterns";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#FFE8E8";
+
+    detect_failure [label="Detect Peer\nFailure", fillcolor=pink];
+    failure_type [shape=diamond, label="Failure\nType?"];
+    peer_disconnect [label="Peer\nDisconnection", fillcolor=orange];
+    peer_malfunction [label="Peer\nMalfunction", fillcolor=orange];
+    isolate_peer [label="Isolate Failed\nPeer", fillcolor=pink];
+    redistribute_work [label="Redistribute\nWork", fillcolor=pink];
+    heal_network [label="Self-Heal\nNetwork", fillcolor=pink];
+    reconnect_peer [label="Reconnect\nPeer", fillcolor=lightgreen];
+  }
+
+  sync_results -> detect_failure;
+  detect_failure -> failure_type;
+  failure_type -> peer_disconnect [label="Disconnect"];
+  failure_type -> peer_malfunction [label="Malfunction"];
+  peer_disconnect -> reconnect_peer;
+  peer_malfunction -> isolate_peer;
+  isolate_peer -> redistribute_work;
+  redistribute_work -> heal_network;
+  reconnect_peer -> heal_network;
+
+  // =============================================================================
+  // HORIZONTAL SCALING
+  // =============================================================================
+  subgraph cluster_scaling {
+    label="Horizontal Scaling Workflow";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    monitor_load [label="Monitor Mesh\nLoad", fillcolor=lightgreen];
+    scaling_needed [shape=diamond, label="Scaling\nNeeded?"];
+    add_peer [label="Add New Peer\nNode", fillcolor=lightgreen];
+    establish_new_connections [label="Establish New\nConnections", fillcolor=lightgreen];
+    rebalance_mesh [label="Rebalance Mesh\nTopology", fillcolor=lightgreen];
+    update_crdt [label="Update CRDT\nStructures", fillcolor=lightgreen];
+  }
+
+  heal_network -> monitor_load;
+  monitor_load -> scaling_needed;
+  scaling_needed -> add_peer [label="Yes"];
+  scaling_needed -> memory_sync [label="No"];
+  add_peer -> establish_new_connections;
+  establish_new_connections -> rebalance_mesh;
+  rebalance_mesh -> update_crdt;
+  update_crdt -> monitor_load [style=dashed];
+
+  // =============================================================================
+  // MEMORY SYNCHRONIZATION
+  // =============================================================================
+  subgraph cluster_memory {
+    label="Distributed Memory Synchronization";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8F0F8";
+
+    memory_sync [label="Initiate Memory\nSync", fillcolor=lightblue];
+    peer_memory_snapshot [label="Peer Memory\nSnapshots", fillcolor=lightblue];
+    gossip_protocol [label="Gossip Protocol\nExchange", fillcolor=lightblue];
+    merge_memories [label="Merge Memory\nStates", fillcolor=lightblue];
+    resolve_conflicts [label="Resolve Memory\nConflicts", fillcolor=lightblue];
+    eventual_consistency [label="Eventual\nConsistency", fillcolor=lightblue];
+  }
+
+  memory_sync -> peer_memory_snapshot;
+  peer_memory_snapshot -> gossip_protocol;
+  gossip_protocol -> merge_memories;
+  merge_memories -> resolve_conflicts;
+  resolve_conflicts -> eventual_consistency;
+
+  // =============================================================================
+  // VALIDATION & QUALITY
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Peer Validation Protocol";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F8E8F8";
+
+    peer_validation [label="Peer-to-Peer\nValidation", fillcolor=purple];
+    cross_verify [label="Cross-Verify\nResults", fillcolor=purple];
+    majority_check [shape=diamond, label="Majority\nAgrees?"];
+    accept_result [label="Accept\nResult", fillcolor=lightgreen];
+    flag_anomaly [label="Flag Anomaly", fillcolor=yellow];
+    investigate [label="Investigate\nDiscrepancy", fillcolor=yellow];
+  }
+
+  eventual_consistency -> peer_validation;
+  peer_validation -> cross_verify;
+  cross_verify -> majority_check;
+  majority_check -> accept_result [label="Yes"];
+  majority_check -> flag_anomaly [label="No"];
+  flag_anomaly -> investigate;
+  investigate -> peer_validation [style=dashed];
+
+  // =============================================================================
+  // MCP COORDINATION TOOLS
+  // =============================================================================
+  subgraph cluster_mcp {
+    label="MCP Mesh Coordination";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFFAF0";
+
+    mcp_swarm_init [label="mcp__ruv-swarm\nswarm_init\n(mesh)", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_spawn [label="mcp__ruv-swarm\nagent_spawn\n(peers)", fillcolor=lightyellow, shape=box3d];
+    mcp_daa_init [label="mcp__ruv-swarm\ndaa_init", fillcolor=lightyellow, shape=box3d];
+    mcp_knowledge_share [label="mcp__ruv-swarm\ndaa_knowledge_share", fillcolor=lightyellow, shape=box3d];
+    mcp_agent_metrics [label="mcp__ruv-swarm\nagent_metrics", fillcolor=lightyellow, shape=box3d];
+  }
+
+  init_mesh -> mcp_swarm_init;
+  define_peers -> mcp_agent_spawn;
+  crdt_init -> mcp_daa_init;
+  gossip_protocol -> mcp_knowledge_share;
+  monitor_load -> mcp_agent_metrics;
+
+  // =============================================================================
+  // RESULT AGGREGATION
+  // =============================================================================
+  subgraph cluster_aggregation {
+    label="Peer Result Aggregation";
+    style="filled,rounded";
+    color="cyan";
+    bgcolor="#E8FFFF";
+
+    collect_peer_results [label="Collect All Peer\nResults", fillcolor=cyan];
+    deduplicate [label="Deduplicate\nResults", fillcolor=cyan];
+    aggregate_consensus [label="Aggregate via\nConsensus", fillcolor=cyan];
+    generate_report [label="Generate Mesh\nReport", fillcolor=cyan];
+  }
+
+  accept_result -> collect_peer_results;
+  collect_peer_results -> deduplicate;
+  deduplicate -> aggregate_consensus;
+  aggregate_consensus -> generate_report;
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion & Cleanup";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup_mesh [label="Cleanup Mesh\nConnections", fillcolor=lightgreen];
+    log_metrics [label="Log Mesh\nMetrics", fillcolor=lightgreen];
+    store_final_state [label="Store Final\nState", fillcolor=lightgreen];
+    success [label="Mesh Coordination\nComplete",
+             shape=doublecircle,
+             fillcolor=green,
+             style="filled,bold"];
+  }
+
+  generate_report -> cleanup_mesh;
+  cleanup_mesh -> log_metrics;
+  log_metrics -> store_final_state;
+  store_final_state -> success;
+
+  // =============================================================================
+  // ERROR HANDLING
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Recovery";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    mesh_error [label="Mesh Error\nDetected", fillcolor=orange];
+    error_type [shape=diamond, label="Error\nType?"];
+    partition_error [label="Network\nPartition", fillcolor=orange];
+    consensus_error [label="Consensus\nFailure", fillcolor=orange];
+    peer_error [label="Peer Error", fillcolor=orange];
+
+    attempt_recovery [label="Attempt\nRecovery", fillcolor=yellow];
+    recovery_success [shape=diamond, label="Recovery\nSuccessful?"];
+    manual_intervention [shape=hexagon, fillcolor=yellow, label="Manual\nIntervention"];
+    failure [label="Coordination\nFailed", shape=doublecircle, fillcolor=red, style="filled,bold"];
+  }
+
+  connectivity_check -> mesh_error [label="Fail (3x)"];
+  consensus_check -> mesh_error [label="Fail (3x)"];
+
+  mesh_error -> error_type;
+  error_type -> partition_error [label="Partition"];
+  error_type -> consensus_error [label="Consensus"];
+  error_type -> peer_error [label="Peer"];
+
+  partition_error -> attempt_recovery;
+  consensus_error -> attempt_recovery;
+  peer_error -> attempt_recovery;
+
+  attempt_recovery -> recovery_success;
+  recovery_success -> heal_network [label="Yes", style=dashed];
+  recovery_success -> manual_intervention [label="No"];
+  manual_intervention -> failure;
+
+  // =============================================================================
+  // LEGEND
+  // =============================================================================
+  subgraph cluster_legend {
+    label="Legend";
+    rank=sink;
+    style="filled,rounded";
+    bgcolor="#F8F8F8";
+
+    legend_peer [shape=box, fillcolor=skyblue, style="filled,bold", label="Peer Node"];
+    legend_process [shape=box, fillcolor=lightblue, label="Process"];
+    legend_decision [shape=diamond, label="Decision"];
+    legend_mcp [shape=box3d, fillcolor=lightyellow, label="MCP Tool"];
+    legend_error [shape=box, fillcolor=orange, label="Error"];
+    legend_manual [shape=hexagon, fillcolor=yellow, label="Manual"];
+    legend_success [shape=doublecircle, fillcolor=green, label="Success"];
+
+    legend_peer -> legend_process [style=invis];
+    legend_process -> legend_decision [style=invis];
+    legend_decision -> legend_mcp [style=invis];
+    legend_mcp -> legend_error [style=invis];
+    legend_error -> legend_manual [style=invis];
+    legend_manual -> legend_success [style=invis];
+  }
+}

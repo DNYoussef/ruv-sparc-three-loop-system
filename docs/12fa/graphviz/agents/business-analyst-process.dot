@@ -1,0 +1,125 @@
+digraph business_analyst_workflow {
+    // Graph styling
+    rankdir=TB;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Business Analyst - Requirements & ROI Analysis";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Business Need\n(Problem statement)", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Discovery Phase
+    subgraph cluster_discovery {
+        label="Discovery Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        stakeholders [label="Stakeholder Identification\n(Key players)"];
+        interviews [label="Stakeholder Interviews\n(Requirements gathering)"];
+        document [label="Documentation Review\n(Existing systems)"];
+    }
+
+    // Analysis Phase
+    subgraph cluster_analysis {
+        label="Business Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        process [label="Process Analysis\n(Current state)"];
+        gaps [label="Gap Analysis\n(Needs vs reality)"];
+        requirements [label="Requirements Definition\n(What's needed)"];
+    }
+
+    // ROI Phase
+    subgraph cluster_roi {
+        label="ROI Analysis";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        costs [label="Cost Analysis\n(Investment required)"];
+        benefits [label="Benefits Assessment\n(Value delivered)"];
+        roi [label="ROI Calculation\n(Return on investment)"];
+    }
+
+    // Stakeholder Management
+    subgraph cluster_management {
+        label="Stakeholder Management";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        communicate [label="Communication\n(Updates)"];
+        negotiate [label="Negotiation\n(Trade-offs)"];
+        approve [label="Approval Process\n(Sign-off)"];
+    }
+
+    // Key Features (right side)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Business Analysis", fillcolor="#238636"];
+        feature2 [label="Requirements Gathering", fillcolor="#238636"];
+        feature3 [label="Stakeholder Management", fillcolor="#238636"];
+        feature4 [label="ROI", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Business Requirements\n+ ROI Report", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> stakeholders;
+    stakeholders -> interviews;
+    interviews -> document;
+
+    document -> process;
+    process -> gaps;
+    gaps -> requirements;
+
+    requirements -> costs;
+    costs -> benefits;
+    benefits -> roi;
+
+    roi -> communicate;
+    communicate -> negotiate;
+    negotiate -> approve;
+
+    approve -> output;
+
+    // Feedback loop
+    negotiate -> requirements [label="Refine requirements", style=dashed, color="#f85149"];
+
+    // Feature connections
+    process -> feature1 [style=dotted, color="#8b949e"];
+    interviews -> feature2 [style=dotted, color="#8b949e"];
+    communicate -> feature3 [style=dotted, color="#8b949e"];
+    roi -> feature4 [style=dotted, color="#8b949e"];
+}

@@ -1,0 +1,70 @@
+digraph sparc_sparc_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="SPARC:SPARC Command Workflow\nFull SPARC Orchestration";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/sparc:sparc", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  parse_objective [label="Parse Objective\nBreak down task", fillcolor="#FFF9C4"];
+
+  delegate_spec [label="Delegate to Spec Agent\n/sparc:spec-pseudocode", fillcolor="#FFE0B2"];
+  gate1 [label="Spec Gate\nComplete?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_arch [label="Delegate to Architect\n/sparc:architect", fillcolor="#BBDEFB"];
+  gate2 [label="Architecture Gate\nApproved?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_code [label="Delegate to Coder\n/sparc:code (TDD)", fillcolor="#C5CAE9"];
+  gate3 [label="Code Gate\nTests pass?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_refine [label="Delegate to Optimizer\n/sparc:refinement", fillcolor="#B2DFDB"];
+  gate4 [label="Optimization Gate\nPerformance OK?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_integrate [label="Delegate to Integrator\n/sparc:integration", fillcolor="#D1C4E9"];
+  gate5 [label="Integration Gate\nE2E tests pass?", fillcolor="#4CAF50", fontcolor=white, shape=diamond];
+
+  delegate_security [label="Delegate to Security\n/sparc:security-review", fillcolor="#F44336", fontcolor=white];
+  gate6 [label="Security Gate\nNo critical issues?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  delegate_devops [label="Delegate to DevOps\n/sparc:devops", fillcolor="#FFE0B2"];
+
+  delegate_monitor [label="Delegate to Monitor\n/sparc:post-deployment", fillcolor="#BBDEFB"];
+
+  success [label="SPARC Complete\nProduction deployed", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> parse_objective;
+  parse_objective -> delegate_spec;
+  delegate_spec -> gate1;
+  gate1 -> delegate_arch [label="Yes"];
+  gate1 -> delegate_spec [label="No", style=dashed, color=red];
+
+  delegate_arch -> gate2;
+  gate2 -> delegate_code [label="Yes"];
+  gate2 -> delegate_arch [label="No", style=dashed, color=red];
+
+  delegate_code -> gate3;
+  gate3 -> delegate_refine [label="Yes"];
+  gate3 -> delegate_code [label="No", style=dashed, color=red];
+
+  delegate_refine -> gate4;
+  gate4 -> delegate_integrate [label="Yes"];
+  gate4 -> delegate_refine [label="No", style=dashed, color=red];
+
+  delegate_integrate -> gate5;
+  gate5 -> delegate_security [label="Yes"];
+  gate5 -> delegate_integrate [label="No", style=dashed, color=red];
+
+  delegate_security -> gate6;
+  gate6 -> delegate_devops [label="Yes"];
+  gate6 -> delegate_code [label="No - Fix", style=dashed, color=red];
+
+  delegate_devops -> delegate_monitor;
+  delegate_monitor -> success;
+}

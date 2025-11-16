@@ -1,0 +1,20 @@
+digraph REPO_ANALYZE {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/repo-analyze", shape=ellipse, fillcolor=lightblue];
+  fetch_repo [label="Fetch Repository\nMetadata", fillcolor=lightblue];
+  clone_repo [label="Clone\nRepository", fillcolor=lightblue];
+  analyze_structure [label="Analyze\nStructure", fillcolor=purple, style="filled,bold"];
+  scan_files [label="Scan\nFiles", fillcolor=lightpurple];
+  analyze_dependencies [label="Analyze\nDependencies", fillcolor=lightpurple];
+  check_quality [label="Check Code\nQuality", fillcolor=lightgreen];
+  calc_metrics [label="Calculate\nMetrics", fillcolor=lightgreen];
+  detect_patterns [label="Detect\nPatterns", fillcolor=yellow];
+  generate_report [label="Generate\nReport", fillcolor=lightblue];
+  success [label="Analysis Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> fetch_repo -> clone_repo -> analyze_structure;
+  analyze_structure -> scan_files -> analyze_dependencies -> check_quality;
+  check_quality -> calc_metrics -> detect_patterns -> generate_report -> success;
+}

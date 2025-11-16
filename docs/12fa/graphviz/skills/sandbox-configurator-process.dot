@@ -1,0 +1,194 @@
+digraph SANDBOX_CONFIGURATOR_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Skill Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Skill Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load skill.yaml"];
+    validate_input [label="Validate Sandbox\nRequirements"];
+    check_deps [label="Check Claude Code\nSandbox"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  // Connect initialization to validation
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Sandbox Configuration";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    setup_filesystem [label="Setup File System\nIsolation", fillcolor=purple];
+    decision_1 [shape=diamond, label="FS Isolated?"];
+
+    configure_network [label="Configure Network\nBoundaries", fillcolor=purple];
+    decision_2 [shape=diamond, label="Network\nRestricted?"];
+
+    apply_security [label="Apply Security\nPolicies", fillcolor=purple];
+    decision_3 [shape=diamond, label="Policies\nActive?"];
+
+    test_isolation [label="Test Isolation\nBoundaries", fillcolor=purple];
+    decision_4 [shape=diamond, label="Isolation\nVerified?"];
+
+    document_config [label="Document Sandbox\nConfiguration", fillcolor=purple];
+
+    // Error handling within execution
+    execution_error [shape=octagon, fillcolor=orange,
+                     label="Configuration Error"];
+    retry_logic [label="Adjust Config", fillcolor=yellow];
+  }
+
+  // Connect validation to execution
+  check_secrets -> setup_filesystem [label="Pass"];
+
+  // Execution flow
+  setup_filesystem -> decision_1;
+  decision_1 -> configure_network [label="Yes"];
+  decision_1 -> execution_error [label="No"];
+
+  configure_network -> decision_2;
+  decision_2 -> apply_security [label="Yes"];
+  decision_2 -> execution_error [label="No"];
+
+  apply_security -> decision_3;
+  decision_3 -> test_isolation [label="Yes"];
+  decision_3 -> execution_error [label="No"];
+
+  test_isolation -> decision_4;
+  decision_4 -> document_config [label="Yes"];
+  decision_4 -> execution_error [label="No"];
+
+  // Error recovery
+  execution_error -> retry_logic;
+  retry_logic -> setup_filesystem [label="Retry", style=dashed];
+  retry_logic -> escalate [label="Cannot Configure"];
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Agent Coordination";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Sandbox\nConfig", fillcolor=lightblue];
+    notify_coordinator [label="Notify Sandbox\nReady", fillcolor=lightblue];
+    check_dependencies [shape=diamond, label="Other Configs\nWaiting?"];
+  }
+
+  // Connect execution to coordination
+  document_config -> memory_store;
+  memory_store -> notify_coordinator;
+  notify_coordinator -> check_dependencies;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="Config\nSecure?"];
+    run_tests [label="Test Security\nBoundaries", fillcolor=lightgreen];
+    test_results [shape=diamond, label="All Tests\nPass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  // Connect coordination to quality
+  check_dependencies -> validate_output [label="No"];
+
+  // Quality flow
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    cleanup [label="Cleanup Test\nArtifacts", fillcolor=lightgreen];
+    log_completion [label="Log Configuration\nMetrics"];
+    success [label="Skill Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  // Connect quality to completion
+  test_results -> cleanup [label="Pass"];
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Revert Configuration", fillcolor=orange];
+    failure [label="Skill Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  // Error escalation flow
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

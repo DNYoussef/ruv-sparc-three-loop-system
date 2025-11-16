@@ -1,0 +1,109 @@
+digraph gemini_search_agent_workflow {
+    // Graph styling
+    rankdir=LR;
+    bgcolor="#0d1117";
+    fontname="Arial";
+    fontcolor="#c9d1d9";
+
+    // Node defaults
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontcolor="#c9d1d9",
+        color="#30363d",
+        fillcolor="#161b22"
+    ];
+
+    // Edge defaults
+    edge [
+        color="#58a6ff",
+        fontname="Arial",
+        fontcolor="#8b949e",
+        fontsize=10
+    ];
+
+    // Title
+    label="Gemini Search Agent - Real-Time Information Integration";
+    labelloc=t;
+    fontsize=16;
+
+    // Input
+    input [label="Search Query", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Search Phase
+    subgraph cluster_search {
+        label="Search Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        parse [label="Query Parsing\n(Intent extraction)"];
+        search [label="Web Search\n(Gemini API)"];
+        retrieve [label="Data Retrieval\n(Real-time)"];
+    }
+
+    // Processing Phase
+    subgraph cluster_processing {
+        label="Processing Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        filter [label="Result Filtering\n(Relevance)"];
+        synthesize [label="Information Synthesis\n(Combine sources)"];
+        factcheck [label="Fact Checking\n(Validation)"];
+    }
+
+    // Integration Phase
+    subgraph cluster_integration {
+        label="Integration Phase";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        format [label="Data Formatting\n(Structured output)"];
+        cite [label="Citation\n(Source tracking)"];
+        integrate [label="Context Integration\n(With existing knowledge)"];
+    }
+
+    // Key Features (bottom)
+    subgraph cluster_features {
+        label="Key Features";
+        style="rounded,filled";
+        fillcolor="#0d1117";
+        color="#30363d";
+
+        feature1 [label="Real-time Search", fillcolor="#238636"];
+        feature2 [label="Web Integration", fillcolor="#238636"];
+        feature3 [label="Fact Checking", fillcolor="#238636"];
+        feature4 [label="Information Synthesis", fillcolor="#238636"];
+    }
+
+    // Output
+    output [label="Synthesized Results\n+ Citations", fillcolor="#1f6feb", fontcolor="white"];
+
+    // Main workflow
+    input -> parse;
+    parse -> search;
+    search -> retrieve;
+
+    retrieve -> filter;
+    filter -> synthesize;
+    synthesize -> factcheck;
+
+    factcheck -> format;
+    format -> cite;
+    cite -> integrate;
+
+    integrate -> output;
+
+    // Feature connections
+    search -> feature1 [style=dotted, color="#8b949e"];
+    retrieve -> feature2 [style=dotted, color="#8b949e"];
+    factcheck -> feature3 [style=dotted, color="#8b949e"];
+    synthesize -> feature4 [style=dotted, color="#8b949e"];
+
+    // Feedback loop
+    factcheck -> search [label="Re-search if needed", style=dashed, color="#f85149"];
+}

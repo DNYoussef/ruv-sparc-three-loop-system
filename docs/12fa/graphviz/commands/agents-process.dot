@@ -1,0 +1,23 @@
+digraph AGENTS {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/agents", shape=ellipse, fillcolor=lightblue];
+  query_agents [label="Query Active\nAgents", fillcolor=lightblue];
+  collect_status [label="Collect\nStatus", fillcolor=lightgreen];
+  collect_metrics [label="Collect\nMetrics", fillcolor=lightgreen];
+  analyze_health [label="Analyze\nHealth", fillcolor=purple];
+  check_performance [label="Check\nPerformance", fillcolor=purple];
+  identify_issues [shape=diamond, label="Issues\nFound?"];
+  flag_issues [label="Flag\nIssues", fillcolor=orange];
+  format_report [label="Format\nReport", fillcolor=lightblue];
+  display_dashboard [label="Display Agent\nDashboard", fillcolor=lightpurple, style="filled,bold"];
+  success [label="Monitoring Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> query_agents -> collect_status -> collect_metrics;
+  collect_metrics -> analyze_health -> check_performance -> identify_issues;
+  identify_issues -> flag_issues [label="Yes"];
+  identify_issues -> format_report [label="No"];
+  flag_issues -> format_report;
+  format_report -> display_dashboard -> success;
+}

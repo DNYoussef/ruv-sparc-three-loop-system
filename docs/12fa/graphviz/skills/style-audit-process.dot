@@ -1,0 +1,175 @@
+digraph STYLE_AUDIT_WORKFLOW {
+  // Layout configuration
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  // =============================================================================
+  // INITIALIZATION PHASE
+  // =============================================================================
+  subgraph cluster_initialization {
+    label="Style Audit Initialization";
+    style="filled,rounded";
+    color="lightblue";
+    bgcolor="#E8F4F8";
+
+    start [label="Style Audit Invoked", shape=ellipse, fillcolor=lightblue];
+    load_spec [label="Load Style Guidelines"];
+    validate_input [label="Validate Target Files"];
+    check_deps [label="Check Linter Dependencies"];
+
+    start -> load_spec;
+    load_spec -> validate_input;
+    validate_input -> check_deps;
+  }
+
+  // =============================================================================
+  // VALIDATION & POLICY ENFORCEMENT
+  // =============================================================================
+  subgraph cluster_validation {
+    label="Policy Validation";
+    style="filled,rounded";
+    color="orange";
+    bgcolor="#FFF8E8";
+
+    check_policy [shape=diamond, label="12-FA\nCompliant?"];
+    check_secrets [shape=diamond, label="No Secrets\nin Root?"];
+
+    policy_violation [shape=octagon, fillcolor=crimson,
+                      label="BLOCKED\nPolicy Violation"];
+    secrets_violation [shape=octagon, fillcolor=crimson,
+                       label="BLOCKED\nRule #1: No Secrets in Root"];
+  }
+
+  check_deps -> check_policy;
+  check_policy -> check_secrets [label="Pass"];
+  check_policy -> policy_violation [label="Fail"];
+  check_secrets -> secrets_violation [label="Secrets Found"];
+
+  // =============================================================================
+  // EXECUTION PHASE - STYLE ANALYSIS
+  // =============================================================================
+  subgraph cluster_execution {
+    label="Style Analysis Phase";
+    style="filled,rounded";
+    color="purple";
+    bgcolor="#F0E8F8";
+
+    run_linter [label="Run Code Linters\n(ESLint, Prettier, etc.)", fillcolor=purple];
+    lint_check [shape=diamond, label="Linting\nPass?"];
+
+    check_formatting [label="Check Code Formatting", fillcolor=purple];
+    format_check [shape=diamond, label="Formatting\nConsistent?"];
+
+    analyze_complexity [label="Analyze Code Complexity\n(Cyclomatic, Cognitive)", fillcolor=purple];
+    complexity_check [shape=diamond, label="Complexity\nAcceptable?"];
+
+    // Error handling
+    style_error [shape=octagon, fillcolor=orange,
+                 label="Style Violations Found"];
+    auto_fix [label="Apply Auto-Fixes", fillcolor=yellow];
+  }
+
+  check_secrets -> run_linter [label="Pass"];
+
+  run_linter -> lint_check;
+  lint_check -> check_formatting [label="Yes"];
+  lint_check -> auto_fix [label="No"];
+
+  auto_fix -> check_formatting;
+  auto_fix -> style_error [label="Can't Auto-Fix"];
+
+  check_formatting -> format_check;
+  format_check -> analyze_complexity [label="Yes"];
+  format_check -> style_error [label="No"];
+
+  analyze_complexity -> complexity_check;
+  complexity_check -> style_error [label="No"];
+
+  style_error -> escalate;
+
+  // =============================================================================
+  // COORDINATION & MEMORY
+  // =============================================================================
+  subgraph cluster_coordination {
+    label="Style Tracking";
+    style="filled,rounded";
+    color="blue";
+    bgcolor="#E8E8F8";
+
+    memory_store [label="Store Style Metrics", fillcolor=lightblue];
+    notify_coordinator [label="Notify Coordinator", fillcolor=lightblue];
+  }
+
+  complexity_check -> memory_store [label="Yes"];
+  memory_store -> notify_coordinator;
+
+  // =============================================================================
+  // VALIDATION & QUALITY GATES
+  // =============================================================================
+  subgraph cluster_quality {
+    label="Quality Validation";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    validate_output [shape=diamond, label="All Style Rules\nSatisfied?"];
+    run_tests [label="Run Style Tests", fillcolor=lightgreen];
+    test_results [shape=diamond, label="Tests Pass?"];
+
+    quality_gate_fail [shape=octagon, fillcolor=orange,
+                       label="Quality Gate Failed"];
+  }
+
+  notify_coordinator -> validate_output;
+  validate_output -> run_tests [label="Yes"];
+  validate_output -> quality_gate_fail [label="No"];
+
+  run_tests -> test_results;
+  test_results -> quality_gate_fail [label="Fail"];
+
+  // =============================================================================
+  // COMPLETION & CLEANUP
+  // =============================================================================
+  subgraph cluster_completion {
+    label="Completion";
+    style="filled,rounded";
+    color="green";
+    bgcolor="#E8F8E8";
+
+    generate_report [label="Generate Style Report", fillcolor=lightgreen];
+    cleanup [label="Cleanup Temp Files", fillcolor=lightgreen];
+    log_completion [label="Log Audit Metrics"];
+    success [label="Style Audit Complete", shape=doublecircle,
+             fillcolor=green, style="filled,bold"];
+  }
+
+  test_results -> generate_report [label="Pass"];
+  generate_report -> cleanup;
+  cleanup -> log_completion;
+  log_completion -> success;
+
+  // =============================================================================
+  // ERROR ESCALATION PATH
+  // =============================================================================
+  subgraph cluster_errors {
+    label="Error Handling & Escalation";
+    style="filled,rounded";
+    color="red";
+    bgcolor="#F8E8E8";
+
+    escalate [shape=hexagon, fillcolor=yellow,
+              label="Escalate to User"];
+    log_error [label="Log Error Details", fillcolor=orange];
+    rollback [label="Rollback Changes", fillcolor=orange];
+    failure [label="Style Audit Failed", shape=doublecircle,
+             fillcolor=red, style="filled,bold"];
+  }
+
+  escalate -> log_error;
+  quality_gate_fail -> log_error;
+  policy_violation -> log_error;
+  secrets_violation -> log_error;
+
+  log_error -> rollback;
+  rollback -> failure;
+}

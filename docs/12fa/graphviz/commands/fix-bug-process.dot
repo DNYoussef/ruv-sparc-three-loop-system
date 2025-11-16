@@ -1,0 +1,65 @@
+digraph fix_bug_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Fix-Bug Command Workflow\nSmart Bug Fix with Systematic Debugging";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/fix-bug", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  describe_bug [label="Describe Bug\n- Symptoms\n- Steps to reproduce\n- Expected vs actual", fillcolor="#FFF9C4"];
+
+  reproduce [label="Reproduce Bug\nCreate minimal test case", fillcolor="#FFE0B2"];
+
+  reproducible [label="Reproducible?", fillcolor="#C5CAE9", shape=diamond];
+
+  gather_info [label="Gather More Info\n- Logs\n- Stack traces\n- Environment", fillcolor="#BBDEFB"];
+
+  root_cause_analysis [label="Root Cause Analysis\n/agent-rca", fillcolor="#B2DFDB"];
+
+  design_fix [label="Design Fix\n- Minimal change\n- No breaking changes\n- Consider side effects", fillcolor="#D1C4E9"];
+
+  write_test_first [label="Write Test First\nTDD approach", fillcolor="#F0F4C3"];
+
+  run_test_red [label="Run Test (Red)\nExpect failure", fillcolor="#F44336", fontcolor=white];
+
+  implement_fix [label="Implement Fix\nMinimal code change", fillcolor="#FFE0B2"];
+
+  run_test_green [label="Run Test (Green)\nExpect success", fillcolor="#4CAF50", fontcolor=white];
+
+  regression_tests [label="Regression Tests\nAll existing tests pass", fillcolor="#BBDEFB"];
+
+  code_review [label="Code Review\nQuality check", fillcolor="#B2DFDB"];
+
+  update_docs [label="Update Documentation\n- Bug description\n- Root cause\n- Solution\n- Prevention", fillcolor="#D1C4E9"];
+
+  commit_fix [label="Commit Fix\nWith descriptive message", fillcolor="#F0F4C3"];
+
+  success [label="Bug Fixed\nTests passing", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> describe_bug;
+  describe_bug -> reproduce;
+  reproduce -> reproducible;
+  reproducible -> root_cause_analysis [label="Yes"];
+  reproducible -> gather_info [label="No"];
+  gather_info -> reproduce;
+  root_cause_analysis -> design_fix;
+  design_fix -> write_test_first;
+  write_test_first -> run_test_red;
+  run_test_red -> implement_fix;
+  implement_fix -> run_test_green;
+  run_test_green -> regression_tests [label="Passed"];
+  run_test_green -> implement_fix [label="Failed", style=dashed, color=red];
+  regression_tests -> code_review [label="Passed"];
+  regression_tests -> implement_fix [label="Failed", style=dashed, color=red];
+  code_review -> update_docs [label="Approved"];
+  code_review -> design_fix [label="Needs improvement", style=dashed, color=orange];
+  update_docs -> commit_fix;
+  commit_fix -> success;
+}

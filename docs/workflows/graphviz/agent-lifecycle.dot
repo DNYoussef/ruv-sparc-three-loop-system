@@ -1,0 +1,255 @@
+digraph AgentLifecycle {
+    // Graph attributes
+    rankdir=TB;
+    bgcolor="#f8f9fa";
+    fontname="Arial";
+    fontsize=12;
+    node [fontname="Arial", fontsize=10, style=filled];
+    edge [fontname="Arial", fontsize=9];
+
+    // Title
+    labelloc="t";
+    label=<<b>Agent Lifecycle Management</b><br/>Spawn → Health Check → Monitor → Scale → Retire>;
+    fontsize=16;
+
+    // Legend
+    subgraph cluster_legend {
+        label="Agent States";
+        style=filled;
+        color="#e9ecef";
+
+        legend_info [label=<
+            <table border="0" cellspacing="0">
+                <tr><td align="left"><b>Initializing</b>: Starting up</td></tr>
+                <tr><td align="left"><b>Healthy</b>: Operational</td></tr>
+                <tr><td align="left"><b>Degraded</b>: Performance issues</td></tr>
+                <tr><td align="left"><b>Unhealthy</b>: Failing health checks</td></tr>
+                <tr><td align="left"><b>Terminating</b>: Shutting down</td></tr>
+            </table>
+        >, shape=box, fillcolor="#fff3cd"];
+    }
+
+    // Start
+    start [label="Agent Lifecycle\nStart", shape=oval, fillcolor="#d4edda"];
+
+    // Agent Spawn Phase
+    subgraph cluster_spawn {
+        label="Phase 1: Agent Spawn";
+        style=filled;
+        color="#cfe2ff";
+
+        spawn_request [label="Spawn Request\nAgent Type + Config", shape=box, fillcolor="#b6d7ff"];
+        spawn_validate [label="Validate Request\nQuota/Permissions", shape=box, fillcolor="#b6d7ff"];
+        spawn_allocate [label="Allocate Resources\nCPU/Memory/Disk", shape=box, fillcolor="#b6d7ff"];
+        spawn_create [label="Create Agent\nContainer/Process", shape=box, fillcolor="#b6d7ff"];
+        spawn_inject [label="Inject Config\nEnv Vars/Secrets", shape=box, fillcolor="#b6d7ff"];
+        spawn_register [label="Register Agent\nService Discovery", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    spawn_success [label="Spawn\nSuccessful?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Initialization Phase
+    subgraph cluster_init {
+        label="Phase 2: Initialization";
+        style=filled;
+        color="#d1e7dd";
+
+        init_load_config [label="Load Config\nSettings/Policies", shape=box, fillcolor="#a3cfbb"];
+        init_connect_deps [label="Connect Dependencies\nDB/Cache/APIs", shape=box, fillcolor="#a3cfbb"];
+        init_warmup [label="Warmup\nPreload Data", shape=box, fillcolor="#a3cfbb"];
+        init_readiness [label="Readiness Check\n/ready endpoint", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    init_ready [label="Ready?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Health Check System
+    subgraph cluster_health {
+        label="Phase 3: Health Check System";
+        style=filled;
+        color="#e7d1e7";
+
+        health_liveness [label="Liveness Probe\n/health endpoint", shape=box, fillcolor="#d4b5d4"];
+        health_readiness [label="Readiness Probe\n/ready endpoint", shape=box, fillcolor="#d4b5d4"];
+        health_startup [label="Startup Probe\nInitial Delay", shape=box, fillcolor="#d4b5d4"];
+        health_metrics [label="Collect Metrics\nCPU/Memory/Latency", shape=box, fillcolor="#d4b5d4"];
+        health_dependencies [label="Check Dependencies\nDB/API Status", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    health_status [label="Health\nStatus?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Monitoring Phase
+    subgraph cluster_monitoring {
+        label="Phase 4: Continuous Monitoring";
+        style=filled;
+        color="#fff3cd";
+
+        monitor_performance [label="Performance\nThroughput/Latency", shape=box, fillcolor="#ffeeba"];
+        monitor_errors [label="Error Tracking\nException Rate", shape=box, fillcolor="#ffeeba"];
+        monitor_resources [label="Resource Usage\nCPU/Memory Trends", shape=box, fillcolor="#ffeeba"];
+        monitor_logs [label="Log Analysis\nError Patterns", shape=box, fillcolor="#ffeeba"];
+        monitor_traces [label="Distributed Tracing\nRequest Flow", shape=box, fillcolor="#ffeeba"];
+    }
+
+    monitor_threshold [label="Within\nThresholds?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Auto-Scaling Logic
+    subgraph cluster_scaling {
+        label="Phase 5: Auto-Scaling";
+        style=filled;
+        color="#d1e7dd";
+
+        scale_analyze [label="Analyze Load\nCurrent Demand", shape=box, fillcolor="#a3cfbb"];
+        scale_predict [label="Predict Demand\nML Forecasting", shape=box, fillcolor="#a3cfbb"];
+        scale_decision [label="Scaling Decision\nUp/Down/Maintain", shape=box, fillcolor="#a3cfbb"];
+    }
+
+    scale_action [label="Scale\nAction?", shape=diamond, fillcolor="#fff3cd"];
+    scale_up [label="Scale Up\nAdd Agents", shape=box, fillcolor="#d4edda"];
+    scale_down [label="Scale Down\nRemove Agents", shape=box, fillcolor="#f8d7da"];
+
+    // Load Balancing
+    subgraph cluster_loadbalance {
+        label="Phase 6: Load Balancing";
+        style=filled;
+        color="#cfe2ff";
+
+        lb_distribute [label="Distribute Load\nRound Robin/Least Conn", shape=box, fillcolor="#b6d7ff"];
+        lb_health_aware [label="Health-Aware\nAvoid Unhealthy", shape=box, fillcolor="#b6d7ff"];
+        lb_sticky [label="Sticky Sessions\nSession Affinity", shape=box, fillcolor="#b6d7ff"];
+        lb_circuit_breaker [label="Circuit Breaker\nFault Tolerance", shape=box, fillcolor="#b6d7ff"];
+    }
+
+    // Incident Response
+    subgraph cluster_incident {
+        label="Phase 7: Incident Response";
+        style=filled;
+        color="#f8d7da";
+
+        incident_detect [label="Detect Issue\nAlert Triggered", shape=box, fillcolor="#f5c6cb"];
+        incident_diagnose [label="Diagnose\nRoot Cause", shape=box, fillcolor="#f5c6cb"];
+        incident_remediate [label="Auto-Remediate\nRestart/Heal", shape=box, fillcolor="#f5c6cb"];
+        incident_escalate [label="Escalate\nHuman Intervention", shape=box, fillcolor="#f5c6cb"];
+    }
+
+    remediation_success [label="Remediation\nSuccessful?", shape=diamond, fillcolor="#fff3cd"];
+
+    // Graceful Shutdown
+    subgraph cluster_shutdown {
+        label="Phase 8: Graceful Shutdown";
+        style=filled;
+        color="#e9ecef";
+
+        shutdown_deregister [label="Deregister\nStop New Requests", shape=box, fillcolor="#dee2e6"];
+        shutdown_drain [label="Drain Connections\nFinish In-Flight", shape=box, fillcolor="#dee2e6"];
+        shutdown_cleanup [label="Cleanup Resources\nClose DB/Cache", shape=box, fillcolor="#dee2e6"];
+        shutdown_save_state [label="Save State\nCheckpoint Data", shape=box, fillcolor="#dee2e6"];
+        shutdown_terminate [label="Terminate\nStop Process", shape=box, fillcolor="#dee2e6"];
+    }
+
+    // Retirement
+    subgraph cluster_retirement {
+        label="Phase 9: Agent Retirement";
+        style=filled;
+        color="#e7d1e7";
+
+        retire_evaluate [label="Evaluate Agent\nAge/Performance", shape=box, fillcolor="#d4b5d4"];
+        retire_replace [label="Spawn Replacement\nRolling Update", shape=box, fillcolor="#d4b5d4"];
+        retire_transfer [label="Transfer State\nMigration", shape=box, fillcolor="#d4b5d4"];
+        retire_shutdown [label="Shutdown Old Agent\nGraceful Exit", shape=box, fillcolor="#d4b5d4"];
+    }
+
+    // Artifacts
+    agent_registry [label="Agent Registry\nService Discovery", shape=cylinder, fillcolor="#f8d7da"];
+    metrics_db [label="Metrics Database\nPrometheus/Influx", shape=cylinder, fillcolor="#f8d7da"];
+    incident_log [label="Incident Log\nPost-Mortems", shape=cylinder, fillcolor="#f8d7da"];
+
+    // End State
+    terminated [label="Agent\nTerminated", shape=oval, fillcolor="#f8d7da"];
+    failed_spawn [label="Spawn\nFailed", shape=oval, fillcolor="#dc3545", fontcolor="white"];
+
+    // Workflow Connections
+    start -> spawn_request;
+
+    // Spawn
+    spawn_request -> spawn_validate;
+    spawn_validate -> spawn_allocate;
+    spawn_allocate -> spawn_create;
+    spawn_create -> spawn_inject;
+    spawn_inject -> spawn_register;
+    spawn_register -> spawn_success;
+
+    spawn_success -> init_load_config [label="Success", color="green"];
+    spawn_success -> failed_spawn [label="Failed", color="red"];
+
+    // Initialization
+    init_load_config -> init_connect_deps;
+    init_connect_deps -> init_warmup;
+    init_warmup -> init_readiness;
+    init_readiness -> init_ready;
+
+    init_ready -> agent_registry [label="Ready", color="green"];
+    init_ready -> incident_detect [label="Not Ready", color="red"];
+
+    // Health Checks (Loop)
+    agent_registry -> health_liveness;
+    health_liveness -> health_readiness;
+    health_readiness -> health_startup;
+    health_startup -> health_metrics;
+    health_metrics -> health_dependencies;
+    health_dependencies -> health_status;
+
+    health_status -> monitor_performance [label="Healthy", color="green"];
+    health_status -> incident_detect [label="Unhealthy", color="red"];
+
+    // Monitoring
+    monitor_performance -> monitor_errors;
+    monitor_errors -> monitor_resources;
+    monitor_resources -> monitor_logs;
+    monitor_logs -> monitor_traces;
+    monitor_traces -> metrics_db;
+    metrics_db -> monitor_threshold;
+
+    monitor_threshold -> lb_distribute [label="Normal", color="green"];
+    monitor_threshold -> scale_analyze [label="Anomaly", color="orange"];
+
+    // Scaling
+    scale_analyze -> scale_predict;
+    scale_predict -> scale_decision;
+    scale_decision -> scale_action;
+
+    scale_action -> scale_up [label="Scale Up", color="blue"];
+    scale_action -> scale_down [label="Scale Down", color="purple"];
+    scale_action -> lb_distribute [label="Maintain", color="green"];
+
+    scale_up -> spawn_request;
+    scale_down -> retire_evaluate;
+
+    // Load Balancing
+    lb_distribute -> lb_health_aware;
+    lb_health_aware -> lb_sticky;
+    lb_sticky -> lb_circuit_breaker;
+    lb_circuit_breaker -> health_liveness [label="Continue Loop"];
+
+    // Incident Response
+    incident_detect -> incident_diagnose;
+    incident_diagnose -> incident_remediate;
+    incident_remediate -> remediation_success;
+
+    remediation_success -> health_liveness [label="Recovered", color="green"];
+    remediation_success -> incident_escalate [label="Failed", color="red"];
+    incident_escalate -> incident_log;
+    incident_log -> shutdown_deregister;
+
+    // Retirement
+    retire_evaluate -> retire_replace;
+    retire_replace -> retire_transfer;
+    retire_transfer -> retire_shutdown;
+    retire_shutdown -> shutdown_deregister;
+
+    // Graceful Shutdown
+    shutdown_deregister -> shutdown_drain;
+    shutdown_drain -> shutdown_cleanup;
+    shutdown_cleanup -> shutdown_save_state;
+    shutdown_save_state -> shutdown_terminate;
+    shutdown_terminate -> terminated;
+}

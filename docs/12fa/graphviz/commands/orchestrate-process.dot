@@ -1,0 +1,21 @@
+digraph ORCHESTRATE {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled"];
+
+  invoke [label="/orchestrate", shape=ellipse, fillcolor=lightblue];
+  parse_task [label="Parse Task\nDescription", fillcolor=lightblue];
+  decompose [label="Decompose into\nSubtasks", fillcolor=purple, style="filled,bold"];
+  assign_agents [label="Assign Agents\nto Subtasks", fillcolor=lightgreen];
+  create_workflow [label="Create Workflow\nDAG", fillcolor=lightpurple];
+  execute_parallel [label="Execute in\nParallel", fillcolor=lightgreen];
+  monitor_progress [label="Monitor\nProgress", fillcolor=yellow];
+  check_completion [shape=diamond, label="All\nComplete?"];
+  aggregate_results [label="Aggregate\nResults", fillcolor=lightblue];
+  success [label="Orchestration Complete", shape=doublecircle, fillcolor=green];
+
+  invoke -> parse_task -> decompose -> assign_agents -> create_workflow -> execute_parallel;
+  execute_parallel -> monitor_progress -> check_completion;
+  check_completion -> monitor_progress [label="No", style=dashed];
+  check_completion -> aggregate_results [label="Yes"];
+  aggregate_results -> success;
+}

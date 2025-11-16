@@ -1,0 +1,95 @@
+// Migration Planner Agent - Migration Planning & Execution
+// Migration planning, risk assessment, rollback strategy, validation
+digraph migration_planner_agent {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_init {
+        label="Agent Initialization"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        migration_init [label="Migration Planner\nInitialize", fillcolor="#d97706", fontcolor="#ffffff"];
+        migration_templates [label="Migration\nTemplates", fillcolor="#2d3748", fontcolor="#ffffff"];
+        best_practices [label="Best Practices\nDatabase", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_analysis {
+        label="Current State Analysis"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        system_analyzer [label="System\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        dependency_mapper [label="Dependency\nMapper", fillcolor="#2563eb", fontcolor="#ffffff"];
+        data_profiler [label="Data\nProfiler", fillcolor="#2563eb", fontcolor="#ffffff"];
+        impact_assessor [label="Impact\nAssessor", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_planning {
+        label="Migration Planning"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        strategy_designer [label="Strategy\nDesigner", fillcolor="#059669", fontcolor="#ffffff"];
+        phase_planner [label="Phase\nPlanner", fillcolor="#059669", fontcolor="#ffffff"];
+        timeline_estimator [label="Timeline\nEstimator", fillcolor="#059669", fontcolor="#ffffff"];
+        resource_planner [label="Resource\nPlanner", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_risk {
+        label="Risk Assessment"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        risk_identifier [label="Risk\nIdentifier", fillcolor="#dc2626", fontcolor="#ffffff"];
+        mitigation_planner [label="Mitigation\nPlanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+        contingency_planner [label="Contingency\nPlanner", fillcolor="#dc2626", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_data {
+        label="Data Migration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        schema_mapper [label="Schema\nMapper", fillcolor="#0891b2", fontcolor="#ffffff"];
+        etl_designer [label="ETL\nDesigner", fillcolor="#0891b2", fontcolor="#ffffff"];
+        data_validator [label="Data\nValidator", fillcolor="#0891b2", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_testing {
+        label="Testing Strategy"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        test_planner [label="Test\nPlanner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        validation_designer [label="Validation\nDesigner", fillcolor="#8b4789", fontcolor="#ffffff"];
+        rollback_tester [label="Rollback\nTester", fillcolor="#8b4789", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_execution {
+        label="Execution Plan"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        cutover_planner [label="Cutover\nPlanner", fillcolor="#ef4444", fontcolor="#ffffff"];
+        communication_planner [label="Communication\nPlanner", fillcolor="#ef4444", fontcolor="#ffffff"];
+        monitoring_setup [label="Monitoring\nSetup", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_collab {
+        label="Agent Collaboration"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        backend_coord [label="Backend\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+        cicd_coord [label="CI/CD\nCoordination", fillcolor="#6366f1", fontcolor="#ffffff"];
+    }
+
+    migration_init -> migration_templates [label="Load"];
+    migration_init -> best_practices [label="Load"];
+    migration_templates -> system_analyzer [label="Analyze"];
+    system_analyzer -> dependency_mapper [label="Map Dependencies"];
+    dependency_mapper -> data_profiler [label="Profile Data"];
+    data_profiler -> impact_assessor [label="Assess Impact"];
+    impact_assessor -> strategy_designer [label="Design Strategy"];
+    strategy_designer -> phase_planner [label="Plan Phases"];
+    phase_planner -> timeline_estimator [label="Estimate Timeline"];
+    timeline_estimator -> resource_planner [label="Plan Resources"];
+    resource_planner -> risk_identifier [label="Identify Risks"];
+    risk_identifier -> mitigation_planner [label="Plan Mitigation"];
+    mitigation_planner -> contingency_planner [label="Plan Contingency"];
+    contingency_planner -> schema_mapper [label="Map Schema"];
+    schema_mapper -> etl_designer [label="Design ETL"];
+    etl_designer -> data_validator [label="Validate Data"];
+    data_validator -> test_planner [label="Plan Tests"];
+    test_planner -> validation_designer [label="Design Validation"];
+    validation_designer -> rollback_tester [label="Test Rollback"];
+    rollback_tester -> cutover_planner [label="Plan Cutover"];
+    cutover_planner -> communication_planner [label="Plan Communication"];
+    communication_planner -> monitoring_setup [label="Setup Monitoring"];
+    monitoring_setup -> backend_coord [label="Coordinate Backend"];
+    cutover_planner -> cicd_coord [label="Coordinate CI/CD"];
+
+    subgraph cluster_legend {
+        label="Legend"; style=filled; color="#1a1f35"; fontcolor="#ffffff";
+        legend1 [label="Migration Planner", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Analysis", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+}

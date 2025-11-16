@@ -1,0 +1,160 @@
+digraph MarketingSpecialistAgent {
+  // Graph attributes
+  rankdir=TB;
+  bgcolor="white";
+  fontname="Arial";
+  fontsize=12;
+  node [fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  // Agent lifecycle nodes (ellipse for start/end)
+  start [shape=ellipse, label="Agent Spawned\n(Marketing Campaign Need)", style=filled, fillcolor=lightblue];
+  complete [shape=ellipse, label="Campaign Complete\n(Results Delivered)", style=filled, fillcolor=lightgreen];
+
+  // Phase nodes
+  discovery [shape=box, label="Phase 1:\nCampaign Discovery\n& Goal Setting", style=filled, fillcolor=lightyellow];
+  audience_research [shape=box, label="Phase 2:\nAudience Research\n& Segmentation", style=filled, fillcolor=lightyellow];
+  channel_strategy [shape=box, label="Phase 3:\nChannel Strategy\n& Selection", style=filled, fillcolor=lightyellow];
+  content_strategy [shape=box, label="Phase 4:\nContent & Creative\nStrategy", style=filled, fillcolor=lightyellow];
+  implementation [shape=box, label="Phase 5:\nCampaign\nImplementation", style=filled, fillcolor=lightgreen];
+  monitoring [shape=box, label="Phase 6:\nPerformance\nMonitoring", style=filled, fillcolor=lightcyan];
+  optimization [shape=box, label="Phase 7:\nOptimization\n& Iteration", style=filled, fillcolor=lightcyan];
+  reporting [shape=box, label="Phase 8:\nReporting &\nKnowledge Transfer", style=filled, fillcolor=lightgreen];
+
+  // Decision nodes (diamond)
+  permission_check [shape=diamond, label="Permission Mode?", style=filled, fillcolor=lightyellow];
+  performance_check [shape=diamond, label="Meeting\nTargets?", style=filled, fillcolor=lightyellow];
+  budget_check [shape=diamond, label="Within\nBudget?", style=filled, fillcolor=lightyellow];
+  continue_check [shape=diamond, label="Continue\nOptimizing?", style=filled, fillcolor=lightyellow];
+
+  // Failure mode warnings (octagon)
+  failure_targeting [shape=octagon, label="WARNING:\nPoor Audience\nTargeting", style=filled, fillcolor=orange];
+  failure_messaging [shape=octagon, label="WARNING:\nInconsistent\nMessaging", style=filled, fillcolor=orange];
+  failure_testing [shape=octagon, label="WARNING:\nInadequate\nTesting", style=filled, fillcolor=orange];
+  failure_data [shape=octagon, label="WARNING:\nIgnoring\nAnalytics", style=filled, fillcolor=orange];
+  failure_channel [shape=octagon, label="WARNING:\nSingle Channel\nOver-Reliance", style=filled, fillcolor=orange];
+
+  // External resources (cylinder)
+  mcp_swarm [shape=cylinder, label="MCP:\nruv-swarm\n(agent_spawn)", style=filled, fillcolor=lightgray];
+  mcp_workflow [shape=cylinder, label="MCP:\nflow-nexus\n(workflow_create)", style=filled, fillcolor=lightgray];
+  mcp_memory [shape=cylinder, label="MCP:\nclaude-flow\n(memory_store)", style=filled, fillcolor=lightgray];
+  mcp_neural [shape=cylinder, label="MCP:\nruv-swarm\n(neural_train)", style=filled, fillcolor=lightgray];
+  sdk_typescript [shape=cylinder, label="Claude SDK\nTypeScript\n(query())", style=filled, fillcolor=lightblue];
+  sdk_python [shape=cylinder, label="Claude SDK\nPython\n(ClaudeSDKClient)", style=filled, fillcolor=lightblue];
+
+  // Design principles (folder)
+  principles_aida [shape=folder, label="Framework:\nAIDA", style=filled, fillcolor=lightcyan];
+  principles_4ps [shape=folder, label="Framework:\n4Ps Marketing Mix", style=filled, fillcolor=lightcyan];
+  principles_aarrr [shape=folder, label="Framework:\nAARRR Metrics", style=filled, fillcolor=lightcyan];
+  principles_journey [shape=folder, label="Framework:\nCustomer Journey", style=filled, fillcolor=lightcyan];
+  principles_attribution [shape=folder, label="Framework:\nAttribution Models", style=filled, fillcolor=lightcyan];
+
+  // Evidence-based techniques (folder)
+  technique_consistency [shape=folder, label="Technique:\nSelf-Consistency\nChecking", style=filled, fillcolor=lightgreen];
+  technique_decomposition [shape=folder, label="Technique:\nProgram-of-Thought\nDecomposition", style=filled, fillcolor=lightgreen];
+  technique_planning [shape=folder, label="Technique:\nPlan-and-Solve\nFramework", style=filled, fillcolor=lightgreen];
+
+  // Subgraph for SDK implementation paths
+  subgraph cluster_sdk {
+    label="SDK Implementation Options";
+    style=dashed;
+    color=blue;
+
+    sdk_typescript;
+    sdk_python;
+
+    sdk_note [shape=note, label="Both SDKs support:\n- Custom tools\n- Permission modes\n- MCP integration\n- Subagent spawning", style=filled, fillcolor=lightyellow];
+  }
+
+  // Subgraph for MCP coordination
+  subgraph cluster_mcp {
+    label="MCP Coordination Layer";
+    style=dashed;
+    color=green;
+
+    mcp_swarm;
+    mcp_workflow;
+    mcp_memory;
+    mcp_neural;
+  }
+
+  // Subgraph for frameworks
+  subgraph cluster_frameworks {
+    label="Marketing Frameworks";
+    style=dashed;
+    color=purple;
+
+    principles_aida;
+    principles_4ps;
+    principles_aarrr;
+    principles_journey;
+    principles_attribution;
+  }
+
+  // Subgraph for techniques
+  subgraph cluster_techniques {
+    label="Evidence-Based Techniques";
+    style=dashed;
+    color=orange;
+
+    technique_consistency;
+    technique_decomposition;
+    technique_planning;
+  }
+
+  // Main workflow edges
+  start -> permission_check [label="spawn"];
+  permission_check -> discovery [label="default/plan/\nacceptEdits"];
+  permission_check -> discovery [label="bypassPermissions\n(trusted only)", color=red];
+
+  discovery -> audience_research [label="SMART goals\ndefined"];
+  audience_research -> channel_strategy [label="personas\ncreated"];
+  channel_strategy -> content_strategy [label="channels\nselected"];
+  content_strategy -> implementation [label="content\ncalendar ready"];
+  implementation -> budget_check [label="campaign\nlaunched"];
+
+  budget_check -> monitoring [label="yes", color=green];
+  budget_check -> optimization [label="no - adjust", color=orange];
+
+  monitoring -> performance_check [label="tracking\ndata collected"];
+  performance_check -> optimization [label="no", color=orange];
+  performance_check -> reporting [label="yes", color=green];
+
+  optimization -> continue_check [label="tests run,\nchanges made"];
+  continue_check -> monitoring [label="yes -\niterate", color=blue];
+  continue_check -> reporting [label="no -\ncomplete", color=green];
+
+  reporting -> complete [label="learnings\nstored"];
+
+  // Framework usage connections
+  discovery -> principles_aida [label="uses", style=dashed];
+  discovery -> principles_4ps [label="uses", style=dashed];
+  channel_strategy -> principles_aarrr [label="uses", style=dashed];
+  audience_research -> principles_journey [label="uses", style=dashed];
+  monitoring -> principles_attribution [label="uses", style=dashed];
+
+  // Technique integration
+  discovery -> technique_planning [label="applies", style=dashed, color=green];
+  channel_strategy -> technique_decomposition [label="applies", style=dashed, color=green];
+  optimization -> technique_consistency [label="applies", style=dashed, color=green];
+
+  // MCP tool usage
+  implementation -> mcp_swarm [label="spawn\nsub-agents", style=dotted];
+  implementation -> mcp_workflow [label="create\nautomation", style=dotted];
+  monitoring -> mcp_memory [label="store\nmetrics", style=dotted];
+  reporting -> mcp_neural [label="train\npatterns", style=dotted];
+
+  // SDK spawning options
+  start -> sdk_typescript [label="programmatic\nspawn option", style=dashed, color=blue];
+  start -> sdk_python [label="programmatic\nspawn option", style=dashed, color=blue];
+
+  // Failure mode warnings (from phases where they can occur)
+  audience_research -> failure_targeting [label="guard against", style=dashed, color=red];
+  content_strategy -> failure_messaging [label="guard against", style=dashed, color=red];
+  implementation -> failure_testing [label="guard against", style=dashed, color=red];
+  monitoring -> failure_data [label="guard against", style=dashed, color=red];
+  channel_strategy -> failure_channel [label="guard against", style=dashed, color=red];
+
+  // Color legend (as a note)
+  legend [shape=note, label="Color Legend:\n• Green = Success path\n• Orange = Warning/Adjustment\n• Red = Critical failure mode\n• Blue = Alternative path\n• Dashed = Reference/Usage\n• Dotted = Tool integration", style=filled, fillcolor=white, fontsize=8];
+}

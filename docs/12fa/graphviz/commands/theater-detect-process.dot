@@ -1,0 +1,54 @@
+digraph theater_detect_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Theater-Detect Command Workflow\n0% Tolerance for Fake Implementations";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/theater-detect", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  scan_files [label="Scan All Files\nRecursive codebase scan", fillcolor="#FFF9C4"];
+
+  detect_mocks [label="Detect Mock Patterns\n- Mock objects\n- Stub functions\n- Fake data\n- Dummy implementations", fillcolor="#FFE0B2"];
+
+  detect_todos [label="Detect TODO/FIXME\n- Unfinished code\n- Placeholder comments\n- Implementation gaps", fillcolor="#BBDEFB"];
+
+  detect_empty [label="Detect Empty Functions\n- No-op functions\n- Empty blocks\n- Return null/undefined", fillcolor="#C5CAE9"];
+
+  detect_console [label="Detect Debug Code\n- console.log statements\n- Debug flags\n- Test mode checks", fillcolor="#B2DFDB"];
+
+  detect_comments [label="Detect Comment Theater\n- Commented out code\n- Excessive comments\n- Misleading docs", fillcolor="#D1C4E9"];
+
+  static_analysis [label="Static Analysis\n- Unused imports\n- Dead code\n- Unreachable code", fillcolor="#F0F4C3"];
+
+  runtime_check [label="Runtime Validation\n- Function calls\n- Return values\n- Side effects", fillcolor="#FFE0B2"];
+
+  calculate_score [label="Calculate Theater Score\n0-100% fake code ratio", fillcolor="#BBDEFB"];
+
+  threshold_check [label="Theater Score > 0%?", fillcolor="#F44336", fontcolor=white, shape=diamond];
+
+  generate_report [label="Generate Report\n- All theater instances\n- Severity levels\n- Fix recommendations", fillcolor="#B2DFDB"];
+
+  success [label="No Theater Detected\nCode is genuine", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+  blocked [label="THEATER DETECTED\nBlock deployment", shape=ellipse, fillcolor="#F44336", fontcolor=white];
+
+  // Main flow
+  start -> scan_files;
+  scan_files -> detect_mocks;
+  detect_mocks -> detect_todos;
+  detect_todos -> detect_empty;
+  detect_empty -> detect_console;
+  detect_console -> detect_comments;
+  detect_comments -> static_analysis;
+  static_analysis -> runtime_check;
+  runtime_check -> calculate_score;
+  calculate_score -> threshold_check;
+  threshold_check -> generate_report [label="Yes"];
+  threshold_check -> success [label="No"];
+  generate_report -> blocked;
+}

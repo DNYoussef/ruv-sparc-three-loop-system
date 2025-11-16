@@ -1,0 +1,53 @@
+digraph gemini_megacontext_command_workflow {
+  rankdir=TB;
+  node [shape=box, style="rounded,filled", fontname="Arial"];
+  edge [fontname="Arial"];
+
+  node [fillcolor="#E3F2FD"];
+
+  label="Gemini-Megacontext Command Workflow\n2M Token Context Window Analysis";
+  labelloc="t";
+  fontsize=16;
+  fontname="Arial Bold";
+
+  start [label="Command Invoked\n/gemini-megacontext", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  scan_codebase [label="Scan Full Codebase\nRecursive file traversal", fillcolor="#FFF9C4"];
+
+  calculate_tokens [label="Calculate Total Tokens\nEstimate context size", fillcolor="#FFE0B2"];
+
+  size_check [label="Fits in 2M Context?", fillcolor="#C5CAE9", shape=diamond];
+
+  prioritize [label="Prioritize Files\n- Core modules\n- Recent changes\n- Dependencies", fillcolor="#BBDEFB"];
+
+  load_context [label="Load into Gemini Context\n2M token window", fillcolor="#B2DFDB"];
+
+  comprehensive_analysis [label="Comprehensive Analysis\n- Architecture patterns\n- Code quality\n- Dependencies\n- Technical debt", fillcolor="#D1C4E9"];
+
+  pattern_detection [label="Pattern Detection\n- Design patterns\n- Anti-patterns\n- Inconsistencies", fillcolor="#F0F4C3"];
+
+  relationship_map [label="Relationship Mapping\n- Module dependencies\n- Data flow\n- Call graphs", fillcolor="#FFE0B2"];
+
+  find_issues [label="Find Issues\n- Security vulnerabilities\n- Performance bottlenecks\n- Code duplication", fillcolor="#BBDEFB"];
+
+  generate_insights [label="Generate Insights\n- Refactoring opportunities\n- Optimization suggestions\n- Architecture improvements", fillcolor="#B2DFDB"];
+
+  create_report [label="Create Comprehensive Report\n- Executive summary\n- Detailed findings\n- Recommendations", fillcolor="#D1C4E9"];
+
+  success [label="Analysis Complete\nFull codebase reviewed", shape=ellipse, fillcolor="#4CAF50", fontcolor=white];
+
+  // Main flow
+  start -> scan_codebase;
+  scan_codebase -> calculate_tokens;
+  calculate_tokens -> size_check;
+  size_check -> load_context [label="Yes"];
+  size_check -> prioritize [label="No"];
+  prioritize -> load_context;
+  load_context -> comprehensive_analysis;
+  comprehensive_analysis -> pattern_detection;
+  pattern_detection -> relationship_map;
+  relationship_map -> find_issues;
+  find_issues -> generate_insights;
+  generate_insights -> create_report;
+  create_report -> success;
+}

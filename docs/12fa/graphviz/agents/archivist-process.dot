@@ -1,0 +1,173 @@
+digraph ArchivistAgentProcess {
+    rankdir=TB;
+    node [shape=box, style="rounded,filled", fillcolor=lightblue];
+    edge [color=darkblue, penwidth=2];
+
+    // Agent definition
+    start [label="archivist Agent\\nActivated", fillcolor=lightgreen];
+
+    // Core Identity
+    identity [label="Core Identity:\\n- Artifact Archival Specialist\\n- Version Control Expert (Git, DVC)\\n- Reproducibility Package Creator\\n- Quality Gate 3 Owner", shape=ellipse, fillcolor=lightyellow];
+
+    // Primary Workflow
+    workflow_start [label="Gate 3 Archival\\nWorkflow", fillcolor=orange];
+
+    // Phase 1: Model Card Creation
+    modelcard_phase [label="PHASE 1: Model Card Creation", fillcolor=lightyellow, shape=box3d];
+    run_init_model_card [label="Run /init-model-card\\n(Form F-G2)"];
+    populate_9_sections [label="Populate 9 Sections:\\nMitchell et al. 2019"];
+    fetch_metrics [label="Fetch Performance\\nMetrics (--include-metrics)"];
+    link_datasheets [label="Link to Datasheets\\nand Risk Assessments"];
+    validate_completion [label="Validate Completion\\n≥90% Required"];
+
+    // Phase 2: Artifact Cataloging
+    catalog_phase [label="PHASE 2: Artifact Cataloging", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_artifacts {
+        label="Catalog All Research Artifacts";
+        style=filled;
+        fillcolor=lightgrey;
+
+        catalog_datasets [label="Datasets:\\nRaw, Processed, Splits"];
+        catalog_models [label="Models:\\nWeights, Architecture"];
+        catalog_code [label="Code:\\nScripts, Notebooks, Config"];
+        catalog_docs [label="Documentation:\\nREADME, Papers, Reviews"];
+        catalog_environment [label="Environment:\\nrequirements.txt,\\nDockerfile"];
+    }
+
+    generate_manifest [label="Generate Manifest\\nwith Checksums (SHA256)"];
+
+    // Phase 3: Reproducibility Package
+    repro_phase [label="PHASE 3: Reproducibility Package", fillcolor=lightyellow, shape=box3d];
+    run_create_repro [label="Run /create-reproducibility-package"];
+    bundle_artifacts [label="Bundle: Code + Data\\n+ Environment + Docs"];
+    create_dockerfile [label="Create Dockerfile\\nfor Environment"];
+    write_readme [label="Write README:\\n≤5 Steps to Reproduce"];
+    document_hyperparams [label="Document All\\nHyperparameters & Seeds"];
+
+    // Phase 4: Reproducibility Testing
+    testing_phase [label="PHASE 4: Reproducibility Testing", fillcolor=lightyellow, shape=box3d];
+    run_test_repro [label="Run /test-reproducibility\\n--mode full"];
+    spin_up_docker [label="Spin Up Fresh\\nDocker Container"];
+    execute_instructions [label="Execute README\\nInstructions"];
+    compare_results [label="Compare Reproduced\\nvs. Original Results"];
+    validate_tolerance [label="Validate Results\\nWithin ±1% (numerically close)"];
+
+    // Phase 5: DOI Assignment
+    doi_phase [label="PHASE 5: DOI Assignment", fillcolor=lightyellow, shape=box3d];
+
+    subgraph cluster_dois {
+        label="Assign DOIs to Major Artifacts";
+        style=filled;
+        fillcolor=lightgrey;
+
+        doi_dataset [label="Dataset DOI\\n(Zenodo)"];
+        doi_model [label="Model DOI\\n(Zenodo)"];
+        doi_code [label="Code DOI\\n(GitHub + Zenodo)"];
+    }
+
+    generate_citations [label="Generate Citation\\nFormats"];
+
+    // Phase 6: Public Registry Publishing
+    publish_phase [label="PHASE 6: Public Registry Publishing", fillcolor=lightyellow, shape=box3d];
+    publish_huggingface [label="Publish to\\nHugging Face Hub"];
+    publish_mlflow [label="Publish to\\nMLflow Registry"];
+    publish_zenodo [label="Publish to\\nZenodo"];
+    publish_github [label="Publish GitHub\\nRelease"];
+
+    // Phase 7: Gate 3 Validation
+    gate3_phase [label="PHASE 7: Gate 3 Validation", fillcolor=lightyellow, shape=box3d];
+    run_validate_gate3 [label="Run /validate-gate-3\\nPipeline G"];
+    check_requirements [label="Check Requirements:\\n- Model Card ≥90%\\n- DOIs Assigned\\n- Reproducibility Tested\\n- Code Public"];
+    generate_checklist [label="Generate Gate 3\\nChecklist"];
+
+    // Phase 8: Archive & Memory
+    archive_phase [label="PHASE 8: Archive & Memory", fillcolor=lightyellow, shape=box3d];
+    create_archive [label="Create Archive\\n.tar.gz with Manifest"];
+    store_institutional [label="Store in Institutional\\nRepository"];
+    store_memory [label="Store in Memory MCP:\\nsop/archives/{artifact-id}"];
+    notify_evaluator [label="Notify evaluator:\\nGate 3 Ready"];
+
+    // Output
+    deliverables [label="Deliverables:\\n- Model Card (Form F-G2)\\n- Reproducibility Package\\n- DOIs (dataset, model, code)\\n- Registry URLs (HF, Zenodo)\\n- Gate 3 Checklist"];
+    end [label="archivist\\nComplete", fillcolor=lightcoral];
+
+    // Flow - Start
+    start -> identity;
+    identity -> workflow_start;
+
+    // Model Card
+    workflow_start -> modelcard_phase;
+    modelcard_phase -> run_init_model_card;
+    run_init_model_card -> populate_9_sections;
+    populate_9_sections -> fetch_metrics;
+    fetch_metrics -> link_datasheets;
+    link_datasheets -> validate_completion;
+
+    // Artifact Cataloging
+    validate_completion -> catalog_phase;
+    catalog_phase -> catalog_datasets;
+    catalog_phase -> catalog_models;
+    catalog_phase -> catalog_code;
+    catalog_phase -> catalog_docs;
+    catalog_phase -> catalog_environment;
+    catalog_datasets -> generate_manifest;
+    catalog_models -> generate_manifest;
+    catalog_code -> generate_manifest;
+    catalog_docs -> generate_manifest;
+    catalog_environment -> generate_manifest;
+
+    // Reproducibility Package
+    generate_manifest -> repro_phase;
+    repro_phase -> run_create_repro;
+    run_create_repro -> bundle_artifacts;
+    bundle_artifacts -> create_dockerfile;
+    create_dockerfile -> write_readme;
+    write_readme -> document_hyperparams;
+
+    // Reproducibility Testing
+    document_hyperparams -> testing_phase;
+    testing_phase -> run_test_repro;
+    run_test_repro -> spin_up_docker;
+    spin_up_docker -> execute_instructions;
+    execute_instructions -> compare_results;
+    compare_results -> validate_tolerance;
+
+    // DOI Assignment
+    validate_tolerance -> doi_phase;
+    doi_phase -> doi_dataset;
+    doi_phase -> doi_model;
+    doi_phase -> doi_code;
+    doi_dataset -> generate_citations;
+    doi_model -> generate_citations;
+    doi_code -> generate_citations;
+
+    // Public Registry Publishing
+    generate_citations -> publish_phase;
+    publish_phase -> publish_huggingface;
+    publish_phase -> publish_mlflow;
+    publish_phase -> publish_zenodo;
+    publish_phase -> publish_github;
+
+    // Gate 3 Validation
+    publish_github -> gate3_phase;
+    gate3_phase -> run_validate_gate3;
+    run_validate_gate3 -> check_requirements;
+    check_requirements -> generate_checklist;
+
+    // Archive & Memory
+    generate_checklist -> archive_phase;
+    archive_phase -> create_archive;
+    create_archive -> store_institutional;
+    store_institutional -> store_memory;
+    store_memory -> notify_evaluator;
+    notify_evaluator -> deliverables;
+
+    // Output
+    deliverables -> end;
+
+    // Metadata
+    label="archivist Agent - Complete Workflow\\nQuality Gate 3 Archival Requirements\\nPipeline G: Reproducibility & Artifacts";
+    fontsize=16;
+    fontname="Arial Bold";
+}

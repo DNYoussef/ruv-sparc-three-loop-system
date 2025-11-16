@@ -1,0 +1,79 @@
+// Post-Task Command Workflow
+// Post-task hooks for cleanup and reporting
+digraph post_task_command {
+    graph [rankdir=TB, bgcolor="#0a0e1a", fontname="Arial", fontsize=12, splines=ortho, nodesep=0.6, ranksep=1.0];
+    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10, margin=0.2];
+    edge [fontname="Arial", fontsize=9, color="#4a90e2"];
+
+    subgraph cluster_trigger {
+        label="Command Trigger";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        cmd_trigger [label="/post-task\nCommand", fillcolor="#d97706", fontcolor="#ffffff"];
+        result_collector [label="Result\nCollector", fillcolor="#2d3748", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_metrics {
+        label="Metrics Collection";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        performance_collector [label="Performance\nCollector", fillcolor="#2563eb", fontcolor="#ffffff"];
+        quality_analyzer [label="Quality\nAnalyzer", fillcolor="#2563eb", fontcolor="#ffffff"];
+        token_tracker [label="Token\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+        time_tracker [label="Time\nTracker", fillcolor="#2563eb", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_reporting {
+        label="Reporting";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        report_generator [label="Report\nGenerator", fillcolor="#10b981", fontcolor="#ffffff"];
+        metrics_formatter [label="Metrics\nFormatter", fillcolor="#10b981", fontcolor="#ffffff"];
+        notification_sender [label="Notification\nSender", fillcolor="#10b981", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_cleanup {
+        label="Cleanup";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        resource_releaser [label="Resource\nReleaser", fillcolor="#ef4444", fontcolor="#ffffff"];
+        temp_cleanup [label="Temp\nCleanup", fillcolor="#ef4444", fontcolor="#ffffff"];
+        agent_deactivator [label="Agent\nDeactivator", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+
+    subgraph cluster_output {
+        label="Output";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        task_report [label="Task\nReport", fillcolor="#059669", fontcolor="#ffffff"];
+        metrics_log [label="Metrics\nLog", fillcolor="#059669", fontcolor="#ffffff"];
+    }
+
+    cmd_trigger -> result_collector;
+    result_collector -> performance_collector -> quality_analyzer -> token_tracker -> time_tracker;
+    time_tracker -> report_generator -> metrics_formatter -> notification_sender;
+    notification_sender -> resource_releaser -> temp_cleanup -> agent_deactivator;
+    agent_deactivator -> task_report -> metrics_log;
+    metrics_log -> cmd_trigger [label="Complete", style=bold, color="#10b981"];
+
+    subgraph cluster_legend {
+        label="Legend";
+        style=filled;
+        color="#1a1f35";
+        fontcolor="#ffffff";
+
+        legend1 [label="Command", fillcolor="#d97706", fontcolor="#ffffff"];
+        legend2 [label="Metrics", fillcolor="#2563eb", fontcolor="#ffffff"];
+        legend3 [label="Cleanup", fillcolor="#ef4444", fontcolor="#ffffff"];
+    }
+}

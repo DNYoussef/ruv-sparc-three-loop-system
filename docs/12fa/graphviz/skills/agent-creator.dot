@@ -1,0 +1,240 @@
+// Agent Creator - 4-Phase SOP Methodology
+// Creates production-ready agents with evidence-based prompting and Claude Agent SDK
+// Official 4-phase methodology implementation
+
+digraph agent_creator {
+  rankdir=TB;
+  bgcolor="#f8f9fa";
+  fontname="Arial";
+  fontsize=12;
+  node [fontname="Arial", fontsize=10];
+  edge [fontname="Arial", fontsize=9];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    labelloc="b";
+    style=filled;
+    color="#e9ecef";
+
+    legend_phase [label="SOP Phase", shape=folder, style=filled, fillcolor="#b3e5fc"];
+    legend_technique [label="Evidence-Based\nTechnique", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+    legend_validation [label="Validation\nGate", shape=octagon, style=filled, fillcolor="#f8d7da"];
+    legend_iteration [label="Iterative\nRefinement", shape=doublecircle, style=filled, fillcolor="#ffccbc"];
+
+    legend_phase -> legend_technique -> legend_validation -> legend_iteration [style=invis];
+  }
+
+  start [label="Agent Creation Request\n(Domain/Purpose)", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Phase 1: Define
+  subgraph cluster_phase1 {
+    label="Phase 1: DEFINE - Agent Specification";
+    style=filled;
+    color="#e3f2fd";
+
+    phase1_icon [label="DEFINE", shape=folder, style=filled, fillcolor="#b3e5fc"];
+
+    capture_purpose [label="1.1 Capture agent\npurpose and domain", shape=box, style=filled, fillcolor="#cce5ff"];
+    identify_tasks [label="1.2 Identify core\ntasks and workflows", shape=box, style=filled, fillcolor="#cce5ff"];
+    define_constraints [label="1.3 Define constraints\nand boundaries", shape=box, style=filled, fillcolor="#cce5ff"];
+    specify_integration [label="1.4 Specify integration\npoints", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    technique_decomposition [label="Program-of-Thought\nDecomposition", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    spec_doc [label="Agent\nSpecification", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Phase 2: Design
+  subgraph cluster_phase2 {
+    label="Phase 2: DESIGN - Prompt Architecture";
+    style=filled;
+    color="#e8f5e9";
+
+    phase2_icon [label="DESIGN", shape=folder, style=filled, fillcolor="#b3e5fc"];
+
+    design_persona [label="2.1 Design agent\npersona and role", shape=box, style=filled, fillcolor="#cce5ff"];
+    architect_prompt [label="2.2 Architect prompt\nstructure", shape=box, style=filled, fillcolor="#cce5ff"];
+    define_context [label="2.3 Define context\nwindow strategy", shape=box, style=filled, fillcolor="#cce5ff"];
+    design_tools [label="2.4 Design tool/function\ncalling interface", shape=box, style=filled, fillcolor="#cce5ff"];
+    apply_patterns [label="2.5 Apply prompt\ndesign patterns", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    technique_self_consistency [label="Self-Consistency\nPattern", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+    technique_cot [label="Chain-of-Thought\nReasoning", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+    technique_few_shot [label="Few-Shot\nExamples", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    prompt_doc [label="Prompt\nArchitecture", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Phase 3: Develop
+  subgraph cluster_phase3 {
+    label="Phase 3: DEVELOP - Implementation with Claude SDK";
+    style=filled;
+    color="#fff3e0";
+
+    phase3_icon [label="DEVELOP", shape=folder, style=filled, fillcolor="#b3e5fc"];
+
+    scaffold_agent [label="3.1 Scaffold agent with\nClaude Agent SDK", shape=box, style=filled, fillcolor="#cce5ff"];
+    implement_prompt [label="3.2 Implement system\nprompt template", shape=box, style=filled, fillcolor="#cce5ff"];
+    integrate_tools [label="3.3 Integrate tools\nand functions", shape=box, style=filled, fillcolor="#cce5ff"];
+    implement_memory [label="3.4 Implement state\nand memory system", shape=box, style=filled, fillcolor="#cce5ff"];
+    add_guardrails [label="3.5 Add safety\nguardrails", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    sdk_integration [label="Claude Agent SDK", shape=component, style=filled, fillcolor="#b3e5fc"];
+
+    agent_code [label="Agent\nImplementation", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Phase 4: Validate
+  subgraph cluster_phase4 {
+    label="Phase 4: VALIDATE - Testing and Refinement";
+    style=filled;
+    color="#f3e5f5";
+
+    phase4_icon [label="VALIDATE", shape=folder, style=filled, fillcolor="#b3e5fc"];
+
+    create_test_suite [label="4.1 Create comprehensive\ntest suite", shape=box, style=filled, fillcolor="#cce5ff"];
+    test_core_tasks [label="4.2 Test core\ntasks", shape=box, style=filled, fillcolor="#cce5ff"];
+    test_edge_cases [label="4.3 Test edge cases\nand errors", shape=box, style=filled, fillcolor="#cce5ff"];
+    test_integration [label="4.4 Test integration\npoints", shape=box, style=filled, fillcolor="#cce5ff"];
+    benchmark_performance [label="4.5 Benchmark\nperformance", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    validation_gate [label="All tests\npass?", shape=octagon, style=filled, fillcolor="#f8d7da"];
+
+    test_results [label="Test Results\nand Metrics", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Evidence-based optimization
+  subgraph cluster_optimization {
+    label="Iterative Optimization Loop";
+    style=filled;
+    color="#fff9c4";
+
+    iteration_counter [label="Optimization\nIteration", shape=doublecircle, style=filled, fillcolor="#ffccbc"];
+
+    analyze_failures [label="Analyze failure\nmodes", shape=box, style=filled, fillcolor="#cce5ff"];
+    refine_prompt [label="Refine prompt\nwith techniques", shape=box, style=filled, fillcolor="#cce5ff"];
+    optimize_tools [label="Optimize tool\nintegration", shape=box, style=filled, fillcolor="#cce5ff"];
+    tune_parameters [label="Tune model\nparameters", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    technique_plan_solve [label="Plan-and-Solve\nFramework", shape=hexagon, style=filled, fillcolor="#c8e6c9"];
+
+    optimization_log [label="Optimization\nHistory", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Production readiness check
+  subgraph cluster_production {
+    label="Production Readiness Validation";
+    style=filled;
+    color="#e1f5fe";
+
+    check_reliability [label="Check reliability\n(>95% success)", shape=box, style=filled, fillcolor="#cce5ff"];
+    check_safety [label="Check safety\nguardrails", shape=box, style=filled, fillcolor="#cce5ff"];
+    check_performance [label="Check performance\nbenchmarks", shape=box, style=filled, fillcolor="#cce5ff"];
+    check_documentation [label="Check documentation\ncompleteness", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    production_ready [label="Production\nready?", shape=octagon, style=filled, fillcolor="#f8d7da"];
+
+    readiness_report [label="Production\nReadiness Report", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  // Final documentation
+  subgraph cluster_documentation {
+    label="Documentation & Deployment";
+    style=filled;
+    color="#f1f8e9";
+
+    document_agent [label="Document agent\nspecification", shape=box, style=filled, fillcolor="#cce5ff"];
+    document_usage [label="Document usage\nand examples", shape=box, style=filled, fillcolor="#cce5ff"];
+    document_limitations [label="Document limitations\nand constraints", shape=box, style=filled, fillcolor="#cce5ff"];
+    create_deployment [label="Create deployment\npackage", shape=box, style=filled, fillcolor="#cce5ff"];
+
+    agent_registry [label="Agent Registry\n(Production)", shape=cylinder, style=filled, fillcolor="#d1ecf1"];
+  }
+
+  end [label="Production-Ready\nAgent", shape=ellipse, style=filled, fillcolor="#d4edda"];
+
+  // Main flow - Phase 1
+  start -> phase1_icon;
+  phase1_icon -> capture_purpose;
+  capture_purpose -> identify_tasks;
+  identify_tasks -> technique_decomposition;
+  technique_decomposition -> define_constraints;
+  define_constraints -> specify_integration;
+  specify_integration -> spec_doc [style=dashed, label="store"];
+  specify_integration -> phase2_icon;
+
+  // Phase 2
+  phase2_icon -> design_persona;
+  design_persona -> architect_prompt;
+  architect_prompt -> technique_self_consistency;
+  technique_self_consistency -> define_context;
+  define_context -> technique_cot;
+  technique_cot -> design_tools;
+  design_tools -> technique_few_shot;
+  technique_few_shot -> apply_patterns;
+  apply_patterns -> prompt_doc [style=dashed, label="store"];
+  apply_patterns -> phase3_icon;
+
+  // Phase 3
+  phase3_icon -> scaffold_agent;
+  scaffold_agent -> sdk_integration [style=dashed, label="use"];
+  scaffold_agent -> implement_prompt;
+  implement_prompt -> integrate_tools;
+  integrate_tools -> implement_memory;
+  implement_memory -> add_guardrails;
+  add_guardrails -> agent_code [style=dashed, label="store"];
+  add_guardrails -> phase4_icon;
+
+  // Phase 4
+  phase4_icon -> create_test_suite;
+  create_test_suite -> test_core_tasks;
+  test_core_tasks -> test_edge_cases;
+  test_edge_cases -> test_integration;
+  test_integration -> benchmark_performance;
+  benchmark_performance -> test_results [style=dashed, label="log"];
+  benchmark_performance -> validation_gate;
+
+  // Validation decision
+  validation_gate -> iteration_counter [label="No\nOptimize"];
+  validation_gate -> check_reliability [label="Yes"];
+
+  // Optimization loop
+  iteration_counter -> analyze_failures;
+  analyze_failures -> optimization_log [style=dashed, label="append"];
+  analyze_failures -> refine_prompt;
+  refine_prompt -> technique_plan_solve;
+  technique_plan_solve -> optimize_tools;
+  optimize_tools -> tune_parameters;
+  tune_parameters -> implement_prompt [label="Update", style=dashed, color=orange];
+
+  // Production readiness
+  check_reliability -> check_safety;
+  check_safety -> check_performance;
+  check_performance -> check_documentation;
+  check_documentation -> readiness_report [style=dashed, label="generate"];
+  check_documentation -> production_ready;
+
+  production_ready -> iteration_counter [label="No\nRefine more", style=dashed, color=red];
+  production_ready -> document_agent [label="Yes"];
+
+  // Final documentation
+  document_agent -> document_usage;
+  document_usage -> document_limitations;
+  document_limitations -> create_deployment;
+  create_deployment -> agent_registry [style=dashed, label="publish"];
+  create_deployment -> end;
+
+  // Evidence-based techniques annotation
+  techniques_note [label="Evidence-Based Techniques:\n• Program-of-Thought Decomposition\n• Self-Consistency Pattern\n• Chain-of-Thought Reasoning\n• Few-Shot Examples\n• Plan-and-Solve Framework", shape=note, style=filled, fillcolor="#e8f5e9"];
+
+  // Key metrics
+  metrics [label="Key Metrics:\n• 4 phases: Define → Design → Develop → Validate\n• Claude Agent SDK integration\n• >95% reliability target\n• Comprehensive test coverage\n• Production-ready output\n• Evidence-based prompt optimization", shape=note, style=filled, fillcolor="#fff9c4"];
+
+  phase1_icon -> techniques_note [style=dashed, color=blue];
+  end -> metrics [style=dashed, color=blue];
+
+  // Quality standards
+  standards [label="Quality Standards:\n• Reliability >95%\n• Safety guardrails mandatory\n• Performance benchmarks\n• Complete documentation\n• Integration tested\n• Edge cases covered", shape=note, style=filled, fillcolor="#f3e5f5"];
+  production_ready -> standards [style=dashed, color=blue];
+}
