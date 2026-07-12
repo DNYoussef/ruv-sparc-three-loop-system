@@ -1,61 +1,14 @@
 {
   "name": "context-cascade",
   "version": "3.0.0",
-  "description": "Context-saving nested plugin architecture for Claude Code. Playbooks -> Skills -> Agents -> Commands. Load only what you need - 90%+ context savings.",
-  "main": "index.js",
-  "type": "module",
+  "private": true,
+  "description": "Archived historical source for the retired Context Cascade Claude Code plugin.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DNYoussef/context-cascade.git"
   },
-  "keywords": [
-    "context-cascade",
-    "claude-code",
-    "plugin",
-    "ai-agents",
-    "playbooks",
-    "skills",
-    "lazy-loading",
-    "nested-context",
-    "sparc",
-    "three-loop",
-    "swarm-intelligence"
-  ],
-  "author": "DNYoussef",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DNYoussef/context-cascade/issues"
-  },
-  "homepage": "https://github.com/DNYoussef/context-cascade#readme",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "files": [
-    ".claude-plugin/",
-    "agents/",
-    "skills/",
-    "commands/",
-    "docs/",
-    "hooks/",
-    "CLAUDE.md",
-    "README.md",
-    "LICENSE"
-  ],
-  "claudeCode": {
-    "plugin": true,
-    "marketplace": ".claude-plugin/marketplace.json",
-    "manifest": ".claude-plugin/plugin.json"
-  },
   "scripts": {
-    "verify": "node scripts/verify-installation.js",
-    "list-agents": "find agents -name '*.md' | wc -l",
-    "list-skills": "find skills -name 'SKILL.md' | wc -l"
-  },
-  "peerDependencies": {
-    "claude-flow": ">=2.7.0"
-  },
-  "optionalDependencies": {
-    "ruv-swarm": "*",
-    "flow-nexus": "*"
+    "verify": "node scripts/check-archive.mjs"
   }
 }
