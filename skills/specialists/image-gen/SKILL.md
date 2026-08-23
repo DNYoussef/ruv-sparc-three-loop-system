@@ -1,6 +1,6 @@
 ---
 name: image-gen
-description: Modular image generation - supports local SDXL Lightning, OpenAI DALL-E, Replicate, or custom providers
+description: Modular image generation - supports local SDXL Lightning, OpenAI DALL-E, Replicate, optional Atlas Cloud, or custom providers
 allowed-tools: Bash, Read, Write, Task, TodoWrite, Glob, Grep
 ---
 
@@ -48,6 +48,7 @@ Generate images using the best available provider - local models (free, private)
 | **SDXL Lightning** | Local | Free | 8GB VRAM, ~7GB disk | Excellent |
 | **OpenAI DALL-E 3** | API | ~$0.04/image | OPENAI_API_KEY | Excellent |
 | **Replicate** | API | ~$0.01/image | REPLICATE_API_TOKEN | Good |
+| **Atlas Cloud** | API | Live price preflight | ATLASCLOUD_API_KEY | Excellent |
 | **Custom** | Any | Varies | User-defined | Varies |
 
 ## When to Use
@@ -88,6 +89,9 @@ python scripts/multi-model/image-gen/cli.py "Tech concept" banner.png --width 12
 
 # Specific provider
 python scripts/multi-model/image-gen/cli.py "A cat" cat.png --provider openai
+
+# Atlas is explicit-only: preflight the live catalog/schema/price, then submit once
+python scripts/multi-model/image-gen/cli.py "A cat" cat.png --provider atlas --yes
 ```
 
 ## Integration with Visual Art Composition
@@ -164,6 +168,25 @@ python scripts/multi-model/image-gen/cli.py --setup openai
 export REPLICATE_API_TOKEN="r8_..."
 python scripts/multi-model/image-gen/cli.py --setup replicate
 ```
+
+### Atlas Cloud (Explicit Opt-In)
+
+Atlas never participates in automatic provider selection. It fetches the live
+model catalog and referenced schema, validates the request, and prints the
+current unit price before submission. `--yes` is required for the single paid
+generation POST; that POST is never retried. Only prediction GETs use bounded
+retries; catalog, schema, and output download requests are single-attempt.
+
+```bash
+export ATLASCLOUD_API_KEY="..."
+python scripts/multi-model/image-gen/cli.py --setup atlas
+python scripts/multi-model/image-gen/cli.py \
+  "A cinematic mountain landscape" output.png --provider atlas --yes
+```
+
+The default model is `openai/gpt-image-2/text-to-image`. Override it with
+`ATLASCLOUD_IMAGE_MODEL`; the override must still be uniquely available in the
+live catalog. Atlas output paths must end in `.png`, `.jpg`, or `.jpeg`.
 
 ## Adding Custom Providers
 
@@ -245,6 +268,7 @@ results = provider.generate_batch(
 1. Local models: First generation is slow (model loading), subsequent are fast
 2. API models: Consistent speed, watch for rate limits
 3. Batch generation: More efficient than individual calls
+4. Atlas: Review the live price plan before adding `--yes`; generation POSTs are not retried
 
 ### Quality
 1. SDXL Lightning: 4 steps is optimal (more steps = minimal improvement)
