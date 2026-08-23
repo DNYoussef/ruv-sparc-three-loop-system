@@ -29,6 +29,7 @@ class ImageProvider(Enum):
     OPENAI = "openai"                  # DALL-E 3
     REPLICATE = "replicate"            # Replicate API
     STABILITY = "stability"            # Stability AI API
+    ATLAS = "atlas"                    # Atlas Cloud API (explicit opt-in)
     CUSTOM = "custom"                  # User-defined
 
 
@@ -42,6 +43,7 @@ class ImageConfig:
     num_images: int = 1
     seed: Optional[int] = None
     negative_prompt: Optional[str] = None
+    confirm_paid: bool = False           # Explicit confirmation for guarded APIs
 
 
 @dataclass

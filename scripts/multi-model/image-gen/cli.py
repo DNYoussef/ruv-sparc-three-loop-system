@@ -44,6 +44,7 @@ def list_providers():
         (ImageProvider.LOCAL_SDXL, "SDXL Lightning (local)", "Free, ~7GB, 8GB VRAM"),
         (ImageProvider.OPENAI, "OpenAI DALL-E 3", "Paid API, OPENAI_API_KEY"),
         (ImageProvider.REPLICATE, "Replicate API", "Paid API, REPLICATE_API_TOKEN"),
+        (ImageProvider.ATLAS, "Atlas Cloud", "Paid API, ATLASCLOUD_API_KEY; explicit --yes"),
     ]
 
     for provider, name, note in all_providers:
@@ -61,6 +62,7 @@ def setup_provider(provider_name: str):
         "openai": ImageProvider.OPENAI,
         "dalle": ImageProvider.OPENAI,
         "replicate": ImageProvider.REPLICATE,
+        "atlas": ImageProvider.ATLAS,
     }
 
     provider_type = provider_map.get(provider_name.lower())
@@ -82,7 +84,8 @@ def generate_image(
     provider_name: str = "auto",
     width: int = 1024,
     height: int = 1024,
-    steps: int = 4
+    steps: int = 4,
+    confirm_paid: bool = False,
 ):
     """Generate an image."""
 
@@ -99,6 +102,7 @@ def generate_image(
             "sdxl": ImageProvider.LOCAL_SDXL,
             "openai": ImageProvider.OPENAI,
             "replicate": ImageProvider.REPLICATE,
+            "atlas": ImageProvider.ATLAS,
         }
         provider_type = provider_map.get(provider_name.lower())
         provider = ProviderRegistry.get(provider_type)
@@ -116,14 +120,19 @@ def generate_image(
         width=width,
         height=height,
         num_inference_steps=steps,
-        guidance_scale=0.0 if provider.provider == ImageProvider.LOCAL_SDXL else 7.5
+        guidance_scale=0.0 if provider.provider == ImageProvider.LOCAL_SDXL else 7.5,
+        confirm_paid=confirm_paid,
     )
 
     # Generate
     print(f"Generating with {provider.provider.value}...")
     print(f"Prompt: {prompt[:100]}...")
 
-    result = provider.generate(prompt, Path(output), config)
+    try:
+        result = provider.generate(prompt, Path(output), config)
+    except api_providers.AtlasConfirmationRequired as exc:
+        print(str(exc))
+        return False
 
     print(f"Generated: {result.path}")
     print(f"Time: {result.generation_time_seconds:.2f}s")
@@ -148,6 +157,9 @@ Examples:
   # Generate with specific provider
   python cli.py "A cat" cat.png --provider openai
 
+  # Atlas performs a live catalog/schema/price preflight before one paid submit
+  python cli.py "A cat" cat.png --provider atlas --yes
+
   # Generate LinkedIn banner size
   python cli.py "Tech concept" banner.png --width 1200 --height 630
 """
@@ -156,11 +168,20 @@ Examples:
     parser.add_argument("prompt", nargs="?", help="Image prompt")
     parser.add_argument("output", nargs="?", help="Output file path")
     parser.add_argument("--list", action="store_true", help="List available providers")
-    parser.add_argument("--setup", metavar="PROVIDER", help="Setup a provider (local, openai, replicate)")
+    parser.add_argument(
+        "--setup",
+        metavar="PROVIDER",
+        help="Setup a provider (local, openai, replicate, atlas)",
+    )
     parser.add_argument("--provider", "-p", default="auto", help="Provider to use (default: auto)")
     parser.add_argument("--width", "-W", type=int, default=1024, help="Image width")
     parser.add_argument("--height", "-H", type=int, default=1024, help="Image height")
     parser.add_argument("--steps", "-s", type=int, default=4, help="Inference steps")
+    parser.add_argument(
+        "--yes",
+        action="store_true",
+        help="Confirm the live Atlas price plan and submit once",
+    )
 
     args = parser.parse_args()
 
@@ -182,7 +203,8 @@ Examples:
         provider_name=args.provider,
         width=args.width,
         height=args.height,
-        steps=args.steps
+        steps=args.steps,
+        confirm_paid=args.yes,
     )
     return 0 if success else 1
 
